@@ -3,6 +3,14 @@
 서울 동네마다 열리는 축제·전통시장·꽃길·산책로·둘레길·박물관을 외국인 관광객에게 보여주는
 안내 서비스. 가제(working title). **Kfood와는 별개 프로젝트**입니다 — 작업 지시는 [CLAUDE.md](./CLAUDE.md) 참고.
 
+**출시 범위: 서울만, 무료.** 호응이 좋으면 전국으로 넓힙니다. 서울 외 지역은 코드 게이트로 막아 뒀습니다
+(`src/config/launchScope.ts`).
+
+## 배포
+
+`main`에 푸시하면 GitHub Pages로 자동 배포됩니다(무료) — 최초 1회 리포 Settings → Pages → Source를
+"GitHub Actions"로 설정해야 합니다. 켜진 뒤에는 https://pyoseongo-hub.github.io/k-street/ 에서 볼 수 있습니다.
+
 ## 실행
 
 ```bash

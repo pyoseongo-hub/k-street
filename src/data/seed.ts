@@ -2,6 +2,12 @@
 // 출처: "K-Street" 기획 문서(claude.ai 아티팩트, 2026-08-24 리서치)의 25개 구 조사 결과.
 // 전부 웹 검색 요약 기반이라 등록 전 공식 페이지 재확인이 필요하다 — CLAUDE.md 정확도 원칙 참고.
 // confirmed:false 항목은 이번 조사에서 이름을 못 찾은 자리표시자이며, 값이 아니라 "빈 칸"으로 취급해야 한다.
+//
+// 출시 범위: 서울만(사용자 결정, 2026-08-24 — "일단 서울부터 출시, 호응 좋으면 전국").
+// src/config/launchScope.ts 참고. 여기 있는 곳은 전부 서울이라 지금은 필터가 아무것도
+// 걸러내지 않지만, 나중에 다른 도시 데이터를 추가해도 실수로 노출되지 않게 게이트를 미리 건다.
+import { isInLaunchScope } from "../config/launchScope";
+import { sidoOf } from "./districts";
 
 export type Category = "festival" | "market" | "flower" | "walk" | "hike" | "museum";
 
@@ -197,7 +203,7 @@ export const MUSEUMS: Place[] = [
   { id: id(), gu: "중랑구", category: "museum", name: "확인 필요", confirmed: false },
 ];
 
-export const ALL_PLACES: Place[] = [
+const ALL_PLACES_RAW: Place[] = [
   ...FESTIVALS,
   ...MARKETS,
   ...FLOWERS,
@@ -205,6 +211,10 @@ export const ALL_PLACES: Place[] = [
   ...HIKES,
   ...MUSEUMS,
 ];
+
+// 출시 범위 게이트(launchScope.ts) — 서울 외 지역이 seed.ts에 섞여 들어와도
+// LAUNCH_REGIONS를 넓히기 전까지는 화면에 노출되지 않는다.
+export const ALL_PLACES: Place[] = ALL_PLACES_RAW.filter((p) => isInLaunchScope(sidoOf(p.gu)));
 
 export const CATEGORY_META: Record<Category, { label: string; icon: string; color: string }> = {
   festival: { label: "축제", icon: "🎪", color: "var(--festival)" },

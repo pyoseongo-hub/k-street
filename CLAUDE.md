@@ -6,6 +6,18 @@
 **Kfood(dongne-hanip)와는 완전히 별개 프로젝트다.** 같은 제작자가 만들지만 코드·배포·브랜드를 공유하지 않는다.
 다만 정확도 원칙은 그대로 물려받는다 — 아래 참고.
 
+## 출시 범위 — 서울만 (사용자 결정, 2026-08-24)
+
+> "일단 서울부터 출시하고 무료배포. 호응이 좋으면 전국 단위 진행. 서울 외 지역은 일단 안 보이게."
+
+- **무료배포.** 유료화·구독 얘기는 지금 안 한다(Kfood의 "수익화보다 커버리지" 원칙과 같다).
+- **서울 외 지역은 코드 차원에서 숨긴다.** `src/config/launchScope.ts`의 `LAUNCH_REGIONS`가 게이트다 —
+  `seed.ts`의 `ALL_PLACES`는 이 게이트를 통과한 것만 내보낸다. 나중에 다른 도시 데이터를 추가해도
+  `LAUNCH_REGIONS`를 넓히기 전까지는 화면에 안 뜬다. **절대로 이 필터를 우회해서 개별 컴포넌트에서
+  "일단 보여주기"로 처리하지 말 것** — 게이트가 한 곳에만 있어야 나중에 전국으로 열 때 한 줄로 끝난다.
+- **전국 확장 조건은 아직 숫자로 정해지지 않았다.** "호응이 좋으면"이라고만 했다 — 구체적인 기준(설치 수,
+  DAU 등)은 사용자가 나중에 정할 일이지 지금 임의로 만들지 않는다.
+
 ## 지금 상태 (2026-08-24 기준)
 
 React + TypeScript + Vite로 스캐폴딩한 뼈대 단계. `npm run dev`로 바로 확인 가능.
@@ -21,6 +33,11 @@ React + TypeScript + Vite로 스캐폴딩한 뼈대 단계. `npm run dev`로 바
 - `src/components/DistrictExplorer.tsx` — 홈 하단, 나머지 5개 카테고리(시장·꽃길·산책로·둘레길·박물관) 전용
   장소형 UI. **아직 진짜 지도가 아니다** — 네이버·카카오 지도 API 키가 없어서 25개 구 그리드로
   대체해 뒀다. 좌표를 지어내지 않았다(실제 위경도 없이 지도 위에 점을 찍는 건 가짜 정보다).
+- `src/config/launchScope.ts`, `src/data/districts.ts` — "서울만 노출" 게이트(위 출시 범위 참고).
+- `.github/workflows/deploy.yml` — main에 푸시하면 GitHub Pages로 자동 배포(무료).
+  **딱 한 번, 리포 Settings → Pages → Source를 "GitHub Actions"로 바꿔야 켜진다** — API로 못 하는
+  설정이라 사용자가 직접 눌러야 한다. 켜지면 `https://pyoseongo-hub.github.io/k-street/`에서 보인다.
+  배포 전에 `npm run audit-seed`를 돌려서 ❌ blocking이 있으면 배포 자체를 막는다.
 
 ## 다음에 할 일 (순서대로)
 

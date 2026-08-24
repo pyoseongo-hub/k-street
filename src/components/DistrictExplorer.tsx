@@ -1,17 +1,12 @@
 import { useMemo, useState, type CSSProperties } from "react";
 import { ALL_PLACES, CATEGORY_META, type Category } from "../data/seed";
+import { SEOUL_DISTRICTS } from "../data/districts";
 
 const MAP_CATEGORIES: Category[] = ["market", "flower", "walk", "hike", "museum"];
 
-// 서울 25개 구 — 실제 지도 위 좌표는 아직 없다(네이버·카카오 지도 API 연동 전).
-// 개략적인 방위(동/서/남/북/중)만 표시해 자치구 단위로 훑을 수 있게 한다.
-const DISTRICTS = [
-  "종로구", "중구", "용산구", "성동구", "광진구",
-  "동대문구", "중랑구", "성북구", "강북구", "도봉구",
-  "노원구", "은평구", "서대문구", "마포구", "양천구",
-  "강서구", "구로구", "금천구", "영등포구", "동작구",
-  "관악구", "서초구", "강남구", "송파구", "강동구",
-];
+// 실제 지도 위 좌표는 아직 없다(네이버·카카오 지도 API 연동 전) — 자치구 단위 그리드로 대신한다.
+// 목록은 districts.ts에서 가져온다(서울 25개 구). 출시 범위가 넓어지면 그쪽만 고치면 된다.
+const DISTRICTS = SEOUL_DISTRICTS;
 
 export default function DistrictExplorer() {
   const [category, setCategory] = useState<Category>("market");
