@@ -14,6 +14,9 @@ React + TypeScript + Vite로 스캐폴딩한 뼈대 단계. `npm run dev`로 바
   등록 전 공식 페이지로 재확인이 필요하다. `confirmed: false`인 항목은 값이 아니라
   "아직 못 찾은 빈 칸"이다 — UI에서도 그렇게 표시해야 한다("확인 필요", 흐리게).
   박물관·미술관은 9/25 → 20/25로 보강함(강북·구로·동작·성동·중랑 5곳만 남음).
+- `scripts/audit-seed.mjs` — Kfood의 audit-seed.mjs와 같은 목적. `npm run audit-seed`로 실행.
+  id 충돌·자리표시자 모순 등은 ❌(blocking)로 막고, 카테고리별 커버리지·날짜 누락 축제는
+  ⚠️(warning)로만 보여준다. **seed.ts를 고칠 때마다 돌릴 것.**
 - `src/components/MonthlyFestivalPanel.tsx` — 홈 상단, 축제 전용 시간형 UI(계절·월 선택 → 그 달 축제).
 - `src/components/DistrictExplorer.tsx` — 홈 하단, 나머지 5개 카테고리(시장·꽃길·산책로·둘레길·박물관) 전용
   장소형 UI. **아직 진짜 지도가 아니다** — 네이버·카카오 지도 API 키가 없어서 25개 구 그리드로
