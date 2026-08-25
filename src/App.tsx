@@ -2,6 +2,7 @@ import { useTheme } from "./lib/useTheme";
 import MonthlyFestivalPanel from "./components/MonthlyFestivalPanel";
 import DistrictExplorer from "./components/DistrictExplorer";
 import WeatherStrip from "./components/WeatherStrip";
+import LanguageSelector from "./components/LanguageSelector";
 
 function App() {
   const { toggleTheme, getIcon } = useTheme();
@@ -17,6 +18,9 @@ function App() {
               <div className="app-name">K-STREET</div>
               <div className="app-tagline">SEOUL FIELD GUIDE</div>
             </div>
+          </div>
+          <div className="app-header-center">
+            <LanguageSelector />
           </div>
           <div className="app-header-actions">
             <button className="icon-btn" onClick={toggleTheme} aria-label="테마 전환">

@@ -56,6 +56,13 @@ button {
   gap: 12px;
 }
 
+.app-header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .app-wordmark {
   display: flex;
   align-items: center;
