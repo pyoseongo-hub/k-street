@@ -1,20 +1,20 @@
 /* 다크 엘레강스 테마를 기본값으로 삼는다(seoulguide/라이브 사이트 스타일 참고) —
    깊은 시안/틸 톤의 다크 + 밝은 라이트 모드 지원 */
 :root {
-  --bg: #0A3A40;
-  --surface: #165360;
-  --surface-2: #1E6270;
-  --text: #F8FFFE;
-  --text-muted: #7FA8A0;
-  --border: #2A6A75;
-  --accent: #35B8BA;
-  --accent-strong: #5FC8C8;
-  --accent-soft: rgba(53, 184, 186, 0.12);
+  --bg: #082F36;
+  --surface: #1A5460;
+  --surface-2: #226A78;
+  --text: #FAFCFD;
+  --text-muted: #8AB5B8;
+  --border: #2E7580;
+  --accent: #3ECBCF;
+  --accent-strong: #6DD8DC;
+  --accent-soft: rgba(62, 203, 207, 0.12);
 
   --festival: #E3A857;
   --market: #D49854;
   --flower: #E28FAE;
-  --walk: #35B8BA;
+  --walk: #3ECBCF;
   --hike: #A8BC5E;
   --museum: #9B9FE0;
 
@@ -74,20 +74,20 @@
 
 /* 다크 모드 명시 선택시 (data-theme="dark") — 깊고 우아한 틸 톤 */
 :root[data-theme="dark"] {
-  --bg: #0A3A40;
-  --surface: #165360;
-  --surface-2: #1E6270;
-  --text: #F2EFE9;
-  --text-muted: #8FA39D;
-  --border: #2A6A75;
-  --accent: #35B8BA;
-  --accent-strong: #5FC8C8;
-  --accent-soft: rgba(53, 184, 186, 0.12);
+  --bg: #082F36;
+  --surface: #1A5460;
+  --surface-2: #226A78;
+  --text: #FAFCFD;
+  --text-muted: #8AB5B8;
+  --border: #2E7580;
+  --accent: #3ECBCF;
+  --accent-strong: #6DD8DC;
+  --accent-soft: rgba(62, 203, 207, 0.12);
 
   --festival: #E3A857;
   --market: #D49854;
   --flower: #E28FAE;
-  --walk: #35B8BA;
+  --walk: #3ECBCF;
   --hike: #A8BC5E;
   --museum: #9B9FE0;
 
