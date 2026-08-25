@@ -1,5 +1,5 @@
 /* 다크 엘레강스 테마를 기본값으로 삼는다(사용자 참고 이미지, 2026-08-25) —
-   시스템 라이트 모드 대응이 아니라 브랜드 정체성 자체다. */
+   라이트 모드도 지원: 참고 이미지의 따뜻하고 밝은 톤 */
 :root {
   --bg: #121B19;
   --surface: #1B2624;
@@ -22,4 +22,75 @@
   --shadow-elevated: 0 14px 30px -12px rgba(0, 0, 0, 0.55);
   --radius-lg: 20px;
   --radius-xl: 24px;
+}
+
+/* 라이트 모드: 참고 이미지의 따뜻하고 밝은 팔레트 */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #F5F0E8;
+    --surface: #FFFFFF;
+    --surface-2: #F8F4EE;
+    --text: #2C3E50;
+    --text-muted: #7A8FA8;
+    --border: #E0D5C7;
+    --accent: #3BA39C;
+    --accent-strong: #2A8A81;
+    --accent-soft: rgba(59, 163, 156, 0.12);
+
+    --festival: #D4A857;
+    --market: #C89448;
+    --flower: #D47A9E;
+    --walk: #3BA39C;
+    --hike: #8BA85C;
+    --museum: #7A7EC4;
+
+    --shadow: rgba(0, 0, 0, 0.08);
+    --shadow-elevated: 0 8px 20px -8px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* 라이트 모드 명시 선택시 (data-theme="light") */
+:root[data-theme="light"] {
+  --bg: #F5F0E8;
+  --surface: #FFFFFF;
+  --surface-2: #F8F4EE;
+  --text: #2C3E50;
+  --text-muted: #7A8FA8;
+  --border: #E0D5C7;
+  --accent: #3BA39C;
+  --accent-strong: #2A8A81;
+  --accent-soft: rgba(59, 163, 156, 0.12);
+
+  --festival: #D4A857;
+  --market: #C89448;
+  --flower: #D47A9E;
+  --walk: #3BA39C;
+  --hike: #8BA85C;
+  --museum: #7A7EC4;
+
+  --shadow: rgba(0, 0, 0, 0.08);
+  --shadow-elevated: 0 8px 20px -8px rgba(0, 0, 0, 0.12);
+}
+
+/* 다크 모드 명시 선택시 (data-theme="dark") */
+:root[data-theme="dark"] {
+  --bg: #121B19;
+  --surface: #1B2624;
+  --surface-2: #23302D;
+  --text: #F1EDE4;
+  --text-muted: #93A6A0;
+  --border: #2E3B37;
+  --accent: #5FCDAF;
+  --accent-strong: #7FE0C4;
+  --accent-soft: rgba(95, 205, 175, 0.14);
+
+  --festival: #E3A857;
+  --market: #D9A45C;
+  --flower: #E28FAE;
+  --walk: #5FCDAF;
+  --hike: #ABBE71;
+  --museum: #9B9FE0;
+
+  --shadow: rgba(0, 0, 0, 0.4);
+  --shadow-elevated: 0 14px 30px -12px rgba(0, 0, 0, 0.55);
 }

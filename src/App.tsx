@@ -1,8 +1,11 @@
+import { useTheme } from "./lib/useTheme";
 import MonthlyFestivalPanel from "./components/MonthlyFestivalPanel";
 import DistrictExplorer from "./components/DistrictExplorer";
 import WeatherStrip from "./components/WeatherStrip";
 
 function App() {
+  const { toggleTheme, getIcon } = useTheme();
+
   return (
     <div className="app-shell">
       <header className="app-header">
@@ -16,6 +19,9 @@ function App() {
             </div>
           </div>
           <div className="app-header-actions">
+            <button className="icon-btn" onClick={toggleTheme} aria-label="테마 전환">
+              {getIcon()}
+            </button>
             <button className="icon-btn" disabled aria-label="검색(준비 중)">
               🔍
             </button>
