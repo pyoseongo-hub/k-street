@@ -180,9 +180,18 @@ button {
 
 .festival-card {
   border-radius: 14px;
-  padding: 12px 14px;
-  background: color-mix(in srgb, var(--festival) 7%, var(--surface));
-  border-left: 4px solid var(--festival);
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+.fc-art {
+  display: block;
+  width: 100%;
+  height: 56px;
+}
+
+.fc-body {
+  padding: 11px 14px 13px;
 }
 
 .fc-top {

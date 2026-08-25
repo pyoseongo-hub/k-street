@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import SeasonMonthPicker from "./SeasonMonthPicker";
+import SeasonArt from "./SeasonArt";
 import { FESTIVALS } from "../data/seed";
+import { seasonOf } from "../lib/season";
 
 const nowMonth = new Date().getMonth() + 1;
 
@@ -31,14 +33,17 @@ export default function MonthlyFestivalPanel() {
             아직 확인을 못 한 것일 수 있다.
           </p>
         )}
-        {festivals.map((f) => (
+        {festivals.map((f, i) => (
           <div className="festival-card" key={f.id}>
-            <div className="fc-top">
-              <span className="fc-gu">{f.gu}</span>
-              {f.dateLabel && <span className="fc-date">{f.dateLabel}</span>}
+            <SeasonArt className="fc-art" season={seasonOf(f.startMonth!)} variant={i % 2 === 0 ? 0 : 1} />
+            <div className="fc-body">
+              <div className="fc-top">
+                <span className="fc-gu">{f.gu}</span>
+                {f.dateLabel && <span className="fc-date">{f.dateLabel}</span>}
+              </div>
+              <div className="fc-name">{f.name}</div>
+              {f.note && <div className="fc-note">{f.note}</div>}
             </div>
-            <div className="fc-name">{f.name}</div>
-            {f.note && <div className="fc-note">{f.note}</div>}
           </div>
         ))}
       </div>
