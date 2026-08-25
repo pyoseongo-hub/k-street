@@ -18,8 +18,10 @@ export default defineConfig({
         description:
           '서울 동네 축제·전통시장·꽃길·산책로·둘레길·박물관 안내 — 외국인 관광객을 위한 서비스(가제)',
         // Kfood와 같은 계열임을 암시하지 않도록 독립 색·아이콘을 쓴다.
-        theme_color: '#2E6F63',
-        background_color: '#F3F4EF',
+        // 2026-08-25: 다크 엘레강스 테마로 바꾸면서 여기도 같이 맞췄다(src/styles/tokens.css의
+        // --bg/--accent와 동일) — 안 맞으면 설치 시 스플래시 화면·주소창 색이 따로 논다.
+        theme_color: '#121B19',
+        background_color: '#121B19',
         display: 'standalone',
         start_url: '/k-street/',
         scope: '/k-street/',
