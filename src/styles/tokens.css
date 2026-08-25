@@ -1,96 +1,96 @@
-/* 다크 엘레강스 테마를 기본값으로 삼는다(사용자 참고 이미지, 2026-08-25) —
-   라이트 모드도 지원: 참고 이미지의 따뜻하고 밝은 톤 */
+/* 다크 엘레강스 테마를 기본값으로 삼는다(seoulguide 스타일 참고, 2026-08-25) —
+   깊고 우아한 다크 톤 + 밝은 라이트 모드 지원 */
 :root {
-  --bg: #121B19;
-  --surface: #1B2624;
-  --surface-2: #23302D;
-  --text: #F1EDE4;
-  --text-muted: #93A6A0;
-  --border: #2E3B37;
-  --accent: #5FCDAF;
-  --accent-strong: #7FE0C4;
-  --accent-soft: rgba(95, 205, 175, 0.14);
+  --bg: #0F1716;
+  --surface: #182220;
+  --surface-2: #1F2C2A;
+  --text: #F2EFE9;
+  --text-muted: #8FA39D;
+  --border: #2A3736;
+  --accent: #4FB3A8;
+  --accent-strong: #6ECDC0;
+  --accent-soft: rgba(79, 179, 168, 0.12);
 
   --festival: #E3A857;
-  --market: #D9A45C;
+  --market: #D49854;
   --flower: #E28FAE;
-  --walk: #5FCDAF;
-  --hike: #ABBE71;
+  --walk: #4FB3A8;
+  --hike: #A8BC5E;
   --museum: #9B9FE0;
 
-  --shadow: rgba(0, 0, 0, 0.4);
-  --shadow-elevated: 0 14px 30px -12px rgba(0, 0, 0, 0.55);
+  --shadow: rgba(0, 0, 0, 0.45);
+  --shadow-elevated: 0 14px 30px -12px rgba(0, 0, 0, 0.6);
   --radius-lg: 20px;
   --radius-xl: 24px;
 }
 
-/* 라이트 모드: 참고 이미지의 따뜻하고 밝은 팔레트 */
+/* 라이트 모드: seoulguide 스타일 — 밝고 따뜻한 팔레트 */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
-    --bg: #F5F0E8;
+    --bg: #F8F6F3;
     --surface: #FFFFFF;
-    --surface-2: #F8F4EE;
-    --text: #2C3E50;
-    --text-muted: #7A8FA8;
-    --border: #E0D5C7;
-    --accent: #3BA39C;
-    --accent-strong: #2A8A81;
-    --accent-soft: rgba(59, 163, 156, 0.12);
+    --surface-2: #FAF8F5;
+    --text: #1F2937;
+    --text-muted: #6B7280;
+    --border: #E5DDD2;
+    --accent: #10A89C;
+    --accent-strong: #0D8B80;
+    --accent-soft: rgba(16, 168, 156, 0.1);
 
-    --festival: #D4A857;
-    --market: #C89448;
-    --flower: #D47A9E;
-    --walk: #3BA39C;
-    --hike: #8BA85C;
-    --museum: #7A7EC4;
+    --festival: #E3A857;
+    --market: #D49854;
+    --flower: #E28FAE;
+    --walk: #10A89C;
+    --hike: #9CB450;
+    --museum: #8B7CC4;
 
-    --shadow: rgba(0, 0, 0, 0.08);
-    --shadow-elevated: 0 8px 20px -8px rgba(0, 0, 0, 0.12);
+    --shadow: rgba(0, 0, 0, 0.06);
+    --shadow-elevated: 0 6px 16px -6px rgba(0, 0, 0, 0.1);
   }
 }
 
 /* 라이트 모드 명시 선택시 (data-theme="light") */
 :root[data-theme="light"] {
-  --bg: #F5F0E8;
+  --bg: #F8F6F3;
   --surface: #FFFFFF;
-  --surface-2: #F8F4EE;
-  --text: #2C3E50;
-  --text-muted: #7A8FA8;
-  --border: #E0D5C7;
-  --accent: #3BA39C;
-  --accent-strong: #2A8A81;
-  --accent-soft: rgba(59, 163, 156, 0.12);
-
-  --festival: #D4A857;
-  --market: #C89448;
-  --flower: #D47A9E;
-  --walk: #3BA39C;
-  --hike: #8BA85C;
-  --museum: #7A7EC4;
-
-  --shadow: rgba(0, 0, 0, 0.08);
-  --shadow-elevated: 0 8px 20px -8px rgba(0, 0, 0, 0.12);
-}
-
-/* 다크 모드 명시 선택시 (data-theme="dark") */
-:root[data-theme="dark"] {
-  --bg: #121B19;
-  --surface: #1B2624;
-  --surface-2: #23302D;
-  --text: #F1EDE4;
-  --text-muted: #93A6A0;
-  --border: #2E3B37;
-  --accent: #5FCDAF;
-  --accent-strong: #7FE0C4;
-  --accent-soft: rgba(95, 205, 175, 0.14);
+  --surface-2: #FAF8F5;
+  --text: #1F2937;
+  --text-muted: #6B7280;
+  --border: #E5DDD2;
+  --accent: #10A89C;
+  --accent-strong: #0D8B80;
+  --accent-soft: rgba(16, 168, 156, 0.1);
 
   --festival: #E3A857;
-  --market: #D9A45C;
+  --market: #D49854;
   --flower: #E28FAE;
-  --walk: #5FCDAF;
-  --hike: #ABBE71;
+  --walk: #10A89C;
+  --hike: #9CB450;
+  --museum: #8B7CC4;
+
+  --shadow: rgba(0, 0, 0, 0.06);
+  --shadow-elevated: 0 6px 16px -6px rgba(0, 0, 0, 0.1);
+}
+
+/* 다크 모드 명시 선택시 (data-theme="dark") — 깊고 우아한 톤 */
+:root[data-theme="dark"] {
+  --bg: #0F1716;
+  --surface: #182220;
+  --surface-2: #1F2C2A;
+  --text: #F2EFE9;
+  --text-muted: #8FA39D;
+  --border: #2A3736;
+  --accent: #4FB3A8;
+  --accent-strong: #6ECDC0;
+  --accent-soft: rgba(79, 179, 168, 0.12);
+
+  --festival: #E3A857;
+  --market: #D49854;
+  --flower: #E28FAE;
+  --walk: #4FB3A8;
+  --hike: #A8BC5E;
   --museum: #9B9FE0;
 
-  --shadow: rgba(0, 0, 0, 0.4);
-  --shadow-elevated: 0 14px 30px -12px rgba(0, 0, 0, 0.55);
+  --shadow: rgba(0, 0, 0, 0.45);
+  --shadow-elevated: 0 14px 30px -12px rgba(0, 0, 0, 0.6);
 }
