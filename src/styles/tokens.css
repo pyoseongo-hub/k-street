@@ -1,25 +1,25 @@
-/* 다크 엘레강스 테마를 기본값으로 삼는다(seoulguide 스타일 참고, 2026-08-25) —
-   깊고 우아한 다크 톤 + 밝은 라이트 모드 지원 */
+/* 다크 엘레강스 테마를 기본값으로 삼는다(seoulguide/라이브 사이트 스타일 참고) —
+   깊은 시안 톤의 다크 + 밝은 라이트 모드 지원 */
 :root {
-  --bg: #0F1716;
-  --surface: #182220;
-  --surface-2: #1F2C2A;
-  --text: #F2EFE9;
-  --text-muted: #8FA39D;
-  --border: #2A3736;
-  --accent: #4FB3A8;
-  --accent-strong: #6ECDC0;
-  --accent-soft: rgba(79, 179, 168, 0.12);
+  --bg: #0D2F2A;
+  --surface: #153B37;
+  --surface-2: #1A4844;
+  --text: #F8FFFE;
+  --text-muted: #7FA8A0;
+  --border: #244440;
+  --accent: #3FA89C;
+  --accent-strong: #5FBBB0;
+  --accent-soft: rgba(63, 168, 156, 0.12);
 
   --festival: #E3A857;
   --market: #D49854;
   --flower: #E28FAE;
-  --walk: #4FB3A8;
+  --walk: #3FA89C;
   --hike: #A8BC5E;
   --museum: #9B9FE0;
 
-  --shadow: rgba(0, 0, 0, 0.45);
-  --shadow-elevated: 0 14px 30px -12px rgba(0, 0, 0, 0.6);
+  --shadow: rgba(0, 0, 0, 0.5);
+  --shadow-elevated: 0 14px 30px -12px rgba(0, 0, 0, 0.65);
   --radius-lg: 20px;
   --radius-xl: 24px;
 }
