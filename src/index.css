@@ -251,6 +251,23 @@ button {
   height: 56px;
 }
 
+.fc-art-photo {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.fc-photo-credit {
+  position: absolute;
+  right: 6px;
+  bottom: 5px;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 100px;
+  padding: 2px 7px;
+}
+
 .fc-body {
   padding: 11px 14px 13px;
 }

@@ -4,6 +4,7 @@ import SeasonArt from "./SeasonArt";
 import { FESTIVALS } from "../data/seed";
 import { seasonOf } from "../lib/season";
 import { useRotatingSeed } from "../lib/useRotatingSeed";
+import { getTourImage } from "../lib/tourImages";
 
 const nowMonth = new Date().getMonth() + 1;
 
@@ -37,13 +38,21 @@ export default function MonthlyFestivalPanel() {
               아직 확인을 못 한 것일 수 있다.
             </p>
           )}
-          {festivals.map((f, i) => (
+          {festivals.map((f, i) => {
+            const photo = getTourImage(f.id);
+            return (
             <div className="festival-card" key={f.id}>
-              <SeasonArt
-                className="fc-art"
-                season={seasonOf(f.startMonth!)}
-                seed={rotatingSeed * 100 + i}
-              />
+              {photo ? (
+                <div className="fc-art fc-art-photo" style={{ backgroundImage: `url(${photo.thumb})` }}>
+                  <span className="fc-photo-credit">사진: 한국관광공사</span>
+                </div>
+              ) : (
+                <SeasonArt
+                  className="fc-art"
+                  season={seasonOf(f.startMonth!)}
+                  seed={rotatingSeed * 100 + i}
+                />
+              )}
               <div className="fc-body">
                 <div className="fc-top">
                   <span className="fc-gu">{f.gu}</span>
@@ -53,7 +62,8 @@ export default function MonthlyFestivalPanel() {
                 {f.note && <div className="fc-note">{f.note}</div>}
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
