@@ -46,8 +46,17 @@ React + TypeScript + Vite로 스캐폴딩한 뼈대 단계. `npm run dev`로 바
   스몰캡스 라벨 + 앰버 강조색 조합. 사진은 아직 못 넣었다 — 포토코리아(공공누리 1유형,
   https://phoko.visitkorea.or.kr) 등 실제 사진 사이트가 이 세션(샌드박스)에서는 네트워크
   차단이라 직접 못 받아온다. 대신 `src/components/SeasonArt.tsx`(계절별 벡터 일러스트,
-  `src/lib/useRotatingSeed.ts`로 시간마다 모티프·팔레트가 바뀜)로 대체해 뒀다 — 사용자가
-  실제 사진 파일을 보내주면 그걸로 교체하는 작업으로 이어가면 된다.
+  `src/lib/useRotatingSeed.ts`로 시간마다 모티프·팔레트가 바뀜)로 대체해 뒀다.
+- **실제 사진 — TourAPI(한국관광공사) 파이프라인 추가함(2026-08-25).** 사용자가 공공데이터포털에서
+  TourAPI 인증키를 발급받았다. `scripts/fetch-tour-images.mjs`를 `TOUR_API_KEY=키 node scripts/fetch-tour-images.mjs`로
+  실행하면 축제 이름으로 검색해서 공공누리 1유형 사진을 `src/data/tour-images.json`에 저장한다
+  (이 리포는 서버가 없는 정적 사이트라 키를 클라이언트 코드에 못 넣는다 — 그래서 로컬 스크립트로
+  미리 받아 URL만 저장해 둔다). 이 파일이 채워지면 `MonthlyFestivalPanel`이 SeasonArt 대신
+  실제 사진을 자동으로 쓴다(`사진: 한국관광공사` 크레딧 칩 포함, 공공누리 1유형 출처 표시 의무).
+  이름이 확실히 일치하는 것만 저장하므로(정확도 원칙) 매칭 안 된 축제는 계속 일러스트로 남는다.
+  ⚠️ apis.data.go.kr는 이 세션(샌드박스)에서도 접속이 된다(더미 키로 테스트해 HTTP 403 — 네트워크
+  차단이 아니라 인증 실패였다) — 다음 세션은 사용자에게 물어서 여기서 바로 돌려도 되고, 사용자가
+  로컬에서 돌려도 된다.
 
 - `src/data/seed.ts` — 25개 구 × 6개 카테고리 시드 데이터. **전부 웹 검색 요약 기반**이라
   등록 전 공식 페이지로 재확인이 필요하다. `confirmed: false`인 항목은 값이 아니라
