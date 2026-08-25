@@ -1,6 +1,7 @@
 import { useMemo, useState, type CSSProperties } from "react";
 import { ALL_PLACES, CATEGORY_META, type Category } from "../data/seed";
 import { SEOUL_DISTRICTS } from "../data/districts";
+import SeoulMap from "./SeoulMap";
 
 const MAP_CATEGORIES: Category[] = ["market", "flower", "walk", "hike", "museum"];
 
@@ -48,8 +49,10 @@ export default function DistrictExplorer() {
         ))}
       </div>
 
+      <SeoulMap />
+
       <p className="map-disclaimer">
-        정식 지도(네이버·카카오 지도 API) 연동 전이라, 우선 <b>자치구 단위로</b> 탐색한다.
+        지도 위 개별 위치 표시는 아직 준비 중이라(구별 좌표 검증 전), 우선 <b>자치구 단위로</b> 탐색한다.
         색이 있는 구는 이번 조사로 이름까지 확인된 곳, 옅은 구는 아직 확인 못 한 곳이다.
       </p>
 
