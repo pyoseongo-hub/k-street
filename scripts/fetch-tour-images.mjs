@@ -1,6 +1,8 @@
 #!/usr/bin/env node
-// 한국관광공사 TourAPI(KorService2)에서 축제 이름으로 검색해 대표 이미지를 받아온다.
-// 전부 공공누리 1유형(출처 표시하면 상업적 이용·수정 가능) 데이터다.
+// 한국관광공사 TourAPI(KorService2)에서 축제 이름으로 검색해 대표 이미지 + 실제 좌표(mapx/mapy)를
+// 받아온다. 전부 공공누리 1유형(출처 표시하면 상업적 이용·수정 가능) 데이터다.
+// 좌표는 나중에 지도 위 실제 핀 기능에 쓴다 — 검색으로 추측한 좌표가 아니라 관광공사가 직접
+// 등록해 둔 값이라 정확도 원칙(좌표를 지어내지 않는다)에 어긋나지 않는다.
 //
 // 이 세션(샌드박스)은 apis.data.go.kr에 접속이 막혀 있어서 직접 실행해 확인할 수 없다.
 // 실제 인터넷이 되는 로컬 PC에서 인증키를 받아 이렇게 실행할 것:
@@ -85,6 +87,10 @@ async function main() {
           image: hit.firstimage,
           thumb: hit.firstimage2 || hit.firstimage,
           contentId: hit.contentid,
+          // mapx/mapy: TourAPI가 주는 실제 좌표(경도/위도) — 지도에 핀을 찍을 때 이걸 쓴다.
+          // 값이 "0"이거나 빈 문자열이면 좌표를 안 가진 항목이라 undefined로 남긴다(지어내지 않음).
+          lng: hit.mapx && hit.mapx !== "0" ? Number(hit.mapx) : undefined,
+          lat: hit.mapy && hit.mapy !== "0" ? Number(hit.mapy) : undefined,
           source: "TourAPI/공공누리 1유형",
         };
         matched++;

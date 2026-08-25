@@ -1,5 +1,6 @@
 import MonthlyFestivalPanel from "./components/MonthlyFestivalPanel";
 import DistrictExplorer from "./components/DistrictExplorer";
+import WeatherStrip from "./components/WeatherStrip";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       </header>
 
       <main className="app-main">
+        <WeatherStrip />
         <MonthlyFestivalPanel />
         <DistrictExplorer />
       </main>

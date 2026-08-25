@@ -6,6 +6,9 @@ export interface TourImage {
   image: string;
   thumb: string;
   contentId: string;
+  /** 한국관광공사가 등록한 실제 좌표 — 값이 없으면 좌표를 안 가진 항목이다(지어내지 않음). */
+  lat?: number;
+  lng?: number;
   source: string;
 }
 
