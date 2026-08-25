@@ -29,7 +29,7 @@ export default function DistrictExplorer() {
   return (
     <section className="panel district-explorer">
       <div className="panel-head">
-        <span className="panel-eyebrow">🗺️ 지금 갈 수 있는 곳</span>
+        <span className="panel-eyebrow">지금 갈 수 있는 곳</span>
         <h2>구를 골라 둘러보기</h2>
       </div>
 

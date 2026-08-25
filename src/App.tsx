@@ -5,12 +5,24 @@ function App() {
   return (
     <div className="app-shell">
       <header className="app-header">
-        <div className="app-wordmark">
-          <span className="app-logo">🌸</span>
-          <span className="app-name">K-Street</span>
+        <h1 className="sr-only">서울 동네 축제 · 시장 · 꽃길 — 외국인 관광객을 위한 서울 동네 안내</h1>
+        <div className="app-header-row">
+          <div className="app-wordmark">
+            <span className="app-logo">🌸</span>
+            <div>
+              <div className="app-name">K-STREET</div>
+              <div className="app-tagline">SEOUL FIELD GUIDE</div>
+            </div>
+          </div>
+          <div className="app-header-actions">
+            <button className="icon-btn" disabled aria-label="검색(준비 중)">
+              🔍
+            </button>
+            <button className="icon-btn" disabled aria-label="알림(준비 중)">
+              🔔
+            </button>
+          </div>
         </div>
-        <h1>서울 동네 축제 · 시장 · 꽃길</h1>
-        <p className="app-tagline">외국인 관광객을 위한 서울 동네 안내</p>
       </header>
 
       <main className="app-main">

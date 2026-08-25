@@ -1,69 +1,25 @@
+/* 다크 엘레강스 테마를 기본값으로 삼는다(사용자 참고 이미지, 2026-08-25) —
+   시스템 라이트 모드 대응이 아니라 브랜드 정체성 자체다. */
 :root {
-  --bg: #F3F4EF;
-  --surface: #FFFFFF;
-  --surface-2: #EAEDE5;
-  --text: #1E2420;
-  --text-muted: #5B655F;
-  --border: #DBDFD4;
-  --accent: #2E6F63;
-  --accent-strong: #1F5347;
-  --accent-soft: #E1EFEA;
+  --bg: #121B19;
+  --surface: #1B2624;
+  --surface-2: #23302D;
+  --text: #F1EDE4;
+  --text-muted: #93A6A0;
+  --border: #2E3B37;
+  --accent: #5FCDAF;
+  --accent-strong: #7FE0C4;
+  --accent-soft: rgba(95, 205, 175, 0.14);
 
-  --festival: #C9542E;
-  --market: #B8842A;
-  --flower: #C24B72;
-  --walk: #2E6F63;
-  --hike: #5C6B2E;
-  --museum: #5B5FA6;
-
-  --shadow: rgba(30, 36, 32, 0.08);
-  --shadow-elevated: 0 10px 24px -8px rgba(30, 36, 32, 0.18);
-  --radius-lg: 18px;
-  --radius-xl: 22px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #14181A;
-    --surface: #1B2120;
-    --surface-2: #222826;
-    --text: #E8ECE7;
-    --text-muted: #9AA79F;
-    --border: #2B322F;
-    --accent: #6BC1AA;
-    --accent-strong: #8AD4C0;
-    --accent-soft: rgba(107, 193, 170, 0.14);
-
-    --festival: #E28A5A;
-    --market: #E0B15C;
-    --flower: #E28FAE;
-    --walk: #6BC1AA;
-    --hike: #ABBE71;
-    --museum: #9B9FE0;
-
-    --shadow: rgba(0, 0, 0, 0.45);
-    --shadow-elevated: 0 10px 24px -8px rgba(0, 0, 0, 0.5);
-  }
-}
-
-:root[data-theme="dark"] {
-  --bg: #14181A;
-  --surface: #1B2120;
-  --surface-2: #222826;
-  --text: #E8ECE7;
-  --text-muted: #9AA79F;
-  --border: #2B322F;
-  --accent: #6BC1AA;
-  --accent-strong: #8AD4C0;
-  --accent-soft: rgba(107, 193, 170, 0.14);
-
-  --festival: #E28A5A;
-  --market: #E0B15C;
+  --festival: #E3A857;
+  --market: #D9A45C;
   --flower: #E28FAE;
-  --walk: #6BC1AA;
+  --walk: #5FCDAF;
   --hike: #ABBE71;
   --museum: #9B9FE0;
 
-  --shadow: rgba(0, 0, 0, 0.45);
-  --shadow-elevated: 0 10px 24px -8px rgba(0, 0, 0, 0.5);
+  --shadow: rgba(0, 0, 0, 0.4);
+  --shadow-elevated: 0 14px 30px -12px rgba(0, 0, 0, 0.55);
+  --radius-lg: 20px;
+  --radius-xl: 24px;
 }
