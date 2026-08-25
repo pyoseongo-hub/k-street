@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { getTranslations, type Language } from './translations';
 
-export type Language = 'ko' | 'en' | 'ja' | 'zh' | 'zh-TW' | 'vi' | 'es' | 'fr' | 'de' | 'ru' | 'id' | 'th';
+export type { Language };
 
 const LANGUAGES: Record<Language, string> = {
   'ko': '한국어',
@@ -36,6 +37,7 @@ export function useLanguage() {
 
   const getLanguageName = (lang: Language) => LANGUAGES[lang];
   const getCurrentLanguageName = () => LANGUAGES[language];
+  const t = useMemo(() => getTranslations(language), [language]);
 
   return {
     language,
@@ -44,5 +46,6 @@ export function useLanguage() {
     getLanguageName,
     getCurrentLanguageName,
     isClient,
+    t,
   };
 }

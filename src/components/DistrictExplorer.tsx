@@ -1,15 +1,15 @@
 import { useMemo, useState, type CSSProperties } from "react";
+import { useLanguage } from "../lib/useLanguage";
 import { ALL_PLACES, CATEGORY_META, type Category } from "../data/seed";
 import { SEOUL_DISTRICTS } from "../data/districts";
 import SeoulMap from "./SeoulMap";
 
 const MAP_CATEGORIES: Category[] = ["market", "flower", "walk", "hike", "museum"];
 
-// 실제 지도 위 좌표는 아직 없다(네이버·카카오 지도 API 연동 전) — 자치구 단위 그리드로 대신한다.
-// 목록은 districts.ts에서 가져온다(서울 25개 구). 출시 범위가 넓어지면 그쪽만 고치면 된다.
 const DISTRICTS = SEOUL_DISTRICTS;
 
 export default function DistrictExplorer() {
+  const { t } = useLanguage();
   const [category, setCategory] = useState<Category>("market");
   const [gu, setGu] = useState<string | null>(null);
 
@@ -29,8 +29,8 @@ export default function DistrictExplorer() {
   return (
     <section className="panel district-explorer">
       <div className="panel-head">
-        <span className="panel-eyebrow">지금 갈 수 있는 곳</span>
-        <h2>구를 골라 둘러보기</h2>
+        <span className="panel-eyebrow">{t.exploreNowLabel}</span>
+        <h2>{t.exploreTitle}</h2>
       </div>
 
       <div className="category-chip-row">
@@ -53,8 +53,7 @@ export default function DistrictExplorer() {
       <SeoulMap />
 
       <p className="map-disclaimer">
-        지도 위 개별 위치 표시는 아직 준비 중이라(구별 좌표 검증 전), 우선 <b>자치구 단위로</b> 탐색한다.
-        색이 있는 구는 이번 조사로 이름까지 확인된 곳, 옅은 구는 아직 확인 못 한 곳이다.
+        {t.mapDisclaimerStart}<b>{t.mapDisclaimerBold}</b>{t.mapDisclaimerEnd}
       </p>
 
       <div className="district-grid">
@@ -75,7 +74,7 @@ export default function DistrictExplorer() {
 
       {gu && (
         <div className="place-list">
-          {selected.length === 0 && <p className="empty-note">{gu}는 아직 확인 못했다.</p>}
+          {selected.length === 0 && <p className="empty-note">{t.noPlacesInDistrictMessage(gu)}</p>}
           {selected.map((p) => (
             <div className="place-row" key={p.id}>
               <span className="dot" style={{ background: CATEGORY_META[p.category].color }} />

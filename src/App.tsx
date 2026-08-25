@@ -1,4 +1,5 @@
 import { useTheme } from "./lib/useTheme";
+import { useLanguage } from "./lib/useLanguage";
 import MonthlyFestivalPanel from "./components/MonthlyFestivalPanel";
 import DistrictExplorer from "./components/DistrictExplorer";
 import WeatherStrip from "./components/WeatherStrip";
@@ -6,6 +7,7 @@ import LanguageSelector from "./components/LanguageSelector";
 
 function App() {
   const { toggleTheme, getIcon } = useTheme();
+  const { t } = useLanguage();
 
   return (
     <div className="app-shell">
@@ -23,13 +25,13 @@ function App() {
             <LanguageSelector />
           </div>
           <div className="app-header-actions">
-            <button className="icon-btn" onClick={toggleTheme} aria-label="테마 전환">
+            <button className="icon-btn" onClick={toggleTheme} aria-label={t.themeSwitchLabel}>
               {getIcon()}
             </button>
-            <button className="icon-btn" disabled aria-label="검색(준비 중)">
+            <button className="icon-btn" disabled aria-label={t.searchLabel}>
               🔍
             </button>
-            <button className="icon-btn" disabled aria-label="알림(준비 중)">
+            <button className="icon-btn" disabled aria-label={t.notificationLabel}>
               🔔
             </button>
           </div>
@@ -45,19 +47,19 @@ function App() {
       <nav className="tab-bar">
         <button className="tab active">
           <span className="tab-icon">🏠</span>
-          <span>홈</span>
+          <span>{t.homeTab}</span>
         </button>
         <button className="tab" disabled>
           <span className="tab-icon">🗓️</span>
-          <span>캘린더</span>
+          <span>{t.calendarTab}</span>
         </button>
         <button className="tab" disabled>
           <span className="tab-icon">🤍</span>
-          <span>저장한 곳</span>
+          <span>{t.savedPlacesTab}</span>
         </button>
         <button className="tab" disabled>
           <span className="tab-icon">⚙️</span>
-          <span>설정</span>
+          <span>{t.settingsTab}</span>
         </button>
       </nav>
     </div>

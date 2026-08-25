@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useLanguage } from "../lib/useLanguage";
 import SeasonMonthPicker from "./SeasonMonthPicker";
 import SeasonArt from "./SeasonArt";
 import { FESTIVALS } from "../data/seed";
@@ -9,13 +10,14 @@ import { getTourImage } from "../lib/tourImages";
 const nowMonth = new Date().getMonth() + 1;
 
 export default function MonthlyFestivalPanel() {
+  const { t } = useLanguage();
   const [month, setMonth] = useState(nowMonth);
   const rotatingSeed = useRotatingSeed();
 
   const festivals = useMemo(
     () =>
       FESTIVALS.filter((f) => {
-        if (f.startMonth == null) return false; // 월 정보 없는 항목은 이 칸에 띄우지 않는다
+        if (f.startMonth == null) return false;
         const end = f.endMonth ?? f.startMonth;
         return month >= f.startMonth && month <= end;
       }),
@@ -27,15 +29,14 @@ export default function MonthlyFestivalPanel() {
       <SeasonArt className="mfp-hero" season={seasonOf(month)} seed={rotatingSeed} dense />
       <div className="panel-inner">
         <div className="panel-head">
-          <span className="panel-eyebrow">이달의 편집</span>
-          <h2>{month}월에 놓치면 안 되는 것</h2>
+          <span className="panel-eyebrow">{t.monthlyEditorLabel}</span>
+          <h2>{t.monthlyTitle(month)}</h2>
         </div>
         <SeasonMonthPicker month={month} onChange={setMonth} />
         <div className="festival-cards">
           {festivals.length === 0 && (
             <p className="empty-note">
-              이번 세션 조사에서는 {month}월에 확인된 축제가 없다 — 없는 게 아니라
-              아직 확인을 못 한 것일 수 있다.
+              {t.noFestivalsMessage(month)}
             </p>
           )}
           {festivals.map((f, i) => {
@@ -44,7 +45,7 @@ export default function MonthlyFestivalPanel() {
             <div className="festival-card" key={f.id}>
               {photo ? (
                 <div className="fc-art fc-art-photo" style={{ backgroundImage: `url(${photo.thumb})` }}>
-                  <span className="fc-photo-credit">사진: 한국관광공사</span>
+                  <span className="fc-photo-credit">{t.photoCredit}</span>
                 </div>
               ) : (
                 <SeasonArt
