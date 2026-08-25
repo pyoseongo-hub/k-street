@@ -76,6 +76,15 @@ React + TypeScript + Vite로 스캐폴딩한 뼈대 단계. `npm run dev`로 바
   검증하기 전까지는 지어내지 않는다(정확도 원칙). 그래서 실제 탐색은 여전히 아래 25개 구 그리드로 한다.
   이 세션(샌드박스)은 아웃바운드 프록시가 네이버 지도 CDN을 막아 직접 스크린샷 확인은 못 했다 —
   실제 사용자 브라우저에서는 제한이 없으니 로컬(`npm run dev`)에서 확인할 것.
+  ⚠️ **좌표 확보 경로가 정해졌다(2026-08-25).** `scripts/fetch-tour-images.mjs`가 이제 사진과 함께
+  TourAPI가 등록해 둔 실제 mapx/mapy도 `tour-images.json`에 저장한다(관광공사 공식 좌표라 지어낸 게
+  아니다). TourAPI 키가 나오면 이 좌표로 지도 위에 진짜 핀을 찍는 작업으로 이어갈 것 — "UX 아이디어"
+  절의 번호 핀 지도 구상 참고.
+- `src/components/WeatherStrip.tsx`, `src/lib/weather.ts` — 실시간 서울 날씨(기온·체감온도·시각).
+  Open-Meteo(키 불필요, CORS 열림)로 클라이언트에서 바로 호출한다. 참고 화면에 있던 "인기 명소가
+  그늘로 이동 중" 같은 코멘트 문구는 지어낸 것이라 안 넣었다 — 실제 관측값만 보여준다.
+- **TourAPI(한국관광공사) 키 — 2026-08-25 신청 완료, 승인 대기 중.** api.visitkorea.or.kr(한국관광
+  콘텐츠랩)에서 OpenAPI로 신청함. 키 나오면 `scripts/fetch-tour-images.mjs` 실행할 것.
 - `src/config/launchScope.ts`, `src/data/districts.ts` — "서울만 노출" 게이트(위 출시 범위 참고).
 - `.github/workflows/deploy.yml` — main에 푸시하면 GitHub Pages로 자동 배포(무료).
   **딱 한 번, 리포 Settings → Pages → Source를 "GitHub Actions"로 바꿔야 켜진다** — API로 못 하는
