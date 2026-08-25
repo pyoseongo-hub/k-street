@@ -33,11 +33,11 @@ export default function MonthlyFestivalPanel() {
         )}
         {festivals.map((f) => (
           <div className="festival-card" key={f.id}>
-            <div className="fc-name">{f.name}</div>
-            <div className="fc-meta">
-              {f.gu}
-              {f.dateLabel ? ` · ${f.dateLabel}` : ""}
+            <div className="fc-top">
+              <span className="fc-gu">{f.gu}</span>
+              {f.dateLabel && <span className="fc-date">{f.dateLabel}</span>}
             </div>
+            <div className="fc-name">{f.name}</div>
             {f.note && <div className="fc-note">{f.note}</div>}
           </div>
         ))}

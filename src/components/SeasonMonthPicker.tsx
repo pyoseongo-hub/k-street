@@ -34,7 +34,7 @@ export default function SeasonMonthPicker({ month, onChange }: Props) {
             onClick={() => onChange(m)}
             aria-label={`${m}월`}
           >
-            {m}
+            {m}월
           </button>
         ))}
       </div>

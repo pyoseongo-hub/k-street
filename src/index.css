@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap");
 
 * {
   box-sizing: border-box;
@@ -19,6 +19,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+button {
+  font-family: inherit;
+}
+
 .app-shell {
   max-width: 480px;
   margin: 0 auto;
@@ -28,171 +32,249 @@ body {
   background: var(--bg);
 }
 
+/* ── header ─────────────────────────────────────────── */
 .app-header {
-  padding: 20px 20px 14px;
-  border-bottom: 1px solid var(--border);
+  padding: 22px 20px 26px;
+  background: linear-gradient(155deg, var(--accent) 0%, var(--accent-strong) 100%);
+  color: #fff;
+  border-radius: 0 0 28px 28px;
+  box-shadow: var(--shadow-elevated);
 }
 
-.app-eyebrow {
+.app-wordmark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-logo {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.app-name {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  color: var(--accent-strong);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .app-header h1 {
   font-family: "Noto Serif KR", serif;
-  font-size: 21px;
+  font-size: 23px;
+  line-height: 1.35;
+  margin: 12px 0 0;
+}
+
+.app-tagline {
   margin: 6px 0 0;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .app-main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 14px 14px 90px;
+  gap: 16px;
+  padding: 16px 14px 100px;
 }
 
+/* ── panel shell ────────────────────────────────────── */
 .panel {
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px;
-  box-shadow: 0 1px 3px var(--shadow);
+  border-radius: var(--radius-lg);
+  padding: 18px 16px;
+  box-shadow: var(--shadow-elevated);
 }
 
 .panel-head {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .panel-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-family: "IBM Plex Mono", monospace;
   font-size: 11px;
-  color: var(--text-muted);
+  font-weight: 500;
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  border-radius: 100px;
+  padding: 4px 10px;
 }
 
 .panel-head h2 {
   font-family: "Noto Serif KR", serif;
-  font-size: 17px;
-  margin: 4px 0 0;
+  font-size: 18.5px;
+  margin: 8px 0 0;
 }
 
-/* season / month picker */
+/* ── season / month picker ──────────────────────────── */
 .season-row {
   display: flex;
   gap: 6px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .season-chip {
   flex: 1;
-  padding: 6px 4px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
+  padding: 9px 4px;
+  border-radius: 100px;
+  border: none;
   background: var(--surface-2);
   color: var(--text-muted);
   font-size: 12.5px;
+  font-weight: 500;
   cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .season-chip.active {
   background: var(--festival);
   color: #fff;
-  border-color: var(--festival);
   font-weight: 700;
+  box-shadow: 0 4px 10px -2px color-mix(in srgb, var(--festival) 60%, transparent);
+  transform: translateY(-1px);
 }
 
 .month-strip {
   display: flex;
-  gap: 4px;
+  gap: 6px;
   overflow-x: auto;
   padding-bottom: 4px;
+  scroll-snap-type: x proximity;
 }
 
 .month-chip {
   flex-shrink: 0;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--surface);
+  scroll-snap-align: start;
+  padding: 7px 12px;
+  border-radius: 100px;
+  border: none;
+  background: var(--surface-2);
   color: var(--text-muted);
   font-family: "IBM Plex Mono", monospace;
-  font-size: 12px;
+  font-size: 12.5px;
+  font-weight: 500;
   cursor: pointer;
 }
 
 .month-chip.active {
   background: var(--festival);
   color: #fff;
-  border-color: var(--festival);
   font-weight: 700;
+  box-shadow: 0 4px 10px -2px color-mix(in srgb, var(--festival) 60%, transparent);
 }
 
-/* festival cards */
+/* ── festival cards ─────────────────────────────────── */
 .festival-cards {
-  margin-top: 12px;
+  margin-top: 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .festival-card {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 12px;
-  border-left: 3px solid var(--festival);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: color-mix(in srgb, var(--festival) 7%, var(--surface));
+  border-left: 4px solid var(--festival);
 }
 
-.fc-name {
-  font-weight: 600;
-  font-size: 14px;
+.fc-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
 }
 
-.fc-meta {
+.fc-gu {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--festival);
+  border-radius: 100px;
+  padding: 2px 9px;
+}
+
+.fc-date {
   font-family: "IBM Plex Mono", monospace;
   font-size: 11.5px;
   color: var(--text-muted);
-  margin-top: 2px;
+}
+
+.fc-name {
+  font-weight: 700;
+  font-size: 15px;
 }
 
 .fc-note {
   font-size: 12px;
   color: var(--text-muted);
-  margin-top: 4px;
+  margin-top: 5px;
+  line-height: 1.5;
 }
 
 .empty-note {
   font-size: 13px;
   color: var(--text-muted);
-  padding: 6px 2px;
+  padding: 10px 2px;
+  line-height: 1.6;
 }
 
-/* category chips (district explorer) */
+/* ── category tiles (district explorer) ─────────────── */
 .category-chip-row {
   display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
 }
 
 .cat-chip {
-  padding: 6px 12px;
-  border-radius: 100px;
-  border: 1px solid var(--border);
-  background: var(--surface);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  width: 68px;
+  padding: 10px 4px 8px;
+  border-radius: 16px;
+  border: none;
+  background: var(--surface-2);
   color: var(--text-muted);
-  font-size: 12.5px;
+  font-size: 11.5px;
+  font-weight: 500;
   cursor: pointer;
+  transition: background 0.12s ease, box-shadow 0.12s ease, transform 0.12s ease;
+}
+
+.cat-chip-icon {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 17px;
+  background: color-mix(in srgb, var(--cc) 16%, var(--surface));
 }
 
 .cat-chip.active {
   background: var(--cc);
   color: #fff;
-  border-color: var(--cc);
-  font-weight: 600;
+  font-weight: 700;
+  box-shadow: 0 6px 14px -4px color-mix(in srgb, var(--cc) 55%, transparent);
+  transform: translateY(-1px);
+}
+
+.cat-chip.active .cat-chip-icon {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .seoul-map-wrap {
@@ -203,7 +285,7 @@ body {
 .seoul-map {
   width: 100%;
   height: 200px;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--surface-2);
 }
@@ -219,48 +301,56 @@ body {
   font-size: 12px;
   color: var(--text-muted);
   background: var(--surface-2);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 }
 
 .map-disclaimer {
   font-size: 12px;
   color: var(--text-muted);
   background: var(--surface-2);
-  border-radius: 8px;
-  padding: 8px 10px;
-  margin: 0 0 12px;
+  border-radius: 10px;
+  padding: 9px 11px;
+  margin: 0 0 14px;
+  line-height: 1.55;
 }
 
 .district-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
+  gap: 8px;
 }
 
 .district-tile {
-  padding: 8px 2px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--surface-2);
+  padding: 10px 2px;
+  border-radius: 12px;
+  border: 1px dashed var(--border);
+  background: transparent;
   color: var(--text-muted);
+  opacity: 0.6;
   font-size: 11.5px;
+  font-weight: 500;
   cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .district-tile.has-data {
-  background: color-mix(in srgb, var(--cc) 16%, var(--surface));
-  color: var(--text);
-  border-color: var(--cc);
-  font-weight: 500;
+  border: none;
+  opacity: 1;
+  background: color-mix(in srgb, var(--cc) 22%, var(--surface));
+  color: color-mix(in srgb, var(--cc) 70%, var(--text));
+  box-shadow: 0 2px 6px -2px var(--shadow);
+  font-weight: 700;
 }
 
 .district-tile.selected {
   background: var(--cc);
   color: #fff;
+  box-shadow: 0 6px 14px -4px color-mix(in srgb, var(--cc) 55%, transparent);
+  transform: translateY(-1px);
 }
 
 .place-list {
-  margin-top: 12px;
+  margin-top: 14px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -268,16 +358,16 @@ body {
 
 .place-row {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   align-items: flex-start;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 12px;
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: var(--surface-2);
 }
 
 .place-row .dot {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   margin-top: 5px;
   flex-shrink: 0;
@@ -285,36 +375,50 @@ body {
 
 .pr-name {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .pr-note {
   font-size: 12px;
   color: var(--text-muted);
-  margin-top: 2px;
+  margin-top: 3px;
+  line-height: 1.5;
 }
 
-/* tab bar */
+/* ── tab bar ────────────────────────────────────────── */
 .tab-bar {
   position: sticky;
   bottom: 0;
   display: flex;
-  border-top: 1px solid var(--border);
+  gap: 4px;
+  padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
   background: var(--surface);
+  box-shadow: 0 -8px 20px -10px var(--shadow);
 }
 
 .tab {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
   border: none;
+  border-radius: 14px;
   background: none;
-  padding: 12px 4px;
-  font-size: 11.5px;
+  padding: 7px 4px;
+  font-size: 11px;
   color: var(--text-muted);
   cursor: pointer;
 }
 
+.tab-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
 .tab.active {
   color: var(--accent-strong);
+  background: var(--accent-soft);
   font-weight: 700;
 }
 

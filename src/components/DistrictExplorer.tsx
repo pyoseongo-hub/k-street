@@ -44,7 +44,8 @@ export default function DistrictExplorer() {
               setGu(null);
             }}
           >
-            {CATEGORY_META[c].icon} {CATEGORY_META[c].label}
+            <span className="cat-chip-icon">{CATEGORY_META[c].icon}</span>
+            <span className="cat-chip-label">{CATEGORY_META[c].label}</span>
           </button>
         ))}
       </div>

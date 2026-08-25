@@ -17,6 +17,9 @@
   --museum: #5B5FA6;
 
   --shadow: rgba(30, 36, 32, 0.08);
+  --shadow-elevated: 0 10px 24px -8px rgba(30, 36, 32, 0.18);
+  --radius-lg: 18px;
+  --radius-xl: 22px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -39,6 +42,7 @@
     --museum: #9B9FE0;
 
     --shadow: rgba(0, 0, 0, 0.45);
+    --shadow-elevated: 0 10px 24px -8px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -61,4 +65,5 @@
   --museum: #9B9FE0;
 
   --shadow: rgba(0, 0, 0, 0.45);
+  --shadow-elevated: 0 10px 24px -8px rgba(0, 0, 0, 0.5);
 }
