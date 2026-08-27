@@ -75,9 +75,21 @@ function primaryName(name) {
   return first.length >= 2 ? first : normalize(name);
 }
 
+// 요청 하나가 응답 없이 멈추면 전체 배치가 무한정 멎어 버리므로(147곳 실행 중
+// 실제로 겪음), 모든 외부 호출에 제한 시간을 둔다.
+async function fetchWithTimeout(url, options, timeoutMs = 15000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 async function kakaoSearch(query) {
   const url = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(query)}&size=5`;
-  const res = await fetch(url, { headers: { Authorization: `KakaoAK ${KAKAO_KEY}` } });
+  const res = await fetchWithTimeout(url, { headers: { Authorization: `KakaoAK ${KAKAO_KEY}` } });
   if (!res.ok) {
     const body = await res.text().catch(() => "(본문 읽기 실패)");
     throw new Error(`Kakao HTTP ${res.status} for "${query}" — ${body}`);
@@ -86,27 +98,35 @@ async function kakaoSearch(query) {
   return data.documents ?? [];
 }
 
+// 카카오는 이미 찾았는데 네이버 대조만 실패한 경우, 그 실패가 전체 장소를
+// 건너뛰게 만들면 안 된다(교차확인 없이 카카오 단독·낮은 신뢰도로 저장하는
+// 기존 로직으로 흘러가야 한다) — 그래서 여기서 모든 오류를 삼키고 null만 낸다.
 async function naverGeocode(address) {
   if (!NAVER_ID || !NAVER_SECRET) return null;
   const url = `https://maps.apigw.ntruss.com/map-geocode/v2/geocode?query=${encodeURIComponent(address)}`;
-  const res = await fetch(url, {
-    headers: {
-      "X-NCP-APIGW-API-KEY-ID": NAVER_ID,
-      "X-NCP-APIGW-API-KEY": NAVER_SECRET,
-    },
-  });
-  if (!res.ok) {
-    const body = await res.text().catch(() => "(본문 읽기 실패)");
-    console.log(`  ↳ 네이버 지오코딩 HTTP ${res.status} for "${address}" — ${body}`);
+  try {
+    const res = await fetchWithTimeout(url, {
+      headers: {
+        "X-NCP-APIGW-API-KEY-ID": NAVER_ID,
+        "X-NCP-APIGW-API-KEY": NAVER_SECRET,
+      },
+    });
+    if (!res.ok) {
+      const body = await res.text().catch(() => "(본문 읽기 실패)");
+      console.log(`  ↳ 네이버 지오코딩 HTTP ${res.status} for "${address}" — ${body}`);
+      return null;
+    }
+    const data = await res.json();
+    const hit = data?.addresses?.[0];
+    if (!hit) {
+      console.log(`  ↳ 네이버 지오코딩 결과 없음 for "${address}"`);
+      return null;
+    }
+    return { lat: Number(hit.y), lng: Number(hit.x) };
+  } catch (err) {
+    console.log(`  ↳ 네이버 지오코딩 오류 for "${address}" — ${err.message}`);
     return null;
   }
-  const data = await res.json();
-  const hit = data?.addresses?.[0];
-  if (!hit) {
-    console.log(`  ↳ 네이버 지오코딩 결과 없음 for "${address}"`);
-    return null;
-  }
-  return { lat: Number(hit.y), lng: Number(hit.x) };
 }
 
 // 두 좌표 사이 대략 거리(m) — 정밀한 지도 계산이 아니라 "같은 곳이 맞나" 정도만 본다.
