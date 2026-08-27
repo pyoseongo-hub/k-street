@@ -172,5 +172,77 @@
     "lng": 126.9776267740439,
     "source": "kakao+naver",
     "matchedName": "남대문시장"
+  },
+  "ks_1g": {
+    "lat": 37.5970099681642,
+    "lng": 127.098252841871,
+    "source": "kakao+naver",
+    "matchedName": "우림시장"
+  },
+  "ks_1h": {
+    "lat": 37.4818037639471,
+    "lng": 127.046595188917,
+    "source": "kakao",
+    "matchedName": "양재천"
+  },
+  "ks_1j": {
+    "lat": 37.63150652866838,
+    "lng": 127.03552730439782,
+    "source": "kakao+naver",
+    "matchedName": "오동공원현대홈타운아파트"
+  },
+  "ks_1k": {
+    "lat": 37.5693958477101,
+    "lng": 126.835037244018,
+    "source": "kakao+naver",
+    "matchedName": "서울식물원"
+  },
+  "ks_1l": {
+    "lat": 37.4717760936514,
+    "lng": 126.933822240006,
+    "source": "kakao+naver",
+    "matchedName": "도림천"
+  },
+  "ks_1m": {
+    "lat": 37.5499772549675,
+    "lng": 127.080235171998,
+    "source": "kakao+naver",
+    "matchedName": "서울어린이대공원"
+  },
+  "ks_1n": {
+    "lat": 37.5092339002167,
+    "lng": 126.874219829815,
+    "source": "kakao",
+    "matchedName": "안양천"
+  },
+  "ks_1o": {
+    "lat": 37.4549899165436,
+    "lng": 126.892828210117,
+    "source": "kakao+naver",
+    "matchedName": "안양천"
+  },
+  "ks_1p": {
+    "lat": 37.6674832700593,
+    "lng": 127.049231777697,
+    "source": "kakao",
+    "matchedName": "중랑천"
+  },
+  "ks_1q": {
+    "lat": 37.6393526425093,
+    "lng": 127.034402567199,
+    "source": "kakao+naver",
+    "matchedName": "우이천변 하류 개방화장실"
+  },
+  "ks_1r": {
+    "lat": 37.5691469686793,
+    "lng": 126.978647068151,
+    "source": "kakao+naver",
+    "matchedName": "청계천"
+  },
+  "ks_1s": {
+    "lat": 37.50255501820018,
+    "lng": 126.97462182443368,
+    "source": "kakao+naver",
+    "matchedName": "국립서울현충원"
   }
 }
