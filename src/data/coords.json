@@ -310,5 +310,59 @@
     "lng": 126.989316855952,
     "source": "kakao+naver",
     "matchedName": "남산공원"
+  },
+  "ks_25": {
+    "lat": 37.5797811776291,
+    "lng": 127.096083733232,
+    "source": "kakao+naver",
+    "matchedName": "사가정공원"
+  },
+  "ks_26": {
+    "lat": 37.52455769460598,
+    "lng": 127.03528760485077,
+    "source": "kakao+naver",
+    "matchedName": "도산근린공원"
+  },
+  "ks_27": {
+    "lat": 37.57031028608262,
+    "lng": 127.15640943958527,
+    "source": "kakao+naver",
+    "matchedName": "서울테마산책길 고덕 자갈길"
+  },
+  "ks_28": {
+    "lat": 37.62360650548208,
+    "lng": 127.04157251496886,
+    "source": "kakao+naver",
+    "matchedName": "북서울꿈의숲"
+  },
+  "ks_29": {
+    "lat": 37.5738000661701,
+    "lng": 126.839068805614,
+    "source": "kakao+naver",
+    "matchedName": "궁산근린공원"
+  },
+  "ks_2a": {
+    "lat": 37.471296925982,
+    "lng": 126.960361423801,
+    "source": "kakao+naver",
+    "matchedName": "낙성대공원"
+  },
+  "ks_2b": {
+    "lat": 37.5292974433415,
+    "lng": 127.06892112991,
+    "source": "kakao+naver",
+    "matchedName": "뚝섬한강공원"
+  },
+  "ks_2e": {
+    "lat": 37.620691807133,
+    "lng": 127.078706040469,
+    "source": "kakao+naver",
+    "matchedName": "경춘선숲길"
+  },
+  "ks_2f": {
+    "lat": 37.6781213031547,
+    "lng": 127.029945030295,
+    "source": "kakao",
+    "matchedName": "무수골"
   }
 }
