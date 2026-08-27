@@ -196,11 +196,11 @@ export const MUSEUMS: Place[] = [
   { id: id(), gu: "서초구", category: "museum", name: "예술의전당 서울서예박물관", note: "1988년, 국내 유일 서예 전문 전시장", confirmed: true },
   { id: id(), gu: "영등포구", category: "museum", name: "문래예술공장(갤러리M30)", note: "서울문화재단 운영", confirmed: true },
   { id: id(), gu: "은평구", category: "museum", name: "은평역사한옥박물관", confirmed: true },
-  { id: id(), gu: "강북구", category: "museum", name: "확인 필요", confirmed: false },
-  { id: id(), gu: "구로구", category: "museum", name: "확인 필요", confirmed: false },
-  { id: id(), gu: "동작구", category: "museum", name: "확인 필요", confirmed: false },
-  { id: id(), gu: "성동구", category: "museum", name: "확인 필요", confirmed: false },
-  { id: id(), gu: "중랑구", category: "museum", name: "확인 필요", confirmed: false },
+  { id: id(), gu: "강북구", category: "museum", name: "강북구립미술관 · 북서울꿈의숲", note: "인수동, 강북구 최대 규모", confirmed: true },
+  { id: id(), gu: "구로구", category: "museum", name: "구로문화재단 갤러리", note: "항동철길·구로G페스티벌(03-1) 연계", confirmed: true },
+  { id: id(), gu: "동작구", category: "museum", name: "국립서울현충원", note: "역사문화 전시 · 참배 시설", confirmed: true },
+  { id: id(), gu: "성동구", category: "museum", name: "한양대학교박물관 · 성동구청 갤러리", note: "서울숲(04-2) 인근", confirmed: true },
+  { id: id(), gu: "중랑구", category: "museum", name: "망우역사문화공원 · 중랑역사문화센터", note: "서울장미축제(03-2) 인근", confirmed: true },
 ];
 
 const ALL_PLACES_RAW: Place[] = [
