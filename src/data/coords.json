@@ -364,5 +364,35 @@
     "lng": 127.029945030295,
     "source": "kakao",
     "matchedName": "무수골"
+  },
+  "ks_2g": {
+    "lat": 37.58006017100839,
+    "lng": 127.0349730190753,
+    "source": "kakao+naver",
+    "matchedName": "서울테마산책길 홍릉 두물길"
+  },
+  "ks_2h": {
+    "lat": 37.50255501820018,
+    "lng": 126.97462182443368,
+    "source": "kakao+naver",
+    "matchedName": "국립서울현충원"
+  },
+  "ks_2i": {
+    "lat": 37.558803479324,
+    "lng": 126.925338455597,
+    "source": "kakao+naver",
+    "matchedName": "경의선숲길"
+  },
+  "ks_2n": {
+    "lat": 37.5205340628851,
+    "lng": 127.120812783275,
+    "source": "kakao",
+    "matchedName": "올림픽공원"
+  },
+  "ks_2o": {
+    "lat": 37.5338229514425,
+    "lng": 126.876590703256,
+    "source": "kakao+naver",
+    "matchedName": "파리공원 공영주차장"
   }
 }
