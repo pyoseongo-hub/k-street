@@ -244,5 +244,71 @@
     "lng": 126.97462182443368,
     "source": "kakao+naver",
     "matchedName": "국립서울현충원"
+  },
+  "ks_1t": {
+    "lat": 37.57213335842017,
+    "lng": 126.88740136782069,
+    "source": "kakao+naver",
+    "matchedName": "난지천공원"
+  },
+  "ks_1v": {
+    "lat": 37.4818037639471,
+    "lng": 127.046595188917,
+    "source": "kakao",
+    "matchedName": "양재천"
+  },
+  "ks_1w": {
+    "lat": 37.5443222301513,
+    "lng": 127.037617759165,
+    "source": "kakao+naver",
+    "matchedName": "서울숲"
+  },
+  "ks_1x": {
+    "lat": 37.5896369994549,
+    "lng": 127.010901313346,
+    "source": "kakao",
+    "matchedName": "성북천"
+  },
+  "ks_1y": {
+    "lat": 37.5076807262772,
+    "lng": 127.099112837006,
+    "source": "kakao",
+    "matchedName": "석촌호수 서호"
+  },
+  "ks_1z": {
+    "lat": 37.5092339002167,
+    "lng": 126.874219829815,
+    "source": "kakao",
+    "matchedName": "안양천"
+  },
+  "ks_20": {
+    "lat": 37.53083431121133,
+    "lng": 126.92477916726968,
+    "source": "kakao+naver",
+    "matchedName": "뚜레쥬르 여의서로점"
+  },
+  "ks_21": {
+    "lat": 37.54900597798612,
+    "lng": 126.98365125198461,
+    "source": "kakao+naver",
+    "matchedName": "콤포타블 남산"
+  },
+  "ks_22": {
+    "lat": 37.5800209041095,
+    "lng": 126.906234509821,
+    "source": "kakao",
+    "matchedName": "불광천"
+  },
+  "ks_23": {
+    "lat": 37.5691469686793,
+    "lng": 126.978647068151,
+    "source": "kakao+naver",
+    "matchedName": "청계천"
+  },
+  "ks_24": {
+    "lat": 37.5524979951415,
+    "lng": 126.989316855952,
+    "source": "kakao+naver",
+    "matchedName": "남산공원"
   }
 }
