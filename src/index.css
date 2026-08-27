@@ -66,7 +66,13 @@ button {
 .app-wordmark {
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 10px;
+}
+
+.app-logo-image {
+  height: 48px;
+  width: auto;
+  max-width: 100px;
 }
 
 .app-name {
@@ -384,8 +390,14 @@ button {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  font-size: 17px;
+  font-size: 16px;
+  line-height: 1;
   background: color-mix(in srgb, var(--cc) 20%, var(--surface));
+}
+
+.cat-chip-label {
+  line-height: 1.2;
+  text-align: center;
 }
 
 .cat-chip.active {
@@ -399,6 +411,7 @@ button {
 
 .cat-chip.active .cat-chip-icon {
   background: var(--cc);
+  color: white;
 }
 
 .seoul-map-wrap {
@@ -641,4 +654,126 @@ button {
 .tab-item.active {
   color: var(--accent-strong);
   background: var(--accent-soft);
+}
+
+/* ── map marker & info window ─────────────────────────── */
+.map-marker {
+  transition: transform 0.12s ease;
+}
+
+.map-marker:hover {
+  transform: scale(1.15);
+}
+
+.map-info-window {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.map-info-window strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.map-info-window small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.map-info-window em {
+  display: block;
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.map-legend {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-label {
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* ── user location button & marker ─────────────────────── */
+.locate-user-btn {
+  position: relative;
+  z-index: 10;
+  padding: 8px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.locate-user-btn:hover:not(:disabled) {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.locate-user-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: var(--text-muted);
+}
+
+.user-location-marker {
+  animation: pulse-location 2s infinite;
+}
+
+@keyframes pulse-location {
+  0% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 219, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(76, 175, 219, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 219, 0);
+  }
+}
+
+.location-error {
+  margin-top: 8px;
+  padding: 6px 8px;
+  background: var(--accent-soft);
+  border-radius: 4px;
+  border-left: 2px solid var(--accent);
+}
+
+.location-error small {
+  color: var(--text-muted);
+  font-size: 11px;
 }

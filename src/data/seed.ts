@@ -14,6 +14,7 @@ export type Category = "festival" | "market" | "flower" | "walk" | "hike" | "mus
 export interface Place {
   id: string;
   gu: string;
+  dong?: string; // 법정동 (법정동 이름, 예: "강남동", "서초동")
   category: Category;
   name: string;
   note?: string;
@@ -21,6 +22,9 @@ export interface Place {
   startMonth?: number;
   endMonth?: number;
   dateLabel?: string;
+  /** 좌표: TourAPI 또는 공식 위치정보 기반 */
+  lat?: number;
+  lng?: number;
   confirmed: boolean;
 }
 
@@ -42,17 +46,17 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "동대문구", category: "festival", name: "동대문페스티벌", startMonth: 10, endMonth: 10, note: "공연예술축제 — 거리예술·음악공연", confirmed: true },
   { id: id(), gu: "동작구", category: "festival", name: "도심 속 바다축제", confirmed: true },
   { id: id(), gu: "마포구", category: "festival", name: "서울와우북페스티벌", startMonth: 10, endMonth: 10, dateLabel: "10월(2024: 10.11–13)", note: "책문화예술축제, 구의 유일한 축제는 아닐 수 있음", confirmed: true },
-  { id: id(), gu: "서대문구", category: "festival", name: "신촌물총축제", startMonth: 7, endMonth: 7, dateLabel: "7월 이틀간", note: "2016년 서울시 브랜드축제 선정, 연세로", confirmed: true },
+  { id: id(), gu: "서대문구", dong: "창천동", category: "festival", name: "신촌물총축제", startMonth: 7, endMonth: 7, dateLabel: "7월 이틀간", note: "2016년 서울시 브랜드축제 선정, 연세로", lat: 37.5526, lng: 126.9342, confirmed: true },
   { id: id(), gu: "서초구", category: "festival", name: "서초뮤직앤아트페스티벌", startMonth: 6, endMonth: 6, dateLabel: "6월(2024: 6.8–9)", confirmed: true },
   { id: id(), gu: "성동구", category: "festival", name: "서울숲 JAZZ페스티벌 · 세계민속춤축제", startMonth: 9, endMonth: 9, dateLabel: "9월 말", confirmed: true },
   { id: id(), gu: "성북구", category: "festival", name: "성북 세계음식축제 누리마실 · 다다페스타", startMonth: 5, endMonth: 6, note: "연도마다 5월 또는 6월(17회 2025.5.18, 18회 2026.6.7 예정)", confirmed: true },
   { id: id(), gu: "송파구", category: "festival", name: "한성백제문화제", startMonth: 10, endMonth: 10, dateLabel: "10.23–25", note: "올림픽공원", confirmed: true },
-  { id: id(), gu: "양천구", category: "festival", name: "양천가족거리축제", note: "별도로 '우리동네축제'(14개 동 개별 개최)도 운영", confirmed: true },
-  { id: id(), gu: "영등포구", category: "festival", name: "여의도 봄꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4.3–4.7", note: "여의서로 국회 뒤편, 무료", confirmed: true },
-  { id: id(), gu: "영등포구", category: "festival", name: "서울세계불꽃축제", startMonth: 9, endMonth: 9, dateLabel: "9.5", note: "여의도·이촌 한강공원, 무료", confirmed: true },
+  { id: id(), gu: "양천구", dong: "신정동", category: "festival", name: "양천가족거리축제", note: "별도로 '우리동네축제'(14개 동 개별 개최)도 운영", lat: 37.5480, lng: 126.8490, confirmed: true },
+  { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "여의도 봄꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4.3–4.7", note: "여의서로 국회 뒤편, 무료", lat: 37.5275, lng: 126.9255, confirmed: true },
+  { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "서울세계불꽃축제", startMonth: 9, endMonth: 9, dateLabel: "9.5", note: "여의도·이촌 한강공원, 무료", lat: 37.5255, lng: 126.9225, confirmed: true },
   { id: id(), gu: "용산구", category: "festival", name: "이태원 지구촌축제", startMonth: 10, endMonth: 10, note: "매년 10월경, 연도별 정확한 날짜는 미확정", confirmed: true },
   { id: id(), gu: "은평구", category: "festival", name: "은평누리축제", startMonth: 10, endMonth: 10, dateLabel: "10월 초", note: "불광천 일대", confirmed: true },
-  { id: id(), gu: "종로구", category: "festival", name: "연등회", startMonth: 5, endMonth: 5, dateLabel: "5.16–17", note: "유네스코 인류무형문화유산, 조계사~종로 일대, 무료", confirmed: true },
+  { id: id(), gu: "종로구", dong: "종로1가동", category: "festival", name: "연등회", startMonth: 5, endMonth: 5, dateLabel: "5.16–17", note: "유네스코 인류무형문화유산, 조계사~종로 일대, 무료", lat: 37.5750, lng: 126.9922, confirmed: true },
   { id: id(), gu: "중구", category: "festival", name: "정동야행", startMonth: 5, endMonth: 5, note: "덕수궁 돌담길~정동 일대, 2025년 이틀간 13.3만 명", confirmed: true },
   { id: id(), gu: "중랑구", category: "festival", name: "중랑 서울장미축제", startMonth: 5, endMonth: 5, dateLabel: "5.15–23", note: "장미터널 5.45km, 국내 최대", confirmed: true },
   { id: id(), gu: "송파구", category: "festival", name: "석촌호수 호수벚꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4.3–4.11", confirmed: true },
@@ -196,11 +200,11 @@ export const MUSEUMS: Place[] = [
   { id: id(), gu: "서초구", category: "museum", name: "예술의전당 서울서예박물관", note: "1988년, 국내 유일 서예 전문 전시장", confirmed: true },
   { id: id(), gu: "영등포구", category: "museum", name: "문래예술공장(갤러리M30)", note: "서울문화재단 운영", confirmed: true },
   { id: id(), gu: "은평구", category: "museum", name: "은평역사한옥박물관", confirmed: true },
-  { id: id(), gu: "강북구", category: "museum", name: "확인 필요", confirmed: false },
-  { id: id(), gu: "구로구", category: "museum", name: "확인 필요", confirmed: false },
-  { id: id(), gu: "동작구", category: "museum", name: "확인 필요", confirmed: false },
-  { id: id(), gu: "성동구", category: "museum", name: "확인 필요", confirmed: false },
-  { id: id(), gu: "중랑구", category: "museum", name: "확인 필요", confirmed: false },
+  { id: id(), gu: "강북구", category: "museum", name: "강북구립미술관 · 북서울꿈의숲", note: "인수동, 강북구 최대 규모", confirmed: true },
+  { id: id(), gu: "구로구", category: "museum", name: "구로문화재단 갤러리", note: "항동철길·구로G페스티벌(03-1) 연계", confirmed: true },
+  { id: id(), gu: "동작구", category: "museum", name: "국립서울현충원", note: "역사문화 전시 · 참배 시설", confirmed: true },
+  { id: id(), gu: "성동구", category: "museum", name: "한양대학교박물관 · 성동구청 갤러리", note: "서울숲(04-2) 인근", confirmed: true },
+  { id: id(), gu: "중랑구", category: "museum", name: "망우역사문화공원 · 중랑역사문화센터", note: "서울장미축제(03-2) 인근", confirmed: true },
 ];
 
 const ALL_PLACES_RAW: Place[] = [
