@@ -73,7 +73,10 @@ function primaryName(name) {
 async function kakaoSearch(query) {
   const url = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(query)}&size=5`;
   const res = await fetch(url, { headers: { Authorization: `KakaoAK ${KAKAO_KEY}` } });
-  if (!res.ok) throw new Error(`Kakao HTTP ${res.status} for "${query}"`);
+  if (!res.ok) {
+    const body = await res.text().catch(() => "(본문 읽기 실패)");
+    throw new Error(`Kakao HTTP ${res.status} for "${query}" — ${body}`);
+  }
   const data = await res.json();
   return data.documents ?? [];
 }
