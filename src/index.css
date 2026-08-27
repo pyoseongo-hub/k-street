@@ -58,6 +58,7 @@ button {
 
 .app-header-center {
   flex: 1;
+  min-width: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,37 +67,60 @@ button {
 .app-wordmark {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
+  flex-shrink: 0;
+  min-width: 0;
 }
 
-.app-logo-image {
-  height: 48px;
-  width: auto;
-  max-width: 100px;
+/* 인장(도장) 느낌의 모노그램 — 래스터 로고 대신 텍스트로 렌더링해서
+   테마 색(--accent)을 그대로 따라간다. 예전 PNG는 잉크색이 고정이라
+   다크/라이트 모드 배경과 안 맞는 경우가 있었다. */
+.app-mark {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: var(--accent);
+  color: #0F2E2A;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.app-wordmark-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.15;
 }
 
 .app-name {
   font-family: "Cormorant Garamond", serif;
-  font-size: 24px;
+  font-size: 17px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   color: var(--text);
-  line-height: 1.1;
+  white-space: nowrap;
 }
 
 .app-tagline {
-  margin-top: 2px;
+  margin-top: 1px;
   font-family: "IBM Plex Mono", monospace;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
-  letter-spacing: 0.16em;
-  color: var(--accent);
-  opacity: 0.95;
+  letter-spacing: 0.1em;
+  color: var(--accent-strong);
+  white-space: nowrap;
 }
 
 .app-header-actions {
   display: flex;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .icon-btn {
@@ -697,56 +721,67 @@ button {
   font-size: 12px;
 }
 
-.map-legend {
+/* ── 지도 컨트롤 — 네이버 지도처럼 지도 위에 작은 아이콘 버튼으로 분리 배치.
+   예전엔 버튼+마커수+에러가 카드 하나에 세로로 쌓여 있어서 좁은 화면에서
+   지도 폭을 반이나 잡아먹었다. 이제 각자 자기 자리(모서리)에 따로 떠 있다. */
+.map-locate-btn {
   position: absolute;
-  bottom: 16px;
-  left: 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 12px;
-  color: var(--text-muted);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.legend-item {
+  z-index: 10;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-
-.legend-label {
-  font-weight: 500;
-  color: var(--text);
-}
-
-/* ── user location button & marker ─────────────────────── */
-.locate-user-btn {
-  position: relative;
-  z-index: 10;
-  padding: 8px 12px;
+  justify-content: center;
+  border-radius: 50%;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  font-size: 15px;
   cursor: pointer;
-  transition: all 0.12s ease;
-  display: block;
-  margin-bottom: 8px;
+  transition: background 0.12s ease, border-color 0.12s ease;
 }
 
-.locate-user-btn:hover:not(:disabled) {
+.map-locate-btn:hover:not(:disabled) {
   background: var(--accent-soft);
   border-color: var(--accent);
 }
 
-.locate-user-btn:disabled {
+.map-locate-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.map-info-chip {
+  position: absolute;
+  z-index: 10;
+  bottom: 10px;
+  left: 10px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 5px 11px;
+  font-size: 11px;
+  font-weight: 500;
   color: var(--text-muted);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.map-location-error {
+  position: absolute;
+  z-index: 10;
+  bottom: 10px;
+  right: 10px;
+  max-width: 60%;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--accent);
+  border-radius: 8px;
+  padding: 5px 9px;
+  font-size: 10.5px;
+  color: var(--text-muted);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
 .user-location-marker {
@@ -763,17 +798,4 @@ button {
   100% {
     box-shadow: 0 0 0 0 rgba(76, 175, 219, 0);
   }
-}
-
-.location-error {
-  margin-top: 8px;
-  padding: 6px 8px;
-  background: var(--accent-soft);
-  border-radius: 4px;
-  border-left: 2px solid var(--accent);
-}
-
-.location-error small {
-  color: var(--text-muted);
-  font-size: 11px;
 }

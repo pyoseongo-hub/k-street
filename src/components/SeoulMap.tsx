@@ -121,27 +121,22 @@ export default function SeoulMap() {
         <div className="seoul-map-fallback">지도를 불러오지 못했다 — 아래 구 목록으로 탐색할 것.</div>
       )}
       {status === "ready" && (
-        <div className="map-legend">
+        <>
           <button
-            className="locate-user-btn"
+            className="map-locate-btn"
             onClick={handleLocateUser}
             title={userLocation ? "내 위치로 이동" : "위치를 가져올 수 없습니다"}
+            aria-label="내 위치로 이동"
             disabled={!userLocation}
           >
-            📍 내 위치
+            📍
           </button>
-          <div className="legend-item">
-            <span className="legend-label">
-              마커 {ALL_PLACES.filter((p) => p.lat && p.lng).length}곳
-              {userLocation && ` • 근처 ${nearbyPlaces.length}곳`}
-            </span>
+          <div className="map-info-chip">
+            마커 {ALL_PLACES.filter((p) => p.lat && p.lng).length}곳
+            {userLocation && ` · 근처 ${nearbyPlaces.length}곳`}
           </div>
-          {locationError && (
-            <div className="location-error">
-              <small>📍 {locationError}</small>
-            </div>
-          )}
-        </div>
+          {locationError && <div className="map-location-error">📍 {locationError}</div>}
+        </>
       )}
     </div>
   );

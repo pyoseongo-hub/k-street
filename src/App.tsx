@@ -15,7 +15,11 @@ function App() {
         <h1 className="sr-only">서울 동네 축제 · 시장 · 꽃길 — 외국인 관광객을 위한 서울 동네 안내</h1>
         <div className="app-header-row">
           <div className="app-wordmark">
-            <img src={`${import.meta.env.BASE_URL}logos/logo-korean-tagline.png`} alt="K-Street - 서울의 걸을 걷다" className="app-logo-image" />
+            <span className="app-mark" aria-hidden="true">K</span>
+            <span className="app-wordmark-text">
+              <span className="app-name">K-STREET</span>
+              <span className="app-tagline">서울의 길을 걷다</span>
+            </span>
           </div>
           <div className="app-header-center">
             <LanguageSelector />
