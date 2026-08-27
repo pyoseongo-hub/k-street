@@ -30,13 +30,18 @@ export function getMapLinks(place: MapLinkTarget): MapLink[] {
     ];
   }
 
-  // 좌표가 아직 없는 곳은(정확도 원칙상 지어내지 않는다) 이름+동네로 검색만 걸어 준다 —
-  // 경로 안내는 못 해줘도 위치를 스스로 찾을 수 있게는 해 준다.
+  // 좌표가 아직 없는 곳은(정확도 원칙상 지어내지 않는다) 이름+동네로만 안내한다.
+  // 다만 셋의 사정이 다르다 — 구글의 공식 길찾기 URL(api=1&destination=)은
+  // 좌표 없이 '이름 텍스트'만으로도 실제 경로 화면(출발지는 현재 위치로 자동,
+  // 목적지는 이 이름)을 띄운다. 네이버·카카오의 길찾기 링크 형식은 좌표가
+  // 있어야 목적지가 바로 찍힌다 — 좌표 없이 부르면 앱이 "직접 골라라"는
+  // 화면만 띄운다(이미 dongne-hanip에서 겪은 문제, openNaverMap 주석 참고).
+  // 그래서 네이버·카카오만 검색으로 폴백하고, 구글은 좌표 없이도 길찾기로 보낸다.
   const query = `${place.name} ${place.dong ?? place.gu}`;
   const encQuery = encodeURIComponent(query);
   return [
     { label: "NAVER", url: `https://map.naver.com/v5/search/${encQuery}` },
     { label: "KAKAO", url: `https://map.kakao.com/link/search/${encQuery}` },
-    { label: "GOOGLE", url: `https://www.google.com/maps/search/?api=1&query=${encQuery}` },
+    { label: "GOOGLE", url: `https://www.google.com/maps/dir/?api=1&destination=${encQuery}` },
   ];
 }
