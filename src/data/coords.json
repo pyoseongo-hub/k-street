@@ -1,1 +1,98 @@
-{}
+{
+  "ks_2": {
+    "lat": 37.5605464139303,
+    "lng": 127.130257802123,
+    "source": "kakao+naver",
+    "matchedName": "강동선사문화축제"
+  },
+  "ks_5": {
+    "lat": 37.47215523409015,
+    "lng": 126.95931754074891,
+    "source": "kakao",
+    "matchedName": "관악강감찬축제"
+  },
+  "ks_7": {
+    "lat": 37.4994597699782,
+    "lng": 126.870852611389,
+    "source": "kakao+naver",
+    "matchedName": "구로G페스티벌"
+  },
+  "ks_8": {
+    "lat": 37.4564517676336,
+    "lng": 126.89529456752109,
+    "source": "kakao+naver",
+    "matchedName": "금천하모니축제"
+  },
+  "ks_b": {
+    "lat": 37.5693012458811,
+    "lng": 127.069818250445,
+    "source": "kakao+naver",
+    "matchedName": "2026 동대문페스티벌"
+  },
+  "ks_g": {
+    "lat": 37.5443222301513,
+    "lng": 127.037617759165,
+    "source": "kakao+naver",
+    "matchedName": "서울숲"
+  },
+  "ks_n": {
+    "lat": 37.595983411417976,
+    "lng": 126.91527212642877,
+    "source": "kakao+naver",
+    "matchedName": "은평누리축제"
+  },
+  "ks_r": {
+    "lat": 37.5076807262772,
+    "lng": 127.099112837006,
+    "source": "kakao",
+    "matchedName": "석촌호수 서호"
+  },
+  "ks_s": {
+    "lat": 37.509885050791176,
+    "lng": 127.02366486128717,
+    "source": "kakao+naver",
+    "matchedName": "영동전통시장"
+  },
+  "ks_t": {
+    "lat": 37.5508604719985,
+    "lng": 127.128819574465,
+    "source": "kakao+naver",
+    "matchedName": "암사종합시장"
+  },
+  "ks_u": {
+    "lat": 37.6307995708701,
+    "lng": 127.023445986404,
+    "source": "kakao+naver",
+    "matchedName": "수유전통시장"
+  },
+  "ks_v": {
+    "lat": 37.5432550860872,
+    "lng": 126.843533944782,
+    "source": "kakao+naver",
+    "matchedName": "화곡본동시장"
+  },
+  "ks_w": {
+    "lat": 37.4825831435359,
+    "lng": 126.926766602033,
+    "source": "kakao+naver",
+    "matchedName": "신원시장"
+  },
+  "ks_x": {
+    "lat": 37.563918547280025,
+    "lng": 127.08131407116785,
+    "source": "kakao+naver",
+    "matchedName": "중곡제일시장"
+  },
+  "ks_y": {
+    "lat": 37.4896296933168,
+    "lng": 126.885620029839,
+    "source": "kakao+naver",
+    "matchedName": "구로시장"
+  },
+  "ks_z": {
+    "lat": 37.4577266926762,
+    "lng": 126.90487738542274,
+    "source": "kakao+naver",
+    "matchedName": "비단길현대시장"
+  }
+}
