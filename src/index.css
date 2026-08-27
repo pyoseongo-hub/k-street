@@ -570,6 +570,45 @@ button {
   line-height: 1.5;
 }
 
+/* ── 지도 딥링크 — 자체 길찾기 대신 네이버·카카오·구글로 넘긴다.
+   (koreatravel.guru 등 여행 일정 사이트가 정거장마다 붙이는 방식 참고) ── */
+.place-directions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 7px;
+}
+
+.place-directions-icon {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.map-link {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--accent-strong);
+  text-decoration: none;
+  padding: 3px 9px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.map-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* 지도 InfoWindow 안에서는 배경이 이미 --surface라 살짝 다르게 */
+.map-info-window .map-link {
+  background: var(--surface-2);
+}
+
 /* ── tab bar ────────────────────────────────────────── */
 .tab-bar {
   position: sticky;
