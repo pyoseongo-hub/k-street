@@ -3,9 +3,12 @@ import { createRoot } from 'react-dom/client'
 import './styles/tokens.css'
 import './index.css'
 import App from './App.tsx'
+import { LanguageProvider } from './lib/useLanguage.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <LanguageProvider>
+      <App />
+    </LanguageProvider>
   </StrictMode>,
 )
