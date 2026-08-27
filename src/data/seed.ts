@@ -220,11 +220,14 @@ const ALL_PLACES_RAW: Place[] = [
 // LAUNCH_REGIONS를 넓히기 전까지는 화면에 노출되지 않는다.
 export const ALL_PLACES: Place[] = ALL_PLACES_RAW.filter((p) => isInLaunchScope(sidoOf(p.gu)));
 
-export const CATEGORY_META: Record<Category, { label: string; icon: string; color: string }> = {
+export const CATEGORY_META: Record<
+  Category,
+  { label: string; icon: string; iconImage?: string; color: string }
+> = {
   festival: { label: "축제", icon: "🎪", color: "var(--festival)" },
-  market: { label: "시장", icon: "🏮", color: "var(--market)" },
-  flower: { label: "꽃길", icon: "🌸", color: "var(--flower)" },
-  walk: { label: "산책로", icon: "🚶", color: "var(--walk)" },
-  hike: { label: "둘레길", icon: "🥾", color: "var(--hike)" },
-  museum: { label: "박물관", icon: "🏛", color: "var(--museum)" },
+  market: { label: "시장", icon: "🏮", iconImage: "icons/categories/market.png", color: "var(--market)" },
+  flower: { label: "꽃길", icon: "🌸", iconImage: "icons/categories/flower.png", color: "var(--flower)" },
+  walk: { label: "산책로", icon: "🚶", iconImage: "icons/categories/walk.png", color: "var(--walk)" },
+  hike: { label: "둘레길", icon: "🥾", iconImage: "icons/categories/hike.png", color: "var(--hike)" },
+  museum: { label: "박물관", icon: "🏛", iconImage: "icons/categories/museum.png", color: "var(--museum)" },
 };

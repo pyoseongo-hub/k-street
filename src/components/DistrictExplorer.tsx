@@ -44,7 +44,17 @@ export default function DistrictExplorer() {
               setGu(null);
             }}
           >
-            <span className="cat-chip-icon">{CATEGORY_META[c].icon}</span>
+            <span className="cat-chip-icon">
+              {CATEGORY_META[c].iconImage ? (
+                <img
+                  src={`${import.meta.env.BASE_URL}${CATEGORY_META[c].iconImage}`}
+                  alt=""
+                  className="cat-chip-icon-image"
+                />
+              ) : (
+                CATEGORY_META[c].icon
+              )}
+            </span>
             <span className="cat-chip-label">{CATEGORY_META[c].label}</span>
           </button>
         ))}

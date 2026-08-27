@@ -419,6 +419,12 @@ button {
   background: color-mix(in srgb, var(--cc) 20%, var(--surface));
 }
 
+.cat-chip-icon-image {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
 .cat-chip-label {
   line-height: 1.2;
   text-align: center;
