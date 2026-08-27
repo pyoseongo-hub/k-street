@@ -805,3 +805,155 @@ button {
     box-shadow: 0 0 0 0 rgba(76, 175, 219, 0);
   }
 }
+
+/* ══════════════════════════════════════════════════════
+   반응형 — 태블릿 · PC
+   참고한 패턴: Airbnb Explore(카테고리 필터 줄 + 카드 그리드),
+   Klook 2단 카드 레이아웃, 요즘 대시보드에 흔한 벤토 그리드.
+   폰 화면을 그냥 늘리기만 하면 여백만 남지 — 넓어진 만큼 실제로
+   내용을 다시 배치(2단 그리드·더 많은 그리드 칸)하는 쪽으로 짰다.
+   모바일 레이아웃(기본 규칙)은 손대지 않는다.
+   ══════════════════════════════════════════════════════ */
+
+@media (min-width: 768px) {
+  .app-shell {
+    max-width: 720px;
+  }
+
+  .app-header {
+    order: 0;
+    padding: 24px 28px 16px;
+  }
+
+  .app-main {
+    order: 2;
+    padding: 8px 28px 40px;
+    gap: 20px;
+  }
+
+  .category-chip-row {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .cat-chip {
+    width: 84px;
+  }
+
+  .seoul-map {
+    height: 280px;
+  }
+
+  .district-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .festival-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* 하단 탭바(모바일 앱 관례) → 헤더 밑 상단 내비게이션으로.
+     화면이 넓어지면 하단에 붙은 탭이 붕 떠 보인다 — 데스크톱 사이트는
+     보통 상단에 둔다. order로 배치만 바꾸고 마크업은 그대로 쓴다. */
+  .tab-bar {
+    order: 1;
+    position: static;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 28px 18px;
+    background: transparent;
+    border-top: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tab {
+    flex: none;
+    flex-direction: row;
+    gap: 6px;
+    padding: 8px 18px;
+    border-radius: 100px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .app-shell {
+    max-width: 1160px;
+  }
+
+  .app-header {
+    padding: 28px 36px 18px;
+  }
+
+  .tab-bar {
+    padding: 0 36px 20px;
+  }
+
+  .app-main {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    grid-template-areas:
+      "weather  weather"
+      "festival district";
+    gap: 24px;
+    padding: 8px 36px 48px;
+  }
+
+  .weather-strip {
+    grid-area: weather;
+  }
+
+  .monthly-festival-panel {
+    grid-area: festival;
+  }
+
+  .district-explorer {
+    grid-area: district;
+  }
+
+  .panel-head h2 {
+    font-size: 36px;
+  }
+
+  .mfp-hero {
+    height: 132px;
+  }
+
+  .seoul-map {
+    height: 360px;
+  }
+
+  .district-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* 마우스가 있는 넓은 화면에서만 카드 호버 반응을 준다 — 터치 기기에서
+   호버가 "끈적하게" 눌러 붙는 걸 피하려고 포인터 종류로 가른다. */
+@media (hover: hover) and (pointer: fine) {
+  .festival-card,
+  .district-tile.has-data,
+  .place-row {
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+
+  .festival-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px -14px rgba(0, 0, 0, 0.4);
+    border-color: var(--accent);
+  }
+
+  .district-tile.has-data:hover {
+    transform: translateY(-2px);
+    border-color: var(--cc);
+  }
+
+  .place-row:hover {
+    border-color: var(--accent);
+  }
+
+  .cat-chip:hover {
+    border-color: var(--cc);
+  }
+}
