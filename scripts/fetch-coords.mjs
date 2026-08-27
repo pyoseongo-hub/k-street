@@ -66,8 +66,13 @@ function normalize(s) {
 }
 
 // 여러 조각 이름("A · B · C")은 첫 조각만 검색어로 쓴다.
+// 단, "4·19혁명"처럼 가운뎃점이 날짜 표기의 일부인 경우 normalize()가
+// "·"를 공백으로 바꾸면서 "4"만 남아 버린다 — 한 글자짜리 조각은 아무
+// 이름에나 들어맞으므로(예: "번동주공4단지아파트") 검색어·대조 둘 다로
+// 쓰면 안 된다. 이럴 땐 쪼개지 말고 전체 이름을 그대로 쓴다.
 function primaryName(name) {
-  return normalize(name).split(" ").filter(Boolean)[0] ?? name;
+  const first = normalize(name).split(" ").filter(Boolean)[0] ?? name;
+  return first.length >= 2 ? first : normalize(name);
 }
 
 async function kakaoSearch(query) {
