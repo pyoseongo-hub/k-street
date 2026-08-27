@@ -101,23 +101,11 @@
     "source": "kakao+naver",
     "matchedName": "공릉동도깨비시장"
   },
-  "ks_11": {
-    "lat": 37.664480260333825,
-    "lng": 127.0340322095898,
-    "source": "kakao+naver",
-    "matchedName": "도봉구 방학동 스마트도서관"
-  },
   "ks_12": {
     "lat": 37.579039740933176,
     "lng": 127.03943411053307,
     "source": "kakao",
     "matchedName": "경동시장"
-  },
-  "ks_13": {
-    "lat": 37.51434018423454,
-    "lng": 126.93984630576587,
-    "source": "kakao+naver",
-    "matchedName": "노량진수산시장성당"
   },
   "ks_14": {
     "lat": 37.555885964724716,
@@ -155,12 +143,6 @@
     "source": "kakao+naver",
     "matchedName": "오목교중앙시장"
   },
-  "ks_1b": {
-    "lat": 37.522709383885,
-    "lng": 126.905179566968,
-    "source": "kakao",
-    "matchedName": "영등포시장역 5호선"
-  },
   "ks_1e": {
     "lat": 37.57005529646949,
     "lng": 126.99894728223626,
@@ -184,12 +166,6 @@
     "lng": 127.046595188917,
     "source": "kakao",
     "matchedName": "양재천"
-  },
-  "ks_1j": {
-    "lat": 37.63150652866838,
-    "lng": 127.03552730439782,
-    "source": "kakao+naver",
-    "matchedName": "오동공원현대홈타운아파트"
   },
   "ks_1k": {
     "lat": 37.5693958477101,
@@ -226,12 +202,6 @@
     "lng": 127.049231777697,
     "source": "kakao",
     "matchedName": "중랑천"
-  },
-  "ks_1q": {
-    "lat": 37.6393526425093,
-    "lng": 127.034402567199,
-    "source": "kakao+naver",
-    "matchedName": "우이천변 하류 개방화장실"
   },
   "ks_1r": {
     "lat": 37.5691469686793,
@@ -280,18 +250,6 @@
     "lng": 126.874219829815,
     "source": "kakao",
     "matchedName": "안양천"
-  },
-  "ks_20": {
-    "lat": 37.53083431121133,
-    "lng": 126.92477916726968,
-    "source": "kakao+naver",
-    "matchedName": "뚜레쥬르 여의서로점"
-  },
-  "ks_21": {
-    "lat": 37.54900597798612,
-    "lng": 126.98365125198461,
-    "source": "kakao+naver",
-    "matchedName": "콤포타블 남산"
   },
   "ks_22": {
     "lat": 37.5800209041095,
@@ -388,11 +346,5 @@
     "lng": 127.120812783275,
     "source": "kakao",
     "matchedName": "올림픽공원"
-  },
-  "ks_2o": {
-    "lat": 37.5338229514425,
-    "lng": 126.876590703256,
-    "source": "kakao+naver",
-    "matchedName": "파리공원 공영주차장"
   }
 }
