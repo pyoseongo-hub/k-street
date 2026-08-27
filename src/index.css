@@ -390,8 +390,14 @@ button {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  font-size: 17px;
+  font-size: 16px;
+  line-height: 1;
   background: color-mix(in srgb, var(--cc) 20%, var(--surface));
+}
+
+.cat-chip-label {
+  line-height: 1.2;
+  text-align: center;
 }
 
 .cat-chip.active {
@@ -405,6 +411,7 @@ button {
 
 .cat-chip.active .cat-chip-icon {
   background: var(--cc);
+  color: white;
 }
 
 .seoul-map-wrap {
