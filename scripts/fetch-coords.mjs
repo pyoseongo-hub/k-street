@@ -95,10 +95,17 @@ async function naverGeocode(address) {
       "X-NCP-APIGW-API-KEY": NAVER_SECRET,
     },
   });
-  if (!res.ok) return null;
+  if (!res.ok) {
+    const body = await res.text().catch(() => "(본문 읽기 실패)");
+    console.log(`  ↳ 네이버 지오코딩 HTTP ${res.status} for "${address}" — ${body}`);
+    return null;
+  }
   const data = await res.json();
   const hit = data?.addresses?.[0];
-  if (!hit) return null;
+  if (!hit) {
+    console.log(`  ↳ 네이버 지오코딩 결과 없음 for "${address}"`);
+    return null;
+  }
   return { lat: Number(hit.y), lng: Number(hit.x) };
 }
 
