@@ -7,7 +7,10 @@ let loadPromise: Promise<void> | null = null;
 export function loadNaverMaps(): Promise<void> {
   if (loadPromise) return loadPromise;
 
-  const clientId = import.meta.env.VITE_NAVER_MAPS_CLIENT_ID as string | undefined;
+  // 개발 환경: import.meta.env / 배포 환경: window.__CONFIG__
+  const clientId = (import.meta.env.VITE_NAVER_MAPS_CLIENT_ID as string | undefined) ||
+                   (window as any).__CONFIG__?.VITE_NAVER_MAPS_CLIENT_ID as string | undefined;
+
   if (!clientId) {
     return Promise.reject(
       new Error("VITE_NAVER_MAPS_CLIENT_ID가 없다 — .env.local을 확인할 것(.env.example 참고).")
