@@ -88,7 +88,7 @@ async function kakaoSearch(query) {
 
 async function naverGeocode(address) {
   if (!NAVER_ID || !NAVER_SECRET) return null;
-  const url = `https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=${encodeURIComponent(address)}`;
+  const url = `https://maps.apigw.ntruss.com/map-geocode/v2/geocode?query=${encodeURIComponent(address)}`;
   const res = await fetch(url, {
     headers: {
       "X-NCP-APIGW-API-KEY-ID": NAVER_ID,
