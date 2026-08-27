@@ -8,6 +8,7 @@
 // 걸러내지 않지만, 나중에 다른 도시 데이터를 추가해도 실수로 노출되지 않게 게이트를 미리 건다.
 import { isInLaunchScope } from "../config/launchScope";
 import { sidoOf } from "./districts";
+import { getCoords } from "../lib/coords";
 
 export type Category = "festival" | "market" | "flower" | "walk" | "hike" | "museum";
 
@@ -216,9 +217,19 @@ const ALL_PLACES_RAW: Place[] = [
   ...MUSEUMS,
 ];
 
+// scripts/fetch-coords.mjs가 채운 좌표를 덧씌운다 — seed.ts에 이미 직접 박아 둔
+// 좌표(현재 5곳)는 그대로 두고, 없는 곳만 coords.json 값으로 채운다.
+function withFetchedCoords(p: Place): Place {
+  if (p.lat != null && p.lng != null) return p;
+  const c = getCoords(p.id);
+  return c ? { ...p, lat: c.lat, lng: c.lng } : p;
+}
+
 // 출시 범위 게이트(launchScope.ts) — 서울 외 지역이 seed.ts에 섞여 들어와도
 // LAUNCH_REGIONS를 넓히기 전까지는 화면에 노출되지 않는다.
-export const ALL_PLACES: Place[] = ALL_PLACES_RAW.filter((p) => isInLaunchScope(sidoOf(p.gu)));
+export const ALL_PLACES: Place[] = ALL_PLACES_RAW.filter((p) => isInLaunchScope(sidoOf(p.gu))).map(
+  withFetchedCoords
+);
 
 export const CATEGORY_META: Record<
   Category,
