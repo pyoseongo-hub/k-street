@@ -566,9 +566,12 @@ button {
   align-items: center;
   justify-content: center;
   border: none;
-  background: var(--surface-2);
-  color: var(--text-muted);
-  opacity: 0.5;
+  /* 데이터 없는 구를 opacity:0.5로 흐리게 뒀더니 어두운 배경(#131316)과
+     거의 구분이 안 돼 벌집에 검은 구멍이 뚫린 것처럼 보였다(2026-08-28
+     사용자 지적: "마포 동대문 색 이상해"). 투명도 대신 밝기 차이로
+     "칸은 있지만 아직 못 채움"을 표현한다 — 항상 보이게. */
+  background: #32323A;
+  color: #8C93A0;
   font-size: 10.5px;
   font-weight: 500;
   line-height: 1.15;
