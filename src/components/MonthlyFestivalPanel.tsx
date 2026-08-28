@@ -6,7 +6,7 @@ import { FESTIVALS } from "../data/seed";
 import { seasonOf } from "../lib/season";
 import { useRotatingSeed } from "../lib/useRotatingSeed";
 import { getTourImage } from "../lib/tourImages";
-import { getMapLinks, MAP_LINK_CLASS, MAP_LINK_TEXT } from "../lib/mapLinks";
+import MapDirections from "./MapDirections";
 
 const nowMonth = new Date().getMonth() + 1;
 
@@ -62,20 +62,7 @@ export default function MonthlyFestivalPanel() {
                 </div>
                 <div className="fc-name">{f.name}</div>
                 {f.note && <div className="fc-note">{f.note}</div>}
-                <div className="place-directions">
-                  <span className="place-directions-icon" aria-hidden="true">🧭</span>
-                  {getMapLinks(f).map((l) => (
-                    <a
-                      key={l.label}
-                      className={MAP_LINK_CLASS[l.label]}
-                      href={l.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {MAP_LINK_TEXT[l.label]}
-                    </a>
-                  ))}
-                </div>
+                <MapDirections place={f} />
               </div>
             </div>
             );

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { loadNaverMaps, SEOUL_CENTER } from "../lib/naverMaps";
 import { ALL_PLACES, CATEGORY_META } from "../data/seed";
 import { getUserLocation, calculateDistance, type UserLocation } from "../lib/geolocation";
-import { getMapLinks, MAP_LINK_CLASS, MAP_LINK_TEXT } from "../lib/mapLinks";
+import { renderMapLinksHtml } from "../lib/mapLinks";
 
 export default function SeoulMap() {
   const ref = useRef<HTMLDivElement>(null);
@@ -43,14 +43,8 @@ export default function SeoulMap() {
           // 마커 클릭시 정보 윈도우 표시 — 우리는 자체 길찾기가 없으니
           // 네이버·카카오·구글로 바로 넘기는 링크를 함께 보여준다.
           window.naver!.maps.Event.addListener(marker, "click", () => {
-            const linksHtml = getMapLinks(place)
-              .map(
-                (l) =>
-                  `<a class="${MAP_LINK_CLASS[l.label]}" href="${l.url}" target="_blank" rel="noopener noreferrer">${MAP_LINK_TEXT[l.label]}</a>`
-              )
-              .join("");
             const infoWindow = new window.naver!.maps.InfoWindow({
-              content: `<div class="map-info-window"><strong>${place.name}</strong><br/><small>${place.gu}${place.dong ? ` ${place.dong}` : ""}</small><br/><em>${CATEGORY_META[place.category].label}</em><div class="place-directions">${linksHtml}</div></div>`,
+              content: `<div class="map-info-window"><strong>${place.name}</strong><br/><small>${place.gu}${place.dong ? ` ${place.dong}` : ""}</small><br/><em>${CATEGORY_META[place.category].label}</em>${renderMapLinksHtml(place)}</div>`,
               position: marker.getPosition(),
             });
             infoWindow.open(map);

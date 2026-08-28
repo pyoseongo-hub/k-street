@@ -571,83 +571,104 @@ button {
 }
 
 /* ── 지도 딥링크 — 자체 길찾기 대신 네이버·카카오·구글로 넘긴다.
-   (koreatravel.guru 등 여행 일정 사이트가 정거장마다 붙이는 방식 참고) ── */
+   Kfood(dongne-hanip)의 길찾기 카드를 그대로 참고한다 — 카카오·네이버를
+   똑같은 너비의 브랜드색 버튼으로 나란히, 구글은 그 아래 작은 텍스트
+   링크 하나로 낮춘다(2026-08-28 사용자가 크기 안 맞고 성의 없다고 재지적
+   — Kfood 참고 화면 캡처와 나란히 비교해 픽셀 단위로 맞췄다). ── */
 .place-directions {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 6px;
-  margin-top: 7px;
+  margin-top: 9px;
 }
 
-.place-directions-icon {
-  font-size: 11px;
-  color: var(--text-muted);
+.map-directions-row {
+  display: flex;
+  gap: 8px;
 }
 
-.map-link {
+.map-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 0;
+  border-radius: 14px;
+  border: none;
   font-family: "Pretendard", "Noto Sans KR", sans-serif;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--accent-strong);
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 7px 14px;
-  border-radius: 100px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  transition: transform 0.12s ease, filter 0.12s ease;
+  transition: filter 0.12s ease, transform 0.12s ease;
 }
 
-.map-link:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-}
-
-/* Kfood 스타일 — 카카오(노랑)·네이버(초록)는 브랜드색 큰 알약으로 눈에 띄게,
-   구글은 한국 길찾기 정확도가 낮아(정부 정밀지도 반출 규제) 계속 작은 보조 링크로 둔다
-   (2026-08-28 사용자 지시: "안보이니 케이푸드처럼 만들어" → "눈에 띄게"). */
-.map-link--kakao {
-  background: #FEE500;
-  border-color: #FEE500;
-  color: #191919;
-}
-
-.map-link--naver {
-  background: #03C75A;
-  border-color: #03C75A;
-  color: #fff;
-}
-
-.map-link--google {
-  font-size: 11px;
-  font-weight: 600;
-  padding: 6px 12px;
-  color: var(--text-muted);
-  background: transparent;
-  border-color: var(--border);
-}
-
-.map-link--kakao:hover,
-.map-link--naver:hover {
+.map-btn:hover {
   filter: brightness(1.06);
   transform: translateY(-1px);
 }
 
-/* 지도 InfoWindow 안에서는 배경이 이미 --surface라 살짝 다르게 */
-.map-info-window .map-link {
-  background: var(--surface-2);
-}
-
-.map-info-window .map-link--kakao {
+.map-btn--kakao {
   background: #FEE500;
+  color: #191919;
 }
 
-.map-info-window .map-link--naver {
+.map-btn--naver {
   background: #03C75A;
+  color: #fff;
+}
+
+.map-btn-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.map-btn-icon--naver {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  background: #fff;
+  color: #03C75A;
+  font-size: 10px;
+  font-weight: 800;
+  font-family: Arial, sans-serif;
+}
+
+.map-link--google {
+  display: block;
+  text-align: center;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 1px 0;
+}
+
+.map-link--google:hover {
+  color: var(--accent-strong);
+  text-decoration: underline;
+}
+
+/* 지도 InfoWindow 안(네이버 지도 위 팝업)은 버튼이 크면 지도를 가리니
+   작은 알약 형태로 되돌린다 — 카드형 레이아웃은 목록·패널 전용. */
+.map-info-window .map-directions-row {
+  gap: 6px;
+}
+
+.map-info-window .map-btn {
+  flex: none;
+  padding: 5px 11px;
+  border-radius: 100px;
+  font-size: 11px;
+}
+
+.map-info-window .map-link--google {
+  display: inline;
+  margin-left: 6px;
 }
 
 /* ── tab bar ────────────────────────────────────────── */

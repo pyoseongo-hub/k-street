@@ -18,20 +18,28 @@ export interface MapLink {
   url: string;
 }
 
-// Kfood(dongne-hanip)처럼 카카오·네이버는 브랜드색 큰 알약 버튼으로 눈에 띄게,
-// 구글은 작은 보조 링크로 둔다(2026-08-28 사용자 지시) — 화면 3곳(패널·구 탐색·지도
-// InfoWindow)이 이 라벨/아이콘을 그대로 써서 한 곳만 고치면 전부 맞춰지게 한다.
-export const MAP_LINK_CLASS: Record<MapLink["label"], string> = {
-  KAKAO: "map-link map-link--kakao",
-  NAVER: "map-link map-link--naver",
-  GOOGLE: "map-link map-link--google",
-};
+// Kfood(dongne-hanip) 길찾기 카드를 그대로 참고한다 — 카카오·네이버는 같은 너비의
+// 브랜드색 버튼으로 나란히, 구글은 그 아래 작은 텍스트 링크 하나로 낮춘다
+// (2026-08-28 사용자가 "사이즈 맞추는 기본도 안하고 성의없다"고 재지적 — Kfood
+// 참고 화면과 나란히 비교해 크기·아이콘·순서를 맞췄다). 화면 3곳(패널·구 탐색·
+// 지도 InfoWindow)이 아래 HTML 조각을 그대로 써서 한 곳만 고치면 전부 맞춰진다 —
+// React 두 곳은 MapDirections.tsx가, 지도 InfoWindow(raw HTML)는 이 함수가 담당한다.
+function kakaoBtn(url: string): string {
+  return `<a class="map-btn map-btn--kakao" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-icon">📍</span>카카오맵</a>`;
+}
 
-export const MAP_LINK_TEXT: Record<MapLink["label"], string> = {
-  KAKAO: "📍 카카오맵",
-  NAVER: "🚇 네이버지도",
-  GOOGLE: "Google",
-};
+function naverBtn(url: string): string {
+  return `<a class="map-btn map-btn--naver" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-icon--naver">N</span>네이버지도</a>`;
+}
+
+function googleLink(url: string): string {
+  return `<a class="map-link--google" href="${url}" target="_blank" rel="noopener noreferrer">다른 지도 앱으로 열기 ›</a>`;
+}
+
+export function renderMapLinksHtml(place: MapLinkTarget): string {
+  const [kakao, naver, google] = getMapLinks(place);
+  return `<div class="place-directions"><div class="map-directions-row">${kakaoBtn(kakao.url)}${naverBtn(naver.url)}</div>${googleLink(google.url)}</div>`;
+}
 
 export function getMapLinks(place: MapLinkTarget): MapLink[] {
   const hasCoords = typeof place.lat === "number" && typeof place.lng === "number";
