@@ -588,8 +588,13 @@ button {
 }
 
 .hex-tile.selected {
-  background: var(--cc);
-  color: #10151E;
+  /* opacity 버그: 데이터 없는(옅은, opacity:0.5) 구를 눌러도 .selected는
+     opacity를 안 올려서 밝은 배경+어두운 글씨가 반투명으로 겹쳐 거의 안
+     보였다(2026-08-28 사용자 지적). opacity:1 명시 + 배경을 진하게,
+     글씨를 밝게 뒤집어서 눌림 상태가 확실히 구분되게 한다. */
+  opacity: 1;
+  background: color-mix(in srgb, var(--cc) 65%, #000000);
+  color: #F7F3EA;
   font-weight: 700;
   transform: scale(1.1);
   z-index: 1;
