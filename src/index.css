@@ -564,7 +564,9 @@ button {
 /* 지도를 뺀 자리(2026-08-28 사용자 지시: "지도는 삭제해, 길찾기가 대신할
    수 있다")를 이 목록이 대신한다 — 그래서 카드에 사진·정보를 더 넣을 수
    있는 여유를 준다. 사진은 확보되는 대로 자동으로 뜨고(getTourImage),
-   없으면 이미지 영역 자체를 그리지 않는다(정확도 원칙: 없으면 없는 대로). */
+   없으면(지금은 전부 이 경우) 카테고리 아이콘을 큼직하게 대신 보여줘
+   빈 칸처럼 허전해 보이지 않게 한다(2026-08-28, "자리는 올라가지 않아" —
+   지도를 뺀 만큼 카드가 커 보이도록 채우라는 재지적). */
 .place-list {
   margin-top: 14px;
   display: flex;
@@ -579,26 +581,55 @@ button {
   border: 1px solid var(--border);
 }
 
+.pr-art-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: color-mix(in srgb, var(--cc) 20%, var(--surface));
+}
+
+.pr-art-fallback img {
+  width: 64px;
+  height: 64px;
+}
+
+.pr-art-fallback span {
+  font-size: 48px;
+}
+
 .pr-body {
-  padding: 14px 16px;
+  padding: 16px;
 }
 
 .pr-top {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
+  margin-bottom: 6px;
 }
 
-.place-row .dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
+.pr-category {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--cc) 75%, var(--text));
+  background: color-mix(in srgb, var(--cc) 18%, var(--surface));
+  border-radius: 100px;
+  padding: 2px 9px;
+}
+
+.pr-gu {
+  font-size: 12px;
+  color: var(--text-muted);
 }
 
 .pr-name {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 700;
+  font-family: "Cormorant Garamond", serif;
 }
 
 .pr-note {

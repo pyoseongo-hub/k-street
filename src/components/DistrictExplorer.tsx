@@ -90,21 +90,36 @@ export default function DistrictExplorer() {
           {selected.length === 0 && <p className="empty-note">{t.noPlacesInDistrictMessage(gu)}</p>}
           {selected.map((p) => {
             const photo = getTourImage(p.id);
+            const meta = CATEGORY_META[p.category];
             return (
               <div className="place-row" key={p.id}>
-                {photo && (
+                {photo ? (
                   <div
                     className="fc-art fc-art-photo"
                     style={{ backgroundImage: `url(${photo.thumb})` }}
                   >
                     <span className="fc-photo-credit">{t.photoCredit}</span>
                   </div>
+                ) : (
+                  // 실제 사진이 없을 때(대부분 지금) 빈 칸으로 두지 않고 카테고리
+                  // 아이콘을 큼직하게 보여준다 — "그 장소의 실제 사진"이라고
+                  // 오해할 여지가 없는 장식용 자리표시자다(정확도 원칙).
+                  <div className="pr-art-fallback" style={{ "--cc": meta.color } as CSSProperties}>
+                    {meta.iconImage ? (
+                      <img src={`${import.meta.env.BASE_URL}${meta.iconImage}`} alt="" />
+                    ) : (
+                      <span>{meta.icon}</span>
+                    )}
+                  </div>
                 )}
                 <div className="pr-body">
                   <div className="pr-top">
-                    <span className="dot" style={{ background: CATEGORY_META[p.category].color }} />
-                    <div className="pr-name">{p.confirmed ? p.name : "확인 필요"}</div>
+                    <span className="pr-category" style={{ "--cc": meta.color } as CSSProperties}>
+                      {meta.label}
+                    </span>
+                    <span className="pr-gu">{p.dong ? `${p.gu} ${p.dong}` : p.gu}</span>
                   </div>
+                  <div className="pr-name">{p.confirmed ? p.name : "확인 필요"}</div>
                   {p.note && <div className="pr-note">{p.note}</div>}
                   {p.confirmed && <MapDirections place={p} />}
                 </div>
