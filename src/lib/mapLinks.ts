@@ -1,7 +1,8 @@
 // K-Street는 자체 길찾기(도보·대중교통 경로 계산)를 만들지 않는다 — 정확한 경로
 // 안내는 지도 3사가 이미 잘 하고 있고, 직접 만들면 정확도를 보장할 수 없다.
-// 대신 koreatravel.guru 같은 여행 사이트들이 쓰는 방식대로, 네이버·카카오·구글
-// 지도로 바로 넘기는 링크만 준다. 구글은 한국 대중교통 데이터가 약하지만
+// 대신 koreatravel.guru 같은 여행 사이트들이 쓰는 방식대로, 카카오·네이버·구글
+// 지도로 바로 넘기는 링크만 준다(2026-08-27 사용자 지시로 카카오를 맨 앞에 둔다).
+// 구글은 한국 대중교통 데이터가 약하지만
 // (참고 사이트도 셋을 나란히 준다) 도보 길찾기·이미 구글에 익숙한 외국인
 // 관광객에게는 여전히 쓸모가 있어 뺴지 않는다.
 export interface MapLinkTarget {
@@ -24,8 +25,8 @@ export function getMapLinks(place: MapLinkTarget): MapLink[] {
   if (hasCoords) {
     const { lat, lng } = place as { lat: number; lng: number };
     return [
-      { label: "NAVER", url: `https://map.naver.com/p/directions/-/${lng},${lat},${encName}/-/transit` },
       { label: "KAKAO", url: `https://map.kakao.com/link/to/${encName},${lat},${lng}` },
+      { label: "NAVER", url: `https://map.naver.com/p/directions/-/${lng},${lat},${encName}/-/transit` },
       { label: "GOOGLE", url: `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}` },
     ];
   }
@@ -40,8 +41,8 @@ export function getMapLinks(place: MapLinkTarget): MapLink[] {
   const query = `${place.name} ${place.dong ?? place.gu}`;
   const encQuery = encodeURIComponent(query);
   return [
-    { label: "NAVER", url: `https://map.naver.com/v5/search/${encQuery}` },
     { label: "KAKAO", url: `https://map.kakao.com/link/search/${encQuery}` },
+    { label: "NAVER", url: `https://map.naver.com/v5/search/${encQuery}` },
     { label: "GOOGLE", url: `https://www.google.com/maps/dir/?api=1&destination=${encQuery}` },
   ];
 }
