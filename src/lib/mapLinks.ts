@@ -18,12 +18,12 @@ export interface MapLink {
   url: string;
 }
 
-// 카카오맵·네이버지도만 같은 규격의 주요 액션으로 나란히 두고, 구글은
-// "다른 지도 앱으로 열기" 링크 하나로 낮춘다(2026-08-28 사용자가 전달한
-// UI 디자인 가이드 — 지도 버튼 세 개를 같은 강도로 노출하면 행사명보다
-// 먼저 시선을 가져간다는 지적). 화면 3곳(패널·구 탐색·지도 InfoWindow)이
-// 아래 HTML 조각을 그대로 써서 한 곳만 고치면 전부 맞춰진다 — React 두
-// 곳은 MapDirections.tsx가, 지도 InfoWindow(raw HTML)는 이 함수가 담당한다.
+// 카카오맵·네이버지도만 같은 규격의 주요 액션으로 나란히 둔다. 구글은
+// 화면에서 아예 뺀다(2026-08-28 사용자가 캡처에 빨간 X로 직접 표시해
+// 지시 — 한국 대중교통 길찾기 정확도가 낮아 실제로 잘 안 쓰인다).
+// getMapLinks()는 구글 URL도 계속 반환하지만(다른 화면이 나중에 쓸 수
+// 있게) 아래 렌더링 두 곳(패널·구 탐색은 MapDirections.tsx, 지도
+// InfoWindow는 이 함수)은 카카오·네이버만 그린다.
 function kakaoBtn(url: string): string {
   return `<a class="map-btn map-btn--kakao" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-icon">📍</span>카카오맵</a>`;
 }
@@ -32,13 +32,9 @@ function naverBtn(url: string): string {
   return `<a class="map-btn map-btn--naver" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-badge map-btn-badge--naver">N</span>네이버지도</a>`;
 }
 
-function googleLink(url: string): string {
-  return `<a class="map-link--google" href="${url}" target="_blank" rel="noopener noreferrer">다른 지도 앱으로 열기 ›</a>`;
-}
-
 export function renderMapLinksHtml(place: MapLinkTarget): string {
-  const [kakao, naver, google] = getMapLinks(place);
-  return `<div class="place-directions"><div class="map-directions-row">${kakaoBtn(kakao.url)}${naverBtn(naver.url)}</div>${googleLink(google.url)}</div>`;
+  const [kakao, naver] = getMapLinks(place);
+  return `<div class="place-directions"><div class="map-directions-row">${kakaoBtn(kakao.url)}${naverBtn(naver.url)}</div></div>`;
 }
 
 export function getMapLinks(place: MapLinkTarget): MapLink[] {
