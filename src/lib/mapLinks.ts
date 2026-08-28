@@ -18,12 +18,12 @@ export interface MapLink {
   url: string;
 }
 
-// 카카오·네이버·구글 세 버튼을 같은 크기의 알약으로 한 줄에 나란히 둔다
-// (2026-08-28 사용자가 참고 캡처를 다시 짚으며 "이 모양으로 만들어라" — 가로형
-// 리스트 카드의 좁은 폭엔 큰 버튼 2개+링크 1개 조합보다 이 쪽이 맞았다).
-// 화면 3곳(패널·구 탐색·지도 InfoWindow)이 아래 HTML 조각을 그대로 써서 한
-// 곳만 고치면 전부 맞춰진다 — React 두 곳은 MapDirections.tsx가, 지도
-// InfoWindow(raw HTML)는 이 함수가 담당한다.
+// 카카오맵·네이버지도만 같은 규격의 주요 액션으로 나란히 두고, 구글은
+// "다른 지도 앱으로 열기" 링크 하나로 낮춘다(2026-08-28 사용자가 전달한
+// UI 디자인 가이드 — 지도 버튼 세 개를 같은 강도로 노출하면 행사명보다
+// 먼저 시선을 가져간다는 지적). 화면 3곳(패널·구 탐색·지도 InfoWindow)이
+// 아래 HTML 조각을 그대로 써서 한 곳만 고치면 전부 맞춰진다 — React 두
+// 곳은 MapDirections.tsx가, 지도 InfoWindow(raw HTML)는 이 함수가 담당한다.
 function kakaoBtn(url: string): string {
   return `<a class="map-btn map-btn--kakao" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-icon">📍</span>카카오맵</a>`;
 }
@@ -32,13 +32,13 @@ function naverBtn(url: string): string {
   return `<a class="map-btn map-btn--naver" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-badge map-btn-badge--naver">N</span>네이버지도</a>`;
 }
 
-function googleBtn(url: string): string {
-  return `<a class="map-btn map-btn--google" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-badge map-btn-badge--google">G</span>Google</a>`;
+function googleLink(url: string): string {
+  return `<a class="map-link--google" href="${url}" target="_blank" rel="noopener noreferrer">다른 지도 앱으로 열기 ›</a>`;
 }
 
 export function renderMapLinksHtml(place: MapLinkTarget): string {
   const [kakao, naver, google] = getMapLinks(place);
-  return `<div class="place-directions"><div class="map-directions-row">${kakaoBtn(kakao.url)}${naverBtn(naver.url)}${googleBtn(google.url)}</div></div>`;
+  return `<div class="place-directions"><div class="map-directions-row">${kakaoBtn(kakao.url)}${naverBtn(naver.url)}</div>${googleLink(google.url)}</div>`;
 }
 
 export function getMapLinks(place: MapLinkTarget): MapLink[] {
