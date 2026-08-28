@@ -1,21 +1,22 @@
 /* 다크 엘레강스 테마가 기본값이다(2026-08-25 사용자 결정) — 시스템 다크모드
    대응이 아니라 브랜드 정체성 자체로 다크 톤을 :root 기본값에 넣는다(라이트
    모드 없음). data-theme="light"를 명시적으로 선택했을 때만 아래 라이트
-   블록이 덮어쓴다. 2026-08-28 사용자가 전달한 UI 디자인 가이드(PDF)의
-   컬러 팔레트를 그대로 반영 — 딥 네이비 배경, 아이보리 텍스트, 아쿠아 포인트,
-   앰버 계절 강조. */
+   블록이 덮어쓴다. 2026-08-28 사용자가 Kfood(dongne-hanip)의 다크모드
+   "소프트 차콜" 팔레트를 그대로 가져오라고 지시 — 완전 검정 대신 차콜
+   배경 위에 카드가 한 단계 밝은 회색으로 뜨는 층 구조, 고춧가루 레드
+   포인트 + 스캘리언 그린 서브 컬러. */
 :root {
-  --bg: #151B2A;
-  --surface: #222C40;
-  --surface-2: #2D3850;
-  --text: #F7F3EA;
-  --text-muted: #AAB4C5;
-  --border: #39465E;
-  --accent: #8ED8CF;
-  --accent-strong: #8ED8CF;
-  --accent-soft: rgba(142, 216, 207, 0.15);
+  --bg: #131316;
+  --surface: #1A1A1E;
+  --surface-2: #26262B;
+  --text: #EDEDF0;
+  --text-muted: #A7A7B0;
+  --border: #34343A;
+  --accent: #FF5A44;
+  --accent-strong: #FF5A44;
+  --accent-soft: #3A211D;
 
-  --festival: #F2B85B;
+  --festival: #6FA894;
   --market: #F2A855;
   --flower: #E28FAE;
   --walk: #78D8CB;
@@ -23,7 +24,7 @@
   --museum: #8B7CC4;
 
   --shadow: rgba(0, 0, 0, 0.3);
-  --shadow-elevated: 0 14px 30px -12px rgba(0, 0, 0, 0.4);
+  --shadow-elevated: none;
   --radius-lg: 20px;
   --radius-xl: 24px;
 }
@@ -76,19 +77,19 @@
   --shadow-elevated: 0 6px 16px -6px rgba(0, 0, 0, 0.1);
 }
 
-/* 다크 모드 명시 선택시 (data-theme="dark") — 부드러운 밤 팔레트 */
+/* 다크 모드 명시 선택시 (data-theme="dark") — Kfood와 같은 소프트 차콜 팔레트 */
 :root[data-theme="dark"] {
-  --bg: #151B2A;
-  --surface: #222C40;
-  --surface-2: #2D3850;
-  --text: #F7F3EA;
-  --text-muted: #AAB4C5;
-  --border: #39465E;
-  --accent: #8ED8CF;
-  --accent-strong: #8ED8CF;
-  --accent-soft: rgba(142, 216, 207, 0.15);
+  --bg: #131316;
+  --surface: #1A1A1E;
+  --surface-2: #26262B;
+  --text: #EDEDF0;
+  --text-muted: #A7A7B0;
+  --border: #34343A;
+  --accent: #FF5A44;
+  --accent-strong: #FF5A44;
+  --accent-soft: #3A211D;
 
-  --festival: #F2B85B;
+  --festival: #6FA894;
   --market: #F2A855;
   --flower: #E28FAE;
   --walk: #78D8CB;
@@ -96,5 +97,5 @@
   --museum: #8B7CC4;
 
   --shadow: rgba(0, 0, 0, 0.3);
-  --shadow-elevated: 0 14px 30px -12px rgba(0, 0, 0, 0.4);
+  --shadow-elevated: none;
 }
