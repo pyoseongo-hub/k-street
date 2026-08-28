@@ -18,27 +18,27 @@ export interface MapLink {
   url: string;
 }
 
-// Kfood(dongne-hanip) 길찾기 카드를 그대로 참고한다 — 카카오·네이버는 같은 너비의
-// 브랜드색 버튼으로 나란히, 구글은 그 아래 작은 텍스트 링크 하나로 낮춘다
-// (2026-08-28 사용자가 "사이즈 맞추는 기본도 안하고 성의없다"고 재지적 — Kfood
-// 참고 화면과 나란히 비교해 크기·아이콘·순서를 맞췄다). 화면 3곳(패널·구 탐색·
-// 지도 InfoWindow)이 아래 HTML 조각을 그대로 써서 한 곳만 고치면 전부 맞춰진다 —
-// React 두 곳은 MapDirections.tsx가, 지도 InfoWindow(raw HTML)는 이 함수가 담당한다.
+// 카카오·네이버·구글 세 버튼을 같은 크기의 알약으로 한 줄에 나란히 둔다
+// (2026-08-28 사용자가 참고 캡처를 다시 짚으며 "이 모양으로 만들어라" — 가로형
+// 리스트 카드의 좁은 폭엔 큰 버튼 2개+링크 1개 조합보다 이 쪽이 맞았다).
+// 화면 3곳(패널·구 탐색·지도 InfoWindow)이 아래 HTML 조각을 그대로 써서 한
+// 곳만 고치면 전부 맞춰진다 — React 두 곳은 MapDirections.tsx가, 지도
+// InfoWindow(raw HTML)는 이 함수가 담당한다.
 function kakaoBtn(url: string): string {
   return `<a class="map-btn map-btn--kakao" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-icon">📍</span>카카오맵</a>`;
 }
 
 function naverBtn(url: string): string {
-  return `<a class="map-btn map-btn--naver" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-icon--naver">N</span>네이버지도</a>`;
+  return `<a class="map-btn map-btn--naver" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-badge map-btn-badge--naver">N</span>네이버지도</a>`;
 }
 
-function googleLink(url: string): string {
-  return `<a class="map-link--google" href="${url}" target="_blank" rel="noopener noreferrer">다른 지도 앱으로 열기 ›</a>`;
+function googleBtn(url: string): string {
+  return `<a class="map-btn map-btn--google" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-badge map-btn-badge--google">G</span>Google</a>`;
 }
 
 export function renderMapLinksHtml(place: MapLinkTarget): string {
   const [kakao, naver, google] = getMapLinks(place);
-  return `<div class="place-directions"><div class="map-directions-row">${kakaoBtn(kakao.url)}${naverBtn(naver.url)}</div>${googleLink(google.url)}</div>`;
+  return `<div class="place-directions"><div class="map-directions-row">${kakaoBtn(kakao.url)}${naverBtn(naver.url)}${googleBtn(google.url)}</div></div>`;
 }
 
 export function getMapLinks(place: MapLinkTarget): MapLink[] {

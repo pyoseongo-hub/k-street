@@ -22,17 +22,17 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <span className="map-btn-icon--naver">N</span>네이버지도
+          <span className="map-btn-badge map-btn-badge--naver">N</span>네이버지도
+        </a>
+        <a
+          className="map-btn map-btn--google"
+          href={google.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span className="map-btn-badge map-btn-badge--google">G</span>Google
         </a>
       </div>
-      <a
-        className="map-link--google"
-        href={google.url}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        다른 지도 앱으로 열기 ›
-      </a>
     </div>
   );
 }

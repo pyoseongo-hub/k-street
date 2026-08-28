@@ -302,7 +302,13 @@ button {
   gap: 10px;
 }
 
+/* 세로로 쌓인 큰 이미지 카드는 진짜 사진이 없는 지금(대부분 장식용
+   SeasonArt) 한 화면에 몇 개 못 담아 목록을 훑기 어렵다는 지적(2026-08-28,
+   참고 캡처 첨부) — 썸네일을 왼쪽 정사각형으로 줄이고 내용을 오른쪽에
+   두는 가로형 리스트 카드로 바꾼다. */
 .festival-card {
+  display: flex;
+  align-items: stretch;
   border-radius: 14px;
   overflow: hidden;
   background: var(--surface-2);
@@ -311,8 +317,9 @@ button {
 
 .fc-art {
   display: block;
-  width: 100%;
-  height: 56px;
+  width: 84px;
+  height: auto;
+  flex-shrink: 0;
 }
 
 .fc-art-photo {
@@ -323,53 +330,66 @@ button {
 
 .fc-photo-credit {
   position: absolute;
-  right: 6px;
-  bottom: 5px;
-  font-size: 9px;
+  left: 3px;
+  bottom: 3px;
+  right: 3px;
+  font-size: 7.5px;
+  line-height: 1.2;
   color: rgba(255, 255, 255, 0.85);
   background: rgba(0, 0, 0, 0.45);
-  border-radius: 100px;
-  padding: 2px 7px;
+  border-radius: 6px;
+  padding: 1px 4px;
 }
 
 .fc-body {
-  padding: 11px 14px 13px;
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
 }
 
 .fc-top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 4px;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .fc-gu {
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.03em;
   color: var(--accent-strong);
   background: var(--accent-soft);
   border-radius: 100px;
-  padding: 2px 9px;
+  padding: 2px 8px;
+  white-space: nowrap;
 }
 
 .fc-date {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 11.5px;
+  font-size: 10.5px;
   color: var(--text-muted);
 }
 
 .fc-name {
   font-family: "Cormorant Garamond", serif;
   font-weight: 600;
-  font-size: 17px;
+  font-size: 15.5px;
+  line-height: 1.25;
 }
 
 .fc-note {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-muted);
-  margin-top: 5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 3px;
   line-height: 1.5;
 }
 
@@ -571,20 +591,20 @@ button {
 }
 
 /* ── 지도 딥링크 — 자체 길찾기 대신 네이버·카카오·구글로 넘긴다.
-   Kfood(dongne-hanip)의 길찾기 카드를 그대로 참고한다 — 카카오·네이버를
-   똑같은 너비의 브랜드색 버튼으로 나란히, 구글은 그 아래 작은 텍스트
-   링크 하나로 낮춘다(2026-08-28 사용자가 크기 안 맞고 성의 없다고 재지적
-   — Kfood 참고 화면 캡처와 나란히 비교해 픽셀 단위로 맞췄다). ── */
+   카카오·네이버·구글 세 버튼을 같은 크기의 알약으로 한 줄에 나란히 둔다
+   (2026-08-28 사용자가 참고 캡처를 다시 짚으며 "이 모양으로 만들어라" —
+   가로형 리스트 카드에서는 큰 버튼 2개+링크 1개 조합보다 이 쪽이 훨씬
+   좁은 폭에 잘 맞는다). 로고 자리는 카카오만 픽토그램(핀), 네이버·구글은
+   흰 원 배지에 글자 하나만 넣어 크기를 통일한다. ── */
 .place-directions {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 9px;
+  margin-top: 8px;
 }
 
 .map-directions-row {
   display: flex;
-  gap: 8px;
+  gap: 5px;
+  width: 100%;
 }
 
 .map-btn {
@@ -592,15 +612,16 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 10px 0;
-  border-radius: 14px;
-  border: none;
+  gap: 4px;
+  padding: 6px 4px;
+  border-radius: 100px;
+  border: 1px solid transparent;
   font-family: "Pretendard", "Noto Sans KR", sans-serif;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: -0.01em;
   text-decoration: none;
+  white-space: nowrap;
   transition: filter 0.12s ease, transform 0.12s ease;
 }
 
@@ -619,56 +640,44 @@ button {
   color: #fff;
 }
 
+.map-btn--google {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+
 .map-btn-icon {
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1;
 }
 
-.map-btn-icon--naver {
+.map-btn-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 15px;
-  height: 15px;
-  border-radius: 4px;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
   background: #fff;
-  color: #03C75A;
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 800;
   font-family: Arial, sans-serif;
+  line-height: 1;
 }
 
-.map-link--google {
-  display: block;
-  text-align: center;
-  font-size: 11.5px;
-  font-weight: 500;
-  color: var(--text-muted);
-  text-decoration: none;
-  padding: 1px 0;
+.map-btn-badge--naver {
+  color: #03C75A;
 }
 
-.map-link--google:hover {
-  color: var(--accent-strong);
-  text-decoration: underline;
+.map-btn-badge--google {
+  color: #4285F4;
 }
 
-/* 지도 InfoWindow 안(네이버 지도 위 팝업)은 버튼이 크면 지도를 가리니
-   작은 알약 형태로 되돌린다 — 카드형 레이아웃은 목록·패널 전용. */
-.map-info-window .map-directions-row {
-  gap: 6px;
-}
-
+/* 지도 InfoWindow 안(네이버 지도 위 팝업)은 카드보다 폭이 좁으니 살짝 더 줄인다. */
 .map-info-window .map-btn {
-  flex: none;
-  padding: 5px 11px;
-  border-radius: 100px;
-  font-size: 11px;
-}
-
-.map-info-window .map-link--google {
-  display: inline;
-  margin-left: 6px;
+  font-size: 10px;
+  padding: 5px 3px;
 }
 
 /* ── tab bar ────────────────────────────────────────── */
