@@ -23,6 +23,7 @@ export interface Translations {
   mapDisclaimerBold: string;
   mapDisclaimerEnd: string;
   noPlacesInDistrictMessage: (gu: string) => string;
+  flowerBloomDisclaimer: string;
 
   // Categories
   categoryLabels: Record<string, string>;
@@ -57,6 +58,8 @@ const translations: Record<Language, Translations> = {
     mapDisclaimerBold: '자치구 단위로',
     mapDisclaimerEnd: ' 탐색한다. 색이 있는 구는 이번 조사로 이름까지 확인된 곳, 옅은 구는 아직 확인 못 한 곳이다.',
     noPlacesInDistrictMessage: (gu) => `${gu}는 아직 확인 못했다.`,
+    flowerBloomDisclaimer:
+      '벚꽃 등 개화 시기는 그 해 날씨에 따라 매년 달라져 특정 날짜를 미리 정할 수 없다. 보통 3~5월 사이이니, 방문 전 서울시·구청 공식 채널에서 실시간 개화 소식을 확인할 것.',
 
     categoryLabels: {
       market: '시장',
@@ -97,6 +100,8 @@ const translations: Record<Language, Translations> = {
     mapDisclaimerBold: 'district.',
     mapDisclaimerEnd: ' Colored districts have confirmed venues; lighter ones are still being researched.',
     noPlacesInDistrictMessage: (gu) => `${gu} hasn't been researched yet.`,
+    flowerBloomDisclaimer:
+      "Bloom dates (cherry blossoms, etc.) shift every year with the weather, so no fixed date can be given. They generally fall between March and May — check the official Seoul city or district channels for real-time bloom updates before you go.",
 
     categoryLabels: {
       market: 'Markets',
@@ -137,6 +142,8 @@ const translations: Record<Language, Translations> = {
     mapDisclaimerBold: '地区別に',
     mapDisclaimerEnd: '探索しています。色付きの地区は確認済みの施設があります。薄い色の地区はまだ調査中です。',
     noPlacesInDistrictMessage: (gu) => `${gu}はまだ調査していません。`,
+    flowerBloomDisclaimer:
+      '桜などの開花時期はその年の天気によって毎年変わるため、特定の日付を決められません。だいたい3〜5月の間なので、訪れる前にソウル市・区の公式チャンネルでリアルタイムの開花情報を確認してください。',
 
     categoryLabels: {
       market: '市場',
@@ -177,6 +184,8 @@ const translations: Record<Language, Translations> = {
     mapDisclaimerBold: '地区',
     mapDisclaimerEnd: '浏览。有色地区已确认有场地；浅色地区仍在调查中。',
     noPlacesInDistrictMessage: (gu) => `${gu}尚未调查。`,
+    flowerBloomDisclaimer:
+      '樱花等开花时间会因当年天气而每年不同，无法提前确定具体日期。大致在3~5月之间，出发前请通过首尔市·区厅官方渠道确认实时花讯。',
 
     categoryLabels: {
       market: '市场',
@@ -217,6 +226,8 @@ const translations: Record<Language, Translations> = {
     mapDisclaimerBold: '地區',
     mapDisclaimerEnd: '瀏覽。有色地區已確認有場地；淺色地區仍在調查中。',
     noPlacesInDistrictMessage: (gu) => `${gu}尚未調查。`,
+    flowerBloomDisclaimer:
+      '櫻花等開花時間會因當年天氣而每年不同，無法提前確定具體日期。大致在3~5月之間，出發前請透過首爾市·區廳官方管道確認即時花訊。',
 
     categoryLabels: {
       market: '市場',
@@ -257,6 +268,8 @@ const translations: Record<Language, Translations> = {
     mapDisclaimerBold: 'theo quận.',
     mapDisclaimerEnd: ' Các quận có màu có các địa điểm được xác nhận; các quận nhạt hơn vẫn đang được điều tra.',
     noPlacesInDistrictMessage: (gu) => `${gu} chưa được điều tra.`,
+    flowerBloomDisclaimer:
+      'Thời điểm hoa nở (như hoa anh đào) thay đổi mỗi năm tùy theo thời tiết, nên không thể ấn định ngày cụ thể trước. Thường rơi vào khoảng tháng 3-5, hãy kiểm tra thông tin nở hoa theo thời gian thực qua kênh chính thức của thành phố Seoul hoặc quận trước khi đến.',
 
     categoryLabels: {
       market: 'Chợ',
@@ -297,6 +310,8 @@ const translations: Record<Language, Translations> = {
     mapDisclaimerBold: 'por distrito.',
     mapDisclaimerEnd: ' Los distritos coloreados tienen lugares confirmados; los más claros aún se están investigando.',
     noPlacesInDistrictMessage: (gu) => `${gu} aún no ha sido investigado.`,
+    flowerBloomDisclaimer:
+      'Las fechas de floración (como los cerezos) cambian cada año según el clima, por lo que no se puede fijar una fecha exacta. Suele ser entre marzo y mayo — consulta los canales oficiales de la ciudad de Seúl o del distrito para conocer el estado de floración en tiempo real antes de ir.',
 
     categoryLabels: {
       market: 'Mercados',
@@ -337,6 +352,8 @@ const translations: Record<Language, Translations> = {
     mapDisclaimerBold: 'par district.',
     mapDisclaimerEnd: ' Les districts colorés ont des lieux confirmés ; les plus clairs sont encore en cours d\'enquête.',
     noPlacesInDistrictMessage: (gu) => `${gu} n'a pas encore été enquêté.`,
+    flowerBloomDisclaimer:
+      "Les dates de floraison (cerisiers, etc.) changent chaque année selon la météo, il n'est donc pas possible de fixer une date précise. Cela se situe généralement entre mars et mai — consultez les canaux officiels de la ville de Séoul ou du district pour connaître l'état de la floraison en temps réel avant de vous y rendre.",
 
     categoryLabels: {
       market: 'Marchés',
@@ -377,6 +394,8 @@ const translations: Record<Language, Translations> = {
     mapDisclaimerBold: 'nach Bezirk.',
     mapDisclaimerEnd: ' Farbige Bezirke haben bestätigte Orte; hellere werden noch untersucht.',
     noPlacesInDistrictMessage: (gu) => `${gu} wurde noch nicht untersucht.`,
+    flowerBloomDisclaimer:
+      'Die Blütezeiten (z. B. Kirschblüten) verschieben sich jedes Jahr je nach Wetter, daher kann kein festes Datum angegeben werden. Meist liegt sie zwischen März und Mai — bitte vor dem Besuch die offiziellen Kanäle der Stadt Seoul bzw. des Bezirks für aktuelle Blüteninformationen prüfen.',
 
     categoryLabels: {
       market: 'Märkte',
@@ -417,6 +436,8 @@ const translations: Record<Language, Translations> = {
     mapDisclaimerBold: 'по округам.',
     mapDisclaimerEnd: ' Цветные округа имеют подтвержденные места; более светлые все еще исследуются.',
     noPlacesInDistrictMessage: (gu) => `${gu} еще не был исследован.`,
+    flowerBloomDisclaimer:
+      'Даты цветения (например, сакуры) каждый год меняются в зависимости от погоды, поэтому точную дату указать нельзя. Обычно это период с марта по май — перед посещением уточните актуальную информацию о цветении на официальных каналах города Сеул или округа.',
 
     categoryLabels: {
       market: 'Рынки',
@@ -457,6 +478,8 @@ const translations: Record<Language, Translations> = {
     mapDisclaimerBold: 'per distrik.',
     mapDisclaimerEnd: ' Distrik berwarna memiliki tempat yang dikonfirmasi; yang lebih terang masih sedang diselidiki.',
     noPlacesInDistrictMessage: (gu) => `${gu} belum diteliti.`,
+    flowerBloomDisclaimer:
+      'Tanggal mekar (seperti bunga sakura) berubah setiap tahun tergantung cuaca, jadi tanggal pastinya tidak bisa ditentukan. Biasanya terjadi antara Maret-Mei — periksa kabar mekar terkini melalui kanal resmi Kota Seoul atau distrik sebelum berkunjung.',
 
     categoryLabels: {
       market: 'Pasar',
@@ -497,6 +520,8 @@ const translations: Record<Language, Translations> = {
     mapDisclaimerBold: 'ตามเขต',
     mapDisclaimerEnd: ' เขตที่มีสีมีสถานที่ที่ยืนยัน เขตที่อ่อนกว่ายังคงอยู่ระหว่างการสอบสวน',
     noPlacesInDistrictMessage: (gu) => `${gu}ยังไม่ได้รับการสอบสวน`,
+    flowerBloomDisclaimer:
+      'ช่วงเวลาดอกไม้บาน (เช่น ซากุระ) จะเปลี่ยนไปทุกปีตามสภาพอากาศ จึงไม่สามารถระบุวันที่แน่นอนล่วงหน้าได้ โดยทั่วไปจะอยู่ในช่วงเดือนมีนาคม-พฤษภาคม กรุณาตรวจสอบข่าวการบานของดอกไม้แบบเรียลไทม์จากช่องทางทางการของกรุงโซลหรือเขตก่อนไปเยือน',
 
     categoryLabels: {
       market: 'ตลาด',

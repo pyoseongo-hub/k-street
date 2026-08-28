@@ -61,6 +61,10 @@ export default function DistrictExplorer() {
         ))}
       </div>
 
+      {category === "flower" && (
+        <p className="map-disclaimer">🌸 {t.flowerBloomDisclaimer}</p>
+      )}
+
       <SeoulMap />
 
       <p className="map-disclaimer">
