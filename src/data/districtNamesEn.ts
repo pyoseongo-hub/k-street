@@ -25,11 +25,19 @@ export const DONG_NAME_EN: Record<string, string> = {
   "창천동": "Changcheon-dong",
 };
 
-// 육각형 타일처럼 자리가 좁은 곳엔 "-gu" 접미사를 뗀 짧은 형태를 쓴다.
+// 육각형 타일처럼 자리가 좁은 곳엔 "-gu"/"구" 접미사를 뗀 짧은 형태를 쓴다.
+// 다만 "중구"는 떼면 "중" 한 글자만 남아 무슨 뜻인지 안 보인다(2026-08-28
+// 사용자 지적: "한글도 구 붙여 중구인데 중 이상해") — 한글 기준으로 뗀
+// 결과가 한 글자뿐인 구는 두 언어 다 접미사를 떼지 않는다(서울 25개 구
+// 중 이 규칙에 걸리는 건 중구뿐이지만, 다른 도시가 들어와도 같은 함정에
+// 빠지지 않도록 이름을 하드코딩하는 대신 글자 수로 가른다).
 export function districtShortName(gu: string, language: string): string {
-  if (language === "ko") return gu.slice(0, -1);
+  const koShort = gu.slice(0, -1);
+  const keepFull = koShort.length <= 1;
+  if (language === "ko") return keepFull ? gu : koShort;
   const en = DISTRICT_NAME_EN[gu];
-  return en ? en.replace(/-gu$/, "") : gu.slice(0, -1);
+  if (!en) return keepFull ? gu : koShort;
+  return keepFull ? en : en.replace(/-gu$/, "");
 }
 
 export function districtFullName(gu: string, language: string): string {
