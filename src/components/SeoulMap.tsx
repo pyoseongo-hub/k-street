@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { loadNaverMaps, SEOUL_CENTER } from "../lib/naverMaps";
 import { ALL_PLACES, CATEGORY_META } from "../data/seed";
 import { getUserLocation, calculateDistance, type UserLocation } from "../lib/geolocation";
-import { getMapLinks } from "../lib/mapLinks";
+import { getMapLinks, MAP_LINK_CLASS, MAP_LINK_TEXT } from "../lib/mapLinks";
 
 export default function SeoulMap() {
   const ref = useRef<HTMLDivElement>(null);
@@ -46,7 +46,7 @@ export default function SeoulMap() {
             const linksHtml = getMapLinks(place)
               .map(
                 (l) =>
-                  `<a class="map-link" href="${l.url}" target="_blank" rel="noopener noreferrer">${l.label}</a>`
+                  `<a class="${MAP_LINK_CLASS[l.label]}" href="${l.url}" target="_blank" rel="noopener noreferrer">${MAP_LINK_TEXT[l.label]}</a>`
               )
               .join("");
             const infoWindow = new window.naver!.maps.InfoWindow({

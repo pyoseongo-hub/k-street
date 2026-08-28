@@ -18,6 +18,21 @@ export interface MapLink {
   url: string;
 }
 
+// Kfood(dongne-hanip)처럼 카카오·네이버는 브랜드색 큰 알약 버튼으로 눈에 띄게,
+// 구글은 작은 보조 링크로 둔다(2026-08-28 사용자 지시) — 화면 3곳(패널·구 탐색·지도
+// InfoWindow)이 이 라벨/아이콘을 그대로 써서 한 곳만 고치면 전부 맞춰지게 한다.
+export const MAP_LINK_CLASS: Record<MapLink["label"], string> = {
+  KAKAO: "map-link map-link--kakao",
+  NAVER: "map-link map-link--naver",
+  GOOGLE: "map-link map-link--google",
+};
+
+export const MAP_LINK_TEXT: Record<MapLink["label"], string> = {
+  KAKAO: "📍 카카오맵",
+  NAVER: "🚇 네이버지도",
+  GOOGLE: "Google",
+};
+
 export function getMapLinks(place: MapLinkTarget): MapLink[] {
   const hasCoords = typeof place.lat === "number" && typeof place.lng === "number";
   const encName = encodeURIComponent(place.name);

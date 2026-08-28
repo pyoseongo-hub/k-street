@@ -2,7 +2,7 @@ import { useMemo, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
 import { ALL_PLACES, CATEGORY_META, type Category } from "../data/seed";
 import { SEOUL_DISTRICTS } from "../data/districts";
-import { getMapLinks } from "../lib/mapLinks";
+import { getMapLinks, MAP_LINK_CLASS, MAP_LINK_TEXT } from "../lib/mapLinks";
 import SeoulMap from "./SeoulMap";
 
 const MAP_CATEGORIES: Category[] = ["market", "flower", "walk", "hike", "museum"];
@@ -98,12 +98,12 @@ export default function DistrictExplorer() {
                     {getMapLinks(p).map((l) => (
                       <a
                         key={l.label}
-                        className="map-link"
+                        className={MAP_LINK_CLASS[l.label]}
                         href={l.url}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {l.label}
+                        {MAP_LINK_TEXT[l.label]}
                       </a>
                     ))}
                   </div>

@@ -586,17 +586,20 @@ button {
 }
 
 .map-link {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 10px;
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
+  font-size: 12.5px;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: -0.01em;
   color: var(--accent-strong);
   text-decoration: none;
-  padding: 3px 9px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 14px;
   border-radius: 100px;
   border: 1px solid var(--border);
   background: var(--surface);
-  transition: border-color 0.12s ease, background 0.12s ease;
+  transition: transform 0.12s ease, filter 0.12s ease;
 }
 
 .map-link:hover {
@@ -604,9 +607,47 @@ button {
   background: var(--accent-soft);
 }
 
+/* Kfood 스타일 — 카카오(노랑)·네이버(초록)는 브랜드색 큰 알약으로 눈에 띄게,
+   구글은 한국 길찾기 정확도가 낮아(정부 정밀지도 반출 규제) 계속 작은 보조 링크로 둔다
+   (2026-08-28 사용자 지시: "안보이니 케이푸드처럼 만들어" → "눈에 띄게"). */
+.map-link--kakao {
+  background: #FEE500;
+  border-color: #FEE500;
+  color: #191919;
+}
+
+.map-link--naver {
+  background: #03C75A;
+  border-color: #03C75A;
+  color: #fff;
+}
+
+.map-link--google {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 12px;
+  color: var(--text-muted);
+  background: transparent;
+  border-color: var(--border);
+}
+
+.map-link--kakao:hover,
+.map-link--naver:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
 /* 지도 InfoWindow 안에서는 배경이 이미 --surface라 살짝 다르게 */
 .map-info-window .map-link {
   background: var(--surface-2);
+}
+
+.map-info-window .map-link--kakao {
+  background: #FEE500;
+}
+
+.map-info-window .map-link--naver {
+  background: #03C75A;
 }
 
 /* ── tab bar ────────────────────────────────────────── */
