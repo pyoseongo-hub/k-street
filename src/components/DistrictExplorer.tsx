@@ -1,13 +1,11 @@
 import { useMemo, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
 import { ALL_PLACES, CATEGORY_META, type Category } from "../data/seed";
-import { SEOUL_DISTRICTS } from "../data/districts";
+import { SEOUL_HEX_ROWS } from "../data/seoulHexMap";
 import MapDirections from "./MapDirections";
 import { getTourImage } from "../lib/tourImages";
 
 const MAP_CATEGORIES: Category[] = ["market", "flower", "walk", "hike", "museum"];
-
-const DISTRICTS = SEOUL_DISTRICTS;
 
 export default function DistrictExplorer() {
   const { t } = useLanguage();
@@ -69,20 +67,28 @@ export default function DistrictExplorer() {
         {t.mapDisclaimerStart}<b>{t.mapDisclaimerBold}</b>{t.mapDisclaimerEnd}
       </p>
 
-      <div className="district-grid">
-        {DISTRICTS.map((d) => {
-          const has = guWithData.has(d);
-          return (
-            <button
-              key={d}
-              className={"district-tile" + (has ? " has-data" : "") + (d === gu ? " selected" : "")}
-              style={{ "--cc": CATEGORY_META[category].color } as CSSProperties}
-              onClick={() => setGu(d === gu ? null : d)}
-            >
-              {d.replace("구", "")}
-            </button>
-          );
-        })}
+      <div className="district-hexgrid">
+        {SEOUL_HEX_ROWS.map((row, i) => (
+          <div
+            className="hex-row"
+            key={i}
+            style={{ "--offset": row.offset } as CSSProperties}
+          >
+            {row.gus.map((d) => {
+              const has = guWithData.has(d);
+              return (
+                <button
+                  key={d}
+                  className={"hex-tile" + (has ? " has-data" : "") + (d === gu ? " selected" : "")}
+                  style={{ "--cc": CATEGORY_META[category].color } as CSSProperties}
+                  onClick={() => setGu(d === gu ? null : d)}
+                >
+                  <span>{d.replace("구", "")}</span>
+                </button>
+              );
+            })}
+          </div>
+        ))}
       </div>
 
       {gu && (

@@ -526,39 +526,63 @@ button {
   line-height: 1.55;
 }
 
-.district-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
+/* 서울 25개구 육각형 지도 — 언론사 개표 결과 그래픽 등에 흔히 쓰는 육각형
+   서울 지도 템플릿과 같은 구 배치를 쓴다(2026-08-28 사용자가 참고 이미지로
+   제시, "육각형만 누끼 따 서울지도형 배치"). 배치 데이터는
+   src/data/seoulHexMap.ts. 평평한 위·아래 변에 좌우가 뾰족한 육각형을
+   clip-path로 만들고, 행마다 --offset만큼 들여써서 서울의 울퉁불퉁한
+   윤곽을 흉내 낸다. */
+.district-hexgrid {
+  --hex-w: 54px;
+  --hex-h: 48px;
+  --hex-gap: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
 }
 
-.district-tile {
-  padding: 10px 2px;
-  border-radius: 12px;
-  border: 1px dashed var(--border);
-  background: transparent;
+.hex-row {
+  display: flex;
+  gap: var(--hex-gap);
+  margin-left: calc(var(--offset) * (var(--hex-w) + var(--hex-gap)));
+  margin-top: -8px;
+}
+
+.hex-tile {
+  width: var(--hex-w);
+  height: var(--hex-h);
+  flex-shrink: 0;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: var(--surface-2);
   color: var(--text-muted);
   opacity: 0.55;
-  font-size: 11.5px;
+  font-size: 10.5px;
   font-weight: 500;
+  line-height: 1.15;
   cursor: pointer;
+  padding: 0 4px;
+  text-align: center;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
-.district-tile.has-data {
-  border: 1px solid color-mix(in srgb, var(--cc) 45%, transparent);
+.hex-tile.has-data {
   opacity: 1;
-  background: color-mix(in srgb, var(--cc) 16%, var(--surface));
-  color: color-mix(in srgb, var(--cc) 75%, var(--text));
+  background: color-mix(in srgb, var(--cc) 30%, var(--surface));
+  color: color-mix(in srgb, var(--cc) 85%, var(--text));
   font-weight: 700;
 }
 
-.district-tile.selected {
+.hex-tile.selected {
   background: var(--cc);
-  border-color: var(--cc);
   color: #1B1408;
-  box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--cc) 60%, transparent);
-  transform: translateY(-1px);
+  font-weight: 700;
+  transform: scale(1.08);
+  z-index: 1;
 }
 
 /* 지도를 뺀 자리(2026-08-28 사용자 지시: "지도는 삭제해, 길찾기가 대신할
@@ -1003,8 +1027,9 @@ button {
     height: 280px;
   }
 
-  .district-grid {
-    grid-template-columns: repeat(7, 1fr);
+  .district-hexgrid {
+    --hex-w: 64px;
+    --hex-h: 56px;
   }
 
   .festival-cards {
@@ -1083,8 +1108,9 @@ button {
     height: 360px;
   }
 
-  .district-grid {
-    grid-template-columns: repeat(5, 1fr);
+  .district-hexgrid {
+    --hex-w: 70px;
+    --hex-h: 62px;
   }
 }
 
@@ -1092,7 +1118,7 @@ button {
    호버가 "끈적하게" 눌러 붙는 걸 피하려고 포인터 종류로 가른다. */
 @media (hover: hover) and (pointer: fine) {
   .festival-card,
-  .district-tile.has-data,
+  .hex-tile.has-data,
   .place-row {
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
@@ -1103,9 +1129,8 @@ button {
     border-color: var(--accent);
   }
 
-  .district-tile.has-data:hover {
-    transform: translateY(-2px);
-    border-color: var(--cc);
+  .hex-tile.has-data:hover {
+    transform: translateY(-2px) scale(1.05);
   }
 
   .place-row:hover {
