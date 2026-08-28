@@ -61,6 +61,16 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "중구", category: "festival", name: "정동야행", startMonth: 5, endMonth: 5, note: "덕수궁 돌담길~정동 일대, 2025년 이틀간 13.3만 명", confirmed: true },
   { id: id(), gu: "중랑구", category: "festival", name: "중랑 서울장미축제", startMonth: 5, endMonth: 5, dateLabel: "5.15–23", note: "장미터널 5.45km, 국내 최대", confirmed: true },
   { id: id(), gu: "송파구", category: "festival", name: "석촌호수 호수벚꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4.3–4.11", confirmed: true },
+  // 아래 4개는 2026-08-28 사용자 지시("3월까지 빈것도 서치해서 채우기")로 추가 —
+  // 1~3월 축제가 비어 있던 이유를 서치해 보니 실제로 이 시기 서울 자치구 축제는
+  // 대부분 '정월대보름'(음력 1월 15일) 무렵에 몰려 있었다. 음력 기준이라 그레고리력
+  // 날짜가 해마다 바뀐다(성북구 세계음식축제 항목과 같은 방식으로 표기) — 그래서
+  // startMonth~endMonth를 2~3월 범위로 두고, 검증 시점 기준(2026년) 실제 날짜는
+  // dateLabel에 참고로만 적는다. 뉴스 매체 다수(6곳 이상)가 겹치는 날짜만 채택했다.
+  { id: id(), gu: "노원구", category: "festival", name: "정월대보름 한마당", startMonth: 2, endMonth: 3, dateLabel: "음력 정월대보름 무렵(2026: 3.2)", note: "당현천 하류 일대, 낙화놀이·달집태우기 — 음력 기준이라 해마다 날짜가 바뀜", confirmed: true },
+  { id: id(), gu: "송파구", category: "festival", name: "정월대보름 행사(송파다리밟기 · 달집태우기)", startMonth: 2, endMonth: 3, dateLabel: "음력 정월대보름 무렵(2026: 3.3)", note: "석촌호수·서울놀이마당, 서울시 무형문화재 — 음력 기준이라 해마다 날짜가 바뀜", confirmed: true },
+  { id: id(), gu: "양천구", category: "festival", name: "정월대보름 민속축제", startMonth: 2, endMonth: 3, dateLabel: "음력 정월대보름 무렵(2026: 2.28, 제24회)", note: "안양천 둔치 야구장(신정교 아래), 달집태우기 — 음력 기준이라 해마다 날짜가 바뀜", confirmed: true },
+  { id: id(), gu: "종로구", dong: "운니동", category: "festival", name: "운현궁 설맞이", startMonth: 2, endMonth: 2, dateLabel: "설 연휴 무렵(2026: 2.16–18)", note: "운현궁 앞마당, 서울시 주관 — 음력설 기준이라 해마다 날짜가 바뀜", confirmed: true },
 ];
 
 // ── 02. 전통시장 (25/25 확인, 대표 1곳씩) ─────────────────────────
