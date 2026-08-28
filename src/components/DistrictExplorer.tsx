@@ -3,7 +3,7 @@ import { useLanguage } from "../lib/useLanguage";
 import { ALL_PLACES, CATEGORY_META, type Category } from "../data/seed";
 import { SEOUL_DISTRICTS } from "../data/districts";
 import MapDirections from "./MapDirections";
-import SeoulMap from "./SeoulMap";
+import { getTourImage } from "../lib/tourImages";
 
 const MAP_CATEGORIES: Category[] = ["market", "flower", "walk", "hike", "museum"];
 
@@ -65,8 +65,6 @@ export default function DistrictExplorer() {
         <p className="map-disclaimer">🌸 {t.flowerBloomDisclaimer}</p>
       )}
 
-      <SeoulMap />
-
       <p className="map-disclaimer">
         {t.mapDisclaimerStart}<b>{t.mapDisclaimerBold}</b>{t.mapDisclaimerEnd}
       </p>
@@ -90,16 +88,29 @@ export default function DistrictExplorer() {
       {gu && (
         <div className="place-list">
           {selected.length === 0 && <p className="empty-note">{t.noPlacesInDistrictMessage(gu)}</p>}
-          {selected.map((p) => (
-            <div className="place-row" key={p.id}>
-              <span className="dot" style={{ background: CATEGORY_META[p.category].color }} />
-              <div>
-                <div className="pr-name">{p.confirmed ? p.name : "확인 필요"}</div>
-                {p.note && <div className="pr-note">{p.note}</div>}
-                {p.confirmed && <MapDirections place={p} />}
+          {selected.map((p) => {
+            const photo = getTourImage(p.id);
+            return (
+              <div className="place-row" key={p.id}>
+                {photo && (
+                  <div
+                    className="fc-art fc-art-photo"
+                    style={{ backgroundImage: `url(${photo.thumb})` }}
+                  >
+                    <span className="fc-photo-credit">{t.photoCredit}</span>
+                  </div>
+                )}
+                <div className="pr-body">
+                  <div className="pr-top">
+                    <span className="dot" style={{ background: CATEGORY_META[p.category].color }} />
+                    <div className="pr-name">{p.confirmed ? p.name : "확인 필요"}</div>
+                  </div>
+                  {p.note && <div className="pr-note">{p.note}</div>}
+                  {p.confirmed && <MapDirections place={p} />}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </section>

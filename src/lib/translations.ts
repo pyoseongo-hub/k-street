@@ -54,7 +54,7 @@ const translations: Record<Language, Translations> = {
 
     exploreNowLabel: '지금 갈 수 있는 곳',
     exploreTitle: '구를 골라 둘러보기',
-    mapDisclaimerStart: '지도 위 개별 위치 표시는 아직 준비 중이라(구별 좌표 검증 전), 우선 ',
+    mapDisclaimerStart: '개별 위치 표시는 아직 준비 중이라(구별 좌표 검증 전), 우선 ',
     mapDisclaimerBold: '자치구 단위로',
     mapDisclaimerEnd: ' 탐색한다. 색이 있는 구는 이번 조사로 이름까지 확인된 곳, 옅은 구는 아직 확인 못 한 곳이다.',
     noPlacesInDistrictMessage: (gu) => `${gu}는 아직 확인 못했다.`,
