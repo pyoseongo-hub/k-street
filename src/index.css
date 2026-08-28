@@ -578,6 +578,12 @@ button {
   cursor: pointer;
   padding: 0 3px;
   text-align: center;
+  /* 로마자 표기(Yeongdeungpo 등)는 한글 2~3자보다 훨씬 길다 — 붙임표 없는
+     한 단어라 줄바꿈 기회가 없으면 넘친 만큼 clip-path에 잘려 앞뒤 글자가
+     날아간다. 필요하면 단어 중간에서도 줄바꿈해 2줄로 접히게 한다
+     (실제 글자 크기 축소는 컴포넌트에서 라벨 길이를 보고 인라인으로 준다). */
+  overflow-wrap: anywhere;
+  word-break: break-word;
   transition: transform 0.12s ease, filter 0.12s ease;
 }
 

@@ -2,13 +2,14 @@ import { useMemo, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
 import { ALL_PLACES, CATEGORY_META, type Category } from "../data/seed";
 import { SEOUL_HEX_ROWS } from "../data/seoulHexMap";
+import { districtShortName, districtFullName, dongName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
 import { getTourImage } from "../lib/tourImages";
 
 const MAP_CATEGORIES: Category[] = ["market", "flower", "walk", "hike", "museum"];
 
 export default function DistrictExplorer() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [category, setCategory] = useState<Category>("market");
   const [gu, setGu] = useState<string | null>(null);
 
@@ -54,7 +55,7 @@ export default function DistrictExplorer() {
                 CATEGORY_META[c].icon
               )}
             </span>
-            <span className="cat-chip-label">{CATEGORY_META[c].label}</span>
+            <span className="cat-chip-label">{t.categoryLabels[c]}</span>
           </button>
         ))}
       </div>
@@ -76,6 +77,11 @@ export default function DistrictExplorer() {
           >
             {row.gus.map((d) => {
               const has = guWithData.has(d);
+              const label = districtShortName(d, language);
+              // 로마자 표기는 한글보다 훨씬 길다(Yeongdeungpo 등) — 라벨
+              // 길이를 보고 글자 크기를 미리 줄여서 잘리기 전에 줄인다.
+              const fontSize =
+                label.length > 10 ? 6.5 : label.length > 7 ? 7.5 : label.length > 4 ? 9 : 10.5;
               return (
                 <button
                   key={d}
@@ -83,10 +89,7 @@ export default function DistrictExplorer() {
                   style={{ "--cc": CATEGORY_META[category].color } as CSSProperties}
                   onClick={() => setGu(d === gu ? null : d)}
                 >
-                  {/* d.replace("구", "") 대신 slice — "구로구"는 첫 "구"가
-                      아니라 마지막 글자만 떼어내야 "구로"가 된다(안 그러면
-                      "로구"로 깨진다). 서울 자치구는 전부 "구"로 끝난다. */}
-                  <span>{d.slice(0, -1)}</span>
+                  <span style={{ fontSize }}>{label}</span>
                 </button>
               );
             })}
@@ -96,7 +99,9 @@ export default function DistrictExplorer() {
 
       {gu && (
         <div className="place-list">
-          {selected.length === 0 && <p className="empty-note">{t.noPlacesInDistrictMessage(gu)}</p>}
+          {selected.length === 0 && (
+            <p className="empty-note">{t.noPlacesInDistrictMessage(districtFullName(gu, language))}</p>
+          )}
           {selected.map((p) => {
             const photo = getTourImage(p.id);
             const meta = CATEGORY_META[p.category];
@@ -124,9 +129,12 @@ export default function DistrictExplorer() {
                 <div className="pr-body">
                   <div className="pr-top">
                     <span className="pr-category" style={{ "--cc": meta.color } as CSSProperties}>
-                      {meta.label}
+                      {t.categoryLabels[p.category]}
                     </span>
-                    <span className="pr-gu">{p.dong ? `${p.gu} ${p.dong}` : p.gu}</span>
+                    <span className="pr-gu">
+                      {districtFullName(p.gu, language)}
+                      {p.dong ? ` ${dongName(p.dong, language)}` : ""}
+                    </span>
                   </div>
                   <div className="pr-name">{p.confirmed ? p.name : "확인 필요"}</div>
                   {p.note && <div className="pr-note">{p.note}</div>}

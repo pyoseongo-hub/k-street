@@ -6,12 +6,13 @@ import { FESTIVALS } from "../data/seed";
 import { seasonOf } from "../lib/season";
 import { useRotatingSeed } from "../lib/useRotatingSeed";
 import { getTourImage } from "../lib/tourImages";
+import { districtFullName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
 
 const nowMonth = new Date().getMonth() + 1;
 
 export default function MonthlyFestivalPanel() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [month, setMonth] = useState(nowMonth);
   const rotatingSeed = useRotatingSeed();
 
@@ -57,7 +58,7 @@ export default function MonthlyFestivalPanel() {
               )}
               <div className="fc-body">
                 <div className="fc-top">
-                  <span className="fc-gu">{f.gu}</span>
+                  <span className="fc-gu">{districtFullName(f.gu, language)}</span>
                   {f.dateLabel && <span className="fc-date">{f.dateLabel}</span>}
                 </div>
                 <div className="fc-name">{f.name}</div>
