@@ -533,12 +533,19 @@ button {
    clip-path로 만들고, 행마다 --offset만큼 들여써서 서울의 울퉁불퉁한
    윤곽을 흉내 낸다. */
 .district-hexgrid {
-  --hex-w: 54px;
-  --hex-h: 48px;
-  --hex-gap: 3px;
+  /* 정육각형: 위아래가 뾰족하면 높이 = 폭 × 2/√3 ≈ 1.155배.
+     행 간격은 높이의 3/4 (즉 1/4만큼 겹쳐야 맞물린다). */
+  --hex-w: 49px;
+  --hex-h: 57px;
+  --hex-gap: 1px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* ⚠️ align-items:center를 쓰면 행마다 제 너비로 따로 중앙정렬돼서
+     margin-left 오프셋이 무의미해진다(= 서울 윤곽이 무너진다).
+     행은 왼쪽 기준으로 붙이고, 덩어리 전체를 margin auto로 가운데 둔다. */
+  align-items: flex-start;
+  width: fit-content;
+  margin: 0 auto;
   padding-top: 8px;
 }
 
@@ -546,42 +553,45 @@ button {
   display: flex;
   gap: var(--hex-gap);
   margin-left: calc(var(--offset) * (var(--hex-w) + var(--hex-gap)));
-  margin-top: -8px;
+  margin-top: calc(var(--hex-h) * -0.25 + var(--hex-gap));
 }
 
 .hex-tile {
   width: var(--hex-w);
   height: var(--hex-h);
   flex-shrink: 0;
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  /* 위아래 뾰족 + 좌우 수직변 (참고 이미지 실측 형태) */
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
   background: var(--surface-2);
   color: var(--text-muted);
-  opacity: 0.55;
+  opacity: 0.5;
   font-size: 10.5px;
   font-weight: 500;
   line-height: 1.15;
   cursor: pointer;
-  padding: 0 4px;
+  padding: 0 3px;
   text-align: center;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition: transform 0.12s ease, filter 0.12s ease;
 }
 
 .hex-tile.has-data {
   opacity: 1;
-  background: color-mix(in srgb, var(--cc) 30%, var(--surface));
-  color: color-mix(in srgb, var(--cc) 85%, var(--text));
+  /* 70% — 이보다 낮추면 차콜과 섞여 어두워져서 아래 어두운 글자가 안 읽힌다
+     (다섯 색 모두 이 비율에서 명암비 5:1 이상 나오는 걸 확인했다). */
+  background: color-mix(in srgb, var(--cc) 70%, var(--surface));
+  color: #10151E;
   font-weight: 700;
 }
 
 .hex-tile.selected {
   background: var(--cc);
-  color: #1B1408;
+  color: #10151E;
   font-weight: 700;
-  transform: scale(1.08);
+  transform: scale(1.1);
   z-index: 1;
 }
 
@@ -1028,8 +1038,8 @@ button {
   }
 
   .district-hexgrid {
-    --hex-w: 64px;
-    --hex-h: 56px;
+    --hex-w: 62px;
+    --hex-h: 72px;
   }
 
   .festival-cards {
@@ -1108,9 +1118,11 @@ button {
     height: 360px;
   }
 
+  /* 1080px 이상에서는 구 탐색이 2단 그리드의 좁은 칸(약 490px)으로 들어가므로
+     720px 구간보다 오히려 조금 줄인다 — 6.5칸이 그 폭을 넘으면 안 된다. */
   .district-hexgrid {
-    --hex-w: 70px;
-    --hex-h: 62px;
+    --hex-w: 56px;
+    --hex-h: 65px;
   }
 }
 

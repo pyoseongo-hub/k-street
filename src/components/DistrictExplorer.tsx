@@ -83,7 +83,10 @@ export default function DistrictExplorer() {
                   style={{ "--cc": CATEGORY_META[category].color } as CSSProperties}
                   onClick={() => setGu(d === gu ? null : d)}
                 >
-                  <span>{d.replace("구", "")}</span>
+                  {/* d.replace("구", "") 대신 slice — "구로구"는 첫 "구"가
+                      아니라 마지막 글자만 떼어내야 "구로"가 된다(안 그러면
+                      "로구"로 깨진다). 서울 자치구는 전부 "구"로 끝난다. */}
+                  <span>{d.slice(0, -1)}</span>
                 </button>
               );
             })}

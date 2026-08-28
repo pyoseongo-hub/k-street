@@ -17,11 +17,13 @@
   --accent-soft: #3A211D;
 
   --festival: #6FA894;
-  --market: #F2A855;
-  --flower: #E28FAE;
-  --walk: #78D8CB;
-  --hike: #A8BC5E;
-  --museum: #8B7CC4;
+  /* 2026-08-28 사용자: "다섯가지 색 바꿔, 너무 칙칙해".
+     어두운 차콜 위에 섞이면 탁해지므로 채도·명도를 함께 올렸다. */
+  --market: #FFB13C;
+  --flower: #FF8FBB;
+  --walk: #4FE3CB;
+  --hike: #A9EC6B;
+  --museum: #C4AEFF;
 
   --shadow: rgba(0, 0, 0, 0.3);
   --shadow-elevated: none;
@@ -43,11 +45,11 @@
     --accent-soft: rgba(120, 216, 203, 0.15);
 
     --festival: #F2BD6B;
-    --market: #F2A855;
-    --flower: #E28FAE;
-    --walk: #78D8CB;
-    --hike: #A8BC5E;
-    --museum: #8B7CC4;
+    --market: #FFB13C;
+    --flower: #FF8FBB;
+    --walk: #4FE3CB;
+    --hike: #A9EC6B;
+    --museum: #C4AEFF;
 
     --shadow: rgba(0, 0, 0, 0.06);
     --shadow-elevated: 0 6px 16px -6px rgba(0, 0, 0, 0.1);
@@ -67,11 +69,13 @@
   --accent-soft: rgba(120, 216, 203, 0.15);
 
   --festival: #F2BD6B;
-  --market: #F2A855;
-  --flower: #E28FAE;
-  --walk: #78D8CB;
-  --hike: #A8BC5E;
-  --museum: #8B7CC4;
+  /* 2026-08-28 사용자: "다섯가지 색 바꿔, 너무 칙칙해".
+     어두운 차콜 위에 섞이면 탁해지므로 채도·명도를 함께 올렸다. */
+  --market: #FFB13C;
+  --flower: #FF8FBB;
+  --walk: #4FE3CB;
+  --hike: #A9EC6B;
+  --museum: #C4AEFF;
 
   --shadow: rgba(0, 0, 0, 0.06);
   --shadow-elevated: 0 6px 16px -6px rgba(0, 0, 0, 0.1);
@@ -90,11 +94,13 @@
   --accent-soft: #3A211D;
 
   --festival: #6FA894;
-  --market: #F2A855;
-  --flower: #E28FAE;
-  --walk: #78D8CB;
-  --hike: #A8BC5E;
-  --museum: #8B7CC4;
+  /* 2026-08-28 사용자: "다섯가지 색 바꿔, 너무 칙칙해".
+     어두운 차콜 위에 섞이면 탁해지므로 채도·명도를 함께 올렸다. */
+  --market: #FFB13C;
+  --flower: #FF8FBB;
+  --walk: #4FE3CB;
+  --hike: #A9EC6B;
+  --museum: #C4AEFF;
 
   --shadow: rgba(0, 0, 0, 0.3);
   --shadow-elevated: none;
