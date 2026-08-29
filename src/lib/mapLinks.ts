@@ -16,6 +16,9 @@ export interface MapLinkTarget {
 export interface MapLink {
   label: "NAVER" | "KAKAO" | "GOOGLE";
   url: string;
+  /** 좌표가 있을 때만 채워진다 — 앱을 직접 열어 "길찾기 단계"로 바로 데려가는 스킴 URL.
+   *  없으면(좌표 미확보) url(검색 링크)만 쓴다 — 검색으로는 앱 스킴이 없다. */
+  appScheme?: string;
 }
 
 // 카카오맵·네이버지도만 같은 규격의 주요 액션으로 나란히 둔다. 구글은
@@ -37,6 +40,28 @@ export function renderMapLinksHtml(place: MapLinkTarget): string {
   return `<div class="place-directions"><div class="map-directions-row">${kakaoBtn(kakao.url)}${naverBtn(naver.url)}</div></div>`;
 }
 
+// 🚨 앱이 깔려 있으면 그 앱의 "길찾기 화면"으로 바로 데려가고, 없을 때만
+// 웹으로 대신 간다(dongne-hanip의 openNaverMap에서 이미 검증된 방식,
+// 2026-08-06 "링크가 안 열린다" 제보로 만들어짐 — 같은 문제를 카카오·네이버
+// 둘 다에 적용). **새 창(window.open)이 아니라 '이동'으로 열어야 한다** —
+// 예비 이동이 클릭 순간이 아니라 타이머 안에서 실행되므로, 새 탭으로 열면
+// 브라우저가 팝업으로 보고 막는다. 같은 탭 이동은 팝업 판정을 받지 않는다.
+// 앱이 정상적으로 열렸으면 화면이 가려지므로(document.hidden) 예비 이동을
+// 건너뛴다.
+export function openMapLink(link: MapLink) {
+  if (!link.appScheme) {
+    window.location.href = link.url;
+    return;
+  }
+  const start = Date.now();
+  window.location.href = link.appScheme;
+  setTimeout(() => {
+    if (Date.now() - start < 2200 && !document.hidden) {
+      window.location.href = link.url;
+    }
+  }, 1200);
+}
+
 export function getMapLinks(place: MapLinkTarget): MapLink[] {
   const hasCoords = typeof place.lat === "number" && typeof place.lng === "number";
   const encName = encodeURIComponent(place.name);
@@ -44,8 +69,14 @@ export function getMapLinks(place: MapLinkTarget): MapLink[] {
   if (hasCoords) {
     const { lat, lng } = place as { lat: number; lng: number };
     return [
-      { label: "KAKAO", url: `https://map.kakao.com/link/to/${encName},${lat},${lng}` },
-      { label: "NAVER", url: `https://map.naver.com/p/directions/-/${lng},${lat},${encName}/-/transit` },
+      // 📍 검색 결과 화면(handle 한 번 더 눌러야 길찾기로 넘어감)이 아니라
+      // **길찾기 단계로 바로** 가야 한다(2026-08-29 사용자 지적: "이 버튼 누른
+      // 단계까지 가야한다고" — 카카오맵 검색 결과 바텀시트의 길찾기 아이콘을
+      // 손으로 한 번 더 눌러야 했다). 앱이 깔려 있으면 kakaomap:// / nmap://
+      // 스킴으로 곧장 길찾기 화면을 열고(appScheme), 앱이 없을 때만 이 웹
+      // url(길찾기 웹페이지, 그래도 검색보다는 한 단계 앞선 화면)로 대신 간다.
+      { label: "KAKAO", url: `https://map.kakao.com/link/to/${encName},${lat},${lng}`, appScheme: `kakaomap://route?ep=${lat},${lng}&by=PUBLICTRANSIT` },
+      { label: "NAVER", url: `https://map.naver.com/p/directions/-/${lng},${lat},${encName}/-/transit`, appScheme: `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encName}&appname=com.kstreet.app` },
       { label: "GOOGLE", url: `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}` },
     ];
   }

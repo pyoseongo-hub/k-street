@@ -112,7 +112,17 @@ export default function DistrictExplorer() {
                   </div>
                   <div className="pr-name">{p.confirmed ? p.name : "확인 필요"}</div>
                   {p.note && <div className="pr-note">{p.note}</div>}
-                  {p.confirmed && <MapDirections place={p} />}
+                  {/* 관광공사 사진과 함께 받은 실제 좌표가 있으면 길찾기에도 쓴다
+                      (2026-08-29 — 좌표가 이미 있는데도 검색 화면만 뜨던 문제). */}
+                  {p.confirmed && (
+                    <MapDirections
+                      place={
+                        p.lat == null && photo?.lat != null
+                          ? { ...p, lat: photo.lat, lng: photo.lng }
+                          : p
+                      }
+                    />
+                  )}
                 </div>
               </div>
             );

@@ -728,6 +728,11 @@ button {
   text-decoration: none;
   white-space: nowrap;
   transition: filter 0.12s ease;
+  /* <a>에서 <button onClick>으로 바뀌었다(2026-08-29, 길찾기 앱 스킴 직결 수정) —
+     버튼 기본 스타일(appearance)을 지워야 위 배경·모양이 그대로 적용된다. */
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
 }
 
 .map-btn:active {

@@ -63,7 +63,16 @@ export default function MonthlyFestivalPanel() {
                 </div>
                 <div className="fc-name">{f.name}</div>
                 {f.note && <div className="fc-note">{f.note}</div>}
-                <MapDirections place={f} />
+                {/* 관광공사 사진과 함께 받은 실제 좌표(fetch-tour-images.mjs)가 있으면
+                    길찾기에도 쓴다 — 2026-08-29 사용자 지적: 좌표가 이미 있는데도
+                    "검색" 링크만 뜨고 "길찾기 단계"로 못 가는 걸 잡음. */}
+                <MapDirections
+                  place={
+                    f.lat == null && photo?.lat != null
+                      ? { ...f, lat: photo.lat, lng: photo.lng }
+                      : f
+                  }
+                />
               </div>
             </div>
             );
