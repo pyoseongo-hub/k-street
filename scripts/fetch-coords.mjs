@@ -27,7 +27,11 @@ const KAKAO_KEY = process.env.KAKAO_REST_API_KEY;
 const NAVER_ID = process.env.NAVER_GEOCODE_CLIENT_ID;
 const NAVER_SECRET = process.env.NAVER_GEOCODE_CLIENT_SECRET;
 const APPLY = process.argv.includes("--apply");
-const LIMIT = Number(process.argv.find((a) => a.startsWith("--limit="))?.split("=")[1] ?? Infinity);
+// --limit=(빈 값)이면 Number("")가 0이 되어 "전체 실행"이 조용히 0곳
+// 처리로 끝나는 버그가 있었다(fetch-tour-images.mjs에서 실제로 겪고 나서
+// 여기도 같이 고침, 2026-08-30) — 빈 문자열도 "제한 없음"으로 취급한다.
+const rawLimit = process.argv.find((a) => a.startsWith("--limit="))?.split("=")[1];
+const LIMIT = rawLimit ? Number(rawLimit) : Infinity;
 
 if (!KAKAO_KEY) {
   console.error("KAKAO_REST_API_KEY 환경변수가 없다. developers.kakao.com에서 무료 발급(즉시, 승인 대기 없음).");

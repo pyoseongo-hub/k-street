@@ -87,7 +87,11 @@ function normalize(s) {
   return s.replace(/[·・()（）]/g, " ").replace(/\s+/g, " ").trim();
 }
 
-const LIMIT = Number(process.argv.find((a) => a.startsWith("--limit="))?.split("=")[1] ?? Infinity);
+// --limit=(빈 값)이면 Number("")가 0이 되어 전체 실행이 "0곳 처리"로 조용히
+// 죽는 버그가 있었다(2026-08-30, GitHub Actions에서 limit 칸을 비운 채
+// 돌렸을 때 실제로 겪음) — 빈 문자열도 "제한 없음"으로 취급해야 한다.
+const rawLimit = process.argv.find((a) => a.startsWith("--limit="))?.split("=")[1];
+const LIMIT = rawLimit ? Number(rawLimit) : Infinity;
 
 async function main() {
   const source = readFileSync(SEED_TS, "utf-8");
