@@ -231,6 +231,27 @@ button {
   height: 96px;
 }
 
+/* 실제 계절 사진이 있을 때만 SeasonArt(일러스트) 대신 이 로테이션을 쓴다
+   (SeasonPhotoHero.tsx 참고) — 사진이 없는 계절은 여전히 일러스트가 뜬다. */
+.season-photo-hero {
+  position: relative;
+  overflow: hidden;
+  background: #131316;
+}
+
+.season-photo-hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.season-photo-hero-credit {
+  z-index: 1;
+}
+
 .panel-inner {
   padding: 16px 16px 18px;
 }

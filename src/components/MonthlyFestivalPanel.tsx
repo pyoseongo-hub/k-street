@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useLanguage } from "../lib/useLanguage";
 import SeasonMonthPicker from "./SeasonMonthPicker";
 import SeasonArt from "./SeasonArt";
+import SeasonPhotoHero from "./SeasonPhotoHero";
 import { FESTIVALS } from "../data/seed";
 import { seasonOf } from "../lib/season";
 import { useRotatingSeed } from "../lib/useRotatingSeed";
@@ -28,7 +29,7 @@ export default function MonthlyFestivalPanel() {
 
   return (
     <section className="panel monthly-festival-panel">
-      <SeasonArt className="mfp-hero" season={seasonOf(month)} seed={rotatingSeed} dense />
+      <SeasonPhotoHero className="mfp-hero" season={seasonOf(month)} seed={rotatingSeed} dense />
       <div className="panel-inner">
         <div className="panel-head">
           <span className="panel-eyebrow">{t.monthlyEditorLabel}</span>
