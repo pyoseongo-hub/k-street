@@ -42,11 +42,11 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "광진구", category: "festival", name: "광진뮤직페스타", confirmed: true },
   { id: id(), gu: "구로구", category: "festival", name: "구로G페스티벌", startMonth: 9, endMonth: 9, dateLabel: "9월 말(2025: 9.26–28)", confirmed: true },
   { id: id(), gu: "금천구", category: "festival", name: "금천하모니축제", confirmed: true },
-  // 🚨 "A · B"처럼 이름 두 개를 하나로 합쳐 두면 지도 검색이 안 된다(2026-08-29
-  // 사용자 지적: "이렇게 두개 있는데는 한개씩 나눠야 지도 검새되니") — 카카오·네이버가
-  // "탈축제 · 댄싱노원 거리페스티벌"을 한 덩어리로 못 찾는다. 아래처럼 항목을 쪼갠다.
-  { id: id(), gu: "노원구", category: "festival", name: "탈축제", startMonth: 9, endMonth: 9, confirmed: true },
-  { id: id(), gu: "노원구", category: "festival", name: "댄싱노원 거리페스티벌", startMonth: 9, endMonth: 9, note: "9월 이틀간", confirmed: true },
+  // "탈축제 · 댄싱노원 거리페스티벌"은 원래 서로 다른 두 축제인 줄 알고 나눴었는데
+  // (2026-08-29), 다시 찾아보니 "탈축제"는 옛 이름이고 2023년 새이름 공모로
+  // "댄싱노원 거리페스티벌"로 개명한 같은 행사였다(서울문화포털 등 확인, 2026-08-30) —
+  // 지금 열리는 건 하나뿐이라 옛 이름은 빼고 지금 이름만 남긴다.
+  { id: id(), gu: "노원구", category: "festival", name: "댄싱노원 거리페스티벌", startMonth: 9, endMonth: 9, note: "옛 이름 '노원탈축제', 2023년 개명. 9월 이틀간", confirmed: true },
   { id: id(), gu: "도봉구", category: "festival", name: "도봉별빛축제", startMonth: 6, endMonth: 6, dateLabel: "6월(2025: 6.13–17)", note: "중랑천(도봉구청~세월교 540m)", confirmed: true },
   { id: id(), gu: "동대문구", category: "festival", name: "동대문페스티벌", startMonth: 10, endMonth: 10, note: "공연예술축제 — 거리예술·음악공연", confirmed: true },
   { id: id(), gu: "동작구", category: "festival", name: "도심 속 바다축제", confirmed: true },
