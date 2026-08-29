@@ -1,4 +1,5 @@
 import { getMapLinks, openMapLink, type MapLinkTarget } from "../lib/mapLinks";
+import { useLanguage } from "../lib/useLanguage";
 
 // SeoulMap.tsx(네이버 지도 InfoWindow)는 raw HTML 문자열이라 이 컴포넌트를 못 쓴다 —
 // 그쪽은 mapLinks.ts의 renderMapLinksHtml()이 같은 마크업을 문자열로 대신 만든다.
@@ -12,6 +13,7 @@ import { getMapLinks, openMapLink, type MapLinkTarget } from "../lib/mapLinks";
 // 주소를 열어야 타이머 안에서도 팝업 차단에 안 걸린다 — 그래서 <a>가 아니라
 // <button onClick>이다.
 export default function MapDirections({ place }: { place: MapLinkTarget }) {
+  const { t } = useLanguage();
   const [kakao, naver] = getMapLinks(place);
   return (
     <div className="place-directions">
@@ -31,6 +33,11 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
           <span className="map-btn-badge map-btn-badge--naver">N</span>네이버지도
         </button>
       </div>
+      {/* 폰·OS·앱 설치 여부 조합을 전부 미리 확인할 수는 없다(2026-08-29 사용자
+          지시: "내가 다 확인 못하니 안내문구 넣어 사용자가 할수있게") — 앱 스킴이
+          안 먹는 드문 경우에도 방문객이 스스로 다음 단계를 알 수 있게 짧은 안내를
+          늘 함께 보여준다. */}
+      <p className="map-app-note">{t.mapAppNote}</p>
     </div>
   );
 }

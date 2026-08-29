@@ -786,6 +786,13 @@ button {
   gap: 5px;
 }
 
+.map-app-note {
+  margin: 6px 0 0;
+  font-size: 11px;
+  color: var(--text-tertiary, #8C93A0);
+  line-height: 1.4;
+}
+
 /* ── tab bar ────────────────────────────────────────── */
 /* 플로팅 도크(2026-08-28 사용자가 전달한 UI 디자인 가이드) — 화면 폭
    전체를 채우던 하단 바 대신 좌우 여백을 두고 뜬 캡슐 형태로 바꾼다.
