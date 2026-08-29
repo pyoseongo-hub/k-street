@@ -55,7 +55,11 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "서초구", category: "festival", name: "서초뮤직앤아트페스티벌", startMonth: 6, endMonth: 6, dateLabel: "6월(2024: 6.8–9)", confirmed: true },
   { id: id(), gu: "성동구", category: "festival", name: "서울숲 JAZZ페스티벌", startMonth: 9, endMonth: 9, dateLabel: "9월 말", confirmed: true },
   { id: id(), gu: "성동구", category: "festival", name: "세계민속춤축제", startMonth: 9, endMonth: 9, dateLabel: "9월 말", confirmed: true },
-  { id: id(), gu: "성북구", category: "festival", name: "성북 세계음식축제 누리마실 · 다다페스타", startMonth: 5, endMonth: 6, note: "연도마다 5월 또는 6월(17회 2025.5.18, 18회 2026.6.7 예정)", confirmed: true },
+  // WebSearch로 확인(2026-08-29): 누리마실(성북동, 6월경, 세계 음식·문화)과
+  // 다다페스타(석관동, 9월, 성북거리문화축제)는 서로 다른 장소·시기의 별개 행사다
+  // — 하나로 합쳐 두면 지도 검색이 안 될뿐더러 시기 정보도 틀리게 섞여 있었다.
+  { id: id(), gu: "성북구", dong: "성북동", category: "festival", name: "성북 세계음식축제 누리마실", startMonth: 5, endMonth: 6, note: "연도마다 5월 또는 6월(17회 2025.5.18, 18회 2026.6.7 예정)", confirmed: true },
+  { id: id(), gu: "성북구", dong: "석관동", category: "festival", name: "성북거리문화축제 다다페스타", startMonth: 9, endMonth: 9, note: "이주민·다문화가정·청년이 함께하는 거리문화축제", confirmed: true },
   { id: id(), gu: "송파구", category: "festival", name: "한성백제문화제", startMonth: 10, endMonth: 10, dateLabel: "10.23–25", note: "올림픽공원", confirmed: true },
   { id: id(), gu: "양천구", dong: "신정동", category: "festival", name: "양천가족거리축제", note: "별도로 '우리동네축제'(14개 동 개별 개최)도 운영", lat: 37.5480, lng: 126.8490, confirmed: true },
   { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "여의도 봄꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4.3–4.7", note: "여의서로 국회 뒤편, 무료", lat: 37.5275, lng: 126.9255, confirmed: true },
@@ -87,7 +91,7 @@ export const MARKETS: Place[] = [
   { id: id(), gu: "관악구", category: "market", name: "신원시장", note: "신림동, 약 120개 점포", confirmed: true },
   { id: id(), gu: "광진구", category: "market", name: "중곡제일시장", confirmed: true },
   { id: id(), gu: "구로구", category: "market", name: "구로시장", note: "1962년, 한복 거리로 유명", confirmed: true },
-  { id: id(), gu: "금천구", category: "market", name: "비단길 현대시장", note: "약 270개 점포, 금천구 최대", confirmed: true },
+  { id: id(), gu: "금천구", category: "market", name: "비단길현대시장", note: "약 270개 점포, 금천구 최대", confirmed: true },
   { id: id(), gu: "노원구", category: "market", name: "공릉동도깨비시장", note: "일평균 4천명, 7호선 공릉역", confirmed: true },
   { id: id(), gu: "도봉구", category: "market", name: "방학동 도깨비시장", note: "서울 우수재래시장 8곳 선정", confirmed: true },
   { id: id(), gu: "동대문구", category: "market", name: "경동시장", confirmed: true },
@@ -244,12 +248,16 @@ export const MUSEUMS: Place[] = [
   { id: id(), gu: "서초구", category: "museum", name: "예술의전당 서울서예박물관", note: "1988년, 국내 유일 서예 전문 전시장", confirmed: true },
   { id: id(), gu: "영등포구", category: "museum", name: "문래예술공장(갤러리M30)", note: "서울문화재단 운영", confirmed: true },
   { id: id(), gu: "은평구", category: "museum", name: "은평역사한옥박물관", confirmed: true },
-  { id: id(), gu: "강북구", category: "museum", name: "강북구립미술관 · 북서울꿈의숲", note: "인수동, 강북구 최대 규모", confirmed: true },
+  // 북서울꿈의숲은 이미 산책로(04)에 별도 항목으로 있다 — 미술관 항목에 공원
+  // 이름까지 합쳐 두면 지도 검색도 안 되고 두 카테고리에 같은 곳이 겹친다.
+  { id: id(), gu: "강북구", category: "museum", name: "강북구립미술관", note: "북서울꿈의숲 내, 인수동", confirmed: true },
   { id: id(), gu: "구로구", category: "museum", name: "구로문화재단 갤러리", note: "항동철길·구로G페스티벌(03-1) 연계", confirmed: true },
   { id: id(), gu: "동작구", category: "museum", name: "국립서울현충원", note: "역사문화 전시 · 참배 시설", confirmed: true },
   { id: id(), gu: "성동구", category: "museum", name: "한양대학교박물관", note: "서울숲(04-2) 인근", confirmed: true },
   { id: id(), gu: "성동구", category: "museum", name: "성동구청 갤러리", confirmed: true },
-  { id: id(), gu: "중랑구", category: "museum", name: "망우역사문화공원 · 중랑역사문화센터", note: "서울장미축제(03-2) 인근", confirmed: true },
+  // 망우역사문화공원은 이미 산책로(04)에 별도 항목으로 있다 — 위 강북구
+  // 항목과 같은 이유로 미술관 항목은 중랑역사문화센터만 남긴다.
+  { id: id(), gu: "중랑구", category: "museum", name: "중랑역사문화센터", note: "망우역사문화공원 내, 서울장미축제(03-2) 인근", confirmed: true },
 ];
 
 const ALL_PLACES_RAW: Place[] = [

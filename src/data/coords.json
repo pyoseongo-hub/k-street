@@ -23,325 +23,295 @@
     "source": "kakao+naver",
     "matchedName": "금천하모니축제"
   },
-  "ks_b": {
+  "ks_c": {
     "lat": 37.5693012458811,
     "lng": 127.069818250445,
     "source": "kakao+naver",
     "matchedName": "2026 동대문페스티벌"
   },
-  "ks_g": {
-    "lat": 37.5443222301513,
-    "lng": 127.037617759165,
-    "source": "kakao+naver",
-    "matchedName": "서울숲"
-  },
-  "ks_n": {
+  "ks_q": {
     "lat": 37.595983411417976,
     "lng": 126.91527212642877,
     "source": "kakao+naver",
     "matchedName": "은평누리축제"
   },
-  "ks_r": {
+  "ks_u": {
     "lat": 37.5076807262772,
     "lng": 127.099112837006,
     "source": "kakao",
     "matchedName": "석촌호수 서호"
   },
-  "ks_s": {
+  "ks_v": {
     "lat": 37.509885050791176,
     "lng": 127.02366486128717,
     "source": "kakao+naver",
     "matchedName": "영동전통시장"
   },
-  "ks_t": {
+  "ks_w": {
     "lat": 37.5508604719985,
     "lng": 127.128819574465,
     "source": "kakao+naver",
     "matchedName": "암사종합시장"
   },
-  "ks_u": {
+  "ks_x": {
     "lat": 37.6307995708701,
     "lng": 127.023445986404,
     "source": "kakao+naver",
     "matchedName": "수유전통시장"
   },
-  "ks_v": {
+  "ks_y": {
     "lat": 37.5432550860872,
     "lng": 126.843533944782,
     "source": "kakao+naver",
     "matchedName": "화곡본동시장"
   },
-  "ks_w": {
+  "ks_z": {
     "lat": 37.4825831435359,
     "lng": 126.926766602033,
     "source": "kakao+naver",
     "matchedName": "신원시장"
   },
-  "ks_x": {
+  "ks_10": {
     "lat": 37.563918547280025,
     "lng": 127.08131407116785,
     "source": "kakao+naver",
     "matchedName": "중곡제일시장"
   },
-  "ks_y": {
+  "ks_11": {
     "lat": 37.4896296933168,
     "lng": 126.885620029839,
     "source": "kakao+naver",
     "matchedName": "구로시장"
   },
-  "ks_z": {
+  "ks_12": {
     "lat": 37.4577266926762,
     "lng": 126.90487738542274,
     "source": "kakao+naver",
     "matchedName": "비단길현대시장"
   },
-  "ks_10": {
+  "ks_13": {
     "lat": 37.62223342424176,
     "lng": 127.0759131838009,
     "source": "kakao+naver",
     "matchedName": "공릉동도깨비시장"
   },
-  "ks_12": {
+  "ks_15": {
     "lat": 37.579039740933176,
     "lng": 127.03943411053307,
     "source": "kakao",
     "matchedName": "경동시장"
   },
-  "ks_14": {
+  "ks_17": {
     "lat": 37.555885964724716,
     "lng": 126.90626589039096,
     "source": "kakao+naver",
     "matchedName": "망원시장"
   },
-  "ks_15": {
+  "ks_18": {
     "lat": 37.59093296706887,
     "lng": 126.94317699687126,
     "source": "kakao+naver",
     "matchedName": "인왕시장"
   },
-  "ks_17": {
+  "ks_1a": {
     "lat": 37.57068418982381,
     "lng": 127.04127141025155,
     "source": "kakao+naver",
     "matchedName": "마장축산물시장"
   },
-  "ks_18": {
+  "ks_1b": {
     "lat": 37.60840566256222,
     "lng": 127.00951216588793,
     "source": "kakao+naver",
     "matchedName": "정릉시장"
   },
-  "ks_19": {
+  "ks_1c": {
     "lat": 37.4938884413034,
     "lng": 127.110927336635,
     "source": "kakao",
     "matchedName": "가락시장"
   },
-  "ks_1a": {
+  "ks_1d": {
     "lat": 37.521299011452,
     "lng": 126.876570609796,
     "source": "kakao+naver",
     "matchedName": "오목교중앙시장"
   },
-  "ks_1e": {
+  "ks_1h": {
     "lat": 37.57005529646949,
     "lng": 126.99894728223626,
     "source": "kakao+naver",
     "matchedName": "광장시장"
   },
-  "ks_1f": {
+  "ks_1i": {
     "lat": 37.55918176072071,
     "lng": 126.9776267740439,
     "source": "kakao+naver",
     "matchedName": "남대문시장"
   },
-  "ks_1g": {
+  "ks_1j": {
     "lat": 37.5970099681642,
     "lng": 127.098252841871,
     "source": "kakao+naver",
     "matchedName": "우림시장"
   },
-  "ks_1h": {
+  "ks_1k": {
     "lat": 37.4818037639471,
     "lng": 127.046595188917,
     "source": "kakao",
     "matchedName": "양재천"
   },
-  "ks_1k": {
+  "ks_1o": {
     "lat": 37.5693958477101,
     "lng": 126.835037244018,
     "source": "kakao+naver",
     "matchedName": "서울식물원"
   },
-  "ks_1l": {
+  "ks_1p": {
     "lat": 37.4717760936514,
     "lng": 126.933822240006,
     "source": "kakao+naver",
     "matchedName": "도림천"
   },
-  "ks_1m": {
+  "ks_1q": {
     "lat": 37.5499772549675,
     "lng": 127.080235171998,
     "source": "kakao+naver",
     "matchedName": "서울어린이대공원"
   },
-  "ks_1n": {
+  "ks_1r": {
     "lat": 37.5092339002167,
     "lng": 126.874219829815,
     "source": "kakao",
     "matchedName": "안양천"
   },
-  "ks_1o": {
+  "ks_1s": {
     "lat": 37.4549899165436,
     "lng": 126.892828210117,
     "source": "kakao+naver",
     "matchedName": "안양천"
   },
-  "ks_1p": {
+  "ks_1t": {
     "lat": 37.6674832700593,
     "lng": 127.049231777697,
     "source": "kakao",
     "matchedName": "중랑천"
   },
-  "ks_1r": {
+  "ks_1v": {
     "lat": 37.5691469686793,
     "lng": 126.978647068151,
     "source": "kakao+naver",
     "matchedName": "청계천"
   },
-  "ks_1s": {
+  "ks_1w": {
     "lat": 37.50255501820018,
     "lng": 126.97462182443368,
     "source": "kakao+naver",
     "matchedName": "국립서울현충원"
   },
-  "ks_1t": {
-    "lat": 37.57213335842017,
-    "lng": 126.88740136782069,
-    "source": "kakao+naver",
-    "matchedName": "난지천공원"
-  },
-  "ks_1v": {
+  "ks_21": {
     "lat": 37.4818037639471,
     "lng": 127.046595188917,
     "source": "kakao",
     "matchedName": "양재천"
   },
-  "ks_1w": {
+  "ks_22": {
     "lat": 37.5443222301513,
     "lng": 127.037617759165,
     "source": "kakao+naver",
     "matchedName": "서울숲"
   },
-  "ks_1x": {
-    "lat": 37.5896369994549,
-    "lng": 127.010901313346,
-    "source": "kakao",
-    "matchedName": "성북천"
-  },
-  "ks_1y": {
+  "ks_25": {
     "lat": 37.5076807262772,
     "lng": 127.099112837006,
     "source": "kakao",
     "matchedName": "석촌호수 서호"
   },
-  "ks_1z": {
+  "ks_26": {
     "lat": 37.5092339002167,
     "lng": 126.874219829815,
     "source": "kakao",
     "matchedName": "안양천"
   },
-  "ks_22": {
+  "ks_29": {
     "lat": 37.5800209041095,
     "lng": 126.906234509821,
     "source": "kakao",
     "matchedName": "불광천"
   },
-  "ks_23": {
+  "ks_2a": {
     "lat": 37.5691469686793,
     "lng": 126.978647068151,
     "source": "kakao+naver",
     "matchedName": "청계천"
   },
-  "ks_24": {
-    "lat": 37.5524979951415,
-    "lng": 126.989316855952,
-    "source": "kakao+naver",
-    "matchedName": "남산공원"
-  },
-  "ks_25": {
+  "ks_2d": {
     "lat": 37.5797811776291,
     "lng": 127.096083733232,
     "source": "kakao+naver",
     "matchedName": "사가정공원"
   },
-  "ks_26": {
+  "ks_2e": {
     "lat": 37.52455769460598,
     "lng": 127.03528760485077,
     "source": "kakao+naver",
     "matchedName": "도산근린공원"
   },
-  "ks_27": {
+  "ks_2f": {
     "lat": 37.57031028608262,
     "lng": 127.15640943958527,
     "source": "kakao+naver",
     "matchedName": "서울테마산책길 고덕 자갈길"
   },
-  "ks_28": {
+  "ks_2g": {
     "lat": 37.62360650548208,
     "lng": 127.04157251496886,
     "source": "kakao+naver",
     "matchedName": "북서울꿈의숲"
   },
-  "ks_29": {
-    "lat": 37.5738000661701,
-    "lng": 126.839068805614,
-    "source": "kakao+naver",
-    "matchedName": "궁산근린공원"
-  },
-  "ks_2a": {
+  "ks_2j": {
     "lat": 37.471296925982,
     "lng": 126.960361423801,
     "source": "kakao+naver",
     "matchedName": "낙성대공원"
   },
-  "ks_2b": {
+  "ks_2k": {
     "lat": 37.5292974433415,
     "lng": 127.06892112991,
     "source": "kakao+naver",
     "matchedName": "뚝섬한강공원"
   },
-  "ks_2e": {
+  "ks_2n": {
     "lat": 37.620691807133,
     "lng": 127.078706040469,
     "source": "kakao+naver",
     "matchedName": "경춘선숲길"
   },
-  "ks_2f": {
+  "ks_2o": {
     "lat": 37.6781213031547,
     "lng": 127.029945030295,
     "source": "kakao",
     "matchedName": "무수골"
   },
-  "ks_2g": {
+  "ks_2p": {
     "lat": 37.58006017100839,
     "lng": 127.0349730190753,
     "source": "kakao+naver",
     "matchedName": "서울테마산책길 홍릉 두물길"
   },
-  "ks_2h": {
+  "ks_2q": {
     "lat": 37.50255501820018,
     "lng": 126.97462182443368,
     "source": "kakao+naver",
     "matchedName": "국립서울현충원"
   },
-  "ks_2i": {
+  "ks_2r": {
     "lat": 37.558803479324,
     "lng": 126.925338455597,
     "source": "kakao+naver",
     "matchedName": "경의선숲길"
   },
-  "ks_2n": {
+  "ks_2w": {
     "lat": 37.5205340628851,
     "lng": 127.120812783275,
     "source": "kakao",
