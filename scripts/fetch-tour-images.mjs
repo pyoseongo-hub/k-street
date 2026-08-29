@@ -10,9 +10,12 @@
 // 카테고리 전부로 넓힌다(사용자 확인 후 진행, 2026-08-28).
 //
 // 이 세션(샌드박스)은 apis.data.go.kr에 접속이 막혀 있어서 직접 실행해 확인할 수 없다.
-// 실제 인터넷이 되는 로컬 PC에서 인증키를 받아 이렇게 실행할 것:
+// 실제 인터넷이 되는 로컬 PC(또는 fetch-tour-images.yml GitHub Actions)에서
+// 이렇게 실행할 것 — data.go.kr 활용신청 상세 화면의 "일반 인증키"를 그대로
+// 복사해 쓰면 된다(Encoding/Decoding 구분해서 찾을 필요 없음, 아래 searchKeyword()
+// 주석 참고):
 //
-//   TOUR_API_KEY=발급받은_디코딩_키 node scripts/fetch-tour-images.mjs
+//   TOUR_API_KEY=데이터포털에서_복사한_일반_인증키 node scripts/fetch-tour-images.mjs
 //
 // 결과는 src/data/tour-images.json에 저장된다(비밀값 아님 — 이미지 URL만 들어있어 커밋해도 된다).
 // 이름이 확실히 일치하는 것만 저장한다 — 애매하면 건너뛴다(정확도 원칙: 틀린 사진 < 빈 칸).
@@ -34,8 +37,12 @@ if (!API_KEY) {
 const BASE = "https://apis.data.go.kr/B551011/KorService2/searchKeyword2";
 
 async function searchKeyword(keyword) {
+  // serviceKey는 URLSearchParams에 넣지 않고 직접 이어 붙인다 — data.go.kr의
+  // "일반 인증키"는 이미 URL에 바로 쓸 수 있게 인코딩된 값(%2B, %2F, %3D 등을
+  // 그대로 포함)이라, URLSearchParams를 거치면 그 %를 다시 인코딩해 %252B처럼
+  // 이중 인코딩되어 키가 깨진다. 사용자가 데이터포털 화면에 보이는 "일반
+  // 인증키" 값을 그대로 복사해 쓸 수 있게 하기 위한 조치다(2026-08-28).
   const params = new URLSearchParams({
-    serviceKey: API_KEY,
     MobileOS: "ETC",
     MobileApp: "KStreet",
     _type: "json",
@@ -44,7 +51,7 @@ async function searchKeyword(keyword) {
     numOfRows: "5",
     pageNo: "1",
   });
-  const res = await fetch(`${BASE}?${params.toString()}`);
+  const res = await fetch(`${BASE}?serviceKey=${API_KEY}&${params.toString()}`);
   if (!res.ok) throw new Error(`HTTP ${res.status} for "${keyword}"`);
   const data = await res.json();
   const items = data?.response?.body?.items?.item;
