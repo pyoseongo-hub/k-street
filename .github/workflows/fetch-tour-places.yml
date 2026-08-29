@@ -1,0 +1,67 @@
+name: Fetch tour places (rebuild source data)
+
+# 🚨 seed.ts를 관광공사 자료 기반으로 다시 짜기 위한 1단계다(2026-08-30
+# 사용자 지시: "싹다 지워 안맞는거 매칭하지 말고 관광공사 꺼 그대로 축제
+# 넣고 길잦아넣고 등산로넣고 다 여기자료를 베이스로해"). 지금까지 해온
+# "우리 목록에 관광공사 사진을 맞춰 넣기"는 계속 실패했다 — 그래서 반대로
+# 관광공사 자료를 그대로 서울 데이터의 기반으로 쓴다.
+#
+# 이 실행은 seed.ts를 아직 안 건드린다 — src/data/tour-places-raw.json에
+# 카테고리별 원본 결과만 저장한다. 몇 곳이 실제로 잡히는지 먼저 눈으로
+# 확인한 뒤에, 그다음 단계로 이 파일을 seed.ts로 옮긴다(정확도 원칙:
+# 실제 응답을 한 번도 못 본 채로 seed.ts 형식을 다시 짜는 건 위험하다 —
+# 이 저장소를 만드는 세션은 apis.data.go.kr을 직접 못 부른다).
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fetch-tour-places:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Fetch tour places
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: node scripts/fetch-tour-places.mjs | tee fetch-log.txt
+      - name: Commit tour-places-raw.json
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- src/data/tour-places-raw.json; then
+            echo "committed=no" >> "$GITHUB_OUTPUT"
+          else
+            git add src/data/tour-places-raw.json
+            git commit -m "관광공사 원본 자료 받기 (fetch-tour-places, 검토용) [skip render]"
+            git push
+            echo "committed=yes" >> "$GITHUB_OUTPUT"
+          fi
+      - name: 결과 요약 (Summary에서 바로 확인)
+        if: always()
+        run: |
+          {
+            echo "## 🗂️ 관광공사 원본 자료 받기 결과 (검토용, 아직 앱엔 반영 안 됨)"
+            echo ""
+            if [ "${{ steps.commit.outputs.committed }}" = "yes" ]; then
+              echo "### ✅ src/data/tour-places-raw.json에 저장했습니다"
+              echo "아직 seed.ts로 옮기지 않았습니다 — 카테고리별 몇 건이 잡혔는지 아래 로그로 먼저 확인하세요."
+            else
+              echo "### ⬜ 저장된 게 없습니다"
+              echo "API 키가 잘못됐거나 호출이 전부 실패했을 가능성이 큽니다 — 아래 로그를 확인하세요."
+            fi
+            echo ""
+            echo "<details><summary>🪵 전체 로그 보기 (카테고리별 건수)</summary>"
+            echo ""
+            echo '```'
+            cat fetch-log.txt
+            echo '```'
+            echo "</details>"
+          } >> "$GITHUB_STEP_SUMMARY"
