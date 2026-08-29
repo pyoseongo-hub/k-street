@@ -120,33 +120,38 @@ export default function DistrictExplorer() {
         </div>
       )}
 
+      {/* 육각형을 화면 폭에 맞춰 줄이면 로마자 표기가 6.5px까지 작아져 가독성이
+          떨어졌다(2026-08-28 사용자 지적: "가독성 떨어져 특히 영어") — 육각형
+          자체를 키우고, 다 안 들어가면 이 바깥 상자가 가로로 스크롤한다. */}
       <div className="district-hexgrid">
-        {SEOUL_HEX_ROWS.map((row, i) => (
-          <div
-            className="hex-row"
-            key={i}
-            style={{ "--offset": row.offset } as CSSProperties}
-          >
-            {row.gus.map((d) => {
-              const has = guWithData.has(d);
-              const label = districtShortName(d, language);
-              // 로마자 표기는 한글보다 훨씬 길다(Yeongdeungpo 등) — 라벨
-              // 길이를 보고 글자 크기를 미리 줄여서 잘리기 전에 줄인다.
-              const fontSize =
-                label.length > 10 ? 6.5 : label.length > 7 ? 7.5 : label.length > 4 ? 9 : 10.5;
-              return (
-                <button
-                  key={d}
-                  className={"hex-tile" + (has ? " has-data" : "") + (d === gu ? " selected" : "")}
-                  style={{ "--cc": CATEGORY_META[category].color } as CSSProperties}
-                  onClick={() => setGu(d === gu ? null : d)}
-                >
-                  <span style={{ fontSize }}>{label}</span>
-                </button>
-              );
-            })}
-          </div>
-        ))}
+        <div className="hex-rows">
+          {SEOUL_HEX_ROWS.map((row, i) => (
+            <div
+              className="hex-row"
+              key={i}
+              style={{ "--offset": row.offset } as CSSProperties}
+            >
+              {row.gus.map((d) => {
+                const has = guWithData.has(d);
+                const label = districtShortName(d, language);
+                // 로마자 표기는 한글·한자보다 훨씬 길다(Yeongdeungpo 등) —
+                // 라벨 길이를 보고 글자 크기를 미리 줄여서 잘리기 전에 줄인다.
+                const fontSize =
+                  label.length > 10 ? 8.5 : label.length > 7 ? 9.5 : label.length > 4 ? 11 : 12;
+                return (
+                  <button
+                    key={d}
+                    className={"hex-tile" + (has ? " has-data" : "") + (d === gu ? " selected" : "")}
+                    style={{ "--cc": CATEGORY_META[category].color } as CSSProperties}
+                    onClick={() => setGu(d === gu ? null : d)}
+                  >
+                    <span style={{ fontSize }}>{label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

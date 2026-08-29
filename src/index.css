@@ -532,21 +532,32 @@ button {
    src/data/seoulHexMap.ts. 평평한 위·아래 변에 좌우가 뾰족한 육각형을
    clip-path로 만들고, 행마다 --offset만큼 들여써서 서울의 울퉁불퉁한
    윤곽을 흉내 낸다. */
+/* 좁은 화면에 다 우겨넣으려고 육각형을 너무 줄였더니(폭 49px) 로마자
+   표기(Yeongdeungpo 등)가 6.5px까지 작아져 가독성이 떨어졌다(2026-08-28
+   사용자 지적: "가독성 떨어져 특히 영어"). 화면 폭에 맞추기보다 글자가
+   읽히는 크기를 우선하고, 다 안 들어가면 가로로 스크롤하게 한다. */
 .district-hexgrid {
+  overflow-x: auto;
+  padding: 8px 4px 6px;
+  margin: 0 -4px;
+}
+
+.hex-rows {
   /* 정육각형: 위아래가 뾰족하면 높이 = 폭 × 2/√3 ≈ 1.155배.
      행 간격은 높이의 3/4 (즉 1/4만큼 겹쳐야 맞물린다). */
-  --hex-w: 49px;
-  --hex-h: 57px;
-  --hex-gap: 1px;
+  --hex-w: 62px;
+  --hex-h: 72px;
+  --hex-gap: 2px;
   display: flex;
   flex-direction: column;
   /* ⚠️ align-items:center를 쓰면 행마다 제 너비로 따로 중앙정렬돼서
      margin-left 오프셋이 무의미해진다(= 서울 윤곽이 무너진다).
-     행은 왼쪽 기준으로 붙이고, 덩어리 전체를 margin auto로 가운데 둔다. */
+     행은 왼쪽 기준으로 붙이고, 덩어리 전체를 margin auto로 가운데 둔다
+     (내용이 화면보다 넓으면 auto margin은 0이 되어 자연스럽게 왼쪽부터
+     시작하고 오른쪽으로 스크롤된다). */
   align-items: flex-start;
   width: fit-content;
   margin: 0 auto;
-  padding-top: 8px;
 }
 
 .hex-row {
@@ -1051,9 +1062,9 @@ button {
     height: 280px;
   }
 
-  .district-hexgrid {
-    --hex-w: 62px;
-    --hex-h: 72px;
+  .hex-rows {
+    --hex-w: 68px;
+    --hex-h: 79px;
   }
 
   .festival-cards {
@@ -1132,12 +1143,9 @@ button {
     height: 360px;
   }
 
-  /* 1080px 이상에서는 구 탐색이 2단 그리드의 좁은 칸(약 490px)으로 들어가므로
-     720px 구간보다 오히려 조금 줄인다 — 6.5칸이 그 폭을 넘으면 안 된다. */
-  .district-hexgrid {
-    --hex-w: 56px;
-    --hex-h: 65px;
-  }
+  /* 1080px 이상에서는 구 탐색이 2단 그리드의 좁은 칸(약 490px)으로 들어가지만,
+     이제 .district-hexgrid가 가로 스크롤을 지원하므로 굳이 줄이지 않는다
+     (720px 구간과 같은 크기 유지 — 다 안 보이면 스크롤하면 된다). */
 }
 
 /* 마우스가 있는 넓은 화면에서만 카드 호버 반응을 준다 — 터치 기기에서
