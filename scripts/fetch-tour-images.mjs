@@ -1,8 +1,13 @@
 #!/usr/bin/env node
-// 한국관광공사 TourAPI(KorService2)에서 축제 이름으로 검색해 대표 이미지 + 실제 좌표(mapx/mapy)를
+// 한국관광공사 TourAPI(KorService2)에서 장소 이름으로 검색해 대표 이미지 + 실제 좌표(mapx/mapy)를
 // 받아온다. 전부 공공누리 1유형(출처 표시하면 상업적 이용·수정 가능) 데이터다.
 // 좌표는 나중에 지도 위 실제 핀 기능에 쓴다 — 검색으로 추측한 좌표가 아니라 관광공사가 직접
 // 등록해 둔 값이라 정확도 원칙(좌표를 지어내지 않는다)에 어긋나지 않는다.
+//
+// 2026-08-28까지는 FESTIVALS(축제)만 처리했다 — 개발계정 트래픽 한도(엔드포인트당
+// 하루 1,000건)를 걱정해서였는데, 실제로 세어 보니 서울 전체가 축제 31 + 시장·꽃길·
+// 산책로·둘레길·박물관 각 25 = 156곳뿐이라 한도의 16%밖에 안 쓴다. 그래서 5개
+// 카테고리 전부로 넓힌다(사용자 확인 후 진행, 2026-08-28).
 //
 // 이 세션(샌드박스)은 apis.data.go.kr에 접속이 막혀 있어서 직접 실행해 확인할 수 없다.
 // 실제 인터넷이 되는 로컬 PC에서 인증키를 받아 이렇게 실행할 것:
@@ -47,42 +52,65 @@ async function searchKeyword(keyword) {
   return Array.isArray(items) ? items : [items];
 }
 
-// seed.ts에서 FESTIVALS 배열의 {id, name} 쌍만 정규식으로 뽑는다(TS를 실행하지 않고도 되게).
-function extractFestivals(source) {
-  const block = source.match(/export const FESTIVALS[\s\S]*?\n\];/);
-  if (!block) throw new Error("seed.ts에서 FESTIVALS 블록을 못 찾음");
-  const idRe = /id:\s*id\(\)/g;
-  const lineRe = /\{[^}]*name:\s*"([^"]+)"[^}]*\}/g;
-  const names = [];
+// seed.ts에서 FESTIVALS부터 MUSEUMS까지 6개 배열 전체의 {id, category, name}을
+// 뽑는다(TS를 실행하지 않고도 되게) — fetch-coords.mjs와 같은 방식. id()는 파일에
+// 등장하는 순서대로(FESTIVALS→MARKETS→FLOWERS→WALKS→HIKES→MUSEUMS) ks_1, ks_2...
+// (36진수)를 매기므로, 같은 순서로 다시 세어야 실제 id와 어긋나지 않는다.
+function extractPlaces(source) {
+  const block = source.match(/export const FESTIVALS[\s\S]*?const ALL_PLACES_RAW/);
+  if (!block) throw new Error("seed.ts에서 장소 배열 블록을 못 찾음");
+  const lineRe = /\{\s*id:\s*id\(\),\s*([^\n]*?)\},?\s*$/gm;
+  const places = [];
+  let seq = 0;
   let m;
-  while ((m = lineRe.exec(block[0]))) names.push(m[1]);
-  // id()는 호출 순서대로 ks_1, ks_2...(36진수) 부여된다 — seed.ts와 동일한 규칙으로 재계산.
-  return names.map((name, i) => ({ id: `ks_${(i + 1).toString(36)}`, name }));
+  while ((m = lineRe.exec(block[0]))) {
+    seq++;
+    const body = m[1];
+    const category = body.match(/category:\s*"([^"]+)"/)?.[1];
+    const name = body.match(/name:\s*"([^"]+)"/)?.[1];
+    if (!category || !name) continue;
+    places.push({ id: `ks_${seq.toString(36)}`, category, name });
+  }
+  return places;
 }
 
 function normalize(s) {
   return s.replace(/[·・()（）]/g, " ").replace(/\s+/g, " ").trim();
 }
 
+const LIMIT = Number(process.argv.find((a) => a.startsWith("--limit="))?.split("=")[1] ?? Infinity);
+
 async function main() {
   const source = readFileSync(SEED_TS, "utf-8");
-  const festivals = extractFestivals(source);
-  console.log(`축제 ${festivals.length}개에서 이미지 검색 시작...`);
+  const allPlaces = extractPlaces(source);
+  const places = allPlaces.slice(0, LIMIT);
 
-  const result = {};
+  // 기존 결과가 있으면 이어서 채운다(덮어쓰지 않음) — 부분 실행·재실행에도 안전하게.
+  let existing = {};
+  try {
+    existing = JSON.parse(readFileSync(OUT_JSON, "utf-8"));
+  } catch {
+    // 파일이 없거나 비어 있으면 빈 객체로 시작
+  }
+
+  console.log(
+    `${allPlaces.length}곳(축제·시장·꽃길·산책로·둘레길·박물관) 중 ${places.length}곳 이미지 검색 시작...`
+  );
+
+  const result = { ...existing };
   let matched = 0;
 
-  for (const f of festivals) {
+  for (const p of places) {
     // "성북 세계음식축제 누리마실 · 다다페스타"처럼 복합명은 첫 조각만 검색어로 쓴다.
-    const keyword = normalize(f.name).split(" ").slice(0, 3).join(" ");
+    const keyword = normalize(p.name).split(" ").slice(0, 3).join(" ");
     try {
       const items = await searchKeyword(keyword);
       const hit = items.find(
         (it) => it.firstimage && normalize(it.title).includes(normalize(keyword).split(" ")[0])
       );
       if (hit) {
-        result[f.id] = {
-          name: f.name,
+        result[p.id] = {
+          name: p.name,
           matchedTitle: hit.title,
           image: hit.firstimage,
           thumb: hit.firstimage2 || hit.firstimage,
@@ -94,18 +122,18 @@ async function main() {
           source: "TourAPI/공공누리 1유형",
         };
         matched++;
-        console.log(`✅ ${f.name} → ${hit.title}`);
+        console.log(`✅ [${p.category}] ${p.name} → ${hit.title}`);
       } else {
-        console.log(`⬜ ${f.name} — 못 찾음(빈 칸으로 둠)`);
+        console.log(`⬜ [${p.category}] ${p.name} — 못 찾음(빈 칸으로 둠)`);
       }
     } catch (err) {
-      console.log(`❌ ${f.name} — 오류: ${err.message}`);
+      console.log(`❌ [${p.category}] ${p.name} — 오류: ${err.message}`);
     }
     await new Promise((r) => setTimeout(r, 300)); // 예의상 살짝 쉬어감
   }
 
   writeFileSync(OUT_JSON, JSON.stringify(result, null, 2) + "\n");
-  console.log(`\n${matched}/${festivals.length}개 매칭 → ${OUT_JSON}에 저장함.`);
+  console.log(`\n${matched}/${places.length}개 매칭 → ${OUT_JSON}에 저장함(총 ${Object.keys(result).length}곳).`);
   console.log("이미지가 맞는지 눈으로 한 번 확인하고 커밋할 것(정확도 원칙).");
 }
 
