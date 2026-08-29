@@ -1,0 +1,45 @@
+name: Fetch tour images
+
+# 한국관광공사 TourAPI(KorService2)에서 축제·시장·꽃길·산책로·둘레길·박물관
+# 156곳의 대표 이미지 + 실제 좌표를 받아온다. fetch-coords.yml과 같은 이유로
+# GitHub Actions 러너에서 돌린다 — 에이전트 샌드박스는 apis.data.go.kr을
+# 못 부른다(네트워크 화이트리스트 정책), GitHub 러너는 인터넷이 자유롭다.
+#
+# limit을 작게 두고 먼저 돌려서 로그(✅/⬜/❌)를 확인한 뒤, 전체로 다시
+# 돌리는 걸 권장한다(정확도 원칙: 매칭이 이상하면 빈 칸이 낫다).
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "이번 실행에서 처리할 최대 개수 (빈 칸이면 전체 156곳)"
+        type: string
+        default: "10"
+
+jobs:
+  fetch-tour-images:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Fetch tour images
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: node scripts/fetch-tour-images.mjs --limit=${{ inputs.limit }}
+      - name: Commit tour-images.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- src/data/tour-images.json; then
+            echo "변경 없음 — 커밋 생략"
+            exit 0
+          fi
+          git add src/data/tour-images.json
+          git commit -m "관광공사 사진·좌표 채우기 (fetch-tour-images) [skip render]"
+          git push

@@ -2,7 +2,6 @@ import { useTheme } from "./lib/useTheme";
 import { useLanguage } from "./lib/useLanguage";
 import MonthlyFestivalPanel from "./components/MonthlyFestivalPanel";
 import DistrictExplorer from "./components/DistrictExplorer";
-import WeatherStrip from "./components/WeatherStrip";
 import LanguageSelector from "./components/LanguageSelector";
 
 function App() {
@@ -39,7 +38,6 @@ function App() {
       </header>
 
       <main className="app-main">
-        <WeatherStrip />
         <MonthlyFestivalPanel />
         <DistrictExplorer />
       </main>

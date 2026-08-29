@@ -68,35 +68,9 @@ export default function DistrictExplorer() {
         {t.mapDisclaimerStart}<b>{t.mapDisclaimerBold}</b>{t.mapDisclaimerEnd}
       </p>
 
-      <div className="district-hexgrid">
-        {SEOUL_HEX_ROWS.map((row, i) => (
-          <div
-            className="hex-row"
-            key={i}
-            style={{ "--offset": row.offset } as CSSProperties}
-          >
-            {row.gus.map((d) => {
-              const has = guWithData.has(d);
-              const label = districtShortName(d, language);
-              // 로마자 표기는 한글보다 훨씬 길다(Yeongdeungpo 등) — 라벨
-              // 길이를 보고 글자 크기를 미리 줄여서 잘리기 전에 줄인다.
-              const fontSize =
-                label.length > 10 ? 6.5 : label.length > 7 ? 7.5 : label.length > 4 ? 9 : 10.5;
-              return (
-                <button
-                  key={d}
-                  className={"hex-tile" + (has ? " has-data" : "") + (d === gu ? " selected" : "")}
-                  style={{ "--cc": CATEGORY_META[category].color } as CSSProperties}
-                  onClick={() => setGu(d === gu ? null : d)}
-                >
-                  <span style={{ fontSize }}>{label}</span>
-                </button>
-              );
-            })}
-          </div>
-        ))}
-      </div>
-
+      {/* 구를 고르면 그 결과(장소 정보·길찾기)가 지도보다 먼저 보이게 위에 둔다
+          (2026-08-28 사용자 지시: "정보가 위로 가게" — 원래는 지도 아래에 있어
+          고르고 나면 다시 스크롤해서 내려봐야 했다). */}
       {gu && (
         <div className="place-list">
           {selected.length === 0 && (
@@ -145,6 +119,35 @@ export default function DistrictExplorer() {
           })}
         </div>
       )}
+
+      <div className="district-hexgrid">
+        {SEOUL_HEX_ROWS.map((row, i) => (
+          <div
+            className="hex-row"
+            key={i}
+            style={{ "--offset": row.offset } as CSSProperties}
+          >
+            {row.gus.map((d) => {
+              const has = guWithData.has(d);
+              const label = districtShortName(d, language);
+              // 로마자 표기는 한글보다 훨씬 길다(Yeongdeungpo 등) — 라벨
+              // 길이를 보고 글자 크기를 미리 줄여서 잘리기 전에 줄인다.
+              const fontSize =
+                label.length > 10 ? 6.5 : label.length > 7 ? 7.5 : label.length > 4 ? 9 : 10.5;
+              return (
+                <button
+                  key={d}
+                  className={"hex-tile" + (has ? " has-data" : "") + (d === gu ? " selected" : "")}
+                  style={{ "--cc": CATEGORY_META[category].color } as CSSProperties}
+                  onClick={() => setGu(d === gu ? null : d)}
+                >
+                  <span style={{ fontSize }}>{label}</span>
+                </button>
+              );
+            })}
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
