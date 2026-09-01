@@ -1,0 +1,87 @@
+name: Translate places (12개 언어 번역)
+
+# 앱 화면의 **틀**(버튼·안내문)은 손으로 써 둔 12개 언어를 쓰는데, 그 안에 담기는
+# **내용**(장소 이름·설명·기간 문구)은 전부 한국어였다. 영어로 바꿔도
+# "광장시장 / 9월 말~10월 초"가 그대로 떴다.
+#
+# 이 워크플로가 구글 번역으로 11개 언어를 채운다(사용자 결정 2026-09-01 "구글번역").
+# 원문 5,411자 × 11언어 = 약 6만 자로, 구글 무료 한도(월 50만 자)의 12% 정도다.
+#
+# 🚨 준비물: 시크릿 GOOGLE_TRANSLATE_API_KEY
+#    Settings → Secrets and variables → Actions → New repository secret
+#    (Kfood 저장소에서 쓰는 것과 같은 키를 그대로 넣으면 된다)
+#    ⚠️ 붙여 넣을 때 줄바꿈이 따라 들어가지 않게 할 것 — 구글이 400을 주는데
+#       키가 멀쩡해 보여서 원인이 안 보인다(Kfood에서 겪었다).
+#
+# apply를 끈 채로 먼저 돌려 무엇이 번역될지 보고, 그다음에 켜는 것을 권한다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "실제로 저장할까요? (끄면 무엇이 번역될지만 보여줍니다)"
+        type: boolean
+        default: false
+      lang:
+        description: "한 언어만 돌리려면 코드 입력 (en ja zh zh-TW vi es fr de ru id th). 비우면 전부"
+        type: string
+        default: ""
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Translate
+        env:
+          GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+        run: |
+          ARGS=""
+          if [ "${{ inputs.apply }}" = "true" ]; then ARGS="$ARGS --apply"; fi
+          if [ -n "${{ inputs.lang }}" ]; then ARGS="$ARGS --lang ${{ inputs.lang }}"; fi
+          node scripts/translate-places.mjs $ARGS | tee translate-log.txt
+      - name: 저장한 것이 앱을 깨뜨리지 않는지 확인
+        if: ${{ inputs.apply }}
+        run: npm run build
+      - name: Commit place-translations.json
+        id: commit
+        if: ${{ inputs.apply }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- src/data/place-translations.json; then
+            echo "committed=no" >> "$GITHUB_OUTPUT"
+          else
+            git add src/data/place-translations.json
+            git commit -m "장소·축제 이름과 설명을 번역한다 (translate-places)"
+            git push
+            echo "committed=yes" >> "$GITHUB_OUTPUT"
+          fi
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🌐 12개 언어 번역 결과"
+            echo ""
+            if [ "${{ inputs.apply }}" != "true" ]; then
+              echo "### 🔍 맛보기입니다 — 아무것도 저장하지 않았습니다"
+              echo "아래에서 몇 자를 쓰게 되는지 확인한 뒤, **apply를 켜고** 다시 돌리세요."
+            elif [ "${{ steps.commit.outputs.committed }}" = "yes" ]; then
+              echo "### ✅ 번역을 저장했습니다"
+              echo "몇 분 뒤 앱에 반영됩니다. 언어를 바꿔서 장소 이름이 그 언어로 나오는지 보세요."
+            else
+              echo "### ⬜ 새로 저장된 게 없습니다"
+              echo "이미 다 번역돼 있거나, 키가 잘못됐거나, 호출이 실패했습니다 — 아래 로그를 보세요."
+            fi
+            echo ""
+            echo '```'
+            cat translate-log.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

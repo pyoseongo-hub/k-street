@@ -9,6 +9,7 @@ import { getTourImage } from "../lib/tourImages";
 import { districtFullName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
 import { openPlaceInfo } from "../lib/mapLinks";
+import { placeName, translateText, hasTranslation } from "../lib/placeText";
 import { FESTIVAL_THEMES, THEME_ICON, themeOf, type FestivalTheme } from "../data/festivalThemes";
 
 // 「봄 여름 가을 겨울 그리고 서울」 — 지도와 상관없이 **계절 · 달 · 테마**로
@@ -163,9 +164,12 @@ export default function MonthlyFestivalPanel() {
                         그래서 **한국어일 때만 그 문구를 쓰고**, 다른 언어에서는
                         달(+초·중·하순)로 만들어 준다 — 덜 자세하지만 번역이 된다. */}
                     {(() => {
+                      // 번역이 있으면 사람이 적어 둔 기간 문구를 그 언어로 쓴다
+                      // ("9월 말~10월 초"처럼 달보다 자세하다). 번역이 아직 없으면
+                      // 달(+초·중·하순)로 대신한다 — 덜 자세하지만 늘 읽힌다.
                       const label =
-                        language === "ko" && f.dateLabel
-                          ? f.dateLabel
+                        f.dateLabel && hasTranslation(f.dateLabel, language)
+                          ? translateText(f.dateLabel, language)
                           : f.startMonth == null
                             ? null
                             : f.period
@@ -182,15 +186,19 @@ export default function MonthlyFestivalPanel() {
                     className="fc-name pr-name-link"
                     onClick={() => openPlaceInfo(f)}
                   >
-                    {f.name}
+                    {placeName(f.name, language).main}
                     <span className="pr-name-arrow" aria-hidden="true">↗</span>
                   </button>
+                  {/* 번역된 이름 아래에 한국어 원문 — placeText.ts 주석 참고. */}
+                  {placeName(f.name, language).sub && (
+                    <div className="name-ko" lang="ko">{f.name}</div>
+                  )}
                   {k && (
                     <span className="fc-theme" style={{ "--cc": "var(--festival)" } as CSSProperties}>
                       {THEME_ICON[k]} {t.themeLabels[k]}
                     </span>
                   )}
-                  {f.note && <div className="fc-note">{f.note}</div>}
+                  {f.note && <div className="fc-note">{translateText(f.note, language)}</div>}
                   <MapDirections
                     place={
                       f.lat == null && legacy?.lat != null

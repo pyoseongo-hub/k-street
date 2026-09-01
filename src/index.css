@@ -983,6 +983,18 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* 🈶 번역된 이름 아래에 붙는 한국어 원문(2026-09-01).
+   기계 번역이라 이름이 어색할 수 있는데, 손님이 길에서 정말 필요한 건
+   **택시 기사에게 보여줄 한국어**다. 그래서 번역이 이상해도 길은 찾게 한다.
+   한국어 화면에서는 아예 안 그려진다(같은 말을 두 번 적지 않는다). */
+.name-ko {
+  margin-top: 1px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-muted);
+  word-break: keep-all;
+}
+
 .pr-name-arrow {
   font-size: 0.66em;
   opacity: 0.45;

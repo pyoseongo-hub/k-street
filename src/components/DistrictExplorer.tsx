@@ -7,6 +7,7 @@ import MapDirections from "./MapDirections";
 import { openPlaceInfo } from "../lib/mapLinks";
 import { getTourImage } from "../lib/tourImages";
 import { getMyDistrict, type MyDistrict } from "../lib/myDistrict";
+import { placeName, translateText } from "../lib/placeText";
 
 // street(골목·거리)를 2026-09-01에 추가했다 — 관광공사 자료의 골목 40곳이
 // 들어갈 칸이 없어서 통째로 버려지고 있었다(seed.ts의 Category 주석 참고).
@@ -196,13 +197,18 @@ export default function DistrictExplorer() {
                       className="pr-name pr-name-link"
                       onClick={() => openPlaceInfo(p)}
                     >
-                      {p.name}
+                      {placeName(p.name, language).main}
                       <span className="pr-name-arrow" aria-hidden="true">↗</span>
                     </button>
                   ) : (
                     <div className="pr-name">확인 필요</div>
                   )}
-                  {p.note && <div className="pr-note">{p.note}</div>}
+                  {/* 번역된 이름 아래에 한국어 원문. 기계 번역이 어색해도 손님이
+                      택시 기사에게 보여줄 수 있어야 한다(placeText.ts 주석 참고). */}
+                  {placeName(p.name, language).sub && (
+                    <div className="name-ko" lang="ko">{p.name}</div>
+                  )}
+                  {p.note && <div className="pr-note">{translateText(p.note, language)}</div>}
                   {/* 주소는 관광공사에서 받은 곳만 있다. 사진이 없는 작은 카드일수록
                       글로 줄 수 있는 정보가 하나라도 더 있는 게 낫다. */}
                   {p.addr && <div className="pr-addr">{p.addr}</div>}
