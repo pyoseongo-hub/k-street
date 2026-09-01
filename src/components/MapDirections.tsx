@@ -47,7 +47,7 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
           disabled={locating !== null}
         >
           <span className="map-btn-icon">📍</span>
-          {locating === "KAKAO" ? t.mapLocating : "카카오맵"}
+          {locating === "KAKAO" ? t.mapLocating : t.kakaoMapLabel}
         </button>
         <button
           type="button"
@@ -56,7 +56,7 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
           disabled={locating !== null}
         >
           <span className="map-btn-badge map-btn-badge--naver">N</span>
-          {locating === "NAVER" ? t.mapLocating : "네이버지도"}
+          {locating === "NAVER" ? t.mapLocating : t.naverMapLabel}
         </button>
       </div>
       {/* 폰·OS·앱 설치 여부 조합을 전부 미리 확인할 수는 없다(2026-08-29 사용자

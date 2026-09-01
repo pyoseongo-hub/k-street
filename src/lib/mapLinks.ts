@@ -27,17 +27,21 @@ export interface MapLink {
 // getMapLinks()는 구글 URL도 계속 반환하지만(다른 화면이 나중에 쓸 수
 // 있게) 아래 렌더링 두 곳(패널·구 탐색은 MapDirections.tsx, 지도
 // InfoWindow는 이 함수)은 카카오·네이버만 그린다.
-function kakaoBtn(url: string): string {
-  return `<a class="map-btn map-btn--kakao" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-icon">📍</span>카카오맵</a>`;
+function kakaoBtn(url: string, label: string): string {
+  return `<a class="map-btn map-btn--kakao" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-icon">📍</span>${label}</a>`;
 }
 
-function naverBtn(url: string): string {
-  return `<a class="map-btn map-btn--naver" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-badge map-btn-badge--naver">N</span>네이버지도</a>`;
+function naverBtn(url: string, label: string): string {
+  return `<a class="map-btn map-btn--naver" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-badge map-btn-badge--naver">N</span>${label}</a>`;
 }
 
-export function renderMapLinksHtml(place: MapLinkTarget): string {
+/** 버튼 이름은 밖에서 받는다 — 이 파일은 raw HTML 문자열이라 훅(useLanguage)을 못 쓴다. */
+export function renderMapLinksHtml(
+  place: MapLinkTarget,
+  labels: { kakao: string; naver: string } = { kakao: "KakaoMap", naver: "Naver Map" }
+): string {
   const [kakao, naver] = getMapLinks(place);
-  return `<div class="place-directions"><div class="map-directions-row">${kakaoBtn(kakao.url)}${naverBtn(naver.url)}</div></div>`;
+  return `<div class="place-directions"><div class="map-directions-row">${kakaoBtn(kakao.url, labels.kakao)}${naverBtn(naver.url, labels.naver)}</div></div>`;
 }
 
 // 🚨 앱이 깔려 있으면 그 앱의 "길찾기 화면"으로 바로 데려가고, 없을 때만
