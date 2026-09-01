@@ -9,7 +9,7 @@ import { useRotatingSeed } from "../lib/useRotatingSeed";
 import { getTourImage } from "../lib/tourImages";
 import { districtFullName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
-import { getPlaceInfoLink, openMapLink } from "../lib/mapLinks";
+import { openPlaceInfo } from "../lib/mapLinks";
 
 const nowMonth = new Date().getMonth() + 1;
 
@@ -63,11 +63,14 @@ export default function MonthlyFestivalPanel() {
                   <span className="fc-gu">{districtFullName(f.gu, language)}</span>
                   {f.dateLabel && <span className="fc-date">{f.dateLabel}</span>}
                 </div>
-                {/* 장소 카드와 같은 규칙 — 이름을 누르면 네이버 지도 장소 화면으로. */}
+                {/* 장소 카드와 같은 규칙 — 이름을 누르면 네이버 통합검색으로 간다.
+                    축제는 지도에 등록된 '장소'가 아니라 며칠만 열리는 '행사'라
+                    지도에서 찾으면 "검색결과가 없습니다"가 뜬다(2026-09-01 사용자 캡처).
+                    통합검색으로 보내면 그 자치구의 공식 행사 안내 페이지가 잡힌다. */}
                 <button
                   type="button"
                   className="fc-name pr-name-link"
-                  onClick={() => openMapLink(getPlaceInfoLink(f))}
+                  onClick={() => openPlaceInfo(f)}
                 >
                   {f.name}
                   <span className="pr-name-arrow" aria-hidden="true">↗</span>

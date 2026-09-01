@@ -69,40 +69,52 @@ export interface MapOrigin {
 }
 
 /**
- * 장소 **정보** 화면으로 가는 링크(길찾기가 아니다).
+ * 이름을 눌렀을 때 가는 **정보 링크**(길찾기가 아니다).
  *
- * 사용자 지시(2026-09-01): "정보가 작아 이름을 누르면 네이버 나 카카오 링크 연결해".
- * 이 앱이 한 곳에 대해 갖고 있는 건 이름·구·주소·사진뿐이라, 영업시간·전화·리뷰·
- * 사진 여러 장 같은 건 지도 앱이 훨씬 잘 갖고 있다. 우리가 그걸 베껴 오면 낡은 정보를
- * 퍼뜨리게 되므로(정확도 원칙: 해마다 바뀌는 값은 적지 않고 공식 창구로 안내한다),
- * **이름을 누르면 지도 앱의 그 장소 화면으로 넘긴다.**
+ * 사용자 지시(2026-09-01 오전): "정보가 작아 이름을 누르면 네이버 나 카카오 링크 연결해".
+ * 그래서 처음에는 **네이버 지도**의 장소 검색으로 보냈다. 그런데 같은 날 오후에
+ * 사용자가 캡처 네 장으로 그게 틀렸다는 걸 보여 줬다:
  *
- * 네이버로 보내는 이유 — 국내 장소의 영업시간·메뉴·사진이 가장 두껍고, 이 앱이 이미
- * 네이버 지도 SDK를 쓰고 있어 사용자가 보는 지도와 결이 같다. 길찾기 버튼(카카오·네이버)은
- * 그대로 아래에 남으므로 역할이 겹치지 않는다.
+ *   "링크 지도 띄우지말고 부정확해 / 네이버 검색후 해당 자치제 행사 안내나
+ *    그에 맞는 사이트로 이동하게해"
  *
- * 앱 스킴은 `nmap://search`만 쓴다 — 좌표로 장소를 바로 여는 `nmap://place`는 네이버 쪽
- * place id가 있어야 하는데 우리는 그 값을 갖고 있지 않다. 없는 값을 지어내느니
- * 이름 검색으로 보내고, 좌표가 있으면 그 근처로 지도를 옮겨 엉뚱한 동네의 동명 장소가
- * 먼저 잡히지 않게 한다.
+ * 🚨 **지도에는 '축제'라는 장소가 없다.** 서울숲 JAZZ페스티벌을 네이버 지도에서 찾으면
+ * "검색결과가 없습니다 / 신규장소 등록 요청하기"만 뜬다 — 축제는 한 해에 며칠만 열리는
+ * 행사라 지도에 상호로 등록되지 않기 때문이다. 골목·꽃길·산책길도 사정이 같다.
+ * 지도는 '가게·건물'을 담는 그릇이지 '행사·길'을 담는 그릇이 아니다.
+ *
+ * ✅ 같은 이름으로 **네이버 통합검색**을 하면 바로 나온다 — 캡처 2번째 장에서
+ * `성동구청 www.sd.go.kr › tour` 의 "서울숲 JAZZ페스티벌 - 대표축제 - 성동구 문화관광"
+ * 페이지가 상단에 떴고, 그 페이지에는 일시·장소·주최·문의 전화까지 다 있다(3번째 장).
+ * 이게 우리가 보내고 싶은 곳이다 — **그 자치구가 직접 운영하는 공식 행사 안내**.
+ *
+ * 이 앱의 정확도 원칙과도 맞는다: 해마다 바뀌는 날짜·요금은 우리가 적지 않고
+ * 공식 창구로 안내한다. 통합검색은 지도와 달리 **0건이 나오지 않는다** —
+ * 구청 페이지가 없는 곳이라도 최소한 뉴스·블로그가 잡힌다.
+ *
+ * 지도 앱 스킴(nmap://)은 쓰지 않는다. 앱을 열면 결국 그 "검색결과가 없습니다" 화면이라
+ * 웹 통합검색 하나로 통일한다. 좌표를 쓰는 **길찾기 버튼은 아래에 그대로 남는다** —
+ * 그건 좌표로 찍으므로 정확하고, 이 링크와 역할이 다르다.
  */
 export function getPlaceInfoLink(place: MapLinkTarget): MapLink {
+  // 검색어는 **이름 그대로**만 쓴다. 구·동을 덧붙이지 않는 이유는 지도 검색 때와 같다
+  // (아래 getMapLinks의 2026-09-01 주석 참고) — 이름에 없는 말을 붙이면 검색이 흐려진다.
+  // 사용자가 캡처로 보여 준 것도 이름만 넣은 검색이었고, 그걸로 성동구청 페이지가 떴다.
   const encName = encodeURIComponent(place.name);
-  const hasCoords = typeof place.lat === "number" && typeof place.lng === "number";
-  if (hasCoords) {
-    const { lat, lng } = place as { lat: number; lng: number };
-    return {
-      label: "NAVER",
-      // c=경도,위도,줌,기울기,회전,틸트,표시방식 — 그 장소 근처를 보여준 상태로 검색된다.
-      url: `https://map.naver.com/p/search/${encName}?c=${lng},${lat},16,0,0,0,dh`,
-      appScheme: `nmap://search?query=${encName}&lat=${lat}&lng=${lng}&appname=com.kstreet.app`,
-    };
-  }
   return {
     label: "NAVER",
-    url: `https://map.naver.com/p/search/${encName}`,
-    appScheme: `nmap://search?query=${encName}&appname=com.kstreet.app`,
+    url: `https://search.naver.com/search.naver?query=${encName}`,
   };
+}
+
+/** 이름 링크는 **새 탭**으로 연다 — 길찾기(openMapLink)와 다른 점이다.
+ *  길찾기는 지도 '앱'을 띄우는 거라 같은 탭 이동이어야 하지만(앱 스킴이 팝업으로
+ *  막히지 않게), 이건 그냥 웹페이지다. 홈 화면에 설치해 쓰는 경우 같은 탭으로 나가면
+ *  앱 창 자체가 네이버로 바뀌어 돌아올 길이 없어진다. 클릭 안에서 바로 부르므로
+ *  브라우저가 팝업으로 막지 않는다. */
+export function openPlaceInfo(place: MapLinkTarget) {
+  const { url } = getPlaceInfoLink(place);
+  window.open(url, "_blank", "noopener,noreferrer");
 }
 
 export function getMapLinks(place: MapLinkTarget, from?: MapOrigin | null): MapLink[] {

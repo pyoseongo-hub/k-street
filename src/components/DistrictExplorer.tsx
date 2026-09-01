@@ -4,7 +4,7 @@ import { ALL_PLACES, CATEGORY_META, type Category } from "../data/seed";
 import { SEOUL_HEX_ROWS } from "../data/seoulHexMap";
 import { districtShortName, districtFullName, dongName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
-import { getPlaceInfoLink, openMapLink } from "../lib/mapLinks";
+import { openPlaceInfo } from "../lib/mapLinks";
 import { getTourImage } from "../lib/tourImages";
 
 // street(골목·거리)를 2026-09-01에 추가했다 — 관광공사 자료의 골목 40곳이
@@ -130,16 +130,17 @@ export default function DistrictExplorer() {
                       {p.dong ? ` ${dongName(p.dong, language)}` : ""}
                     </span>
                   </div>
-                  {/* 🔗 이름을 누르면 네이버 지도의 그 장소 화면으로 간다
-                      (사용자 지시 2026-09-01: "정보가 작아 이름을 누르면 네이버 나
-                      카카오 링크 연결해"). 영업시간·전화·리뷰처럼 자주 바뀌는 정보를
-                      우리가 베껴 오면 낡은 값을 퍼뜨리게 되므로, 그건 지도 앱에 맡긴다.
-                      아래 길찾기 버튼과 역할이 다르다 — 이건 "정보 보기"다. */}
+                  {/* 🔗 이름을 누르면 네이버 **통합검색**으로 간다.
+                      처음엔 네이버 지도로 보냈는데 2026-09-01 사용자 캡처로 틀린 게
+                      드러났다 — 축제·골목·꽃길은 지도에 등록된 '장소'가 아니라
+                      "검색결과가 없습니다"만 떴다. 통합검색은 그 자치구가 직접 만든
+                      공식 행사·관광 안내 페이지를 잡아 준다.
+                      아래 길찾기 버튼과 역할이 다르다 — 이건 "자세히 보기"다. */}
                   {p.confirmed ? (
                     <button
                       type="button"
                       className="pr-name pr-name-link"
-                      onClick={() => openMapLink(getPlaceInfoLink(p))}
+                      onClick={() => openPlaceInfo(p)}
                     >
                       {p.name}
                       <span className="pr-name-arrow" aria-hidden="true">↗</span>

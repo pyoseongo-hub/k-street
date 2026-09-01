@@ -1,4 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+/* 🈳 IBM Plex Sans KR을 2026-09-01에 넣었다 — 사용자가 장소 이름을 빨간 동그라미로
+   짚으며 "디자인 촌스러"라고 한 것의 진짜 원인이었다.
+   Cormorant Garamond는 **영문 전용 서체라 한글이 한 자도 없다.** 그래서 "만리시장"
+   같은 한글 이름은 폰에 깔린 아무 명조체(붓글씨 느낌)로 대신 그려졌고, 나머지 화면은
+   전부 고딕인데 이름만 명조라 혼자 튀었다. 글꼴은 글자마다 따로 골라지므로 뒤에
+   한글 서체를 세워 두면 **영문은 Cormorant 그대로 · 한글만 고딕**이 된다.
+   12개 언어 중 한글은 하나뿐이라 Cormorant를 버리지 않고 뒤를 채우는 쪽을 택했다. */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+:root {
+  /* 제목용 서체 — 한 곳만 고치면 여섯 군데가 같이 바뀐다.
+     맨 뒤를 serif로 두지 않는다: 한글이 명조로 떨어지던 게 문제였다. */
+  --font-display: "Cormorant Garamond", "IBM Plex Sans KR", "Pretendard",
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
 
 * {
   box-sizing: border-box;
@@ -85,7 +99,7 @@ button {
   border-radius: 9px;
   background: var(--accent);
   color: #0F2E2A;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 17px;
   line-height: 1;
@@ -99,7 +113,7 @@ button {
 }
 
 .app-name {
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-display);
   font-size: 17px;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -211,7 +225,7 @@ button {
 }
 
 .panel-head h2 {
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 34px;
   line-height: 1.25;
@@ -403,7 +417,7 @@ button {
 }
 
 .fc-name {
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 23px;
   line-height: 1.25;
@@ -673,31 +687,41 @@ button {
   padding: 11px 13px;
 }
 
-.place-row.pr-compact /* 🔗 이름을 누르면 네이버 지도 장소 화면으로 간다(2026-09-01). <button>이라
-   브라우저 기본 버튼 모양을 지워서, 누를 수 있다는 것 말고는 예전 제목과 똑같이
-   보이게 한다 — 카드 제목이 갑자기 버튼처럼 생기면 목록의 리듬이 깨진다. */
+.place-row.pr-compact .pr-name {
+  font-size: 15px;
+}
+
+/* 🔗 이름을 누르면 네이버 통합검색으로 간다(2026-09-01). <button>이라 브라우저
+   기본 버튼 모양(회색 테두리 상자)을 지워서, 누를 수 있다는 것 말고는 예전 제목과
+   똑같이 보이게 한다 — 카드 제목이 갑자기 입력칸처럼 생기면 목록의 리듬이 깨진다.
+   🐞 **이 주석을 바로 위 규칙 한가운데에 끼워 넣는 바람에** 선택자가
+   `.place-row.pr-compact .pr-name-link` 로 붙어 버렸던 적이 있다(같은 날 오전).
+   .pr-compact는 사진 없는 카드용인데 사진 게이트 때문에 그런 카드가 아예 안 그려져서,
+   **이 초기화가 한 번도 적용되지 않았다** — 사용자가 캡처로 "디자인 촌스러"라고
+   짚어 준 그 회색 상자가 바로 그거였다. 규칙 사이에는 빈 줄을 두고 주석을 단다. */
 .pr-name-link {
   appearance: none;
   -webkit-appearance: none;
   background: none;
-  border: none;
+  border: 0;
   padding: 0;
   margin: 0;
-  font: inherit;
   color: inherit;
   text-align: left;
   cursor: pointer;
   display: inline-flex;
   align-items: baseline;
-  gap: 5px;
+  gap: 4px;
   width: 100%;
+  /* 안드로이드 크롬이 누를 때 씌우는 파란 사각형도 끈다 — 이것도 상자처럼 보인다. */
+  -webkit-tap-highlight-color: transparent;
 }
 
 .pr-name-arrow {
-  font-size: 0.72em;
-  opacity: 0.5;
+  font-size: 0.66em;
+  opacity: 0.45;
   flex: none;
-  transform: translateY(-0.1em);
+  transform: translateY(-0.15em);
 }
 
 .pr-name-link:hover .pr-name-arrow,
@@ -709,10 +733,6 @@ button {
   outline: 2px solid var(--accent, #6FA894);
   outline-offset: 3px;
   border-radius: 4px;
-}
-
-.pr-name {
-  font-size: 15px;
 }
 
 /* 사진 자리가 없으니 어느 칸의 장소인지를 이 작은 아이콘이 대신 알려 준다. */
@@ -791,7 +811,7 @@ button {
 .pr-name {
   font-size: 17px;
   font-weight: 700;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-display);
 }
 
 .pr-note {
@@ -979,7 +999,7 @@ button {
 }
 
 .app-display {
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-display);
   font-size: 40px;
   font-weight: 700;
   line-height: 1.2;
