@@ -9,9 +9,30 @@ import { getTourImage } from "../lib/tourImages";
 import { getMyDistrict, type MyDistrict } from "../lib/myDistrict";
 import { placeName, translateText } from "../lib/placeText";
 
-// street(골목·거리)를 2026-09-01에 추가했다 — 관광공사 자료의 골목 40곳이
-// 들어갈 칸이 없어서 통째로 버려지고 있었다(seed.ts의 Category 주석 참고).
-const MAP_CATEGORIES: Category[] = ["market", "street", "flower", "walk", "hike", "museum"];
+// 화면 위 갈래 칩. 칩 하나가 반드시 칸 하나는 아니다 — 아래 walk처럼 **여러 칸을
+// 한 칩으로 묶을 수** 있다.
+//
+// 🌸 꽃길을 산책길에 합쳤다 (사용자 지시 2026-09-01: "꽃길 산책로 합쳐").
+// 합치는 게 맞는 이유가 둘 있다:
+//   ① 걷는다는 점에서 같은 일이다 — 손님에게 "꽃길"과 "산책길"은 구분할 이유가 없다.
+//   ② 꽃길 칩이 사실상 죽어 있었다. 사진 게이트를 켜면서 32곳 → 2곳이 됐다
+//      (사람이 조사한 25개 구 꽃길에 사진이 없어서다). 두 곳짜리 칩은 눌러도
+//      허탕이라 죽은 버튼과 다르지 않았다. 합치면 22곳이 된다.
+// 자료는 그대로 둔다 — 카드에 붙는 칸 이름은 여전히 '꽃길'/'산책길'로 각각 나온다.
+// 되돌리려면 이 표에서 extra만 빼면 된다.
+const MAP_CHIPS: { key: Category; extra?: Category[]; label?: string }[] = [
+  { key: "market" },
+  { key: "street" },
+  { key: "walk", extra: ["flower"], label: "walkFlower" },
+  { key: "hike" },
+  { key: "museum" },
+];
+
+/** 이 칩이 담는 칸들. */
+function catsOf(key: Category): Category[] {
+  const chip = MAP_CHIPS.find((c) => c.key === key);
+  return chip ? [chip.key, ...(chip.extra ?? [])] : [key];
+}
 
 export default function DistrictExplorer() {
   const { t, language } = useLanguage();
@@ -19,12 +40,12 @@ export default function DistrictExplorer() {
   const [gu, setGu] = useState<string | null>(null);
   // 내 위치의 구. null = 아직 안 눌러 봤다, "loading" = 찾는 중.
   const [myGu, setMyGu] = useState<MyDistrict | "loading" | null>(null);
-  const condensed = useCondenseOnScroll();
+  const map = useMapOffScreen();
 
-  const inCategory = useMemo(
-    () => ALL_PLACES.filter((p) => p.category === category),
-    [category]
-  );
+  const inCategory = useMemo(() => {
+    const cats = catsOf(category);
+    return ALL_PLACES.filter((p) => cats.includes(p.category));
+  }, [category]);
   const guWithData = useMemo(
     () => new Set(inCategory.filter((p) => p.confirmed).map((p) => p.gu)),
     [inCategory]
@@ -36,20 +57,26 @@ export default function DistrictExplorer() {
 
   return (
     <section className="panel district-explorer">
-      <div className="panel-head">
-        <span className="panel-eyebrow">{t.exploreNowLabel}</span>
+      {/* 🎨 머리말에 **지금 고른 갈래의 색**을 깐다(사용자 지시 2026-09-01:
+          "지도 위 글씨부분도 꾸미고"). 계절 화면은 사진 표지가 있어 무게가 있는데
+          이 화면은 검은 바탕에 흰 글씨뿐이라 밋밋했다.
+          색을 갈래에 묶은 이유 — 꾸미기만 하는 게 아니라 **지금 무엇을 보고 있는지**를
+          말해 준다. 시장을 고르면 앰버, 골목을 고르면 주황으로 머리 색이 바뀐다.
+          바탕의 삼각 격자는 아래 육각 지도와 같은 결이다(3% 밝기라 글씨를 안 가린다). */}
+      <div className="de-head" style={{ "--cc": CATEGORY_META[category].color } as CSSProperties}>
+        <span className="de-eyebrow">{t.exploreNowLabel}</span>
         <h2>{t.exploreTitle}</h2>
       </div>
 
-      {/* 🧲 고르는 것(갈래 칩 · 내 위치 · 육각 지도)을 **맨 위에 모아 화면에 붙여 둔다**
-          (사용자 지시 2026-09-01: "2안 / 스크롤해도 지도는 안밀리게 / 이카드를 맨위로").
-          2026-08-28에는 반대로 지도를 목록 **아래**로 내렸었는데("정보가 위로 가게"),
-          그러자 동네를 바꿀 때마다 목록을 통째로 지나 내려가야 했다. 붙여 두면
-          두 요구가 같이 풀린다 — 결과는 여전히 눈앞에 있고, 지도는 늘 손 닿는 곳에 있다. */}
-      <div ref={condensed.sentinelRef} className="de-sentinel" aria-hidden="true" />
-      <div className={"de-sticky" + (condensed.on ? " condensed" : "")}>
+      {/* 🗺️ 고르는 것(갈래 칩 · 내 위치 · 육각 지도)을 맨 위에 모아 둔다.
+          **화면에 붙여 두지 않는다** — 스크롤하면 그냥 위로 밀려 나간다.
+          붙여 뒀더니 폰 화면의 절반을 먹어서 목록이 한두 개밖에 안 보였고,
+          작게 접는 장치는 덜덜 떨렸다(useMapOffScreen 주석 참고).
+          대신 지도가 화면 밖으로 나가면 작은 '지도' 버튼이 떠서 한 번에 돌아온다 —
+          동네를 바꾸려고 손으로 끝까지 올릴 필요가 없다. */}
+      <div ref={map.ref} className="de-picker">
         <div className="category-chip-row">
-          {MAP_CATEGORIES.map((c) => (
+          {MAP_CHIPS.map(({ key: c, label }) => (
             <button
               key={c}
               className={"cat-chip" + (c === category ? " active" : "")}
@@ -70,7 +97,7 @@ export default function DistrictExplorer() {
                   CATEGORY_META[c].icon
                 )}
               </span>
-              <span className="cat-chip-label">{t.categoryLabels[c]}</span>
+              <span className="cat-chip-label">{t.categoryLabels[label ?? c]}</span>
             </button>
           ))}
         </div>
@@ -121,7 +148,9 @@ export default function DistrictExplorer() {
         </div>
       </div>
 
-      {category === "flower" && (
+      {/* 꽃 피는 시기 안내. 꽃길이 산책길 칩에 합쳐졌으므로 그 칩일 때 띄운다 —
+          예전 조건(category === "flower")은 칩이 없어져 영영 안 뜨게 됐다. */}
+      {category === "walk" && (
         <p className="map-disclaimer">🌸 {t.flowerBloomDisclaimer}</p>
       )}
 
@@ -230,32 +259,55 @@ export default function DistrictExplorer() {
         </div>
       )}
 
+      {/* 🗺️ 지도가 화면 밖으로 나갔을 때만 뜬다. 목록 위에 떠 있어서 자리를
+          차지하지 않고, 누르면 지도로 한 번에 돌아간다.
+          ⚠️ 뜨고 지는 것이 **레이아웃을 건드리지 않아야** 한다 — 높이를 바꾸면
+          그 변화가 다시 '화면 밖인지'를 뒤집어 덜덜 떨린다(useMapOffScreen 주석). */}
+      {map.off && (
+        <button
+          type="button"
+          className="to-map"
+          onClick={() => map.ref.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
+        >
+          <span aria-hidden="true">🗺️</span> {t.backToMap}
+        </button>
+      )}
     </section>
   );
 }
 
 /**
- * 붙어 있는 고르기 영역을 **스크롤을 시작하면 작게** 접는다.
+ * 지도가 화면 밖으로 나갔는지 지켜본다. 나가면 작은 "지도" 버튼을 띄운다.
  *
- * 왜 필요한가 — 갈래 칩 + 내 위치 + 육각 지도를 다 펴 두면 폰 화면(900px)의 **55%**를
- * 차지해서, 정작 보러 온 목록이 한 칸밖에 안 보였다. 그렇다고 지도를 늘 작게 두면
- * 로마자 표기가 뭉개진다(2026-08-28 사용자 지적: "가독성 떨어져 특히 영어").
- * 그래서 **맨 위에서는 크게, 목록을 훑을 때는 작게** 두 크기를 오간다.
+ * 🐞 여기 있던 것을 2026-09-01에 걷어냈다 — 지도를 화면에 붙여 두고(sticky)
+ * 스크롤하면 작게 접는 장치였는데, 사용자가 **"지도 작아지면서 덜덜 떨린다"**고
+ * 짚어 줬다. 원인은 되먹임 고리다:
+ *   접힌다 → 지도가 작아진다 → 페이지 전체 높이가 줄어든다 → 스크롤 위치가
+ *   내용에 대해 뒤로 밀린다 → 표식이 다시 화면 안으로 들어온다 → 펴진다 →
+ *   높이가 늘어난다 → 다시 접힌다 …
+ * 경계 근처에서 이게 초당 몇 번씩 반복된다. **크기를 바꾸는 것을 크기 변화가
+ * 스스로 일으키게 만들면 반드시 이렇게 된다.**
  *
- * 스크롤 위치를 직접 재지 않고 1px짜리 표식(sentinel)이 화면 밖으로 나갔는지만 본다 —
- * 스크롤 이벤트를 매번 받아 계산하면 손가락을 따라 버벅인다.
+ * 지금 것은 안전하다 — 버튼을 띄우고 내리는 것뿐이라 **레이아웃을 건드리지 않는다.**
+ * 지도는 그냥 위로 밀려 나간다(사용자 결정: "화면이 작아서 지도가 밀려 나가는 게 맞겠어").
  */
-function useCondenseOnScroll() {
-  const sentinelRef = useRef<HTMLDivElement>(null);
-  const [on, setOn] = useState(false);
+function useMapOffScreen() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [off, setOff] = useState(false);
   useEffect(() => {
-    const el = sentinelRef.current;
+    const el = ref.current;
     if (!el || typeof IntersectionObserver === "undefined") return;
-    const io = new IntersectionObserver(([entry]) => setOn(!entry.isIntersecting));
+    const io = new IntersectionObserver(([entry]) => {
+      // 🐞 "화면 밖"이 두 가지라 처음엔 틀렸다(2026-09-01) — 지도가 **위로 지나간**
+      // 것과 **아직 아래에 있어 안 나온** 것. 그냥 !isIntersecting으로 보면 둘을
+      // 못 가려서, 맨 위 계절 화면을 보는 중에도 "지도" 버튼이 떠 있었다.
+      // 위로 지나갔을 때(아래 끝이 화면 위쪽 밖)만 띄운다.
+      setOff(!entry.isIntersecting && entry.boundingClientRect.bottom < 0);
+    });
     io.observe(el);
     return () => io.disconnect();
   }, []);
-  return { sentinelRef, on };
+  return { ref, off };
 }
 
 /**

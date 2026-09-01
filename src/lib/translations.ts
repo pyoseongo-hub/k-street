@@ -25,6 +25,8 @@ export interface Translations {
   noPlacesInDistrictMessage: (gu: string) => string;
   flowerBloomDisclaimer: string;
   mapAppNote: string;
+  /** 지도가 화면 밖으로 나갔을 때 뜨는 "지도로 돌아가기" 버튼 */
+  backToMap: string;
   /** 지도 버튼 이름. 두 회사가 정한 공식 표기를 쓴다 — 지어내지 않는다. */
   kakaoMapLabel: string;
   naverMapLabel: string;
@@ -86,6 +88,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       '벚꽃 등 개화 시기는 그 해 날씨에 따라 매년 달라져 특정 날짜를 미리 정할 수 없다. 보통 3~5월 사이이니, 방문 전 서울시·구청 공식 채널에서 실시간 개화 소식을 확인할 것.',
     mapAppNote: '지도 앱이 바로 안 열리면, 이름으로 다시 검색해 보세요.',
+    backToMap: '지도',
     kakaoMapLabel: '카카오맵',
     naverMapLabel: '네이버지도',
     seasonTitleAnd: '그리고 서울',
@@ -105,6 +108,7 @@ const translations: Record<Language, Translations> = {
       market: '시장',
       flower: '꽃길',
       walk: '산책길',
+      walkFlower: '꽃길·산책길',
       hike: '등산로',
       museum: '박물관',
       festival: '축제',
@@ -144,6 +148,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       "Bloom dates (cherry blossoms, etc.) shift every year with the weather, so no fixed date can be given. They generally fall between March and May — check the official Seoul city or district channels for real-time bloom updates before you go.",
     mapAppNote: "If the map app doesn't open directly, try searching the name yourself.",
+    backToMap: 'Map',
     kakaoMapLabel: 'KakaoMap',
     naverMapLabel: 'Naver Map',
     seasonTitleAnd: 'and Seoul',
@@ -163,6 +168,7 @@ const translations: Record<Language, Translations> = {
       market: 'Markets',
       flower: 'Flower paths',
       walk: 'Walking trails',
+      walkFlower: 'Walks & flowers',
       hike: 'Hiking routes',
       museum: 'Museums',
       festival: 'Festivals',
@@ -202,6 +208,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       '桜などの開花時期はその年の天気によって毎年変わるため、特定の日付を決められません。だいたい3〜5月の間なので、訪れる前にソウル市・区の公式チャンネルでリアルタイムの開花情報を確認してください。',
     mapAppNote: '地図アプリがすぐに開かない場合は、名前でもう一度検索してみてください。',
+    backToMap: '地図',
     kakaoMapLabel: 'KakaoMap',
     naverMapLabel: 'NAVER Map',
     seasonTitleAnd: 'そしてソウル',
@@ -221,6 +228,7 @@ const translations: Record<Language, Translations> = {
       market: '市場',
       flower: '花の小道',
       walk: '散歩道',
+      walkFlower: '散歩道・花の小道',
       hike: 'ハイキングコース',
       museum: '博物館',
       festival: 'フェスティバル',
@@ -260,6 +268,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       '樱花等开花时间会因当年天气而每年不同，无法提前确定具体日期。大致在3~5月之间，出发前请通过首尔市·区厅官方渠道确认实时花讯。',
     mapAppNote: '如果地图App没有直接打开，请尝试用名称重新搜索。',
+    backToMap: '地图',
     kakaoMapLabel: 'KakaoMap',
     naverMapLabel: 'Naver地图',
     seasonTitleAnd: '和首尔',
@@ -279,6 +288,7 @@ const translations: Record<Language, Translations> = {
       market: '市场',
       flower: '花路',
       walk: '散步路线',
+      walkFlower: '散步路线与花路',
       hike: '登山路线',
       museum: '博物馆',
       festival: '节庆',
@@ -318,6 +328,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       '櫻花等開花時間會因當年天氣而每年不同，無法提前確定具體日期。大致在3~5月之間，出發前請透過首爾市·區廳官方管道確認即時花訊。',
     mapAppNote: '如果地圖App沒有直接開啟，請嘗試用名稱重新搜尋。',
+    backToMap: '地圖',
     kakaoMapLabel: 'KakaoMap',
     naverMapLabel: 'Naver地圖',
     seasonTitleAnd: '和首爾',
@@ -337,6 +348,7 @@ const translations: Record<Language, Translations> = {
       market: '市場',
       flower: '花路',
       walk: '散步路線',
+      walkFlower: '散步路線與花路',
       hike: '登山路線',
       museum: '博物館',
       festival: '節慶',
@@ -376,6 +388,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       'Thời điểm hoa nở (như hoa anh đào) thay đổi mỗi năm tùy theo thời tiết, nên không thể ấn định ngày cụ thể trước. Thường rơi vào khoảng tháng 3-5, hãy kiểm tra thông tin nở hoa theo thời gian thực qua kênh chính thức của thành phố Seoul hoặc quận trước khi đến.',
     mapAppNote: 'Nếu ứng dụng bản đồ không mở trực tiếp, hãy thử tìm kiếm lại bằng tên.',
+    backToMap: 'Bản đồ',
     kakaoMapLabel: 'KakaoMap',
     naverMapLabel: 'Naver Map',
     seasonTitleAnd: 'và Seoul',
@@ -395,6 +408,7 @@ const translations: Record<Language, Translations> = {
       market: 'Chợ',
       flower: 'Lối đi hoa',
       walk: 'Lối đi bộ',
+      walkFlower: 'Đi dạo & hoa',
       hike: 'Tuyến leo núi',
       museum: 'Bảo tàng',
       festival: 'Lễ hội',
@@ -434,6 +448,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       'Las fechas de floración (como los cerezos) cambian cada año según el clima, por lo que no se puede fijar una fecha exacta. Suele ser entre marzo y mayo — consulta los canales oficiales de la ciudad de Seúl o del distrito para conocer el estado de floración en tiempo real antes de ir.',
     mapAppNote: 'Si la app de mapas no se abre directamente, prueba a buscar el nombre tú mismo.',
+    backToMap: 'Mapa',
     kakaoMapLabel: 'KakaoMap',
     naverMapLabel: 'Naver Map',
     seasonTitleAnd: 'y Seúl',
@@ -453,6 +468,7 @@ const translations: Record<Language, Translations> = {
       market: 'Mercados',
       flower: 'Caminos florales',
       walk: 'Rutas a pie',
+      walkFlower: 'Paseos y flores',
       hike: 'Rutas de senderismo',
       museum: 'Museos',
       festival: 'Festivales',
@@ -492,6 +508,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       "Les dates de floraison (cerisiers, etc.) changent chaque année selon la météo, il n'est donc pas possible de fixer une date précise. Cela se situe généralement entre mars et mai — consultez les canaux officiels de la ville de Séoul ou du district pour connaître l'état de la floraison en temps réel avant de vous y rendre.",
     mapAppNote: "Si l'application de carte ne s'ouvre pas directement, essayez de rechercher le nom vous-même.",
+    backToMap: 'Carte',
     kakaoMapLabel: 'KakaoMap',
     naverMapLabel: 'Naver Map',
     seasonTitleAnd: 'et Séoul',
@@ -511,6 +528,7 @@ const translations: Record<Language, Translations> = {
       market: 'Marchés',
       flower: 'Chemins fleuris',
       walk: 'Sentiers pédestres',
+      walkFlower: 'Balades et fleurs',
       hike: 'Sentiers de randonnée',
       museum: 'Musées',
       festival: 'Festivals',
@@ -550,6 +568,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       'Die Blütezeiten (z. B. Kirschblüten) verschieben sich jedes Jahr je nach Wetter, daher kann kein festes Datum angegeben werden. Meist liegt sie zwischen März und Mai — bitte vor dem Besuch die offiziellen Kanäle der Stadt Seoul bzw. des Bezirks für aktuelle Blüteninformationen prüfen.',
     mapAppNote: 'Wenn die Karten-App nicht direkt öffnet, versuchen Sie, den Namen selbst zu suchen.',
+    backToMap: 'Karte',
     kakaoMapLabel: 'KakaoMap',
     naverMapLabel: 'Naver Map',
     seasonTitleAnd: 'und Seoul',
@@ -569,6 +588,7 @@ const translations: Record<Language, Translations> = {
       market: 'Märkte',
       flower: 'Blumenwege',
       walk: 'Wanderwege',
+      walkFlower: 'Spazier- & Blütenwege',
       hike: 'Wanderstrecken',
       museum: 'Museen',
       festival: 'Festivals',
@@ -608,6 +628,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       'Даты цветения (например, сакуры) каждый год меняются в зависимости от погоды, поэтому точную дату указать нельзя. Обычно это период с марта по май — перед посещением уточните актуальную информацию о цветении на официальных каналах города Сеул или округа.',
     mapAppNote: 'Если приложение карты не открывается напрямую, попробуйте найти название самостоятельно.',
+    backToMap: 'Карта',
     kakaoMapLabel: 'KakaoMap',
     naverMapLabel: 'Naver Map',
     seasonTitleAnd: 'и Сеул',
@@ -627,6 +648,7 @@ const translations: Record<Language, Translations> = {
       market: 'Рынки',
       flower: 'Цветочные дорожки',
       walk: 'Пешеходные маршруты',
+      walkFlower: 'Прогулки и цветы',
       hike: 'Маршруты пеших прогулок',
       museum: 'Музеи',
       festival: 'Фестивали',
@@ -666,6 +688,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       'Tanggal mekar (seperti bunga sakura) berubah setiap tahun tergantung cuaca, jadi tanggal pastinya tidak bisa ditentukan. Biasanya terjadi antara Maret-Mei — periksa kabar mekar terkini melalui kanal resmi Kota Seoul atau distrik sebelum berkunjung.',
     mapAppNote: 'Jika aplikasi peta tidak langsung terbuka, coba cari namanya sendiri.',
+    backToMap: 'Peta',
     kakaoMapLabel: 'KakaoMap',
     naverMapLabel: 'Naver Map',
     seasonTitleAnd: 'dan Seoul',
@@ -685,6 +708,7 @@ const translations: Record<Language, Translations> = {
       market: 'Pasar',
       flower: 'Jalur bunga',
       walk: 'Jalur jalan',
+      walkFlower: 'Jalan santai & bunga',
       hike: 'Rute pendakian',
       museum: 'Museum',
       festival: 'Festival',
@@ -724,6 +748,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       'ช่วงเวลาดอกไม้บาน (เช่น ซากุระ) จะเปลี่ยนไปทุกปีตามสภาพอากาศ จึงไม่สามารถระบุวันที่แน่นอนล่วงหน้าได้ โดยทั่วไปจะอยู่ในช่วงเดือนมีนาคม-พฤษภาคม กรุณาตรวจสอบข่าวการบานของดอกไม้แบบเรียลไทม์จากช่องทางทางการของกรุงโซลหรือเขตก่อนไปเยือน',
     mapAppNote: 'หากแอปแผนที่ไม่เปิดโดยตรง โปรดลองค้นหาชื่อด้วยตัวเองอีกครั้ง',
+    backToMap: 'แผนที่',
     kakaoMapLabel: 'KakaoMap',
     naverMapLabel: 'Naver Map',
     seasonTitleAnd: 'และโซล',
@@ -743,6 +768,7 @@ const translations: Record<Language, Translations> = {
       market: 'ตลาด',
       flower: 'ทางดอกไม้',
       walk: 'เส้นทางเดิน',
+      walkFlower: 'เส้นทางเดินและดอกไม้',
       hike: 'เส้นทางเดินป่า',
       museum: 'พิพิธภัณฑ์',
       festival: 'เทศกาล',

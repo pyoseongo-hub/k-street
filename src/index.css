@@ -577,94 +577,108 @@ button {
   line-height: 1.6;
 }
 
-/* ── 🧲 붙어 있는 고르기 영역 (2026-09-01, 사용자 지시 "스크롤해도 지도는
-   안밀리게 이카드를 맨위로") ──────────────────────────
-   갈래 칩 · 내 위치 · 육각 지도를 한 덩어리로 묶어 화면 위에 붙인다.
-   목록은 그 아래로 흐른다.
-
-   ⚠️ 좌우로 -16px 빼서 패널 안쪽 여백까지 덮는 이유 — 안 그러면 붙어 있는 동안
-   양옆 16px 틈으로 아래 목록이 지나가는 게 보인다.
-   ⚠️ 조상 요소에 overflow:hidden이 있으면 sticky가 통째로 죽는다. .panel에는
-   없지만(.monthly-festival-panel에만 있다) 나중에 넣지 말 것. */
-.de-sticky {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  margin: 0 -16px 10px;
-  padding: 10px 16px 8px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+/* ── 🎨 동네 화면 머리말 (2026-09-01, 사용자 지시 "지도 위 글씨부분도 꾸미고") ──
+   계절 화면에는 사진 표지가 있어 무게가 있는데, 이 화면은 검은 바탕에 흰 글씨뿐이라
+   밋밋했다. 그렇다고 여기에 사진을 깔 수는 없다 — 이 화면의 주인공은 25개 구를
+   한눈에 보여주는 육각 지도지, 특정 장소 사진이 아니다.
+   그래서 **지금 고른 갈래의 색**을 옅게 깔고, 아래 지도와 같은 결의 격자를 얹는다.
+   꾸미기만 하는 게 아니라 **지금 무엇을 보고 있는지**를 말해 준다 — 시장을 고르면
+   앰버, 골목을 고르면 주황으로 머리 색이 바뀐다. */
+.de-head {
+  position: relative;
+  overflow: hidden;
+  /* 패널 안쪽 여백(18px 16px)까지 덮어 화면 폭을 꽉 채운 띠로 만든다. */
+  margin: -18px -16px 16px;
+  padding: 22px 18px 18px;
+  border-bottom: 1px solid color-mix(in srgb, var(--cc) 26%, var(--border));
+  background:
+    /* 육각 지도와 같은 결의 삼각 격자. 3%라 글씨를 안 가린다. */
+    repeating-linear-gradient(60deg, transparent 0 25px, rgba(255, 255, 255, 0.03) 25px 26px),
+    repeating-linear-gradient(-60deg, transparent 0 25px, rgba(255, 255, 255, 0.03) 25px 26px),
+    /* 갈래 색은 왼쪽 위에서만 번지게 — 전체를 칠하면 카드가 아니라 배너처럼 보인다. */
+    radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--cc) 22%, transparent), transparent 62%);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-/* 스크롤이 시작됐는지 알려 주는 1px짜리 표식(useCondenseOnScroll 참고).
-   이게 화면 밖으로 나가면 위 영역이 .condensed로 접힌다. */
-.de-sentinel {
-  height: 1px;
-  margin-bottom: -1px;
-}
-
-/* ── 접힌 상태 ────────────────────────────────────────
-   다 펴 두면 폰 화면의 55%를 먹어서 목록이 한 칸밖에 안 보였다.
-   맨 위에서는 크게 두고, 목록을 훑기 시작하면 이 크기로 줄인다. */
-.de-sticky.condensed {
-  padding-top: 6px;
-  padding-bottom: 4px;
-}
-
-/* 갈래 칩: 아이콘 위 글씨 아래(세로) → 아이콘 옆 글씨(가로)로 눕힌다. 85px → 34px. */
-.de-sticky.condensed .cat-chip {
-  flex-direction: row;
-  gap: 5px;
-  width: auto;
-  padding: 6px 12px 6px 9px;
+.de-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 11px;
   border-radius: 100px;
-}
-
-.de-sticky.condensed .cat-chip-icon,
-.de-sticky.condensed .cat-chip-icon-image {
-  width: 17px;
-  height: 17px;
-  font-size: 14px;
-}
-
-.de-sticky.condensed .category-chip-row {
-  margin-bottom: 7px;
-  padding-bottom: 4px;
-}
-
-.de-sticky.condensed .myloc {
-  margin-bottom: 6px;
-  padding: 3px 10px;
+  background: color-mix(in srgb, var(--cc) 22%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--cc) 40%, transparent);
   font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  /* 갈래 색을 그대로 쓰면 어두운 배경에서 안 읽히는 색이 있다(--walk 아쿠아 등) —
+     흰색 쪽으로 당겨 어느 갈래에서나 읽히게 한다. */
+  color: color-mix(in srgb, var(--cc) 55%, #FFFFFF);
 }
 
-/* 육각형은 62→48px. 이보다 더 줄이면 로마자 표기가 뭉개진다
-   (2026-08-28 "가독성 떨어져 특히 영어" — 그때 문제가 된 크기가 49px였다).
-   접힌 상태는 잠깐 지나가는 화면이라 48px까지만 내려간다. */
-.de-sticky.condensed .hex-rows {
-  --hex-w: 48px;
-  --hex-h: 56px;
+.de-head h2 {
+  margin: 10px 0 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.2;
+  color: var(--text);
+  /* 한글이 "동네마다 다른 서/울"처럼 글자 단위로 쪼개지지 않게. */
+  word-break: keep-all;
+  text-wrap: balance;
 }
 
-.de-sticky.condensed .district-hexgrid {
-  padding-top: 2px;
-  padding-bottom: 2px;
+/* ── 🗺️ 맨 위의 고르기 영역 (갈래 칩 · 내 위치 · 육각 지도) ────────
+   2026-09-01 오전에 이걸 화면에 **붙여** 뒀다가(position: sticky) 같은 날 저녁에
+   걷어냈다. 사용자 지적 둘:
+     ① "자리 너무 차지해" — 다 펴면 폰 화면(900px)의 55%를 먹어 목록이 한둘밖에
+        안 보였다.
+     ② "지도 작아지면서 덜덜 떨린다" — 스크롤하면 작게 접는 장치를 붙였더니
+        접힘 → 높이 감소 → 스크롤 위치가 밀림 → 다시 펴짐 → … 되먹임 고리가 생겼다.
+   그래서 **그냥 위로 밀려 나가게** 둔다(사용자 결정: "지도가 밀려 나가는 게 맞겠어").
+   동네를 바꿔야 할 땐 아래 .to-map 버튼이 한 번에 데려다준다. */
+.de-picker {
+  margin-bottom: 10px;
 }
 
-/* 크기가 툭 바뀌면 놀란다 — 짧게 이어 준다.
-   ⚠️ .hex-tile의 transition은 이 파일 아래쪽(.hex-tile 규칙)에 따로 있다.
-   같은 속성을 두 번 쓰면 나중 것이 이기므로 여기서 겹쳐 쓰지 않는다. */
-.hex-row,
-.cat-chip {
-  transition: width 0.18s ease, margin 0.18s ease, padding 0.18s ease;
+/* 지도가 화면 밖으로 나갔을 때만 뜨는 작은 버튼.
+   ⚠️ 반드시 **떠 있어야**(fixed) 한다 — 자리를 차지하면 그 높이 변화가 다시
+   "화면 밖인지" 판정을 뒤집어, 위에 적은 덜덜 떨림이 그대로 되살아난다. */
+.to-map {
+  position: fixed;
+  right: 16px;
+  /* 하단 탭바(플로팅 도크) 위로 올린다. */
+  bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 15px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  -webkit-tap-highlight-color: transparent;
+  animation: to-map-in 0.18s ease;
+}
+
+.to-map:active {
+  filter: brightness(1.15);
+}
+
+@keyframes to-map-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hex-row,
-  .cat-chip,
-  .hex-tile {
-    transition: none;
-  }
+  .to-map { animation: none; }
 }
 
 /* ── 📍 내 위치의 구 ─────────────────────────────────── */
@@ -897,8 +911,7 @@ button {
      (실제 글자 크기 축소는 컴포넌트에서 라벨 길이를 보고 인라인으로 준다). */
   overflow-wrap: anywhere;
   word-break: break-word;
-  /* width·height는 접힘(.de-sticky.condensed)에서 --hex-w/--hex-h가 바뀔 때 쓰인다. */
-  transition: transform 0.12s ease, filter 0.12s ease, width 0.18s ease, height 0.18s ease;
+  transition: transform 0.12s ease, filter 0.12s ease;
 }
 
 .hex-tile.has-data {
