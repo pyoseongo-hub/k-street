@@ -57,9 +57,9 @@ const translations: Record<Language, Translations> = {
 
     exploreNowLabel: '지금 갈 수 있는 곳',
     exploreTitle: '구를 골라 둘러보기',
-    mapDisclaimerStart: '개별 위치 표시는 아직 준비 중이라(구별 좌표 검증 전), 우선 ',
-    mapDisclaimerBold: '자치구 단위로',
-    mapDisclaimerEnd: ' 탐색한다. 색이 있는 구는 이번 조사로 이름까지 확인된 곳, 옅은 구는 아직 확인 못 한 곳이다.',
+    mapDisclaimerStart: '구를 누르면 그 동네의 장소가 나온다. 진한 색은 ',
+    mapDisclaimerBold: '지금 볼 곳이 있는 구',
+    mapDisclaimerEnd: ', 옅은 색은 아직 준비 중인 구다.',
     noPlacesInDistrictMessage: (gu) => `${gu}는 아직 확인 못했다.`,
     flowerBloomDisclaimer:
       '벚꽃 등 개화 시기는 그 해 날씨에 따라 매년 달라져 특정 날짜를 미리 정할 수 없다. 보통 3~5월 사이이니, 방문 전 서울시·구청 공식 채널에서 실시간 개화 소식을 확인할 것.',
@@ -102,9 +102,9 @@ const translations: Record<Language, Translations> = {
 
     exploreNowLabel: 'Where you can go now',
     exploreTitle: 'Pick a district to explore',
-    mapDisclaimerStart: 'Individual location markers are still in progress (district coordinates pending validation). For now, we explore by ',
-    mapDisclaimerBold: 'district.',
-    mapDisclaimerEnd: ' Colored districts have confirmed venues; lighter ones are still being researched.',
+    mapDisclaimerStart: 'Tap a district to see its places. Bold districts ',
+    mapDisclaimerBold: 'have places to visit now',
+    mapDisclaimerEnd: '; faded ones are still being added.',
     noPlacesInDistrictMessage: (gu) => `${gu} hasn't been researched yet.`,
     flowerBloomDisclaimer:
       "Bloom dates (cherry blossoms, etc.) shift every year with the weather, so no fixed date can be given. They generally fall between March and May — check the official Seoul city or district channels for real-time bloom updates before you go.",
@@ -147,9 +147,9 @@ const translations: Record<Language, Translations> = {
 
     exploreNowLabel: '今行ける場所',
     exploreTitle: '地区を選んで探索',
-    mapDisclaimerStart: '個別の場所のマーカーはまだ準備中です（地区の座標検証待ち）。現在のところ、',
-    mapDisclaimerBold: '地区別に',
-    mapDisclaimerEnd: '探索しています。色付きの地区は確認済みの施設があります。薄い色の地区はまだ調査中です。',
+    mapDisclaimerStart: '区をタップするとその街の場所が出てきます。濃い色は',
+    mapDisclaimerBold: '今行ける場所がある区',
+    mapDisclaimerEnd: '、薄い色はまだ準備中の区です。',
     noPlacesInDistrictMessage: (gu) => `${gu}はまだ調査していません。`,
     flowerBloomDisclaimer:
       '桜などの開花時期はその年の天気によって毎年変わるため、特定の日付を決められません。だいたい3〜5月の間なので、訪れる前にソウル市・区の公式チャンネルでリアルタイムの開花情報を確認してください。',
@@ -192,9 +192,9 @@ const translations: Record<Language, Translations> = {
 
     exploreNowLabel: '现在可以去的地方',
     exploreTitle: '选择地区浏览',
-    mapDisclaimerStart: '个别位置标记仍在准备中（等待地区坐标验证），目前按',
-    mapDisclaimerBold: '地区',
-    mapDisclaimerEnd: '浏览。有色地区已确认有场地；浅色地区仍在调查中。',
+    mapDisclaimerStart: '点击区可查看该区域的地点。深色表示',
+    mapDisclaimerBold: '现在就能去的区',
+    mapDisclaimerEnd: '，浅色表示还在整理中的区。',
     noPlacesInDistrictMessage: (gu) => `${gu}尚未调查。`,
     flowerBloomDisclaimer:
       '樱花等开花时间会因当年天气而每年不同，无法提前确定具体日期。大致在3~5月之间，出发前请通过首尔市·区厅官方渠道确认实时花讯。',
@@ -237,9 +237,9 @@ const translations: Record<Language, Translations> = {
 
     exploreNowLabel: '現在可以去的地方',
     exploreTitle: '選擇地區瀏覽',
-    mapDisclaimerStart: '個別位置標記仍在準備中（等待地區座標驗證），目前按',
-    mapDisclaimerBold: '地區',
-    mapDisclaimerEnd: '瀏覽。有色地區已確認有場地；淺色地區仍在調查中。',
+    mapDisclaimerStart: '點擊區可查看該區域的地點。深色表示',
+    mapDisclaimerBold: '現在就能去的區',
+    mapDisclaimerEnd: '，淺色表示還在整理中的區。',
     noPlacesInDistrictMessage: (gu) => `${gu}尚未調查。`,
     flowerBloomDisclaimer:
       '櫻花等開花時間會因當年天氣而每年不同，無法提前確定具體日期。大致在3~5月之間，出發前請透過首爾市·區廳官方管道確認即時花訊。',
@@ -282,9 +282,9 @@ const translations: Record<Language, Translations> = {
 
     exploreNowLabel: 'Các địa điểm bạn có thể đến ngay',
     exploreTitle: 'Chọn một quận để khám phá',
-    mapDisclaimerStart: 'Các điểm đánh dấu vị trí riêng lẻ vẫn đang được chuẩn bị (chờ xác nhận tọa độ quận), hiện tại chúng tôi khám phá ',
-    mapDisclaimerBold: 'theo quận.',
-    mapDisclaimerEnd: ' Các quận có màu có các địa điểm được xác nhận; các quận nhạt hơn vẫn đang được điều tra.',
+    mapDisclaimerStart: 'Chạm vào một quận để xem các địa điểm. Màu đậm là ',
+    mapDisclaimerBold: 'quận đã có nơi để đi',
+    mapDisclaimerEnd: ', màu nhạt là quận đang được cập nhật.',
     noPlacesInDistrictMessage: (gu) => `${gu} chưa được điều tra.`,
     flowerBloomDisclaimer:
       'Thời điểm hoa nở (như hoa anh đào) thay đổi mỗi năm tùy theo thời tiết, nên không thể ấn định ngày cụ thể trước. Thường rơi vào khoảng tháng 3-5, hãy kiểm tra thông tin nở hoa theo thời gian thực qua kênh chính thức của thành phố Seoul hoặc quận trước khi đến.',
@@ -327,9 +327,9 @@ const translations: Record<Language, Translations> = {
 
     exploreNowLabel: 'Lugares donde puedes ir ahora',
     exploreTitle: 'Elige un distrito para explorar',
-    mapDisclaimerStart: 'Los marcadores de ubicación individuales aún están en preparación (validación de coordenadas de distrito pendiente). Por ahora exploramos ',
-    mapDisclaimerBold: 'por distrito.',
-    mapDisclaimerEnd: ' Los distritos coloreados tienen lugares confirmados; los más claros aún se están investigando.',
+    mapDisclaimerStart: 'Toca un distrito para ver sus lugares. Los distritos en color ',
+    mapDisclaimerBold: 'ya tienen lugares que visitar',
+    mapDisclaimerEnd: '; los más claros aún están en preparación.',
     noPlacesInDistrictMessage: (gu) => `${gu} aún no ha sido investigado.`,
     flowerBloomDisclaimer:
       'Las fechas de floración (como los cerezos) cambian cada año según el clima, por lo que no se puede fijar una fecha exacta. Suele ser entre marzo y mayo — consulta los canales oficiales de la ciudad de Seúl o del distrito para conocer el estado de floración en tiempo real antes de ir.',
@@ -372,9 +372,9 @@ const translations: Record<Language, Translations> = {
 
     exploreNowLabel: 'Où vous pouvez aller maintenant',
     exploreTitle: 'Choisir un district pour explorer',
-    mapDisclaimerStart: 'Les marqueurs de localisation individuels sont encore en cours de préparation (validation des coordonnées de district en attente). Pour l\'instant, nous explorons ',
-    mapDisclaimerBold: 'par district.',
-    mapDisclaimerEnd: ' Les districts colorés ont des lieux confirmés ; les plus clairs sont encore en cours d\'enquête.',
+    mapDisclaimerStart: 'Touchez un arrondissement pour voir ses lieux. Les arrondissements colorés ',
+    mapDisclaimerBold: 'ont déjà des lieux à visiter',
+    mapDisclaimerEnd: ' ; les plus pâles sont encore en préparation.',
     noPlacesInDistrictMessage: (gu) => `${gu} n'a pas encore été enquêté.`,
     flowerBloomDisclaimer:
       "Les dates de floraison (cerisiers, etc.) changent chaque année selon la météo, il n'est donc pas possible de fixer une date précise. Cela se situe généralement entre mars et mai — consultez les canaux officiels de la ville de Séoul ou du district pour connaître l'état de la floraison en temps réel avant de vous y rendre.",
@@ -417,9 +417,9 @@ const translations: Record<Language, Translations> = {
 
     exploreNowLabel: 'Orte, die Sie jetzt besuchen können',
     exploreTitle: 'Wählen Sie einen Bezirk zum Erkunden',
-    mapDisclaimerStart: 'Einzelne Standortmarker werden noch vorbereitet (Validierung der Bezirkskoordinaten ausstehend). Wir erkunden vorerst ',
-    mapDisclaimerBold: 'nach Bezirk.',
-    mapDisclaimerEnd: ' Farbige Bezirke haben bestätigte Orte; hellere werden noch untersucht.',
+    mapDisclaimerStart: 'Tippen Sie auf einen Bezirk, um seine Orte zu sehen. Farbige Bezirke ',
+    mapDisclaimerBold: 'haben bereits Orte zu besuchen',
+    mapDisclaimerEnd: '; blassere werden noch ergänzt.',
     noPlacesInDistrictMessage: (gu) => `${gu} wurde noch nicht untersucht.`,
     flowerBloomDisclaimer:
       'Die Blütezeiten (z. B. Kirschblüten) verschieben sich jedes Jahr je nach Wetter, daher kann kein festes Datum angegeben werden. Meist liegt sie zwischen März und Mai — bitte vor dem Besuch die offiziellen Kanäle der Stadt Seoul bzw. des Bezirks für aktuelle Blüteninformationen prüfen.',
@@ -462,9 +462,9 @@ const translations: Record<Language, Translations> = {
 
     exploreNowLabel: 'Куда вы можете пойти сейчас',
     exploreTitle: 'Выберите округ для исследования',
-    mapDisclaimerStart: 'Отдельные маркеры местоположения все еще готовятся (проверка координат округов ожидается), пока мы исследуем ',
-    mapDisclaimerBold: 'по округам.',
-    mapDisclaimerEnd: ' Цветные округа имеют подтвержденные места; более светлые все еще исследуются.',
+    mapDisclaimerStart: 'Нажмите на район, чтобы увидеть места. Яркие районы ',
+    mapDisclaimerBold: 'уже содержат места для посещения',
+    mapDisclaimerEnd: '; бледные ещё готовятся.',
     noPlacesInDistrictMessage: (gu) => `${gu} еще не был исследован.`,
     flowerBloomDisclaimer:
       'Даты цветения (например, сакуры) каждый год меняются в зависимости от погоды, поэтому точную дату указать нельзя. Обычно это период с марта по май — перед посещением уточните актуальную информацию о цветении на официальных каналах города Сеул или округа.',
@@ -507,9 +507,9 @@ const translations: Record<Language, Translations> = {
 
     exploreNowLabel: 'Tempat yang bisa Anda kunjungi sekarang',
     exploreTitle: 'Pilih distrik untuk dijelajahi',
-    mapDisclaimerStart: 'Penanda lokasi individu masih dalam persiapan (validasi koordinat distrik tertunda), untuk saat ini kami menjelajahi ',
-    mapDisclaimerBold: 'per distrik.',
-    mapDisclaimerEnd: ' Distrik berwarna memiliki tempat yang dikonfirmasi; yang lebih terang masih sedang diselidiki.',
+    mapDisclaimerStart: 'Ketuk sebuah distrik untuk melihat tempatnya. Distrik berwarna ',
+    mapDisclaimerBold: 'sudah punya tempat untuk dikunjungi',
+    mapDisclaimerEnd: '; yang pudar masih disiapkan.',
     noPlacesInDistrictMessage: (gu) => `${gu} belum diteliti.`,
     flowerBloomDisclaimer:
       'Tanggal mekar (seperti bunga sakura) berubah setiap tahun tergantung cuaca, jadi tanggal pastinya tidak bisa ditentukan. Biasanya terjadi antara Maret-Mei — periksa kabar mekar terkini melalui kanal resmi Kota Seoul atau distrik sebelum berkunjung.',
@@ -552,9 +552,9 @@ const translations: Record<Language, Translations> = {
 
     exploreNowLabel: 'สถานที่ที่คุณสามารถไปได้ตอนนี้',
     exploreTitle: 'เลือกเขตเพื่อสำรวจ',
-    mapDisclaimerStart: 'เครื่องหมายตำแหน่งแต่ละรายการยังคงอยู่ระหว่างการเตรียมการ (รอการยืนยันพิกัดเขต) สำหรับตอนนี้เราสำรวจ ',
-    mapDisclaimerBold: 'ตามเขต',
-    mapDisclaimerEnd: ' เขตที่มีสีมีสถานที่ที่ยืนยัน เขตที่อ่อนกว่ายังคงอยู่ระหว่างการสอบสวน',
+    mapDisclaimerStart: 'แตะเขตเพื่อดูสถานที่ในย่านนั้น สีเข้มคือ',
+    mapDisclaimerBold: 'เขตที่มีที่ให้ไปแล้ว',
+    mapDisclaimerEnd: ' ส่วนสีจางคือเขตที่ยังเตรียมอยู่',
     noPlacesInDistrictMessage: (gu) => `${gu}ยังไม่ได้รับการสอบสวน`,
     flowerBloomDisclaimer:
       'ช่วงเวลาดอกไม้บาน (เช่น ซากุระ) จะเปลี่ยนไปทุกปีตามสภาพอากาศ จึงไม่สามารถระบุวันที่แน่นอนล่วงหน้าได้ โดยทั่วไปจะอยู่ในช่วงเดือนมีนาคม-พฤษภาคม กรุณาตรวจสอบข่าวการบานของดอกไม้แบบเรียลไทม์จากช่องทางทางการของกรุงโซลหรือเขตก่อนไปเยือน',
