@@ -276,18 +276,49 @@ button {
   z-index: 1;
 }
 
+/* 표지 제목은 두 줄이다 — 윗줄에 계절 넷, 아랫줄에 "그리고 서울"
+   (사용자 지시 2026-09-01). 줄바꿈을 브라우저에 맡기지 않고 우리가 정한다:
+   맡기면 언어마다 엉뚱한 데서 끊긴다("봄 여름 가을 겨/울"처럼).
+
+   ⚠️ 기울임은 안 쓴다 — 한글 글꼴에 진짜 이탤릭이 없어서 브라우저가 억지로
+   눕히는데 획이 뭉개진다. 크기·굵기·색으로만 강조한다. */
 .mfp-cover-text h2 {
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 27px;
-  line-height: 1.18;
   color: #fff;
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
-  text-wrap: balance;
-  /* "겨울"이 '겨'와 '울'로 쪼개져 두 줄에 걸치던 것을 막는다 — 한글은 글자 단위로
-     끊기므로 낱말 단위로 묶어 줘야 한다. */
+  /* 한글은 글자 단위로 끊긴다 — 낱말로 묶어 줘야 "겨/울"로 안 쪼개진다. */
   word-break: keep-all;
+}
+
+/* 윗줄 — 계절 넷. 아랫줄보다 작고, 자간을 넓혀 이름표처럼 보이게 한다. */
+.mfp-seasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 9px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.65);
+}
+
+/* 🌸☀️🍁⛄ 계절마다 그 계절의 색. 사진 위에 얹히므로 전부 밝은 쪽으로 잡는다 —
+   앱의 카테고리 색을 그대로 쓰면 어두워서 사진에 묻힌다. */
+.mfp-spring { color: #FFB6D5; } /* 벚꽃 */
+.mfp-summer { color: #7FE8D0; } /* 물빛 */
+.mfp-autumn { color: #FFC46B; } /* 단풍 */
+.mfp-winter { color: #CBD9FF; } /* 눈빛 */
+
+/* 아랫줄 — 이 화면의 이름. 두 배 가까이 키워서 여기가 제목임을 분명히 한다. */
+.mfp-and {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55);
 }
 
 .mfp-cover-text p {

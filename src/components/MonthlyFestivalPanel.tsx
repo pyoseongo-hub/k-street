@@ -75,8 +75,28 @@ export default function MonthlyFestivalPanel() {
           띠였는데, 계절이 주인공인 화면이라 제목을 얹을 만큼 키웠다. */}
       <div className="mfp-cover">
         <SeasonPhotoHero className="mfp-cover-art" season={season} seed={rotatingSeed} />
+        {/* 🎨 제목을 두 줄로 나누고 계절 넷에 각각 그 계절의 색을 준다
+            (사용자 지시 2026-09-01: "겨울까지 다 윗줄 / 그리고 서울 아래 /
+             그리고 서울 강조 / 아니면 봄 여름 가을 겨울을 계절에 맞게").
+            둘 다 한다 — 윗줄은 계절 색, 아랫줄은 크고 굵게.
+
+            ⚠️ 기울임(이탤릭)은 쓰지 않는다. 한글 글꼴에는 진짜 이탤릭이 없어서
+            브라우저가 글자를 억지로 비스듬히 눕히는데, 획이 뭉개져 오히려 싸구려로
+            보인다. 대신 **크기 · 굵기 · 색**으로 강조한다.
+
+            윗줄은 seasonNames를 그대로 쓰므로 12개 언어에서 저절로 맞는다 —
+            새 문구를 언어마다 또 만들지 않아도 된다. */}
         <div className="mfp-cover-text">
-          <h2>{t.seasonTitle}</h2>
+          <h2>
+            <span className="mfp-seasons">
+              {SEASONS.map((s) => (
+                <span key={s.key} className={"mfp-season mfp-" + s.key}>
+                  {t.seasonNames[s.key]}
+                </span>
+              ))}
+            </span>
+            <span className="mfp-and">{t.seasonTitleAnd}</span>
+          </h2>
           <p>{t.seasonSubtitle(t.seasonNames[season], t.months[month], inMonth.length)}</p>
         </div>
       </div>

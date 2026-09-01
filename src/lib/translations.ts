@@ -27,7 +27,8 @@ export interface Translations {
   mapAppNote: string;
 
   // 계절 화면 「봄 여름 가을 겨울 그리고 서울」
-  seasonTitle: string;
+  /** 표지 아랫줄 — "그리고 서울". 윗줄의 계절 넷은 seasonNames를 그대로 쓴다. */
+  seasonTitleAnd: string;
   seasonNames: Record<string, string>;
   seasonSubtitle: (season: string, month: string, count: number) => string;
   themeAll: string;
@@ -82,7 +83,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       '벚꽃 등 개화 시기는 그 해 날씨에 따라 매년 달라져 특정 날짜를 미리 정할 수 없다. 보통 3~5월 사이이니, 방문 전 서울시·구청 공식 채널에서 실시간 개화 소식을 확인할 것.',
     mapAppNote: '지도 앱이 바로 안 열리면, 이름으로 다시 검색해 보세요.',
-    seasonTitle: '봄 여름 가을 겨울 그리고 서울',
+    seasonTitleAnd: '그리고 서울',
     seasonNames: { spring: '봄', summer: '여름', autumn: '가을', winter: '겨울' },
     seasonSubtitle: (season, month, count) => `${season} · ${month}에 열리는 축제 ${count}곳`,
     themeAll: '전체',
@@ -138,7 +139,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       "Bloom dates (cherry blossoms, etc.) shift every year with the weather, so no fixed date can be given. They generally fall between March and May — check the official Seoul city or district channels for real-time bloom updates before you go.",
     mapAppNote: "If the map app doesn't open directly, try searching the name yourself.",
-    seasonTitle: 'Spring Summer Fall Winter … and Seoul',
+    seasonTitleAnd: 'and Seoul',
     seasonNames: { spring: 'Spring', summer: 'Summer', autumn: 'Fall', winter: 'Winter' },
     seasonSubtitle: (season, month, count) => `${season} · ${count} festival${count === 1 ? '' : 's'} in ${month}`,
     themeAll: 'All',
@@ -194,7 +195,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       '桜などの開花時期はその年の天気によって毎年変わるため、特定の日付を決められません。だいたい3〜5月の間なので、訪れる前にソウル市・区の公式チャンネルでリアルタイムの開花情報を確認してください。',
     mapAppNote: '地図アプリがすぐに開かない場合は、名前でもう一度検索してみてください。',
-    seasonTitle: '春 夏 秋 冬 そしてソウル',
+    seasonTitleAnd: 'そしてソウル',
     seasonNames: { spring: '春', summer: '夏', autumn: '秋', winter: '冬' },
     seasonSubtitle: (season, month, count) => `${season} · ${month}に開かれる祭り ${count}件`,
     themeAll: 'すべて',
@@ -250,7 +251,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       '樱花等开花时间会因当年天气而每年不同，无法提前确定具体日期。大致在3~5月之间，出发前请通过首尔市·区厅官方渠道确认实时花讯。',
     mapAppNote: '如果地图App没有直接打开，请尝试用名称重新搜索。',
-    seasonTitle: '春 夏 秋 冬 和首尔',
+    seasonTitleAnd: '和首尔',
     seasonNames: { spring: '春', summer: '夏', autumn: '秋', winter: '冬' },
     seasonSubtitle: (season, month, count) => `${season} · ${month}举办的庆典 ${count}个`,
     themeAll: '全部',
@@ -306,7 +307,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       '櫻花等開花時間會因當年天氣而每年不同，無法提前確定具體日期。大致在3~5月之間，出發前請透過首爾市·區廳官方管道確認即時花訊。',
     mapAppNote: '如果地圖App沒有直接開啟，請嘗試用名稱重新搜尋。',
-    seasonTitle: '春 夏 秋 冬 和首爾',
+    seasonTitleAnd: '和首爾',
     seasonNames: { spring: '春', summer: '夏', autumn: '秋', winter: '冬' },
     seasonSubtitle: (season, month, count) => `${season} · ${month}舉辦的慶典 ${count}個`,
     themeAll: '全部',
@@ -362,7 +363,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       'Thời điểm hoa nở (như hoa anh đào) thay đổi mỗi năm tùy theo thời tiết, nên không thể ấn định ngày cụ thể trước. Thường rơi vào khoảng tháng 3-5, hãy kiểm tra thông tin nở hoa theo thời gian thực qua kênh chính thức của thành phố Seoul hoặc quận trước khi đến.',
     mapAppNote: 'Nếu ứng dụng bản đồ không mở trực tiếp, hãy thử tìm kiếm lại bằng tên.',
-    seasonTitle: 'Xuân Hạ Thu Đông … và Seoul',
+    seasonTitleAnd: 'và Seoul',
     seasonNames: { spring: 'Xuân', summer: 'Hè', autumn: 'Thu', winter: 'Đông' },
     seasonSubtitle: (season, month, count) => `${season} · ${count} lễ hội trong ${month}`,
     themeAll: 'Tất cả',
@@ -418,7 +419,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       'Las fechas de floración (como los cerezos) cambian cada año según el clima, por lo que no se puede fijar una fecha exacta. Suele ser entre marzo y mayo — consulta los canales oficiales de la ciudad de Seúl o del distrito para conocer el estado de floración en tiempo real antes de ir.',
     mapAppNote: 'Si la app de mapas no se abre directamente, prueba a buscar el nombre tú mismo.',
-    seasonTitle: 'Primavera Verano Otoño Invierno … y Seúl',
+    seasonTitleAnd: 'y Seúl',
     seasonNames: { spring: 'Primavera', summer: 'Verano', autumn: 'Otoño', winter: 'Invierno' },
     seasonSubtitle: (season, month, count) => `${season} · ${count} festival${count === 1 ? '' : 'es'} en ${month}`,
     themeAll: 'Todos',
@@ -474,7 +475,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       "Les dates de floraison (cerisiers, etc.) changent chaque année selon la météo, il n'est donc pas possible de fixer une date précise. Cela se situe généralement entre mars et mai — consultez les canaux officiels de la ville de Séoul ou du district pour connaître l'état de la floraison en temps réel avant de vous y rendre.",
     mapAppNote: "Si l'application de carte ne s'ouvre pas directement, essayez de rechercher le nom vous-même.",
-    seasonTitle: 'Printemps Été Automne Hiver … et Séoul',
+    seasonTitleAnd: 'et Séoul',
     seasonNames: { spring: 'Printemps', summer: 'Été', autumn: 'Automne', winter: 'Hiver' },
     seasonSubtitle: (season, month, count) => `${season} · ${count} festival${count === 1 ? '' : 's'} en ${month}`,
     themeAll: 'Tous',
@@ -530,7 +531,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       'Die Blütezeiten (z. B. Kirschblüten) verschieben sich jedes Jahr je nach Wetter, daher kann kein festes Datum angegeben werden. Meist liegt sie zwischen März und Mai — bitte vor dem Besuch die offiziellen Kanäle der Stadt Seoul bzw. des Bezirks für aktuelle Blüteninformationen prüfen.',
     mapAppNote: 'Wenn die Karten-App nicht direkt öffnet, versuchen Sie, den Namen selbst zu suchen.',
-    seasonTitle: 'Frühling Sommer Herbst Winter … und Seoul',
+    seasonTitleAnd: 'und Seoul',
     seasonNames: { spring: 'Frühling', summer: 'Sommer', autumn: 'Herbst', winter: 'Winter' },
     seasonSubtitle: (season, month, count) => `${season} · ${count} Feste im ${month}`,
     themeAll: 'Alle',
@@ -586,7 +587,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       'Даты цветения (например, сакуры) каждый год меняются в зависимости от погоды, поэтому точную дату указать нельзя. Обычно это период с марта по май — перед посещением уточните актуальную информацию о цветении на официальных каналах города Сеул или округа.',
     mapAppNote: 'Если приложение карты не открывается напрямую, попробуйте найти название самостоятельно.',
-    seasonTitle: 'Весна Лето Осень Зима … и Сеул',
+    seasonTitleAnd: 'и Сеул',
     seasonNames: { spring: 'Весна', summer: 'Лето', autumn: 'Осень', winter: 'Зима' },
     seasonSubtitle: (season, month, count) => `${season} · фестивалей в ${month}: ${count}`,
     themeAll: 'Все',
@@ -642,7 +643,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       'Tanggal mekar (seperti bunga sakura) berubah setiap tahun tergantung cuaca, jadi tanggal pastinya tidak bisa ditentukan. Biasanya terjadi antara Maret-Mei — periksa kabar mekar terkini melalui kanal resmi Kota Seoul atau distrik sebelum berkunjung.',
     mapAppNote: 'Jika aplikasi peta tidak langsung terbuka, coba cari namanya sendiri.',
-    seasonTitle: 'Semi Panas Gugur Dingin … dan Seoul',
+    seasonTitleAnd: 'dan Seoul',
     seasonNames: { spring: 'Musim Semi', summer: 'Musim Panas', autumn: 'Musim Gugur', winter: 'Musim Dingin' },
     seasonSubtitle: (season, month, count) => `${season} · ${count} festival pada ${month}`,
     themeAll: 'Semua',
@@ -698,7 +699,7 @@ const translations: Record<Language, Translations> = {
     flowerBloomDisclaimer:
       'ช่วงเวลาดอกไม้บาน (เช่น ซากุระ) จะเปลี่ยนไปทุกปีตามสภาพอากาศ จึงไม่สามารถระบุวันที่แน่นอนล่วงหน้าได้ โดยทั่วไปจะอยู่ในช่วงเดือนมีนาคม-พฤษภาคม กรุณาตรวจสอบข่าวการบานของดอกไม้แบบเรียลไทม์จากช่องทางทางการของกรุงโซลหรือเขตก่อนไปเยือน',
     mapAppNote: 'หากแอปแผนที่ไม่เปิดโดยตรง โปรดลองค้นหาชื่อด้วยตัวเองอีกครั้ง',
-    seasonTitle: 'ใบไม้ผลิ ร้อน ใบไม้ร่วง หนาว และโซล',
+    seasonTitleAnd: 'และโซล',
     seasonNames: { spring: 'ฤดูใบไม้ผลิ', summer: 'ฤดูร้อน', autumn: 'ฤดูใบไม้ร่วง', winter: 'ฤดูหนาว' },
     seasonSubtitle: (season, month, count) => `${season} · เทศกาลใน${month} ${count} งาน`,
     themeAll: 'ทั้งหมด',
