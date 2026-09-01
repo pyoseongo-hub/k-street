@@ -9,6 +9,7 @@ import { useRotatingSeed } from "../lib/useRotatingSeed";
 import { getTourImage } from "../lib/tourImages";
 import { districtFullName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
+import { getPlaceInfoLink, openMapLink } from "../lib/mapLinks";
 
 const nowMonth = new Date().getMonth() + 1;
 
@@ -62,7 +63,15 @@ export default function MonthlyFestivalPanel() {
                   <span className="fc-gu">{districtFullName(f.gu, language)}</span>
                   {f.dateLabel && <span className="fc-date">{f.dateLabel}</span>}
                 </div>
-                <div className="fc-name">{f.name}</div>
+                {/* 장소 카드와 같은 규칙 — 이름을 누르면 네이버 지도 장소 화면으로. */}
+                <button
+                  type="button"
+                  className="fc-name pr-name-link"
+                  onClick={() => openMapLink(getPlaceInfoLink(f))}
+                >
+                  {f.name}
+                  <span className="pr-name-arrow" aria-hidden="true">↗</span>
+                </button>
                 {f.note && <div className="fc-note">{f.note}</div>}
                 {/* 관광공사 사진과 함께 받은 실제 좌표(fetch-tour-images.mjs)가 있으면
                     길찾기에도 쓴다 — 2026-08-29 사용자 지적: 좌표가 이미 있는데도

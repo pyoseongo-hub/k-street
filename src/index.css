@@ -673,7 +673,45 @@ button {
   padding: 11px 13px;
 }
 
-.place-row.pr-compact .pr-name {
+.place-row.pr-compact /* 🔗 이름을 누르면 네이버 지도 장소 화면으로 간다(2026-09-01). <button>이라
+   브라우저 기본 버튼 모양을 지워서, 누를 수 있다는 것 말고는 예전 제목과 똑같이
+   보이게 한다 — 카드 제목이 갑자기 버튼처럼 생기면 목록의 리듬이 깨진다. */
+.pr-name-link {
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  width: 100%;
+}
+
+.pr-name-arrow {
+  font-size: 0.72em;
+  opacity: 0.5;
+  flex: none;
+  transform: translateY(-0.1em);
+}
+
+.pr-name-link:hover .pr-name-arrow,
+.pr-name-link:focus-visible .pr-name-arrow {
+  opacity: 1;
+}
+
+.pr-name-link:focus-visible {
+  outline: 2px solid var(--accent, #6FA894);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.pr-name {
   font-size: 15px;
 }
 

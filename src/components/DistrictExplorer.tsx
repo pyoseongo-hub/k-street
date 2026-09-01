@@ -4,6 +4,7 @@ import { ALL_PLACES, CATEGORY_META, type Category } from "../data/seed";
 import { SEOUL_HEX_ROWS } from "../data/seoulHexMap";
 import { districtShortName, districtFullName, dongName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
+import { getPlaceInfoLink, openMapLink } from "../lib/mapLinks";
 import { getTourImage } from "../lib/tourImages";
 
 // street(골목·거리)를 2026-09-01에 추가했다 — 관광공사 자료의 골목 40곳이
@@ -129,7 +130,23 @@ export default function DistrictExplorer() {
                       {p.dong ? ` ${dongName(p.dong, language)}` : ""}
                     </span>
                   </div>
-                  <div className="pr-name">{p.confirmed ? p.name : "확인 필요"}</div>
+                  {/* 🔗 이름을 누르면 네이버 지도의 그 장소 화면으로 간다
+                      (사용자 지시 2026-09-01: "정보가 작아 이름을 누르면 네이버 나
+                      카카오 링크 연결해"). 영업시간·전화·리뷰처럼 자주 바뀌는 정보를
+                      우리가 베껴 오면 낡은 값을 퍼뜨리게 되므로, 그건 지도 앱에 맡긴다.
+                      아래 길찾기 버튼과 역할이 다르다 — 이건 "정보 보기"다. */}
+                  {p.confirmed ? (
+                    <button
+                      type="button"
+                      className="pr-name pr-name-link"
+                      onClick={() => openMapLink(getPlaceInfoLink(p))}
+                    >
+                      {p.name}
+                      <span className="pr-name-arrow" aria-hidden="true">↗</span>
+                    </button>
+                  ) : (
+                    <div className="pr-name">확인 필요</div>
+                  )}
                   {p.note && <div className="pr-note">{p.note}</div>}
                   {/* 주소는 관광공사에서 받은 곳만 있다. 사진이 없는 작은 카드일수록
                       글로 줄 수 있는 정보가 하나라도 더 있는 게 낫다. */}
