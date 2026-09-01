@@ -36,7 +36,12 @@ jobs:
       - name: Fetch festival dates
         env:
           TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
-        run: node scripts/fetch-festival-dates.mjs | tee fetch-log.txt
+        # pipefail이 없으면 node가 죽어도 tee가 성공해서 이 단계가 초록색이 된다.
+        # 2>&1이 없으면 오류 메시지(stderr)가 로그에 안 담겨 원인이 안 보인다.
+        # 둘 다 2026-09-01 번역 워크플로에서 실제로 당한 것이다.
+        run: |
+          set -o pipefail
+          node scripts/fetch-festival-dates.mjs 2>&1 | tee fetch-log.txt
       - name: Commit festival-dates.json
         id: commit
         run: |

@@ -40,13 +40,23 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Translate
+        id: translate
         env:
           GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
         run: |
+          # 🐞 2026-09-01에 여기서 사고가 났다. 원래는 이랬다:
+          #      node ... | tee translate-log.txt
+          #   ① 파이프의 끝(tee)이 성공하면 **앞에서 node가 죽어도 이 단계는 초록색**이
+          #      된다(bash 기본 동작). 실제로 번역이 실패했는데 화면엔 Success가 떴다.
+          #      → set -o pipefail 로 앞쪽 실패를 살린다.
+          #   ② 오류 메시지는 stderr로 나가는데 파이프는 stdout만 받는다. 그래서 로그가
+          #      "en 새로 번역할 것 524개…"에서 뚝 끊기고 **정작 원인이 안 보였다.**
+          #      → 2>&1 로 오류도 같은 로그에 담는다.
+          set -o pipefail
           ARGS=""
           if [ "${{ inputs.apply }}" = "true" ]; then ARGS="$ARGS --apply"; fi
           if [ -n "${{ inputs.lang }}" ]; then ARGS="$ARGS --lang ${{ inputs.lang }}"; fi
-          node scripts/translate-places.mjs $ARGS | tee translate-log.txt
+          node scripts/translate-places.mjs $ARGS 2>&1 | tee translate-log.txt
       - name: 저장한 것이 앱을 깨뜨리지 않는지 확인
         if: ${{ inputs.apply }}
         run: npm run build
@@ -70,7 +80,10 @@ jobs:
           {
             echo "## 🌐 12개 언어 번역 결과"
             echo ""
-            if [ "${{ inputs.apply }}" != "true" ]; then
+            if [ "${{ steps.translate.outcome }}" != "success" ]; then
+              echo "### ❌ 번역이 실패했습니다"
+              echo "아래 로그의 **마지막 몇 줄**에 이유가 적혀 있습니다. 그 부분을 캡처해서 보내 주세요."
+            elif [ "${{ inputs.apply }}" != "true" ]; then
               echo "### 🔍 맛보기입니다 — 아무것도 저장하지 않았습니다"
               echo "아래에서 몇 자를 쓰게 되는지 확인한 뒤, **apply를 켜고** 다시 돌리세요."
             elif [ "${{ steps.commit.outputs.committed }}" = "yes" ]; then

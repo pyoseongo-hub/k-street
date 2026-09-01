@@ -227,6 +227,18 @@ try {
   /* 첫 실행 */
 }
 
+// 언어별로 열쇠를 정렬해 두면 다음 실행의 diff가 읽기 쉽다.
+function save() {
+  const sorted = {};
+  for (const code of Object.keys(store).sort()) {
+    sorted[code] = Object.fromEntries(
+      Object.entries(store[code]).sort(([a], [b]) => a.localeCompare(b, "ko"))
+    );
+  }
+  writeFileSync(OUT, JSON.stringify(sorted, null, 1) + "\n");
+  return sorted;
+}
+
 let spent = 0;
 for (const { code, google } of TARGETS) {
   const have = (store[code] ??= {});
@@ -254,6 +266,11 @@ for (const { code, google } of TARGETS) {
     process.stdout.write(`         ${Math.min(i + 50, todo.length)}/${todo.length}\r`);
     await sleep(200);
   }
+  // 🚨 **한 언어가 끝날 때마다 저장한다.**
+  // 2026-09-01 사고: 맨 끝에서 한 번만 저장했더니, 중간에 한 번 실패하는 순간
+  // 그때까지 번역한 것이 통째로 사라졌다. 게다가 그 글자 수는 **이미 구글에서
+  // 차감된 뒤**라 되돌릴 수도 없다. 다시 돌리면 이미 된 언어는 건너뛴다.
+  save();
   console.log(`         ✅ ${Object.keys(have).length}개 저장`);
 }
 
@@ -264,12 +281,7 @@ if (!APPLY) {
   process.exit(0);
 }
 
-// 언어별로 열쇠를 정렬해 두면 다음 실행의 diff가 읽기 쉽다.
-const sorted = {};
-for (const code of Object.keys(store).sort()) {
-  sorted[code] = Object.fromEntries(Object.entries(store[code]).sort(([a], [b]) => a.localeCompare(b, "ko")));
-}
-writeFileSync(OUT, JSON.stringify(sorted, null, 1) + "\n");
+const sorted = save();
 console.log(`저장: ${OUT}`);
 for (const code of Object.keys(sorted)) {
   console.log(`  ${code.padEnd(6)} ${Object.keys(sorted[code]).length}개 / 원문 ${all.length}개`);
