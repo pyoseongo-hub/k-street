@@ -56,7 +56,7 @@ const translations: Record<Language, Translations> = {
     photoCredit: '사진: 한국관광공사',
 
     exploreNowLabel: '지금 갈 수 있는 곳',
-    exploreTitle: '구를 골라 둘러보기',
+    exploreTitle: '동네마다 다른 서울',
     mapDisclaimerStart: '구를 누르면 그 동네의 장소가 나온다. 진한 색은 ',
     mapDisclaimerBold: '지금 볼 곳이 있는 구',
     mapDisclaimerEnd: ', 옅은 색은 아직 준비 중인 구다.',
@@ -101,7 +101,7 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'Photo: Korea Tourism Organization',
 
     exploreNowLabel: 'Where you can go now',
-    exploreTitle: 'Pick a district to explore',
+    exploreTitle: 'A different Seoul in every neighborhood',
     mapDisclaimerStart: 'Tap a district to see its places. Bold districts ',
     mapDisclaimerBold: 'have places to visit now',
     mapDisclaimerEnd: '; faded ones are still being added.',
@@ -146,7 +146,7 @@ const translations: Record<Language, Translations> = {
     photoCredit: '写真：韓国観光公社',
 
     exploreNowLabel: '今行ける場所',
-    exploreTitle: '地区を選んで探索',
+    exploreTitle: '街ごとに違うソウル',
     mapDisclaimerStart: '区をタップするとその街の場所が出てきます。濃い色は',
     mapDisclaimerBold: '今行ける場所がある区',
     mapDisclaimerEnd: '、薄い色はまだ準備中の区です。',
@@ -191,7 +191,7 @@ const translations: Record<Language, Translations> = {
     photoCredit: '照片：韩国旅游组织',
 
     exploreNowLabel: '现在可以去的地方',
-    exploreTitle: '选择地区浏览',
+    exploreTitle: '每个街区都不一样的首尔',
     mapDisclaimerStart: '点击区可查看该区域的地点。深色表示',
     mapDisclaimerBold: '现在就能去的区',
     mapDisclaimerEnd: '，浅色表示还在整理中的区。',
@@ -236,7 +236,7 @@ const translations: Record<Language, Translations> = {
     photoCredit: '照片：韓國觀光公社',
 
     exploreNowLabel: '現在可以去的地方',
-    exploreTitle: '選擇地區瀏覽',
+    exploreTitle: '每個街區都不一樣的首爾',
     mapDisclaimerStart: '點擊區可查看該區域的地點。深色表示',
     mapDisclaimerBold: '現在就能去的區',
     mapDisclaimerEnd: '，淺色表示還在整理中的區。',
@@ -281,7 +281,7 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'Ảnh: Tổ chức Du lịch Hàn Quốc',
 
     exploreNowLabel: 'Các địa điểm bạn có thể đến ngay',
-    exploreTitle: 'Chọn một quận để khám phá',
+    exploreTitle: 'Mỗi khu phố một Seoul khác',
     mapDisclaimerStart: 'Chạm vào một quận để xem các địa điểm. Màu đậm là ',
     mapDisclaimerBold: 'quận đã có nơi để đi',
     mapDisclaimerEnd: ', màu nhạt là quận đang được cập nhật.',
@@ -326,7 +326,7 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'Foto: Organización de Turismo de Corea',
 
     exploreNowLabel: 'Lugares donde puedes ir ahora',
-    exploreTitle: 'Elige un distrito para explorar',
+    exploreTitle: 'Un Seúl distinto en cada barrio',
     mapDisclaimerStart: 'Toca un distrito para ver sus lugares. Los distritos en color ',
     mapDisclaimerBold: 'ya tienen lugares que visitar',
     mapDisclaimerEnd: '; los más claros aún están en preparación.',
@@ -371,7 +371,7 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'Photo : Organisation du Tourisme de Corée',
 
     exploreNowLabel: 'Où vous pouvez aller maintenant',
-    exploreTitle: 'Choisir un district pour explorer',
+    exploreTitle: 'Un Séoul différent dans chaque quartier',
     mapDisclaimerStart: 'Touchez un arrondissement pour voir ses lieux. Les arrondissements colorés ',
     mapDisclaimerBold: 'ont déjà des lieux à visiter',
     mapDisclaimerEnd: ' ; les plus pâles sont encore en préparation.',
@@ -416,7 +416,7 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'Foto: Korea Tourism Organization',
 
     exploreNowLabel: 'Orte, die Sie jetzt besuchen können',
-    exploreTitle: 'Wählen Sie einen Bezirk zum Erkunden',
+    exploreTitle: 'In jedem Viertel ein anderes Seoul',
     mapDisclaimerStart: 'Tippen Sie auf einen Bezirk, um seine Orte zu sehen. Farbige Bezirke ',
     mapDisclaimerBold: 'haben bereits Orte zu besuchen',
     mapDisclaimerEnd: '; blassere werden noch ergänzt.',
@@ -461,7 +461,7 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'Фото: Организация туризма Кореи',
 
     exploreNowLabel: 'Куда вы можете пойти сейчас',
-    exploreTitle: 'Выберите округ для исследования',
+    exploreTitle: 'В каждом районе — свой Сеул',
     mapDisclaimerStart: 'Нажмите на район, чтобы увидеть места. Яркие районы ',
     mapDisclaimerBold: 'уже содержат места для посещения',
     mapDisclaimerEnd: '; бледные ещё готовятся.',
@@ -506,7 +506,7 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'Foto: Organisasi Pariwisata Korea',
 
     exploreNowLabel: 'Tempat yang bisa Anda kunjungi sekarang',
-    exploreTitle: 'Pilih distrik untuk dijelajahi',
+    exploreTitle: 'Seoul yang berbeda di tiap lingkungan',
     mapDisclaimerStart: 'Ketuk sebuah distrik untuk melihat tempatnya. Distrik berwarna ',
     mapDisclaimerBold: 'sudah punya tempat untuk dikunjungi',
     mapDisclaimerEnd: '; yang pudar masih disiapkan.',
@@ -551,7 +551,7 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'ภาพ: องค์การท่องเที่ยวเกาหลี',
 
     exploreNowLabel: 'สถานที่ที่คุณสามารถไปได้ตอนนี้',
-    exploreTitle: 'เลือกเขตเพื่อสำรวจ',
+    exploreTitle: 'โซลที่แตกต่างในทุกย่าน',
     mapDisclaimerStart: 'แตะเขตเพื่อดูสถานที่ในย่านนั้น สีเข้มคือ',
     mapDisclaimerBold: 'เขตที่มีที่ให้ไปแล้ว',
     mapDisclaimerEnd: ' ส่วนสีจางคือเขตที่ยังเตรียมอยู่',
