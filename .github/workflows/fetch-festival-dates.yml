@@ -1,0 +1,63 @@
+name: Fetch festival dates (축제 날짜 받기)
+
+# 관광공사 축제 57곳은 **열리는 달을 하나도 모르는 상태**였다 — 처음 자료를 받을 때
+# 쓴 areaBasedList2에 날짜 칸이 없어서다(2026-09-01 확인). 그래서 계절·월로 고르는
+# 화면에서 통째로 사라진다.
+#
+# 이 워크플로는 축제 전용 창구(searchFestival2)를 불러 시작일·종료일을 받아
+# src/data/festival-dates.json에 저장한다. 이름이 아니라 **contentId로 잇는다.**
+#
+# 사용자는 Actions 탭에서 "Run workflow" 버튼만 누르면 된다 — 이 저장소를 만드는
+# 세션은 apis.data.go.kr을 직접 못 부르고, 사용자 PC에서 PowerShell로 돌리는 것보다
+# 이쪽이 훨씬 덜 헷갈린다(인증키가 %를 포함해 cmd에서 깨지는 문제도 없다).
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fetch-festival-dates:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Fetch festival dates
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: node scripts/fetch-festival-dates.mjs | tee fetch-log.txt
+      - name: Commit festival-dates.json
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- src/data/festival-dates.json; then
+            echo "committed=no" >> "$GITHUB_OUTPUT"
+          else
+            git add src/data/festival-dates.json
+            git commit -m "축제 날짜 받기 (fetch-festival-dates)"
+            git push
+            echo "committed=yes" >> "$GITHUB_OUTPUT"
+          fi
+      - name: 결과 요약 (Summary에서 바로 확인)
+        if: always()
+        run: |
+          {
+            echo "## 📅 축제 날짜 받기 결과"
+            echo ""
+            if [ "${{ steps.commit.outputs.committed }}" = "yes" ]; then
+              echo "### ✅ 날짜를 받아 저장했습니다"
+              echo "아래 로그에서 **달별 축제 수**를 확인하세요. 12개 달에 골고루 있어야 정상입니다."
+            else
+              echo "### ⬜ 새로 저장된 게 없습니다"
+              echo "이미 최신이거나, 인증키가 잘못됐거나, 호출이 실패했을 수 있습니다 — 아래 로그를 보세요."
+            fi
+            echo ""
+            echo '```'
+            cat fetch-log.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
