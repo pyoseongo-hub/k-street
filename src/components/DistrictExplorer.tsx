@@ -80,10 +80,16 @@ export default function DistrictExplorer() {
           )}
           {selected.map((p) => {
             // 사진은 두 군데서 온다 — 관광공사에서 통째로 받아온 곳은 항목 자체에
-            // 붙어 있고(p.thumb), 예전 fetch-tour-images.mjs로 따로 맞춰 붙인 것은
+            // 붙어 있고, 예전 fetch-tour-images.mjs로 따로 맞춰 붙인 것은
             // id를 열쇠로 tour-images.json에 있다.
+            //
+            // 🖼️ 2026-09-01 사용자 지적("사진 화질이 안 좋아") — 원본(image)이 아니라
+            // 썸네일(thumb)을 먼저 쓰고 있었다. 관광공사는 한 장소에 두 크기를 준다:
+            // firstimage(_image2_, 원본)와 firstimage2(_image3_, 작은 썸네일).
+            // 카드는 화면 폭을 꽉 채우는데 작은 쪽을 늘려 쓰니 뭉개져 보였다.
+            // 265곳 중 249곳이 두 주소가 실제로 다르다 — 그만큼이 흐릿했던 것.
             const legacyPhoto = getTourImage(p.id);
-            const photoUrl = p.thumb ?? p.image ?? legacyPhoto?.thumb;
+            const photoUrl = p.image ?? p.thumb ?? legacyPhoto?.image ?? legacyPhoto?.thumb;
             const meta = CATEGORY_META[p.category];
             // ⓘ 2026-09-01 오후에 사진 게이트가 생겨(seed.ts의 hasPhoto) 사진 없는 곳은
             // 아예 목록에 안 온다 — 그래서 아래 작은 카드는 지금은 실제로 안 그려진다.

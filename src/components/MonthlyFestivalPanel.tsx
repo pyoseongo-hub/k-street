@@ -47,7 +47,7 @@ export default function MonthlyFestivalPanel() {
             return (
             <div className="festival-card" key={f.id}>
               {photo ? (
-                <div className="fc-art fc-art-photo" style={{ backgroundImage: `url(${photo.thumb})` }}>
+                <div className="fc-art fc-art-photo" style={{ backgroundImage: `url(${photo.image ?? photo.thumb})` }}>
                   <span className="fc-photo-credit">{t.photoCredit}</span>
                 </div>
               ) : (

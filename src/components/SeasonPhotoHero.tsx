@@ -32,7 +32,9 @@ function seasonalPhotos(season: SeasonKey): string[] {
         : CATEGORY_SEASON[p.category];
     if (placeSeason !== season) continue;
     const photo = getTourImage(p.id);
-    if (photo) urls.push(photo.thumb);
+    // 화면 전체 폭을 채우는 배너라 썸네일(_image3_)을 쓰면 특히 심하게 뭉개진다 —
+    // 원본(_image2_)을 먼저 쓴다(2026-09-01 사용자 지적 "사진 화질이 안 좋아").
+    if (photo) urls.push(photo.image ?? photo.thumb);
   }
   return urls;
 }
