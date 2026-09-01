@@ -1,93 +1,205 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
-import SeasonMonthPicker from "./SeasonMonthPicker";
 import SeasonArt from "./SeasonArt";
 import SeasonPhotoHero from "./SeasonPhotoHero";
-import { FESTIVALS } from "../data/seed";
-import { seasonOf } from "../lib/season";
+import { ALL_FESTIVALS } from "../data/seed";
+import { seasonOf, type SeasonKey } from "../lib/season";
 import { useRotatingSeed } from "../lib/useRotatingSeed";
 import { getTourImage } from "../lib/tourImages";
 import { districtFullName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
 import { openPlaceInfo } from "../lib/mapLinks";
+import { FESTIVAL_THEMES, THEME_ICON, themeOf, type FestivalTheme } from "../data/festivalThemes";
+
+// 「봄 여름 가을 겨울 그리고 서울」 — 지도와 상관없이 **계절 · 달 · 테마**로
+// 축제를 고르는 화면이다(사용자 지시 2026-09-01: "이건 지도와상관없이 서울의
+// 계절별 월별 축제 등 추천 화면이야").
+//
+// 예전에는 달 하나로만 걸렀는데, 10월에만 31곳이 몰려 있어서 그 달을 고르면
+// 31줄이 그대로 쏟아졌다. 불꽃놀이를 보러 온 사람과 김장을 보러 온 사람에게
+// 같은 목록을 주는 셈이라, 세 번째 축인 '테마'를 넣었다(festivalThemes.ts).
+
+const SEASONS: { key: SeasonKey; icon: string; months: number[] }[] = [
+  { key: "spring", icon: "🌸", months: [3, 4, 5] },
+  { key: "summer", icon: "☀️", months: [6, 7, 8] },
+  { key: "autumn", icon: "🍁", months: [9, 10, 11] },
+  { key: "winter", icon: "⛄", months: [12, 1, 2] },
+];
 
 const nowMonth = new Date().getMonth() + 1;
+
+/** 그 달에 열리는 축제인가. 여러 달에 걸치는 축제는 걸친 달 전부에서 보인다. */
+function opensIn(f: (typeof ALL_FESTIVALS)[number], month: number): boolean {
+  if (f.startMonth == null) return false;
+  const end = f.endMonth ?? f.startMonth;
+  // 12월 → 1월처럼 해를 넘기는 축제. 그냥 비교하면 start > end라 아무 달에도 안 걸린다.
+  if (end < f.startMonth) return month >= f.startMonth || month <= end;
+  return month >= f.startMonth && month <= end;
+}
 
 export default function MonthlyFestivalPanel() {
   const { t, language } = useLanguage();
   const [month, setMonth] = useState(nowMonth);
+  const [theme, setTheme] = useState<FestivalTheme | null>(null);
   const rotatingSeed = useRotatingSeed();
 
+  const season = seasonOf(month);
+  const seasonMonths = SEASONS.find((s) => s.key === season)!.months;
+
+  // 이 달에 열리는 축제 — 테마를 거르기 **전**. 테마 칩을 몇 개 띄울지 정하는 데 쓴다.
+  const inMonth = useMemo(() => ALL_FESTIVALS.filter((f) => opensIn(f, month)), [month]);
+
+  // 이 달에 실제로 있는 테마만 칩으로 띄운다. 눌러도 0곳인 칩을 보여주면
+  // "고장 났나" 싶어진다(앱 안의 죽은 버튼 문제와 같은 이야기).
+  const themesHere = useMemo(() => {
+    const found = new Set(inMonth.map((f) => themeOf(f.name)).filter(Boolean) as FestivalTheme[]);
+    return FESTIVAL_THEMES.filter((k) => found.has(k));
+  }, [inMonth]);
+
   const festivals = useMemo(
-    () =>
-      FESTIVALS.filter((f) => {
-        if (f.startMonth == null) return false;
-        const end = f.endMonth ?? f.startMonth;
-        return month >= f.startMonth && month <= end;
-      }),
-    [month]
+    () => (theme ? inMonth.filter((f) => themeOf(f.name) === theme) : inMonth),
+    [inMonth, theme]
   );
+
+  const pickMonth = (m: number) => {
+    setMonth(m);
+    // 달을 바꾸면 테마를 푼다 — 안 그러면 그 달에 없는 테마가 걸린 채로 남아
+    // 축제가 있는데도 빈 화면이 뜬다.
+    setTheme(null);
+  };
 
   return (
     <section className="panel monthly-festival-panel">
-      <SeasonPhotoHero className="mfp-hero" season={seasonOf(month)} seed={rotatingSeed} dense />
-      <div className="panel-inner">
-        <div className="panel-head">
-          <span className="panel-eyebrow">{t.monthlyEditorLabel}</span>
-          <h2>{t.monthlyTitle(month)}</h2>
+      {/* 계절 사진을 이 화면의 표지로 크게 쓴다(5안 "계절 표지"). 예전에는 96px짜리
+          띠였는데, 계절이 주인공인 화면이라 제목을 얹을 만큼 키웠다. */}
+      <div className="mfp-cover">
+        <SeasonPhotoHero className="mfp-cover-art" season={season} seed={rotatingSeed} />
+        <div className="mfp-cover-text">
+          <h2>{t.seasonTitle}</h2>
+          <p>{t.seasonSubtitle(t.seasonNames[season], t.months[month], inMonth.length)}</p>
         </div>
-        <SeasonMonthPicker month={month} onChange={setMonth} />
+      </div>
+
+      <div className="panel-inner">
+        <div className="season-row">
+          {SEASONS.map((s) => (
+            <button
+              key={s.key}
+              className={"season-chip" + (s.key === season ? " active" : "")}
+              onClick={() => pickMonth(s.months[0])}
+            >
+              {s.icon} {t.seasonNames[s.key]}
+            </button>
+          ))}
+        </div>
+
+        {/* 그 계절의 석 달만 띄운다. 예전에는 12개가 한 줄로 늘어서서 가로로
+            밀어야 했고, 계절 칩과 달 칩이 무슨 관계인지도 안 보였다. */}
+        <div className="month-strip">
+          {seasonMonths.map((m) => (
+            <button
+              key={m}
+              className={"month-chip" + (m === month ? " active" : "")}
+              onClick={() => pickMonth(m)}
+            >
+              {t.months[m]}
+            </button>
+          ))}
+        </div>
+
+        {themesHere.length > 0 && (
+          <div className="theme-row">
+            <button
+              className={"theme-chip" + (theme === null ? " active" : "")}
+              onClick={() => setTheme(null)}
+            >
+              {t.themeAll}
+            </button>
+            {themesHere.map((k) => (
+              <button
+                key={k}
+                className={"theme-chip" + (theme === k ? " active" : "")}
+                onClick={() => setTheme(theme === k ? null : k)}
+              >
+                <span aria-hidden="true">{THEME_ICON[k]}</span> {t.themeLabels[k]}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* 🚨 정확한 날짜를 안 적는 이유를 화면에도 적는다 — 받아온 날짜가 지난
+            회차 것이라, 손님이 "10월 중순"만 믿고 날짜를 정하면 안 된다. */}
+        <p className="map-disclaimer">{t.festivalDateDisclaimer}</p>
+
         <div className="festival-cards">
           {festivals.length === 0 && (
-            <p className="empty-note">
-              {t.noFestivalsMessage(month)}
-            </p>
+            <p className="empty-note">{t.noFestivalsMessage(month)}</p>
           )}
           {festivals.map((f, i) => {
-            const photo = getTourImage(f.id);
+            const legacy = getTourImage(f.id);
+            // 원본(image)을 썸네일(thumb)보다 먼저 쓴다 — 2026-09-01 "사진 화질이 안 좋아".
+            const photoUrl = f.image ?? f.thumb ?? legacy?.image ?? legacy?.thumb;
+            const k = themeOf(f.name);
             return (
-            <div className="festival-card" key={f.id}>
-              {photo ? (
-                <div className="fc-art fc-art-photo" style={{ backgroundImage: `url(${photo.image ?? photo.thumb})` }}>
-                  <span className="fc-photo-credit">{t.photoCredit}</span>
+              <div className="festival-card" key={f.id}>
+                {photoUrl ? (
+                  <div className="fc-art fc-art-photo" style={{ backgroundImage: `url(${photoUrl})` }}>
+                    <span className="fc-photo-credit">{f.photoCredit ?? t.photoCredit}</span>
+                  </div>
+                ) : (
+                  <SeasonArt
+                    className="fc-art"
+                    season={seasonOf(f.startMonth ?? month)}
+                    seed={rotatingSeed * 100 + i}
+                  />
+                )}
+                <div className="fc-body">
+                  <div className="fc-top">
+                    <span className="fc-gu">{districtFullName(f.gu, language)}</span>
+                    {/* 🈳 dateLabel은 사람이 seed.ts에 **한국어로** 적어 둔 문구다
+                        ("9월 말~10월 초"). 근거를 확인한 값이라 한국어 화면에서는
+                        가장 좋지만, 12개 언어 앱에서 영어 사용자에게 한글을 그대로
+                        보여줄 수는 없다(2026-09-01 영어로 바꿔 보고 발견).
+                        그래서 **한국어일 때만 그 문구를 쓰고**, 다른 언어에서는
+                        달(+초·중·하순)로 만들어 준다 — 덜 자세하지만 번역이 된다. */}
+                    {(() => {
+                      const label =
+                        language === "ko" && f.dateLabel
+                          ? f.dateLabel
+                          : f.startMonth == null
+                            ? null
+                            : f.period
+                              ? t.monthPeriod(t.months[f.startMonth], f.period)
+                              : t.months[f.startMonth];
+                      return label ? <span className="fc-date">{label}</span> : null;
+                    })()}
+                  </div>
+                  {/* 이름을 누르면 네이버 통합검색 → 그 구청의 공식 행사 안내로 간다.
+                      축제는 지도에 등록된 '장소'가 아니라 며칠만 열리는 '행사'라
+                      지도에서 찾으면 "검색결과가 없습니다"가 뜬다(2026-09-01 캡처). */}
+                  <button
+                    type="button"
+                    className="fc-name pr-name-link"
+                    onClick={() => openPlaceInfo(f)}
+                  >
+                    {f.name}
+                    <span className="pr-name-arrow" aria-hidden="true">↗</span>
+                  </button>
+                  {k && (
+                    <span className="fc-theme" style={{ "--cc": "var(--festival)" } as CSSProperties}>
+                      {THEME_ICON[k]} {t.themeLabels[k]}
+                    </span>
+                  )}
+                  {f.note && <div className="fc-note">{f.note}</div>}
+                  <MapDirections
+                    place={
+                      f.lat == null && legacy?.lat != null
+                        ? { ...f, lat: legacy.lat, lng: legacy.lng }
+                        : f
+                    }
+                  />
                 </div>
-              ) : (
-                <SeasonArt
-                  className="fc-art"
-                  season={seasonOf(f.startMonth!)}
-                  seed={rotatingSeed * 100 + i}
-                />
-              )}
-              <div className="fc-body">
-                <div className="fc-top">
-                  <span className="fc-gu">{districtFullName(f.gu, language)}</span>
-                  {f.dateLabel && <span className="fc-date">{f.dateLabel}</span>}
-                </div>
-                {/* 장소 카드와 같은 규칙 — 이름을 누르면 네이버 통합검색으로 간다.
-                    축제는 지도에 등록된 '장소'가 아니라 며칠만 열리는 '행사'라
-                    지도에서 찾으면 "검색결과가 없습니다"가 뜬다(2026-09-01 사용자 캡처).
-                    통합검색으로 보내면 그 자치구의 공식 행사 안내 페이지가 잡힌다. */}
-                <button
-                  type="button"
-                  className="fc-name pr-name-link"
-                  onClick={() => openPlaceInfo(f)}
-                >
-                  {f.name}
-                  <span className="pr-name-arrow" aria-hidden="true">↗</span>
-                </button>
-                {f.note && <div className="fc-note">{f.note}</div>}
-                {/* 관광공사 사진과 함께 받은 실제 좌표(fetch-tour-images.mjs)가 있으면
-                    길찾기에도 쓴다 — 2026-08-29 사용자 지적: 좌표가 이미 있는데도
-                    "검색" 링크만 뜨고 "길찾기 단계"로 못 가는 걸 잡음. */}
-                <MapDirections
-                  place={
-                    f.lat == null && photo?.lat != null
-                      ? { ...f, lat: photo.lat, lng: photo.lng }
-                      : f
-                  }
-                />
               </div>
-            </div>
             );
           })}
         </div>

@@ -127,8 +127,35 @@ for (const [id, v] of byId) {
   if (v.startMonth != null) dated.set(id, v);
 }
 
-const out = Object.fromEntries([...dated.entries()].sort((a, b) => Number(a[0]) - Number(b[0])));
+// 🚨 이미 받아 둔 것과 **합친다. 덮어쓰지 않는다.**
+// 2026-09-01 첫 실행 결과가 9~12월 57곳뿐이었다 — 관광공사 축제 창구는 이미 끝난
+// 축제를 내리고 **다가올 것만** 올려 두기 때문이다(그날이 9월이라 가을·겨울만 있었다).
+// 봄 축제는 봄이 가까워져야 올라온다. 그래서 이 스크립트는 **달마다 자동으로 돌고**,
+// 돌 때마다 새로 뜬 것을 보태야 1년이면 열두 달이 다 찬다.
+// 파일을 통째로 덮어쓰면 다음 달 실행이 이번에 받은 가을 축제를 지워 버린다.
+let previous = {};
+try {
+  previous = JSON.parse(readFileSync(OUT, "utf-8"));
+} catch {
+  /* 첫 실행 */
+}
+const merged = { ...previous };
+let added = 0;
+let updated = 0;
+for (const [id, v] of dated) {
+  const old = merged[id];
+  if (!old) added++;
+  else if (old.start !== v.start) updated++;
+  // 같은 축제가 새 회차로 다시 뜨면 최신으로 갈아 준다. 옛 회차보다 최신이 낫다.
+  if (!old || v.start > old.start) merged[id] = v;
+}
+const out = Object.fromEntries(
+  Object.entries(merged).sort((a, b) => Number(a[0]) - Number(b[0]))
+);
 writeFileSync(OUT, JSON.stringify(out, null, 2) + "\n");
+console.log(
+  `저장 대상: 새로 ${added}곳 · 회차 갱신 ${updated}곳 · 이미 있던 것 포함 모두 ${Object.keys(out).length}곳`
+);
 
 // ── 요약: 지금 앱이 가진 57곳 중 몇 곳이 채워졌나 ─────────────────────
 let already = [];
@@ -137,19 +164,19 @@ try {
 } catch {
   /* 원본이 없으면 대조는 건너뛴다 */
 }
-const matched = already.filter((f) => dated.has(String(f.contentId)));
-const missing = already.filter((f) => !dated.has(String(f.contentId)));
-const brandNew = [...dated.entries()].filter(
-  ([id]) => !already.some((f) => String(f.contentId) === id)
+const matched = already.filter((f) => out[String(f.contentId)]);
+const missing = already.filter((f) => !out[String(f.contentId)]);
+const brandNew = Object.keys(out).filter(
+  (id) => !already.some((f) => String(f.contentId) === id)
 );
 
 console.log("");
-console.log(`날짜를 확인한 축제: ${dated.size}곳`);
+console.log(`이번에 받은 축제: ${dated.size}곳 · 파일에 쌓인 전체: ${Object.keys(out).length}곳`);
 console.log(`  · 앱에 이미 있는 ${already.length}곳 중 → ${matched.length}곳 채움, ${missing.length}곳 못 채움`);
 console.log(`  · 앱에 없던 새 축제 → ${brandNew.length}곳`);
 
 const byMonth = {};
-for (const v of dated.values()) byMonth[v.startMonth] = (byMonth[v.startMonth] ?? 0) + 1;
+for (const v of Object.values(out)) byMonth[v.startMonth] = (byMonth[v.startMonth] ?? 0) + 1;
 console.log("");
 console.log("달별 축제 수:");
 for (let m = 1; m <= 12; m++) console.log(`  ${String(m).padStart(2)}월 — ${byMonth[m] ?? 0}곳`);

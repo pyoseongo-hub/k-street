@@ -37,6 +37,16 @@ export interface Place {
   startMonth?: number;
   endMonth?: number;
   dateLabel?: string;
+  /**
+   * 축제 전용: 그 달의 초·중·하순.
+   *
+   * 🚨 **정확한 날짜(10.17–19)는 일부러 안 적는다.** 관광공사에서 받은 날짜는
+   * 지난 회차(2025년) 것이다 — 축제는 해마다 같은 시기에 열리므로 "10월 중순"까지는
+   * 맞지만 날짜와 요일은 해마다 옮겨 간다. 지난해 날짜를 올해 것처럼 적으면
+   * 손님이 그 날 헛걸음한다(CLAUDE.md: 해마다 바뀌는 값은 적지 않고 공식 창구로
+   * 안내한다). 정확한 날짜는 이름을 눌러 구청 안내에서 보게 한다.
+   */
+  period?: "early" | "mid" | "late";
   /** 좌표: TourAPI 또는 공식 위치정보 기반 */
   lat?: number;
   lng?: number;
@@ -355,6 +365,50 @@ export const HIDDEN_NO_PHOTO: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .filter((p) => isInLaunchScope(sidoOf(p.gu)))
   .map(withManualPhoto)
   .filter((p) => !hasPhoto(p));
+
+/**
+ * 계절 화면(「봄 여름 가을 겨울 그리고 서울」)이 쓰는 축제 전체.
+ *
+ * 🚨 여기에는 **사진 게이트를 걸지 않는다** — 위 ALL_PLACES와 다른 점이다.
+ * 사진 없는 곳을 가리기로 한 것은(2026-09-01) 장소 카드 이야기였다. 거기서는
+ * 사진이 없으면 빈 상자가 남지만, 축제 카드는 사진이 없으면 **계절 일러스트**
+ * (SeasonArt)가 대신 그려져 빈 자리가 안 생긴다.
+ * 게다가 사진이 있는 축제는 관광공사에서 온 57곳뿐이고 그게 전부 9~12월이라,
+ * 게이트를 걸면 **봄·여름이 통째로 비어 버린다**(2월 4곳·4월 3곳·5월 4곳이 전부
+ * 사람이 조사한 것이다).
+ *
+ * 예전에는 이 화면이 seed.ts의 FESTIVALS 33곳만 봤다. 관광공사 축제 57곳은
+ * ALL_PLACES 안에 들어 있었는데 어느 화면도 안 그려서 **통째로 안 보이고 있었다.**
+ */
+export const ALL_FESTIVALS: Place[] = (() => {
+  // ⚠️ 위의 mergeWithTourPlaces를 그대로 쓰면 안 된다 — 그 함수는 안 쓰인 관광공사
+  // 자료를 **전부**(시장·박물관·골목까지) 뒤에 붙인다. 여기서는 축제만 골라 합친다.
+  const tourFestivals = TOUR_PLACES.filter((p) => p.category === "festival");
+  const byName = new Map(tourFestivals.map((p) => [p.name.normalize("NFC"), p]));
+  const used = new Set<string>();
+  const merged = FESTIVALS.map((p) => {
+    const t = byName.get(p.name.normalize("NFC"));
+    if (!t) return p;
+    used.add(t.id);
+    // 사람이 적은 값이 이긴다 — note·기간처럼 관광공사에 없는 것이 붙어 있고,
+    // 달도 사람이 근거를 확인해 적은 것이다. 관광공사에서는 빈 칸만 채워 온다.
+    return {
+      ...p,
+      image: p.image ?? t.image,
+      thumb: p.thumb ?? t.thumb,
+      addr: p.addr ?? t.addr,
+      lat: p.lat ?? t.lat,
+      lng: p.lng ?? t.lng,
+      startMonth: p.startMonth ?? t.startMonth,
+      endMonth: p.endMonth ?? t.endMonth,
+      period: p.period ?? t.period,
+    };
+  });
+  return [...merged, ...tourFestivals.filter((t) => !used.has(t.id))];
+})()
+  .filter((p) => isInLaunchScope(sidoOf(p.gu)))
+  .map(withFetchedCoords)
+  .map(withManualPhoto);
 
 export const CATEGORY_META: Record<
   Category,

@@ -16,6 +16,7 @@
 
 import type { Category, Place } from "./seed";
 import raw from "./tour-places-raw.json";
+import festivalDates from "./festival-dates.json";
 
 interface RawPlace {
   name: string;
@@ -42,7 +43,35 @@ const RAW = raw as Record<string, RawPlace[]>;
  */
 const idOf = (p: RawPlace) => `tour_${p.contentId}`;
 
+// ── 축제가 언제 열리는지 (scripts/fetch-festival-dates.mjs가 채운다) ──────────
+//
+// 처음 자료를 받은 areaBasedList2에는 날짜 칸이 아예 없어서, 관광공사 축제 57곳은
+// **열리는 달을 하나도 모르는 상태**였다 — 사진도 좌표도 다 있는데 계절·월로 고르는
+// 화면에서는 통째로 사라졌다. 축제 전용 창구(searchFestival2)를 따로 불러 채운다.
+// 이름이 아니라 **contentId로 잇는다** — 두 창구가 같은 번호를 쓴다.
+interface FestivalDate {
+  start: string;
+  end: string;
+  startMonth: number | null;
+  endMonth: number | null;
+}
+const DATES = festivalDates as Record<string, FestivalDate>;
+
+/**
+ * "20251017" → "mid". 날짜가 이상하면 undefined — 지어내지 않는다.
+ *
+ * 🚨 날짜를 그대로 안 쓰고 초·중·하순으로 뭉개는 이유는 Place.period 주석에 적어 뒀다:
+ * 받아온 값이 **지난 회차(2025년)** 것이라, 달까지는 맞아도 날짜는 해마다 옮겨 간다.
+ */
+function periodOf(yyyymmdd: string): Place["period"] {
+  if (!/^\d{8}$/.test(yyyymmdd)) return undefined;
+  const day = Number(yyyymmdd.slice(6, 8));
+  if (day < 1 || day > 31) return undefined;
+  return day <= 10 ? "early" : day <= 20 ? "mid" : "late";
+}
+
 function toPlace(category: Category, p: RawPlace): Place {
+  const date = category === "festival" ? DATES[p.contentId] : undefined;
   return {
     id: idOf(p),
     gu: p.gu ?? "",
@@ -53,6 +82,13 @@ function toPlace(category: Category, p: RawPlace): Place {
     thumb: p.thumb ?? p.image,
     lat: p.lat,
     lng: p.lng,
+    ...(date?.startMonth != null
+      ? {
+          startMonth: date.startMonth,
+          endMonth: date.endMonth ?? date.startMonth,
+          period: periodOf(date.start),
+        }
+      : null),
     // 관광공사가 직접 등록·관리하는 자료라 "확인된 값"으로 둔다.
     // seed.ts의 confirmed:false(=아직 못 찾은 빈 칸)와는 성격이 다르다.
     confirmed: true,
