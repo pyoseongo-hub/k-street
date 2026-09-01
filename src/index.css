@@ -442,6 +442,137 @@ button {
   line-height: 1.6;
 }
 
+/* ── 🧲 붙어 있는 고르기 영역 (2026-09-01, 사용자 지시 "스크롤해도 지도는
+   안밀리게 이카드를 맨위로") ──────────────────────────
+   갈래 칩 · 내 위치 · 육각 지도를 한 덩어리로 묶어 화면 위에 붙인다.
+   목록은 그 아래로 흐른다.
+
+   ⚠️ 좌우로 -16px 빼서 패널 안쪽 여백까지 덮는 이유 — 안 그러면 붙어 있는 동안
+   양옆 16px 틈으로 아래 목록이 지나가는 게 보인다.
+   ⚠️ 조상 요소에 overflow:hidden이 있으면 sticky가 통째로 죽는다. .panel에는
+   없지만(.monthly-festival-panel에만 있다) 나중에 넣지 말 것. */
+.de-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin: 0 -16px 10px;
+  padding: 10px 16px 8px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+/* 스크롤이 시작됐는지 알려 주는 1px짜리 표식(useCondenseOnScroll 참고).
+   이게 화면 밖으로 나가면 위 영역이 .condensed로 접힌다. */
+.de-sentinel {
+  height: 1px;
+  margin-bottom: -1px;
+}
+
+/* ── 접힌 상태 ────────────────────────────────────────
+   다 펴 두면 폰 화면의 55%를 먹어서 목록이 한 칸밖에 안 보였다.
+   맨 위에서는 크게 두고, 목록을 훑기 시작하면 이 크기로 줄인다. */
+.de-sticky.condensed {
+  padding-top: 6px;
+  padding-bottom: 4px;
+}
+
+/* 갈래 칩: 아이콘 위 글씨 아래(세로) → 아이콘 옆 글씨(가로)로 눕힌다. 85px → 34px. */
+.de-sticky.condensed .cat-chip {
+  flex-direction: row;
+  gap: 5px;
+  width: auto;
+  padding: 6px 12px 6px 9px;
+  border-radius: 100px;
+}
+
+.de-sticky.condensed .cat-chip-icon,
+.de-sticky.condensed .cat-chip-icon-image {
+  width: 17px;
+  height: 17px;
+  font-size: 14px;
+}
+
+.de-sticky.condensed .category-chip-row {
+  margin-bottom: 7px;
+  padding-bottom: 4px;
+}
+
+.de-sticky.condensed .myloc {
+  margin-bottom: 6px;
+  padding: 3px 10px;
+  font-size: 11.5px;
+}
+
+/* 육각형은 62→48px. 이보다 더 줄이면 로마자 표기가 뭉개진다
+   (2026-08-28 "가독성 떨어져 특히 영어" — 그때 문제가 된 크기가 49px였다).
+   접힌 상태는 잠깐 지나가는 화면이라 48px까지만 내려간다. */
+.de-sticky.condensed .hex-rows {
+  --hex-w: 48px;
+  --hex-h: 56px;
+}
+
+.de-sticky.condensed .district-hexgrid {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/* 크기가 툭 바뀌면 놀란다 — 짧게 이어 준다.
+   ⚠️ .hex-tile의 transition은 이 파일 아래쪽(.hex-tile 규칙)에 따로 있다.
+   같은 속성을 두 번 쓰면 나중 것이 이기므로 여기서 겹쳐 쓰지 않는다. */
+.hex-row,
+.cat-chip {
+  transition: width 0.18s ease, margin 0.18s ease, padding 0.18s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hex-row,
+  .cat-chip,
+  .hex-tile {
+    transition: none;
+  }
+}
+
+/* ── 📍 내 위치의 구 ─────────────────────────────────── */
+.myloc {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0 0 10px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  font-family: inherit;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.myloc-btn {
+  cursor: pointer;
+}
+
+.myloc-btn:active {
+  filter: brightness(1.15);
+}
+
+/* 찾았을 때만 강조색을 준다 — 아직 안 눌러 본 상태가 알림처럼 튀면 안 된다. */
+.myloc-found {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  color: var(--text);
+  font-weight: 600;
+}
+
+.myloc-loading {
+  font-style: italic;
+}
+
+.myloc-failed {
+  color: var(--text-muted);
+}
+
 /* ── category tiles (district explorer) ─────────────── */
 .category-chip-row {
   display: flex;
@@ -605,6 +736,8 @@ button {
   width: var(--hex-w);
   height: var(--hex-h);
   flex-shrink: 0;
+  /* .here의 ::after 고리를 이 칸 안에 앉히기 위한 기준점. */
+  position: relative;
   /* 위아래 뾰족 + 좌우 수직변 (참고 이미지 실측 형태) */
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   display: flex;
@@ -629,7 +762,8 @@ button {
      (실제 글자 크기 축소는 컴포넌트에서 라벨 길이를 보고 인라인으로 준다). */
   overflow-wrap: anywhere;
   word-break: break-word;
-  transition: transform 0.12s ease, filter 0.12s ease;
+  /* width·height는 접힘(.de-sticky.condensed)에서 --hex-w/--hex-h가 바뀔 때 쓰인다. */
+  transition: transform 0.12s ease, filter 0.12s ease, width 0.18s ease, height 0.18s ease;
 }
 
 .hex-tile.has-data {
@@ -639,6 +773,34 @@ button {
   background: color-mix(in srgb, var(--cc) 70%, var(--surface));
   color: #10151E;
   font-weight: 700;
+}
+
+/* 📍 내가 지금 서 있는 구. 색으로 칠하지 않고 **테두리만** 두른다 —
+   색을 칠하면 "자료가 있는 구(has-data)"·"고른 구(selected)"와 뜻이 섞인다.
+   셋은 서로 다른 말이고 한 칸에 겹칠 수 있어서, 각각 다른 신호를 써야 한다. */
+/* 📍 내가 지금 서 있는 구.
+   ⚠️ 2026-09-01에 두 번 실패하고 세 번째에 된 것이라 남겨 둔다 —
+   · outline / box-shadow → clip-path가 육각형 **밖**을 잘라내서 좌우 수직변에만
+     빨간 실선 두 줄이 남았다.
+   · filter: drop-shadow → 브라우저는 **필터를 먼저 걸고 그다음에 자른다.**
+     그려 놓은 테두리가 통째로 잘려 아무것도 안 보였다.
+   결국 **육각형 안쪽에** 고리를 직접 그린다: 바깥 육각형을 한 바퀴 돈 뒤
+   안쪽 육각형을 되짚어 오는 한 붓 그리기(도넛)로 가운데를 비운다.
+   시작점(50% 0% → 50% 7%)에 생기는 이음매는 폭이 0이라 안 보인다. */
+.hex-tile.here::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  pointer-events: none;
+  clip-path: polygon(
+    50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%, 50% 0%,
+    50% 7%, 7% 28.5%, 7% 71.5%, 50% 93%, 93% 71.5%, 93% 28.5%, 50% 7%
+  );
+}
+
+.hex-tile.here {
+  z-index: 2;
 }
 
 .hex-tile.selected {

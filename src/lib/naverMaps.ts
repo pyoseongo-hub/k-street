@@ -23,7 +23,11 @@ export function loadNaverMaps(): Promise<void> {
       return;
     }
     const script = document.createElement("script");
-    script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${clientId}`;
+    // submodules=geocoder — 좌표를 행정구역 이름으로 바꾸는 기능(reverseGeocode)이
+    // 기본 번들에 안 들어 있다. 이걸 빼면 naver.maps.Service 자체가 undefined다.
+    // 내 위치가 어느 구인지 띄우는 데 쓴다(2026-09-01 사용자 지시:
+    // "내위치가 어느구인지 … 용산구 이런식으로 표시").
+    script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${clientId}&submodules=geocoder`;
     script.async = true;
     script.onload = () => resolve();
     script.onerror = () => reject(new Error("네이버 지도 SDK 로드 실패"));

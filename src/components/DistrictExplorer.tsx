@@ -1,4 +1,4 @@
-import { useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
 import { ALL_PLACES, CATEGORY_META, type Category } from "../data/seed";
 import { SEOUL_HEX_ROWS } from "../data/seoulHexMap";
@@ -6,6 +6,7 @@ import { districtShortName, districtFullName, dongName } from "../data/districtN
 import MapDirections from "./MapDirections";
 import { openPlaceInfo } from "../lib/mapLinks";
 import { getTourImage } from "../lib/tourImages";
+import { getMyDistrict, type MyDistrict } from "../lib/myDistrict";
 
 // street(골목·거리)를 2026-09-01에 추가했다 — 관광공사 자료의 골목 40곳이
 // 들어갈 칸이 없어서 통째로 버려지고 있었다(seed.ts의 Category 주석 참고).
@@ -15,6 +16,9 @@ export default function DistrictExplorer() {
   const { t, language } = useLanguage();
   const [category, setCategory] = useState<Category>("market");
   const [gu, setGu] = useState<string | null>(null);
+  // 내 위치의 구. null = 아직 안 눌러 봤다, "loading" = 찾는 중.
+  const [myGu, setMyGu] = useState<MyDistrict | "loading" | null>(null);
+  const condensed = useCondenseOnScroll();
 
   const inCategory = useMemo(
     () => ALL_PLACES.filter((p) => p.category === category),
@@ -36,31 +40,84 @@ export default function DistrictExplorer() {
         <h2>{t.exploreTitle}</h2>
       </div>
 
-      <div className="category-chip-row">
-        {MAP_CATEGORIES.map((c) => (
-          <button
-            key={c}
-            className={"cat-chip" + (c === category ? " active" : "")}
-            style={{ "--cc": CATEGORY_META[c].color } as CSSProperties}
-            onClick={() => {
-              setCategory(c);
-              setGu(null);
-            }}
-          >
-            <span className="cat-chip-icon">
-              {CATEGORY_META[c].iconImage ? (
-                <img
-                  src={`${import.meta.env.BASE_URL}${CATEGORY_META[c].iconImage}`}
-                  alt=""
-                  className="cat-chip-icon-image"
-                />
-              ) : (
-                CATEGORY_META[c].icon
-              )}
-            </span>
-            <span className="cat-chip-label">{t.categoryLabels[c]}</span>
-          </button>
-        ))}
+      {/* 🧲 고르는 것(갈래 칩 · 내 위치 · 육각 지도)을 **맨 위에 모아 화면에 붙여 둔다**
+          (사용자 지시 2026-09-01: "2안 / 스크롤해도 지도는 안밀리게 / 이카드를 맨위로").
+          2026-08-28에는 반대로 지도를 목록 **아래**로 내렸었는데("정보가 위로 가게"),
+          그러자 동네를 바꿀 때마다 목록을 통째로 지나 내려가야 했다. 붙여 두면
+          두 요구가 같이 풀린다 — 결과는 여전히 눈앞에 있고, 지도는 늘 손 닿는 곳에 있다. */}
+      <div ref={condensed.sentinelRef} className="de-sentinel" aria-hidden="true" />
+      <div className={"de-sticky" + (condensed.on ? " condensed" : "")}>
+        <div className="category-chip-row">
+          {MAP_CATEGORIES.map((c) => (
+            <button
+              key={c}
+              className={"cat-chip" + (c === category ? " active" : "")}
+              style={{ "--cc": CATEGORY_META[c].color } as CSSProperties}
+              onClick={() => {
+                setCategory(c);
+                setGu(null);
+              }}
+            >
+              <span className="cat-chip-icon">
+                {CATEGORY_META[c].iconImage ? (
+                  <img
+                    src={`${import.meta.env.BASE_URL}${CATEGORY_META[c].iconImage}`}
+                    alt=""
+                    className="cat-chip-icon-image"
+                  />
+                ) : (
+                  CATEGORY_META[c].icon
+                )}
+              </span>
+              <span className="cat-chip-label">{t.categoryLabels[c]}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* 📍 내가 지금 어느 구에 있는지(사용자 지시 2026-09-01).
+            위치는 **이 버튼을 눌렀을 때만** 물어본다 — 앱을 켜자마자 권한 창이 뜨면
+            대부분 거절하고, 한 번 거절하면 되돌리기 어렵다(userPosition.ts와 같은 판단). */}
+        <MyLocationChip state={myGu} onFind={async () => {
+          setMyGu("loading");
+          setMyGu(await getMyDistrict());
+        }} t={t} />
+
+        <div className="district-hexgrid">
+          <div className="hex-rows">
+            {SEOUL_HEX_ROWS.map((row, i) => (
+              <div
+                className="hex-row"
+                key={i}
+                style={{ "--offset": row.offset } as CSSProperties}
+              >
+                {row.gus.map((d) => {
+                  const has = guWithData.has(d);
+                  const here = typeof myGu === "object" && myGu?.kind === "gu" && myGu.gu === d;
+                  const label = districtShortName(d, language);
+                  // 로마자 표기는 한글·한자보다 훨씬 길다(Yeongdeungpo 등) —
+                  // 라벨 길이를 보고 글자 크기를 미리 줄여서 잘리기 전에 줄인다.
+                  const fontSize =
+                    label.length > 10 ? 8.5 : label.length > 7 ? 9.5 : label.length > 4 ? 11 : 12;
+                  return (
+                    <button
+                      key={d}
+                      className={
+                        "hex-tile" +
+                        (has ? " has-data" : "") +
+                        (d === gu ? " selected" : "") +
+                        (here ? " here" : "")
+                      }
+                      style={{ "--cc": CATEGORY_META[category].color } as CSSProperties}
+                      onClick={() => setGu(d === gu ? null : d)}
+                    >
+                      <span style={{ fontSize }}>{label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {category === "flower" && (
@@ -71,9 +128,6 @@ export default function DistrictExplorer() {
         {t.mapDisclaimerStart}<b>{t.mapDisclaimerBold}</b>{t.mapDisclaimerEnd}
       </p>
 
-      {/* 구를 고르면 그 결과(장소 정보·길찾기)가 지도보다 먼저 보이게 위에 둔다
-          (2026-08-28 사용자 지시: "정보가 위로 가게" — 원래는 지도 아래에 있어
-          고르고 나면 다시 스크롤해서 내려봐야 했다). */}
       {gu && (
         <div className="place-list">
           {selected.length === 0 && (
@@ -170,39 +224,76 @@ export default function DistrictExplorer() {
         </div>
       )}
 
-      {/* 육각형을 화면 폭에 맞춰 줄이면 로마자 표기가 6.5px까지 작아져 가독성이
-          떨어졌다(2026-08-28 사용자 지적: "가독성 떨어져 특히 영어") — 육각형
-          자체를 키우고, 다 안 들어가면 이 바깥 상자가 가로로 스크롤한다. */}
-      <div className="district-hexgrid">
-        <div className="hex-rows">
-          {SEOUL_HEX_ROWS.map((row, i) => (
-            <div
-              className="hex-row"
-              key={i}
-              style={{ "--offset": row.offset } as CSSProperties}
-            >
-              {row.gus.map((d) => {
-                const has = guWithData.has(d);
-                const label = districtShortName(d, language);
-                // 로마자 표기는 한글·한자보다 훨씬 길다(Yeongdeungpo 등) —
-                // 라벨 길이를 보고 글자 크기를 미리 줄여서 잘리기 전에 줄인다.
-                const fontSize =
-                  label.length > 10 ? 8.5 : label.length > 7 ? 9.5 : label.length > 4 ? 11 : 12;
-                return (
-                  <button
-                    key={d}
-                    className={"hex-tile" + (has ? " has-data" : "") + (d === gu ? " selected" : "")}
-                    style={{ "--cc": CATEGORY_META[category].color } as CSSProperties}
-                    onClick={() => setGu(d === gu ? null : d)}
-                  >
-                    <span style={{ fontSize }}>{label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          ))}
-        </div>
-      </div>
     </section>
+  );
+}
+
+/**
+ * 붙어 있는 고르기 영역을 **스크롤을 시작하면 작게** 접는다.
+ *
+ * 왜 필요한가 — 갈래 칩 + 내 위치 + 육각 지도를 다 펴 두면 폰 화면(900px)의 **55%**를
+ * 차지해서, 정작 보러 온 목록이 한 칸밖에 안 보였다. 그렇다고 지도를 늘 작게 두면
+ * 로마자 표기가 뭉개진다(2026-08-28 사용자 지적: "가독성 떨어져 특히 영어").
+ * 그래서 **맨 위에서는 크게, 목록을 훑을 때는 작게** 두 크기를 오간다.
+ *
+ * 스크롤 위치를 직접 재지 않고 1px짜리 표식(sentinel)이 화면 밖으로 나갔는지만 본다 —
+ * 스크롤 이벤트를 매번 받아 계산하면 손가락을 따라 버벅인다.
+ */
+function useCondenseOnScroll() {
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([entry]) => setOn(!entry.isIntersecting));
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return { sentinelRef, on };
+}
+
+/**
+ * 📍 내 위치의 구를 보여주는 한 줄.
+ *
+ * 네 가지 결과를 각각 다른 말로 적는다(myDistrict.ts 참고) — 뭉뚱그리면
+ * "서울 밖이라 안 나오는 것"과 "위치 권한을 거절해서 안 나오는 것"을 구분 못 한다.
+ * 특히 **서울 밖일 때 가장 가까운 구를 억지로 대지 않는다.** 틀린 구 이름은
+ * 그 아래 목록 전체를 못 믿게 만든다(CLAUDE.md 정확도 원칙).
+ */
+function MyLocationChip({
+  state,
+  onFind,
+  t,
+}: {
+  state: MyDistrict | "loading" | null;
+  onFind: () => void;
+  t: ReturnType<typeof useLanguage>["t"];
+}) {
+  if (state === null) {
+    return (
+      <button type="button" className="myloc myloc-btn" onClick={onFind}>
+        {t.myLocationFind}
+      </button>
+    );
+  }
+  if (state === "loading") {
+    return <span className="myloc myloc-loading">{t.mapLocating}</span>;
+  }
+  if (state.kind === "gu") {
+    return (
+      <span className="myloc myloc-found">
+        <span className="myloc-pin" aria-hidden="true">📍</span>
+        {t.myLocationHere(state.gu)}
+      </span>
+    );
+  }
+  if (state.kind === "outside") {
+    return <span className="myloc myloc-note">{t.myLocationOutside}</span>;
+  }
+  // 못 찾았을 때는 **다시 누를 수 있게** 버튼으로 남긴다 — 잠깐 안 됐을 수 있다.
+  return (
+    <button type="button" className="myloc myloc-btn myloc-failed" onClick={onFind}>
+      {t.myLocationFailed}
+    </button>
   );
 }
