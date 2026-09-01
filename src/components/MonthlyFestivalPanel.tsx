@@ -168,9 +168,13 @@ export default function MonthlyFestivalPanel() {
                     <span className="fc-photo-credit">{f.photoCredit ?? t.photoCredit}</span>
                   </div>
                 ) : (
+                  /* 카드 그림은 **지금 고른 달**의 계절로 그린다.
+                     예전엔 그 축제의 시작 달을 썼는데, 2월~3월에 걸친 축제가
+                     3월(봄) 목록에서 겨울 그림으로 떠서 화면이 어수선했다.
+                     사실을 말하는 자리가 아니라 분위기를 내는 자리라 보는 쪽에 맞춘다. */
                   <SeasonArt
                     className="fc-art"
-                    season={seasonOf(f.startMonth ?? month)}
+                    season={season}
                     seed={rotatingSeed * 100 + i}
                   />
                 )}

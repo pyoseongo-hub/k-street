@@ -23,26 +23,41 @@ function makeRng(seed: number) {
   };
 }
 
+// 🎨 2026-09-01에 전부 밝게 다시 잡았다 (사용자 지시: "봄 여름 가을 겨울 이미지
+// 화사한 거로 바꿔"). 예전 값은 전부 어두운 고동색 계열이라(#2A2018 → #7A3F1E)
+// 어느 계절이든 갈색 덩어리로만 보였다 — 사용자가 캡처로 짚어 준 그 화면이다.
+//
+// 원래는 **카드 뒤에 깔리는 띠**라 어둡게 잡았던 값인데, 지금은 172px짜리 계절
+// 표지로도 쓰인다. 표지에는 아래쪽에 검은 그늘이 깔려 있어(.mfp-cover::after)
+// 밝은 그림 위에서도 흰 글씨가 그대로 읽힌다 — 밝게 해도 안전하다.
+//
+// 🚨 사진이 아니라 **직접 그린 그림**이다. 스톡 사진이나 웹에서 긁어온 이미지는
+// 쓰지 않는다(저작권 원칙). 실사진은 관광공사 것(공공누리 1유형)만 쓰고,
+// 그 계절에 확보된 사진이 하나도 없을 때만 이 그림이 대신 나온다.
 const PALETTES: Record<SeasonKey, [string, string][]> = {
+  // 벚꽃 — 연분홍에서 진분홍으로
   spring: [
-    ["#3A2A33", "#7A3B52"],
-    ["#33232C", "#8C4A63"],
-    ["#2C2230", "#6C3B5C"],
+    ["#FFE3EF", "#F58FB4"],
+    ["#FFEAF2", "#EE7FA8"],
+    ["#FFDCE9", "#F79BC0"],
   ],
+  // 한여름 물빛 — 민트에서 에메랄드로
   summer: [
-    ["#2A2018", "#7A3F1E"],
-    ["#241C16", "#8A4A24"],
-    ["#221A14", "#6E3A22"],
+    ["#CFF6EA", "#2FB89A"],
+    ["#D8F7EF", "#37C2A4"],
+    ["#C6F2E4", "#28A98C"],
   ],
+  // 단풍 — 살구빛에서 주황으로
   autumn: [
-    ["#241C14", "#7A5220"],
-    ["#221B12", "#8C5F24"],
-    ["#1F1810", "#6E4A1C"],
+    ["#FFE6C0", "#E5822F"],
+    ["#FFEDD0", "#D9722A"],
+    ["#FFE1B4", "#EC8C38"],
   ],
+  // 눈 내린 하늘 — 옅은 하늘빛에서 푸른빛으로
   winter: [
-    ["#131E24", "#274A56"],
-    ["#111A20", "#1F3E4A"],
-    ["#0F181D", "#2C5461"],
+    ["#E4EEFF", "#6E96C8"],
+    ["#DCE8FB", "#5F88BC"],
+    ["#EAF2FF", "#7AA1D0"],
   ],
 };
 
@@ -56,7 +71,7 @@ export default function SeasonArt({ season, seed = 0, dense = false, className }
   return (
     <svg
       className={className}
-      viewBox="0 0 300 72"
+      viewBox="0 0 300 170"
       preserveAspectRatio="xMidYMid slice"
       role="presentation"
       aria-hidden="true"
@@ -67,7 +82,7 @@ export default function SeasonArt({ season, seed = 0, dense = false, className }
           <stop offset="1" stopColor={to} />
         </linearGradient>
       </defs>
-      <rect width="300" height="72" fill={`url(#${gradId})`} />
+      <rect width="300" height="170" fill={`url(#${gradId})`} />
       {season === "spring" && <SpringMotif rng={rng} dense={dense} />}
       {season === "summer" && <SummerMotif rng={rng} dense={dense} />}
       {season === "autumn" && <AutumnMotif rng={rng} dense={dense} />}
@@ -77,19 +92,19 @@ export default function SeasonArt({ season, seed = 0, dense = false, className }
 }
 
 function SpringMotif({ rng, dense }: { rng: () => number; dense: boolean }) {
-  const branches = dense ? 2 : 1;
+  const branches = dense ? 3 : 2;
   return (
     <g opacity="0.92">
       {Array.from({ length: branches }, (_, b) => {
         const cx = 40 + rng() * 220;
         const dir = rng() > 0.5 ? 1 : -1;
-        const blossoms = 5 + Math.floor(rng() * 4);
+        const blossoms = 9 + Math.floor(rng() * 6);
         return (
           <g key={b}>
             <path
-              d={`M ${cx - 30 * dir} 76 Q ${cx} ${18 + rng() * 20} ${cx + 34 * dir} ${-4 + rng() * 10}`}
-              stroke="#D8B4A0"
-              strokeWidth="2.4"
+              d={`M ${cx - 40 * dir} 180 Q ${cx} ${60 + rng() * 50} ${cx + 46 * dir} ${-8 + rng() * 24}`}
+              stroke="#A9614C"
+              strokeWidth="3"
               fill="none"
               strokeLinecap="round"
               opacity="0.75"
@@ -97,10 +112,10 @@ function SpringMotif({ rng, dense }: { rng: () => number; dense: boolean }) {
             {Array.from({ length: blossoms }, (_, i) => (
               <circle
                 key={i}
-                cx={cx + (rng() - 0.5) * 70}
-                cy={4 + rng() * 60}
-                r={4 + rng() * 5}
-                fill="#FBEAE6"
+                cx={cx + (rng() - 0.5) * 110}
+                cy={6 + rng() * 150}
+                r={3.5 + rng() * 5}
+                fill="#FFFFFF"
                 fillOpacity={0.65 + rng() * 0.3}
               />
             ))}
@@ -112,20 +127,20 @@ function SpringMotif({ rng, dense }: { rng: () => number; dense: boolean }) {
 }
 
 function SummerMotif({ rng, dense }: { rng: () => number; dense: boolean }) {
-  const count = dense ? 6 : 4;
+  const count = dense ? 9 : 7;
   const start = rng() * 30;
   const gap = 300 / count;
   return (
     <g opacity="0.9">
       {Array.from({ length: count }, (_, i) => {
         const x = start + i * gap + rng() * 12;
-        const y = 12 + rng() * 20;
-        const r = 9 + rng() * 6;
+        const y = 22 + rng() * 78;
+        const r = 7 + rng() * 6;
         return (
           <g key={i}>
-            <line x1={x} y1={y - r - 4} x2={x} y2={y - r + 3} stroke="#F4D9A8" strokeWidth="1.6" />
-            <ellipse cx={x} cy={y + r * 0.4} rx={r} ry={r * 1.25} fill="#F4D9A8" fillOpacity="0.85" />
-            <ellipse cx={x} cy={y + r * 0.4} rx={r} ry={r * 1.25} fill="none" stroke="#8A4A24" strokeOpacity="0.35" />
+            <line x1={x} y1={0} x2={x} y2={y - r} stroke="#F6C544" strokeWidth="1.4" strokeOpacity="0.55" />
+            <ellipse cx={x} cy={y + r * 0.4} rx={r} ry={r * 1.25} fill="#FFF0B8" fillOpacity="0.95" />
+            <ellipse cx={x} cy={y + r * 0.4} rx={r} ry={r * 1.25} fill="none" stroke="#1E7A66" strokeOpacity="0.35" />
           </g>
         );
       })}
@@ -134,12 +149,12 @@ function SummerMotif({ rng, dense }: { rng: () => number; dense: boolean }) {
 }
 
 function AutumnMotif({ rng, dense }: { rng: () => number; dense: boolean }) {
-  const count = dense ? 9 : 6;
+  const count = dense ? 16 : 12;
   return (
     <g opacity="0.88">
       {Array.from({ length: count }, (_, i) => {
-        const x = (300 / count) * i + rng() * 20;
-        const y = 6 + rng() * 44;
+        const x = (300 / count) * i + rng() * 24;
+        const y = 8 + rng() * 150;
         const rot = rng() * 360;
         const scale = 0.7 + rng() * 0.6;
         return (
@@ -147,8 +162,8 @@ function AutumnMotif({ rng, dense }: { rng: () => number; dense: boolean }) {
             key={i}
             transform={`translate(${x}, ${y}) rotate(${rot}) scale(${scale})`}
             d="M0 0 C4 -8 12 -8 12 0 C12 8 4 8 0 16 C-4 8 -12 8 -12 0 C-12 -8 -4 -8 0 0 Z"
-            fill="#F5DFAE"
-            fillOpacity={0.55 + rng() * 0.35}
+            fill="#C0402A"
+            fillOpacity={0.5 + rng() * 0.35}
           />
         );
       })}
@@ -157,8 +172,8 @@ function AutumnMotif({ rng, dense }: { rng: () => number; dense: boolean }) {
 }
 
 function WinterMotif({ rng, dense }: { rng: () => number; dense: boolean }) {
-  const rows = dense ? 4 : 3;
-  const cols = dense ? 9 : 6;
+  const rows = dense ? 7 : 6;
+  const cols = dense ? 11 : 9;
   return (
     <g opacity="0.85">
       {Array.from({ length: rows }, (_, ri) =>
@@ -166,8 +181,8 @@ function WinterMotif({ rng, dense }: { rng: () => number; dense: boolean }) {
           <circle
             key={`${ri}-${ci}`}
             cx={(300 / cols) * ci + rng() * 14}
-            cy={(72 / (rows + 1)) * (ri + 1) + (rng() - 0.5) * 10}
-            r={1.2 + rng() * 2.4}
+            cy={(170 / (rows + 1)) * (ri + 1) + (rng() - 0.5) * 18}
+            r={1.4 + rng() * 3}
             fill="#FFFFFF"
             fillOpacity={0.5 + rng() * 0.4}
           />
