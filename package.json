@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "audit-seed": "node scripts/audit-seed.mjs"
+    "audit-seed": "node scripts/audit-seed.mjs",
+    "photo-todo": "node scripts/list-photo-todo.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

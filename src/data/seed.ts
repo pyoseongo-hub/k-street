@@ -10,6 +10,7 @@ import { isInLaunchScope } from "../config/launchScope";
 import { sidoOf } from "./districts";
 import { getCoords } from "../lib/coords";
 import { TOUR_PLACES, TOUR_BY_NAME } from "./tourPlaces";
+import { getManualPhoto } from "../lib/manualPhotos";
 
 // street(골목·거리)는 2026-09-01에 추가했다. 관광공사 자료에 경리단길·익선동 한옥거리·
 // 종로귀금속거리처럼 구·사진·좌표가 다 붙은 골목이 40곳 있는데, 앱 이름이 K-Street인데도
@@ -30,6 +31,8 @@ export interface Place {
   thumb?: string;
   /** 어디서 온 자료인가. 값이 없으면 사람이 직접 조사해 seed.ts에 적은 것이다. */
   source?: "tour";
+  /** 사진 출처 표기. 구청 등에서 받은 사진은 공공누리상 출처를 반드시 띄워야 한다. */
+  photoCredit?: string;
   /** 축제 전용: 시작/종료 월(1-12). 여러 달에 걸치면 startMonth < endMonth */
   startMonth?: number;
   endMonth?: number;
@@ -316,11 +319,42 @@ function mergeWithTourPlaces(hand: Place[]): Place[] {
   return [...merged, ...TOUR_PLACES.filter((t) => !used.has(t.id))];
 }
 
+// 사람이 직접 찾아 넣은 사진(구청 공공누리 등)을 덧입힌다 — manual-photos.json.
+// 관광공사에서 이미 사진을 받은 곳은 그대로 두고, 없는 곳만 채운다.
+function withManualPhoto(p: Place): Place {
+  if (p.image) return p;
+  const m = getManualPhoto(p.id);
+  return m ? { ...p, image: m.image, thumb: m.image, photoCredit: m.source } : p;
+}
+
+// 🚨 사진 게이트 (사용자 결정 2026-09-01: "사진 없는장소 일단 가리기 앱에 안보이게",
+// "이미지 채운 것은 보임으로").
+//
+// 사진이 없다는 건 대체로 덜 알려진 곳이라는 뜻이고, 목록에서 자리만 차지한다.
+// 그래서 **사진이 있는 곳만 화면에 내보낸다.** 자료를 지우는 게 아니라 가리는 것이라,
+// manual-photos.json에 사진을 한 줄 넣는 순간 그 곳은 다시 나타난다.
+//
+// ⚠️ 지금은 이 게이트로 443곳 중 179곳이 가려진다. 특히 **꽃길이 32곳 → 2곳**으로
+// 준다(사람이 조사한 25개 구 꽃길에 사진이 없어서다). 하루 3곳씩 채우는 작업에서
+// 꽃길을 먼저 채우면 열흘이면 되살아난다 — docs가 아니라 여기 적어 두는 이유는,
+// 다음 세션이 "꽃길 탭이 왜 비었지?" 하고 자료가 없어진 줄 오해하지 않게 하기 위해서다.
+function hasPhoto(p: Place): boolean {
+  return Boolean(p.image ?? p.thumb);
+}
+
 // 출시 범위 게이트(launchScope.ts) — 서울 외 지역이 seed.ts에 섞여 들어와도
 // LAUNCH_REGIONS를 넓히기 전까지는 화면에 노출되지 않는다.
 export const ALL_PLACES: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .filter((p) => isInLaunchScope(sidoOf(p.gu)))
-  .map(withFetchedCoords);
+  .map(withFetchedCoords)
+  .map(withManualPhoto)
+  .filter(hasPhoto);
+
+/** 사진이 없어 지금 가려져 있는 곳. 하루 3곳 채우기 작업의 대상 목록이다. */
+export const HIDDEN_NO_PHOTO: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
+  .filter((p) => isInLaunchScope(sidoOf(p.gu)))
+  .map(withManualPhoto)
+  .filter((p) => !hasPhoto(p));
 
 export const CATEGORY_META: Record<
   Category,

@@ -85,6 +85,10 @@ export default function DistrictExplorer() {
             const legacyPhoto = getTourImage(p.id);
             const photoUrl = p.thumb ?? p.image ?? legacyPhoto?.thumb;
             const meta = CATEGORY_META[p.category];
+            // ⓘ 2026-09-01 오후에 사진 게이트가 생겨(seed.ts의 hasPhoto) 사진 없는 곳은
+            // 아예 목록에 안 온다 — 그래서 아래 작은 카드는 지금은 실제로 안 그려진다.
+            // 게이트를 풀거나 완화하면 바로 되살아나므로 지운다기보다 남겨 둔다.
+            //
             // 🚨 사진 없는 곳은 카드를 작게 만든다(사용자 지시 2026-09-01:
             // "사진이 없는 곳은 그만큼 메리트가 없거나 유명하지 않은 장소 —
             //  빈칸을 너무 크게 할애하지 말고 카드 크기 줄이고 텍스트 정보와
