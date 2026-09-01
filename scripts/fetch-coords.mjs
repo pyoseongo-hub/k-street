@@ -69,16 +69,51 @@ function normalize(s) {
   return s.replace(/[·・()（）]/g, " ").replace(/\s+/g, " ").trim();
 }
 
-// 여러 조각 이름("A · B · C")은 첫 조각만 검색어로 쓴다.
-// 단, 첫 조각이 짧으면(2글자 이하) 위험하다 — "성북 세계음식축제"의 "성북",
-// "중랑 서울장미축제"의 "중랑"처럼 동네 이름 앞머리만 남으면 그 동네의
-// 아무 업체 이름에나 들어맞는다(실제로 "성북구보건소", "중랑구보건소"와
-// 잘못 매칭되는 걸 확인했다 — 네이버 교차확인도 "카카오가 찾은 그 틀린
-// 업체"의 좌표를 다시 확인하는 것뿐이라 오히려 고신뢰도로 둔갑시킨다).
-// "4·19혁명"의 "4"도 같은 문제. 이럴 땐 쪼개지 말고 전체 이름을 그대로 쓴다.
-function primaryName(name) {
-  const first = normalize(name).split(" ").filter(Boolean)[0] ?? name;
-  return first.length >= 3 ? first : normalize(name);
+// 🚨 2026-09-01 전수검사에서 찾은 버그 — 옛 primaryName()은 이름의 **첫 단어만**
+// 검색어로 썼다. 여러 장소를 "A · B"로 합쳐 둔 이름을 쪼개려고 만든 것인데,
+// normalize()가 ·를 공백으로 바꾼 뒤 공백으로 잘랐기 때문에 그냥 두 단어인
+// 이름까지 전부 잘렸다. 185곳 중 68곳(37%)이 이렇게 망가져 있었다:
+//
+//   서울둘레길 1코스 — 수락산   → "서울둘레길"   (17개 코스가 전부 같은 검색어!)
+//   이태원 지구촌축제           → "이태원"       (동네 이름)
+//   청계천 꽃길                → "청계천"       (하천 전체)
+//   성동구청 갤러리            → "성동구청"      (구청 건물)
+//   예술의전당 서울서예박물관     → "예술의전당"    (공연장)
+//
+// 게다가 여기에 구까지 붙여 "댄싱노원 노원구"처럼 검색했다 — 카카오에서 0건이 난다
+// (사용자가 캡처로 확인: "댄싱노원 거리페스티벌 노원구" → 검색 결과가 없어요).
+// 좌표 없는 118곳이 이래서 생겼다.
+//
+// 합쳐진 이름은 2026-08-29(커밋 522e783)에 이미 항목 단위로 쪼개 뒀다. 지금 남은
+// ·는 "송정·응봉지구", "망우·용마산"처럼 **한 장소 안의 구간 표시**라 쪼개면 안 된다.
+// 그래서 이름을 자르지 않고, **넓은 것부터 좁은 것 순으로 여러 번** 시도한다.
+function searchVariants(name, gu) {
+  const full = normalize(name);
+  const v = [full];
+  // "서울둘레길 1코스 — 수락산" → "서울둘레길 1코스" (대시 뒤 구간 설명을 뗀다)
+  const beforeDash = full.split(/\s*[—–-]\s*/)[0].trim();
+  if (beforeDash && beforeDash !== full && beforeDash.length >= 4) v.push(beforeDash);
+  // 괄호 안 설명을 뗀 이름. normalize()가 이미 괄호를 공백으로 바꾸므로 원본에서 뗀다.
+  const noParen = normalize(name.replace(/\(.*?\)|（.*?）/g, ""));
+  if (noParen && !v.includes(noParen) && noParen.length >= 4) v.push(noParen);
+  // 마지막 수단으로만 구를 붙인다 — 붙이면 오히려 0건이 나는 경우가 많다.
+  v.push(`${full} ${gu}`);
+  return v;
+}
+
+// 결과가 그 장소가 맞는지 보는 잣대. **구가 일치하는지를 반드시 본다** —
+// 검색어를 넓게 던지는 만큼 이 잣대가 정확도를 지키는 유일한 장치다.
+function looksLikeSamePlace(doc, name, gu) {
+  const addr = `${doc.road_address_name ?? ""} ${doc.address_name ?? ""}`;
+  if (!addr.includes(gu)) return false;
+  const squash = (s) => s.replace(/[^가-힣a-zA-Z0-9]/g, "");
+  const a = squash(doc.place_name);
+  const b = squash(name);
+  if (!a || !b) return false;
+  // 한쪽이 다른 쪽을 품고, 짧은 쪽이 4글자 이상일 때만 같은 곳으로 본다
+  // ("이태원"처럼 3글자가 아무 데나 걸리는 걸 막는다).
+  const shorter = a.length <= b.length ? a : b;
+  return shorter.length >= 4 && (a.includes(b) || b.includes(a));
 }
 
 // 요청 하나가 응답 없이 멈추면 전체 배치가 무한정 멎어 버리므로(147곳 실행 중
@@ -159,14 +194,25 @@ async function main() {
   let crossChecked = 0;
 
   for (const p of todo) {
-    const keyword = `${primaryName(p.name)} ${p.dong ?? p.gu}`;
     try {
-      const docs = await kakaoSearch(keyword);
-      const target = normalize(primaryName(p.name));
-      const hit = docs.find((d) => normalize(d.place_name).includes(target));
+      // 넓은 검색어부터 차례로 던지고, 구까지 일치하는 결과가 나오면 거기서 멈춘다.
+      let hit = null;
+      let usedKeyword = "";
+      for (const keyword of searchVariants(p.name, p.gu)) {
+        const docs = await kakaoSearch(keyword);
+        hit = docs.find((d) => looksLikeSamePlace(d, p.name, p.gu)) ?? null;
+        if (hit) {
+          usedKeyword = keyword;
+          break;
+        }
+        await new Promise((r) => setTimeout(r, 120));
+      }
       if (!hit) {
-        console.log(`⬜ [${p.category}] ${p.name} — 카카오에서 못 찾음`);
+        console.log(`⬜ [${p.category}] ${p.name} — 카카오에서 못 찾음(검색어 여러 개 시도)`);
         continue;
+      }
+      if (usedKeyword !== normalize(p.name)) {
+        console.log(`   ↳ "${usedKeyword}"로 찾음`);
       }
       const kakaoCoord = { lat: Number(hit.y), lng: Number(hit.x) };
       const address = hit.road_address_name || hit.address_name;

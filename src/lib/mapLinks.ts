@@ -118,8 +118,16 @@ export function getMapLinks(place: MapLinkTarget, from?: MapOrigin | null): MapL
   // 있어야 목적지가 바로 찍힌다 — 좌표 없이 부르면 앱이 "직접 골라라"는
   // 화면만 띄운다(이미 dongne-hanip에서 겪은 문제, openNaverMap 주석 참고).
   // 그래서 네이버·카카오만 검색으로 폴백하고, 구글은 좌표 없이도 길찾기로 보낸다.
-  const query = `${place.name} ${place.dong ?? place.gu}`;
-  const encQuery = encodeURIComponent(query);
+  // 🚨 2026-09-01 — 여기에 구·동을 붙이면 **오히려 검색이 0건**이 된다.
+  // 사용자가 캡처로 확인해 줬다: 카카오맵에서 "댄싱노원 거리페스티벌 노원구"는
+  // "검색 결과가 없어요"가 뜨는데, 지역명을 뗀 이름만으로는 나온다.
+  // 카카오·네이버는 등록된 장소 이름으로 찾는 검색이라, 이름에 없는 행정구역을
+  // 덧붙이면 그냥 안 맞는 검색어가 된다.
+  //
+  // 구를 떼면 다른 동네의 같은 이름이 섞일 수 있지만, 0건보다는 낫다.
+  // 애초에 이 경로는 **좌표가 없는 곳만** 타는 폴백이고(좌표가 있으면 길찾기로
+  // 바로 간다), 진짜 해결은 좌표를 채우는 것이다 — scripts/fetch-coords.mjs.
+  const encQuery = encodeURIComponent(place.name);
   return [
     { label: "KAKAO", url: `https://map.kakao.com/link/search/${encQuery}` },
     { label: "NAVER", url: `https://map.naver.com/v5/search/${encQuery}` },
