@@ -110,13 +110,32 @@ function toPlace(it) {
 // 0건이었는데도 "왜 0건인지"를 확인할 방법이 없었다는 뜻이다. 그래서 이제
 // 받은 것을 **하나도 버리지 않고** tour-pool-all.json에 통째로 저장한다.
 // 규칙은 그 실제 제목들을 보고 정한다(추측으로 키워드를 넓히면 엉뚱한 게 섞인다).
-const KEYWORD_CATEGORIES = {
-  market: ["시장"],
-  flower: ["벚꽃", "꽃길", "장미"],
-  walk: ["둘레길", "산책", "숲길", "트레일"],
-  hike: ["등산", "산행", "정상", "능선"],
-  museum: ["박물관", "미술관", "기념관", "전시관"],
-};
+//
+// 2026-09-01 2차 수집(858건)의 제목을 전부 눈으로 읽고 아래 규칙을 만들었다.
+// 검증 결과: festival 57 · market 65 · museum 64 · flower 2 · walk 21 · hike 20 · street 40 = 269곳.
+
+// 서울의 실제 산. "산"이라는 글자만으로 거르면 용산·세계유산·절두산·심산기념문화센터처럼
+// 산이 아닌 것이 무더기로 딸려 온다 — 그래서 산 이름을 직접 적는다.
+const MTN = /(관악산|구룡산|배봉산|봉화산|북악산|북한산|불암산|지양산|청계산|초안산|남산|아차산|우면산|대모산|인왕산|호암산|목멱산|도봉산|수락산|용마산|백운대|족두리봉|국기봉)/;
+// 산 이름이 들어갔지만 산이 아닌 것 — 배봉산숲속도서관·서울남산국악당·북한산 둘레캠프·
+// 서울 서초 글램핑 청계산장이 실제로 걸려 나왔다.
+const NOT_MTN = /(근린공원|체육공원|배수지|한옥마을|역광장|신학교|순교성지|의열사|인권숲|예장공원|가족공원|부분개방|세계유산|봉수대 터|사격장|캠핑|캠프|클라이밍|도서관|국악당|광장|글램핑|산장|타임캡슐)/;
+// 골목·거리. 앱 이름이 K-Street인데 정작 "거리" 칸이 없었다(사용자 지시 2026-09-01).
+const STREET = /(골목|거리|가로수길|경리단길|우사단길|서순라길|로렌스길|감고당길|차이나타운|떡볶이타운|로데오)/;
+// 거리공원·우이동 먹거리마을·패션타운(동대문 도매상가)은 거리가 아니다.
+const NOT_STREET = /(공원|마을|패션타운|나눔누리|체험관|기념비)/;
+
+// ⚠️ 순서가 규칙의 일부다 — 앞에 있는 것이 이긴다. 한 곳이 두 칸에 겹쳐 들어가면
+// 화면에 같은 곳이 두 번 뜬다. 예: "노룬산골목시장"은 골목이 아니라 시장이고,
+// "안양천제방벚꽃길"은 산책로가 아니라 꽃길이며, "북한산 자락길"은 산이 아니라 산책로다.
+const RULES = [
+  { key: "market", re: /시장/ },
+  { key: "museum", re: /(박물관|미술관|기념관|전시관)/ },
+  { key: "flower", re: /(벚꽃|꽃길|철쭉|장미원|연꽃|수목원|화훼단지)/ },
+  { key: "walk", re: /(둘레길|나들길|산책|숲길|자락길|하늘길|트레일|올레|계곡|생태공원|수변|돌담길|서울로 7017)/ },
+  { key: "hike", re: MTN, not: NOT_MTN },
+  { key: "street", re: STREET, not: NOT_STREET },
+];
 
 // 넓게 받아 두는 칸들. 여기서 키워드로 골라낸다.
 // 38(쇼핑)이 빠져 있어서 시장이 0건이었다 — 관광공사는 전통시장을 쇼핑으로 분류한다.
@@ -144,18 +163,14 @@ async function main() {
     pool.push(...list);
   }
 
-  function byKeyword(keywords) {
-    return pool.filter((it) => keywords.some((k) => (it.title || "").includes(k)));
+  // 한 곳은 한 칸에만 들어간다 — RULES 순서대로 먼저 맞는 칸이 가져간다.
+  const result = { festival: festivals.map(toPlace) };
+  for (const { key } of RULES) result[key] = [];
+  for (const it of pool) {
+    const name = it.title || "";
+    const rule = RULES.find((r) => r.re.test(name) && !(r.not && r.not.test(name)));
+    if (rule) result[rule.key].push(toPlace(it));
   }
-
-  const result = {
-    festival: festivals.map(toPlace),
-    market: byKeyword(KEYWORD_CATEGORIES.market).map(toPlace),
-    flower: byKeyword(KEYWORD_CATEGORIES.flower).map(toPlace),
-    walk: byKeyword(KEYWORD_CATEGORIES.walk).map(toPlace),
-    hike: byKeyword(KEYWORD_CATEGORIES.hike).map(toPlace),
-    museum: byKeyword(KEYWORD_CATEGORIES.museum).map(toPlace),
-  };
 
   console.log("\n카테고리별 결과:");
   for (const [cat, list] of Object.entries(result)) {
