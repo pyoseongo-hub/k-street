@@ -180,12 +180,36 @@ async function translateBatch(texts, googleLang) {
       throw new Error("구글 번역 한도를 다 썼습니다(월 50만 자). 다음 달에 이어서 하세요.");
     }
     if (res.status === 400 || res.status === 403) {
+      // 구글이 주는 말이 세 갈래라 각각 할 일이 다르다. 뭉뚱그리면 사용자가
+      // 엉뚱한 데를 고치느라 며칠을 쓴다(2026-09-01에 실제로 겪었다).
+      let hint;
+      if (/blocked/i.test(txt)) {
+        // "Requests to this API translate method ... are blocked."
+        hint =
+          `👉 **열쇠에 걸린 'API 제한사항' 때문입니다.** 키 자체는 멀쩡합니다.\n` +
+          `   Google Cloud Console → API 및 서비스 → 사용자 인증 정보 → 그 키를 클릭\n` +
+          `   → 아래 'API 제한사항'에서 **Cloud Translation API**를 골라 저장하세요.\n` +
+          `   (또는 '키 제한 안함'). 목록에 Cloud Translation API가 안 보이면,\n` +
+          `   그 프로젝트에서 아직 사용 설정을 안 한 것입니다 — 먼저 켜야 목록에 뜹니다.`;
+      } else if (/has not been used|is disabled|SERVICE_DISABLED/i.test(txt)) {
+        hint =
+          `👉 **이 프로젝트에서 Cloud Translation API가 꺼져 있습니다.**\n` +
+          `   Google Cloud Console → API 및 서비스 → 라이브러리 → "Cloud Translation API"\n` +
+          `   → 사용 설정. 응답 안에 있는 주소를 눌러도 바로 갑니다.`;
+      } else if (/API key not valid|expired|INVALID_ARGUMENT/i.test(txt)) {
+        hint =
+          `👉 **키 값 자체가 안 맞습니다.** 시크릿에 줄바꿈이나 앞뒤 공백이 섞였을 수 있습니다.\n` +
+          `   시크릿을 지우고 다시 붙여 넣으세요.`;
+      } else {
+        hint =
+          `👉 아래 구글 응답을 보세요. 흔한 원인 셋입니다 —\n` +
+          `   ① 열쇠의 'API 제한사항'에 Cloud Translation API가 빠짐\n` +
+          `   ② 그 프로젝트에서 Cloud Translation API를 아직 안 켬\n` +
+          `   ③ 시크릿에 줄바꿈·공백이 섞임`;
+      }
       throw new Error(
-        `구글이 키를 받지 않습니다 (HTTP ${res.status}).\n` +
-          `  · 시크릿에 줄바꿈이나 앞뒤 공백이 섞이지 않았는지\n` +
-          `  · Google Cloud에서 Cloud Translation API를 '사용 설정'했는지\n` +
-          `  · 그 프로젝트에 결제 계정이 연결돼 있는지(월 50만 자는 무료)\n` +
-          `구글 응답: ${txt.slice(0, 300)}`
+        `구글이 거절했습니다 (HTTP ${res.status}).\n\n${hint}\n\n` +
+          `구글 응답 원문:\n${txt.slice(0, 900)}`
       );
     }
     if (attempt >= 4) throw new Error(`구글 호출 실패 (HTTP ${res.status}): ${txt.slice(0, 200)}`);
