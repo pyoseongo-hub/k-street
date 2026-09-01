@@ -6,7 +6,9 @@ import { districtShortName, districtFullName, dongName } from "../data/districtN
 import MapDirections from "./MapDirections";
 import { getTourImage } from "../lib/tourImages";
 
-const MAP_CATEGORIES: Category[] = ["market", "flower", "walk", "hike", "museum"];
+// street(골목·거리)를 2026-09-01에 추가했다 — 관광공사 자료의 골목 40곳이
+// 들어갈 칸이 없어서 통째로 버려지고 있었다(seed.ts의 Category 주석 참고).
+const MAP_CATEGORIES: Category[] = ["market", "street", "flower", "walk", "hike", "museum"];
 
 export default function DistrictExplorer() {
   const { t, language } = useLanguage();
@@ -77,31 +79,38 @@ export default function DistrictExplorer() {
             <p className="empty-note">{t.noPlacesInDistrictMessage(districtFullName(gu, language))}</p>
           )}
           {selected.map((p) => {
-            const photo = getTourImage(p.id);
+            // 사진은 두 군데서 온다 — 관광공사에서 통째로 받아온 곳은 항목 자체에
+            // 붙어 있고(p.thumb), 예전 fetch-tour-images.mjs로 따로 맞춰 붙인 것은
+            // id를 열쇠로 tour-images.json에 있다.
+            const legacyPhoto = getTourImage(p.id);
+            const photoUrl = p.thumb ?? p.image ?? legacyPhoto?.thumb;
             const meta = CATEGORY_META[p.category];
+            // 🚨 사진 없는 곳은 카드를 작게 만든다(사용자 지시 2026-09-01:
+            // "사진이 없는 곳은 그만큼 메리트가 없거나 유명하지 않은 장소 —
+            //  빈칸을 너무 크게 할애하지 말고 카드 크기 줄이고 텍스트 정보와
+            //  길안내 정도까지"). 예전에는 사진이 없어도 4:3짜리 아이콘 자리를
+            // 그대로 잡아 화면 절반이 빈 칸이었다.
+            const compact = !photoUrl;
             return (
-              <div className="place-row" key={p.id}>
-                {photo ? (
-                  <div
-                    className="fc-art fc-art-photo"
-                    style={{ backgroundImage: `url(${photo.thumb})` }}
-                  >
+              <div className={"place-row" + (compact ? " pr-compact" : "")} key={p.id}>
+                {photoUrl && (
+                  <div className="fc-art fc-art-photo" style={{ backgroundImage: `url(${photoUrl})` }}>
                     <span className="fc-photo-credit">{t.photoCredit}</span>
-                  </div>
-                ) : (
-                  // 실제 사진이 없을 때(대부분 지금) 빈 칸으로 두지 않고 카테고리
-                  // 아이콘을 큼직하게 보여준다 — "그 장소의 실제 사진"이라고
-                  // 오해할 여지가 없는 장식용 자리표시자다(정확도 원칙).
-                  <div className="pr-art-fallback" style={{ "--cc": meta.color } as CSSProperties}>
-                    {meta.iconImage ? (
-                      <img src={`${import.meta.env.BASE_URL}${meta.iconImage}`} alt="" />
-                    ) : (
-                      <span>{meta.icon}</span>
-                    )}
                   </div>
                 )}
                 <div className="pr-body">
                   <div className="pr-top">
+                    {/* 작은 카드에서는 사진 자리가 없으니 아이콘을 여기 작게 붙인다 —
+                        어느 칸의 장소인지가 한눈에 보여야 한다. */}
+                    {compact && (
+                      <span className="pr-chip-icon" style={{ "--cc": meta.color } as CSSProperties}>
+                        {meta.iconImage ? (
+                          <img src={`${import.meta.env.BASE_URL}${meta.iconImage}`} alt="" />
+                        ) : (
+                          meta.icon
+                        )}
+                      </span>
+                    )}
                     <span className="pr-category" style={{ "--cc": meta.color } as CSSProperties}>
                       {t.categoryLabels[p.category]}
                     </span>
@@ -112,13 +121,16 @@ export default function DistrictExplorer() {
                   </div>
                   <div className="pr-name">{p.confirmed ? p.name : "확인 필요"}</div>
                   {p.note && <div className="pr-note">{p.note}</div>}
+                  {/* 주소는 관광공사에서 받은 곳만 있다. 사진이 없는 작은 카드일수록
+                      글로 줄 수 있는 정보가 하나라도 더 있는 게 낫다. */}
+                  {p.addr && <div className="pr-addr">{p.addr}</div>}
                   {/* 관광공사 사진과 함께 받은 실제 좌표가 있으면 길찾기에도 쓴다
                       (2026-08-29 — 좌표가 이미 있는데도 검색 화면만 뜨던 문제). */}
                   {p.confirmed && (
                     <MapDirections
                       place={
-                        p.lat == null && photo?.lat != null
-                          ? { ...p, lat: photo.lat, lng: photo.lng }
+                        p.lat == null && legacyPhoto?.lat != null
+                          ? { ...p, lat: legacyPhoto.lat, lng: legacyPhoto.lng }
                           : p
                       }
                     />

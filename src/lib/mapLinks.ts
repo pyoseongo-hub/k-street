@@ -62,12 +62,32 @@ export function openMapLink(link: MapLink) {
   }, 1200);
 }
 
-export function getMapLinks(place: MapLinkTarget): MapLink[] {
+/** 출발지(내 위치). 없으면 목적지만 찍힌 화면으로 연다 — 지금까지의 동작 그대로다. */
+export interface MapOrigin {
+  lat: number;
+  lng: number;
+}
+
+export function getMapLinks(place: MapLinkTarget, from?: MapOrigin | null): MapLink[] {
   const hasCoords = typeof place.lat === "number" && typeof place.lng === "number";
   const encName = encodeURIComponent(place.name);
 
   if (hasCoords) {
     const { lat, lng } = place as { lat: number; lng: number };
+    const encHere = encodeURIComponent("내 위치");
+    const kakaoScheme = from
+      ? `kakaomap://route?sp=${from.lat},${from.lng}&ep=${lat},${lng}&by=PUBLICTRANSIT`
+      : `kakaomap://route?ep=${lat},${lng}&by=PUBLICTRANSIT`;
+    const naverScheme = from
+      ? `nmap://route/public?slat=${from.lat}&slng=${from.lng}&sname=${encHere}&dlat=${lat}&dlng=${lng}&dname=${encName}&appname=com.kstreet.app`
+      : `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encName}&appname=com.kstreet.app`;
+    const naverWeb = from
+      ? `https://map.naver.com/p/directions/${from.lng},${from.lat},${encHere}/${lng},${lat},${encName}/-/transit`
+      : `https://map.naver.com/p/directions/-/${lng},${lat},${encName}/-/transit`;
+    const googleWeb = from
+      ? `https://www.google.com/maps/dir/?api=1&origin=${from.lat},${from.lng}&destination=${lat},${lng}`
+      : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+
     return [
       // 📍 검색 결과 화면(handle 한 번 더 눌러야 길찾기로 넘어감)이 아니라
       // **길찾기 단계로 바로** 가야 한다(2026-08-29 사용자 지적: "이 버튼 누른
@@ -75,9 +95,19 @@ export function getMapLinks(place: MapLinkTarget): MapLink[] {
       // 손으로 한 번 더 눌러야 했다). 앱이 깔려 있으면 kakaomap:// / nmap://
       // 스킴으로 곧장 길찾기 화면을 열고(appScheme), 앱이 없을 때만 이 웹
       // url(길찾기 웹페이지, 그래도 검색보다는 한 단계 앞선 화면)로 대신 간다.
-      { label: "KAKAO", url: `https://map.kakao.com/link/to/${encName},${lat},${lng}`, appScheme: `kakaomap://route?ep=${lat},${lng}&by=PUBLICTRANSIT` },
-      { label: "NAVER", url: `https://map.naver.com/p/directions/-/${lng},${lat},${encName}/-/transit`, appScheme: `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${encName}&appname=com.kstreet.app` },
-      { label: "GOOGLE", url: `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}` },
+      //
+      // 🚩 그리고 **출발지까지 채운다**(사용자 지시 2026-09-01 — 카카오맵 길찾기
+      // 캡처 두 장: 출발·도착이 모두 적혀 있고 자동차/버스 탭이 바로 뜨는 화면).
+      // 앱 스킴은 두 지도 모두 출발지 인자를 받는다 — 카카오는 sp(start point),
+      // 네이버는 slat/slng/sname.
+      //
+      // ⚠️ 웹 주소는 사정이 다르다. 네이버 길찾기 웹 주소는 경로 첫 칸이 출발지라
+      // (지금까지 `-`로 비워 두던 자리) 그대로 채우면 되지만, 카카오 `link/to/`는
+      // 도착지만 받는 형식이라 출발지를 넣을 자리가 없다. **카카오 웹 폴백은
+      // 도착지만** 남는다 — 앱이 깔려 있으면 스킴이 먼저 뜨므로 실사용에선 거의 안 걸린다.
+      { label: "KAKAO", url: `https://map.kakao.com/link/to/${encName},${lat},${lng}`, appScheme: kakaoScheme },
+      { label: "NAVER", url: naverWeb, appScheme: naverScheme },
+      { label: "GOOGLE", url: googleWeb },
     ];
   }
 

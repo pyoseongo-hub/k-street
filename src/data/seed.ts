@@ -9,8 +9,12 @@
 import { isInLaunchScope } from "../config/launchScope";
 import { sidoOf } from "./districts";
 import { getCoords } from "../lib/coords";
+import { TOUR_PLACES, TOUR_BY_NAME } from "./tourPlaces";
 
-export type Category = "festival" | "market" | "flower" | "walk" | "hike" | "museum";
+// street(골목·거리)는 2026-09-01에 추가했다. 관광공사 자료에 경리단길·익선동 한옥거리·
+// 종로귀금속거리처럼 구·사진·좌표가 다 붙은 골목이 40곳 있는데, 앱 이름이 K-Street인데도
+// 정작 "거리" 칸이 없어서 전부 버려지고 있었다(사용자 지시).
+export type Category = "festival" | "market" | "flower" | "walk" | "hike" | "museum" | "street";
 
 export interface Place {
   id: string;
@@ -19,6 +23,13 @@ export interface Place {
   category: Category;
   name: string;
   note?: string;
+  /** 지번/도로명 주소. 관광공사에서 받은 곳만 값이 있다. */
+  addr?: string;
+  /** 관광공사 사진(공공누리 1유형). 없는 곳은 화면에서 작은 카드로 나온다. */
+  image?: string;
+  thumb?: string;
+  /** 어디서 온 자료인가. 값이 없으면 사람이 직접 조사해 seed.ts에 적은 것이다. */
+  source?: "tour";
   /** 축제 전용: 시작/종료 월(1-12). 여러 달에 걸치면 startMonth < endMonth */
   startMonth?: number;
   endMonth?: number;
@@ -277,11 +288,39 @@ function withFetchedCoords(p: Place): Place {
   return c ? { ...p, lat: c.lat, lng: c.lng } : p;
 }
 
+// ── 관광공사 자료와 합치기 (2026-09-01, 사용자 지시 "합치자") ──────────────
+//
+// 위 185곳은 사람이 25개 구를 직접 조사한 것이고, TOUR_PLACES는 관광공사에서 받은 269곳이다.
+// 통째로 갈아엎지 않고 합치는 이유는 칸별로 강한 쪽이 다르기 때문이다 —
+// 축제·시장·박물관·골목은 관광공사가 훨씬 많지만, **꽃길은 사람 조사가 30곳 대 2곳**이고
+// 등산로(33 대 20)·산책로(27 대 21)도 사람 쪽이 많다. 어느 한쪽을 버리면 그만큼이 사라진다.
+//
+// 이름이 같은 곳은 10곳뿐이다(185곳의 5%). 그 10곳은 **사람이 적은 항목을 남기고**
+// (note·축제 기간처럼 관광공사에 없는 정보가 붙어 있다), 관광공사 쪽에서는
+// **사진과 좌표만 가져와 덧입힌다.**
+function mergeWithTourPlaces(hand: Place[]): Place[] {
+  const used = new Set<string>();
+  const merged = hand.map((p) => {
+    const t = TOUR_BY_NAME.get(p.name.normalize("NFC"));
+    if (!t) return p;
+    used.add(t.id);
+    return {
+      ...p,
+      image: p.image ?? t.image,
+      thumb: p.thumb ?? t.thumb,
+      addr: p.addr ?? t.addr,
+      lat: p.lat ?? t.lat,
+      lng: p.lng ?? t.lng,
+    };
+  });
+  return [...merged, ...TOUR_PLACES.filter((t) => !used.has(t.id))];
+}
+
 // 출시 범위 게이트(launchScope.ts) — 서울 외 지역이 seed.ts에 섞여 들어와도
 // LAUNCH_REGIONS를 넓히기 전까지는 화면에 노출되지 않는다.
-export const ALL_PLACES: Place[] = ALL_PLACES_RAW.filter((p) => isInLaunchScope(sidoOf(p.gu))).map(
-  withFetchedCoords
-);
+export const ALL_PLACES: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
+  .filter((p) => isInLaunchScope(sidoOf(p.gu)))
+  .map(withFetchedCoords);
 
 export const CATEGORY_META: Record<
   Category,
@@ -293,4 +332,6 @@ export const CATEGORY_META: Record<
   walk: { label: "산책로", icon: "🚶", iconImage: "icons/categories/walk.png", color: "var(--walk)" },
   hike: { label: "둘레길", icon: "🥾", iconImage: "icons/categories/hike.png", color: "var(--hike)" },
   museum: { label: "박물관", icon: "🏛", iconImage: "icons/categories/museum.png", color: "var(--museum)" },
+  // 전용 아이콘 이미지는 아직 없다 — 만들기 전까지 이모지로 둔다(icons/categories/ 참고).
+  street: { label: "골목·거리", icon: "🍢", color: "var(--street)" },
 };
