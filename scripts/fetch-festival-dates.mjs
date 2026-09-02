@@ -122,6 +122,39 @@ function monthOf(yyyymmdd) {
   return m >= 1 && m <= 12 ? m : null;
 }
 
+// 🔗 축제의 **공식 홈페이지**를 받아온다 (2026-09-02 사용자 지적: "이런거 카드
+//    이름 누르면 네이버 들어가면 홈페이지 뜨는데 니가 못해?").
+//
+//    맞는 지적이다 — 하나씩 사람에게 물어볼 일이 아니다. 관광공사는 축제마다
+//    공식 홈페이지를 이미 갖고 있고(detailCommon2의 homepage 칸), 이름이 아니라
+//    **contentId로 잇기 때문에** 엉뚱한 축제에 남의 주소가 붙을 일이 없다.
+//    웹 검색으로 찾으면 "서울숲 재즈"에 "서울 재즈" 주소가 붙는 사고가 난다.
+//
+//    homepage 칸은 <a href="http://...">...</a> 같은 HTML 조각으로 온다.
+//    첫 주소만 뽑아 쓰고, http(s)가 아니면 버린다.
+function homepageOf(html) {
+  if (!html) return null;
+  const s = String(html);
+  const href = s.match(/href\s*=\s*["']([^"']+)["']/i)?.[1];
+  const url = href ?? s.match(/https?:\/\/[^\s"'<>]+/)?.[0];
+  if (!url || !/^https?:\/\//i.test(url)) return null;
+  // &amp; 같은 것이 그대로 오는 경우가 있다 — 주소로 쓰려면 되돌려야 한다.
+  return url.replace(/&amp;/g, "&").trim();
+}
+
+async function fetchHomepage(contentId) {
+  try {
+    const { list } = await callTourApi("detailCommon2", { contentId: String(contentId) });
+    return homepageOf(list[0]?.homepage);
+  } catch (e) {
+    // 한 곳이 실패해도 전체를 멈추지 않는다 — 날짜 받기가 본업이다.
+    // 다만 한도 초과(429)는 그 뒤 전부 실패하므로 위로 던진다.
+    if (String(e.message).includes("429")) throw e;
+    console.log(`  ↳ 홈페이지 못 받음 (${contentId}): ${e.message}`);
+    return null;
+  }
+}
+
 const raw = await fetchAllFestivals();
 console.log(`searchFestival2 응답: ${raw.length}건`);
 
@@ -176,6 +209,28 @@ for (const [id, v] of dated) {
   else if (old.start !== v.start) updated++;
   // 같은 축제가 새 회차로 다시 뜨면 최신으로 갈아 준다. 옛 회차보다 최신이 낫다.
   if (!old || v.start > old.start) merged[id] = v;
+}
+
+// ── 공식 홈페이지 채우기 ─────────────────────────────────────────────
+// 한 번에 다 부르지 않는다 — 축제마다 한 번씩 부르므로 호출 한도(하루치)를
+// 금세 먹는다. **아직 없는 것부터 조금씩** 채운다. 하루 한 번 도니까 며칠이면 다 찬다.
+const HOMEPAGE_BATCH = Number(process.env.HOMEPAGE_BATCH ?? 40);
+const needHomepage = Object.keys(merged).filter((id) => merged[id].homepage === undefined);
+let gotHomepage = 0;
+if (needHomepage.length) {
+  console.log(`\n공식 홈페이지 받는 중 — 아직 안 본 ${needHomepage.length}곳 중 ${Math.min(HOMEPAGE_BATCH, needHomepage.length)}곳...`);
+  for (const id of needHomepage.slice(0, HOMEPAGE_BATCH)) {
+    const url = await fetchHomepage(id);
+    // null도 저장한다 — "물어봤는데 없더라"와 "아직 안 물어봤다"를 갈라야
+    // 다음 실행이 같은 곳을 또 묻지 않는다(undefined = 아직 안 물어봄).
+    merged[id].homepage = url;
+    if (url) {
+      gotHomepage++;
+      console.log(`  🔗 ${merged[id].name} → ${url}`);
+    }
+    await new Promise((r) => setTimeout(r, 150));
+  }
+  console.log(`  → ${gotHomepage}곳에서 공식 홈페이지를 받았다.`);
 }
 const out = Object.fromEntries(
   Object.entries(merged).sort((a, b) => Number(a[0]) - Number(b[0]))

@@ -55,8 +55,22 @@ interface FestivalDate {
   end: string;
   startMonth: number | null;
   endMonth: number | null;
+  /**
+   * 축제 공식 홈페이지(관광공사 detailCommon2). 이름을 눌렀을 때 여기로 간다.
+   *
+   * · undefined = 아직 안 물어봤다   · null = 물어봤는데 없더라   · 문자열 = 있다
+   * 셋을 갈라야 다음 실행이 같은 곳을 또 묻지 않는다.
+   *
+   * 🔗 이름이 아니라 **contentId로 이어서** 받는다 — 웹 검색으로 찾으면
+   *    「서울숲 재즈」에 「서울 재즈」 주소가 붙는 사고가 난다.
+   */
+  homepage?: string | null;
 }
 const DATES = festivalDates as Record<string, FestivalDate>;
+
+/** contentId로 축제 공식 홈페이지를 찾는다. 없으면 undefined. */
+export const tourHomepage = (contentId?: string): string | undefined =>
+  (contentId ? DATES[contentId]?.homepage : null) ?? undefined;
 
 /**
  * "20251017" → "mid". 날짜가 이상하면 undefined — 지어내지 않는다.
@@ -79,6 +93,8 @@ function toPlace(category: Category, p: RawPlace): Place {
     category,
     name: p.name,
     addr: p.addr,
+    // 관광공사가 등록해 둔 공식 홈페이지. 없으면 이름을 눌렀을 때 네이버 검색으로 간다.
+    ...(date?.homepage ? { officialUrl: date.homepage } : null),
     image: p.image,
     thumb: p.thumb ?? p.image,
     lat: p.lat,

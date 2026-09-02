@@ -98,7 +98,7 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "강동구", category: "festival", name: "강동선사문화축제", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "1996년 시작, 서울 유일 선사시대 테마 축제", officialUrl: "https://m.gdsunsa.com/", confirmed: true },
   { id: id(), gu: "강북구", category: "festival", name: "4·19혁명 국민문화제", startMonth: 4, endMonth: 4, dateLabel: "4월", confirmed: true },
   { id: id(), gu: "강서구", category: "festival", name: "허준축제", startMonth: 9, endMonth: 9, confirmed: true },
-  { id: id(), gu: "관악구", category: "festival", name: "관악강감찬축제", startMonth: 10, endMonth: 10, confirmed: true },
+  { id: id(), gu: "관악구", category: "festival", name: "관악강감찬축제", startMonth: 10, endMonth: 10, officialUrl: "https://www.ggcfest.com/", confirmed: true },
   // 8월 확인(2026-09-01): "한여름 밤의 음악축제"로 헤럴드경제·시정일보·청년개발자신문이
   // 모두 8월 29일 개최를 보도했고, 광진구청 포털 축제/행사 안내에도 같은 날짜가 있다.
   // 자양역 2·3번 출구 일대(뚝섬한강공원).
@@ -140,7 +140,7 @@ export const FESTIVALS: Place[] = [
   // — 하나로 합쳐 두면 지도 검색이 안 될뿐더러 시기 정보도 틀리게 섞여 있었다.
   { id: id(), gu: "성북구", dong: "성북동", category: "festival", name: "성북 세계음식축제 누리마실", startMonth: 5, endMonth: 6, note: "연도마다 5월 또는 6월(17회 2025.5.18, 18회 2026.6.7 예정)", confirmed: true },
   { id: id(), gu: "성북구", dong: "석관동", category: "festival", name: "성북거리문화축제 다다페스타", startMonth: 9, endMonth: 9, note: "이주민·다문화가정·청년이 함께하는 거리문화축제", confirmed: true },
-  { id: id(), gu: "송파구", category: "festival", name: "한성백제문화제", startMonth: 10, endMonth: 10, dateLabel: "10.23–25", note: "올림픽공원", confirmed: true },
+  { id: id(), gu: "송파구", category: "festival", name: "한성백제문화제", startMonth: 10, endMonth: 10, dateLabel: "10.23–25", note: "올림픽공원", officialUrl: "https://www.songpa.go.kr/hanseong/", confirmed: true },
   { id: id(), gu: "양천구", dong: "신정동", category: "festival", name: "양천가족거리축제", startMonth: 10, endMonth: 10, note: "별도로 '우리동네축제'(14개 동 개별 개최)도 운영", lat: 37.5480, lng: 126.8490, confirmed: true },
   { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "여의도 봄꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4.3–4.7", note: "여의서로 국회 뒤편, 무료", lat: 37.5275, lng: 126.9255, confirmed: true },
   // 🎆 "9.5"라고 **올해 날짜가 박혀 있었다.** 해마다 옮겨 다니는 축제라 내년에는
@@ -385,6 +385,8 @@ function mergeWithTourPlaces(hand: Place[]): Place[] {
       lng: p.lng ?? t.lng,
       // 사진 여러 장을 찾는 열쇠 — 안 들고 오면 합쳐진 곳만 사진이 한 장이 된다.
       tourContentId: p.tourContentId ?? t.tourContentId,
+      // 사람이 적어 둔 공식 주소가 이긴다. 없을 때만 관광공사가 등록해 둔 것을 쓴다.
+      officialUrl: p.officialUrl ?? t.officialUrl,
     };
   });
   return [...merged, ...TOUR_PLACES.filter((t) => !used.has(t.id))];
@@ -480,6 +482,8 @@ export const ALL_FESTIVALS: Place[] = (() => {
       endMonth: p.endMonth ?? t.endMonth,
       period: p.period ?? t.period,
       tourContentId: p.tourContentId ?? t.tourContentId,
+      // 사람이 적어 둔 공식 주소가 이긴다. 없을 때만 관광공사가 등록해 둔 것을 쓴다.
+      officialUrl: p.officialUrl ?? t.officialUrl,
     };
   });
   return [...merged, ...tourFestivals.filter((t) => !used.has(t.id))];
