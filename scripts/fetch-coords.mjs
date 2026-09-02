@@ -120,34 +120,54 @@ function searchVariants(name, gu) {
   return v;
 }
 
-// 결과가 그 장소가 맞는지 보는 잣대. **구가 일치하는지를 반드시 본다** —
-// 검색어를 넓게 던지는 만큼 이 잣대가 정확도를 지키는 유일한 장치다.
-function looksLikeSamePlace(doc, name, gu) {
+const squash = (s) => nfc(s).replace(/[^가-힣a-zA-Z0-9]/g, "");
+
+// 🚨 2026-09-02에 찾은 오매칭 — "이름을 품기만 하면 같은 곳"으로 본 게 원인이다.
+// 미리보기 30곳에서 세 건이 걸렸다:
+//
+//   오동공원(벚꽃길)     → 오동공원**현대홈타운아파트**   ← 아파트다. 공원이 아니다
+//   영등포시장           → 영등포시장**기계공구상가**     ← 다른 시장이다
+//   도심 속 바다축제      → **고흥완도수산** 노량진수산시장**횟집**  ← 시장 안의 횟집
+//
+// 전부 "우리 이름으로 **시작하는** 더 긴 상호"였다. 상가·아파트·점포 이름은
+// 대개 앞에 랜드마크 이름을 붙이므로 이 방식은 계속 걸려든다.
+//
+// 그래서 두 단계로 고른다 —
+//   ① **이름이 정확히 같은 결과를 먼저 찾는다.** 카카오는 결과를 5개 주는데,
+//      "노량진수산시장"·"오동공원" 본체가 그 안에 있는데도 첫 줄의 긴 상호를
+//      집어 오고 있었다.
+//   ② 정확히 같은 게 없을 때만 포함 관계를 인정하되, **덧붙은 글자가 5자 이내**일
+//      때까지만 본다. "노원역 4호선"·"서울고속버스터미널(경부)"처럼 같은 곳을
+//      가리키는 꼬리표는 통과하고, 위 세 건은 걸러진다(덧붙은 글자 6~8자).
+const EXTRA_CHARS_ALLOWED = 5;
+
+function inSameGu(doc, gu) {
   const addr = `${doc.road_address_name ?? ""} ${doc.address_name ?? ""}`;
-  if (!addr.includes(gu)) return false;
-  const squash = (s) => s.replace(/[^가-힣a-zA-Z0-9]/g, "");
-  const a = squash(doc.place_name);
-  const b = squash(name);
-  if (!a || !b) return false;
-  // 한쪽이 다른 쪽을 품고, 짧은 쪽이 4글자 이상일 때만 같은 곳으로 본다
-  // ("이태원"처럼 3글자가 아무 데나 걸리는 걸 막는다).
-  const shorter = a.length <= b.length ? a : b;
-  return shorter.length >= 4 && (a.includes(b) || b.includes(a));
+  return addr.includes(gu);
 }
 
-// 장소표(festival-venues.json)로 찾을 때 쓰는 잣대. 위와 다른 점은 **글자 수 제한이
-// 느슨하다**는 것 하나다 — "덕수궁 · 코엑스 · 노원역"처럼 3글자짜리 정식 장소명이
-// 많은데, 위 잣대(4글자 이상)를 그대로 쓰면 멀쩡한 장소가 전부 걸러진다.
-// 대신 검색어가 **사람이 근거를 확인해 적어 둔 정식 명칭**이고, 구 일치 검사는
-// 그대로 하므로 엉뚱한 곳이 걸릴 위험은 오히려 이름 검색보다 낮다.
-function looksLikeVenue(doc, venue, gu) {
-  const addr = `${doc.road_address_name ?? ""} ${doc.address_name ?? ""}`;
-  if (!addr.includes(gu)) return false;
-  const squash = (s) => s.replace(/[^가-힣a-zA-Z0-9]/g, "");
-  const a = squash(nfc(doc.place_name));
-  const b = squash(nfc(venue));
-  if (!a || !b) return false;
-  return a.includes(b) || b.includes(a);
+/**
+ * 검색 결과 여럿 중 가장 그럴듯한 하나를 고른다. 없으면 null(→ 빈 칸으로 둔다).
+ * minLength는 이름 검색에서만 쓴다 — "이태원" 같은 3글자가 아무 데나 걸리는 걸
+ * 막는 장치다. 장소표는 사람이 확인한 정식 명칭이라 그 제한을 두지 않는다.
+ */
+function pickBest(docs, target, gu, { minLength = 0 } = {}) {
+  const t = squash(target);
+  if (!t) return null;
+  const candidates = docs.filter((d) => inSameGu(d, gu) && squash(d.place_name));
+
+  const exact = candidates.find((d) => squash(d.place_name) === t);
+  if (exact) return exact;
+
+  return (
+    candidates.find((d) => {
+      const a = squash(d.place_name);
+      const [longer, shorter] = a.length >= t.length ? [a, t] : [t, a];
+      if (shorter.length < minLength) return false;
+      if (!longer.includes(shorter)) return false;
+      return longer.length - shorter.length <= EXTRA_CHARS_ALLOWED;
+    }) ?? null
+  );
 }
 
 // 요청 하나가 응답 없이 멈추면 전체 배치가 무한정 멎어 버리므로(147곳 실행 중
@@ -232,16 +252,17 @@ async function main() {
       // 장소표에 적힌 축제면 축제 이름 대신 **열리는 곳**을 검색한다.
       const venue = VENUES.get(nfc(p.name));
       const keywords = venue ? venue.venues : searchVariants(p.name, p.gu);
-      const matches = venue
-        ? (doc, keyword) => looksLikeVenue(doc, keyword, p.gu)
-        : (doc) => looksLikeSamePlace(doc, p.name, p.gu);
+      // 장소표는 검색어 자체가 대조 기준이다. 이름 검색은 검색어를 넓게 던지므로
+      // (구를 붙인 마지막 수단까지) 대조는 늘 **원래 이름**으로 한다.
+      const targetOf = (keyword) => (venue ? keyword : p.name);
+      const opts = venue ? {} : { minLength: 4 };
 
       // 넓은 검색어부터 차례로 던지고, 구까지 일치하는 결과가 나오면 거기서 멈춘다.
       let hit = null;
       let usedKeyword = "";
       for (const keyword of keywords) {
         const docs = await kakaoSearch(keyword);
-        hit = docs.find((d) => matches(d, keyword)) ?? null;
+        hit = pickBest(docs, targetOf(keyword), p.gu, opts);
         if (hit) {
           usedKeyword = keyword;
           break;
