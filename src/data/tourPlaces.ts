@@ -17,6 +17,7 @@
 import type { Category, Place } from "./seed";
 import raw from "./tour-places-raw.json";
 import festivalDates from "./festival-dates.json";
+import aliases from "./name-aliases.json";
 
 interface RawPlace {
   name: string;
@@ -101,5 +102,61 @@ export const TOUR_PLACES: Place[] = Object.entries(RAW).flatMap(([category, list
   (list ?? []).filter((p) => p.gu).map((p) => toPlace(category as Category, p))
 );
 
-/** 이름이 같은 곳을 찾아 쓰기 위한 표. 한글은 보이는 게 같아도 코드가 다를 수 있어 NFC로 맞춘다. */
-export const TOUR_BY_NAME = new Map(TOUR_PLACES.map((p) => [p.name.normalize("NFC"), p]));
+/**
+ * 이름으로 관광공사 항목을 찾는 표.
+ *
+ * 🔁 **열쇠는 기호·공백을 털어낸 이름**이다(2026-09-02 사용자가 앱 화면에서 잡은 사고).
+ * 예전에는 NFC 문자열을 글자까지 그대로 비교해서, 같은 곳인데도 표기가 조금만
+ * 다르면 안 합쳐지고 **카드가 두 장** 떴다:
+ *
+ *   성북거리문화축제 다다페스타   vs  성북거리문화축제 <다다페스타>
+ *   양천가족거리축제             vs  양천가족 거리축제
+ *   마장축산물시장               vs  마장 축산물시장
+ *   서울로7017                  vs  서울로 7017
+ *   한양대학교박물관             vs  한양대학교 박물관
+ *
+ * 관광공사는 부제를 < >나 ( )로 묶고 띄어쓰기도 다르게 적는 일이 잦다. 기호와
+ * 공백을 털면 이 다섯 쌍이 저절로 붙는다.
+ *
+ * ⚠️ **여기서 더 느슨하게 하면 안 된다.** '포함하면 같은 곳'까지 인정하면
+ * 구로시장과 **남**구로시장(서로 다른 시장), 광장시장과 광장시장 **한복매장**
+ * (시장과 그 안의 매장)이 하나로 합쳐진다. 좌표·사진 쪽 잣대가 '5자 이내 덧붙음'을
+ * 인정하는 것과 일부러 다르게 뒀다 — 거기는 **검색 결과를 고르는** 자리라 덜 맞아도
+ * 사람이 로그로 보지만, 여기는 **화면에 뜰 항목을 지우는** 자리라 되돌리기 어렵다.
+ *
+ * 한글은 보이는 게 같아도 코드가 다를 수 있으므로 NFC를 먼저 거친다.
+ */
+export const nameKey = (s: string) => s.normalize("NFC").replace(/[^가-힣a-zA-Z0-9]/g, "");
+
+export const TOUR_BY_NAME = new Map(TOUR_PLACES.map((p) => [nameKey(p.name), p]));
+
+/** 이름 자체가 달라 위 규칙으로는 못 잇는 곳 — 사람이 확인해 적은 표(name-aliases.json). */
+const NAME_ALIASES: Record<string, string> = Object.fromEntries(
+  Object.entries(aliases as Record<string, unknown>).filter(
+    ([k, v]) => !k.startsWith("_") && typeof v === "string"
+  ) as [string, string][]
+);
+
+/** 사람이 적은 이름에 붙여 둔 관광공사 쪽 이름. 없으면 undefined. */
+export const aliasOf = (handName: string): string | undefined =>
+  NAME_ALIASES[handName.normalize("NFC")];
+
+/**
+ * 주어진 표에서 그 곳을 찾는다. 별명표를 먼저 보고, 없으면 이름으로 찾는다.
+ *
+ * 표를 밖에서 받는 이유 — 축제 합치기는 **축제만 담은 표**로 찾아야 한다.
+ * 전체 표에서 찾으면 이름이 같은 다른 칸의 항목(예: 박물관 '허준박물관')이 먼저
+ * 걸려 축제가 안 붙는다.
+ */
+export function findIn(table: Map<string, Place>, handName: string): Place | undefined {
+  const alias = aliasOf(handName);
+  if (alias) {
+    const byAlias = table.get(nameKey(alias));
+    if (byAlias) return byAlias;
+  }
+  return table.get(nameKey(handName));
+}
+
+/** 전체 관광공사 자료에서 찾는다(칸을 가리지 않는 합치기용). */
+export const findTourPlace = (handName: string): Place | undefined =>
+  findIn(TOUR_BY_NAME, handName);

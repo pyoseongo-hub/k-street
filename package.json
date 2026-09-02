@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "audit-seed": "node scripts/audit-seed.mjs",
     "photo-todo": "node scripts/list-photo-todo.mjs",
-    "festival-todo": "node scripts/audit-festivals.mjs"
+    "festival-todo": "node scripts/audit-festivals.mjs",
+    "audit-dupes": "node scripts/audit-duplicates.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

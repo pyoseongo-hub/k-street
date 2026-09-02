@@ -9,7 +9,7 @@
 import { isInLaunchScope } from "../config/launchScope";
 import { sidoOf } from "./districts";
 import { getCoords } from "../lib/coords";
-import { TOUR_PLACES, TOUR_BY_NAME } from "./tourPlaces";
+import { TOUR_PLACES, findTourPlace, nameKey } from "./tourPlaces";
 import { getManualPhoto } from "../lib/manualPhotos";
 
 // street(골목·거리)는 2026-09-01에 추가했다. 관광공사 자료에 경리단길·익선동 한옥거리·
@@ -324,7 +324,9 @@ function withFetchedCoords(p: Place): Place {
 function mergeWithTourPlaces(hand: Place[]): Place[] {
   const used = new Set<string>();
   const merged = hand.map((p) => {
-    const t = TOUR_BY_NAME.get(p.name.normalize("NFC"));
+    // 기호·공백을 털어낸 이름으로 맞춘다(+ 별명표). 왜 그런지는 tourPlaces.ts의
+    // nameKey 주석 참고 — "<다다페스타>"가 두 장으로 뜨던 사고를 막는다.
+    const t = findTourPlace(p.name);
     if (!t) return p;
     used.add(t.id);
     return {
@@ -394,11 +396,13 @@ export const ALL_FESTIVALS: Place[] = (() => {
   // ⚠️ 위의 mergeWithTourPlaces를 그대로 쓰면 안 된다 — 그 함수는 안 쓰인 관광공사
   // 자료를 **전부**(시장·박물관·골목까지) 뒤에 붙인다. 여기서는 축제만 골라 합친다.
   const tourFestivals = TOUR_PLACES.filter((p) => p.category === "festival");
-  const byName = new Map(tourFestivals.map((p) => [p.name.normalize("NFC"), p]));
+  // 🔁 축제도 같은 열쇠를 쓴다 — 여기만 옛 방식으로 두면 축제에서만 카드가 두 장
+  // 뜬다(실제로 성북거리문화축제가 그랬다). 잣대가 둘이면 반쪽만 고쳐진다.
+  const byName = new Map(tourFestivals.map((p) => [nameKey(p.name), p]));
   const used = new Set<string>();
   const merged = FESTIVALS.map((p) => {
-    const t = byName.get(p.name.normalize("NFC"));
-    if (!t) return p;
+    const t = findTourPlace(p.name) ?? byName.get(nameKey(p.name));
+    if (!t || t.category !== "festival") return p;
     used.add(t.id);
     // 사람이 적은 값이 이긴다 — note·기간처럼 관광공사에 없는 것이 붙어 있고,
     // 달도 사람이 근거를 확인해 적은 것이다. 관광공사에서는 빈 칸만 채워 온다.
