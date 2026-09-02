@@ -118,7 +118,7 @@ export const FESTIVALS: Place[] = [
   // (2026-08-29), 다시 찾아보니 "탈축제"는 옛 이름이고 2023년 새이름 공모로
   // "댄싱노원 거리페스티벌"로 개명한 같은 행사였다(서울문화포털 등 확인, 2026-08-30) —
   // 지금 열리는 건 하나뿐이라 옛 이름은 빼고 지금 이름만 남긴다.
-  { id: id(), gu: "노원구", category: "festival", name: "댄싱노원 거리페스티벌", startMonth: 9, endMonth: 9, note: "옛 이름 '노원탈축제', 2023년 개명. 9월 이틀간", confirmed: true },
+  { id: id(), gu: "노원구", category: "festival", name: "댄싱노원 거리페스티벌", startMonth: 9, endMonth: 9, note: "옛 이름 '노원탈축제', 2023년 개명. 9월 이틀간", officialUrl: "https://dancingnowon.isweb.co.kr/", confirmed: true },
   { id: id(), gu: "도봉구", category: "festival", name: "도봉별빛축제", startMonth: 6, endMonth: 6, dateLabel: "6월(2025: 6.13–17)", note: "중랑천(도봉구청~세월교 540m)", confirmed: true },
   { id: id(), gu: "동대문구", category: "festival", name: "동대문페스티벌", startMonth: 10, endMonth: 10, note: "공연예술축제 — 거리예술·음악공연", confirmed: true },
   // 10월 확인(2026-09-01): 제8회가 10월 25~26일 노량진수산시장 일대에서 열렸다.
@@ -143,7 +143,10 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "송파구", category: "festival", name: "한성백제문화제", startMonth: 10, endMonth: 10, dateLabel: "10.23–25", note: "올림픽공원", confirmed: true },
   { id: id(), gu: "양천구", dong: "신정동", category: "festival", name: "양천가족거리축제", startMonth: 10, endMonth: 10, note: "별도로 '우리동네축제'(14개 동 개별 개최)도 운영", lat: 37.5480, lng: 126.8490, confirmed: true },
   { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "여의도 봄꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4.3–4.7", note: "여의서로 국회 뒤편, 무료", lat: 37.5275, lng: 126.9255, confirmed: true },
-  { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "서울세계불꽃축제", startMonth: 9, endMonth: 9, dateLabel: "9.5", note: "여의도·이촌 한강공원, 무료", lat: 37.5255, lng: 126.9225, confirmed: true },
+  // 🎆 "9.5"라고 **올해 날짜가 박혀 있었다.** 해마다 옮겨 다니는 축제라 내년에는
+  //    그대로 틀린 값이 된다 — 2026년은 9월 5일인데 2025년은 9월 말이었다
+  //    (한화 발표: "지난해보다 3주 앞당겨"). 달까지만 적고 날짜는 공식 안내로 보낸다.
+  { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "서울세계불꽃축제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "여의도·이촌 한강공원, 무료", officialUrl: "https://hanwhafireworks.com/", lat: 37.5255, lng: 126.9225, confirmed: true },
   { id: id(), gu: "용산구", category: "festival", name: "이태원 지구촌축제", startMonth: 10, endMonth: 10, note: "매년 10월경, 연도별 정확한 날짜는 미확정", confirmed: true },
   { id: id(), gu: "은평구", category: "festival", name: "은평누리축제", startMonth: 10, endMonth: 10, dateLabel: "10월 초", note: "불광천 일대", confirmed: true },
   { id: id(), gu: "종로구", dong: "종로1가동", category: "festival", name: "연등회", startMonth: 5, endMonth: 5, dateLabel: "5.16–17", note: "유네스코 인류무형문화유산, 조계사~종로 일대, 무료", lat: 37.5750, lng: 126.9922, confirmed: true },

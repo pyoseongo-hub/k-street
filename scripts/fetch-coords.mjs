@@ -159,7 +159,23 @@ const FACILITY_WORDS = [
   "상가", "빌딩", "타워", "오피스텔", "어린이집", "유치원",
   "학원", "편의점", "은행", "우체국", "주유소", "호텔", "모텔",
   "횟집", "식당", "카페", "치킨", "노래방", "PC방", "미용실",
+  // 2026-09-02 3차: 강남페스티벌이 **도산분식** 도산공원점에 걸렸다.
+  "분식", "마트", "김밥", "제과", "베이커리", "정육", "세탁", "부동산", "주점",
 ];
+
+// 🚨 **'…점'으로 끝나는 상호는 그 랜드마크가 아니라 '그 앞에 있는 가게'다**
+//    (2026-09-02 3차 미리보기).
+//
+//      강남페스티벌 → 도산공원 → **도산분식 도산공원점**   ← 분식집이다
+//
+//    덧붙은 글자가 딱 5자라 글자 수 잣대를 통과했고, '분식'을 업종 목록에
+//    넣어도 같은 종류의 사고는 끝없이 나온다(다음엔 '도산세차 도산공원점'이다).
+//    상호 끝의 '점'은 **지점 표시**이므로, 우리 이름이 그 앞가게 이름 뒤에
+//    붙어 있다는 뜻이다 — 업종을 하나하나 세는 것보다 이 규칙이 근본적이다.
+//
+//    통과해야 하는 것들은 안 걸린다: "노원역 4호선"(덧붙은 글자 4호선),
+//    "서울고속버스터미널(경부)"(경부), "시립노원청소년센터"(시립).
+const isBranchName = (extra) => extra.endsWith("점");
 
 function inSameGu(doc, gu) {
   const addr = `${doc.road_address_name ?? ""} ${doc.address_name ?? ""}`;
@@ -188,6 +204,7 @@ function pickBest(docs, target, gu, { minLength = 0 } = {}) {
       if (longer.length - shorter.length > EXTRA_CHARS_ALLOWED) return false;
       // 덧붙은 글자가 업종을 바꾸는 말이면 다른 곳이다(노량진수산시장 vs 노량진수산시장성당).
       const extra = longer.replace(shorter, "");
+      if (isBranchName(extra)) return false; // 도산분식 도산공원'점'
       return !FACILITY_WORDS.some((w) => extra.includes(w));
     }) ?? null
   );
