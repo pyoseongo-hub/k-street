@@ -59,6 +59,13 @@ async function callTourApi(path, extraParams) {
     const res = await fetch(`${ROOT}/${path}?serviceKey=${API_KEY}&${params.toString()}`, {
       signal: controller.signal,
     });
+    // 🚦 429는 "오늘 몫을 다 썼다"는 뜻이다 — 코드가 틀린 게 아니다. 사진은 곳마다
+    //    한 번씩 부르므로 여기서 한도를 가장 먼저 만난다.
+    if (res.status === 429) {
+      throw new Error(
+        "호출 한도 초과(429) — 오늘 관광공사에 물어볼 수 있는 몫을 다 썼다. 자정이 지나면 초기화된다"
+      );
+    }
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const text = await res.text();
     // 🚨 data.go.kr은 오류를 **HTTP 200 + XML**로 돌려주는 일이 잦다(키가 안 맞거나

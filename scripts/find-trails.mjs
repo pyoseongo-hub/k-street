@@ -53,6 +53,21 @@ async function fetchWithRetry(url, tries = 4) {
   throw new Error(`관광공사 서버에 ${tries}번 다 연결하지 못했다 (${why})`);
 }
 
+// 🚦 429는 "오늘 몫을 다 썼다"는 뜻이다 — 코드가 틀린 게 아니다. 그런데 `HTTP 429`
+//    한 줄만 보면 무슨 일인지 알 수가 없어서, 무엇을 하면 되는지까지 적어 준다
+//    (2026-09-02: 사진 246곳 받고 자료를 여러 번 다시 받은 날 이걸 만났다).
+function checkStatus(res) {
+  if (res.ok) return;
+  if (res.status === 429) {
+    throw new Error(
+      "호출 한도 초과(429) — 오늘 관광공사에 물어볼 수 있는 몫을 다 썼다.\n" +
+        "   자정이 지나면 초기화된다. 내일 다시 돌리면 된다.\n" +
+        "   (공공데이터포털 → 마이페이지 → 활용신청 현황에서 남은 횟수를 볼 수 있다.)"
+    );
+  }
+  throw new Error(`HTTP ${res.status}`);
+}
+
 async function searchKeyword(keyword, { areaCode } = {}) {
   const items = [];
   let pageNo = 1;
@@ -70,7 +85,7 @@ async function searchKeyword(keyword, { areaCode } = {}) {
       ...(areaCode ? { areaCode } : {}),
     });
     const res = await fetchWithRetry(`${ROOT}/searchKeyword2?serviceKey=${API_KEY}&${params}`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    checkStatus(res);
     const text = await res.text();
     let data;
     try {
