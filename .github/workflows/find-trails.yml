@@ -1,0 +1,39 @@
+name: Find trails (둘레길 이름으로 찾아보기)
+
+# 🥾 보기만 하는 실행이다 — 아무것도 저장하지 않는다.
+#
+# 2026-09-02: 관광공사 「여행코스(25)」가 서울 0건이라고 관광공사가 직접 답했다.
+# 남은 가능성은 areaBasedList2가 **지역코드가 붙은 것만** 돌려준다는 점이다 —
+# 서울둘레길처럼 여러 구를 가로지르는 코스는 지역코드가 안 붙어 그물에 안 걸린다.
+# 그래서 지역을 걸지 않고 이름으로 훑어 본다.
+#
+# 결과는 Actions Summary에 그대로 나온다. 무엇을 넣을지는 목록을 보고 사람이 정한다.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  find-trails:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Find trails
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        # set -o pipefail이 없으면 node가 죽어도 tee가 성공해 초록불로 끝난다.
+        run: |
+          set -o pipefail
+          node scripts/find-trails.mjs 2>&1 | tee trails-log.txt
+      - name: 결과 요약 (Summary에서 바로 확인)
+        if: always()
+        run: |
+          {
+            echo "## 🥾 둘레길 찾아보기 결과 (보기만 함 — 저장 안 됨)"
+            echo ""
+            cat trails-log.txt
+          } >> "$GITHUB_STEP_SUMMARY"
