@@ -196,7 +196,6 @@ export const WALKS: Place[] = [
   { id: id(), gu: "관악구", category: "walk", name: "낙성대공원 산책로", note: "6.2km", confirmed: true },
   { id: id(), gu: "광진구", category: "walk", name: "뚝섬한강공원 산책로", confirmed: true },
   { id: id(), gu: "구로구", category: "walk", name: "구로 해피트레일", note: "항동철길 포함, 9개 코스 9.54km", confirmed: true },
-  { id: id(), gu: "금천구", category: "walk", name: "확인 필요", confirmed: false },
   { id: id(), gu: "노원구", category: "walk", name: "경춘선숲길", confirmed: true },
   { id: id(), gu: "도봉구", category: "walk", name: "무수골", confirmed: true },
   { id: id(), gu: "동대문구", category: "walk", name: "홍릉 두물길", confirmed: true },
@@ -253,8 +252,7 @@ export const HIKES: Place[] = [
   { id: id(), gu: "서대문구", category: "hike", name: "안산자락길", note: "무장애 둘레길", confirmed: true },
   { id: id(), gu: "성동구", category: "hike", name: "응봉산", note: "95.4m, 팔각정 — 매봉산과 이름 혼용 주의", confirmed: true },
   { id: id(), gu: "용산구", category: "hike", name: "남산둘레길", confirmed: true },
-  { id: id(), gu: "동대문구", category: "hike", name: "확인 필요", note: "서울둘레길 미해당 도심 구, 대체 등산로 미확인", confirmed: false },
-  { id: id(), gu: "마포구", category: "hike", name: "확인 필요", note: "서울둘레길 미해당 도심 구, 대체 등산로 미확인", confirmed: false },
+  { id: id(), gu: "마포구", dong: "상암동", category: "hike", name: "하늘공원", note: "난지도 매립지를 덮은 언덕. 억새밭과 전망대 — 서울둘레길 15코스(노을·하늘공원)", confirmed: true },
 ];
 
 // ── 06. 박물관·미술관 (20/25 확인) ─────────────────────────────
@@ -375,7 +373,20 @@ function hasPhoto(p: Place): boolean {
 
 // 출시 범위 게이트(launchScope.ts) — 서울 외 지역이 seed.ts에 섞여 들어와도
 // LAUNCH_REGIONS를 넓히기 전까지는 화면에 노출되지 않는다.
+/**
+ * 🚧 아직 못 채운 자리표시자는 화면에 내보내지 않는다.
+ *
+ * 이 파일 맨 위에 적어 둔 대로 `confirmed: false`는 "값"이 아니라 **빈 칸**이다.
+ * 그런데 걸러 주는 곳이 없어서, 이름이 「확인 필요」인 항목 셋이 그대로 목록에
+ * 섞여 있었다(2026-09-02 사용자가 158곳 목록을 훑다 잡았다). 사진이 없어 지금은
+ * 가려져 있었을 뿐, 사진이 붙는 순간 손님 화면에 "확인 필요"가 떴을 것이다.
+ *
+ * 셋은 채우거나 지웠고, 앞으로 새 자리표시자를 적어 두더라도 여기서 막힌다.
+ */
+const isPlaceholder = (p: Place) => p.confirmed === false;
+
 export const ALL_PLACES: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
+  .filter((p) => !isPlaceholder(p))
   .filter((p) => isInLaunchScope(sidoOf(p.gu)))
   .map(withFetchedCoords)
   .map(withManualPhoto)
@@ -383,6 +394,7 @@ export const ALL_PLACES: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
 
 /** 사진이 없어 지금 가려져 있는 곳. 하루 3곳 채우기 작업의 대상 목록이다. */
 export const HIDDEN_NO_PHOTO: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
+  .filter((p) => !isPlaceholder(p))
   .filter((p) => isInLaunchScope(sidoOf(p.gu)))
   .map(withManualPhoto)
   .filter((p) => !hasPhoto(p));
@@ -430,6 +442,7 @@ export const ALL_FESTIVALS: Place[] = (() => {
   });
   return [...merged, ...tourFestivals.filter((t) => !used.has(t.id))];
 })()
+  .filter((p) => !isPlaceholder(p))
   .filter((p) => isInLaunchScope(sidoOf(p.gu)))
   .map(withFetchedCoords)
   .map(withManualPhoto);
