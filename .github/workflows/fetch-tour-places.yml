@@ -14,6 +14,11 @@ name: Fetch tour places (rebuild source data)
 
 on:
   workflow_dispatch:
+    inputs:
+      apply:
+        description: "실제로 저장할까요? (끄면 몇 건 받아오는지만 보여줍니다)"
+        type: boolean
+        default: false
 
 jobs:
   fetch-tour-places:
@@ -30,9 +35,15 @@ jobs:
       - name: Fetch tour places
         env:
           TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
-        run: node scripts/fetch-tour-places.mjs | tee fetch-log.txt
+        # set -o pipefail이 없으면 node가 죽어도 tee가 성공해 초록불로 끝난다.
+        run: |
+          set -o pipefail
+          ARGS=""
+          if [ "${{ inputs.apply }}" = "true" ]; then ARGS="--apply"; fi
+          node scripts/fetch-tour-places.mjs $ARGS 2>&1 | tee fetch-log.txt
       - name: Commit tour-places-raw.json
         id: commit
+        if: ${{ inputs.apply }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

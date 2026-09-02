@@ -17,7 +17,7 @@
 // 결과는 카테고리별 곳 수와 함께 콘솔에 요약되고, 원본 항목은 전부
 // src/data/tour-places-raw.json에 저장된다(공공누리 1유형, 비밀값 아님).
 
-import { writeFileSync } from "node:fs";
+import { writeFileSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -46,7 +46,20 @@ async function callTourApi(path, extraParams) {
   });
   const res = await fetch(`${ROOT}/${path}?serviceKey=${API_KEY}&${params.toString()}`);
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${path}`);
-  const data = await res.json();
+  const text = await res.text();
+  // 🚨 data.go.kr은 오류를 HTTP 200 + XML로 돌려주는 일이 잦다. 그대로 JSON.parse하면
+  //    "0건"처럼 보여서, 자료가 없는 건지 호출이 틀린 건지 구분이 안 된다
+  //    (2026-09-02: 여행코스(25)가 0건인데 이유를 알 수 없었다).
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error(`JSON이 아닌 응답: ${text.slice(0, 300).replace(/\s+/g, " ")}`);
+  }
+  const header = data?.response?.header;
+  if (header?.resultCode && header.resultCode !== "0000") {
+    throw new Error(`API 오류 ${header.resultCode} — ${header.resultMsg}`);
+  }
   const body = data?.response?.body;
   const items = body?.items?.item;
   const list = !items ? [] : Array.isArray(items) ? items : [items];
@@ -57,6 +70,7 @@ async function callTourApi(path, extraParams) {
 async function fetchAllByContentType(contentTypeId) {
   const items = [];
   let pageNo = 1;
+  let firstTotal = null;
   const numOfRows = 500;
   for (;;) {
     const { list, totalCount } = await callTourApi("areaBasedList2", {
@@ -66,11 +80,16 @@ async function fetchAllByContentType(contentTypeId) {
       pageNo: String(pageNo),
       arrange: "A",
     });
+    if (firstTotal === null) firstTotal = totalCount;
     items.push(...list);
     if (items.length >= totalCount || list.length < numOfRows) break;
     pageNo++;
     if (pageNo > 10) break; // 안전장치
     await new Promise((r) => setTimeout(r, 200));
+  }
+  // 0건일 때는 **관광공사가 0이라고 답한 것**인지 우리가 잘못 부른 것인지 남긴다.
+  if (items.length === 0) {
+    console.log(`     ↳ 관광공사가 알려 준 전체 건수: ${firstTotal ?? "(응답 없음)"}`);
   }
   return items;
 }
@@ -177,6 +196,34 @@ async function main() {
     const withGu = list.filter((p) => p.gu).length;
     const withPhoto = list.filter((p) => p.image).length;
     console.log(`  ${cat}: ${list.length}건 (구 확인 ${withGu} / 사진 있음 ${withPhoto})`);
+  }
+
+  // 🚨 덮어쓰기 안전장치 (2026-09-02) — 이 스크립트는 지금 앱이 쓰는 자료를 통째로
+  //    갈아엎는다. 관광공사가 하루 불안정해서 적게 주면 **화면에서 장소가 사라진다**
+  //    (사진·좌표까지 함께 날아간다). 이전보다 20% 넘게 줄면 멈추고 사람에게 묻는다.
+  //    일부러 줄이는 경우에는 --force 를 붙인다.
+  const APPLY = process.argv.includes("--apply");
+  const FORCE = process.argv.includes("--force");
+  let prevCount = 0;
+  try {
+    const prev = JSON.parse(readFileSync(OUT_JSON, "utf-8"));
+    prevCount = Object.values(prev).reduce((n, l) => n + (Array.isArray(l) ? l.length : 0), 0);
+  } catch {
+    /* 처음 만드는 경우 */
+  }
+  const newCount = Object.values(result).reduce((n, l) => n + l.length, 0);
+  if (prevCount && newCount < prevCount * 0.8 && !FORCE) {
+    console.log(
+      `\n🚨 멈춤 — 지금 ${prevCount}곳인데 이번에 받은 건 ${newCount}곳이다(20% 넘게 줄었다).`
+    );
+    console.log("   관광공사가 불안정했을 가능성이 크다. 그대로 덮어쓰면 앱에서 장소가 사라진다.");
+    console.log("   정말 줄이려는 것이면 --force 를 붙여 다시 실행할 것.");
+    process.exit(1);
+  }
+  if (!APPLY) {
+    console.log(`\n👀 맛보기만 했다 — 저장하지 않았다(지금 ${prevCount}곳 → 받은 것 ${newCount}곳).`);
+    console.log("   저장하려면 --apply 를 붙일 것.");
+    return;
   }
 
   writeFileSync(OUT_JSON, JSON.stringify(result, null, 2) + "\n");
