@@ -3,6 +3,7 @@ import { useLanguage } from "./lib/useLanguage";
 import MonthlyFestivalPanel from "./components/MonthlyFestivalPanel";
 import DistrictExplorer from "./components/DistrictExplorer";
 import LanguageSelector from "./components/LanguageSelector";
+import CoverPicker from "./components/CoverPicker";
 
 function App() {
   const { toggleTheme, getIcon } = useTheme();
@@ -38,8 +39,18 @@ function App() {
       </header>
 
       <main className="app-main">
-        <MonthlyFestivalPanel />
-        <DistrictExplorer />
+        {/* 🖼️ 표지 사진 고르는 임시 화면 — 주소 끝에 ?pick=cover 를 붙이면 열린다.
+            작업 세션에서는 관광공사 사진 서버가 막혀 있어 내가 사진을 못 본다.
+            폰에서는 보이므로 여기서 번호로 골라 알려 주는 쪽이 빠르다.
+            다 고르고 나면 이 분기와 CoverPicker.tsx를 같이 지운다. */}
+        {new URLSearchParams(window.location.search).get("pick") === "cover" ? (
+          <CoverPicker />
+        ) : (
+          <>
+            <MonthlyFestivalPanel />
+            <DistrictExplorer />
+          </>
+        )}
       </main>
 
       <nav className="tab-bar">
