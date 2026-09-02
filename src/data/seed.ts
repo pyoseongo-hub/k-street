@@ -95,7 +95,7 @@ export const FESTIVALS: Place[] = [
   // 2025년은 9월 25일~10월 3일로 **한 해에 두 달을 걸쳐** 열렸다. 서울숲 재즈처럼
   // 달이 옮겨 다니는 것이 아니라 원래 걸치는 축제라, monthVaries는 붙이지 않는다.
   { id: id(), gu: "강남구", category: "festival", name: "강남페스티벌", startMonth: 9, endMonth: 10, dateLabel: "9월 말~10월 초", officialUrl: "https://www.visitgangnam.net/festival#stages", confirmed: true },
-  { id: id(), gu: "강동구", category: "festival", name: "강동선사문화축제", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "1996년 시작, 서울 유일 선사시대 테마 축제", confirmed: true },
+  { id: id(), gu: "강동구", category: "festival", name: "강동선사문화축제", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "1996년 시작, 서울 유일 선사시대 테마 축제", officialUrl: "https://m.gdsunsa.com/", confirmed: true },
   { id: id(), gu: "강북구", category: "festival", name: "4·19혁명 국민문화제", startMonth: 4, endMonth: 4, dateLabel: "4월", confirmed: true },
   { id: id(), gu: "강서구", category: "festival", name: "허준축제", startMonth: 9, endMonth: 9, confirmed: true },
   { id: id(), gu: "관악구", category: "festival", name: "관악강감찬축제", startMonth: 10, endMonth: 10, confirmed: true },
