@@ -40,6 +40,19 @@ export interface Place {
   tourContentId?: string;
   /** 사진 출처 표기. 구청 등에서 받은 사진은 공공누리상 출처를 반드시 띄워야 한다. */
   photoCredit?: string;
+  /**
+   * 그 곳의 **공식 안내 주소**. 이름을 눌렀을 때 여기로 간다.
+   *
+   * 없으면 네이버 검색으로 간다(mapLinks.ts). 검색은 대개 잘 맞지만, 이름이
+   * 비슷한 다른 행사가 있으면 그쪽이 먼저 뜬다 — 「서울숲 JAZZ페스티벌」을
+   * 검색하면 올림픽공원에서 하는 「서울재즈페스티벌」 자료가 섞여 나온다.
+   * 그런 곳만 여기에 공식 주소를 적어 둔다.
+   *
+   * 🚨 **공식 창구만 적는다** — 그 축제·기관이 직접 운영하는 곳(공식 홈페이지,
+   *    구청·재단 안내 페이지)만. 블로그·예매 사이트·소개 글은 적지 않는다.
+   *    날짜가 해마다 바뀌므로 손님이 **가장 최신을 볼 수 있는 자리**여야 한다.
+   */
+  officialUrl?: string;
   /** 축제 전용: 시작/종료 월(1-12). 여러 달에 걸치면 startMonth < endMonth */
   startMonth?: number;
   endMonth?: number;
@@ -94,7 +107,13 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "마포구", category: "festival", name: "서울와우북페스티벌", startMonth: 10, endMonth: 10, dateLabel: "10월(2024: 10.11–13)", note: "책문화예술축제, 구의 유일한 축제는 아닐 수 있음", confirmed: true },
   { id: id(), gu: "서대문구", dong: "창천동", category: "festival", name: "신촌물총축제", startMonth: 7, endMonth: 7, dateLabel: "7월 이틀간", note: "2016년 서울시 브랜드축제 선정, 연세로", lat: 37.5526, lng: 126.9342, confirmed: true },
   { id: id(), gu: "서초구", category: "festival", name: "서초뮤직앤아트페스티벌", startMonth: 6, endMonth: 6, dateLabel: "6월(2024: 6.8–9)", confirmed: true },
-  { id: id(), gu: "성동구", category: "festival", name: "서울숲 JAZZ페스티벌", startMonth: 9, endMonth: 9, dateLabel: "9월 말", confirmed: true },
+  // 🎷 달이 해마다 옮겨 다닌다 — 서울시 문화포털(공식)에서 확인: 2025년 9월 19~21일,
+  //    2024년 10월 12~13일. 전에 "9월 말"이라고 적어 뒀는데 두 해 다 아니었고,
+  //    9월만 걸어 두는 바람에 10월에 열리는 해에는 10월 목록에서 사라졌다.
+  //    period(초·중순·말)는 **비워 둔다** — 해마다 달라서 어느 쪽도 사실이 아니다.
+  //    ⚠️ 「서울재즈페스티벌」(올림픽공원, 송파구, 민간 주최)과 다른 축제다. 이름이
+  //       비슷해 자료가 자주 섞인다 — 이쪽은 성동문화재단이 서울숲에서 여는 것이다.
+  { id: id(), gu: "성동구", dong: "성수동1가", category: "festival", name: "서울숲 JAZZ페스티벌", startMonth: 9, endMonth: 10, dateLabel: "9~10월", note: "서울숲 가족마당, 성동문화재단", officialUrl: "https://www.seoulforestjazz.com/", confirmed: true },
   { id: id(), gu: "성동구", category: "festival", name: "세계민속춤축제", startMonth: 9, endMonth: 9, dateLabel: "9월 말", confirmed: true },
   // WebSearch로 확인(2026-08-29): 누리마실(성북동, 6월경, 세계 음식·문화)과
   // 다다페스타(석관동, 9월, 성북거리문화축제)는 서로 다른 장소·시기의 별개 행사다

@@ -11,10 +11,13 @@ export interface MapLinkTarget {
   dong?: string;
   lat?: number;
   lng?: number;
+  /** 공식 안내 주소가 있으면 이름을 눌렀을 때 검색 대신 여기로 간다(seed.ts 참고). */
+  officialUrl?: string;
 }
 
 export interface MapLink {
-  label: "NAVER" | "KAKAO" | "GOOGLE";
+  // OFFICIAL = 그 축제·기관이 직접 운영하는 공식 안내 주소(seed.ts의 officialUrl).
+  label: "NAVER" | "KAKAO" | "GOOGLE" | "OFFICIAL";
   url: string;
   /** 좌표가 있을 때만 채워진다 — 앱을 직접 열어 "길찾기 단계"로 바로 데려가는 스킴 URL.
    *  없으면(좌표 미확보) url(검색 링크)만 쓴다 — 검색으로는 앱 스킴이 없다. */
@@ -101,6 +104,15 @@ export interface MapOrigin {
  * 그건 좌표로 찍으므로 정확하고, 이 링크와 역할이 다르다.
  */
 export function getPlaceInfoLink(place: MapLinkTarget): MapLink {
+  // 🔗 공식 주소를 적어 둔 곳은 검색을 거치지 않고 **곧장 그리로** 간다
+  //    (2026-09-02 사용자가 서울숲 재즈페스티벌 공식 주소를 줬다).
+  //    검색은 대개 잘 맞지만, 이름이 비슷한 다른 행사가 있으면 그쪽이 먼저 뜬다 —
+  //    「서울숲 JAZZ페스티벌」을 검색하면 올림픽공원에서 하는 「서울재즈페스티벌」
+  //    자료가 섞여 나온다. 날짜가 해마다 바뀌는 축제라 **손님이 가장 최신을 보는
+  //    자리**로 보내는 게 중요하다.
+  if (place.officialUrl) {
+    return { label: "OFFICIAL", url: place.officialUrl };
+  }
   // 검색어는 **이름 그대로**만 쓴다. 구·동을 덧붙이지 않는 이유는 지도 검색 때와 같다
   // (아래 getMapLinks의 2026-09-01 주석 참고) — 이름에 없는 말을 붙이면 검색이 흐려진다.
   // 사용자가 캡처로 보여 준 것도 이름만 넣은 검색이었고, 그걸로 성동구청 페이지가 떴다.
