@@ -22,6 +22,7 @@ import { dirname, join } from "node:path";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SEED_TS = join(__dirname, "..", "src", "data", "seed.ts");
 const OUT_JSON = join(__dirname, "..", "src", "data", "coords.json");
+const VENUES_JSON = join(__dirname, "..", "src", "data", "festival-venues.json");
 
 const KAKAO_KEY = process.env.KAKAO_REST_API_KEY;
 const NAVER_ID = process.env.NAVER_GEOCODE_CLIENT_ID;
@@ -69,6 +70,24 @@ function normalize(s) {
   return s.replace(/[·・()（）]/g, " ").replace(/\s+/g, " ").trim();
 }
 
+// 🎪 축제는 지도에 등록된 '장소'가 아니라 며칠만 열리는 '행사'다. 그래서 이름으로
+// 검색하면 아무것도 안 나온다 — 2026-09-01 감사에서 좌표 없는 17곳이 **전부 축제**로
+// 확인됐다(docs/축제-빈칸.md). 사람이 근거를 확인해 적어 둔 '실제 열리는 곳'을
+// festival-venues.json에서 읽어, 축제 이름 대신 그 장소를 검색한다.
+//
+// ⚠️ 한글은 NFC로 맞춰서 찾는다. 화면에 똑같이 보여도 자모 분해형(NFD)이면 다른
+//    문자열이라 표에서 안 찾아진다(Kfood에서 유튜브 제목으로 실제로 겪은 사고).
+const nfc = (s) => String(s ?? "").normalize("NFC");
+const VENUES = (() => {
+  const raw = JSON.parse(readFileSync(VENUES_JSON, "utf-8"));
+  const map = new Map();
+  for (const [name, v] of Object.entries(raw)) {
+    if (name.startsWith("_")) continue; // "_읽어보세요" 같은 설명 칸
+    map.set(nfc(name), v);
+  }
+  return map;
+})();
+
 // 🚨 2026-09-01 전수검사에서 찾은 버그 — 옛 primaryName()은 이름의 **첫 단어만**
 // 검색어로 썼다. 여러 장소를 "A · B"로 합쳐 둔 이름을 쪼개려고 만든 것인데,
 // normalize()가 ·를 공백으로 바꾼 뒤 공백으로 잘랐기 때문에 그냥 두 단어인
@@ -114,6 +133,21 @@ function looksLikeSamePlace(doc, name, gu) {
   // ("이태원"처럼 3글자가 아무 데나 걸리는 걸 막는다).
   const shorter = a.length <= b.length ? a : b;
   return shorter.length >= 4 && (a.includes(b) || b.includes(a));
+}
+
+// 장소표(festival-venues.json)로 찾을 때 쓰는 잣대. 위와 다른 점은 **글자 수 제한이
+// 느슨하다**는 것 하나다 — "덕수궁 · 코엑스 · 노원역"처럼 3글자짜리 정식 장소명이
+// 많은데, 위 잣대(4글자 이상)를 그대로 쓰면 멀쩡한 장소가 전부 걸러진다.
+// 대신 검색어가 **사람이 근거를 확인해 적어 둔 정식 명칭**이고, 구 일치 검사는
+// 그대로 하므로 엉뚱한 곳이 걸릴 위험은 오히려 이름 검색보다 낮다.
+function looksLikeVenue(doc, venue, gu) {
+  const addr = `${doc.road_address_name ?? ""} ${doc.address_name ?? ""}`;
+  if (!addr.includes(gu)) return false;
+  const squash = (s) => s.replace(/[^가-힣a-zA-Z0-9]/g, "");
+  const a = squash(nfc(doc.place_name));
+  const b = squash(nfc(venue));
+  if (!a || !b) return false;
+  return a.includes(b) || b.includes(a);
 }
 
 // 요청 하나가 응답 없이 멈추면 전체 배치가 무한정 멎어 버리므로(147곳 실행 중
@@ -195,12 +229,19 @@ async function main() {
 
   for (const p of todo) {
     try {
+      // 장소표에 적힌 축제면 축제 이름 대신 **열리는 곳**을 검색한다.
+      const venue = VENUES.get(nfc(p.name));
+      const keywords = venue ? venue.venues : searchVariants(p.name, p.gu);
+      const matches = venue
+        ? (doc, keyword) => looksLikeVenue(doc, keyword, p.gu)
+        : (doc) => looksLikeSamePlace(doc, p.name, p.gu);
+
       // 넓은 검색어부터 차례로 던지고, 구까지 일치하는 결과가 나오면 거기서 멈춘다.
       let hit = null;
       let usedKeyword = "";
-      for (const keyword of searchVariants(p.name, p.gu)) {
+      for (const keyword of keywords) {
         const docs = await kakaoSearch(keyword);
-        hit = docs.find((d) => looksLikeSamePlace(d, p.name, p.gu)) ?? null;
+        hit = docs.find((d) => matches(d, keyword)) ?? null;
         if (hit) {
           usedKeyword = keyword;
           break;
@@ -208,10 +249,13 @@ async function main() {
         await new Promise((r) => setTimeout(r, 120));
       }
       if (!hit) {
-        console.log(`⬜ [${p.category}] ${p.name} — 카카오에서 못 찾음(검색어 여러 개 시도)`);
+        const how = venue ? `장소표: ${venue.venues.join(" / ")}` : "검색어 여러 개 시도";
+        console.log(`⬜ [${p.category}] ${p.name} — 카카오에서 못 찾음(${how})`);
         continue;
       }
-      if (usedKeyword !== normalize(p.name)) {
+      if (venue) {
+        console.log(`   ↳ 축제 장소표에서 "${usedKeyword}"로 찾음 — ${venue.why}`);
+      } else if (usedKeyword !== normalize(p.name)) {
         console.log(`   ↳ "${usedKeyword}"로 찾음`);
       }
       const kakaoCoord = { lat: Number(hit.y), lng: Number(hit.x) };
@@ -239,6 +283,9 @@ async function main() {
         lng: final.lng,
         source: confidence,
         matchedName: hit.place_name,
+        // 축제는 이름이 아니라 '열리는 곳'으로 찾았다는 것을 남긴다. 나중에
+        // matchedName만 보고 "상호가 다른데?" 하고 지우는 일을 막는다.
+        ...(venue ? { venueFor: p.name, venueWhy: venue.why } : {}),
       };
       matched++;
       console.log(`✅ [${p.category}] ${p.name} → ${hit.place_name} (${confidence})`);

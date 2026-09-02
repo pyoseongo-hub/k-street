@@ -10,6 +10,9 @@ export interface CoordEntry {
   lng: number;
   source: string;
   matchedName?: string;
+  /** 축제처럼 이름이 아니라 '열리는 곳'으로 찾은 경우, 그 축제 이름과 근거. */
+  venueFor?: string;
+  venueWhy?: string;
 }
 
 const COORDS: Record<string, CoordEntry> = coordsData as Record<string, CoordEntry>;

@@ -33,8 +33,19 @@ const seedSrc = readFileSync(D("seed.ts"), "utf-8");
 const tourRaw = JSON.parse(readFileSync(D("tour-places-raw.json"), "utf-8"));
 const dates = JSON.parse(readFileSync(D("festival-dates.json"), "utf-8"));
 const coords = JSON.parse(readFileSync(D("coords.json"), "utf-8"));
+const venuesRaw = JSON.parse(readFileSync(D("festival-venues.json"), "utf-8"));
 
 const nfc = (s) => String(s ?? "").normalize("NFC");
+
+// 🎪 축제가 '실제로 열리는 곳' 표(festival-venues.json). 좌표가 없는 축제 중
+// 이 표에 있는 것은 **다음 자동 실행이 알아서 채운다** — 사람이 할 일이 없다.
+// 표에 없는 것만 사람이 장소를 확인해 표에 한 줄 넣으면 된다. 그 구분을 아래
+// 목록에 표시해서, "17곳 남았다"는 숫자가 실제 할 일과 어긋나지 않게 한다.
+const VENUES = new Set(
+  Object.keys(venuesRaw)
+    .filter((k) => !k.startsWith("_"))
+    .map(nfc)
+);
 const pick = (line, key) => line.match(new RegExp(`${key}: "([^"]+)"`))?.[1];
 const num = (line, key) => {
   const v = line.match(new RegExp(`${key}: (-?[\\d.]+)`))?.[1];
@@ -110,9 +121,12 @@ for (const f of all) {
   f.season = seasonOf(f.startMonth);
   f.hasCoord = f.lat != null;
   f.hasPhoto = Boolean(f.image);
+  f.hasVenue = VENUES.has(nfc(f.name));
 }
 
 const noCoord = all.filter((f) => !f.hasCoord);
+// 좌표도 없고 장소표에도 없는 곳 — 여기만 사람 손이 필요하다.
+const noCoordNoVenue = noCoord.filter((f) => !f.hasVenue);
 const noPhoto = all.filter((f) => !f.hasPhoto);
 const noMonth = all.filter((f) => f.startMonth == null);
 
@@ -145,6 +159,9 @@ const listOf = (arr) =>
     .join("\n");
 
 console.log(`🗺️ 지도에 못 붙는 축제 ${noCoord.length}곳 (길찾기가 '검색' 화면으로 떨어진다)`);
+console.log(
+  `   그중 ${noCoord.length - noCoordNoVenue.length}곳은 장소표에 있어 자동으로 채워진다 — 사람 손이 필요한 건 ${noCoordNoVenue.length}곳`
+);
 console.log(listOf(noCoord));
 console.log("");
 console.log(`📷 사진 없는 축제 ${noPhoto.length}곳 (카드에 계절 그림이 대신 나온다)`);
@@ -158,15 +175,19 @@ if (!SAVE) {
 }
 
 const today = new Date().toISOString().slice(0, 10);
-const row = (f) =>
-  `| ${f.startMonth ? f.startMonth + "월" : "—"} | ${f.season ?? "—"} | ${f.gu} | ${f.name} | ${f.from} |`;
-const table = (arr) =>
-  ["| 달 | 계절 | 구 | 축제 | 출처 |", "|---|---|---|---|---|"]
+const row = (f, withVenue) =>
+  `| ${f.startMonth ? f.startMonth + "월" : "—"} | ${f.season ?? "—"} | ${f.gu} | ${f.name} | ${f.from} |` +
+  (withVenue ? ` ${f.hasVenue ? "🤖 자동" : "**사람이 확인**"} |` : "");
+const table = (arr, withVenue = false) =>
+  [
+    `| 달 | 계절 | 구 | 축제 | 출처 |${withVenue ? " 장소표 |" : ""}`,
+    `|---|---|---|---|---|${withVenue ? "---|" : ""}`,
+  ]
     .concat(
       arr
         .slice()
         .sort((a, b) => (a.startMonth ?? 99) - (b.startMonth ?? 99) || a.gu.localeCompare(b.gu, "ko"))
-        .map(row)
+        .map((f) => row(f, withVenue))
     )
     .join("\n");
 
@@ -194,15 +215,21 @@ const md = `# 축제 빈 칸 — 내일부터 채울 목록
 
 좌표가 없으면 길찾기 버튼이 **출발지·목적지가 찍힌 화면**이 아니라 '검색' 화면으로 떨어진다.
 
-**왜 자동으로 안 채워지나** — 전부 사람이 조사한 축제인데, **행사 이름만 있고 열리는 장소가
-안 정해져 있다.** "강남페스티벌"을 지도에 검색해도 나오는 장소가 없다. 축제는 며칠만 열리는
-행사라 지도에 상호로 등록되지 않기 때문이다(2026-09-01 사용자 캡처로 확인한 그 문제).
+**왜 자동으로 안 채워졌나** — 좌표 채우기 스크립트가 **축제 이름으로** 지도를 검색하는데,
+축제는 며칠만 열리는 '행사'라 지도에 등록된 '장소'가 아니다. "강남페스티벌"을 지도에서
+검색하면 아무것도 안 나온다(2026-09-01 사용자 캡처로 확인한 그 문제).
 
-**채우는 법** — 앱에서 그 축제 이름을 누르면 네이버 통합검색 → 그 구청의 공식 행사 안내로 간다.
-거기 적힌 장소(예: "서울숲 가족마당")를 네이버 지도에서 찾아 좌표를 얻고, \`seed.ts\`의 그
-항목에 \`lat\`·\`lng\`를 적는다.
+**어떻게 바꿨나** (2026-09-02) — 축제마다 **실제로 열리는 곳**을 적어 둔 표를 만들었다:
+\`src/data/festival-venues.json\` (예: 강남페스티벌 → 코엑스, 한성백제문화제 → 올림픽공원).
+좌표 스크립트가 축제 이름 대신 이 장소를 검색하므로, 표에 있는 축제는 **매주 월요일 새벽
+자동 실행이 알아서 채운다.** 아래 표의 '장소표' 칸이 🤖 자동이면 손댈 것이 없다.
 
-${table(noCoord)}
+**사람이 할 일** — '장소표' 칸이 **사람이 확인**인 것만. 앱에서 그 축제 이름을 누르면
+네이버 통합검색 → 그 구청의 공식 행사 안내로 간다. 거기 적힌 장소(예: "서울숲 가족마당")를
+\`festival-venues.json\`에 한 줄 넣으면 된다. 좌표를 손으로 적을 필요는 없다.
+⚠️ 장소는 해마다 바뀌기도 하니, **여러 해 같은 곳에서 열린 것**만 넣는다.
+
+${table(noCoord, true)}
 
 ---
 
