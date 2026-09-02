@@ -151,7 +151,7 @@ export default function MonthlyFestivalPanel() {
 
         {/* 🚨 정확한 날짜를 안 적는 이유를 화면에도 적는다 — 받아온 날짜가 지난
             회차 것이라, 손님이 "10월 중순"만 믿고 날짜를 정하면 안 된다. */}
-        <p className="map-disclaimer">{t.festivalDateDisclaimer}</p>
+        <p className="map-disclaimer">{t.festivalDateDisclaimer} {t.mapAppNote}</p>
 
         <div className="festival-cards">
           {festivals.length === 0 && (

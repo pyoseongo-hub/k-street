@@ -59,11 +59,12 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
           {locating === "NAVER" ? t.mapLocating : t.naverMapLabel}
         </button>
       </div>
-      {/* 폰·OS·앱 설치 여부 조합을 전부 미리 확인할 수는 없다(2026-08-29 사용자
-          지시: "내가 다 확인 못하니 안내문구 넣어 사용자가 할수있게") — 앱 스킴이
-          안 먹는 드문 경우에도 방문객이 스스로 다음 단계를 알 수 있게 짧은 안내를
-          늘 함께 보여준다. */}
-      <p className="map-app-note">{t.mapAppNote}</p>
+      {/* 📏 "지도 앱이 바로 안 열리면…" 안내는 **여기서 뺐다**(2026-09-02 사용자
+          지적: "칸차지가 심해"). 카드마다 두 줄씩 반복되어 목록 절반을 먹고
+          있었다. 안내 자체는 여전히 필요하므로(앱 스킴이 안 먹는 폰이 있다 —
+          2026-08-29 "내가 다 확인 못하니 안내문구 넣어 사용자가 할수있게")
+          목록 맨 위 안내 줄에 **한 번만** 붙인다. 지도 위 팝업(InfoWindow)은
+          목록이 아니라 혼자 뜨는 창이라 mapLinks.ts 쪽에 그대로 둔다. */}
     </div>
   );
 }

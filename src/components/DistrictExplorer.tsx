@@ -156,7 +156,7 @@ export default function DistrictExplorer() {
       )}
 
       <p className="map-disclaimer">
-        {t.mapDisclaimerStart}<b>{t.mapDisclaimerBold}</b>{t.mapDisclaimerEnd}
+        {t.mapDisclaimerStart}<b>{t.mapDisclaimerBold}</b>{t.mapDisclaimerEnd} {t.mapAppNote}
       </p>
 
       {gu && (
