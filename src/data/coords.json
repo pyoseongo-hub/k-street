@@ -570,5 +570,155 @@
     "lng": 126.982413256957,
     "source": "kakao",
     "matchedName": "남산둘레길"
+  },
+  "ks_40": {
+    "lat": 37.575422861783345,
+    "lng": 126.94816634534915,
+    "source": "kakao",
+    "matchedName": "안산자락길"
+  },
+  "ks_41": {
+    "lat": 37.5482528089186,
+    "lng": 127.029834156041,
+    "source": "kakao",
+    "matchedName": "응봉산"
+  },
+  "ks_43": {
+    "lat": 37.5685396959502,
+    "lng": 126.886883825534,
+    "source": "kakao",
+    "matchedName": "하늘공원"
+  },
+  "ks_44": {
+    "lat": 37.578627489574416,
+    "lng": 126.9800979573524,
+    "source": "kakao+naver",
+    "matchedName": "국립현대미술관 서울"
+  },
+  "ks_45": {
+    "lat": 37.573031041794664,
+    "lng": 126.96346810881765,
+    "source": "kakao+naver",
+    "matchedName": "딜쿠샤"
+  },
+  "ks_46": {
+    "lat": 37.5808175214949,
+    "lng": 126.984172997364,
+    "source": "kakao+naver",
+    "matchedName": "가회동백인제가옥"
+  },
+  "ks_47": {
+    "lat": 37.56410579887691,
+    "lng": 126.9736988634857,
+    "source": "kakao+naver",
+    "matchedName": "서울시립미술관 서소문본관"
+  },
+  "ks_48": {
+    "lat": 37.5659384342432,
+    "lng": 126.973740099183,
+    "source": "kakao+naver",
+    "matchedName": "국립현대미술관 덕수궁"
+  },
+  "ks_49": {
+    "lat": 37.52392249364415,
+    "lng": 126.98018716127058,
+    "source": "kakao+naver",
+    "matchedName": "국립중앙박물관"
+  },
+  "ks_4a": {
+    "lat": 37.59357930433219,
+    "lng": 126.99696540704932,
+    "source": "kakao+naver",
+    "matchedName": "간송미술관"
+  },
+  "ks_4e": {
+    "lat": 37.51845542521429,
+    "lng": 127.03453476229417,
+    "source": "kakao+naver",
+    "matchedName": "국립관세박물관"
+  },
+  "ks_4f": {
+    "lat": 37.5225509345279,
+    "lng": 127.036041194408,
+    "source": "kakao+naver",
+    "matchedName": "호림박물관 신사분관"
+  },
+  "ks_4g": {
+    "lat": 37.5239206199026,
+    "lng": 127.035507899928,
+    "source": "kakao+naver",
+    "matchedName": "도산공원 도산안창호기념관"
+  },
+  "ks_4h": {
+    "lat": 37.5154126785182,
+    "lng": 127.120895017165,
+    "source": "kakao+naver",
+    "matchedName": "한성백제박물관"
+  },
+  "ks_4i": {
+    "lat": 37.51688595123324,
+    "lng": 127.1180921409908,
+    "source": "kakao+naver",
+    "matchedName": "소마미술관"
+  },
+  "ks_4j": {
+    "lat": 37.45774583773384,
+    "lng": 126.89553915985154,
+    "source": "kakao+naver",
+    "matchedName": "서울시립 서서울미술관"
+  },
+  "ks_4k": {
+    "lat": 37.5276400128879,
+    "lng": 126.873777133469,
+    "source": "kakao+naver",
+    "matchedName": "오목한미술관"
+  },
+  "ks_4l": {
+    "lat": 37.5678799742891,
+    "lng": 126.850998403189,
+    "source": "kakao+naver",
+    "matchedName": "허준박물관"
+  },
+  "ks_4o": {
+    "lat": 37.5508665042994,
+    "lng": 127.077592558039,
+    "source": "kakao",
+    "matchedName": "서울상상나라"
+  },
+  "ks_4t": {
+    "lat": 37.580632384055335,
+    "lng": 127.03763602036537,
+    "source": "kakao+naver",
+    "matchedName": "서울약령시한의약박물관"
+  },
+  "ks_4u": {
+    "lat": 37.576752258195064,
+    "lng": 126.93785805574039,
+    "source": "kakao+naver",
+    "matchedName": "서대문자연사박물관"
+  },
+  "ks_4v": {
+    "lat": 37.47833986691578,
+    "lng": 127.01186193751934,
+    "source": "kakao",
+    "matchedName": "예술의전당 서울서예박물관"
+  },
+  "ks_4x": {
+    "lat": 37.6404045181413,
+    "lng": 126.937978427932,
+    "source": "kakao+naver",
+    "matchedName": "은평역사한옥박물관"
+  },
+  "ks_50": {
+    "lat": 37.50255501820018,
+    "lng": 126.97462182443368,
+    "source": "kakao+naver",
+    "matchedName": "국립서울현충원"
+  },
+  "ks_51": {
+    "lat": 37.5551677747939,
+    "lng": 127.04472141627,
+    "source": "kakao",
+    "matchedName": "한양대학교 박물관"
   }
 }
