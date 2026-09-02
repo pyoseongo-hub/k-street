@@ -31,6 +31,13 @@ export interface Place {
   thumb?: string;
   /** 어디서 온 자료인가. 값이 없으면 사람이 직접 조사해 seed.ts에 적은 것이다. */
   source?: "tour";
+  /**
+   * 관광공사 콘텐츠 번호. **사진 여러 장을 찾는 열쇠**다(tour-gallery.json).
+   *
+   * id가 아니라 따로 두는 이유 — 사람이 적은 곳과 합쳐지면 id는 `ks_…` 쪽이
+   * 남는다. 그때 contentId를 안 들고 오면 합쳐진 곳만 사진을 못 찾는다.
+   */
+  tourContentId?: string;
   /** 사진 출처 표기. 구청 등에서 받은 사진은 공공누리상 출처를 반드시 띄워야 한다. */
   photoCredit?: string;
   /** 축제 전용: 시작/종료 월(1-12). 여러 달에 걸치면 startMonth < endMonth */
@@ -336,6 +343,8 @@ function mergeWithTourPlaces(hand: Place[]): Place[] {
       addr: p.addr ?? t.addr,
       lat: p.lat ?? t.lat,
       lng: p.lng ?? t.lng,
+      // 사진 여러 장을 찾는 열쇠 — 안 들고 오면 합쳐진 곳만 사진이 한 장이 된다.
+      tourContentId: p.tourContentId ?? t.tourContentId,
     };
   });
   return [...merged, ...TOUR_PLACES.filter((t) => !used.has(t.id))];
@@ -416,6 +425,7 @@ export const ALL_FESTIVALS: Place[] = (() => {
       startMonth: p.startMonth ?? t.startMonth,
       endMonth: p.endMonth ?? t.endMonth,
       period: p.period ?? t.period,
+      tourContentId: p.tourContentId ?? t.tourContentId,
     };
   });
   return [...merged, ...tourFestivals.filter((t) => !used.has(t.id))];

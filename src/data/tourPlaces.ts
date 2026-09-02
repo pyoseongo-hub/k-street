@@ -94,6 +94,9 @@ function toPlace(category: Category, p: RawPlace): Place {
     // seed.ts의 confirmed:false(=아직 못 찾은 빈 칸)와는 성격이 다르다.
     confirmed: true,
     source: "tour",
+    // 사진 여러 장(tour-gallery.json)을 찾는 열쇠. 합쳐질 때 id는 사람 쪽이
+    // 남으므로 이 값을 따로 들고 다녀야 한다.
+    tourContentId: String(p.contentId),
   };
 }
 

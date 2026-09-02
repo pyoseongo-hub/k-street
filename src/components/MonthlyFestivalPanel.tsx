@@ -8,6 +8,7 @@ import { useRotatingSeed } from "../lib/useRotatingSeed";
 import { getTourImage } from "../lib/tourImages";
 import { districtFullName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
+import PlacePhoto from "./PlacePhoto";
 import { openPlaceInfo } from "../lib/mapLinks";
 import { placeName, translateText, hasTranslation } from "../lib/placeText";
 import { FESTIVAL_THEMES, THEME_ICON, themeOf, type FestivalTheme } from "../data/festivalThemes";
@@ -164,9 +165,7 @@ export default function MonthlyFestivalPanel() {
             return (
               <div className="festival-card" key={f.id}>
                 {photoUrl ? (
-                  <div className="fc-art fc-art-photo" style={{ backgroundImage: `url(${photoUrl})` }}>
-                    <span className="fc-photo-credit">{f.photoCredit ?? t.photoCredit}</span>
-                  </div>
+                  <PlacePhoto place={{ ...f, image: photoUrl }} />
                 ) : (
                   /* 카드 그림은 **지금 고른 달**의 계절로 그린다.
                      예전엔 그 축제의 시작 달을 썼는데, 2월~3월에 걸친 축제가

@@ -522,6 +522,54 @@ button {
   z-index: 1;
 }
 
+/* 📷 사진이 여러 장인 곳 — 눌러서 넘긴다 (2026-09-02 "사진 이쁜걸로 교체").
+   관광공사는 곳마다 사진을 여러 장 갖고 있는데(강동북페스티벌 10장) 우리는 대표
+   한 장만 쓰고 있었다. 어느 게 더 나은지 기계가 고르면 멀쩡한 사진을 버리는 쪽이
+   잦아서, 첫 장은 그대로 두고 **고르는 건 손님에게 맡긴다.** */
+.fc-art-photo.has-more {
+  cursor: pointer;
+}
+.fc-art-photo.has-more:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.fc-photo-dots {
+  position: absolute;
+  left: 8px;
+  bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 1;
+  /* 출처 칩과 같은 배경을 써서 사진이 밝든 어둡든 읽힌다. */
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 100px;
+  padding: 4px 7px;
+}
+.fc-photo-dots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  transition: background 0.15s;
+}
+.fc-photo-dots i.on {
+  background: #fff;
+}
+/* 장수가 많으면 점 대신 숫자 — 열 개짜리 점은 사진을 가린다. */
+.fc-photo-dots b {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  font-variant-numeric: tabular-nums;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fc-photo-dots i {
+    transition: none;
+  }
+}
+
 .fc-body {
   padding: 16px;
 }

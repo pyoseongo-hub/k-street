@@ -15,7 +15,10 @@ on:
         type: boolean
         default: false
       limit:
-        description: "이번 실행에서 처리할 최대 개수 (빈 칸이면 전체)"
+        # 🚨 "빈 칸이면 전체"로 만들 수 없다 — workflow_dispatch는 빈 값을 받으면
+        #    **여기 적힌 default로 되돌린다**(2026-09-02에 전수로 돌린다고 빈 칸을
+        #    넘겼는데 조용히 20곳만 처리됐다). 그래서 전체는 all이라고 적게 한다.
+        description: "이번 실행에서 처리할 최대 개수. 전체로 하려면 all"
         type: string
         default: "20"
 
@@ -42,7 +45,7 @@ jobs:
         run: |
           set -o pipefail
           ARGS=""
-          if [ -n "$LIMIT" ]; then ARGS="--limit $LIMIT"; fi
+          if [ -n "$LIMIT" ] && [ "$LIMIT" != "all" ]; then ARGS="--limit $LIMIT"; fi
           if [ "$APPLY" = "true" ]; then ARGS="$ARGS --apply"; fi
           node scripts/fetch-tour-gallery.mjs $ARGS 2>&1 | tee fetch-log.txt
       - name: Commit tour-gallery.json
@@ -51,10 +54,14 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- src/data/tour-gallery.json; then
+          # 🚨 git diff는 **아직 git이 모르는 새 파일**을 못 본다. tour-gallery.json은
+          #    이번에 처음 생기는 파일이라, diff로 검사하면 "바뀐 게 없다"가 나와
+          #    조용히 안 올라간다(2026-09-02에 실제로 겪었다 — 초록불인데 저장소엔
+          #    파일이 없었다). 먼저 add하고 **스테이지된 것**을 검사한다.
+          git add src/data/tour-gallery.json
+          if git diff --cached --quiet -- src/data/tour-gallery.json; then
             echo "committed=no" >> "$GITHUB_OUTPUT"
           else
-            git add src/data/tour-gallery.json
             git commit -m "사진 여러 장 받기 (fetch-tour-gallery) [skip render]"
             git push
             echo "committed=yes" >> "$GITHUB_OUTPUT"

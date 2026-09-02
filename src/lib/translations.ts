@@ -15,6 +15,8 @@ export interface Translations {
   monthlyTitle: (month: number) => string;
   noFestivalsMessage: (month: number) => string;
   photoCredit: string;
+  /** 사진이 여러 장일 때 그 자리를 눌러 넘길 수 있다고 알려 주는 말(화면에 안 보이고 읽어 주는 용). */
+  morePhotos: (count: number) => string;
 
   // District Explorer
   exploreNowLabel: string;
@@ -78,6 +80,7 @@ const translations: Record<Language, Translations> = {
     noFestivalsMessage: (month) =>
       `이번 세션 조사에서는 ${month}월에 확인된 축제가 없다 — 없는 게 아니라 아직 확인을 못 한 것일 수 있다.`,
     photoCredit: '사진: 한국관광공사',
+    morePhotos: (n: number) => `사진 ${n}장 — 눌러서 넘기기`,
 
     exploreNowLabel: '지금 갈 수 있는 곳',
     exploreTitle: '동네마다 다른 서울',
@@ -138,6 +141,7 @@ const translations: Record<Language, Translations> = {
     noFestivalsMessage: (month) =>
       `No festivals confirmed for ${getMonthName('en', month)} in this session — but there may be events we haven't documented yet.`,
     photoCredit: 'Photo: Korea Tourism Organization',
+    morePhotos: (n: number) => `${n} photos — tap to see the next`,
 
     exploreNowLabel: 'Where you can go now',
     exploreTitle: 'A different Seoul in every neighborhood',
@@ -198,6 +202,7 @@ const translations: Record<Language, Translations> = {
     noFestivalsMessage: (month) =>
       `このセッションの調査では${getMonthName('ja', month)}に確認されたフェスティバルはありません。ただし、まだ記録していないイベントがある可能性があります。`,
     photoCredit: '写真：韓国観光公社',
+    morePhotos: (n: number) => `写真${n}枚 — タップで次へ`,
 
     exploreNowLabel: '今行ける場所',
     exploreTitle: '街ごとに違うソウル',
@@ -258,6 +263,7 @@ const translations: Record<Language, Translations> = {
     noFestivalsMessage: (month) =>
       `本次调查中未发现${getMonthName('zh', month)}的节庆活动 — 但可能还有我们尚未记录的活动。`,
     photoCredit: '照片：韩国旅游组织',
+    morePhotos: (n: number) => `照片 ${n} 张 — 点击查看下一张`,
 
     exploreNowLabel: '现在可以去的地方',
     exploreTitle: '每个街区都不一样的首尔',
@@ -318,6 +324,7 @@ const translations: Record<Language, Translations> = {
     noFestivalsMessage: (month) =>
       `本次調查中未發現${getMonthName('zh-TW', month)}的節慶活動 — 但可能還有我們尚未記錄的活動。`,
     photoCredit: '照片：韓國觀光公社',
+    morePhotos: (n: number) => `照片 ${n} 張 — 點擊查看下一張`,
 
     exploreNowLabel: '現在可以去的地方',
     exploreTitle: '每個街區都不一樣的首爾',
@@ -378,6 +385,7 @@ const translations: Record<Language, Translations> = {
     noFestivalsMessage: (month) =>
       `Không có lễ hội nào được xác nhận vào tháng ${getMonthName('vi', month)} trong phiên này — nhưng có thể có các sự kiện mà chúng tôi chưa ghi lại.`,
     photoCredit: 'Ảnh: Tổ chức Du lịch Hàn Quốc',
+    morePhotos: (n: number) => `${n} ảnh — chạm để xem tiếp`,
 
     exploreNowLabel: 'Các địa điểm bạn có thể đến ngay',
     exploreTitle: 'Mỗi khu phố một Seoul khác',
@@ -438,6 +446,7 @@ const translations: Record<Language, Translations> = {
     noFestivalsMessage: (month) =>
       `No hay festivales confirmados en ${getMonthName('es', month)} en esta sesión — pero puede haber eventos que aún no hemos documentado.`,
     photoCredit: 'Foto: Organización de Turismo de Corea',
+    morePhotos: (n: number) => `${n} fotos — toca para ver la siguiente`,
 
     exploreNowLabel: 'Lugares donde puedes ir ahora',
     exploreTitle: 'Un Seúl distinto en cada barrio',
@@ -498,6 +507,7 @@ const translations: Record<Language, Translations> = {
     noFestivalsMessage: (month) =>
       `Aucun festival confirmé en ${getMonthName('fr', month)} dans cette session — mais il peut y avoir des événements que nous n'avons pas encore documentés.`,
     photoCredit: 'Photo : Organisation du Tourisme de Corée',
+    morePhotos: (n: number) => `${n} photos — appuyez pour la suivante`,
 
     exploreNowLabel: 'Où vous pouvez aller maintenant',
     exploreTitle: 'Un Séoul différent dans chaque quartier',
@@ -558,6 +568,7 @@ const translations: Record<Language, Translations> = {
     noFestivalsMessage: (month) =>
       `Keine Festivals im ${getMonthName('de', month)} in dieser Sitzung bestätigt — es kann aber Veranstaltungen geben, die wir noch nicht dokumentiert haben.`,
     photoCredit: 'Foto: Korea Tourism Organization',
+    morePhotos: (n: number) => `${n} Fotos — zum Weiterblättern tippen`,
 
     exploreNowLabel: 'Orte, die Sie jetzt besuchen können',
     exploreTitle: 'In jedem Viertel ein anderes Seoul',
@@ -618,6 +629,7 @@ const translations: Record<Language, Translations> = {
     noFestivalsMessage: (month) =>
       `В этой сессии на ${getMonthName('ru', month)} не подтверждено никаких фестивалей — но могут быть события, которые мы еще не задокументировали.`,
     photoCredit: 'Фото: Организация туризма Кореи',
+    morePhotos: (n: number) => `${n} фото — нажмите, чтобы посмотреть следующее`,
 
     exploreNowLabel: 'Куда вы можете пойти сейчас',
     exploreTitle: 'В каждом районе — свой Сеул',
@@ -678,6 +690,7 @@ const translations: Record<Language, Translations> = {
     noFestivalsMessage: (month) =>
       `Tidak ada festival yang dikonfirmasi pada ${getMonthName('id', month)} dalam sesi ini — tetapi mungkin ada acara yang belum kami dokumentasikan.`,
     photoCredit: 'Foto: Organisasi Pariwisata Korea',
+    morePhotos: (n: number) => `${n} foto — ketuk untuk berikutnya`,
 
     exploreNowLabel: 'Tempat yang bisa Anda kunjungi sekarang',
     exploreTitle: 'Seoul yang berbeda di tiap lingkungan',
@@ -738,6 +751,7 @@ const translations: Record<Language, Translations> = {
     noFestivalsMessage: (month) =>
       `ไม่มีเทศกาลที่ยืนยันสำหรับเดือน${getMonthName('th', month)}ในเซสชันนี้ — แต่อาจมีกิจกรรมที่เรายังไม่ได้บันทึก`,
     photoCredit: 'ภาพ: องค์การท่องเที่ยวเกาหลี',
+    morePhotos: (n: number) => `${n} ภาพ — แตะเพื่อดูภาพถัดไป`,
 
     exploreNowLabel: 'สถานที่ที่คุณสามารถไปได้ตอนนี้',
     exploreTitle: 'โซลที่แตกต่างในทุกย่าน',
