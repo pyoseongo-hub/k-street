@@ -162,6 +162,68 @@ button {
   padding: 4px 14px 100px;
 }
 
+/* ── 맨 위 화면 전환 (계절 ↔ 동네) ──────────────────── */
+/* 🔀 2026-09-02 사용자 지적: "자료가 많아지면서 이 페이지가 너무 아래인데
+   맨 위로 가면서 화면 스위치 스왑? 할 방법이나 아이디어 없나".
+   두 화면을 이어 붙이지 않고 나란히 두 장으로 놓는다 — HomeSwitch.tsx 참고. */
+.home-switch {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 📌 화면 맨 위에 붙는다. **이 줄 하나만** 붙이므로 자리를 거의 안 먹는다
+   (예전에 고르는 것 전체를 붙여 뒀다가 폰 화면 절반을 먹은 적이 있다). */
+.home-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  gap: 6px;
+  padding: 8px 0;
+  /* 밑에 깔린 카드가 비쳐 보이지 않게 바탕을 깐다 — 붙어 있는 줄이라
+     아래 내용이 그 뒤로 지나간다. */
+  background: var(--bg);
+}
+
+.home-tab {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  /* 로마자·태국어 이름은 한글보다 훨씬 길다 — 잘리기 전에 한 줄로 눌러 담는다. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.home-tab.active {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+.home-tab-icon {
+  font-size: 15px;
+}
+
+/* 숨긴 쪽은 확실히 사라져야 한다. 부모가 flex라 자칫 다른 규칙이 이겨서
+   두 화면이 겹쳐 보이는 사고가 나기 쉬운 자리다. */
+.home-switch > [hidden] {
+  display: none !important;
+}
+
 /* ── weather strip ──────────────────────────────────── */
 .weather-strip {
   display: flex;

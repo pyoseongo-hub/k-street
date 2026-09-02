@@ -18,6 +18,12 @@ export interface Translations {
   /** 사진이 여러 장일 때 그 자리를 눌러 넘길 수 있다고 알려 주는 말(화면에 안 보이고 읽어 주는 용). */
   morePhotos: (count: number) => string;
 
+  // 🔀 맨 위 화면 전환 단추(HomeSwitch). 자리가 좁으니 **한두 낱말**로 짧게 적는다.
+  /** 계절 화면 — 「봄 여름 가을 겨울 그리고 서울」 쪽 */
+  viewSeason: string;
+  /** 동네 화면 — 육각 지도로 구를 고르는 쪽 */
+  viewDistrict: string;
+
   // District Explorer
   exploreNowLabel: string;
   exploreTitle: string;
@@ -82,6 +88,8 @@ const translations: Record<Language, Translations> = {
     photoCredit: '사진: 한국관광공사',
     morePhotos: (n: number) => `사진 ${n}장 — 눌러서 넘기기`,
 
+    viewSeason: '계절',
+    viewDistrict: '동네',
     exploreNowLabel: '지금 갈 수 있는 곳',
     exploreTitle: '동네마다 다른 서울',
     mapDisclaimerStart: '구를 누르면 그 동네의 장소가 나온다. 진한 색은 ',
@@ -143,6 +151,8 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'Photo: Korea Tourism Organization',
     morePhotos: (n: number) => `${n} photos — tap to see the next`,
 
+    viewSeason: 'Seasons',
+    viewDistrict: 'Neighborhoods',
     exploreNowLabel: 'Where you can go now',
     exploreTitle: 'A different Seoul in every neighborhood',
     mapDisclaimerStart: 'Tap a district to see its places. Bold districts ',
@@ -204,6 +214,8 @@ const translations: Record<Language, Translations> = {
     photoCredit: '写真：韓国観光公社',
     morePhotos: (n: number) => `写真${n}枚 — タップで次へ`,
 
+    viewSeason: '季節',
+    viewDistrict: '街めぐり',
     exploreNowLabel: '今行ける場所',
     exploreTitle: '街ごとに違うソウル',
     mapDisclaimerStart: '区をタップするとその街の場所が出てきます。濃い色は',
@@ -265,6 +277,8 @@ const translations: Record<Language, Translations> = {
     photoCredit: '照片：韩国旅游组织',
     morePhotos: (n: number) => `照片 ${n} 张 — 点击查看下一张`,
 
+    viewSeason: '季节',
+    viewDistrict: '街区',
     exploreNowLabel: '现在可以去的地方',
     exploreTitle: '每个街区都不一样的首尔',
     mapDisclaimerStart: '点击区可查看该区域的地点。深色表示',
@@ -326,6 +340,8 @@ const translations: Record<Language, Translations> = {
     photoCredit: '照片：韓國觀光公社',
     morePhotos: (n: number) => `照片 ${n} 張 — 點擊查看下一張`,
 
+    viewSeason: '季節',
+    viewDistrict: '街區',
     exploreNowLabel: '現在可以去的地方',
     exploreTitle: '每個街區都不一樣的首爾',
     mapDisclaimerStart: '點擊區可查看該區域的地點。深色表示',
@@ -387,6 +403,8 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'Ảnh: Tổ chức Du lịch Hàn Quốc',
     morePhotos: (n: number) => `${n} ảnh — chạm để xem tiếp`,
 
+    viewSeason: 'Mùa',
+    viewDistrict: 'Khu phố',
     exploreNowLabel: 'Các địa điểm bạn có thể đến ngay',
     exploreTitle: 'Mỗi khu phố một Seoul khác',
     mapDisclaimerStart: 'Chạm vào một quận để xem các địa điểm. Màu đậm là ',
@@ -448,6 +466,8 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'Foto: Organización de Turismo de Corea',
     morePhotos: (n: number) => `${n} fotos — toca para ver la siguiente`,
 
+    viewSeason: 'Temporadas',
+    viewDistrict: 'Barrios',
     exploreNowLabel: 'Lugares donde puedes ir ahora',
     exploreTitle: 'Un Seúl distinto en cada barrio',
     mapDisclaimerStart: 'Toca un distrito para ver sus lugares. Los distritos en color ',
@@ -509,6 +529,8 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'Photo : Organisation du Tourisme de Corée',
     morePhotos: (n: number) => `${n} photos — appuyez pour la suivante`,
 
+    viewSeason: 'Saisons',
+    viewDistrict: 'Quartiers',
     exploreNowLabel: 'Où vous pouvez aller maintenant',
     exploreTitle: 'Un Séoul différent dans chaque quartier',
     mapDisclaimerStart: 'Touchez un arrondissement pour voir ses lieux. Les arrondissements colorés ',
@@ -570,6 +592,8 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'Foto: Korea Tourism Organization',
     morePhotos: (n: number) => `${n} Fotos — zum Weiterblättern tippen`,
 
+    viewSeason: 'Jahreszeiten',
+    viewDistrict: 'Stadtviertel',
     exploreNowLabel: 'Orte, die Sie jetzt besuchen können',
     exploreTitle: 'In jedem Viertel ein anderes Seoul',
     mapDisclaimerStart: 'Tippen Sie auf einen Bezirk, um seine Orte zu sehen. Farbige Bezirke ',
@@ -631,6 +655,8 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'Фото: Организация туризма Кореи',
     morePhotos: (n: number) => `${n} фото — нажмите, чтобы посмотреть следующее`,
 
+    viewSeason: 'Сезоны',
+    viewDistrict: 'Районы',
     exploreNowLabel: 'Куда вы можете пойти сейчас',
     exploreTitle: 'В каждом районе — свой Сеул',
     mapDisclaimerStart: 'Нажмите на район, чтобы увидеть места. Яркие районы ',
@@ -692,6 +718,8 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'Foto: Organisasi Pariwisata Korea',
     morePhotos: (n: number) => `${n} foto — ketuk untuk berikutnya`,
 
+    viewSeason: 'Musim',
+    viewDistrict: 'Lingkungan',
     exploreNowLabel: 'Tempat yang bisa Anda kunjungi sekarang',
     exploreTitle: 'Seoul yang berbeda di tiap lingkungan',
     mapDisclaimerStart: 'Ketuk sebuah distrik untuk melihat tempatnya. Distrik berwarna ',
@@ -753,6 +781,8 @@ const translations: Record<Language, Translations> = {
     photoCredit: 'ภาพ: องค์การท่องเที่ยวเกาหลี',
     morePhotos: (n: number) => `${n} ภาพ — แตะเพื่อดูภาพถัดไป`,
 
+    viewSeason: 'ฤดูกาล',
+    viewDistrict: 'ย่าน',
     exploreNowLabel: 'สถานที่ที่คุณสามารถไปได้ตอนนี้',
     exploreTitle: 'โซลที่แตกต่างในทุกย่าน',
     mapDisclaimerStart: 'แตะเขตเพื่อดูสถานที่ในย่านนั้น สีเข้มคือ',

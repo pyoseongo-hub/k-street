@@ -4,6 +4,7 @@ import MonthlyFestivalPanel from "./components/MonthlyFestivalPanel";
 import DistrictExplorer from "./components/DistrictExplorer";
 import LanguageSelector from "./components/LanguageSelector";
 import CoverPicker from "./components/CoverPicker";
+import HomeSwitch from "./components/HomeSwitch";
 
 function App() {
   const { toggleTheme, getIcon } = useTheme();
@@ -46,10 +47,9 @@ function App() {
         {new URLSearchParams(window.location.search).get("pick") === "cover" ? (
           <CoverPicker />
         ) : (
-          <>
-            <MonthlyFestivalPanel />
-            <DistrictExplorer />
-          </>
+          // 🔀 두 화면을 위아래로 잇지 않고 맨 위 단추로 오간다 — 자료가 늘수록
+          //    아래 화면이 멀어지던 문제(HomeSwitch.tsx 주석 참고).
+          <HomeSwitch season={<MonthlyFestivalPanel />} district={<DistrictExplorer />} />
         )}
       </main>
 
