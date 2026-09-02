@@ -27,19 +27,25 @@ const NIGHT = /(야경|남산|서울타워|한강|반포|달빛|청계천|서울
 export default function CoverPicker() {
   const [only, setOnly] = useState(true);
 
-  const shots = useMemo(() => {
+  // 🔢 번호는 **전체 목록 기준**으로 매긴다. 걸러 낸 뒤에 매기면 '야경만 보기'와
+  // '전체 보기'에서 같은 번호가 다른 사진을 가리켜, 사용자가 말한 번호가 무엇인지
+  // 헷갈린다(#124가 두 개가 된다). 번호를 먼저 매기고 그다음에 거른다.
+  const all = useMemo(() => {
     const out: { n: number; url: string; place: string; gu: string }[] = [];
     let n = 0;
     for (const entry of Object.values(GALLERY)) {
-      const name = entry.name ?? "";
-      if (only && !NIGHT.test(name)) continue;
       for (const p of entry.photos ?? []) {
         n += 1;
-        out.push({ n, url: p.url, place: name, gu: entry.gu ?? "" });
+        out.push({ n, url: p.url, place: entry.name ?? "", gu: entry.gu ?? "" });
       }
     }
     return out;
-  }, [only]);
+  }, []);
+
+  const shots = useMemo(
+    () => (only ? all.filter((s) => NIGHT.test(s.place)) : all),
+    [all, only]
+  );
 
   return (
     <div className="pick-wrap">
@@ -54,7 +60,7 @@ export default function CoverPicker() {
         </p>
         <div className="pick-toggle">
           <button className={only ? "on" : ""} onClick={() => setOnly(true)}>
-            🌃 야경·전망만 ({only ? shots.length : "…"})
+            🌃 야경·전망만
           </button>
           <button className={!only ? "on" : ""} onClick={() => setOnly(false)}>
             전체 보기
