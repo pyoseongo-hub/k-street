@@ -63,8 +63,16 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "강북구", category: "festival", name: "4·19혁명 국민문화제", startMonth: 4, endMonth: 4, dateLabel: "4월", confirmed: true },
   { id: id(), gu: "강서구", category: "festival", name: "허준축제", startMonth: 9, endMonth: 9, confirmed: true },
   { id: id(), gu: "관악구", category: "festival", name: "관악강감찬축제", startMonth: 10, endMonth: 10, confirmed: true },
-  { id: id(), gu: "광진구", category: "festival", name: "광진뮤직페스타", confirmed: true },
+  // 8월 확인(2026-09-01): "한여름 밤의 음악축제"로 헤럴드경제·시정일보·청년개발자신문이
+  // 모두 8월 29일 개최를 보도했고, 광진구청 포털 축제/행사 안내에도 같은 날짜가 있다.
+  // 자양역 2·3번 출구 일대(뚝섬한강공원).
+  { id: id(), gu: "광진구", category: "festival", name: "광진뮤직페스타", startMonth: 8, endMonth: 8, confirmed: true },
   { id: id(), gu: "구로구", category: "festival", name: "구로G페스티벌", startMonth: 9, endMonth: 9, dateLabel: "9월 말(2025: 9.26–28)", confirmed: true },
+  // ⚠️ 달을 **비워 둔다**(2026-09-01). 회차마다 달라서다 —
+  // 2023년 5월 13~14일 · 2024년 5월 · **2025년 10월 18~19일**.
+  // 시기를 옮긴 것으로 보이지만 한 번뿐이라 "매년 10월"이라고 단정할 수 없다.
+  // CLAUDE.md: 숫자가 엇갈리면 숫자를 적지 않는다. 2026년 회차가 공고되면 그때 넣는다.
+  // (지금은 계절 화면에 안 나온다 — 그게 틀린 달로 나오는 것보다 낫다.)
   { id: id(), gu: "금천구", category: "festival", name: "금천하모니축제", confirmed: true },
   // "탈축제 · 댄싱노원 거리페스티벌"은 원래 서로 다른 두 축제인 줄 알고 나눴었는데
   // (2026-08-29), 다시 찾아보니 "탈축제"는 옛 이름이고 2023년 새이름 공모로
@@ -73,7 +81,9 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "노원구", category: "festival", name: "댄싱노원 거리페스티벌", startMonth: 9, endMonth: 9, note: "옛 이름 '노원탈축제', 2023년 개명. 9월 이틀간", confirmed: true },
   { id: id(), gu: "도봉구", category: "festival", name: "도봉별빛축제", startMonth: 6, endMonth: 6, dateLabel: "6월(2025: 6.13–17)", note: "중랑천(도봉구청~세월교 540m)", confirmed: true },
   { id: id(), gu: "동대문구", category: "festival", name: "동대문페스티벌", startMonth: 10, endMonth: 10, note: "공연예술축제 — 거리예술·음악공연", confirmed: true },
-  { id: id(), gu: "동작구", category: "festival", name: "도심 속 바다축제", confirmed: true },
+  // 10월 확인(2026-09-01): 제8회가 10월 25~26일 노량진수산시장 일대에서 열렸다.
+  // 문화일보·헤럴드경제·시정일보와 서울문화포털 자치구브랜드축제 안내가 일치한다.
+  { id: id(), gu: "동작구", category: "festival", name: "도심 속 바다축제", startMonth: 10, endMonth: 10, note: "노량진수산시장 일대", confirmed: true },
   { id: id(), gu: "마포구", category: "festival", name: "서울와우북페스티벌", startMonth: 10, endMonth: 10, dateLabel: "10월(2024: 10.11–13)", note: "책문화예술축제, 구의 유일한 축제는 아닐 수 있음", confirmed: true },
   { id: id(), gu: "서대문구", dong: "창천동", category: "festival", name: "신촌물총축제", startMonth: 7, endMonth: 7, dateLabel: "7월 이틀간", note: "2016년 서울시 브랜드축제 선정, 연세로", lat: 37.5526, lng: 126.9342, confirmed: true },
   { id: id(), gu: "서초구", category: "festival", name: "서초뮤직앤아트페스티벌", startMonth: 6, endMonth: 6, dateLabel: "6월(2024: 6.8–9)", confirmed: true },
@@ -85,7 +95,7 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "성북구", dong: "성북동", category: "festival", name: "성북 세계음식축제 누리마실", startMonth: 5, endMonth: 6, note: "연도마다 5월 또는 6월(17회 2025.5.18, 18회 2026.6.7 예정)", confirmed: true },
   { id: id(), gu: "성북구", dong: "석관동", category: "festival", name: "성북거리문화축제 다다페스타", startMonth: 9, endMonth: 9, note: "이주민·다문화가정·청년이 함께하는 거리문화축제", confirmed: true },
   { id: id(), gu: "송파구", category: "festival", name: "한성백제문화제", startMonth: 10, endMonth: 10, dateLabel: "10.23–25", note: "올림픽공원", confirmed: true },
-  { id: id(), gu: "양천구", dong: "신정동", category: "festival", name: "양천가족거리축제", note: "별도로 '우리동네축제'(14개 동 개별 개최)도 운영", lat: 37.5480, lng: 126.8490, confirmed: true },
+  { id: id(), gu: "양천구", dong: "신정동", category: "festival", name: "양천가족거리축제", startMonth: 10, endMonth: 10, note: "별도로 '우리동네축제'(14개 동 개별 개최)도 운영", lat: 37.5480, lng: 126.8490, confirmed: true },
   { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "여의도 봄꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4.3–4.7", note: "여의서로 국회 뒤편, 무료", lat: 37.5275, lng: 126.9255, confirmed: true },
   { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "서울세계불꽃축제", startMonth: 9, endMonth: 9, dateLabel: "9.5", note: "여의도·이촌 한강공원, 무료", lat: 37.5255, lng: 126.9225, confirmed: true },
   { id: id(), gu: "용산구", category: "festival", name: "이태원 지구촌축제", startMonth: 10, endMonth: 10, note: "매년 10월경, 연도별 정확한 날짜는 미확정", confirmed: true },
