@@ -369,6 +369,12 @@ async function main() {
         lat: final.lat,
         lng: final.lng,
         source: confidence,
+        // 🚨 **이 좌표가 어느 장소의 것인지**를 함께 적는다 (2026-09-02).
+        //    id(ks_1, ks_2…)는 seed.ts에 적힌 **순서**로 매겨지므로, 항목 하나를
+        //    지우면 그 뒤가 전부 한 칸씩 밀린다. 그러면 좌표가 조용히 남의 것이
+        //    된다 — 실제로 7곳이 그랬다(무수골이 경춘선숲길 좌표를 갖고 있었다).
+        //    앱은 이 이름이 지금 이름과 다르면 그 좌표를 버린다(lib/coords.ts).
+        for: p.name,
         matchedName: hit.place_name,
         // 축제는 이름이 아니라 '열리는 곳'으로 찾았다는 것을 남긴다. 나중에
         // matchedName만 보고 "상호가 다른데?" 하고 지우는 일을 막는다.

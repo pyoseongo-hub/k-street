@@ -354,7 +354,9 @@ const ALL_PLACES_RAW: Place[] = [
 // 좌표(현재 5곳)는 그대로 두고, 없는 곳만 coords.json 값으로 채운다.
 function withFetchedCoords(p: Place): Place {
   if (p.lat != null && p.lng != null) return p;
-  const c = getCoords(p.id);
+  // 이름을 함께 넘긴다 — id만 믿으면 seed에서 항목 하나만 지워도 그 뒤 좌표가
+  // 통째로 남의 것이 된다(lib/coords.ts 주석: 2026-09-02에 7곳이 그랬다).
+  const c = getCoords(p.id, p.name);
   return c ? { ...p, lat: c.lat, lng: c.lng } : p;
 }
 

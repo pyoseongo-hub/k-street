@@ -3,355 +3,365 @@
     "lat": 37.5605464139303,
     "lng": 127.130257802123,
     "source": "kakao+naver",
-    "matchedName": "강동선사문화축제"
+    "matchedName": "강동선사문화축제",
+    "for": "강동선사문화축제"
   },
   "ks_5": {
     "lat": 37.47215523409015,
     "lng": 126.95931754074891,
     "source": "kakao",
-    "matchedName": "관악강감찬축제"
+    "matchedName": "관악강감찬축제",
+    "for": "관악강감찬축제"
   },
   "ks_7": {
     "lat": 37.4994597699782,
     "lng": 126.870852611389,
     "source": "kakao+naver",
-    "matchedName": "구로G페스티벌"
+    "matchedName": "구로G페스티벌",
+    "for": "구로G페스티벌"
   },
   "ks_8": {
     "lat": 37.4564517676336,
     "lng": 126.89529456752109,
     "source": "kakao+naver",
-    "matchedName": "금천하모니축제"
+    "matchedName": "금천하모니축제",
+    "for": "금천하모니축제"
   },
   "ks_b": {
     "lat": 37.5693012458811,
     "lng": 127.069818250445,
     "source": "kakao+naver",
-    "matchedName": "2026 동대문페스티벌"
+    "matchedName": "2026 동대문페스티벌",
+    "for": "동대문페스티벌"
   },
   "ks_g": {
     "lat": 37.5443222301513,
     "lng": 127.037617759165,
     "source": "kakao+naver",
-    "matchedName": "서울숲"
-  },
-  "ks_h": {
-    "lat": 37.5443222301513,
-    "lng": 127.037617759165,
-    "source": "kakao+naver",
-    "matchedName": "서울숲"
+    "matchedName": "서울숲",
+    "for": "서울숲 JAZZ페스티벌"
   },
   "ks_p": {
     "lat": 37.595983411417976,
     "lng": 126.91527212642877,
     "source": "kakao+naver",
-    "matchedName": "은평누리축제"
+    "matchedName": "은평누리축제",
+    "for": "은평누리축제"
   },
   "ks_t": {
     "lat": 37.5076807262772,
     "lng": 127.099112837006,
     "source": "kakao",
-    "matchedName": "석촌호수 서호"
+    "matchedName": "석촌호수 서호",
+    "for": "석촌호수 호수벚꽃축제"
   },
   "ks_y": {
     "lat": 37.509885050791176,
     "lng": 127.02366486128717,
     "source": "kakao+naver",
-    "matchedName": "영동전통시장"
+    "matchedName": "영동전통시장",
+    "for": "영동전통시장"
   },
   "ks_z": {
     "lat": 37.5508604719985,
     "lng": 127.128819574465,
     "source": "kakao+naver",
-    "matchedName": "암사종합시장"
+    "matchedName": "암사종합시장",
+    "for": "암사종합시장"
   },
   "ks_10": {
     "lat": 37.6307995708701,
     "lng": 127.023445986404,
     "source": "kakao+naver",
-    "matchedName": "수유전통시장"
+    "matchedName": "수유전통시장",
+    "for": "수유전통시장"
   },
   "ks_11": {
     "lat": 37.5432550860872,
     "lng": 126.843533944782,
     "source": "kakao+naver",
-    "matchedName": "화곡본동시장"
+    "matchedName": "화곡본동시장",
+    "for": "화곡본동시장"
   },
   "ks_12": {
     "lat": 37.4825831435359,
     "lng": 126.926766602033,
     "source": "kakao+naver",
-    "matchedName": "신원시장"
+    "matchedName": "신원시장",
+    "for": "신원시장"
   },
   "ks_13": {
     "lat": 37.563918547280025,
     "lng": 127.08131407116785,
     "source": "kakao+naver",
-    "matchedName": "중곡제일시장"
+    "matchedName": "중곡제일시장",
+    "for": "중곡제일시장"
   },
   "ks_14": {
     "lat": 37.4896296933168,
     "lng": 126.885620029839,
     "source": "kakao+naver",
-    "matchedName": "구로시장"
+    "matchedName": "구로시장",
+    "for": "구로시장"
   },
   "ks_15": {
     "lat": 37.4577266926762,
     "lng": 126.90487738542274,
     "source": "kakao+naver",
-    "matchedName": "비단길현대시장"
+    "matchedName": "비단길현대시장",
+    "for": "비단길현대시장"
   },
   "ks_16": {
     "lat": 37.62223342424176,
     "lng": 127.0759131838009,
     "source": "kakao+naver",
-    "matchedName": "공릉동도깨비시장"
+    "matchedName": "공릉동도깨비시장",
+    "for": "공릉동도깨비시장"
   },
   "ks_18": {
     "lat": 37.579039740933176,
     "lng": 127.03943411053307,
     "source": "kakao",
-    "matchedName": "경동시장"
+    "matchedName": "경동시장",
+    "for": "경동시장"
   },
   "ks_1a": {
     "lat": 37.555885964724716,
     "lng": 126.90626589039096,
     "source": "kakao+naver",
-    "matchedName": "망원시장"
+    "matchedName": "망원시장",
+    "for": "망원시장"
   },
   "ks_1b": {
     "lat": 37.59093296706887,
     "lng": 126.94317699687126,
     "source": "kakao+naver",
-    "matchedName": "인왕시장"
+    "matchedName": "인왕시장",
+    "for": "인왕시장"
   },
   "ks_1d": {
     "lat": 37.57068418982381,
     "lng": 127.04127141025155,
     "source": "kakao+naver",
-    "matchedName": "마장축산물시장"
+    "matchedName": "마장축산물시장",
+    "for": "마장축산물시장"
   },
   "ks_1e": {
     "lat": 37.60840566256222,
     "lng": 127.00951216588793,
     "source": "kakao+naver",
-    "matchedName": "정릉시장"
+    "matchedName": "정릉시장",
+    "for": "정릉시장"
   },
   "ks_1f": {
     "lat": 37.4938884413034,
     "lng": 127.110927336635,
     "source": "kakao",
-    "matchedName": "가락시장"
+    "matchedName": "가락시장",
+    "for": "가락시장"
   },
   "ks_1g": {
     "lat": 37.521299011452,
     "lng": 126.876570609796,
     "source": "kakao+naver",
-    "matchedName": "오목교중앙시장"
+    "matchedName": "오목교중앙시장",
+    "for": "오목교중앙시장"
   },
   "ks_1k": {
     "lat": 37.57005529646949,
     "lng": 126.99894728223626,
     "source": "kakao+naver",
-    "matchedName": "광장시장"
+    "matchedName": "광장시장",
+    "for": "광장시장"
   },
   "ks_1m": {
     "lat": 37.55918176072071,
     "lng": 126.9776267740439,
     "source": "kakao+naver",
-    "matchedName": "남대문시장"
+    "matchedName": "남대문시장",
+    "for": "남대문시장"
   },
   "ks_1n": {
     "lat": 37.5970099681642,
     "lng": 127.098252841871,
     "source": "kakao+naver",
-    "matchedName": "우림시장"
+    "matchedName": "우림시장",
+    "for": "우림시장"
   },
   "ks_1o": {
     "lat": 37.4818037639471,
     "lng": 127.046595188917,
     "source": "kakao",
-    "matchedName": "양재천"
+    "matchedName": "양재천",
+    "for": "양재천 벚꽃길(강남 구간)"
   },
   "ks_1r": {
     "lat": 37.5693958477101,
     "lng": 126.835037244018,
     "source": "kakao+naver",
-    "matchedName": "서울식물원"
+    "matchedName": "서울식물원",
+    "for": "서울식물원"
   },
   "ks_1s": {
     "lat": 37.4717760936514,
     "lng": 126.933822240006,
     "source": "kakao+naver",
-    "matchedName": "도림천"
+    "matchedName": "도림천",
+    "for": "도림천 벚꽃길"
   },
   "ks_1t": {
     "lat": 37.5499772549675,
     "lng": 127.080235171998,
     "source": "kakao+naver",
-    "matchedName": "서울어린이대공원"
+    "matchedName": "서울어린이대공원",
+    "for": "서울어린이대공원 벚꽃길"
   },
   "ks_1u": {
     "lat": 37.5092339002167,
     "lng": 126.874219829815,
     "source": "kakao",
-    "matchedName": "안양천"
+    "matchedName": "안양천",
+    "for": "안양천 벚꽃길(구로 구간)"
   },
   "ks_1v": {
     "lat": 37.4549899165436,
     "lng": 126.892828210117,
     "source": "kakao+naver",
-    "matchedName": "안양천"
+    "matchedName": "안양천",
+    "for": "안양천 벚꽃 뚝방길"
   },
   "ks_1w": {
     "lat": 37.6674832700593,
     "lng": 127.049231777697,
     "source": "kakao",
-    "matchedName": "중랑천"
+    "matchedName": "중랑천",
+    "for": "중랑천 송정·응봉지구"
   },
   "ks_20": {
     "lat": 37.5691469686793,
     "lng": 126.978647068151,
     "source": "kakao+naver",
-    "matchedName": "청계천"
+    "matchedName": "청계천",
+    "for": "청계천 꽃길"
   },
   "ks_21": {
     "lat": 37.50255501820018,
     "lng": 126.97462182443368,
     "source": "kakao+naver",
-    "matchedName": "국립서울현충원"
+    "matchedName": "국립서울현충원",
+    "for": "국립서울현충원 수양벚꽃길"
   },
   "ks_22": {
     "lat": 37.57213335842017,
     "lng": 126.88740136782069,
     "source": "kakao+naver",
-    "matchedName": "난지천공원"
+    "matchedName": "난지천공원",
+    "for": "난지천공원"
   },
   "ks_25": {
     "lat": 37.4818037639471,
     "lng": 127.046595188917,
     "source": "kakao",
-    "matchedName": "양재천"
+    "matchedName": "양재천",
+    "for": "양재천 벚꽃길(서초 구간)"
   },
   "ks_26": {
     "lat": 37.5443222301513,
     "lng": 127.037617759165,
     "source": "kakao+naver",
-    "matchedName": "서울숲"
+    "matchedName": "서울숲",
+    "for": "서울숲 벚꽃길"
   },
   "ks_27": {
     "lat": 37.5896369994549,
     "lng": 127.010901313346,
     "source": "kakao",
-    "matchedName": "성북천"
+    "matchedName": "성북천",
+    "for": "성북천"
   },
   "ks_28": {
     "lat": 37.5076807262772,
     "lng": 127.099112837006,
     "source": "kakao",
-    "matchedName": "석촌호수 서호"
+    "matchedName": "석촌호수 서호",
+    "for": "석촌호수 벚꽃길"
   },
   "ks_29": {
     "lat": 37.5092339002167,
     "lng": 126.874219829815,
     "source": "kakao",
-    "matchedName": "안양천"
+    "matchedName": "안양천",
+    "for": "안양천 벚꽃길(양천 구간)"
   },
   "ks_2d": {
     "lat": 37.5800209041095,
     "lng": 126.906234509821,
     "source": "kakao",
-    "matchedName": "불광천"
+    "matchedName": "불광천",
+    "for": "불광천 벚꽃길"
   },
   "ks_2e": {
     "lat": 37.5691469686793,
     "lng": 126.978647068151,
     "source": "kakao+naver",
-    "matchedName": "청계천"
+    "matchedName": "청계천",
+    "for": "청계천"
   },
   "ks_2f": {
     "lat": 37.5524979951415,
     "lng": 126.989316855952,
     "source": "kakao+naver",
-    "matchedName": "남산공원"
+    "matchedName": "남산공원",
+    "for": "남산"
   },
   "ks_2g": {
     "lat": 37.5797811776291,
     "lng": 127.096083733232,
     "source": "kakao+naver",
-    "matchedName": "사가정공원"
+    "matchedName": "사가정공원",
+    "for": "사가정공원"
   },
   "ks_2i": {
     "lat": 37.52455769460598,
     "lng": 127.03528760485077,
     "source": "kakao+naver",
-    "matchedName": "도산근린공원"
+    "matchedName": "도산근린공원",
+    "for": "도산근린공원"
   },
   "ks_2j": {
     "lat": 37.57031028608262,
     "lng": 127.15640943958527,
     "source": "kakao+naver",
-    "matchedName": "서울테마산책길 고덕 자갈길"
+    "matchedName": "서울테마산책길 고덕 자갈길",
+    "for": "고덕 자갈길"
   },
   "ks_2k": {
     "lat": 37.62360650548208,
     "lng": 127.04157251496886,
     "source": "kakao+naver",
-    "matchedName": "북서울꿈의숲"
+    "matchedName": "북서울꿈의숲",
+    "for": "북서울꿈의숲"
   },
   "ks_2l": {
     "lat": 37.5738000661701,
     "lng": 126.839068805614,
     "source": "kakao+naver",
-    "matchedName": "궁산근린공원"
+    "matchedName": "궁산근린공원",
+    "for": "궁산근린공원"
   },
   "ks_2m": {
     "lat": 37.471296925982,
     "lng": 126.960361423801,
     "source": "kakao+naver",
-    "matchedName": "낙성대공원"
+    "matchedName": "낙성대공원",
+    "for": "낙성대공원 산책로"
   },
   "ks_2n": {
     "lat": 37.5292974433415,
     "lng": 127.06892112991,
     "source": "kakao+naver",
-    "matchedName": "뚝섬한강공원"
-  },
-  "ks_2q": {
-    "lat": 37.620691807133,
-    "lng": 127.078706040469,
-    "source": "kakao+naver",
-    "matchedName": "경춘선숲길"
-  },
-  "ks_2r": {
-    "lat": 37.6781213031547,
-    "lng": 127.029945030295,
-    "source": "kakao",
-    "matchedName": "무수골"
-  },
-  "ks_2s": {
-    "lat": 37.58006017100839,
-    "lng": 127.0349730190753,
-    "source": "kakao+naver",
-    "matchedName": "서울테마산책길 홍릉 두물길"
-  },
-  "ks_2t": {
-    "lat": 37.50255501820018,
-    "lng": 126.97462182443368,
-    "source": "kakao+naver",
-    "matchedName": "국립서울현충원"
-  },
-  "ks_2u": {
-    "lat": 37.558803479324,
-    "lng": 126.925338455597,
-    "source": "kakao+naver",
-    "matchedName": "경의선숲길"
-  },
-  "ks_2z": {
-    "lat": 37.5205340628851,
-    "lng": 127.120812783275,
-    "source": "kakao",
-    "matchedName": "올림픽공원"
+    "matchedName": "뚝섬한강공원",
+    "for": "뚝섬한강공원 산책로"
   },
   "ks_3": {
     "lat": 37.648576279141,
@@ -359,7 +369,8 @@
     "source": "kakao+naver",
     "matchedName": "국립4.19민주묘지",
     "venueFor": "4·19혁명 국민문화제",
-    "venueWhy": "국립4·19민주묘지 일대 — 강북구 보도자료, 헤럴드경제"
+    "venueWhy": "국립4·19민주묘지 일대 — 강북구 보도자료, 헤럴드경제",
+    "for": "4·19혁명 국민문화제"
   },
   "ks_4": {
     "lat": 37.5678799742891,
@@ -367,7 +378,8 @@
     "source": "kakao+naver",
     "matchedName": "허준박물관",
     "venueFor": "허준축제",
-    "venueWhy": "가양동 허준근린공원·허준박물관·허준테마거리 일대 — 강서구 문화관광"
+    "venueWhy": "가양동 허준근린공원·허준박물관·허준테마거리 일대 — 강서구 문화관광",
+    "for": "허준축제"
   },
   "ks_6": {
     "lat": 37.5292974433415,
@@ -375,7 +387,8 @@
     "source": "kakao+naver",
     "matchedName": "뚝섬한강공원",
     "venueFor": "광진뮤직페스타",
-    "venueWhy": "뚝섬한강공원(자양역 2·3번 출구 일대) — 광진구 보도자료, 헤럴드경제·시정일보"
+    "venueWhy": "뚝섬한강공원(자양역 2·3번 출구 일대) — 광진구 보도자료, 헤럴드경제·시정일보",
+    "for": "광진뮤직페스타"
   },
   "ks_9": {
     "lat": 37.6563403513278,
@@ -383,7 +396,8 @@
     "source": "kakao+naver",
     "matchedName": "노원역 4호선",
     "venueFor": "댄싱노원 거리페스티벌",
-    "venueWhy": "노원역(KB국민은행 사거리) 일원 — 노원문화재단, 서울문화포털"
+    "venueWhy": "노원역(KB국민은행 사거리) 일원 — 노원문화재단, 서울문화포털",
+    "for": "댄싱노원 거리페스티벌"
   },
   "ks_a": {
     "lat": 37.6686914100331,
@@ -391,7 +405,8 @@
     "source": "kakao+naver",
     "matchedName": "도봉구청",
     "venueFor": "도봉별빛축제",
-    "venueWhy": "중랑천(도봉구청~세월교 540m) — 도봉구 문화관광, 아시아경제"
+    "venueWhy": "중랑천(도봉구청~세월교 540m) — 도봉구 문화관광, 아시아경제",
+    "for": "도봉별빛축제"
   },
   "ks_c": {
     "lat": 37.514766187527776,
@@ -399,7 +414,8 @@
     "source": "kakao+naver",
     "matchedName": "노량진수산물도매시장",
     "venueFor": "도심 속 바다축제",
-    "venueWhy": "노량진수산시장(축구장·야구장) — 동작구 보도자료, 디지털동작문화대전. 지도에는 '노량진수산시장'이라는 이름이 없고 '노량진수산시장성당'이 먼저 잡혀서(2026-09-02), 정식 명칭과 역을 후보로 함께 둔다"
+    "venueWhy": "노량진수산시장(축구장·야구장) — 동작구 보도자료, 디지털동작문화대전. 지도에는 '노량진수산시장'이라는 이름이 없고 '노량진수산시장성당'이 먼저 잡혀서(2026-09-02), 정식 명칭과 역을 후보로 함께 둔다",
+    "for": "도심 속 바다축제"
   },
   "ks_d": {
     "lat": 37.550813816795745,
@@ -407,7 +423,8 @@
     "source": "kakao+naver",
     "matchedName": "서울생활문화센터 서교",
     "venueFor": "서울와우북페스티벌",
-    "venueWhy": "서울생활문화센터 서교(양화로 72) — 서울문화포털. 2019년까지는 홍대거리였다가 2022년부터 이곳으로 옮겼다"
+    "venueWhy": "서울생활문화센터 서교(양화로 72) — 서울문화포털. 2019년까지는 홍대거리였다가 2022년부터 이곳으로 옮겼다",
+    "for": "서울와우북페스티벌"
   },
   "ks_f": {
     "lat": 37.506192165253054,
@@ -415,7 +432,8 @@
     "source": "kakao",
     "matchedName": "서울고속버스터미널(경부)",
     "venueFor": "서초뮤직앤아트페스티벌",
-    "venueWhy": "서울고속버스터미널 광장 — 서초문화재단, 서울문화포털"
+    "venueWhy": "서울고속버스터미널 광장 — 서초문화재단, 서울문화포털",
+    "for": "서초뮤직앤아트페스티벌"
   },
   "ks_i": {
     "lat": 37.58842461354086,
@@ -423,7 +441,8 @@
     "source": "kakao",
     "matchedName": "한성대입구역 4호선",
     "venueFor": "성북 세계음식축제 누리마실",
-    "venueWhy": "성북로 일대(성북천 분수마루) — 성북문화재단, 아시아경제·헤럴드경제"
+    "venueWhy": "성북로 일대(성북천 분수마루) — 성북문화재단, 아시아경제·헤럴드경제",
+    "for": "성북 세계음식축제 누리마실"
   },
   "ks_j": {
     "lat": 37.6110662949573,
@@ -431,7 +450,8 @@
     "source": "kakao+naver",
     "matchedName": "서울석관초등학교",
     "venueFor": "성북거리문화축제 다다페스타",
-    "venueWhy": "석관초등학교 앞 돌곶이로22길 일대와 학교운동장 — 성북구 보도자료"
+    "venueWhy": "석관초등학교 앞 돌곶이로22길 일대와 학교운동장 — 성북구 보도자료",
+    "for": "성북거리문화축제 다다페스타"
   },
   "ks_k": {
     "lat": 37.5205340628851,
@@ -439,7 +459,8 @@
     "source": "kakao",
     "matchedName": "올림픽공원",
     "venueFor": "한성백제문화제",
-    "venueWhy": "올림픽공원(평화의광장·88잔디마당) — 송파구 축제 공식 페이지, 한성백제박물관"
+    "venueWhy": "올림픽공원(평화의광장·88잔디마당) — 송파구 축제 공식 페이지, 한성백제박물관",
+    "for": "한성백제문화제"
   },
   "ks_o": {
     "lat": 37.5345252050511,
@@ -447,7 +468,8 @@
     "source": "kakao",
     "matchedName": "이태원역 6호선",
     "venueFor": "이태원 지구촌축제",
-    "venueWhy": "이태원관광특구 일원(이태원로) — 용산구, 한국관광공사 대한민국구석구석"
+    "venueWhy": "이태원관광특구 일원(이태원로) — 용산구, 한국관광공사 대한민국구석구석",
+    "for": "이태원 지구촌축제"
   },
   "ks_r": {
     "lat": 37.5655638710672,
@@ -455,7 +477,8 @@
     "source": "kakao+naver",
     "matchedName": "덕수궁",
     "venueFor": "정동야행",
-    "venueWhy": "덕수궁·정동길 일대 — 중구 보도자료, 서울문화포털"
+    "venueWhy": "덕수궁·정동길 일대 — 중구 보도자료, 서울문화포털",
+    "for": "정동야행"
   },
   "ks_s": {
     "lat": 37.615527242263454,
@@ -463,7 +486,8 @@
     "source": "kakao+naver",
     "matchedName": "중랑장미공원",
     "venueFor": "중랑 서울장미축제",
-    "venueWhy": "중랑장미공원(묵동교~겸재교 중랑천 일원) — 중랑구청 문화행사 안내"
+    "venueWhy": "중랑장미공원(묵동교~겸재교 중랑천 일원) — 중랑구청 문화행사 안내",
+    "for": "중랑 서울장미축제"
   },
   "ks_u": {
     "lat": 37.6403309941757,
@@ -471,7 +495,8 @@
     "source": "kakao",
     "matchedName": "시립노원청소년센터",
     "venueFor": "정월대보름 한마당",
-    "venueWhy": "당현천 하류(노원청소년센터 앞~중계동성당 앞) — 노원구 보도자료 2026"
+    "venueWhy": "당현천 하류(노원청소년센터 앞~중계동성당 앞) — 노원구 보도자료 2026",
+    "for": "정월대보름 한마당"
   },
   "ks_v": {
     "lat": 37.5093789801021,
@@ -479,7 +504,8 @@
     "source": "kakao+naver",
     "matchedName": "서울놀이마당",
     "venueFor": "정월대보름 행사(송파다리밟기 · 달집태우기)",
-    "venueWhy": "석촌호수 일대 서울놀이마당 — 송파구 보도자료, 시정일보·딜라이브뉴스"
+    "venueWhy": "석촌호수 일대 서울놀이마당 — 송파구 보도자료, 시정일보·딜라이브뉴스",
+    "for": "정월대보름 행사(송파다리밟기 · 달집태우기)"
   },
   "ks_w": {
     "lat": 37.5174334563325,
@@ -487,7 +513,8 @@
     "source": "kakao+naver",
     "matchedName": "신정교 공영주차장",
     "venueFor": "정월대보름 민속축제",
-    "venueWhy": "안양천 둔치 신정교 아래 제1·2야구장 — 양천구청 축제 안내, 헤럴드경제"
+    "venueWhy": "안양천 둔치 신정교 아래 제1·2야구장 — 양천구청 축제 안내, 헤럴드경제",
+    "for": "정월대보름 민속축제"
   },
   "ks_x": {
     "lat": 37.576226410093,
@@ -495,25 +522,29 @@
     "source": "kakao+naver",
     "matchedName": "운현궁",
     "venueFor": "운현궁 설맞이",
-    "venueWhy": "운현궁 앞마당 — 종로문화플랫폼, 서울한옥포털"
+    "venueWhy": "운현궁 앞마당 — 종로문화플랫폼, 서울한옥포털",
+    "for": "운현궁 설맞이"
   },
   "ks_17": {
     "lat": 37.66507369343768,
     "lng": 127.0351012728891,
     "source": "kakao+naver",
-    "matchedName": "방학동도깨비시장"
+    "matchedName": "방학동도깨비시장",
+    "for": "방학동 도깨비시장"
   },
   "ks_1h": {
     "lat": 37.522709383885,
     "lng": 126.905179566968,
     "source": "kakao",
-    "matchedName": "영등포시장역 5호선"
+    "matchedName": "영등포시장역 5호선",
+    "for": "영등포시장"
   },
   "ks_1l": {
     "lat": 37.580769707479256,
     "lng": 126.96994796046572,
     "source": "kakao+naver",
-    "matchedName": "통인시장"
+    "matchedName": "통인시장",
+    "for": "통인시장"
   },
   "ks_1": {
     "lat": 37.5230412388766,
@@ -521,204 +552,238 @@
     "source": "kakao+naver",
     "matchedName": "도산공원공영주차장",
     "venueFor": "강남페스티벌",
-    "venueWhy": "도산공원 — 사용자 지시(2026-09-02). 전에는 코엑스로 잡아 뒀었다(강남구 보도자료의 개막제 장소). 이 축제는 코엑스·영동대로·마루공원 등 강남 여러 곳에서 열흘간 열려 '한 점'이 없는데, 손님이 찾아갈 기준점으로 도산공원을 쓴다"
+    "venueWhy": "도산공원 — 사용자 지시(2026-09-02). 전에는 코엑스로 잡아 뒀었다(강남구 보도자료의 개막제 장소). 이 축제는 코엑스·영동대로·마루공원 등 강남 여러 곳에서 열흘간 열려 '한 점'이 없는데, 손님이 찾아갈 기준점으로 도산공원을 쓴다",
+    "for": "강남페스티벌"
   },
   "ks_1z": {
     "lat": 37.6596867039654,
     "lng": 127.032013855648,
     "source": "kakao+naver",
-    "matchedName": "발바닥공원"
+    "matchedName": "발바닥공원",
+    "for": "발바닥공원"
   },
   "ks_23": {
     "lat": 37.5663859671922,
     "lng": 126.914288083984,
     "source": "kakao",
-    "matchedName": "홍제천"
+    "matchedName": "홍제천",
+    "for": "홍제천"
   },
   "ks_2a": {
     "lat": 37.53351080966769,
     "lng": 126.91493215270192,
     "source": "kakao",
-    "matchedName": "여의서로"
+    "matchedName": "여의서로",
+    "for": "여의서로"
   },
   "ks_2c": {
     "lat": 37.548940860784064,
     "lng": 126.98939657811628,
     "source": "kakao+naver",
-    "matchedName": "남산"
+    "matchedName": "남산",
+    "for": "남산"
   },
   "ks_2p": {
     "lat": 37.620691807133,
     "lng": 127.078706040469,
     "source": "kakao+naver",
-    "matchedName": "경춘선숲길"
+    "matchedName": "경춘선숲길",
+    "for": "경춘선숲길"
   },
   "ks_34": {
     "lat": 37.5906452023744,
     "lng": 126.981743337459,
     "source": "kakao",
-    "matchedName": "삼청동길"
+    "matchedName": "삼청동길",
+    "for": "삼청동길"
   },
   "ks_35": {
     "lat": 37.557109027019116,
     "lng": 126.97541367376364,
     "source": "kakao",
-    "matchedName": "서울로7017"
+    "matchedName": "서울로7017",
+    "for": "서울로7017"
   },
   "ks_3a": {
     "lat": 37.5537585658907,
     "lng": 126.982413256957,
     "source": "kakao",
-    "matchedName": "남산둘레길"
+    "matchedName": "남산둘레길",
+    "for": "남산둘레길"
   },
   "ks_40": {
     "lat": 37.575422861783345,
     "lng": 126.94816634534915,
     "source": "kakao",
-    "matchedName": "안산자락길"
+    "matchedName": "안산자락길",
+    "for": "안산자락길"
   },
   "ks_41": {
     "lat": 37.5482528089186,
     "lng": 127.029834156041,
     "source": "kakao",
-    "matchedName": "응봉산"
+    "matchedName": "응봉산",
+    "for": "응봉산"
   },
   "ks_43": {
     "lat": 37.5685396959502,
     "lng": 126.886883825534,
     "source": "kakao",
-    "matchedName": "하늘공원"
+    "matchedName": "하늘공원",
+    "for": "하늘공원"
   },
   "ks_44": {
     "lat": 37.578627489574416,
     "lng": 126.9800979573524,
     "source": "kakao+naver",
-    "matchedName": "국립현대미술관 서울"
+    "matchedName": "국립현대미술관 서울",
+    "for": "국립현대미술관 서울관"
   },
   "ks_45": {
     "lat": 37.573031041794664,
     "lng": 126.96346810881765,
     "source": "kakao+naver",
-    "matchedName": "딜쿠샤"
+    "matchedName": "딜쿠샤",
+    "for": "딜쿠샤"
   },
   "ks_46": {
     "lat": 37.5808175214949,
     "lng": 126.984172997364,
     "source": "kakao+naver",
-    "matchedName": "가회동백인제가옥"
+    "matchedName": "가회동백인제가옥",
+    "for": "백인제가옥"
   },
   "ks_47": {
     "lat": 37.56410579887691,
     "lng": 126.9736988634857,
     "source": "kakao+naver",
-    "matchedName": "서울시립미술관 서소문본관"
+    "matchedName": "서울시립미술관 서소문본관",
+    "for": "서울시립미술관"
   },
   "ks_48": {
     "lat": 37.5659384342432,
     "lng": 126.973740099183,
     "source": "kakao+naver",
-    "matchedName": "국립현대미술관 덕수궁"
+    "matchedName": "국립현대미술관 덕수궁",
+    "for": "국립현대미술관 덕수궁관"
   },
   "ks_49": {
     "lat": 37.52392249364415,
     "lng": 126.98018716127058,
     "source": "kakao+naver",
-    "matchedName": "국립중앙박물관"
+    "matchedName": "국립중앙박물관",
+    "for": "국립중앙박물관"
   },
   "ks_4a": {
     "lat": 37.59357930433219,
     "lng": 126.99696540704932,
     "source": "kakao+naver",
-    "matchedName": "간송미술관"
+    "matchedName": "간송미술관",
+    "for": "간송미술관"
   },
   "ks_4e": {
     "lat": 37.51845542521429,
     "lng": 127.03453476229417,
     "source": "kakao+naver",
-    "matchedName": "국립관세박물관"
+    "matchedName": "국립관세박물관",
+    "for": "관세박물관"
   },
   "ks_4f": {
     "lat": 37.5225509345279,
     "lng": 127.036041194408,
     "source": "kakao+naver",
-    "matchedName": "호림박물관 신사분관"
+    "matchedName": "호림박물관 신사분관",
+    "for": "호림박물관 신사분관"
   },
   "ks_4g": {
     "lat": 37.5239206199026,
     "lng": 127.035507899928,
     "source": "kakao+naver",
-    "matchedName": "도산공원 도산안창호기념관"
+    "matchedName": "도산공원 도산안창호기념관",
+    "for": "도산안창호기념관"
   },
   "ks_4h": {
     "lat": 37.5154126785182,
     "lng": 127.120895017165,
     "source": "kakao+naver",
-    "matchedName": "한성백제박물관"
+    "matchedName": "한성백제박물관",
+    "for": "한성백제박물관"
   },
   "ks_4i": {
     "lat": 37.51688595123324,
     "lng": 127.1180921409908,
     "source": "kakao+naver",
-    "matchedName": "소마미술관"
+    "matchedName": "소마미술관",
+    "for": "소마미술관"
   },
   "ks_4j": {
     "lat": 37.45774583773384,
     "lng": 126.89553915985154,
     "source": "kakao+naver",
-    "matchedName": "서울시립 서서울미술관"
+    "matchedName": "서울시립 서서울미술관",
+    "for": "서울시립 서서울미술관"
   },
   "ks_4k": {
     "lat": 37.5276400128879,
     "lng": 126.873777133469,
     "source": "kakao+naver",
-    "matchedName": "오목한미술관"
+    "matchedName": "오목한미술관",
+    "for": "오목한미술관"
   },
   "ks_4l": {
     "lat": 37.5678799742891,
     "lng": 126.850998403189,
     "source": "kakao+naver",
-    "matchedName": "허준박물관"
+    "matchedName": "허준박물관",
+    "for": "허준박물관"
   },
   "ks_4o": {
     "lat": 37.5508665042994,
     "lng": 127.077592558039,
     "source": "kakao",
-    "matchedName": "서울상상나라"
+    "matchedName": "서울상상나라",
+    "for": "서울상상나라"
   },
   "ks_4t": {
     "lat": 37.580632384055335,
     "lng": 127.03763602036537,
     "source": "kakao+naver",
-    "matchedName": "서울약령시한의약박물관"
+    "matchedName": "서울약령시한의약박물관",
+    "for": "서울약령시한의약박물관"
   },
   "ks_4u": {
     "lat": 37.576752258195064,
     "lng": 126.93785805574039,
     "source": "kakao+naver",
-    "matchedName": "서대문자연사박물관"
+    "matchedName": "서대문자연사박물관",
+    "for": "서대문자연사박물관"
   },
   "ks_4v": {
     "lat": 37.47833986691578,
     "lng": 127.01186193751934,
     "source": "kakao",
-    "matchedName": "예술의전당 서울서예박물관"
+    "matchedName": "예술의전당 서울서예박물관",
+    "for": "예술의전당 서울서예박물관"
   },
   "ks_4x": {
     "lat": 37.6404045181413,
     "lng": 126.937978427932,
     "source": "kakao+naver",
-    "matchedName": "은평역사한옥박물관"
+    "matchedName": "은평역사한옥박물관",
+    "for": "은평역사한옥박물관"
   },
   "ks_50": {
     "lat": 37.50255501820018,
     "lng": 126.97462182443368,
     "source": "kakao+naver",
-    "matchedName": "국립서울현충원"
+    "matchedName": "국립서울현충원",
+    "for": "국립서울현충원"
   },
   "ks_51": {
     "lat": 37.5551677747939,
     "lng": 127.04472141627,
     "source": "kakao",
-    "matchedName": "한양대학교 박물관"
+    "matchedName": "한양대학교 박물관",
+    "for": "한양대학교박물관"
   }
 }
