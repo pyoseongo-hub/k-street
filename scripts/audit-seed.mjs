@@ -8,7 +8,13 @@
 // 실행: node scripts/audit-seed.mjs
 
 import { execSync } from "node:child_process";
-import { writeFileSync, rmSync } from "node:fs";
+import { writeFileSync, rmSync, readFileSync } from "node:fs";
+
+// 좌표·사진은 id를 열쇠로 쓰는 별도 파일이다. B1-2가 이 둘을 seed와 대조한다.
+const dataFile = (f) =>
+  JSON.parse(readFileSync(new URL(`../src/data/${f}`, import.meta.url), "utf-8"));
+const coordsJson = dataFile("coords.json");
+const manualPhotosJson = dataFile("manual-photos.json");
 
 // seed.ts는 TypeScript라 Node가 바로 import 못 한다 — esbuild로 즉석 변환한다.
 const tmp = new URL("../.audit-seed.mjs", import.meta.url);
@@ -42,6 +48,42 @@ const add = (bucket, code, title, items) => {
     seen.set(p.id, p.name);
   }
   add(blocking, "B1", "id 충돌", dups);
+}
+
+// ❌ B1-2 — **좌표·사진이 남의 것에 붙어 있지 않은가** (2026-09-02에 18곳이 그랬다)
+//
+// seed.ts의 id는 `ks_1, ks_2 …`로 **파일에 적힌 순서**로 매겨진다. 항목 하나를
+// 지우거나 끼워 넣으면 그 뒤가 전부 한 칸씩 밀리는데, coords.json과
+// manual-photos.json은 옛 번호를 그대로 들고 있어 조용히 남의 것이 된다:
+//
+//     무수골(도봉구)       → 경춘선숲길 좌표 + 경춘선숲길 사진
+//     서울시립미술관(중구)  → 딜쿠샤 사진 (종로구의 다른 곳)
+//
+// **화면도 안 깨지고 문법도 안 틀려서 눈으로는 절대 못 잡는다.** 좌표 7곳·사진
+// 11곳이 그 상태였고, 사용자가 "하나하나 수동검사 해"라고 해서야 찾았다.
+// 앱에는 이름 대조 장치를 넣었지만(lib/coords.ts·manualPhotos.ts), 그건 **틀린 걸
+// 안 쓰는 것**이지 고치는 게 아니다 — 여기서 잡아야 다시 채울 수 있다.
+{
+  const sq = (s) => String(s ?? "").normalize("NFC").replace(/[^가-힣a-zA-Z0-9]/g, "");
+  const near = (a, b) => sq(a).includes(sq(b)) || sq(b).includes(sq(a));
+  const byId = new Map(ALL_PLACES.map((p) => [p.id, p]));
+  const check = (file, json, label) => {
+    const bad = [];
+    for (const [id, v] of Object.entries(json)) {
+      if (id.startsWith("_")) continue;
+      const p = byId.get(id);
+      if (!p) continue; // 관광공사 쪽(tour_…)이거나 지워진 항목 — 여기선 안 본다
+      // 축제 장소표로 찾은 좌표는 일부러 다른 이름이다(venueFor).
+      const stamped = v.for ?? v.matchedName;
+      if (v.venueFor || !stamped) continue;
+      if (!near(stamped, p.name)) bad.push(`${p.gu} ${p.name} ← "${stamped}" (${file})`);
+    }
+    return bad;
+  };
+  add(blocking, "B1-2", "좌표·사진이 남의 장소 것에 붙어 있다 (id 밀림)", [
+    ...check("coords.json", coordsJson, "좌표"),
+    ...check("manual-photos.json", manualPhotosJson, "사진"),
+  ]);
 }
 
 // ❌ B2 — 알 수 없는 카테고리

@@ -398,7 +398,9 @@ function mergeWithTourPlaces(hand: Place[]): Place[] {
 // 관광공사에서 이미 사진을 받은 곳은 그대로 두고, 없는 곳만 채운다.
 function withManualPhoto(p: Place): Place {
   if (p.image) return p;
-  const m = getManualPhoto(p.id);
+  // 이름을 함께 넘긴다 — id만 믿으면 화면에 남의 집 사진이 뜬다
+  // (lib/manualPhotos.ts 주석: 2026-09-02에 11곳이 그랬다).
+  const m = getManualPhoto(p.id, p.name);
   return m ? { ...p, image: m.image, thumb: m.image, photoCredit: m.source } : p;
 }
 

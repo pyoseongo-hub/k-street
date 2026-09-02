@@ -22,7 +22,16 @@ export interface ManualPhoto {
   license: string;
   /** 원본 페이지. 나중에 출처를 다시 확인할 때 쓴다. */
   pageUrl?: string;
+  /**
+   * 관광공사에서 자동으로 찾아 넣은 경우, **그때 맞춘 장소 이름**.
+   * 지금 이름과 다르면 그 사진은 안 쓴다 — 아래 getManualPhoto 주석 참고.
+   */
+  matchedName?: string;
 }
+
+const sameName = (a?: string, b?: string) =>
+  String(a ?? "").normalize("NFC").replace(/[^가-힣a-zA-Z0-9]/g, "") ===
+  String(b ?? "").normalize("NFC").replace(/[^가-힣a-zA-Z0-9]/g, "");
 
 // "_"로 시작하는 열쇠는 파일 안에 적어 둔 설명·규칙이라 자료가 아니다.
 const PHOTOS: Record<string, ManualPhoto> = Object.fromEntries(
@@ -38,8 +47,32 @@ const PHOTOS: Record<string, ManualPhoto> = Object.fromEntries(
   )
 ) as Record<string, ManualPhoto>;
 
-export function getManualPhoto(placeId: string): ManualPhoto | undefined {
-  return PHOTOS[placeId];
+/**
+ * 🚨 **id만 믿지 않는다** (2026-09-02에 11곳이 남의 사진을 달고 있었다).
+ *
+ * seed.ts의 id는 `ks_1, ks_2 …`로 **파일에 적힌 순서**로 매겨진다. 항목 하나를
+ * 지우거나 끼워 넣으면 그 뒤가 전부 밀리는데, 이 파일은 옛 번호를 그대로 들고
+ * 있어 **화면에 남의 집 사진이 뜬다**:
+ *
+ *     서울시립미술관(중구)  → 딜쿠샤 사진 (종로구의 다른 곳)
+ *     관세박물관(강남구)    → 대안공간 루프 사진
+ *     무수골(도봉구)       → 경춘선숲길 사진
+ *
+ * 좌표가 밀린 것과 같은 원인이고(lib/coords.ts 주석), 사진 쪽이 더 나쁘다 —
+ * 좌표는 눌러 봐야 알지만 사진은 **목록에 그냥 보인다.**
+ *
+ * 그래서 자동으로 넣은 사진에는 그때 맞춘 이름(matchedName)이 적혀 있고,
+ * 지금 이름과 다르면 **안 쓴다.** 사진이 없는 곳으로 취급되어 목록에서 빠지거나
+ * 일러스트가 대신 나온다 — 남의 사진을 보여 주는 것보다 낫다.
+ *
+ * matchedName이 없는 항목(사람이 직접 찾아 넣은 것)은 검사하지 않는다 —
+ * 사람이 그 장소를 보고 고른 것이라 밀림과 무관하다.
+ */
+export function getManualPhoto(placeId: string, name?: string): ManualPhoto | undefined {
+  const p = PHOTOS[placeId];
+  if (!p) return undefined;
+  if (name && p.matchedName && !sameName(p.matchedName, name)) return undefined;
+  return p;
 }
 
 export const MANUAL_PHOTO_COUNT = Object.keys(PHOTOS).length;
