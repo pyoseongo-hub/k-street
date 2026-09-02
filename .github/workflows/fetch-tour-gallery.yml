@@ -1,0 +1,86 @@
+name: Fetch tour gallery
+
+# 📷 한 곳에 딸린 사진을 **여러 장** 받아온다(detailImage2).
+# 지금 앱은 목록 API가 주는 대표 이미지 한 장만 쓰는데, 관광공사는 곳마다 사진을
+# 여러 장 갖고 있다 — 그중에 대표 이미지보다 나은 것이 많다(2026-09-02 사용자 지시).
+#
+# apply를 끄면 20곳만 맛보기로 돌려 응답 형식과 장수를 로그로 확인한다.
+# 확인한 뒤 apply를 켜면 전수로 받아 src/data/tour-gallery.json에 저장·커밋한다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "tour-gallery.json에 실제로 저장할지 (꺼두면 로그만 확인)"
+        type: boolean
+        default: false
+      limit:
+        description: "이번 실행에서 처리할 최대 개수 (빈 칸이면 전체)"
+        type: string
+        default: "20"
+
+jobs:
+  fetch-gallery:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      APPLY: ${{ inputs.apply }}
+      LIMIT: ${{ inputs.limit }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Fetch gallery
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        # set -o pipefail이 없으면 node가 죽어도 tee가 성공해 이 단계가 초록불로
+        # 끝난다(2026-09-01 번역 워크플로에서 겪었다). 2>&1로 오류도 로그에 담는다.
+        run: |
+          set -o pipefail
+          ARGS=""
+          if [ -n "$LIMIT" ]; then ARGS="--limit $LIMIT"; fi
+          if [ "$APPLY" = "true" ]; then ARGS="$ARGS --apply"; fi
+          node scripts/fetch-tour-gallery.mjs $ARGS 2>&1 | tee fetch-log.txt
+      - name: Commit tour-gallery.json
+        id: commit
+        if: env.APPLY == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- src/data/tour-gallery.json; then
+            echo "committed=no" >> "$GITHUB_OUTPUT"
+          else
+            git add src/data/tour-gallery.json
+            git commit -m "사진 여러 장 받기 (fetch-tour-gallery) [skip render]"
+            git push
+            echo "committed=yes" >> "$GITHUB_OUTPUT"
+          fi
+      - name: 결과 요약 (Summary에서 바로 확인)
+        if: always()
+        run: |
+          {
+            echo "## 📷 사진 여러 장 받기 결과"
+            echo ""
+            if [ "$APPLY" != "true" ]; then
+              echo "### 👀 맛보기만 했습니다 (저장 안 함)"
+              echo "아래 로그에서 곳마다 사진이 몇 장씩 오는지 확인하고, 괜찮으면 저장을 켜서 다시 실행하세요."
+            elif [ "${{ steps.commit.outputs.committed }}" = "yes" ]; then
+              echo "### ✅ 사진 목록을 저장했습니다"
+            else
+              echo "### ⬜ 이번엔 새로 저장된 게 없습니다"
+              echo "이미 받아 둔 곳만 있었을 때입니다(같은 곳을 두 번 부르지 않습니다)."
+            fi
+            echo ""
+            echo "이번 실행 값 — limit: \`${LIMIT:-(빈 칸 = 전체)}\`, apply: \`$APPLY\`"
+            echo ""
+            echo "<details><summary>🪵 전체 로그 보기</summary>"
+            echo ""
+            echo '```'
+            cat fetch-log.txt 2>/dev/null || echo "(로그 파일이 없습니다)"
+            echo '```'
+            echo "</details>"
+          } >> "$GITHUB_STEP_SUMMARY"
