@@ -60,11 +60,62 @@ async function callTourApi(path, extraParams) {
       signal: controller.signal,
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
+    const text = await res.text();
+    // 🚨 data.go.kr은 오류를 **HTTP 200 + XML**로 돌려주는 일이 잦다(키가 안 맞거나
+    //    신청 안 한 창구를 부를 때). 그대로 JSON.parse하면 "fetch failed"처럼 보이는
+    //    엉뚱한 오류가 나서 원인을 못 찾는다 — 본문 앞머리를 그대로 보여 준다.
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error(`JSON이 아닌 응답: ${text.slice(0, 300).replace(/\s+/g, " ")}`);
+    }
+    const header = data?.response?.header;
+    if (header && header.resultCode && header.resultCode !== "0000") {
+      throw new Error(`API 오류 ${header.resultCode} — ${header.resultMsg}`);
+    }
     const items = data?.response?.body?.items?.item;
     return !items ? [] : Array.isArray(items) ? items : [items];
+  } catch (err) {
+    // fetch가 실패하면 Node는 "fetch failed"만 던지고 진짜 이유는 cause에 숨긴다
+    // (2026-09-02 첫 실행에서 25곳 전부 이 한 줄만 나와 원인을 못 봤다).
+    const cause = err?.cause;
+    const detail = cause?.code || cause?.message;
+    throw new Error(detail ? `${err.message} (${detail})` : err.message);
   } finally {
     clearTimeout(timer);
+  }
+}
+
+/** 첫 호출 전에 창구가 살아 있는지 한 번만 확인한다. 25번 똑같이 실패하는 걸 막는다. */
+async function smokeTest(sampleContentId) {
+  console.log("창구 확인 중…");
+  try {
+    const list = await callTourApi("areaBasedList2", {
+      contentTypeId: "15",
+      areaCode: "1",
+      numOfRows: "1",
+      pageNo: "1",
+    });
+    console.log(`  areaBasedList2 : ✅ (${list.length}건)`);
+  } catch (err) {
+    console.log(`  areaBasedList2 : ❌ ${err.message}`);
+    console.log("  → 목록 창구부터 안 되면 키나 네트워크 문제다. detailImage2 탓이 아니다.");
+    return false;
+  }
+  try {
+    const list = await callTourApi("detailImage2", {
+      contentId: sampleContentId,
+      imageYN: "Y",
+      numOfRows: "10",
+      pageNo: "1",
+    });
+    console.log(`  detailImage2   : ✅ (${list.length}장)`);
+    return true;
+  } catch (err) {
+    console.log(`  detailImage2   : ❌ ${err.message}`);
+    console.log("  → 목록은 되는데 이것만 안 되면, 데이터포털에서 이 창구를 따로 신청해야 한다.");
+    return false;
   }
 }
 
@@ -87,6 +138,12 @@ const todo = targets.filter((t) => !prev[t.contentId]).slice(0, LIMIT);
 console.log(
   `사진을 받을 곳 ${targets.length}곳 중 ${todo.length}곳 처리 (${APPLY ? "저장함" : "맛보기 — 저장 안 함"})\n`
 );
+
+if (todo.length && !(await smokeTest(todo[0].contentId))) {
+  console.log("\n창구가 안 되므로 여기서 멈춘다 — 같은 오류를 수백 번 찍을 필요가 없다.");
+  process.exit(1);
+}
+console.log("");
 
 const result = { ...prev };
 let withMany = 0;
