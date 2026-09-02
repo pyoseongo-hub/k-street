@@ -35,6 +35,31 @@ if (!API_KEY) {
 
 const ROOT = "https://apis.data.go.kr/B551011/KorService2";
 
+// 🔁 관광공사 서버는 하루에 몇 번씩 **접속 자체가 안 열린다**(ConnectTimeoutError).
+//    2026-09-02 하루에만 두 번 겪었고, 둘 다 코드는 그대로인데 다시 돌리니 됐다.
+//    한 번 실패하면 통째로 멈추던 구조라 20분짜리 수집이 첫 호출에서 날아갔다.
+//    자료가 없는 것과 서버가 안 열리는 것은 다른 일이므로, 안 열리는 쪽은 기다렸다
+//    다시 물어본다. 세 번 다 실패하면 그때는 진짜 문제이므로 멈춘다.
+async function fetchWithRetry(url, tries = 4) {
+  const WAITS = [5000, 15000, 30000]; // 5초 → 15초 → 30초. 잠깐 먹통일 때를 넘기려는 것이다.
+  let lastErr;
+  for (let i = 1; i <= tries; i++) {
+    try {
+      return await fetch(url);
+    } catch (e) {
+      lastErr = e;
+      if (i === tries) break;
+      const wait = WAITS[i - 1];
+      // 진짜 이유는 cause에 숨어 있다 — "fetch failed" 한 줄만 보면 원인을 못 찾는다.
+      const why = e?.cause?.code || e?.cause?.message || e?.message;
+      console.log(`     ↳ 관광공사 접속 실패(${i}/${tries}, ${why}) — ${wait / 1000}초 뒤 다시 시도`);
+      await new Promise((r) => setTimeout(r, wait));
+    }
+  }
+  const why = lastErr?.cause?.code || lastErr?.cause?.message || lastErr?.message;
+  throw new Error(`관광공사 서버에 ${tries}번 다 연결하지 못했다 (${why})`);
+}
+
 async function callTourApi(path, extraParams) {
   // serviceKey를 URLSearchParams에 안 넣는 이유는 fetch-coords.mjs 주석 참고
   // (data.go.kr "일반 인증키"가 이미 URL 인코딩된 값이라 이중 인코딩되면 깨짐).
@@ -44,7 +69,7 @@ async function callTourApi(path, extraParams) {
     _type: "json",
     ...extraParams,
   });
-  const res = await fetch(`${ROOT}/${path}?serviceKey=${API_KEY}&${params.toString()}`);
+  const res = await fetchWithRetry(`${ROOT}/${path}?serviceKey=${API_KEY}&${params.toString()}`);
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${path}`);
   const text = await res.text();
   // 🚨 data.go.kr은 오류를 HTTP 200 + XML로 돌려주는 일이 잦다. 그대로 JSON.parse하면
