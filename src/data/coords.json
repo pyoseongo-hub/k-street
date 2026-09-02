@@ -353,14 +353,6 @@
     "source": "kakao",
     "matchedName": "올림픽공원"
   },
-  "ks_1": {
-    "lat": 37.511824182641504,
-    "lng": 127.05915859162609,
-    "source": "kakao+naver",
-    "matchedName": "코엑스",
-    "venueFor": "강남페스티벌",
-    "venueWhy": "코엑스·영동대로 일대 — 강남구 보도자료, 코엑스 VISITOR"
-  },
   "ks_3": {
     "lat": 37.648576279141,
     "lng": 127.007655529176,
