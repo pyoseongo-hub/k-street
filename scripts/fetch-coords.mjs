@@ -115,6 +115,32 @@ function searchVariants(name, gu) {
   // 괄호 안 설명을 뗀 이름. normalize()가 이미 괄호를 공백으로 바꾸므로 원본에서 뗀다.
   const noParen = normalize(name.replace(/\(.*?\)|（.*?）/g, ""));
   if (noParen && !v.includes(noParen) && noParen.length >= 4) v.push(noParen);
+
+  // 🥾 **대시 뒤의 '산·하천 이름'으로도 찾아본다** (2026-09-02).
+  //
+  //    좌표 없는 89곳 중 31곳이 서울둘레길·순성길이었다. 지도에 「서울둘레길
+  //    9코스 — 대모·구룡산」이라는 장소는 없다 — 길에는 시작도 끝도 있어서
+  //    한 점으로 등록되지 않는다. 그런데 **코스 이름이 이미 답을 갖고 있다.**
+  //    대시 뒤에 그 구간의 산 이름이 적혀 있고, 그 산은 지도에 있다.
+  //
+  //      서울둘레길 9코스 — 대모·구룡산  →  "대모산", "구룡산"
+  //      서울둘레길 4코스 — 망우·용마산  →  "망우산", "용마산"
+  //
+  //    ⚠️ 「대모·구룡산」처럼 **앞쪽이 '산'자를 생략**한 표기가 흔하다.
+  //       그냥 쪼개면 "대모"가 되어 아무 데나 걸리므로 '산'을 붙여 준다.
+  //
+  //    억지로 맞추는 게 아니다 — 구 일치 검사와 이름 대조는 그대로라, 그 구에
+  //    그 산이 없으면 여전히 빈 칸으로 남는다(틀린 좌표 < 빈 칸).
+  const afterDash = full.split(/\s*[—–-]\s*/)[1]?.trim();
+  if (afterDash) {
+    const tail = afterDash.split(/\s+/).pop() ?? afterDash; // "대모 구룡산" → "구룡산"
+    const suffix = tail.match(/(산|천|공원|역)$/)?.[1];
+    for (const part of afterDash.split(/\s+/)) {
+      // 끝 낱말은 그대로, 앞 낱말들은 생략된 꼬리("산")를 붙여 되살린다.
+      const cand = /(산|천|공원|역)$/.test(part) ? part : suffix ? part + suffix : null;
+      if (cand && cand.length >= 3 && !v.includes(cand)) v.push(cand);
+    }
+  }
   // 마지막 수단으로만 구를 붙인다 — 붙이면 오히려 0건이 나는 경우가 많다.
   v.push(`${full} ${gu}`);
   return v;
