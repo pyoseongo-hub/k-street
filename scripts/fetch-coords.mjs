@@ -141,6 +141,26 @@ const squash = (s) => nfc(s).replace(/[^가-힣a-zA-Z0-9]/g, "");
 //      가리키는 꼬리표는 통과하고, 위 세 건은 걸러진다(덧붙은 글자 6~8자).
 const EXTRA_CHARS_ALLOWED = 5;
 
+// 🚨 글자 수만으로는 못 거르는 것들 (2026-09-02 2차 미리보기에서 새로 발견):
+//
+//   노량진수산시장 → 노량진수산시장**성당**   ← 성당이다. 시장이 아니다 (덧붙은 글자 2자)
+//   오동공원      → 오동공원…**아파트**      ← (1차에서 걸러졌지만 같은 종류의 사고)
+//
+// 덧붙은 글자가 짧아도 그게 **건물·업종을 바꾸는 말**이면 다른 곳이다. 랜드마크
+// 이름을 앞에 붙인 성당·아파트·상가·횟집은 그 랜드마크가 아니다. 반대로
+// "노원역 4호선"의 '호선', "서울고속버스터미널(경부)"의 '경부'는 같은 곳의
+// 갈래를 가리키는 꼬리표라 통과시켜야 한다.
+//
+// 그래서 **업종을 바꾸는 말이 덧붙었으면 거른다.** 못 고르면 빈 칸으로 둔다.
+const FACILITY_WORDS = [
+  "아파트", "성당", "교회", "사찰", "병원", "의원", "약국", "한의원",
+  // ⚠️ '주차장'은 넣지 않는다 — "신정교 공영주차장"처럼 그 랜드마크에 딸린
+  //    주차장은 실제로 그 자리에 있다. 이름만 빌려 쓰는 성당·아파트와 다르다.
+  "상가", "빌딩", "타워", "오피스텔", "어린이집", "유치원",
+  "학원", "편의점", "은행", "우체국", "주유소", "호텔", "모텔",
+  "횟집", "식당", "카페", "치킨", "노래방", "PC방", "미용실",
+];
+
 function inSameGu(doc, gu) {
   const addr = `${doc.road_address_name ?? ""} ${doc.address_name ?? ""}`;
   return addr.includes(gu);
@@ -165,7 +185,10 @@ function pickBest(docs, target, gu, { minLength = 0 } = {}) {
       const [longer, shorter] = a.length >= t.length ? [a, t] : [t, a];
       if (shorter.length < minLength) return false;
       if (!longer.includes(shorter)) return false;
-      return longer.length - shorter.length <= EXTRA_CHARS_ALLOWED;
+      if (longer.length - shorter.length > EXTRA_CHARS_ALLOWED) return false;
+      // 덧붙은 글자가 업종을 바꾸는 말이면 다른 곳이다(노량진수산시장 vs 노량진수산시장성당).
+      const extra = longer.replace(shorter, "");
+      return !FACILITY_WORDS.some((w) => extra.includes(w));
     }) ?? null
   );
 }
