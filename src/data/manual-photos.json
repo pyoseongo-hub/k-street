@@ -19,5 +19,221 @@
         }
       }
     }
+  },
+  "ks_4": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/63/3557963_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2028176",
+    "auto": true,
+    "matchedName": "허준축제"
+  },
+  "ks_d": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/11/3547511_image2_1.png",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=229057",
+    "auto": true,
+    "matchedName": "서울와우북페스티벌"
+  },
+  "ks_j": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/54/3527554_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=3348362",
+    "auto": true,
+    "matchedName": "성북거리문화축제 <다다페스타>"
+  },
+  "ks_l": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/32/3544832_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=3384023",
+    "auto": true,
+    "matchedName": "양천가족 거리축제"
+  },
+  "ks_z": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/68/2787768_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2741602",
+    "auto": true,
+    "matchedName": "암사종합시장"
+  },
+  "ks_11": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/82/3566882_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2753917",
+    "auto": true,
+    "matchedName": "화곡본동시장"
+  },
+  "ks_14": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/48/3400248_image2_1.JPG",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2592394",
+    "auto": true,
+    "matchedName": "구로시장"
+  },
+  "ks_16": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/99/2779699_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2743742",
+    "auto": true,
+    "matchedName": "공릉동도깨비시장"
+  },
+  "ks_1d": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/38/3463038_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=1253230",
+    "auto": true,
+    "matchedName": "마장 축산물시장"
+  },
+  "ks_1k": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/81/2668981_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=132183",
+    "auto": true,
+    "matchedName": "광장시장"
+  },
+  "ks_1m": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/67/2612867_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=132180",
+    "auto": true,
+    "matchedName": "남대문시장"
+  },
+  "ks_1t": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/61/3355161_image2_1.JPG",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=126490",
+    "auto": true,
+    "matchedName": "서울어린이대공원"
+  },
+  "ks_22": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/24/3565324_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2784060",
+    "auto": true,
+    "matchedName": "난지천공원"
+  },
+  "ks_2g": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/80/3412280_image2_1.JPG",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=1117141",
+    "auto": true,
+    "matchedName": "사가정공원"
+  },
+  "ks_2k": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/44/3540144_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=822384",
+    "auto": true,
+    "matchedName": "북서울꿈의숲"
+  },
+  "ks_2n": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/61/3534561_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=1030763",
+    "auto": true,
+    "matchedName": "뚝섬한강공원"
+  },
+  "ks_2q": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/58/2650858_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2704696",
+    "auto": true,
+    "matchedName": "경춘선숲길"
+  },
+  "ks_36": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/09/3081409_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2495561",
+    "auto": true,
+    "matchedName": "서울로 7017"
+  },
+  "ks_46": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/02/2991502_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=1934593",
+    "auto": true,
+    "matchedName": "국립현대미술관 서울"
+  },
+  "ks_47": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/61/3573161_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2707460",
+    "auto": true,
+    "matchedName": "딜쿠샤"
+  },
+  "ks_48": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/92/3096392_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2481866",
+    "auto": true,
+    "matchedName": "백인제가옥"
+  },
+  "ks_4c": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/43/3464643_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=130511",
+    "auto": true,
+    "matchedName": "간송미술관(서울 보화각)"
+  },
+  "ks_4e": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/81/3542581_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=130348",
+    "auto": true,
+    "matchedName": "대안공간 루프"
+  },
+  "ks_4j": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/55/3502855_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=1916296",
+    "auto": true,
+    "matchedName": "한성백제박물관"
+  },
+  "ks_4o": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/71/3566871_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=1750737",
+    "auto": true,
+    "matchedName": "강동아트센터"
+  },
+  "ks_4q": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/64/3539964_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=1897833",
+    "auto": true,
+    "matchedName": "서울상상나라"
+  },
+  "ks_53": {
+    "image": "http://tong.visitkorea.or.kr/cms/resource/29/3537629_image2_1.jpg",
+    "source": "한국관광공사",
+    "license": "공공누리 제1유형",
+    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=130958",
+    "auto": true,
+    "matchedName": "한양대학교 박물관"
   }
 }
