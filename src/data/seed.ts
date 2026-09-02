@@ -67,6 +67,19 @@ export interface Place {
    * 안내한다). 정확한 날짜는 이름을 눌러 구청 안내에서 보게 한다.
    */
   period?: "early" | "mid" | "late";
+  /**
+   * 축제 전용: **열리는 달이 해마다 옮겨 다니는가.**
+   *
+   * startMonth~endMonth가 두 달에 걸칠 때 뜻이 두 가지다 —
+   *   ① 한 해에 두 달을 **걸쳐서** 열린다 (강남페스티벌: 9월 25일~10월 3일)
+   *   ② 그 해에 한 달만, 다만 **어느 달인지가 해마다 다르다**
+   *      (서울숲 JAZZ페스티벌: 2024년 10월, 2025년 9월)
+   *
+   * 둘 다 9월·10월 목록에 뜨게 해야 손님이 찾을 수 있다. 하지만 ②는 그대로 두면
+   * **9월에 온 손님이 그해 10월 축제를 보러 헛걸음한다.** 그래서 ②에만 이 표시를
+   * 달고 카드에 안내를 띄운다(사용자 지시 2026-09-02: "9 10 다 뜨게 하고 안내문구").
+   */
+  monthVaries?: boolean;
   /** 좌표: TourAPI 또는 공식 위치정보 기반 */
   lat?: number;
   lng?: number;
@@ -78,7 +91,10 @@ const id = () => `ks_${(++seq).toString(36)}`;
 
 // ── 01. 축제 (25/25 확인) ─────────────────────────────────────────
 export const FESTIVALS: Place[] = [
-  { id: id(), gu: "강남구", category: "festival", name: "강남페스티벌", startMonth: 9, endMonth: 10, dateLabel: "9월 말~10월 초", confirmed: true },
+  // 강남구 공식 안내(visitgangnam.net)로 곧장 간다 — 사용자가 준 주소(2026-09-02).
+  // 2025년은 9월 25일~10월 3일로 **한 해에 두 달을 걸쳐** 열렸다. 서울숲 재즈처럼
+  // 달이 옮겨 다니는 것이 아니라 원래 걸치는 축제라, monthVaries는 붙이지 않는다.
+  { id: id(), gu: "강남구", category: "festival", name: "강남페스티벌", startMonth: 9, endMonth: 10, dateLabel: "9월 말~10월 초", officialUrl: "https://www.visitgangnam.net/festival#stages", confirmed: true },
   { id: id(), gu: "강동구", category: "festival", name: "강동선사문화축제", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "1996년 시작, 서울 유일 선사시대 테마 축제", confirmed: true },
   { id: id(), gu: "강북구", category: "festival", name: "4·19혁명 국민문화제", startMonth: 4, endMonth: 4, dateLabel: "4월", confirmed: true },
   { id: id(), gu: "강서구", category: "festival", name: "허준축제", startMonth: 9, endMonth: 9, confirmed: true },
@@ -87,7 +103,11 @@ export const FESTIVALS: Place[] = [
   // 모두 8월 29일 개최를 보도했고, 광진구청 포털 축제/행사 안내에도 같은 날짜가 있다.
   // 자양역 2·3번 출구 일대(뚝섬한강공원).
   { id: id(), gu: "광진구", category: "festival", name: "광진뮤직페스타", startMonth: 8, endMonth: 8, confirmed: true },
-  { id: id(), gu: "구로구", category: "festival", name: "구로G페스티벌", startMonth: 9, endMonth: 9, dateLabel: "9월 말(2025: 9.26–28)", confirmed: true },
+  // 🗓️ "9월 말"이라고 적어 뒀는데 9월 안에서도 옮겨 다닌다 — 2025년 9월 26~28일,
+  //    2026년 9월 19~20일. 달은 9월로 굳어 있으니 **달까지만** 적고 초·중·말은
+  //    비운다(period 주석: 해마다 바뀌는 값은 적지 않는다).
+  //    장소는 안양천 구일역 쪽 — festival-venues.json에 적어 좌표를 찾게 한다.
+  { id: id(), gu: "구로구", category: "festival", name: "구로G페스티벌", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "안양천(구일역) 일대, 점프!구로 + 아시아문화축제 통합", officialUrl: "https://www.guro.go.kr/www/contents.do?key=2976", confirmed: true },
   // ⚠️ 달을 **비워 둔다**(2026-09-01). 회차마다 달라서다 —
   // 2023년 5월 13~14일 · 2024년 5월 · **2025년 10월 18~19일**.
   // 시기를 옮긴 것으로 보이지만 한 번뿐이라 "매년 10월"이라고 단정할 수 없다.
@@ -113,7 +133,7 @@ export const FESTIVALS: Place[] = [
   //    period(초·중순·말)는 **비워 둔다** — 해마다 달라서 어느 쪽도 사실이 아니다.
   //    ⚠️ 「서울재즈페스티벌」(올림픽공원, 송파구, 민간 주최)과 다른 축제다. 이름이
   //       비슷해 자료가 자주 섞인다 — 이쪽은 성동문화재단이 서울숲에서 여는 것이다.
-  { id: id(), gu: "성동구", dong: "성수동1가", category: "festival", name: "서울숲 JAZZ페스티벌", startMonth: 9, endMonth: 10, dateLabel: "9~10월", note: "서울숲 가족마당, 성동문화재단", officialUrl: "https://www.seoulforestjazz.com/", confirmed: true },
+  { id: id(), gu: "성동구", dong: "성수동1가", category: "festival", name: "서울숲 JAZZ페스티벌", startMonth: 9, endMonth: 10, monthVaries: true, note: "서울숲 가족마당, 성동문화재단", officialUrl: "https://www.seoulforestjazz.com/", confirmed: true },
   { id: id(), gu: "성동구", category: "festival", name: "세계민속춤축제", startMonth: 9, endMonth: 9, dateLabel: "9월 말", confirmed: true },
   // WebSearch로 확인(2026-08-29): 누리마실(성북동, 6월경, 세계 음식·문화)과
   // 다다페스타(석관동, 9월, 성북거리문화축제)는 서로 다른 장소·시기의 별개 행사다

@@ -684,6 +684,19 @@ button {
   line-height: 1.45;
 }
 
+/* ⚠️ 열리는 달이 해마다 옮겨 다니는 축제에만 붙는 안내.
+   fc-note와 달리 **줄을 자르지 않는다** — 잘리면 "9월 또는 10월"의 뒷말이
+   사라져서 안내가 안내 구실을 못 한다. 헛걸음을 막으려고 넣은 줄이다. */
+.fc-varies {
+  font-size: 12.5px;
+  line-height: 1.45;
+  margin-top: 5px;
+  padding: 6px 9px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--festival) 12%, transparent);
+  color: var(--text);
+}
+
 .empty-note {
   font-size: 13px;
   color: var(--text-muted);

@@ -39,6 +39,24 @@ function opensIn(f: (typeof ALL_FESTIVALS)[number], month: number): boolean {
   return month >= f.startMonth && month <= end;
 }
 
+/** 걸린 달을 그 언어로 이어 붙인다 — "9월·10월", "September · October". */
+function monthsLabel(
+  f: (typeof ALL_FESTIVALS)[number],
+  t: { months: Record<number, string> }
+): string {
+  const start = f.startMonth;
+  if (start == null) return "";
+  const end = f.endMonth ?? start;
+  const out: string[] = [];
+  // 12월 → 1월처럼 해를 넘기는 축제도 있으므로 12에서 1로 돌아가며 센다.
+  for (let m = start, guard = 0; guard < 12; guard++) {
+    out.push(t.months[m]);
+    if (m === end) break;
+    m = m === 12 ? 1 : m + 1;
+  }
+  return out.join(" · ");
+}
+
 export default function MonthlyFestivalPanel() {
   const { t, language } = useLanguage();
   const [month, setMonth] = useState(nowMonth);
@@ -187,6 +205,12 @@ export default function MonthlyFestivalPanel() {
                         그래서 **한국어일 때만 그 문구를 쓰고**, 다른 언어에서는
                         달(+초·중·하순)로 만들어 준다 — 덜 자세하지만 번역이 된다. */}
                     {(() => {
+                      // 🗓️ 달이 해마다 옮겨 다니는 축제는 **걸린 달을 다 적는다**
+                      //    ("9월·10월"). 첫 달만 적으면 10월에 열리는 해에 9월이라고
+                      //    말하는 셈이다(seed.ts monthVaries 주석 참고).
+                      if (f.monthVaries) {
+                        return <span className="fc-date">{monthsLabel(f, t)}</span>;
+                      }
                       // 번역이 있으면 사람이 적어 둔 기간 문구를 그 언어로 쓴다
                       // ("9월 말~10월 초"처럼 달보다 자세하다). 번역이 아직 없으면
                       // 달(+초·중·하순)로 대신한다 — 덜 자세하지만 늘 읽힌다.
@@ -220,6 +244,14 @@ export default function MonthlyFestivalPanel() {
                     <span className="fc-theme" style={{ "--cc": "var(--festival)" } as CSSProperties}>
                       {THEME_ICON[k]} {t.themeLabels[k]}
                     </span>
+                  )}
+                  {/* ⚠️ 열리는 달이 해마다 옮겨 다니는 축제. 9월·10월 목록에 둘 다
+                      띄우되(그래야 찾을 수 있다), **그해에는 둘 중 한 달만 열린다**는
+                      것을 여기서 말해 준다. 이 줄이 없으면 9월에 온 손님이 그해 10월
+                      축제를 보러 헛걸음한다(사용자 지시 2026-09-02: "9 10 다 뜨게 하고
+                      안내문구"). 올해 날짜는 이름을 눌러 공식 안내에서 본다. */}
+                  {f.monthVaries && (
+                    <div className="fc-varies">⚠️ {t.festivalMonthVaries(monthsLabel(f, t))}</div>
                   )}
                   {f.note && <div className="fc-note">{translateText(f.note, language)}</div>}
                   <MapDirections

@@ -49,6 +49,13 @@ export interface Translations {
   /** "10월 중순" — 정확한 날짜는 일부러 안 적는다(Place.period 주석 참고) */
   monthPeriod: (month: string, period: "early" | "mid" | "late") => string;
   festivalDateDisclaimer: string;
+  /**
+   * ⚠️ 열리는 달이 해마다 옮겨 다니는 축제에만 붙는 안내.
+   * months에는 걸린 달이 그 언어로 들어온다("9월 · 10월").
+   * **그해에는 둘 중 한 달만 열린다**는 뜻이 반드시 드러나야 한다 — 이 줄이 없으면
+   * 9월에 온 손님이 그해 10월 축제를 보러 헛걸음한다.
+   */
+  festivalMonthVaries: (months: string) => string;
   /** 내 위치의 구를 찾는 버튼 */
   myLocationFind: string;
   /** 구를 찾았을 때 — "지금 용산구에 계세요" */
@@ -109,6 +116,7 @@ const translations: Record<Language, Translations> = {
     themeLabels: { nature: '꽃·자연', light: '빛·불꽃', music: '음악·춤', food: '먹거리', history: '역사·전통', street: '동네·거리' },
     monthPeriod: (month, period) => `${month} ${period === 'early' ? '초' : period === 'mid' ? '중순' : '말'}`,
     festivalDateDisclaimer: '날짜는 해마다 바뀝니다. 이름을 누르면 그 구청의 공식 안내로 갑니다.',
+    festivalMonthVaries: (m) => `해마다 ${m} 중 한 달에 열립니다 — 올해 날짜는 이름을 눌러 확인하세요.`,
     myLocationFind: '📍 내 위치',
     myLocationHere: (gu) => `지금 ${gu}에 계세요`,
     myLocationOutside: '서울 밖에 계세요',
@@ -172,6 +180,7 @@ const translations: Record<Language, Translations> = {
     themeLabels: { nature: 'Flowers & nature', light: 'Lights & fireworks', music: 'Music & dance', food: 'Food & drink', history: 'History & tradition', street: 'Streets & neighborhoods' },
     monthPeriod: (month, period) => `${period === 'early' ? 'Early' : period === 'mid' ? 'Mid' : 'Late'} ${month}`,
     festivalDateDisclaimer: 'Dates shift a little every year. Tap a name for the district office’s official notice.',
+    festivalMonthVaries: (m) => `Held in one of ${m}, and which one changes each year — tap the name for this year's dates.`,
     myLocationFind: '📍 My location',
     myLocationHere: (gu) => `You're in ${gu}`,
     myLocationOutside: "You're outside Seoul",
@@ -235,6 +244,7 @@ const translations: Record<Language, Translations> = {
     themeLabels: { nature: '花・自然', light: '光・花火', music: '音楽・踊り', food: 'グルメ', history: '歴史・伝統', street: '街・通り' },
     monthPeriod: (month, period) => `${month}${period === 'early' ? '上旬' : period === 'mid' ? '中旬' : '下旬'}`,
     festivalDateDisclaimer: '日程は毎年少しずつ変わります。名前をタップすると区役所の公式案内が開きます。',
+    festivalMonthVaries: (m) => `毎年 ${m} のいずれか1か月に開催されます。今年の日程は名前をタップしてご確認ください。`,
     myLocationFind: '📍 現在地',
     myLocationHere: (gu) => `いま ${gu} にいます`,
     myLocationOutside: 'ソウルの外にいます',
@@ -298,6 +308,7 @@ const translations: Record<Language, Translations> = {
     themeLabels: { nature: '花与自然', light: '灯光与烟花', music: '音乐与舞蹈', food: '美食', history: '历史与传统', street: '街区' },
     monthPeriod: (month, period) => `${month}${period === 'early' ? '上旬' : period === 'mid' ? '中旬' : '下旬'}`,
     festivalDateDisclaimer: '日期每年略有变动。点击名称可查看区厅的官方公告。',
+    festivalMonthVaries: (m) => `每年在 ${m} 中的某一个月举办，具体月份逐年不同 — 点击名称查看今年日期。`,
     myLocationFind: '📍 我的位置',
     myLocationHere: (gu) => `您现在在${gu}`,
     myLocationOutside: '您在首尔以外',
@@ -361,6 +372,7 @@ const translations: Record<Language, Translations> = {
     themeLabels: { nature: '花與自然', light: '燈光與煙火', music: '音樂與舞蹈', food: '美食', history: '歷史與傳統', street: '街區' },
     monthPeriod: (month, period) => `${month}${period === 'early' ? '上旬' : period === 'mid' ? '中旬' : '下旬'}`,
     festivalDateDisclaimer: '日期每年略有變動。點擊名稱可查看區廳的官方公告。',
+    festivalMonthVaries: (m) => `每年在 ${m} 其中一個月舉辦，實際月份逐年不同 — 點擊名稱查看今年日期。`,
     myLocationFind: '📍 我的位置',
     myLocationHere: (gu) => `您現在在${gu}`,
     myLocationOutside: '您在首爾以外',
@@ -424,6 +436,7 @@ const translations: Record<Language, Translations> = {
     themeLabels: { nature: 'Hoa & thiên nhiên', light: 'Ánh sáng & pháo hoa', music: 'Âm nhạc & vũ điệu', food: 'Ẩm thực', history: 'Lịch sử & truyền thống', street: 'Phố & khu dân cư' },
     monthPeriod: (month, period) => `${period === 'early' ? 'Đầu' : period === 'mid' ? 'Giữa' : 'Cuối'} ${month}`,
     festivalDateDisclaimer: 'Ngày tổ chức thay đổi mỗi năm. Nhấn vào tên để xem thông báo chính thức của quận.',
+    festivalMonthVaries: (m) => `Được tổ chức vào một trong các tháng ${m}, thay đổi theo từng năm — nhấn vào tên để xem ngày năm nay.`,
     myLocationFind: '📍 Vị trí của tôi',
     myLocationHere: (gu) => `Bạn đang ở ${gu}`,
     myLocationOutside: 'Bạn đang ở ngoài Seoul',
@@ -487,6 +500,7 @@ const translations: Record<Language, Translations> = {
     themeLabels: { nature: 'Flores y naturaleza', light: 'Luces y fuegos artificiales', music: 'Música y danza', food: 'Gastronomía', history: 'Historia y tradición', street: 'Calles y barrios' },
     monthPeriod: (month, period) => `${period === 'early' ? 'Principios' : period === 'mid' ? 'Mediados' : 'Finales'} de ${month}`,
     festivalDateDisclaimer: 'Las fechas cambian cada año. Toca un nombre para ver el aviso oficial del distrito.',
+    festivalMonthVaries: (m) => `Se celebra en uno de estos meses (${m}) y cambia cada año: toca el nombre para ver las fechas de este año.`,
     myLocationFind: '📍 Mi ubicación',
     myLocationHere: (gu) => `Estás en ${gu}`,
     myLocationOutside: 'Estás fuera de Seúl',
@@ -550,6 +564,7 @@ const translations: Record<Language, Translations> = {
     themeLabels: { nature: 'Fleurs et nature', light: 'Lumières et feux d’artifice', music: 'Musique et danse', food: 'Gastronomie', history: 'Histoire et tradition', street: 'Rues et quartiers' },
     monthPeriod: (month, period) => `${period === 'early' ? 'Début' : period === 'mid' ? 'Mi-' : 'Fin'} ${month}`,
     festivalDateDisclaimer: 'Les dates changent chaque année. Touchez un nom pour l’annonce officielle de l’arrondissement.',
+    festivalMonthVaries: (m) => `A lieu l'un de ces mois (${m}), et cela change chaque année — appuyez sur le nom pour les dates de cette année.`,
     myLocationFind: '📍 Ma position',
     myLocationHere: (gu) => `Vous êtes à ${gu}`,
     myLocationOutside: 'Vous êtes hors de Séoul',
@@ -613,6 +628,7 @@ const translations: Record<Language, Translations> = {
     themeLabels: { nature: 'Blüten & Natur', light: 'Lichter & Feuerwerk', music: 'Musik & Tanz', food: 'Essen & Trinken', history: 'Geschichte & Tradition', street: 'Straßen & Viertel' },
     monthPeriod: (month, period) => `${period === 'early' ? 'Anfang' : period === 'mid' ? 'Mitte' : 'Ende'} ${month}`,
     festivalDateDisclaimer: 'Die Termine ändern sich jedes Jahr. Tippen Sie auf einen Namen für die offizielle Ankündigung des Bezirks.',
+    festivalMonthVaries: (m) => `Findet in einem dieser Monate statt (${m}) und wechselt jedes Jahr – tippen Sie auf den Namen für die diesjährigen Termine.`,
     myLocationFind: '📍 Mein Standort',
     myLocationHere: (gu) => `Sie sind in ${gu}`,
     myLocationOutside: 'Sie sind außerhalb von Seoul',
@@ -676,6 +692,7 @@ const translations: Record<Language, Translations> = {
     themeLabels: { nature: 'Цветы и природа', light: 'Огни и фейерверки', music: 'Музыка и танцы', food: 'Еда и напитки', history: 'История и традиции', street: 'Улицы и кварталы' },
     monthPeriod: (month, period) => `${period === 'early' ? 'Начало' : period === 'mid' ? 'Середина' : 'Конец'} — ${month}`,
     festivalDateDisclaimer: 'Даты меняются каждый год. Нажмите на название, чтобы открыть официальное объявление района.',
+    festivalMonthVaries: (m) => `Проводится в один из этих месяцев (${m}), и каждый год месяц разный — нажмите на название, чтобы узнать даты этого года.`,
     myLocationFind: '📍 Моё местоположение',
     myLocationHere: (gu) => `Вы в районе ${gu}`,
     myLocationOutside: 'Вы за пределами Сеула',
@@ -739,6 +756,7 @@ const translations: Record<Language, Translations> = {
     themeLabels: { nature: 'Bunga & alam', light: 'Cahaya & kembang api', music: 'Musik & tari', food: 'Kuliner', history: 'Sejarah & tradisi', street: 'Jalan & kampung' },
     monthPeriod: (month, period) => `${period === 'early' ? 'Awal' : period === 'mid' ? 'Pertengahan' : 'Akhir'} ${month}`,
     festivalDateDisclaimer: 'Tanggal berubah setiap tahun. Ketuk nama untuk melihat pengumuman resmi kantor distrik.',
+    festivalMonthVaries: (m) => `Diadakan pada salah satu bulan ${m}, dan bulannya berubah tiap tahun — ketuk nama untuk melihat tanggal tahun ini.`,
     myLocationFind: '📍 Lokasi saya',
     myLocationHere: (gu) => `Anda di ${gu}`,
     myLocationOutside: 'Anda di luar Seoul',
@@ -802,6 +820,7 @@ const translations: Record<Language, Translations> = {
     themeLabels: { nature: 'ดอกไม้และธรรมชาติ', light: 'แสงไฟและพลุ', music: 'ดนตรีและการเต้น', food: 'อาหาร', history: 'ประวัติศาสตร์และประเพณี', street: 'ย่านและถนน' },
     monthPeriod: (month, period) => `${period === 'early' ? 'ต้น' : period === 'mid' ? 'กลาง' : 'ปลาย'}${month}`,
     festivalDateDisclaimer: 'วันจัดงานเปลี่ยนแปลงทุกปี แตะที่ชื่อเพื่อดูประกาศอย่างเป็นทางการของเขต',
+    festivalMonthVaries: (m) => `จัดขึ้นในเดือนใดเดือนหนึ่งของ ${m} ซึ่งเปลี่ยนไปในแต่ละปี — แตะที่ชื่อเพื่อดูวันที่ของปีนี้`,
     myLocationFind: '📍 ตำแหน่งของฉัน',
     myLocationHere: (gu) => `คุณอยู่ใน ${gu}`,
     myLocationOutside: 'คุณอยู่นอกกรุงโซล',
