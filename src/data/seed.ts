@@ -191,7 +191,7 @@ export const FESTIVALS: Place[] = [
   // 🎆 "9.5"라고 **올해 날짜가 박혀 있었다.** 해마다 옮겨 다니는 축제라 내년에는
   //    그대로 틀린 값이 된다 — 2026년은 9월 5일인데 2025년은 9월 말이었다
   //    (한화 발표: "지난해보다 3주 앞당겨"). 달까지만 적고 날짜는 공식 안내로 보낸다.
-  { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "서울세계불꽃축제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "여의도·이촌 한강공원, 무료", officialUrl: "https://hanwhafireworks.com/", lat: 37.5255, lng: 126.9225, monthSource: "한화 공식 발표 (2026 9.5). 2025년은 9월 말", confirmed: true },
+  { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "서울세계불꽃축제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "여의도 한강공원 일대, 무료", officialUrl: "https://hanwhafireworks.com/", monthSource: "한화 공식 발표 (2026 9.5). 2025년은 9월 말", confirmed: true },
   { id: id(), gu: "용산구", category: "festival", name: "이태원 지구촌축제", startMonth: 10, endMonth: 10, note: "매년 10월경, 연도별 정확한 날짜는 미확정", confirmed: true },
   { id: id(), gu: "은평구", category: "festival", name: "은평누리축제", startMonth: 10, endMonth: 10, dateLabel: "10월 초", note: "불광천 일대", confirmed: true },
   { id: id(), gu: "종로구", dong: "종로1가동", category: "festival", name: "연등회", startMonth: 4, endMonth: 5, monthVaries: true, note: "유네스코 인류무형문화유산, 조계사~종로 일대, 무료", lat: 37.5750, lng: 126.9922, officialUrl: "http://www.llf.or.kr/", monthSource: "음력 4월 8일 기준 — 해마다 4월 또는 5월 (2026 연등회 5.16–17)", confirmed: true },
