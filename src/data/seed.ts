@@ -191,7 +191,7 @@ export const FESTIVALS: Place[] = [
   //    없는 곳에 간다. 다시 열리는 것이 확인되면 이 줄을 지우고 근거를 적는다.
   //    손으로 박아 둔 좌표(37.5526, 126.9342)도 함께 뺐다 — 근거가 없었다.
   { id: id(), gu: "서대문구", dong: "창천동", category: "festival", name: "신촌물총축제", startMonth: 7, endMonth: 7, dateLabel: "7월 이틀간", note: "2016년 서울시 브랜드축제 선정, 연세로", hidden: "2024년 취소, 이후 개최 확인 안 됨 (2026-09-02)", confirmed: true },
-  { id: id(), gu: "서초구", category: "festival", name: "서초뮤직앤아트페스티벌", startMonth: 6, endMonth: 6, dateLabel: "6월", confirmed: true },
+  { id: id(), gu: "서초구", category: "festival", name: "서초뮤직앤아트페스티벌", startMonth: 6, endMonth: 6, dateLabel: "6월", note: "서울고속버스터미널 광장, 무료", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=677", monthSource: "서울문화포털·서초문화재단 (2025 6.14–15)", confirmed: true },
   // 🎷 달이 해마다 옮겨 다닌다 — 서울시 문화포털(공식)에서 확인: 2025년 9월 19~21일,
   //    2024년 10월 12~13일. 전에 "9월 말"이라고 적어 뒀는데 두 해 다 아니었고,
   //    9월만 걸어 두는 바람에 10월에 열리는 해에는 10월 목록에서 사라졌다.
