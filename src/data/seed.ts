@@ -187,14 +187,20 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "성북구", dong: "석관동", category: "festival", name: "성북거리문화축제 다다페스타", startMonth: 9, endMonth: 9, note: "이주민·다문화가정·청년이 함께하는 거리문화축제", confirmed: true },
   { id: id(), gu: "송파구", category: "festival", name: "한성백제문화제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "올림픽공원", officialUrl: "https://www.songpa.go.kr/hanseong/", monthSource: "서울문화포털·송파구 공식 (2025 9.26–28, 2024 9.27–29)", confirmed: true },
   { id: id(), gu: "양천구", dong: "신정동", category: "festival", name: "양천가족거리축제", startMonth: 10, endMonth: 10, note: "별도로 '우리동네축제'(14개 동 개별 개최)도 운영", lat: 37.5480, lng: 126.8490, confirmed: true },
-  { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "여의도 봄꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4월", note: "여의서로 국회 뒤편, 무료", lat: 37.5275, lng: 126.9255, confirmed: true },
+  { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "여의도 봄꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4월", note: "여의서로 윤중로 벚꽃길, 무료", monthSource: "네이버 축제정보 (2026 4.3–4.7). 2005년부터 매년 4월 — 사용자가 화면으로 확인해 줌", confirmed: true },
   // 🎆 "9.5"라고 **올해 날짜가 박혀 있었다.** 해마다 옮겨 다니는 축제라 내년에는
   //    그대로 틀린 값이 된다 — 2026년은 9월 5일인데 2025년은 9월 말이었다
   //    (한화 발표: "지난해보다 3주 앞당겨"). 달까지만 적고 날짜는 공식 안내로 보낸다.
   { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "서울세계불꽃축제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "여의도 한강공원 일대, 무료", officialUrl: "https://hanwhafireworks.com/", monthSource: "한화 공식 발표 (2026 9.5). 2025년은 9월 말", confirmed: true },
   { id: id(), gu: "용산구", category: "festival", name: "이태원 지구촌축제", startMonth: 10, endMonth: 10, note: "매년 10월경, 연도별 정확한 날짜는 미확정", confirmed: true },
   { id: id(), gu: "은평구", category: "festival", name: "은평누리축제", startMonth: 10, endMonth: 10, dateLabel: "10월 초", note: "불광천 일대", confirmed: true },
-  { id: id(), gu: "종로구", dong: "종로1가동", category: "festival", name: "연등회", startMonth: 4, endMonth: 5, monthVaries: true, note: "유네스코 인류무형문화유산, 조계사~종로 일대, 무료", lat: 37.5750, lng: 126.9922, officialUrl: "http://www.llf.or.kr/", monthSource: "음력 4월 8일 기준 — 해마다 4월 또는 5월 (2026 연등회 5.16–17)", confirmed: true },
+  // 🙈 화면에서 뺐다 (사용자 지시 2026-09-02: "연등회도 가리자 종교행사이고
+  //    특정 자리가 없는 절 전체").
+  //    ① 불교 **종교 행사**다 — 놀러 갈 곳을 찾는 손님에게 축제로 내밀 것이 아니다.
+  //    ② 갈 자리가 하나로 안 정해진다 — 조계사·봉은사와 종로 일대 행렬이라
+  //       "여기로 가세요"라고 찍을 점이 없다. 손으로 박아 둔 좌표가 있었지만
+  //       어디서 온 값인지 근거가 없었다.
+  { id: id(), gu: "종로구", dong: "종로1가동", category: "festival", name: "연등회", startMonth: 4, endMonth: 5, monthVaries: true, note: "유네스코 인류무형문화유산, 조계사~종로 일대, 무료", officialUrl: "http://www.llf.or.kr/", monthSource: "음력 4월 8일 기준 — 해마다 4월 또는 5월 (2026 연등회 5.16–17)", hidden: "종교 행사이고 갈 자리가 한 점으로 안 정해진다 (사용자 판단 2026-09-02)", confirmed: true },
   { id: id(), gu: "중구", category: "festival", name: "정동야행", startMonth: 5, endMonth: 5, note: "덕수궁 돌담길~정동 일대, 2025년 이틀간 13.3만 명", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=601", monthSource: "서울시 펀서울·서울문화포털 (2025 5.23–24)", confirmed: true },
   { id: id(), gu: "중랑구", category: "festival", name: "중랑 서울장미축제", startMonth: 5, endMonth: 5, dateLabel: "5월", note: "장미터널 5.45km, 국내 최대", officialUrl: "https://www.jnfac.or.kr/rose/index", monthSource: "중랑문화재단 공식 (2026 5.15–23)", confirmed: true },
   { id: id(), gu: "송파구", category: "festival", name: "석촌호수 호수벚꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4월", confirmed: true },
