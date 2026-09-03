@@ -815,5 +815,12 @@
     "source": "kakao+naver",
     "for": "경의선숲길(연남동 구간)",
     "matchedName": "경의선숲길"
+  },
+  "ks_q": {
+    "lat": 37.5739480070481,
+    "lng": 126.981851559609,
+    "source": "kakao+naver",
+    "for": "연등회",
+    "matchedName": "연등회"
   }
 }
