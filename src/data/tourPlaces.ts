@@ -104,6 +104,10 @@ function toPlace(category: Category, p: RawPlace): Place {
           startMonth: date.startMonth,
           endMonth: date.endMonth ?? date.startMonth,
           period: periodOf(date.start),
+          // 🔒 관광공사 축제 창구에서 직접 받은 날짜다 — 그 자체가 근거이고,
+          //    하루 한 번 다시 받아 대조된다(seed.ts의 monthSource 주석 참고).
+          //    이걸 안 붙이면 관광공사 축제 56곳이 통째로 화면에서 사라진다.
+          monthSource: `한국관광공사 축제 창구 (${date.start})`,
         }
       : null),
     // 관광공사가 직접 등록·관리하는 자료라 "확인된 값"으로 둔다.

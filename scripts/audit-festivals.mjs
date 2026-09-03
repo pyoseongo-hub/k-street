@@ -168,6 +168,34 @@ console.log(`📷 사진 없는 축제 ${noPhoto.length}곳 (카드에 계절 �
 console.log(listOf(noPhoto));
 
 // ── 파일로 저장 ──────────────────────────────────────────────────
+// 🔒 달의 근거가 없어 **계절 화면에서 가려진** 축제 (2026-09-02)
+//
+// 사용자 지시: "부정확한건 가리고 서치가 맞을때 개시".
+// 같은 날 두 곳의 달이 틀린 걸 찾았다 — 한성백제문화제(10월→9월)와
+// 허준축제(9월→10월). 둘 다 **근거 없이 적힌 값**이었다. 그래서 근거를 적은 것만
+// 내보낸다. 출처를 확인해 seed.ts의 monthSource에 적으면 그날부터 다시 나온다.
+{
+  const seedSrc = readFileSync(D("seed.ts"), "utf-8");
+  const hidden = [];
+  for (const line of seedSrc.split("\n")) {
+    if (!/category: "festival"/.test(line)) continue;
+    if (!/startMonth: \d/.test(line)) continue; // 달이 없는 것은 원래 안 나온다
+    if (/monthSource:/.test(line)) continue;
+    const name = line.match(/name: "([^"]+)"/)?.[1];
+    const gu = line.match(/gu: "([^"]+)"/)?.[1] ?? "";
+    const m = line.match(/startMonth: (\d+)/)?.[1];
+    hidden.push(`${gu.padEnd(6)} ${name} (${m}월)`);
+  }
+  console.log("");
+  console.log(`🔒 달의 근거가 없어 가려진 축제 — ${hidden.length}곳`);
+  if (hidden.length) {
+    console.log("   (관광공사 축제 창구에도 있는 곳은 거기서 근거가 붙어 실제로는 나온다)");
+    hidden.forEach((h) => console.log(`   · ${h}`));
+    console.log("   → 출처를 확인해 seed.ts의 monthSource에 적으면 다시 나온다.");
+  }
+}
+
+
 if (!SAVE) {
   console.log("");
   console.log("저장하려면 --save 를 붙이세요 → docs/축제-빈칸.md");

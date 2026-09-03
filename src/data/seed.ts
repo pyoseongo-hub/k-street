@@ -80,6 +80,25 @@ export interface Place {
    * 달고 카드에 안내를 띄운다(사용자 지시 2026-09-02: "9 10 다 뜨게 하고 안내문구").
    */
   monthVaries?: boolean;
+  /**
+   * 🔒 **이 축제의 달을 어디서 확인했나.** 없으면 계절·월 화면에 **안 나온다.**
+   *
+   * 사용자 지시(2026-09-02): "부정확한건 가리고 서치가 맞을때 개시".
+   *
+   * 왜 이 칸을 만들었나 — 같은 날 축제 두 곳의 달이 틀린 걸 찾았다.
+   * 한성백제문화제는 10월로 적혀 있었지만 두 해 다 9월이었고, 허준축제는
+   * 9월로 적혀 있었지만 그건 사전행사였고 본행사는 10월이었다. **둘 다 근거 없이
+   * 적힌 값**이었고, 아무 장치도 그걸 막지 못했다.
+   *
+   * 그래서 근거를 적은 것만 내보낸다. 빈 칸이 틀린 달보다 낫다 — 틀린 달은
+   * 손님을 그 달에 헛걸음시키지만, 없는 것은 그냥 안 보일 뿐이다.
+   *
+   * 적는 법 — **어디서 봤는지와 그 해 날짜**를 함께. 예:
+   *   "서울문화포털 (2025 9.26–28, 2024 9.27–29)"
+   *   "음력 1월 15일 기준 — 해마다 2월 또는 3월"
+   * 관광공사 축제 창구에 있는 곳은 이 칸이 없어도 통과한다(거기서 대조된다).
+   */
+  monthSource?: string;
   /** 좌표: TourAPI 또는 공식 위치정보 기반 */
   lat?: number;
   lng?: number;
@@ -94,7 +113,7 @@ export const FESTIVALS: Place[] = [
   // 강남구 공식 안내(visitgangnam.net)로 곧장 간다 — 사용자가 준 주소(2026-09-02).
   // 2025년은 9월 25일~10월 3일로 **한 해에 두 달을 걸쳐** 열렸다. 서울숲 재즈처럼
   // 달이 옮겨 다니는 것이 아니라 원래 걸치는 축제라, monthVaries는 붙이지 않는다.
-  { id: id(), gu: "강남구", category: "festival", name: "강남페스티벌", startMonth: 9, endMonth: 10, dateLabel: "9월 말~10월 초", officialUrl: "https://www.visitgangnam.net/festival#stages", confirmed: true },
+  { id: id(), gu: "강남구", category: "festival", name: "강남페스티벌", startMonth: 9, endMonth: 10, dateLabel: "9월 말~10월 초", officialUrl: "https://www.visitgangnam.net/festival#stages", monthSource: "강남구 보도자료 (2025 9.25–10.3)", confirmed: true },
   { id: id(), gu: "강동구", category: "festival", name: "강동선사문화축제", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "1996년 시작, 서울 유일 선사시대 테마 축제", officialUrl: "https://m.gdsunsa.com/", confirmed: true },
   { id: id(), gu: "강북구", category: "festival", name: "4·19혁명 국민문화제", startMonth: 4, endMonth: 4, dateLabel: "4월", confirmed: true },
   // 🚨 9월로 적어 뒀는데 **본행사는 10월**이다(2025년 10월 18~19일 — 서울문화포털·
@@ -103,17 +122,17 @@ export const FESTIVALS: Place[] = [
   //    ⚠️ 2025년 본행사 장소는 서울식물원·마곡광장 쪽이었다. 장소표는 허준박물관에
   //       그대로 둔다 — 한 해 자료만으로 옮기지 않는다(CLAUDE.md: 여러 해 같은 곳에서
   //       열린 것만 넣는다). 다음 회차에서 또 마곡이면 그때 옮긴다.
-  { id: id(), gu: "강서구", category: "festival", name: "허준축제", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "사전행사 「허준 인트로 축제」는 9월", confirmed: true },
+  { id: id(), gu: "강서구", category: "festival", name: "허준축제", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "사전행사 「허준 인트로 축제」는 9월", monthSource: "서울문화포털·관광공사 (2025 10.18–19). 9월은 사전행사", confirmed: true },
   { id: id(), gu: "관악구", category: "festival", name: "관악강감찬축제", startMonth: 10, endMonth: 10, officialUrl: "https://www.ggcfest.com/", confirmed: true },
   // 8월 확인(2026-09-01): "한여름 밤의 음악축제"로 헤럴드경제·시정일보·청년개발자신문이
   // 모두 8월 29일 개최를 보도했고, 광진구청 포털 축제/행사 안내에도 같은 날짜가 있다.
   // 자양역 2·3번 출구 일대(뚝섬한강공원).
-  { id: id(), gu: "광진구", category: "festival", name: "광진뮤직페스타", startMonth: 8, endMonth: 8, confirmed: true },
+  { id: id(), gu: "광진구", category: "festival", name: "광진뮤직페스타", startMonth: 8, endMonth: 8, monthSource: "헤럴드경제·시정일보·광진구청 포털 (2025 8.29)", confirmed: true },
   // 🗓️ "9월 말"이라고 적어 뒀는데 9월 안에서도 옮겨 다닌다 — 2025년 9월 26~28일,
   //    2026년 9월 19~20일. 달은 9월로 굳어 있으니 **달까지만** 적고 초·중·말은
   //    비운다(period 주석: 해마다 바뀌는 값은 적지 않는다).
   //    장소는 안양천 구일역 쪽 — festival-venues.json에 적어 좌표를 찾게 한다.
-  { id: id(), gu: "구로구", category: "festival", name: "구로G페스티벌", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "안양천(구일역) 일대, 점프!구로 + 아시아문화축제 통합", officialUrl: "https://www.guro.go.kr/www/contents.do?key=2976", confirmed: true },
+  { id: id(), gu: "구로구", category: "festival", name: "구로G페스티벌", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "안양천(구일역) 일대, 점프!구로 + 아시아문화축제 통합", officialUrl: "https://www.guro.go.kr/www/contents.do?key=2976", monthSource: "구로구 안내 (2026 9.19–20, 2025 9.26–28)", confirmed: true },
   // ⚠️ 달을 **비워 둔다**(2026-09-01). 회차마다 달라서다 —
   // 2023년 5월 13~14일 · 2024년 5월 · **2025년 10월 18~19일**.
   // 시기를 옮긴 것으로 보이지만 한 번뿐이라 "매년 10월"이라고 단정할 수 없다.
@@ -129,7 +148,7 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "동대문구", category: "festival", name: "동대문페스티벌", startMonth: 10, endMonth: 10, note: "공연예술축제 — 거리예술·음악공연", confirmed: true },
   // 10월 확인(2026-09-01): 제8회가 10월 25~26일 노량진수산시장 일대에서 열렸다.
   // 문화일보·헤럴드경제·시정일보와 서울문화포털 자치구브랜드축제 안내가 일치한다.
-  { id: id(), gu: "동작구", category: "festival", name: "도심 속 바다축제", startMonth: 10, endMonth: 10, note: "노량진수산시장 일대", confirmed: true },
+  { id: id(), gu: "동작구", category: "festival", name: "도심 속 바다축제", startMonth: 10, endMonth: 10, note: "노량진수산시장 일대", monthSource: "문화일보·헤럴드경제·서울문화포털 (제8회 10.25–26)", confirmed: true },
   { id: id(), gu: "마포구", category: "festival", name: "서울와우북페스티벌", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "책문화예술축제, 구의 유일한 축제는 아닐 수 있음", officialUrl: "http://wowbookfest.com/", confirmed: true },
   { id: id(), gu: "서대문구", dong: "창천동", category: "festival", name: "신촌물총축제", startMonth: 7, endMonth: 7, dateLabel: "7월 이틀간", note: "2016년 서울시 브랜드축제 선정, 연세로", lat: 37.5526, lng: 126.9342, confirmed: true },
   { id: id(), gu: "서초구", category: "festival", name: "서초뮤직앤아트페스티벌", startMonth: 6, endMonth: 6, dateLabel: "6월", confirmed: true },
@@ -139,25 +158,25 @@ export const FESTIVALS: Place[] = [
   //    period(초·중순·말)는 **비워 둔다** — 해마다 달라서 어느 쪽도 사실이 아니다.
   //    ⚠️ 「서울재즈페스티벌」(올림픽공원, 송파구, 민간 주최)과 다른 축제다. 이름이
   //       비슷해 자료가 자주 섞인다 — 이쪽은 성동문화재단이 서울숲에서 여는 것이다.
-  { id: id(), gu: "성동구", dong: "성수동1가", category: "festival", name: "서울숲 JAZZ페스티벌", startMonth: 9, endMonth: 10, monthVaries: true, note: "서울숲 가족마당, 성동문화재단", officialUrl: "https://www.seoulforestjazz.com/", confirmed: true },
+  { id: id(), gu: "성동구", dong: "성수동1가", category: "festival", name: "서울숲 JAZZ페스티벌", startMonth: 9, endMonth: 10, monthVaries: true, note: "서울숲 가족마당, 성동문화재단", officialUrl: "https://www.seoulforestjazz.com/", monthSource: "서울시 문화포털 (2025 9.19–21, 2024 10.12–13)", confirmed: true },
   { id: id(), gu: "성동구", category: "festival", name: "세계민속춤축제", startMonth: 9, endMonth: 9, dateLabel: "9월", confirmed: true },
   // WebSearch로 확인(2026-08-29): 누리마실(성북동, 6월경, 세계 음식·문화)과
   // 다다페스타(석관동, 9월, 성북거리문화축제)는 서로 다른 장소·시기의 별개 행사다
   // — 하나로 합쳐 두면 지도 검색이 안 될뿐더러 시기 정보도 틀리게 섞여 있었다.
-  { id: id(), gu: "성북구", dong: "성북동", category: "festival", name: "성북 세계음식축제 누리마실", startMonth: 5, endMonth: 6, monthVaries: true, note: "연도마다 5월 또는 6월(17회 2025.5.18, 18회 2026.6.7 예정)", confirmed: true },
+  { id: id(), gu: "성북구", dong: "성북동", category: "festival", name: "성북 세계음식축제 누리마실", startMonth: 5, endMonth: 6, monthVaries: true, note: "연도마다 5월 또는 6월(17회 2025.5.18, 18회 2026.6.7 예정)", monthSource: "17회 2025.5.18, 18회 2026.6.7 예정", confirmed: true },
   { id: id(), gu: "성북구", dong: "석관동", category: "festival", name: "성북거리문화축제 다다페스타", startMonth: 9, endMonth: 9, note: "이주민·다문화가정·청년이 함께하는 거리문화축제", confirmed: true },
-  { id: id(), gu: "송파구", category: "festival", name: "한성백제문화제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "올림픽공원", officialUrl: "https://www.songpa.go.kr/hanseong/", confirmed: true },
+  { id: id(), gu: "송파구", category: "festival", name: "한성백제문화제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "올림픽공원", officialUrl: "https://www.songpa.go.kr/hanseong/", monthSource: "서울문화포털·송파구 공식 (2025 9.26–28, 2024 9.27–29)", confirmed: true },
   { id: id(), gu: "양천구", dong: "신정동", category: "festival", name: "양천가족거리축제", startMonth: 10, endMonth: 10, note: "별도로 '우리동네축제'(14개 동 개별 개최)도 운영", lat: 37.5480, lng: 126.8490, confirmed: true },
   { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "여의도 봄꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4월", note: "여의서로 국회 뒤편, 무료", lat: 37.5275, lng: 126.9255, confirmed: true },
   // 🎆 "9.5"라고 **올해 날짜가 박혀 있었다.** 해마다 옮겨 다니는 축제라 내년에는
   //    그대로 틀린 값이 된다 — 2026년은 9월 5일인데 2025년은 9월 말이었다
   //    (한화 발표: "지난해보다 3주 앞당겨"). 달까지만 적고 날짜는 공식 안내로 보낸다.
-  { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "서울세계불꽃축제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "여의도·이촌 한강공원, 무료", officialUrl: "https://hanwhafireworks.com/", lat: 37.5255, lng: 126.9225, confirmed: true },
+  { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "서울세계불꽃축제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "여의도·이촌 한강공원, 무료", officialUrl: "https://hanwhafireworks.com/", lat: 37.5255, lng: 126.9225, monthSource: "한화 공식 발표 (2026 9.5). 2025년은 9월 말", confirmed: true },
   { id: id(), gu: "용산구", category: "festival", name: "이태원 지구촌축제", startMonth: 10, endMonth: 10, note: "매년 10월경, 연도별 정확한 날짜는 미확정", confirmed: true },
   { id: id(), gu: "은평구", category: "festival", name: "은평누리축제", startMonth: 10, endMonth: 10, dateLabel: "10월 초", note: "불광천 일대", confirmed: true },
-  { id: id(), gu: "종로구", dong: "종로1가동", category: "festival", name: "연등회", startMonth: 4, endMonth: 5, monthVaries: true, note: "유네스코 인류무형문화유산, 조계사~종로 일대, 무료", lat: 37.5750, lng: 126.9922, officialUrl: "http://www.llf.or.kr/", confirmed: true },
+  { id: id(), gu: "종로구", dong: "종로1가동", category: "festival", name: "연등회", startMonth: 4, endMonth: 5, monthVaries: true, note: "유네스코 인류무형문화유산, 조계사~종로 일대, 무료", lat: 37.5750, lng: 126.9922, officialUrl: "http://www.llf.or.kr/", monthSource: "음력 4월 8일 기준 — 해마다 4월 또는 5월 (2026 연등회 5.16–17)", confirmed: true },
   { id: id(), gu: "중구", category: "festival", name: "정동야행", startMonth: 5, endMonth: 5, note: "덕수궁 돌담길~정동 일대, 2025년 이틀간 13.3만 명", confirmed: true },
-  { id: id(), gu: "중랑구", category: "festival", name: "중랑 서울장미축제", startMonth: 5, endMonth: 5, dateLabel: "5월", note: "장미터널 5.45km, 국내 최대", officialUrl: "https://www.jnfac.or.kr/rose/index", confirmed: true },
+  { id: id(), gu: "중랑구", category: "festival", name: "중랑 서울장미축제", startMonth: 5, endMonth: 5, dateLabel: "5월", note: "장미터널 5.45km, 국내 최대", officialUrl: "https://www.jnfac.or.kr/rose/index", monthSource: "중랑문화재단 공식 (2026 5.15–23)", confirmed: true },
   { id: id(), gu: "송파구", category: "festival", name: "석촌호수 호수벚꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4월", confirmed: true },
   // 아래 4개는 2026-08-28 사용자 지시("3월까지 빈것도 서치해서 채우기")로 추가 —
   // 1~3월 축제가 비어 있던 이유를 서치해 보니 실제로 이 시기 서울 자치구 축제는
@@ -165,10 +184,10 @@ export const FESTIVALS: Place[] = [
   // 날짜가 해마다 바뀐다(성북구 세계음식축제 항목과 같은 방식으로 표기) — 그래서
   // startMonth~endMonth를 2~3월 범위로 두고, 검증 시점 기준(2026년) 실제 날짜는
   // dateLabel에 참고로만 적는다. 뉴스 매체 다수(6곳 이상)가 겹치는 날짜만 채택했다.
-  { id: id(), gu: "노원구", category: "festival", name: "정월대보름 한마당", startMonth: 2, endMonth: 3, monthVaries: true, note: "당현천 하류 일대, 낙화놀이·달집태우기 — 음력 기준이라 해마다 날짜가 바뀜", confirmed: true },
-  { id: id(), gu: "송파구", category: "festival", name: "정월대보름 행사(송파다리밟기 · 달집태우기)", startMonth: 2, endMonth: 3, monthVaries: true, note: "석촌호수·서울놀이마당, 서울시 무형문화재 — 음력 기준이라 해마다 날짜가 바뀜", confirmed: true },
-  { id: id(), gu: "양천구", category: "festival", name: "정월대보름 민속축제", startMonth: 2, endMonth: 3, monthVaries: true, note: "안양천 둔치 야구장(신정교 아래), 달집태우기 — 음력 기준이라 해마다 날짜가 바뀜", confirmed: true },
-  { id: id(), gu: "종로구", dong: "운니동", category: "festival", name: "운현궁 설맞이", startMonth: 1, endMonth: 2, monthVaries: true, note: "운현궁 앞마당, 서울시 주관 — 음력설 기준이라 해마다 날짜가 바뀜", confirmed: true },
+  { id: id(), gu: "노원구", category: "festival", name: "정월대보름 한마당", startMonth: 2, endMonth: 3, monthVaries: true, note: "당현천 하류 일대, 낙화놀이·달집태우기 — 음력 기준이라 해마다 날짜가 바뀜", monthSource: "음력 1월 15일 기준 — 해마다 2월 또는 3월", confirmed: true },
+  { id: id(), gu: "송파구", category: "festival", name: "정월대보름 행사(송파다리밟기 · 달집태우기)", startMonth: 2, endMonth: 3, monthVaries: true, note: "석촌호수·서울놀이마당, 서울시 무형문화재 — 음력 기준이라 해마다 날짜가 바뀜", monthSource: "음력 1월 15일 기준 — 해마다 2월 또는 3월", confirmed: true },
+  { id: id(), gu: "양천구", category: "festival", name: "정월대보름 민속축제", startMonth: 2, endMonth: 3, monthVaries: true, note: "안양천 둔치 야구장(신정교 아래), 달집태우기 — 음력 기준이라 해마다 날짜가 바뀜", monthSource: "음력 1월 15일 기준 — 해마다 2월 또는 3월", confirmed: true },
+  { id: id(), gu: "종로구", dong: "운니동", category: "festival", name: "운현궁 설맞이", startMonth: 1, endMonth: 2, monthVaries: true, note: "운현궁 앞마당, 서울시 주관 — 음력설 기준이라 해마다 날짜가 바뀜", monthSource: "음력설 기준 — 양력 1월 21일~2월 20일 사이 (2025 설 1.29, 2026 설 2.17)", confirmed: true },
 ];
 
 // ── 02. 전통시장 (25/25 확인, 대표 1곳씩) ─────────────────────────
@@ -491,6 +510,9 @@ export const ALL_FESTIVALS: Place[] = (() => {
       startMonth: p.startMonth ?? t.startMonth,
       endMonth: p.endMonth ?? t.endMonth,
       period: p.period ?? t.period,
+      // 🔒 관광공사 축제 창구에서 온 달은 그 자체가 근거다 — 하루 한 번 대조되므로
+      //    사람이 따로 적지 않아도 통과시킨다(monthSource 주석 참고).
+      monthSource: p.monthSource ?? (t.startMonth != null ? "한국관광공사 축제 창구" : undefined),
       tourContentId: p.tourContentId ?? t.tourContentId,
       // 사람이 적어 둔 공식 주소가 이긴다. 없을 때만 관광공사가 등록해 둔 것을 쓴다.
       officialUrl: p.officialUrl ?? t.officialUrl,
@@ -500,6 +522,17 @@ export const ALL_FESTIVALS: Place[] = (() => {
 })()
   .filter((p) => !isPlaceholder(p))
   .filter((p) => isInLaunchScope(sidoOf(p.gu)))
+  // 🔒 **달의 근거가 없는 축제는 안 내보낸다** (사용자 지시 2026-09-02:
+  //    "부정확한건 가리고 서치가 맞을때 개시").
+  //
+  //    같은 날 두 곳의 달이 틀린 것을 찾았다 — 한성백제문화제는 10월로 적혀
+  //    있었지만 두 해 다 9월이었고, 허준축제는 9월로 적혀 있었지만 그건
+  //    사전행사였다. 둘 다 **근거 없이 적힌 값**이었고 아무것도 그걸 막지 못했다.
+  //
+  //    이 화면은 "몇 월에 뭐가 있나"를 보는 곳이라, 달이 틀리면 화면 전체가
+  //    거짓말이 된다. 근거를 확인해 monthSource에 적으면 그날부터 다시 나온다.
+  //    가려진 목록은 `npm run festival-todo`로 본다.
+  .filter((p) => p.startMonth == null || p.monthSource)
   .map(withFetchedCoords)
   .map(withManualPhoto);
 
