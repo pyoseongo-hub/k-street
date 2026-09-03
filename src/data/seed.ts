@@ -97,7 +97,13 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "강남구", category: "festival", name: "강남페스티벌", startMonth: 9, endMonth: 10, dateLabel: "9월 말~10월 초", officialUrl: "https://www.visitgangnam.net/festival#stages", confirmed: true },
   { id: id(), gu: "강동구", category: "festival", name: "강동선사문화축제", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "1996년 시작, 서울 유일 선사시대 테마 축제", officialUrl: "https://m.gdsunsa.com/", confirmed: true },
   { id: id(), gu: "강북구", category: "festival", name: "4·19혁명 국민문화제", startMonth: 4, endMonth: 4, dateLabel: "4월", confirmed: true },
-  { id: id(), gu: "강서구", category: "festival", name: "허준축제", startMonth: 9, endMonth: 9, confirmed: true },
+  // 🚨 9월로 적어 뒀는데 **본행사는 10월**이다(2025년 10월 18~19일 — 서울문화포털·
+  //    관광공사 축제 창구 일치). 9월인 것은 사전행사「허준 인트로 축제」(9월 20일,
+  //    허준근린공원)라, 그걸 본행사로 착각해 적은 것으로 보인다.
+  //    ⚠️ 2025년 본행사 장소는 서울식물원·마곡광장 쪽이었다. 장소표는 허준박물관에
+  //       그대로 둔다 — 한 해 자료만으로 옮기지 않는다(CLAUDE.md: 여러 해 같은 곳에서
+  //       열린 것만 넣는다). 다음 회차에서 또 마곡이면 그때 옮긴다.
+  { id: id(), gu: "강서구", category: "festival", name: "허준축제", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "사전행사 「허준 인트로 축제」는 9월", confirmed: true },
   { id: id(), gu: "관악구", category: "festival", name: "관악강감찬축제", startMonth: 10, endMonth: 10, officialUrl: "https://www.ggcfest.com/", confirmed: true },
   // 8월 확인(2026-09-01): "한여름 밤의 음악축제"로 헤럴드경제·시정일보·청년개발자신문이
   // 모두 8월 29일 개최를 보도했고, 광진구청 포털 축제/행사 안내에도 같은 날짜가 있다.

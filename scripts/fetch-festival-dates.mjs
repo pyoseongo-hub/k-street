@@ -271,5 +271,60 @@ if (missing.length) {
   if (missing.length > 30) console.log(`  … 그 밖에 ${missing.length - 30}곳`);
 }
 
+// ── 🚨 우리가 적어 둔 달이 관광공사와 어긋나지 않는가 ────────────────────
+//
+// 사용자 지시(2026-09-02): "하루 한번 몇개 안되니 계속 서치해서 최신자료로 업로드".
+//
+// 여태 이 작업은 **받아서 저장만** 했다. 그래서 우리가 손으로 적어 둔 달이 틀려도
+// 아무도 몰랐다 — 한성백제문화제가 10월로 적혀 있었는데 실제로는 2024·2025년
+// 두 해 다 9월이었고, 사용자가 "하나하나 수동검사 해"라고 해서야 찾았다.
+// 1년 넘게 손님을 엉뚱한 달에 보내고 있었던 셈이다.
+//
+// 이제 하루 한 번 돌면서 **우리 값과 관광공사 값을 대조해 어긋나면 알린다.**
+// 고치지는 않는다 — 관광공사 쪽이 늘 옳은 것도 아니고(장소표처럼 사람이 근거를
+// 확인해 적은 값이 이기는 자리가 있다), 자동으로 덮어쓰면 그 판단이 사라진다.
+// 사람이 보고 정하도록 **목록만** 낸다.
+{
+  const seedSrc = readFileSync(new URL("../src/data/seed.ts", import.meta.url), "utf-8");
+  const nfc = (s) => String(s ?? "").normalize("NFC");
+  const sq = (s) => nfc(s).replace(/[^가-힣a-zA-Z0-9]/g, "");
+  const hand = [];
+  for (const line of seedSrc.split("\n")) {
+    if (!/category: "festival"/.test(line)) continue;
+    const name = line.match(/name: "([^"]+)"/)?.[1];
+    const start = Number(line.match(/startMonth: (\d+)/)?.[1]);
+    const end = Number(line.match(/endMonth: (\d+)/)?.[1] ?? start);
+    if (name && start) hand.push({ name, start, end });
+  }
+  const mismatches = [];
+  for (const h of hand) {
+    // 이름이 같은 관광공사 축제를 찾는다. 못 찾으면 대조할 것이 없다.
+    const hit = Object.values(out).find((v) => {
+      const a = sq(v.name), b = sq(h.name);
+      return a && (a.includes(b) || b.includes(a));
+    });
+    if (!hit?.startMonth) continue;
+    // 우리가 적어 둔 달 범위 안에 들어오면 문제없다(달이 겹치는 축제 포함).
+    const span = [];
+    for (let m = h.start, guard = 0; guard < 12; guard++) {
+      span.push(m);
+      if (m === h.end) break;
+      m = m === 12 ? 1 : m + 1;
+    }
+    if (span.includes(hit.startMonth)) continue;
+    mismatches.push(
+      `  · ${h.name} — 우리는 ${span.join("·")}월, 관광공사는 ${hit.startMonth}월 (${hit.start})`
+    );
+  }
+  console.log("");
+  if (mismatches.length) {
+    console.log(`🚨 우리 달과 관광공사가 어긋나는 축제 ${mismatches.length}곳 — 사람이 확인할 것:`);
+    mismatches.forEach((m) => console.log(m));
+    console.log("   (관광공사 날짜는 지난 회차일 수 있다. 공식 안내를 보고 정할 것.)");
+  } else {
+    console.log("✅ 우리가 적어 둔 달과 관광공사 날짜가 어긋나는 축제 없음.");
+  }
+}
+
 console.log("");
 console.log(`저장: ${OUT}`);
