@@ -317,6 +317,38 @@ async function main() {
     try {
       // 장소표에 적힌 축제면 축제 이름 대신 **열리는 곳**을 검색한다.
       const venue = VENUES.get(nfc(p.name));
+
+      // 📍 **주소가 적혀 있으면 그 주소를 그대로 좌표로 바꾼다** (2026-09-02
+      //    사용자 지시: "네이버 자료대로 / 위치는 정확히 뜨니 거기로").
+      //
+      //    축제가 네이버 지도에 그 이름으로 등록돼 있으면 주소가 정확히 나온다
+      //    ("영등포 여의도 봄꽃축제 → 서울 영등포구 여의서로 60-2"). 그럴 때는
+      //    윤중로·도산공원 같은 **대체 장소를 찾을 이유가 없다** — 대체 장소는
+      //    행사장에서 몇백 미터씩 떨어질 수 있고, 이름 대조에서 엉뚱한 가게에
+      //    걸릴 위험도 있다(도산분식 도산공원점 사고).
+      //
+      //    주소→좌표는 네이버 지오코딩이 한다. 이름 검색이 아니라 주소 변환이라
+      //    대조가 필요 없고, 못 바꾸면 아래 이름 검색으로 그냥 넘어간다.
+      if (venue?.addr) {
+        const at = await naverGeocode(venue.addr);
+        if (at) {
+          result[p.id] = {
+            lat: at.lat,
+            lng: at.lng,
+            source: "naver-address",
+            for: p.name,
+            matchedName: venue.addr,
+            venueFor: p.name,
+            venueWhy: venue.why,
+          };
+          matched++;
+          crossChecked++;
+          console.log(`✅ [${p.category}] ${p.name} → 주소 "${venue.addr}" (naver-address)`);
+          await new Promise((r) => setTimeout(r, 120));
+          continue;
+        }
+        console.log(`   ↳ 주소 "${venue.addr}"를 좌표로 못 바꿨다 — 이름 검색으로 넘어간다`);
+      }
       const keywords = venue ? venue.venues : searchVariants(p.name, p.gu);
       // 장소표는 검색어 자체가 대조 기준이다. 이름 검색은 검색어를 넓게 던지므로
       // (구를 붙인 마지막 수단까지) 대조는 늘 **원래 이름**으로 한다.
