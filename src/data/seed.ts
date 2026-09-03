@@ -178,7 +178,7 @@ export const FESTIVALS: Place[] = [
   //    확인된 것: 2025년 6월 13~17일 중랑천(도봉구청~세월교 540m)에서 열렸다
   //    (아시아경제·다음뉴스·도봉구 문화관광 일치). 달 자체가 틀린 것은 아니다.
   { id: id(), gu: "도봉구", category: "festival", name: "도봉별빛축제", startMonth: 6, endMonth: 6, dateLabel: "6월", note: "중랑천(도봉구청~세월교 540m)", officialUrl: "https://tour.dobong.go.kr/Contents.asp?code=10003458", monthSource: "아시아경제·도봉구 (2025 6.13–17)", hidden: "회차마다 구청 공고를 새로 찾아야 해 고정된 안내가 없다 (사용자 판단 2026-09-02, 댄싱노원과 같은 이유)", confirmed: true },
-  { id: id(), gu: "동대문구", category: "festival", name: "동대문페스티벌", startMonth: 10, endMonth: 10, note: "공연예술축제 — 거리예술·음악공연", confirmed: true },
+  { id: id(), gu: "동대문구", category: "festival", name: "동대문페스티벌", startMonth: 10, endMonth: 10, note: "공연예술축제 — 거리예술·음악공연", officialUrl: "https://ddmf.co.kr/", monthSource: "시민일보·헤럴드경제·서울문화포털 (2025 10.18)", confirmed: true },
   // 10월 확인(2026-09-01): 제8회가 10월 25~26일 노량진수산시장 일대에서 열렸다.
   // 문화일보·헤럴드경제·시정일보와 서울문화포털 자치구브랜드축제 안내가 일치한다.
   { id: id(), gu: "동작구", category: "festival", name: "도심 속 바다축제", startMonth: 10, endMonth: 10, note: "노량진수산시장 일대", monthSource: "문화일보·헤럴드경제·서울문화포털 (제8회 10.25–26)", confirmed: true },
@@ -217,8 +217,8 @@ export const FESTIVALS: Place[] = [
   //    그대로 틀린 값이 된다 — 2026년은 9월 5일인데 2025년은 9월 말이었다
   //    (한화 발표: "지난해보다 3주 앞당겨"). 달까지만 적고 날짜는 공식 안내로 보낸다.
   { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "서울세계불꽃축제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "여의도 한강공원 일대, 무료", officialUrl: "https://hanwhafireworks.com/", monthSource: "한화 공식 발표 (2026 9.5). 2025년은 9월 말", confirmed: true },
-  { id: id(), gu: "용산구", category: "festival", name: "이태원 지구촌축제", startMonth: 10, endMonth: 10, note: "매년 10월경, 연도별 정확한 날짜는 미확정", confirmed: true },
-  { id: id(), gu: "은평구", category: "festival", name: "은평누리축제", startMonth: 10, endMonth: 10, dateLabel: "10월 초", note: "불광천 일대", confirmed: true },
+  { id: id(), gu: "용산구", category: "festival", name: "이태원 지구촌축제", startMonth: 10, endMonth: 10, note: "매년 10월경, 연도별 정확한 날짜는 미확정", officialUrl: "http://www.itaewon.or.kr/", monthSource: "위키백과·서울문화포털 — 매년 10월. 2025년 회차 날짜는 확인 못 함", confirmed: true },
+  { id: id(), gu: "은평구", category: "festival", name: "은평누리축제", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "불광천변 일대", monthSource: "서울문화포털·은평문화재단 (2025 10.24–25)", confirmed: true },
   // 🙈 화면에서 뺐다 (사용자 지시 2026-09-02: "연등회도 가리자 종교행사이고
   //    특정 자리가 없는 절 전체").
   //    ① 불교 **종교 행사**다 — 놀러 갈 곳을 찾는 손님에게 축제로 내밀 것이 아니다.
