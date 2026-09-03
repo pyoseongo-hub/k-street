@@ -170,7 +170,15 @@ export const FESTIVALS: Place[] = [
   // 문화일보·헤럴드경제·시정일보와 서울문화포털 자치구브랜드축제 안내가 일치한다.
   { id: id(), gu: "동작구", category: "festival", name: "도심 속 바다축제", startMonth: 10, endMonth: 10, note: "노량진수산시장 일대", monthSource: "문화일보·헤럴드경제·서울문화포털 (제8회 10.25–26)", confirmed: true },
   { id: id(), gu: "마포구", category: "festival", name: "서울와우북페스티벌", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "책문화예술축제, 구의 유일한 축제는 아닐 수 있음", officialUrl: "http://wowbookfest.com/", confirmed: true },
-  { id: id(), gu: "서대문구", dong: "창천동", category: "festival", name: "신촌물총축제", startMonth: 7, endMonth: 7, dateLabel: "7월 이틀간", note: "2016년 서울시 브랜드축제 선정, 연세로", lat: 37.5526, lng: 126.9342, confirmed: true },
+  // 🙈 화면에서 뺐다 (사용자 지시 2026-09-02: "불확실 가려").
+  //    **지금도 열리는지가 불확실하다.** 우리 자료는 "7월, 연세로"인데 마지막으로
+  //    그랬던 것이 2019년(7.6–7)이다:
+  //      2020~2021 코로나로 취소 · 2022 개최 · 2023 **8월, 마포 문화비축기지**
+  //      2024 **취소** · 2025~2026 개최 확인 안 됨
+  //    달도 장소도 옮겨 다니다 멈춘 상태라, 7월 연세로로 안내하면 손님이 아무것도
+  //    없는 곳에 간다. 다시 열리는 것이 확인되면 이 줄을 지우고 근거를 적는다.
+  //    손으로 박아 둔 좌표(37.5526, 126.9342)도 함께 뺐다 — 근거가 없었다.
+  { id: id(), gu: "서대문구", dong: "창천동", category: "festival", name: "신촌물총축제", startMonth: 7, endMonth: 7, dateLabel: "7월 이틀간", note: "2016년 서울시 브랜드축제 선정, 연세로", hidden: "2024년 취소, 이후 개최 확인 안 됨 (2026-09-02)", confirmed: true },
   { id: id(), gu: "서초구", category: "festival", name: "서초뮤직앤아트페스티벌", startMonth: 6, endMonth: 6, dateLabel: "6월", confirmed: true },
   // 🎷 달이 해마다 옮겨 다닌다 — 서울시 문화포털(공식)에서 확인: 2025년 9월 19~21일,
   //    2024년 10월 12~13일. 전에 "9월 말"이라고 적어 뒀는데 두 해 다 아니었고,
