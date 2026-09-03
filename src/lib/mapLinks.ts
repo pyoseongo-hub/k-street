@@ -103,6 +103,21 @@ export interface MapOrigin {
  * 웹 통합검색 하나로 통일한다. 좌표를 쓰는 **길찾기 버튼은 아래에 그대로 남는다** —
  * 그건 좌표로 찍으므로 정확하고, 이 링크와 역할이 다르다.
  */
+/**
+ * 🔎 그 이름의 **네이버 통합검색** 주소. 축제 카드의 「날짜 확인」이 여기로 간다.
+ *
+ * 사용자 지시(2026-09-02): "날짜에 너무 신경쓰지말고 네이버 링크 달아서 직접
+ * 확인해야한다".
+ *
+ * 왜 공식 홈페이지가 아니라 네이버인가 — 공식 사이트는 회차가 끝나면 그대로
+ * 멈춰 있는 곳이 많은데, 네이버 축제정보 카드는 **올해 날짜가 같은 자리에**
+ * 뜬다. 사장님이 오늘 캡처로 확인해 준 것도 전부 이 카드였다.
+ * 이름을 누르는 쪽(getPlaceInfoLink)은 공식 창구로 그대로 두고, 날짜만 이쪽으로
+ * 보낸다 — 둘은 손님이 알고 싶은 것이 다르다.
+ */
+export const naverSearchUrl = (name: string) =>
+  `https://search.naver.com/search.naver?query=${encodeURIComponent(name)}`;
+
 export function getPlaceInfoLink(place: MapLinkTarget): MapLink {
   // 🔗 공식 주소를 적어 둔 곳은 검색을 거치지 않고 **곧장 그리로** 간다
   //    (2026-09-02 사용자가 서울숲 재즈페스티벌 공식 주소를 줬다).

@@ -658,6 +658,30 @@ button {
   white-space: nowrap;
 }
 
+/* 🔎 날짜 옆 「날짜 확인」 — 네이버로 보내는 작은 링크 (2026-09-02 사용자 지시:
+   "네이버 링크 달아서 직접 확인해야한다 / 달라질수있다 작게적어").
+   날짜 배지보다 작고 흐리게 둔다 — 눈에 띄어야 하지만 날짜를 가리면 안 된다. */
+.fc-date-check {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--border);
+  padding-bottom: 1px;
+  white-space: nowrap;
+}
+
+.fc-date-check:active {
+  color: var(--text);
+}
+
+/* 목록 위 안내를 한 단계 작게. 카드마다 「날짜 확인」이 붙으므로 여기서 길게
+   늘어놓으면 목록만 아래로 밀린다. */
+.map-disclaimer--fine {
+  font-size: 11.5px;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
 .fc-date {
   font-family: "IBM Plex Mono", monospace;
   font-size: 13px;

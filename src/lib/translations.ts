@@ -64,6 +64,17 @@ export interface Translations {
    * 카드에 한 줄로 들어가므로 짧게. 자세한 설명은 목록 위 안내(flowerBloomDisclaimer)에 있다.
    */
   festivalBloomVaries: string;
+  /**
+   * 🔎 날짜 옆에 붙는 **작은 링크** 글자. 누르면 그 축제의 네이버 검색으로 간다.
+   *
+   * 사용자 지시(2026-09-02): "날짜에 너무 신경쓰지말고 네이버 링크 달아서 직접
+   * 확인해야한다 / 달라질수있다 작게적어".
+   *
+   * 우리가 적어 둔 달은 **어느 철에 열리나**를 보여 줄 뿐이고, 그해 날짜는
+   * 주최 측 사정으로 바뀐다. 손님이 한 번만 눌러 지금 날짜를 볼 수 있어야 한다.
+   * 자리를 많이 먹지 않게 한두 낱말로.
+   */
+  festivalCheckDates: string;
   /** 내 위치의 구를 찾는 버튼 */
   myLocationFind: string;
   /** 구를 찾았을 때 — "지금 용산구에 계세요" */
@@ -126,6 +137,7 @@ const translations: Record<Language, Translations> = {
     festivalDateDisclaimer: '날짜는 해마다 바뀝니다. 이름을 누르면 그 구청의 공식 안내로 갑니다.',
     festivalMonthVaries: (m) => `해마다 ${m} 중 한 달에 열립니다 — 올해 날짜는 이름을 눌러 확인하세요.`,
     festivalBloomVaries: '꽃이 피는 때에 따라 날짜가 바뀝니다 — 이름을 눌러 올해 일정을 확인하세요.',
+    festivalCheckDates: '날짜 확인',
     myLocationFind: '📍 내 위치',
     myLocationHere: (gu) => `지금 ${gu}에 계세요`,
     myLocationOutside: '서울 밖에 계세요',
@@ -191,6 +203,7 @@ const translations: Record<Language, Translations> = {
     festivalDateDisclaimer: 'Dates shift a little every year. Tap a name for the district office’s official notice.',
     festivalMonthVaries: (m) => `Held in one of ${m}, and which one changes each year — tap the name for this year's dates.`,
     festivalBloomVaries: 'Dates shift with the bloom each year — tap the name for this year\'s schedule.',
+    festivalCheckDates: 'Check dates',
     myLocationFind: '📍 My location',
     myLocationHere: (gu) => `You're in ${gu}`,
     myLocationOutside: "You're outside Seoul",
@@ -256,6 +269,7 @@ const translations: Record<Language, Translations> = {
     festivalDateDisclaimer: '日程は毎年少しずつ変わります。名前をタップすると区役所の公式案内が開きます。',
     festivalMonthVaries: (m) => `毎年 ${m} のいずれか1か月に開催されます。今年の日程は名前をタップしてご確認ください。`,
     festivalBloomVaries: '開花時期によって日程が変わります。名前をタップして今年の日程をご確認ください。',
+    festivalCheckDates: '日程を確認',
     myLocationFind: '📍 現在地',
     myLocationHere: (gu) => `いま ${gu} にいます`,
     myLocationOutside: 'ソウルの外にいます',
@@ -321,6 +335,7 @@ const translations: Record<Language, Translations> = {
     festivalDateDisclaimer: '日期每年略有变动。点击名称可查看区厅的官方公告。',
     festivalMonthVaries: (m) => `每年在 ${m} 中的某一个月举办，具体月份逐年不同 — 点击名称查看今年日期。`,
     festivalBloomVaries: '日期随开花时间每年变动 — 点击名称查看今年日程。',
+    festivalCheckDates: '查看日期',
     myLocationFind: '📍 我的位置',
     myLocationHere: (gu) => `您现在在${gu}`,
     myLocationOutside: '您在首尔以外',
@@ -386,6 +401,7 @@ const translations: Record<Language, Translations> = {
     festivalDateDisclaimer: '日期每年略有變動。點擊名稱可查看區廳的官方公告。',
     festivalMonthVaries: (m) => `每年在 ${m} 其中一個月舉辦，實際月份逐年不同 — 點擊名稱查看今年日期。`,
     festivalBloomVaries: '日期隨開花時間逐年變動 — 點擊名稱查看今年日程。',
+    festivalCheckDates: '查看日期',
     myLocationFind: '📍 我的位置',
     myLocationHere: (gu) => `您現在在${gu}`,
     myLocationOutside: '您在首爾以外',
@@ -451,6 +467,7 @@ const translations: Record<Language, Translations> = {
     festivalDateDisclaimer: 'Ngày tổ chức thay đổi mỗi năm. Nhấn vào tên để xem thông báo chính thức của quận.',
     festivalMonthVaries: (m) => `Được tổ chức vào một trong các tháng ${m}, thay đổi theo từng năm — nhấn vào tên để xem ngày năm nay.`,
     festivalBloomVaries: 'Ngày tổ chức thay đổi theo mùa hoa nở — nhấn vào tên để xem lịch năm nay.',
+    festivalCheckDates: 'Xem ngày',
     myLocationFind: '📍 Vị trí của tôi',
     myLocationHere: (gu) => `Bạn đang ở ${gu}`,
     myLocationOutside: 'Bạn đang ở ngoài Seoul',
@@ -516,6 +533,7 @@ const translations: Record<Language, Translations> = {
     festivalDateDisclaimer: 'Las fechas cambian cada año. Toca un nombre para ver el aviso oficial del distrito.',
     festivalMonthVaries: (m) => `Se celebra en uno de estos meses (${m}) y cambia cada año: toca el nombre para ver las fechas de este año.`,
     festivalBloomVaries: 'Las fechas cambian con la floración cada año: toca el nombre para ver el calendario de este año.',
+    festivalCheckDates: 'Ver fechas',
     myLocationFind: '📍 Mi ubicación',
     myLocationHere: (gu) => `Estás en ${gu}`,
     myLocationOutside: 'Estás fuera de Seúl',
@@ -581,6 +599,7 @@ const translations: Record<Language, Translations> = {
     festivalDateDisclaimer: 'Les dates changent chaque année. Touchez un nom pour l’annonce officielle de l’arrondissement.',
     festivalMonthVaries: (m) => `A lieu l'un de ces mois (${m}), et cela change chaque année — appuyez sur le nom pour les dates de cette année.`,
     festivalBloomVaries: 'Les dates changent avec la floraison chaque année — appuyez sur le nom pour le calendrier de cette année.',
+    festivalCheckDates: 'Voir les dates',
     myLocationFind: '📍 Ma position',
     myLocationHere: (gu) => `Vous êtes à ${gu}`,
     myLocationOutside: 'Vous êtes hors de Séoul',
@@ -646,6 +665,7 @@ const translations: Record<Language, Translations> = {
     festivalDateDisclaimer: 'Die Termine ändern sich jedes Jahr. Tippen Sie auf einen Namen für die offizielle Ankündigung des Bezirks.',
     festivalMonthVaries: (m) => `Findet in einem dieser Monate statt (${m}) und wechselt jedes Jahr – tippen Sie auf den Namen für die diesjährigen Termine.`,
     festivalBloomVaries: 'Die Termine richten sich nach der Blüte und ändern sich jedes Jahr – tippen Sie auf den Namen für den diesjährigen Termin.',
+    festivalCheckDates: 'Termine prüfen',
     myLocationFind: '📍 Mein Standort',
     myLocationHere: (gu) => `Sie sind in ${gu}`,
     myLocationOutside: 'Sie sind außerhalb von Seoul',
@@ -711,6 +731,7 @@ const translations: Record<Language, Translations> = {
     festivalDateDisclaimer: 'Даты меняются каждый год. Нажмите на название, чтобы открыть официальное объявление района.',
     festivalMonthVaries: (m) => `Проводится в один из этих месяцев (${m}), и каждый год месяц разный — нажмите на название, чтобы узнать даты этого года.`,
     festivalBloomVaries: 'Даты меняются каждый год вместе с цветением — нажмите на название, чтобы узнать расписание этого года.',
+    festivalCheckDates: 'Уточнить даты',
     myLocationFind: '📍 Моё местоположение',
     myLocationHere: (gu) => `Вы в районе ${gu}`,
     myLocationOutside: 'Вы за пределами Сеула',
@@ -776,6 +797,7 @@ const translations: Record<Language, Translations> = {
     festivalDateDisclaimer: 'Tanggal berubah setiap tahun. Ketuk nama untuk melihat pengumuman resmi kantor distrik.',
     festivalMonthVaries: (m) => `Diadakan pada salah satu bulan ${m}, dan bulannya berubah tiap tahun — ketuk nama untuk melihat tanggal tahun ini.`,
     festivalBloomVaries: 'Tanggalnya berubah mengikuti masa mekar tiap tahun — ketuk nama untuk melihat jadwal tahun ini.',
+    festivalCheckDates: 'Cek tanggal',
     myLocationFind: '📍 Lokasi saya',
     myLocationHere: (gu) => `Anda di ${gu}`,
     myLocationOutside: 'Anda di luar Seoul',
@@ -841,6 +863,7 @@ const translations: Record<Language, Translations> = {
     festivalDateDisclaimer: 'วันจัดงานเปลี่ยนแปลงทุกปี แตะที่ชื่อเพื่อดูประกาศอย่างเป็นทางการของเขต',
     festivalMonthVaries: (m) => `จัดขึ้นในเดือนใดเดือนหนึ่งของ ${m} ซึ่งเปลี่ยนไปในแต่ละปี — แตะที่ชื่อเพื่อดูวันที่ของปีนี้`,
     festivalBloomVaries: 'วันจัดงานเปลี่ยนไปตามช่วงดอกไม้บานในแต่ละปี — แตะที่ชื่อเพื่อดูกำหนดการปีนี้',
+    festivalCheckDates: 'ดูวันที่',
     myLocationFind: '📍 ตำแหน่งของฉัน',
     myLocationHere: (gu) => `คุณอยู่ใน ${gu}`,
     myLocationOutside: 'คุณอยู่นอกกรุงโซล',

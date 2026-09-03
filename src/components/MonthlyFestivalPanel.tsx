@@ -9,7 +9,7 @@ import { getTourImage } from "../lib/tourImages";
 import { districtFullName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
 import PlacePhoto from "./PlacePhoto";
-import { openPlaceInfo } from "../lib/mapLinks";
+import { openPlaceInfo, naverSearchUrl } from "../lib/mapLinks";
 import { placeName, translateText, hasTranslation } from "../lib/placeText";
 import { FESTIVAL_THEMES, THEME_ICON, themeOf, type FestivalTheme } from "../data/festivalThemes";
 
@@ -177,9 +177,13 @@ export default function MonthlyFestivalPanel() {
           </div>
         )}
 
-        {/* 🚨 정확한 날짜를 안 적는 이유를 화면에도 적는다 — 받아온 날짜가 지난
-            회차 것이라, 손님이 "10월 중순"만 믿고 날짜를 정하면 안 된다. */}
-        <p className="map-disclaimer">{t.festivalDateDisclaimer} {t.mapAppNote}</p>
+        {/* 🚨 정확한 날짜를 안 적는 이유를 화면에도 적는다 — 우리가 아는 것은
+            '어느 철에 열리나'까지다. 다만 **작게** 적는다(사용자 지시 2026-09-02:
+            "달라질수있다 작게적어") — 카드마다 「날짜 확인」 링크가 따로 붙으므로
+            여기서 길게 늘어놓으면 목록만 밀려난다. */}
+        <p className="map-disclaimer map-disclaimer--fine">
+          {t.festivalDateDisclaimer} {t.mapAppNote}
+        </p>
 
         <div className="festival-cards">
           {festivals.length === 0 && (
@@ -214,6 +218,22 @@ export default function MonthlyFestivalPanel() {
                         보여줄 수는 없다(2026-09-01 영어로 바꿔 보고 발견).
                         그래서 **한국어일 때만 그 문구를 쓰고**, 다른 언어에서는
                         달(+초·중·하순)로 만들어 준다 — 덜 자세하지만 번역이 된다. */}
+                    {/* 🔎 **날짜는 여기서 직접 확인한다** (사용자 지시 2026-09-02:
+                        "날짜에 너무 신경쓰지말고 네이버 링크 달아서 직접 확인해야한다
+                         / 달라질수있다 작게적어").
+                        우리가 적은 달은 '어느 철에 열리나'까지만 말해 준다 — 그해
+                        날짜는 주최 측 사정으로 바뀐다. 공식 홈페이지는 회차가 끝나면
+                        멈춰 있는 곳이 많은데 네이버 축제정보 카드는 올해 날짜가 같은
+                        자리에 뜨므로, 날짜만 그쪽으로 보낸다. 이름을 누르는 쪽은
+                        공식 창구 그대로다 — 손님이 알고 싶은 것이 서로 다르다. */}
+                    <a
+                      className="fc-date-check"
+                      href={naverSearchUrl(f.name)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {t.festivalCheckDates} ↗
+                    </a>
                     {(() => {
                       // 🗓️ 달이 해마다 옮겨 다니는 축제는 **걸린 달을 다 적는다**
                       //    ("9월·10월"). 첫 달만 적으면 10월에 열리는 해에 9월이라고
