@@ -195,7 +195,7 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "용산구", category: "festival", name: "이태원 지구촌축제", startMonth: 10, endMonth: 10, note: "매년 10월경, 연도별 정확한 날짜는 미확정", confirmed: true },
   { id: id(), gu: "은평구", category: "festival", name: "은평누리축제", startMonth: 10, endMonth: 10, dateLabel: "10월 초", note: "불광천 일대", confirmed: true },
   { id: id(), gu: "종로구", dong: "종로1가동", category: "festival", name: "연등회", startMonth: 4, endMonth: 5, monthVaries: true, note: "유네스코 인류무형문화유산, 조계사~종로 일대, 무료", lat: 37.5750, lng: 126.9922, officialUrl: "http://www.llf.or.kr/", monthSource: "음력 4월 8일 기준 — 해마다 4월 또는 5월 (2026 연등회 5.16–17)", confirmed: true },
-  { id: id(), gu: "중구", category: "festival", name: "정동야행", startMonth: 5, endMonth: 5, note: "덕수궁 돌담길~정동 일대, 2025년 이틀간 13.3만 명", confirmed: true },
+  { id: id(), gu: "중구", category: "festival", name: "정동야행", startMonth: 5, endMonth: 5, note: "덕수궁 돌담길~정동 일대, 2025년 이틀간 13.3만 명", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=601", monthSource: "서울시 펀서울·서울문화포털 (2025 5.23–24)", confirmed: true },
   { id: id(), gu: "중랑구", category: "festival", name: "중랑 서울장미축제", startMonth: 5, endMonth: 5, dateLabel: "5월", note: "장미터널 5.45km, 국내 최대", officialUrl: "https://www.jnfac.or.kr/rose/index", monthSource: "중랑문화재단 공식 (2026 5.15–23)", confirmed: true },
   { id: id(), gu: "송파구", category: "festival", name: "석촌호수 호수벚꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4월", confirmed: true },
   // 아래 4개는 2026-08-28 사용자 지시("3월까지 빈것도 서치해서 채우기")로 추가 —
