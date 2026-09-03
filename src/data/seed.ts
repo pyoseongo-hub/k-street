@@ -164,7 +164,7 @@ export const FESTIVALS: Place[] = [
   // "댄싱노원 거리페스티벌"로 개명한 같은 행사였다(서울문화포털 등 확인, 2026-08-30) —
   // 지금 열리는 건 하나뿐이라 옛 이름은 빼고 지금 이름만 남긴다.
   { id: id(), gu: "노원구", category: "festival", name: "댄싱노원 거리페스티벌", startMonth: 9, endMonth: 9, note: "옛 이름 '노원탈축제', 2023년 개명. 9월 이틀간", officialUrl: "https://dancingnowon.isweb.co.kr/", confirmed: true },
-  { id: id(), gu: "도봉구", category: "festival", name: "도봉별빛축제", startMonth: 6, endMonth: 6, dateLabel: "6월", note: "중랑천(도봉구청~세월교 540m)", confirmed: true },
+  { id: id(), gu: "도봉구", category: "festival", name: "도봉별빛축제", startMonth: 6, endMonth: 6, dateLabel: "6월", note: "중랑천(도봉구청~세월교 540m)", officialUrl: "https://tour.dobong.go.kr/Contents.asp?code=10003458", monthSource: "아시아경제·도봉구 (2025 6.13–17)", confirmed: true },
   { id: id(), gu: "동대문구", category: "festival", name: "동대문페스티벌", startMonth: 10, endMonth: 10, note: "공연예술축제 — 거리예술·음악공연", confirmed: true },
   // 10월 확인(2026-09-01): 제8회가 10월 25~26일 노량진수산시장 일대에서 열렸다.
   // 문화일보·헤럴드경제·시정일보와 서울문화포털 자치구브랜드축제 안내가 일치한다.
