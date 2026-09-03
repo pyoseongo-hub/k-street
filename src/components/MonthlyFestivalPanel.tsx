@@ -39,6 +39,16 @@ function opensIn(f: (typeof ALL_FESTIVALS)[number], month: number): boolean {
   return month >= f.startMonth && month <= end;
 }
 
+/**
+ * 🌸 꽃이 주인공인 축제. 이 축제들은 **날짜가 꽃 따라 움직인다** — 벚꽃은 그 해
+ * 날씨에 따라 보름씩 당겨지거나 밀려서 주최 측도 미리 못 박는다.
+ *
+ * 이름으로 가르는 이유 — 이 축제들은 이름에 꽃 이름이 그대로 들어 있다
+ * (여의도 **봄꽃**축제, 석촌호수 호수**벚꽃**축제, 중랑 서울**장미**축제).
+ * 자료에 표시를 하나 더 다는 것보다 이름을 보는 쪽이 새 축제가 들어와도 저절로 맞는다.
+ */
+const BLOOM_RE = /(벚꽃|봄꽃|장미|철쭉|진달래|연꽃|매화|유채|튤립|국화|단풍)/;
+
 /** 걸린 달을 그 언어로 이어 붙인다 — "9월·10월", "September · October". */
 function monthsLabel(
   f: (typeof ALL_FESTIVALS)[number],
@@ -252,6 +262,16 @@ export default function MonthlyFestivalPanel() {
                       안내문구"). 올해 날짜는 이름을 눌러 공식 안내에서 본다. */}
                   {f.monthVaries && (
                     <div className="fc-varies">⚠️ {t.festivalMonthVaries(monthsLabel(f, t))}</div>
+                  )}
+                  {/* 🌸 꽃 축제는 **날짜가 꽃 따라 움직인다.** 벚꽃은 그 해 날씨에
+                      따라 보름씩 당겨지거나 밀려서 주최 측도 미리 못 박는다 —
+                      "4월 3일"이라고 적어 두면 그 날 꽃이 없을 수 있다
+                      (사용자 지시 2026-09-02: "꽃 축제나 날짜가 변하는건 달로만
+                      표기하고 안내문구").
+                      이름으로 가른다 — 이 축제들은 이름에 꽃 이름이 그대로 들어 있어
+                      따로 표시를 달 필요가 없다. */}
+                  {BLOOM_RE.test(f.name) && (
+                    <div className="fc-varies">🌸 {t.festivalBloomVaries}</div>
                   )}
                   {f.note && <div className="fc-note">{translateText(f.note, language)}</div>}
                   <MapDirections
