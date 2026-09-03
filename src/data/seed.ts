@@ -172,11 +172,12 @@ export const FESTIVALS: Place[] = [
   //    안정된 안내가 생기면 hidden을 지우고 근거를 적는다.
   { id: id(), gu: "노원구", category: "festival", name: "댄싱노원 거리페스티벌", startMonth: 9, endMonth: 9, note: "옛 이름 '노원탈축제', 2023년 개명. 9월 이틀간", officialUrl: "https://dancingnowon.isweb.co.kr/", hidden: "회차마다 구청 공고를 새로 찾아야 해 고정된 안내가 없다 (사용자 판단 2026-09-02)", confirmed: true },
   // 🙈 화면에서 뺐다 (사용자 지시 2026-09-02: "도봉 가림").
-  //    ⚠️ 뺀 이유를 사용자에게 아직 못 들었다 — 여기 적어야 다음 사람이 같은
-  //       논의를 반복하지 않는다. 이유를 들으면 아래 hidden 문구를 고칠 것.
+  //    이유는 댄싱노원과 같다(사용자 확인 2026-09-02: "노원과 같은 이유로 적어") —
+  //    회차마다 구청이 공고를 새로 내서 그때그때 찾아야 하므로, 우리가 고정 값으로
+  //    들고 있으면 언제 낡았는지 알 수가 없다.
   //    확인된 것: 2025년 6월 13~17일 중랑천(도봉구청~세월교 540m)에서 열렸다
   //    (아시아경제·다음뉴스·도봉구 문화관광 일치). 달 자체가 틀린 것은 아니다.
-  { id: id(), gu: "도봉구", category: "festival", name: "도봉별빛축제", startMonth: 6, endMonth: 6, dateLabel: "6월", note: "중랑천(도봉구청~세월교 540m)", officialUrl: "https://tour.dobong.go.kr/Contents.asp?code=10003458", monthSource: "아시아경제·도봉구 (2025 6.13–17)", hidden: "사용자 판단으로 뺌 (2026-09-02) — 자세한 이유는 아직 안 적혔다", confirmed: true },
+  { id: id(), gu: "도봉구", category: "festival", name: "도봉별빛축제", startMonth: 6, endMonth: 6, dateLabel: "6월", note: "중랑천(도봉구청~세월교 540m)", officialUrl: "https://tour.dobong.go.kr/Contents.asp?code=10003458", monthSource: "아시아경제·도봉구 (2025 6.13–17)", hidden: "회차마다 구청 공고를 새로 찾아야 해 고정된 안내가 없다 (사용자 판단 2026-09-02, 댄싱노원과 같은 이유)", confirmed: true },
   { id: id(), gu: "동대문구", category: "festival", name: "동대문페스티벌", startMonth: 10, endMonth: 10, note: "공연예술축제 — 거리예술·음악공연", confirmed: true },
   // 10월 확인(2026-09-01): 제8회가 10월 25~26일 노량진수산시장 일대에서 열렸다.
   // 문화일보·헤럴드경제·시정일보와 서울문화포털 자치구브랜드축제 안내가 일치한다.
@@ -199,7 +200,7 @@ export const FESTIVALS: Place[] = [
   //    ⚠️ 「서울재즈페스티벌」(올림픽공원, 송파구, 민간 주최)과 다른 축제다. 이름이
   //       비슷해 자료가 자주 섞인다 — 이쪽은 성동문화재단이 서울숲에서 여는 것이다.
   { id: id(), gu: "성동구", dong: "성수동1가", category: "festival", name: "서울숲 JAZZ페스티벌", startMonth: 9, endMonth: 10, monthVaries: true, note: "서울숲 가족마당, 성동문화재단", officialUrl: "https://www.seoulforestjazz.com/", monthSource: "서울시 문화포털 (2025 9.19–21, 2024 10.12–13)", confirmed: true },
-  { id: id(), gu: "성동구", category: "festival", name: "세계민속춤축제", startMonth: 9, endMonth: 9, dateLabel: "9월", confirmed: true },
+  { id: id(), gu: "성동구", category: "festival", name: "세계민속춤축제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "왕십리광장, 성동구 주최. 2015년 시작, 10~15개국 민속 무용단", monthSource: "성동구 문화관광 — 일시 「매년 9월」(9월 말). 사용자가 화면으로 확인해 줌", confirmed: true },
   // WebSearch로 확인(2026-08-29): 누리마실(성북동, 6월경, 세계 음식·문화)과
   // 다다페스타(석관동, 9월, 성북거리문화축제)는 서로 다른 장소·시기의 별개 행사다
   // — 하나로 합쳐 두면 지도 검색이 안 될뿐더러 시기 정보도 틀리게 섞여 있었다.
