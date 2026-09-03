@@ -211,7 +211,7 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "종로구", dong: "종로1가동", category: "festival", name: "연등회", startMonth: 4, endMonth: 5, monthVaries: true, note: "유네스코 인류무형문화유산, 조계사~종로 일대, 무료", officialUrl: "http://www.llf.or.kr/", monthSource: "음력 4월 8일 기준 — 해마다 4월 또는 5월 (2026 연등회 5.16–17)", hidden: "종교 행사이고 갈 자리가 한 점으로 안 정해진다 (사용자 판단 2026-09-02)", confirmed: true },
   { id: id(), gu: "중구", category: "festival", name: "정동야행", startMonth: 5, endMonth: 5, note: "덕수궁 돌담길~정동 일대, 2025년 이틀간 13.3만 명", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=601", monthSource: "서울시 펀서울·서울문화포털 (2025 5.23–24)", confirmed: true },
   { id: id(), gu: "중랑구", category: "festival", name: "중랑 서울장미축제", startMonth: 5, endMonth: 5, dateLabel: "5월", note: "장미터널 5.45km, 국내 최대", officialUrl: "https://www.jnfac.or.kr/rose/index", monthSource: "중랑문화재단 공식 (2026 5.15–23)", confirmed: true },
-  { id: id(), gu: "송파구", category: "festival", name: "석촌호수 호수벚꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4월", confirmed: true },
+  { id: id(), gu: "송파구", category: "festival", name: "석촌호수 호수벚꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4월", note: "석촌호수 일대, 무료. 왕벚나무 1,000여 그루", monthSource: "네이버 축제정보 (2026 4.3–4.11). 매년 봄 — 사용자가 화면으로 확인해 줌", confirmed: true },
   // 아래 4개는 2026-08-28 사용자 지시("3월까지 빈것도 서치해서 채우기")로 추가 —
   // 1~3월 축제가 비어 있던 이유를 서치해 보니 실제로 이 시기 서울 자치구 축제는
   // 대부분 '정월대보름'(음력 1월 15일) 무렵에 몰려 있었다. 음력 기준이라 그레고리력
