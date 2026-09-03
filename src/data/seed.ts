@@ -205,7 +205,11 @@ export const FESTIVALS: Place[] = [
   // 다다페스타(석관동, 9월, 성북거리문화축제)는 서로 다른 장소·시기의 별개 행사다
   // — 하나로 합쳐 두면 지도 검색이 안 될뿐더러 시기 정보도 틀리게 섞여 있었다.
   { id: id(), gu: "성북구", dong: "성북동", category: "festival", name: "성북 세계음식축제 누리마실", startMonth: 5, endMonth: 6, monthVaries: true, note: "연도마다 5월 또는 6월(17회 2025.5.18, 18회 2026.6.7 예정)", monthSource: "17회 2025.5.18, 18회 2026.6.7 예정", confirmed: true },
-  { id: id(), gu: "성북구", dong: "석관동", category: "festival", name: "성북거리문화축제 다다페스타", startMonth: 9, endMonth: 9, note: "이주민·다문화가정·청년이 함께하는 거리문화축제", confirmed: true },
+  // 🙈 화면에서 뺐다 (사용자 지시 2026-09-02: "다다도 가려").
+  //    노원·도봉과 같은 줄에서 나온 판단이라 이유도 같게 적는다 — 회차마다
+  //    구청이 공고를 새로 내서 그때그때 찾아야 하는 축제다. 다른 이유였다면
+  //    아래 hidden 문구만 고치면 된다.
+  { id: id(), gu: "성북구", dong: "석관동", category: "festival", name: "성북거리문화축제 다다페스타", startMonth: 9, endMonth: 9, note: "이주민·다문화가정·청년이 함께하는 거리문화축제", hidden: "회차마다 구청 공고를 새로 찾아야 해 고정된 안내가 없다 (사용자 판단 2026-09-02, 댄싱노원·도봉별빛과 같은 이유)", confirmed: true },
   { id: id(), gu: "송파구", category: "festival", name: "한성백제문화제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "올림픽공원", officialUrl: "https://www.songpa.go.kr/hanseong/", monthSource: "서울문화포털·송파구 공식 (2025 9.26–28, 2024 9.27–29)", confirmed: true },
   { id: id(), gu: "양천구", dong: "신정동", category: "festival", name: "양천가족거리축제", startMonth: 10, endMonth: 10, note: "별도로 '우리동네축제'(14개 동 개별 개최)도 운영", lat: 37.5480, lng: 126.8490, confirmed: true },
   { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "여의도 봄꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4월", note: "여의서로 윤중로 벚꽃길, 무료", monthSource: "네이버 축제정보 (2026 4.3–4.7). 2005년부터 매년 4월 — 사용자가 화면으로 확인해 줌", confirmed: true },
