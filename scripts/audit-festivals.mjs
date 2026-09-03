@@ -60,6 +60,9 @@ for (const line of seedSrc.split("\n")) {
   if (!/id:\s*id\(\)/.test(line)) continue;
   seq++;
   if (pick(line, "category") !== "festival") continue;
+  // 🙈 사람이 "안 내보낸다"고 정한 것은 감사 대상이 아니다(Place.hidden).
+  //    앱에 안 나오는 것을 "사진 없음·좌표 없음"으로 세면 할 일이 부풀어 보인다.
+  if (/hidden: "/.test(line)) continue;
   const id = `ks_${seq.toString(36)}`;
   hand.push({
     id,
@@ -180,6 +183,8 @@ console.log(listOf(noPhoto));
   for (const line of seedSrc.split("\n")) {
     if (!/category: "festival"/.test(line)) continue;
     if (!/startMonth: \d/.test(line)) continue; // 달이 없는 것은 원래 안 나온다
+    // 사람이 "안 내보낸다"고 정한 것은 근거를 찾을 대상이 아니다(Place.hidden).
+    if (/hidden: "/.test(line)) continue;
     if (/monthSource:/.test(line)) continue;
     const name = line.match(/name: "([^"]+)"/)?.[1];
     const gu = line.match(/gu: "([^"]+)"/)?.[1] ?? "";

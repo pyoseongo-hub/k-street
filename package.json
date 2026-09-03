@@ -11,7 +11,8 @@
     "audit-seed": "node scripts/audit-seed.mjs",
     "photo-todo": "node scripts/list-photo-todo.mjs",
     "festival-todo": "node scripts/audit-festivals.mjs",
-    "audit-dupes": "node scripts/audit-duplicates.mjs"
+    "audit-dupes": "node scripts/audit-duplicates.mjs",
+    "rekey": "node scripts/rekey-by-name.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

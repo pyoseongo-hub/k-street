@@ -99,6 +99,22 @@ export interface Place {
    * 관광공사 축제 창구에 있는 곳은 이 칸이 없어도 통과한다(거기서 대조된다).
    */
   monthSource?: string;
+  /**
+   * 🙈 **화면에 안 내보내는 이유.** 값이 있으면 어느 화면에도 안 나온다.
+   *
+   * 사용자 지시(2026-09-02, 4·19혁명 국민문화제에 대해):
+   * "4.19는 빼 축제의 개념은 아니야" → "안보이게 하고 이유를 달아".
+   *
+   * **지우지 않고 가리는 이유가 둘이다.**
+   * ① id가 밀린다 — id는 파일 순서로 매겨져서, 항목 하나를 지우면 그 뒤 좌표·사진이
+   *    전부 남의 것이 된다(오늘 좌표 7곳·사진 11곳이 그래서 어긋나 있었다).
+   * ② **왜 뺐는지가 사라진다** — 지워 버리면 다음 사람이 "빠졌네" 하고 다시 넣는다.
+   *    이유를 여기 남기면 같은 논의를 두 번 하지 않는다.
+   *
+   * confirmed:false와 뜻이 다르다 — 그쪽은 "아직 확인 못 한 빈 칸"이고,
+   * 이쪽은 "확인은 됐지만 이 앱에 넣지 않기로 정한 것"이다.
+   */
+  hidden?: string;
   /** 좌표: TourAPI 또는 공식 위치정보 기반 */
   lat?: number;
   lng?: number;
@@ -115,7 +131,11 @@ export const FESTIVALS: Place[] = [
   // 달이 옮겨 다니는 것이 아니라 원래 걸치는 축제라, monthVaries는 붙이지 않는다.
   { id: id(), gu: "강남구", category: "festival", name: "강남페스티벌", startMonth: 9, endMonth: 10, dateLabel: "9월 말~10월 초", officialUrl: "https://www.visitgangnam.net/festival#stages", monthSource: "강남구 보도자료 (2025 9.25–10.3)", confirmed: true },
   { id: id(), gu: "강동구", category: "festival", name: "강동선사문화축제", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "1996년 시작, 서울 유일 선사시대 테마 축제", officialUrl: "https://m.gdsunsa.com/", confirmed: true },
-  { id: id(), gu: "강북구", category: "festival", name: "4·19혁명 국민문화제", startMonth: 4, endMonth: 4, dateLabel: "4월", confirmed: true },
+  // 🙈 화면에서 뺐다 (사용자 지시 2026-09-02: "4.19는 빼 축제의 개념은 아니야").
+  //    4·19민주묘지에서 열리는 **추모·기념 행사**라, 놀러 갈 곳을 찾는 손님에게
+  //    "축제"로 내미는 것이 맞지 않는다. 자료는 지우지 않고 남겨 둔다 —
+  //    지우면 id가 밀려 좌표·사진이 어긋나고, 왜 뺐는지도 사라진다.
+  { id: id(), gu: "강북구", category: "festival", name: "4·19혁명 국민문화제", startMonth: 4, endMonth: 4, dateLabel: "4월", hidden: "축제가 아니라 추모·기념 행사다 (사용자 판단 2026-09-02)", confirmed: true },
   // 🚨 9월로 적어 뒀는데 **본행사는 10월**이다(2025년 10월 18~19일 — 서울문화포털·
   //    관광공사 축제 창구 일치). 9월인 것은 사전행사「허준 인트로 축제」(9월 20일,
   //    허준근린공원)라, 그걸 본행사로 착각해 적은 것으로 보인다.
@@ -460,6 +480,9 @@ const isPlaceholder = (p: Place) => p.confirmed === false;
 
 export const ALL_PLACES: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .filter((p) => !isPlaceholder(p))
+  // 🙈 사람이 "이건 안 내보낸다"고 정한 것(Place.hidden). 자료는 남아 있지만
+  //    어느 화면에도 안 나온다 — 이유는 그 항목의 hidden에 적혀 있다.
+  .filter((p) => !p.hidden)
   .filter((p) => isInLaunchScope(sidoOf(p.gu)))
   .map(withFetchedCoords)
   .map(withManualPhoto)
@@ -468,6 +491,9 @@ export const ALL_PLACES: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
 /** 사진이 없어 지금 가려져 있는 곳. 하루 3곳 채우기 작업의 대상 목록이다. */
 export const HIDDEN_NO_PHOTO: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .filter((p) => !isPlaceholder(p))
+  // 🙈 사람이 "이건 안 내보낸다"고 정한 것(Place.hidden). 자료는 남아 있지만
+  //    어느 화면에도 안 나온다 — 이유는 그 항목의 hidden에 적혀 있다.
+  .filter((p) => !p.hidden)
   .filter((p) => isInLaunchScope(sidoOf(p.gu)))
   .map(withManualPhoto)
   .filter((p) => !hasPhoto(p));
@@ -521,6 +547,9 @@ export const ALL_FESTIVALS: Place[] = (() => {
   return [...merged, ...tourFestivals.filter((t) => !used.has(t.id))];
 })()
   .filter((p) => !isPlaceholder(p))
+  // 🙈 사람이 "이건 안 내보낸다"고 정한 것(Place.hidden). 자료는 남아 있지만
+  //    어느 화면에도 안 나온다 — 이유는 그 항목의 hidden에 적혀 있다.
+  .filter((p) => !p.hidden)
   .filter((p) => isInLaunchScope(sidoOf(p.gu)))
   // 🔒 **달의 근거가 없는 축제는 안 내보낸다** (사용자 지시 2026-09-02:
   //    "부정확한건 가리고 서치가 맞을때 개시").
