@@ -164,7 +164,12 @@ export const FESTIVALS: Place[] = [
   // "댄싱노원 거리페스티벌"로 개명한 같은 행사였다(서울문화포털 등 확인, 2026-08-30) —
   // 지금 열리는 건 하나뿐이라 옛 이름은 빼고 지금 이름만 남긴다.
   { id: id(), gu: "노원구", category: "festival", name: "댄싱노원 거리페스티벌", startMonth: 9, endMonth: 9, note: "옛 이름 '노원탈축제', 2023년 개명. 9월 이틀간", officialUrl: "https://dancingnowon.isweb.co.kr/", confirmed: true },
-  { id: id(), gu: "도봉구", category: "festival", name: "도봉별빛축제", startMonth: 6, endMonth: 6, dateLabel: "6월", note: "중랑천(도봉구청~세월교 540m)", officialUrl: "https://tour.dobong.go.kr/Contents.asp?code=10003458", monthSource: "아시아경제·도봉구 (2025 6.13–17)", confirmed: true },
+  // 🙈 화면에서 뺐다 (사용자 지시 2026-09-02: "도봉 가림").
+  //    ⚠️ 뺀 이유를 사용자에게 아직 못 들었다 — 여기 적어야 다음 사람이 같은
+  //       논의를 반복하지 않는다. 이유를 들으면 아래 hidden 문구를 고칠 것.
+  //    확인된 것: 2025년 6월 13~17일 중랑천(도봉구청~세월교 540m)에서 열렸다
+  //    (아시아경제·다음뉴스·도봉구 문화관광 일치). 달 자체가 틀린 것은 아니다.
+  { id: id(), gu: "도봉구", category: "festival", name: "도봉별빛축제", startMonth: 6, endMonth: 6, dateLabel: "6월", note: "중랑천(도봉구청~세월교 540m)", officialUrl: "https://tour.dobong.go.kr/Contents.asp?code=10003458", monthSource: "아시아경제·도봉구 (2025 6.13–17)", hidden: "사용자 판단으로 뺌 (2026-09-02) — 자세한 이유는 아직 안 적혔다", confirmed: true },
   { id: id(), gu: "동대문구", category: "festival", name: "동대문페스티벌", startMonth: 10, endMonth: 10, note: "공연예술축제 — 거리예술·음악공연", confirmed: true },
   // 10월 확인(2026-09-01): 제8회가 10월 25~26일 노량진수산시장 일대에서 열렸다.
   // 문화일보·헤럴드경제·시정일보와 서울문화포털 자치구브랜드축제 안내가 일치한다.
