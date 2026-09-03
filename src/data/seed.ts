@@ -143,7 +143,7 @@ export const FESTIVALS: Place[] = [
   //       그대로 둔다 — 한 해 자료만으로 옮기지 않는다(CLAUDE.md: 여러 해 같은 곳에서
   //       열린 것만 넣는다). 다음 회차에서 또 마곡이면 그때 옮긴다.
   { id: id(), gu: "강서구", category: "festival", name: "허준축제", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "사전행사 「허준 인트로 축제」는 9월", monthSource: "서울문화포털·관광공사 (2025 10.18–19). 9월은 사전행사", confirmed: true },
-  { id: id(), gu: "관악구", category: "festival", name: "관악강감찬축제", startMonth: 10, endMonth: 10, officialUrl: "https://www.ggcfest.com/", confirmed: true },
+  { id: id(), gu: "관악구", category: "festival", name: "관악강감찬축제", startMonth: 10, endMonth: 10, officialUrl: "https://www.ggcfest.com/", note: "낙성대공원, 무료. 귀주대첩의 강감찬 장군을 기리는 역사문화 축제", monthSource: "네이버 축제정보 (2026 10.16–18). 사용자가 화면으로 확인해 줌", confirmed: true },
   // 8월 확인(2026-09-01): "한여름 밤의 음악축제"로 헤럴드경제·시정일보·청년개발자신문이
   // 모두 8월 29일 개최를 보도했고, 광진구청 포털 축제/행사 안내에도 같은 날짜가 있다.
   // 자양역 2·3번 출구 일대(뚝섬한강공원).
