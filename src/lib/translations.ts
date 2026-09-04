@@ -8,6 +8,11 @@ export interface Translations {
   homeTab: string;
   calendarTab: string;
   savedPlacesTab: string;
+  saveLabel: string;
+  unsaveLabel: string;
+  savedEmptyTitle: string;
+  savedEmptyBody: string;
+  savedOnThisPhone: string;
   settingsTab: string;
 
   // Monthly Festival Panel
@@ -105,6 +110,11 @@ const translations: Record<Language, Translations> = {
     homeTab: '홈',
     calendarTab: '캘린더',
     savedPlacesTab: '저장한 곳',
+    saveLabel: '저장하기',
+    unsaveLabel: '저장 해제',
+    savedEmptyTitle: '아직 저장한 곳이 없어요',
+    savedEmptyBody: '마음에 드는 곳의 🤍 를 누르면 여기에 모입니다.',
+    savedOnThisPhone: '저장한 곳은 이 기기에만 남습니다.',
     settingsTab: '설정',
 
     monthlyEditorLabel: '이달의 편집',
@@ -171,6 +181,11 @@ const translations: Record<Language, Translations> = {
     homeTab: 'Home',
     calendarTab: 'Calendar',
     savedPlacesTab: 'Saved',
+    saveLabel: 'Save',
+    unsaveLabel: 'Remove from saved',
+    savedEmptyTitle: 'Nothing saved yet',
+    savedEmptyBody: 'Tap 🤍 on any place and it shows up here.',
+    savedOnThisPhone: 'Saved places stay on this device only.',
     settingsTab: 'Settings',
 
     monthlyEditorLabel: "This Month's Picks",
@@ -237,6 +252,11 @@ const translations: Record<Language, Translations> = {
     homeTab: 'ホーム',
     calendarTab: 'カレンダー',
     savedPlacesTab: '保存済み',
+    saveLabel: '保存する',
+    unsaveLabel: '保存を解除',
+    savedEmptyTitle: 'まだ保存した場所がありません',
+    savedEmptyBody: '気になる場所の 🤍 を押すと、ここに集まります。',
+    savedOnThisPhone: '保存した場所はこの端末にのみ残ります。',
     settingsTab: '設定',
 
     monthlyEditorLabel: 'この月の編集',
@@ -303,6 +323,11 @@ const translations: Record<Language, Translations> = {
     homeTab: '首页',
     calendarTab: '日历',
     savedPlacesTab: '已保存',
+    saveLabel: '收藏',
+    unsaveLabel: '取消收藏',
+    savedEmptyTitle: '还没有收藏的地方',
+    savedEmptyBody: '点一下喜欢的地方的 🤍，就会出现在这里。',
+    savedOnThisPhone: '收藏内容仅保存在本设备上。',
     settingsTab: '设置',
 
     monthlyEditorLabel: '本月精选',
@@ -369,6 +394,11 @@ const translations: Record<Language, Translations> = {
     homeTab: '首頁',
     calendarTab: '日曆',
     savedPlacesTab: '已儲存',
+    saveLabel: '收藏',
+    unsaveLabel: '取消收藏',
+    savedEmptyTitle: '還沒有收藏的地方',
+    savedEmptyBody: '點一下喜歡的地方的 🤍，就會出現在這裡。',
+    savedOnThisPhone: '收藏內容僅保存在本裝置上。',
     settingsTab: '設定',
 
     monthlyEditorLabel: '本月精選',
@@ -435,6 +465,11 @@ const translations: Record<Language, Translations> = {
     homeTab: 'Trang chủ',
     calendarTab: 'Lịch',
     savedPlacesTab: 'Đã lưu',
+    saveLabel: 'Lưu',
+    unsaveLabel: 'Bỏ lưu',
+    savedEmptyTitle: 'Chưa lưu địa điểm nào',
+    savedEmptyBody: 'Nhấn 🤍 ở địa điểm bạn thích, nó sẽ hiện ở đây.',
+    savedOnThisPhone: 'Địa điểm đã lưu chỉ nằm trên thiết bị này.',
     settingsTab: 'Cài đặt',
 
     monthlyEditorLabel: 'Lựa chọn tháng này',
@@ -501,6 +536,11 @@ const translations: Record<Language, Translations> = {
     homeTab: 'Inicio',
     calendarTab: 'Calendario',
     savedPlacesTab: 'Guardados',
+    saveLabel: 'Guardar',
+    unsaveLabel: 'Quitar de guardados',
+    savedEmptyTitle: 'Aún no has guardado nada',
+    savedEmptyBody: 'Toca 🤍 en cualquier lugar y aparecerá aquí.',
+    savedOnThisPhone: 'Los lugares guardados solo quedan en este dispositivo.',
     settingsTab: 'Configuración',
 
     monthlyEditorLabel: 'Selecciones del mes',
@@ -567,6 +607,11 @@ const translations: Record<Language, Translations> = {
     homeTab: 'Accueil',
     calendarTab: 'Calendrier',
     savedPlacesTab: 'Enregistrés',
+    saveLabel: 'Enregistrer',
+    unsaveLabel: 'Retirer des enregistrés',
+    savedEmptyTitle: 'Rien d\'enregistré pour l\'instant',
+    savedEmptyBody: 'Touchez 🤍 sur un lieu et il apparaîtra ici.',
+    savedOnThisPhone: 'Les lieux enregistrés restent sur cet appareil uniquement.',
     settingsTab: 'Paramètres',
 
     monthlyEditorLabel: 'Sélections du mois',
@@ -633,6 +678,11 @@ const translations: Record<Language, Translations> = {
     homeTab: 'Startseite',
     calendarTab: 'Kalender',
     savedPlacesTab: 'Gespeichert',
+    saveLabel: 'Speichern',
+    unsaveLabel: 'Aus Gespeichert entfernen',
+    savedEmptyTitle: 'Noch nichts gespeichert',
+    savedEmptyBody: 'Tippe bei einem Ort auf 🤍 – er erscheint dann hier.',
+    savedOnThisPhone: 'Gespeicherte Orte bleiben nur auf diesem Gerät.',
     settingsTab: 'Einstellungen',
 
     monthlyEditorLabel: 'Auswahl des Monats',
@@ -699,6 +749,11 @@ const translations: Record<Language, Translations> = {
     homeTab: 'Главная',
     calendarTab: 'Календарь',
     savedPlacesTab: 'Сохраненные',
+    saveLabel: 'Сохранить',
+    unsaveLabel: 'Убрать из сохранённых',
+    savedEmptyTitle: 'Пока ничего не сохранено',
+    savedEmptyBody: 'Нажмите 🤍 у любого места — оно появится здесь.',
+    savedOnThisPhone: 'Сохранённые места остаются только на этом устройстве.',
     settingsTab: 'Настройки',
 
     monthlyEditorLabel: 'Выбор месяца',
@@ -765,6 +820,11 @@ const translations: Record<Language, Translations> = {
     homeTab: 'Beranda',
     calendarTab: 'Kalender',
     savedPlacesTab: 'Disimpan',
+    saveLabel: 'Simpan',
+    unsaveLabel: 'Hapus dari simpanan',
+    savedEmptyTitle: 'Belum ada yang disimpan',
+    savedEmptyBody: 'Ketuk 🤍 pada tempat yang kamu suka, nanti muncul di sini.',
+    savedOnThisPhone: 'Tempat yang disimpan hanya tersimpan di perangkat ini.',
     settingsTab: 'Pengaturan',
 
     monthlyEditorLabel: 'Pilihan bulan ini',
@@ -831,6 +891,11 @@ const translations: Record<Language, Translations> = {
     homeTab: 'หน้าแรก',
     calendarTab: 'ปฏิทิน',
     savedPlacesTab: 'บันทึก',
+    saveLabel: 'บันทึก',
+    unsaveLabel: 'เอาออกจากที่บันทึก',
+    savedEmptyTitle: 'ยังไม่มีที่บันทึกไว้',
+    savedEmptyBody: 'แตะ 🤍 ที่สถานที่ที่ชอบ แล้วจะมาอยู่ตรงนี้',
+    savedOnThisPhone: 'ที่บันทึกไว้จะอยู่บนเครื่องนี้เท่านั้น',
     settingsTab: 'การตั้งค่า',
 
     monthlyEditorLabel: 'บรรณาธิการของเดือนนี้',

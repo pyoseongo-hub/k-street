@@ -1827,3 +1827,92 @@ button {
   word-break: keep-all;
 }
 .pick-item figcaption b { color: var(--accent); font-size: 13px; }
+
+/* ── 🤍 저장 단추 · 저장한 곳 화면 (2026-09-04) ────────────────
+   사용자 결정: "홈 하고 저장한 곳만 살릴까" — 아래 탭에서 캘린더·설정을 빼고
+   '저장한 곳'을 실제로 되게 만들면서 함께 넣은 것들이다. */
+
+/* 사진(또는 계절 그림) 위에 하트를 얹을 자리. position만 잡아 주는 껍데기라
+   레이아웃은 예전 그대로 — 카드 높이·간격이 안 바뀐다. */
+.pr-photo-wrap {
+  position: relative;
+  display: block;
+}
+
+.save-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  line-height: 1;
+  /* 손가락으로 누르는 단추는 44px가 안전선이다(애플·구글 권장). 하트 그림은
+     작게 두되 누르는 자리는 넓게 잡는다 — 사진을 가리지 않으면서 잘 눌린다. */
+  min-width: 40px;
+  min-height: 40px;
+  font-size: 19px;
+  padding: 0;
+  transition: transform 0.12s ease;
+}
+
+.save-btn:active {
+  transform: scale(0.86);
+}
+
+/* 사진 위 — 오른쪽 위 구석. 사진이 밝든 어둡든 하트가 보이게 어두운 알약을
+   깐다(사진 위 흰 글씨에 그늘을 까는 것과 같은 이유, .mfp-cover::after 참고). */
+.save-btn--on-photo {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  min-width: 34px;
+  min-height: 34px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(3px);
+  font-size: 17px;
+}
+
+/* 사진이 없는 작은 카드 — 구 이름 줄 오른쪽 끝에 붙는다. */
+.save-btn--inline {
+  margin-left: auto;
+  min-width: 32px;
+  min-height: 32px;
+  font-size: 16px;
+}
+
+.save-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* 저장한 곳 화면 */
+.saved-panel .panel-head h2 {
+  font-size: 30px;
+}
+
+.saved-empty {
+  text-align: center;
+  padding: 40px 12px 48px;
+}
+
+.saved-empty-icon {
+  font-size: 42px;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+.saved-empty-title {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.saved-empty-body {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--text-muted);
+}

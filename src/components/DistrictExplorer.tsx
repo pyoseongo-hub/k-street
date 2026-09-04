@@ -5,6 +5,7 @@ import { SEOUL_HEX_ROWS } from "../data/seoulHexMap";
 import { districtShortName, districtFullName, dongName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
 import PlacePhoto from "./PlacePhoto";
+import SaveButton from "./SaveButton";
 import { openPlaceInfo } from "../lib/mapLinks";
 import { getTourImage } from "../lib/tourImages";
 import { getMyDistrict, type MyDistrict } from "../lib/myDistrict";
@@ -191,7 +192,14 @@ export default function DistrictExplorer() {
               <div className={"place-row" + (compact ? " pr-compact" : "")} key={p.id}>
                 {/* 사진이 여러 장이면 눌러서 넘길 수 있다 — PlacePhoto가 맡는다.
                     legacy 좌표·사진을 쓰는 예전 항목도 있어 image를 채워 넘긴다. */}
-                {photoUrl && <PlacePhoto place={{ ...p, image: photoUrl }} />}
+                {photoUrl && (
+                  <div className="pr-photo-wrap">
+                    <PlacePhoto place={{ ...p, image: photoUrl }} />
+                    {/* 🤍 사진 위에 얹는다. 사진이 없는 작은 카드에서는
+                        아래 pr-top 줄 끝에 작게 붙는다. */}
+                    <SaveButton place={p} className="save-btn save-btn--on-photo" />
+                  </div>
+                )}
                 <div className="pr-body">
                   <div className="pr-top">
                     {/* 작은 카드에서는 사진 자리가 없으니 아이콘을 여기 작게 붙인다 —
@@ -212,6 +220,7 @@ export default function DistrictExplorer() {
                       {districtFullName(p.gu, language)}
                       {p.dong ? ` ${dongName(p.dong, language)}` : ""}
                     </span>
+                    {compact && <SaveButton place={p} className="save-btn save-btn--inline" />}
                   </div>
                   {/* 🔗 이름을 누르면 네이버 **통합검색**으로 간다.
                       처음엔 네이버 지도로 보냈는데 2026-09-01 사용자 캡처로 틀린 게

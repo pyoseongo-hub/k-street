@@ -9,6 +9,7 @@ import { getTourImage } from "../lib/tourImages";
 import { districtFullName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
 import PlacePhoto from "./PlacePhoto";
+import SaveButton from "./SaveButton";
 import { openPlaceInfo, naverSearchUrl } from "../lib/mapLinks";
 import { placeName, translateText, hasTranslation } from "../lib/placeText";
 import { FESTIVAL_THEMES, THEME_ICON, themeOf, type FestivalTheme } from "../data/festivalThemes";
@@ -196,6 +197,10 @@ export default function MonthlyFestivalPanel() {
             const k = themeOf(f.name);
             return (
               <div className="festival-card" key={f.id}>
+                {/* 🤍 저장 단추는 그림 위에 얹는다 — 사진이 있든(PlacePhoto)
+                    없든(SeasonArt) 같은 자리라 손님이 찾는 곳이 하나다. */}
+                <div className="pr-photo-wrap">
+                <SaveButton place={f} className="save-btn save-btn--on-photo" />
                 {photoUrl ? (
                   <PlacePhoto place={{ ...f, image: photoUrl }} />
                 ) : (
@@ -209,6 +214,7 @@ export default function MonthlyFestivalPanel() {
                     seed={rotatingSeed * 100 + i}
                   />
                 )}
+                </div>
                 <div className="fc-body">
                   <div className="fc-top">
                     <span className="fc-gu">{districtFullName(f.gu, language)}</span>
