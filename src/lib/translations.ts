@@ -13,6 +13,12 @@ export interface Translations {
   savedEmptyTitle: string;
   savedEmptyBody: string;
   savedOnThisPhone: string;
+  freeNoSignup: string;
+  installTitle: string;
+  installBody: string;
+  installBodyIos: string;
+  installAction: string;
+  installDismiss: string;
   settingsTab: string;
 
   // Monthly Festival Panel
@@ -115,6 +121,12 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: '아직 저장한 곳이 없어요',
     savedEmptyBody: '마음에 드는 곳의 🤍 를 누르면 여기에 모입니다.',
     savedOnThisPhone: '저장한 곳은 이 기기에만 남습니다.',
+    freeNoSignup: '평생 무료 · 가입 없음',
+    installTitle: '앱처럼 쓰기',
+    installBody: '홈 화면에 두면 인터넷이 없어도 열립니다.',
+    installBodyIos: '공유 버튼 → "홈 화면에 추가"',
+    installAction: '설치',
+    installDismiss: '닫기',
     settingsTab: '설정',
 
     monthlyEditorLabel: '이달의 편집',
@@ -186,6 +198,12 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'Nothing saved yet',
     savedEmptyBody: 'Tap 🤍 on any place and it shows up here.',
     savedOnThisPhone: 'Saved places stay on this device only.',
+    freeNoSignup: 'Free forever · No sign-up',
+    installTitle: 'Use it like an app',
+    installBody: 'Add it to your home screen — it opens even offline.',
+    installBodyIos: 'Share button → "Add to Home Screen"',
+    installAction: 'Install',
+    installDismiss: 'Close',
     settingsTab: 'Settings',
 
     monthlyEditorLabel: "This Month's Picks",
@@ -257,6 +275,12 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'まだ保存した場所がありません',
     savedEmptyBody: '気になる場所の 🤍 を押すと、ここに集まります。',
     savedOnThisPhone: '保存した場所はこの端末にのみ残ります。',
+    freeNoSignup: 'ずっと無料 · 登録不要',
+    installTitle: 'アプリのように使う',
+    installBody: 'ホーム画面に追加すると、オフラインでも開けます。',
+    installBodyIos: '共有ボタン →「ホーム画面に追加」',
+    installAction: 'インストール',
+    installDismiss: '閉じる',
     settingsTab: '設定',
 
     monthlyEditorLabel: 'この月の編集',
@@ -328,6 +352,12 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: '还没有收藏的地方',
     savedEmptyBody: '点一下喜欢的地方的 🤍，就会出现在这里。',
     savedOnThisPhone: '收藏内容仅保存在本设备上。',
+    freeNoSignup: '永久免费 · 无需注册',
+    installTitle: '像应用一样使用',
+    installBody: '添加到主屏幕后，没有网络也能打开。',
+    installBodyIos: '分享按钮 →「添加到主屏幕」',
+    installAction: '安装',
+    installDismiss: '关闭',
     settingsTab: '设置',
 
     monthlyEditorLabel: '本月精选',
@@ -399,6 +429,12 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: '還沒有收藏的地方',
     savedEmptyBody: '點一下喜歡的地方的 🤍，就會出現在這裡。',
     savedOnThisPhone: '收藏內容僅保存在本裝置上。',
+    freeNoSignup: '永久免費 · 無需註冊',
+    installTitle: '像應用程式一樣使用',
+    installBody: '加到主畫面後，沒有網路也能開啟。',
+    installBodyIos: '分享按鈕 →「加入主畫面」',
+    installAction: '安裝',
+    installDismiss: '關閉',
     settingsTab: '設定',
 
     monthlyEditorLabel: '本月精選',
@@ -470,6 +506,12 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'Chưa lưu địa điểm nào',
     savedEmptyBody: 'Nhấn 🤍 ở địa điểm bạn thích, nó sẽ hiện ở đây.',
     savedOnThisPhone: 'Địa điểm đã lưu chỉ nằm trên thiết bị này.',
+    freeNoSignup: 'Miễn phí mãi mãi · Không cần đăng ký',
+    installTitle: 'Dùng như một ứng dụng',
+    installBody: 'Thêm vào màn hình chính — mở được cả khi không có mạng.',
+    installBodyIos: 'Nút chia sẻ → "Thêm vào MH chính"',
+    installAction: 'Cài đặt',
+    installDismiss: 'Đóng',
     settingsTab: 'Cài đặt',
 
     monthlyEditorLabel: 'Lựa chọn tháng này',
@@ -541,6 +583,12 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'Aún no has guardado nada',
     savedEmptyBody: 'Toca 🤍 en cualquier lugar y aparecerá aquí.',
     savedOnThisPhone: 'Los lugares guardados solo quedan en este dispositivo.',
+    freeNoSignup: 'Gratis para siempre · Sin registro',
+    installTitle: 'Úsala como una app',
+    installBody: 'Añádela a tu pantalla de inicio: abre incluso sin conexión.',
+    installBodyIos: 'Botón compartir → "Añadir a inicio"',
+    installAction: 'Instalar',
+    installDismiss: 'Cerrar',
     settingsTab: 'Configuración',
 
     monthlyEditorLabel: 'Selecciones del mes',
@@ -612,6 +660,12 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'Rien d\'enregistré pour l\'instant',
     savedEmptyBody: 'Touchez 🤍 sur un lieu et il apparaîtra ici.',
     savedOnThisPhone: 'Les lieux enregistrés restent sur cet appareil uniquement.',
+    freeNoSignup: 'Gratuit à vie · Sans inscription',
+    installTitle: 'Utilisez-la comme une appli',
+    installBody: 'Ajoutez-la à l\'écran d\'accueil : elle s\'ouvre même hors ligne.',
+    installBodyIos: 'Bouton partager → "Sur l\'écran d\'accueil"',
+    installAction: 'Installer',
+    installDismiss: 'Fermer',
     settingsTab: 'Paramètres',
 
     monthlyEditorLabel: 'Sélections du mois',
@@ -683,6 +737,12 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'Noch nichts gespeichert',
     savedEmptyBody: 'Tippe bei einem Ort auf 🤍 – er erscheint dann hier.',
     savedOnThisPhone: 'Gespeicherte Orte bleiben nur auf diesem Gerät.',
+    freeNoSignup: 'Für immer kostenlos · Ohne Anmeldung',
+    installTitle: 'Wie eine App nutzen',
+    installBody: 'Zum Startbildschirm hinzufügen – öffnet auch offline.',
+    installBodyIos: 'Teilen-Button → "Zum Home-Bildschirm"',
+    installAction: 'Installieren',
+    installDismiss: 'Schließen',
     settingsTab: 'Einstellungen',
 
     monthlyEditorLabel: 'Auswahl des Monats',
@@ -754,6 +814,12 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'Пока ничего не сохранено',
     savedEmptyBody: 'Нажмите 🤍 у любого места — оно появится здесь.',
     savedOnThisPhone: 'Сохранённые места остаются только на этом устройстве.',
+    freeNoSignup: 'Навсегда бесплатно · Без регистрации',
+    installTitle: 'Пользуйтесь как приложением',
+    installBody: 'Добавьте на главный экран — откроется даже без интернета.',
+    installBodyIos: 'Кнопка «Поделиться» → «На экран «Домой»»',
+    installAction: 'Установить',
+    installDismiss: 'Закрыть',
     settingsTab: 'Настройки',
 
     monthlyEditorLabel: 'Выбор месяца',
@@ -825,6 +891,12 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'Belum ada yang disimpan',
     savedEmptyBody: 'Ketuk 🤍 pada tempat yang kamu suka, nanti muncul di sini.',
     savedOnThisPhone: 'Tempat yang disimpan hanya tersimpan di perangkat ini.',
+    freeNoSignup: 'Gratis selamanya · Tanpa daftar',
+    installTitle: 'Pakai seperti aplikasi',
+    installBody: 'Tambahkan ke layar utama — bisa dibuka walau offline.',
+    installBodyIos: 'Tombol bagikan → "Tambah ke Layar Utama"',
+    installAction: 'Pasang',
+    installDismiss: 'Tutup',
     settingsTab: 'Pengaturan',
 
     monthlyEditorLabel: 'Pilihan bulan ini',
@@ -896,6 +968,12 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'ยังไม่มีที่บันทึกไว้',
     savedEmptyBody: 'แตะ 🤍 ที่สถานที่ที่ชอบ แล้วจะมาอยู่ตรงนี้',
     savedOnThisPhone: 'ที่บันทึกไว้จะอยู่บนเครื่องนี้เท่านั้น',
+    freeNoSignup: 'ฟรีตลอดไป · ไม่ต้องสมัคร',
+    installTitle: 'ใช้เหมือนแอป',
+    installBody: 'เพิ่มลงหน้าจอหลัก เปิดได้แม้ไม่มีเน็ต',
+    installBodyIos: 'ปุ่มแชร์ → "เพิ่มไปยังหน้าจอโฮม"',
+    installAction: 'ติดตั้ง',
+    installDismiss: 'ปิด',
     settingsTab: 'การตั้งค่า',
 
     monthlyEditorLabel: 'บรรณาธิการของเดือนนี้',

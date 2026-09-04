@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTheme } from "./lib/useTheme";
 import { useLanguage } from "./lib/useLanguage";
 import SavedPanel from "./components/SavedPanel";
+import InstallHint from "./components/InstallHint";
 import { useSavedEntries } from "./lib/savedPlaces";
 import MonthlyFestivalPanel from "./components/MonthlyFestivalPanel";
 import DistrictExplorer from "./components/DistrictExplorer";
@@ -25,6 +26,12 @@ function App() {
             <span className="app-wordmark-text">
               <span className="app-name">K-STREET</span>
               <span className="app-tagline">서울의 길을 걷다</span>
+            {/* 💚 이 앱의 가장 큰 차별점을 첫 화면에 적는다 (2026-09-04).
+                여행 앱은 대부분 열자마자 가입을 요구한다 — 손님이 그걸 겪고 온
+                직후라, "무료 · 가입 없음"은 기능 설명이 아니라 **안심 신호**다.
+                평생 무료는 사장님이 정한 원칙이라 지킬 수 있는 약속이다
+                (CLAUDE.md 맨 위 항목). */}
+            <span className="app-free">{t.freeNoSignup}</span>
             </span>
           </div>
           <div className="app-header-center">
@@ -45,6 +52,9 @@ function App() {
       </header>
 
       <main className="app-main">
+        {/* 📲 홈 화면에 추가하면 앱처럼 열리고 인터넷 없이도 열린다 — 손님은
+            그걸 모른다. 설치할 수 있는 브라우저에서만, 한 번만 뜬다. */}
+        <InstallHint />
         {/* 🖼️ 표지 사진 고르는 임시 화면 — 주소 끝에 ?pick=cover 를 붙이면 열린다.
             작업 세션에서는 관광공사 사진 서버가 막혀 있어 내가 사진을 못 본다.
             폰에서는 보이므로 여기서 번호로 골라 알려 주는 쪽이 빠르다.
