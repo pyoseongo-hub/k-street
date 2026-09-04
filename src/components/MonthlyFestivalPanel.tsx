@@ -30,6 +30,22 @@ const SEASONS: { key: SeasonKey; icon: string; months: number[] }[] = [
 
 const nowMonth = new Date().getMonth() + 1;
 
+/**
+ * 📷 그 축제 카드에 띄울 사진. 없으면 undefined.
+ *
+ * 🚨 **잣대는 하나뿐이어야 한다.** 목록을 정렬할 때와 카드를 그릴 때가 서로 다른
+ * 기준을 쓰면, "사진 있다"고 위로 올려 놓고 정작 빈 카드를 그리는 일이 생긴다.
+ * 그래서 두 곳이 이 함수 하나를 부른다.
+ *
+ * 원본(image)을 썸네일(thumb)보다 먼저 쓴다 — 2026-09-01 "사진 화질이 안 좋아".
+ */
+function festivalPhoto(f: (typeof ALL_FESTIVALS)[number]): string | undefined {
+  const legacy = getTourImage(f.id);
+  return f.image ?? f.thumb ?? legacy?.image ?? legacy?.thumb;
+}
+
+const hasPhoto = (f: (typeof ALL_FESTIVALS)[number]) => Boolean(festivalPhoto(f));
+
 /** 그 달에 열리는 축제인가. 여러 달에 걸치는 축제는 걸친 달 전부에서 보인다. */
 function opensIn(f: (typeof ALL_FESTIVALS)[number], month: number): boolean {
   if (f.startMonth == null) return false;
@@ -86,10 +102,20 @@ export default function MonthlyFestivalPanel() {
     return FESTIVAL_THEMES.filter((k) => found.has(k));
   }, [inMonth]);
 
-  const festivals = useMemo(
-    () => (theme ? inMonth.filter((f) => themeOf(f.name) === theme) : inMonth),
-    [inMonth, theme]
-  );
+  const festivals = useMemo(() => {
+    const picked = theme ? inMonth.filter((f) => themeOf(f.name) === theme) : inMonth;
+    // 📷 **사진 있는 카드를 위로 올린다** (사용자 지적 2026-09-04: "왜 아직 사진없는게
+    //    위에 있지"). 예전에는 자료에 적힌 순서 그대로 나와서, 사진 없는 작은 카드가
+    //    목록 맨 위에 걸리는 일이 잦았다 — 화면을 열자마자 빈 카드 셋이 보이면
+    //    "이 앱 부실하네"로 읽힌다. 사진은 훑는 사람에게 가장 먼저 가는 정보다.
+    //
+    //    사진 없는 곳을 **버리는 게 아니라 뒤로 미는** 것이다. 그 카드도 이름·날짜·
+    //    길안내를 다 갖고 있고, 왜 사진이 없는지도 적혀 있다.
+    //
+    //    sort는 요즘 자바스크립트에서 **순서가 뒤바뀌지 않으므로**(stable), 사진이
+    //    있는 것끼리·없는 것끼리는 원래 순서를 그대로 지킨다.
+    return picked.slice().sort((a, b) => Number(hasPhoto(b)) - Number(hasPhoto(a)));
+  }, [inMonth, theme]);
 
   const pickMonth = (m: number) => {
     setMonth(m);
@@ -191,8 +217,9 @@ export default function MonthlyFestivalPanel() {
           )}
           {festivals.map((f) => {
             const legacy = getTourImage(f.id);
-            // 원본(image)을 썸네일(thumb)보다 먼저 쓴다 — 2026-09-01 "사진 화질이 안 좋아".
-            const photoUrl = f.image ?? f.thumb ?? legacy?.image ?? legacy?.thumb;
+            // 위 정렬과 **같은 함수**를 쓴다 — 잣대가 둘이면 "사진 있다"고 위로
+            // 올려 놓고 빈 카드를 그리는 일이 생긴다.
+            const photoUrl = festivalPhoto(f);
             const k = themeOf(f.name);
             // 🖼️ **사진이 없는 축제는 카드를 작게 만든다** (사용자 지시 2026-09-04:
             //    "카드도줄이고 공간 낭비하지마").
