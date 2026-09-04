@@ -1,0 +1,37 @@
+name: Check live site (새 주소가 제대로 뜨나)
+
+# 🔎 실제로 서비스되는 주소를 열어 제대로 나오는지 본다. 아무것도 저장하지 않는다.
+# 빌드가 맞게 나온 것과, 그게 손님이 여는 주소에서 제대로 뜨는 것은 다른 이야기다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      site:
+        description: "확인할 주소"
+        type: string
+        default: "https://korea-street.com"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 사이트 확인
+        env:
+          SITE: ${{ inputs.site }}
+        run: |
+          set -o pipefail
+          node scripts/check-live.mjs 2>&1 | tee live-log.txt
+      - name: 결과 요약 (Summary에서 바로 확인)
+        if: always()
+        run: |
+          {
+            echo "## 🔎 새 주소 확인 결과"
+            echo ""
+            echo '```'
+            cat live-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
