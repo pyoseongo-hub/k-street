@@ -529,7 +529,8 @@
     "endMonth": 9,
     "image": "https://tong.visitkorea.or.kr/cms/resource/86/3542886_image2_1.jpg",
     "lat": 37.561012246,
-    "lng": 126.9240400306
+    "lng": 126.9240400306,
+    "homepage": "https://mobing.kr/yn_festival2025"
   },
   "3379778": {
     "name": "가락옥토버페스트 미식야행",
@@ -541,7 +542,8 @@
     "endMonth": 10,
     "image": "https://tong.visitkorea.or.kr/cms/resource/73/3553073_image2_1.png",
     "lat": 37.4960786971,
-    "lng": 127.1107693087
+    "lng": 127.1107693087,
+    "homepage": "https://www.garak.co.kr/homepage/M0000075/board/view.do?atcSn=17462&pageIndex=1"
   },
   "3383832": {
     "name": "케미스트릿 강남역 페스티벌",
@@ -553,7 +555,8 @@
     "endMonth": 11,
     "image": "https://tong.visitkorea.or.kr/cms/resource/64/3553464_image2_1.jpg",
     "lat": 37.4996073141,
-    "lng": 127.0257686102
+    "lng": 127.0257686102,
+    "homepage": null
   },
   "3384023": {
     "name": "양천가족 거리축제",
@@ -565,7 +568,8 @@
     "endMonth": 10,
     "image": "https://tong.visitkorea.or.kr/cms/resource/32/3544832_image2_1.jpg",
     "lat": 37.5198490944,
-    "lng": 126.8530059985
+    "lng": 126.8530059985,
+    "homepage": "https://yfac.kr/main/contents.do?idx=2719"
   },
   "3387201": {
     "name": "영등포선유도원축제",
@@ -577,7 +581,8 @@
     "endMonth": 10,
     "image": "https://tong.visitkorea.or.kr/cms/resource/25/3552525_image2_1.JPG",
     "lat": 37.5422918129,
-    "lng": 126.902442527
+    "lng": 126.902442527,
+    "homepage": "https://www.ydpcf.or.kr/festival/seonyudo.do"
   },
   "3439947": {
     "name": "강남 미디어 윈터페스타",
@@ -589,7 +594,8 @@
     "endMonth": 1,
     "image": "https://tong.visitkorea.or.kr/cms/resource/54/3579654_image2_1.jpg",
     "lat": 37.5103955843,
-    "lng": 127.0610512042
+    "lng": 127.0610512042,
+    "homepage": "https://gangnameyes.com/event/festival"
   },
   "3489468": {
     "name": "창덕궁 약다방",
@@ -601,7 +607,8 @@
     "endMonth": 10,
     "image": "https://tong.visitkorea.or.kr/cms/resource/51/3489451_image2_1.jpg",
     "lat": 37.5777031595,
-    "lng": 126.9902446339
+    "lng": 126.9902446339,
+    "homepage": "https://www.kh.or.kr/cont/view/all/day/menu/361?thisPage=1&idx=110216&searchField=all&searchDate=20251001&weekSel=&searchText=%EC%95%BD%EB%8B%A4%EB%B0%A9"
   },
   "3524418": {
     "name": "제2회 고메 잇 강남",
@@ -613,7 +620,8 @@
     "endMonth": 11,
     "image": "https://tong.visitkorea.or.kr/cms/resource/24/3563924_image2_1.png",
     "lat": 37.5119175967,
-    "lng": 127.059217995
+    "lng": 127.059217995,
+    "homepage": "https://www.instagram.com/gourmet_eat_gangnam/"
   },
   "3526695": {
     "name": "제6회 푸른하늘의 날 기념행사",
@@ -625,7 +633,8 @@
     "endMonth": 9,
     "image": "https://tong.visitkorea.or.kr/cms/resource/94/3526694_image2_1.jpg",
     "lat": 37.5655015943,
-    "lng": 126.9787960237
+    "lng": 126.9787960237,
+    "homepage": "https://www.instagram.com/blueskymamo/"
   },
   "3533382": {
     "name": "엔터테크 서울 2025",
@@ -637,7 +646,8 @@
     "endMonth": 9,
     "image": "https://tong.visitkorea.or.kr/cms/resource/81/3533381_image2_1.png",
     "lat": 37.566107632,
-    "lng": 127.0095709797
+    "lng": 127.0095709797,
+    "homepage": null
   },
   "3540355": {
     "name": "2025 제14회 강남구 아름다운 건축물 전시회",
@@ -649,7 +659,8 @@
     "endMonth": 9,
     "image": "https://tong.visitkorea.or.kr/cms/resource/47/3540747_image2_1.png",
     "lat": 37.5119175967,
-    "lng": 127.059217995
+    "lng": 127.059217995,
+    "homepage": "https://gbae.kr/"
   },
   "3546110": {
     "name": "2025 서울한옥위크",
@@ -661,7 +672,8 @@
     "endMonth": 10,
     "image": "https://tong.visitkorea.or.kr/cms/resource/09/3546109_image2_1.jpg",
     "lat": 37.5790529392,
-    "lng": 126.9867060298
+    "lng": 126.9867060298,
+    "homepage": "https://hanok.seoul.go.kr/"
   },
   "3548994": {
     "name": "그린칩스 페스티벌",
@@ -673,7 +685,8 @@
     "endMonth": 10,
     "image": "https://tong.visitkorea.or.kr/cms/resource/93/3548993_image2_1.png",
     "lat": 37.5645590416,
-    "lng": 126.9232288927
+    "lng": 126.9232288927,
+    "homepage": "https://greenchipsseoul.com/"
   },
   "3551526": {
     "name": "용마루 숲길 축제",
@@ -685,7 +698,8 @@
     "endMonth": 11,
     "image": "https://tong.visitkorea.or.kr/cms/resource/93/3551493_image2_1.jpg",
     "lat": 37.5388210345,
-    "lng": 126.9605734386
+    "lng": 126.9605734386,
+    "homepage": "https://www.yongsan.go.kr/portal/bbs/B0000041/view.do?nttId=718229&menuNo=200228"
   },
   "3554794": {
     "name": "2025 대한민국 김장대축제",
@@ -697,7 +711,8 @@
     "endMonth": 11,
     "image": "https://tong.visitkorea.or.kr/cms/resource/85/3562885_image2_1.jpg",
     "lat": 37.467391878,
-    "lng": 127.0407514903
+    "lng": 127.0407514903,
+    "homepage": "https://kimjang-festa.com/default/"
   },
   "3563444": {
     "name": "방배카페 골목페스타",
@@ -709,7 +724,8 @@
     "endMonth": 11,
     "image": "https://tong.visitkorea.or.kr/cms/resource/52/3564652_image2_1.png",
     "lat": 37.4963319705,
-    "lng": 126.9854168201
+    "lng": 126.9854168201,
+    "homepage": "https://www.seocho.go.kr/site/seocho/ex/bbs/View.do?pageIndex=1&pageUnit=10&cbIdx=59&searchMedia=&bcIdx=405392&searchCondition=subCont&searchKeyword="
   },
   "3572025": {
     "name": "동궐동락",
@@ -721,6 +737,7 @@
     "endMonth": 11,
     "image": "https://tong.visitkorea.or.kr/cms/resource/22/3572022_image2_1.jpg",
     "lat": 37.5789336838,
-    "lng": 126.9964634775
+    "lng": 126.9964634775,
+    "homepage": "https://www.kh.or.kr/cont/view/fest/month/menu/210?thisPage=1&idx=110321&searchCategory1=600&searchCategory2=&searchCategory3=&searchField=all&searchDate=202511&weekSel=undefined&searchType=&searchText="
   }
 }
