@@ -18,6 +18,8 @@ import type { Category, Place } from "./seed";
 import raw from "./tour-places-raw.json";
 import festivalDates from "./festival-dates.json";
 import aliases from "./name-aliases.json";
+// 🏷️ 관광공사 이름에 붙어 오는 홍보 문구를 털어낸다. 이유와 규칙은 그 파일에 있다.
+import displayNames from "./display-names.json";
 // 🚫 관광공사가 준 좌표 중 **가리키는 곳 자체가 엉뚱한** 것. 이유는 그 파일에 적혀 있다.
 import badCoords from "./bad-coords.json";
 // 블로그·SNS를 공식 창구에서 걸러내는 잣대. 화면 쪽(mapLinks.ts)과 **같은 함수**를 쓴다.
@@ -96,6 +98,25 @@ function periodOf(yyyymmdd: string): Place["period"] {
   return day <= 10 ? "early" : day <= 20 ? "mid" : "late";
 }
 
+/**
+ * 🏷️ 화면에 띄울 이름. 관광공사가 준 이름에 붙어 온 홍보 문구를 털어낸다.
+ *
+ * 왜 (2026-09-04 사장님 지시: "강추는 빼") — 「강북청소년축제 강추」의 '강추'가
+ * 이름 자리에 그대로 들어가 있었다. 못생긴 데서 끝나지 않고 **번역까지
+ * 망가뜨렸다** — 구글이 그걸 문장으로 읽어 영어 이름이
+ * "I highly recommend Gangbuk Youth Festival." 이 돼 있었다.
+ * 게다가 이제는 **택시 기사에게 내미는 화면**에도 그대로 나간다(DriverCard.tsx).
+ *
+ * 표에 없는 곳은 원래 이름 그대로다 — 기계가 알아서 자르지 않는다.
+ * '강추' 같은 말을 규칙으로 잘라 내려 하면 그게 이름의 일부인 곳까지 자른다.
+ */
+const DISPLAY_NAMES: Record<string, string> = Object.fromEntries(
+  Object.entries(displayNames as Record<string, unknown>).filter(
+    ([k, v]) => !k.startsWith("_") && typeof v === "string"
+  ) as [string, string][]
+);
+const displayName = (raw: string) => DISPLAY_NAMES[raw.normalize("NFC")] ?? raw;
+
 function toPlace(category: Category, p: RawPlace): Place {
   const date = category === "festival" ? DATES[p.contentId] : undefined;
   const homepage = date?.homepage;
@@ -104,7 +125,7 @@ function toPlace(category: Category, p: RawPlace): Place {
     id: idOf(p),
     gu: p.gu ?? "",
     category,
-    name: p.name,
+    name: displayName(p.name),
     addr: p.addr,
     // 관광공사가 등록해 둔 공식 홈페이지. 없으면 이름을 눌렀을 때 네이버 검색으로 간다.
     // 블로그·SNS는 여기서 걸린다(isOfficialSite 주석 참고).
