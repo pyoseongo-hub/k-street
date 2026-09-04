@@ -1414,6 +1414,12 @@ button {
 .tab-bar {
   position: sticky;
   bottom: max(12px, env(safe-area-inset-bottom));
+  /* 🚨 아래 탭은 **모든 것 위에** 있어야 한다 (2026-09-04 사장님 화면에서 발견).
+     카드 사진 위의 🤍 저장 단추가 z-index: 2 를 갖고 있어서, 탭바에 z-index가
+     없으면(auto) 그 단추가 **탭바를 뚫고 위로 올라온다** — 화면 아래에 하트가
+     하나 떠 있는 것처럼 보였다. 붙어 있는(sticky) 요소라고 자동으로 위가 되지 않는다.
+     맨 위 화면 전환 줄(.home-tabs)이 20이므로 그보다 높게 둔다. */
+  z-index: 30;
   display: flex;
   gap: 4px;
   margin: 0 16px;
