@@ -46,8 +46,13 @@ const REFERERS = [
 
 const URL_BASE = "https://oapi.map.naver.com/openapi/v3/maps.js";
 
-/** 인증 실패일 때 네이버가 답에 섞어 보내는 말들. */
-const FAIL_RE = /(Authentication Failed|인증에 실패|잘못된 인증|Unauthorized|허용되지 않은|not allowed|errorCode)/i;
+/** 인증 실패일 때 네이버가 답에 섞어 보내는 말들.
+ *
+ * 🐞 2026-09-04 — 여기에 `errorCode`를 넣었다가 **멀쩡한 SDK를 실패로 읽었다.**
+ *    334KB짜리 압축된 자바스크립트 안에는 그런 낱말이 당연히 들어 있다.
+ *    넓게 잡은 그물이 정답까지 걸러 낸 것이다. **앞부분에서만** 찾는다.
+ */
+const FAIL_RE = /(Authentication Failed|인증에 실패|잘못된 인증|Unauthorized|허용되지 않은 도메인)/i;
 
 let anyOk = false;
 
@@ -59,7 +64,8 @@ for (const referer of REFERERS) {
       signal: AbortSignal.timeout(15000),
     });
     const text = await res.text();
-    const failed = FAIL_RE.test(text);
+    // 오류문은 앞머리에 온다. 본문 전체를 뒤지면 압축된 코드에 걸린다(위 주석).
+    const failed = FAIL_RE.test(text.slice(0, 2000));
     // 제대로 온 응답은 수백 KB 짜리 자바스크립트다. 오류는 짧다.
     const looksLikeSdk = !failed && text.length > 20000;
     if (looksLikeSdk) anyOk = true;
@@ -92,6 +98,12 @@ for (const referer of REFERERS) {
 }
 
 console.log("─".repeat(62));
+console.log(`🚨 **이 검사가 확인해 주지 못하는 것**
+   네이버 v3는 **스크립트를 먼저 내려 주고, 인증은 브라우저에서 확인**한다.
+   그래서 여기서 SDK가 왔다고 해서 **그 도메인이 허용됐다는 뜻은 아니다.**
+   도메인 인증 결과는 브라우저에서 window.navermap_authFailure 로만 알 수 있다 —
+   그 손잡이를 앱에 달아 두었으니, 실패하면 화면이 그렇게 말해 준다.
+`);
 if (anyOk) {
   console.log(`읽는 법:
  · korea-street.com 만 ❌ 이면 → **Web 서비스 URL 저장이 안 된 것.**

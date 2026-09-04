@@ -119,6 +119,16 @@ export interface Translations {
    * 이쪽은 **손님이 고칠 수 있는 문제**라, 무엇을 하면 되는지까지 적는다.
    */
   myLocationNoPermission: string;
+  /**
+   * 🗺️ **지도 열쇠·도메인 인증이 막혔을 때** — 손님 잘못이 아니라 **우리 잘못**이다.
+   *
+   * 네이버는 인증 실패를 window.navermap_authFailure 로만 알려 준다(lib/naverMaps.ts).
+   * 그 신호가 오면 손님이 아무리 다시 눌러도 안 되므로, "다시 눌러 보세요"라고
+   * 하면 안 된다 — 헛수고를 시키는 말이다.
+   *
+   * 그래서 **우리가 고치겠다고 말한다.** 손님이 할 일은 없다.
+   */
+  myLocationMapProblem: string;
 
   // Categories
   /** 길찾기 버튼이 내 위치를 받아오는 동안 보여줄 글자 */
@@ -191,6 +201,7 @@ const translations: Record<Language, Translations> = {
     myLocationOutside: '서울 밖에 계세요',
     myLocationFailed: '위치를 못 찾았어요. 다시 눌러 보세요.',
     myLocationNoPermission: '위치 권한이 꺼져 있어요. 브라우저에서 위치 허용을 켜고 다시 눌러 주세요.',
+    myLocationMapProblem: '지도 서비스에 문제가 있어요. 곧 고치겠습니다.',
     mapLocating: '위치 확인 중…',
 
     categoryLabels: {
@@ -270,6 +281,7 @@ const translations: Record<Language, Translations> = {
     myLocationOutside: "You're outside Seoul",
     myLocationFailed: 'Could not find your location. Tap to try again.',
     myLocationNoPermission: 'Location access is off. Allow location in your browser, then tap again.',
+    myLocationMapProblem: 'Our map service is having trouble. We’re fixing it.',
     mapLocating: 'Locating…',
 
     categoryLabels: {
@@ -349,6 +361,7 @@ const translations: Record<Language, Translations> = {
     myLocationOutside: 'ソウルの外にいます',
     myLocationFailed: '現在地を取得できませんでした。もう一度押してください。',
     myLocationNoPermission: '位置情報が許可されていません。ブラウザで位置情報を許可してから、もう一度タップしてください。',
+    myLocationMapProblem: '地図サービスに問題が発生しています。まもなく修正します。',
     mapLocating: '現在地を確認中…',
 
     categoryLabels: {
@@ -428,6 +441,7 @@ const translations: Record<Language, Translations> = {
     myLocationOutside: '您在首尔以外',
     myLocationFailed: '无法获取位置，请再点一次。',
     myLocationNoPermission: '定位权限已关闭。请在浏览器中允许定位后再次点击。',
+    myLocationMapProblem: '地图服务出现问题，我们会尽快修复。',
     mapLocating: '正在定位…',
 
     categoryLabels: {
@@ -507,6 +521,7 @@ const translations: Record<Language, Translations> = {
     myLocationOutside: '您在首爾以外',
     myLocationFailed: '無法取得位置，請再點一次。',
     myLocationNoPermission: '定位權限已關閉。請在瀏覽器中允許定位後再次點擊。',
+    myLocationMapProblem: '地圖服務發生問題，我們會盡快修復。',
     mapLocating: '正在定位…',
 
     categoryLabels: {
@@ -586,6 +601,7 @@ const translations: Record<Language, Translations> = {
     myLocationOutside: 'Bạn đang ở ngoài Seoul',
     myLocationFailed: 'Không tìm được vị trí. Hãy nhấn lại.',
     myLocationNoPermission: 'Quyền truy cập vị trí đang tắt. Hãy bật trong trình duyệt rồi nhấn lại.',
+    myLocationMapProblem: 'Dịch vụ bản đồ đang gặp sự cố. Chúng tôi sẽ khắc phục sớm.',
     mapLocating: 'Đang định vị…',
 
     categoryLabels: {
@@ -665,6 +681,7 @@ const translations: Record<Language, Translations> = {
     myLocationOutside: 'Estás fuera de Seúl',
     myLocationFailed: 'No se pudo obtener tu ubicación. Toca para reintentar.',
     myLocationNoPermission: 'El acceso a la ubicación está desactivado. Actívalo en tu navegador y vuelve a tocar.',
+    myLocationMapProblem: 'Nuestro servicio de mapas tiene problemas. Lo estamos solucionando.',
     mapLocating: 'Ubicando…',
 
     categoryLabels: {
@@ -744,6 +761,7 @@ const translations: Record<Language, Translations> = {
     myLocationOutside: 'Vous êtes hors de Séoul',
     myLocationFailed: 'Position introuvable. Appuyez pour réessayer.',
     myLocationNoPermission: 'L’accès à la position est désactivé. Autorisez-le dans votre navigateur, puis appuyez à nouveau.',
+    myLocationMapProblem: 'Notre service de cartes rencontre un problème. Nous le corrigeons.',
     mapLocating: 'Localisation…',
 
     categoryLabels: {
@@ -823,6 +841,7 @@ const translations: Record<Language, Translations> = {
     myLocationOutside: 'Sie sind außerhalb von Seoul',
     myLocationFailed: 'Standort nicht gefunden. Zum Wiederholen tippen.',
     myLocationNoPermission: 'Der Standortzugriff ist deaktiviert. Erlauben Sie ihn im Browser und tippen Sie erneut.',
+    myLocationMapProblem: 'Unser Kartendienst hat gerade ein Problem. Wir beheben es.',
     mapLocating: 'Standort…',
 
     categoryLabels: {
@@ -902,6 +921,7 @@ const translations: Record<Language, Translations> = {
     myLocationOutside: 'Вы за пределами Сеула',
     myLocationFailed: 'Не удалось определить местоположение. Нажмите ещё раз.',
     myLocationNoPermission: 'Доступ к геолокации выключен. Разрешите его в браузере и нажмите ещё раз.',
+    myLocationMapProblem: 'Сервис карт временно не работает. Мы это исправляем.',
     mapLocating: 'Определение…',
 
     categoryLabels: {
@@ -981,6 +1001,7 @@ const translations: Record<Language, Translations> = {
     myLocationOutside: 'Anda di luar Seoul',
     myLocationFailed: 'Lokasi tidak ditemukan. Ketuk untuk mencoba lagi.',
     myLocationNoPermission: 'Akses lokasi mati. Izinkan akses lokasi di browser, lalu ketuk lagi.',
+    myLocationMapProblem: 'Layanan peta sedang bermasalah. Kami sedang memperbaikinya.',
     mapLocating: 'Mencari lokasi…',
 
     categoryLabels: {
@@ -1060,6 +1081,7 @@ const translations: Record<Language, Translations> = {
     myLocationOutside: 'คุณอยู่นอกกรุงโซล',
     myLocationFailed: 'ไม่พบตำแหน่ง แตะเพื่อลองอีกครั้ง',
     myLocationNoPermission: 'สิทธิ์เข้าถึงตำแหน่งถูกปิดอยู่ กรุณาอนุญาตในเบราว์เซอร์แล้วแตะอีกครั้ง',
+    myLocationMapProblem: 'บริการแผนที่ขัดข้อง เรากำลังแก้ไขอยู่',
     mapLocating: 'กำลังหาตำแหน่ง…',
 
     categoryLabels: {

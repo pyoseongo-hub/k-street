@@ -373,6 +373,11 @@ function MyLocationChip({
       </button>
     );
   }
+  // 🗺️ 지도 열쇠·도메인 인증이 막힌 경우. **손님 잘못이 아니라 우리 잘못**이라
+  // "다시 눌러 보세요"라고 하지 않는다 — 아무리 눌러도 안 되는데 헛수고만 시킨다.
+  if (isNaverAuthFailed()) {
+    return <span className="myloc myloc-note">{t.myLocationMapProblem}</span>;
+  }
   // 못 찾았을 때는 **다시 누를 수 있게** 버튼으로 남긴다 — 잠깐 안 됐을 수 있다.
   return (
     <button type="button" className="myloc myloc-btn myloc-failed" onClick={onFind}>

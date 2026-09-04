@@ -4,6 +4,24 @@
 
 let loadPromise: Promise<void> | null = null;
 
+/**
+ * 🗺️ **네이버가 "이 도메인은 허용 안 됐다"고 말하는 유일한 통로.**
+ *
+ * 2026-09-04에 도메인을 옮긴 뒤 「내 위치」가 조용히 실패했는데, 원인을 알 방법이
+ * 없었다. 러너에서 SDK 주소를 불러 봤더니 **스크립트는 멀쩡히 내려왔다** —
+ * 네이버 v3는 **스크립트를 먼저 주고 인증은 브라우저에서 확인**하기 때문이다.
+ * 즉 바깥에서 아무리 불러 봐도 도메인 허용 여부는 알 수 없다.
+ *
+ * 네이버는 그 결과를 **이 전역 함수 하나로만** 알려 준다. 안 달아 두면
+ * 실패가 어디에도 안 남고, 화면에는 "다시 눌러 보세요"만 뜬다 —
+ * 손님은 아무리 눌러도 안 되는데 헛수고를 하게 된다.
+ */
+let authFailed = false;
+
+/** 네이버 지도 인증이 막혔나. 막혔으면 손님이 다시 눌러도 소용없다. */
+export const isNaverAuthFailed = () => authFailed;
+
+
 export function loadNaverMaps(): Promise<void> {
   if (loadPromise) return loadPromise;
 
@@ -22,6 +40,15 @@ export function loadNaverMaps(): Promise<void> {
       resolve();
       return;
     }
+    // 인증 실패 손잡이는 **스크립트를 붙이기 전에** 달아 둔다 — 실패는 로드 직후
+    // 곧바로 불려서, 나중에 달면 놓친다.
+    (window as unknown as Record<string, unknown>).navermap_authFailure = () => {
+      authFailed = true;
+      console.error(
+        "[네이버 지도] 인증 실패 — 이 도메인이 Web 서비스 URL 에 없거나 열쇠가 안 맞는다. " +
+          "console.ncloud.com → Maps → Application → 수정 에서 확인할 것."
+      );
+    };
     const script = document.createElement("script");
     // submodules=geocoder — 좌표를 행정구역 이름으로 바꾸는 기능(reverseGeocode)이
     // 기본 번들에 안 들어 있다. 이걸 빼면 naver.maps.Service 자체가 undefined다.
