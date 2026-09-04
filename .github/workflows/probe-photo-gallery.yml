@@ -1,0 +1,52 @@
+name: Probe photo gallery (사진 없는 축제 채울 수 있나)
+
+# 📷 사진이 없는 축제 24곳을 **관광공사 「관광사진 갤러리」**로 채울 수 있는지 본다.
+# 사용자 지시(2026-09-04): "B 시도해봐 포스터 사용도 안되나".
+#
+# **아무것도 저장하지 않는다** — 될지 안 될지만 본다.
+# 결과는 이 실행 페이지의 Summary에 그대로 나온다.
+#
+# 지금 키(TOUR_API_KEY)는 KorService2만 신청돼 있을 수 있다. 그러면 여기서
+# 거절당하는데, 그 답을 로그에 그대로 옮겨 **공공데이터포털에서 무엇을 신청하면
+# 되는지**까지 적어 준다.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # 사진 없는 축제가 무엇인지 **앱 코드 그대로** 뽑는다(잣대를 둘로 만들지 않는다).
+      - name: 축제 목록 뽑아내기
+        run: |
+          set -o pipefail
+          npx vite build --ssr scripts/dump-links.ts --outDir .linkdump --logLevel error
+          node .linkdump/dump-links.js > links.json
+
+      - name: 갤러리에 물어보기
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/probe-photo-gallery.mjs links.json 2>&1 | tee probe-log.txt
+
+      - name: 결과 요약 (Summary에서 바로 확인)
+        if: always()
+        run: |
+          {
+            echo "## 📷 사진 없는 축제, 갤러리로 채울 수 있나"
+            echo ""
+            echo "저장은 아무것도 하지 않았습니다 — 될지 안 될지만 본 것입니다."
+            echo ""
+            echo '```'
+            cat probe-log.txt 2>/dev/null || echo "(로그 파일이 없습니다)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

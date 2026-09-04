@@ -1,6 +1,5 @@
 import { useMemo, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
-import SeasonArt from "./SeasonArt";
 import SeasonPhotoHero from "./SeasonPhotoHero";
 import { ALL_FESTIVALS } from "../data/seed";
 import { seasonOf, type SeasonKey } from "../lib/season";
@@ -190,33 +189,41 @@ export default function MonthlyFestivalPanel() {
           {festivals.length === 0 && (
             <p className="empty-note">{t.noFestivalsMessage(month)}</p>
           )}
-          {festivals.map((f, i) => {
+          {festivals.map((f) => {
             const legacy = getTourImage(f.id);
             // 원본(image)을 썸네일(thumb)보다 먼저 쓴다 — 2026-09-01 "사진 화질이 안 좋아".
             const photoUrl = f.image ?? f.thumb ?? legacy?.image ?? legacy?.thumb;
             const k = themeOf(f.name);
+            // 🖼️ **사진이 없는 축제는 카드를 작게 만든다** (사용자 지시 2026-09-04:
+            //    "카드도줄이고 공간 낭비하지마").
+            //
+            // 예전에는 사진이 없으면 그 자리에 계절 일러스트를 16:9로 꽉 채워 그렸다.
+            // 그런데 그림은 **그 축제에 대해 아무것도 말해 주지 않는다** — 손님이
+            // 화면을 훑다가 "사진이 없네"라고 읽는 자리를, 카드 높이의 절반을 써서
+            // 만들고 있었던 셈이다(사용자가 캡처로 짚었다). 80곳 중 24곳이 이렇다.
+            //
+            // 그래서 그림을 걷어내고, 대신 **왜 없는지 한 줄로 말한다**(아래
+            // .fc-nophoto). 계절은 위 표지에서 이미 크게 보여 주고 있으므로
+            // 카드에서는 작은 아이콘 하나로 충분하다.
+            const compact = !photoUrl;
             return (
-              <div className="festival-card" key={f.id}>
-                {/* 🤍 저장 단추는 그림 위에 얹는다 — 사진이 있든(PlacePhoto)
-                    없든(SeasonArt) 같은 자리라 손님이 찾는 곳이 하나다. */}
-                <div className="pr-photo-wrap">
-                <SaveButton place={f} className="save-btn save-btn--on-photo" />
-                {photoUrl ? (
-                  <PlacePhoto place={{ ...f, image: photoUrl }} />
-                ) : (
-                  /* 카드 그림은 **지금 고른 달**의 계절로 그린다.
-                     예전엔 그 축제의 시작 달을 썼는데, 2월~3월에 걸친 축제가
-                     3월(봄) 목록에서 겨울 그림으로 떠서 화면이 어수선했다.
-                     사실을 말하는 자리가 아니라 분위기를 내는 자리라 보는 쪽에 맞춘다. */
-                  <SeasonArt
-                    className="fc-art"
-                    season={season}
-                    seed={rotatingSeed * 100 + i}
-                  />
+              <div className={"festival-card" + (compact ? " fc-compact" : "")} key={f.id}>
+                {/* 🤍 저장 단추는 사진 위에 얹는다. 사진이 없는 작은 카드에서는
+                    아래 fc-top 줄 끝에 작게 붙는다 — 자리가 하나뿐이라 헷갈리지 않는다. */}
+                {photoUrl && (
+                  <div className="pr-photo-wrap">
+                    <SaveButton place={f} className="save-btn save-btn--on-photo" />
+                    <PlacePhoto place={{ ...f, image: photoUrl }} />
+                  </div>
                 )}
-                </div>
                 <div className="fc-body">
                   <div className="fc-top">
+                    {/* 사진 자리가 없으니 계절을 아이콘으로 작게 남긴다. */}
+                    {compact && (
+                      <span className="fc-season-icon" aria-hidden="true">
+                        {SEASONS.find((s) => s.key === season)!.icon}
+                      </span>
+                    )}
                     <span className="fc-gu">{districtFullName(f.gu, language)}</span>
                     {/* 🈳 dateLabel은 사람이 seed.ts에 **한국어로** 적어 둔 문구다
                         ("9월 말~10월 초"). 근거를 확인한 값이라 한국어 화면에서는
@@ -260,6 +267,7 @@ export default function MonthlyFestivalPanel() {
                               : t.months[f.startMonth];
                       return label ? <span className="fc-date">{label}</span> : null;
                     })()}
+                    {compact && <SaveButton place={f} className="save-btn save-btn--inline" />}
                   </div>
                   {/* 이름을 누르면 네이버 통합검색 → 그 구청의 공식 행사 안내로 간다.
                       축제는 지도에 등록된 '장소'가 아니라 며칠만 열리는 '행사'라
@@ -300,6 +308,15 @@ export default function MonthlyFestivalPanel() {
                     <div className="fc-varies">🌸 {t.festivalBloomVaries}</div>
                   )}
                   {f.note && <div className="fc-note">{translateText(f.note, language)}</div>}
+                  {/* 🖼️ **사진이 없는 이유를 화면에 적는다** (사용자 지시 2026-09-04:
+                      "회면에 설명을 넣어야지 이유 / 이미지가 사용권한이 없어서
+                       홈페이지 링크로 연결합니다 라든가").
+                      아무 말 없이 빈 카드를 두면 손님은 "앱이 부실하다"고 읽는다.
+                      이유를 적으면 **남의 사진을 함부로 안 쓰는 앱**으로 읽힌다 —
+                      이 앱이 지키는 선(공공누리 제1유형만 쓴다)을 그대로 말하는 것이다.
+                      끝은 늘 "이름을 누르면 공식 안내로 간다"로 맺는다. 변명이 아니라
+                      다음에 할 일을 알려 주는 줄이어야 한다. */}
+                  {compact && <div className="fc-nophoto">ⓘ {t.festivalNoPhoto}</div>}
                   <MapDirections
                     place={
                       f.lat == null && legacy?.lat != null
