@@ -3,10 +3,15 @@ import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
-// base: GitHub Pages가 https://<계정>.github.io/k-street/ 하위 경로로 서빙하므로 필요하다.
-// 커스텀 도메인을 연결하면 '/'로 되돌려야 한다.
+// base: 사이트가 주소의 **최상단**에 있으므로 '/' 다.
+//
+// 2026-09-04에 korea-street.com 을 붙이면서 '/k-street/' 에서 '/' 로 바꿨다.
+// 예전에는 https://pyoseongo-hub.github.io/**k-street/** 처럼 하위 경로였는데,
+// 도메인을 붙이면 https://korea-street.com/ 이 곧 최상단이 된다.
+// 🚨 이걸 안 바꾸면 파일을 /k-street/assets/… 에서 찾다가 전부 404가 나서
+//    **화면이 통째로 빈다.** 도메인을 떼면 다시 '/k-street/' 로 되돌려야 한다.
 export default defineConfig({
-  base: '/k-street/',
+  base: '/',
   plugins: [
     react(),
     VitePWA({
@@ -23,8 +28,8 @@ export default defineConfig({
         theme_color: '#121B19',
         background_color: '#121B19',
         display: 'standalone',
-        start_url: '/k-street/',
-        scope: '/k-street/',
+        start_url: '/',
+        scope: '/',
         lang: 'ko',
         icons: [
           { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
