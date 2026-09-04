@@ -203,14 +203,33 @@ function containsAsName(title, name) {
   return false;
 }
 
+/**
+ * 🐞 **띄어쓰기를 지우고 판단하면 안 된다** (2026-09-04, 같은 날 두 번째 교훈).
+ *
+ * 위 규칙을 넣고 다시 돌렸더니 **「서울 경동시장」과 「제30회 여의도 봄꽃축제」가
+ * 떨어졌다.** 공백까지 지워 놓고 "앞 글자가 한글이니 다른 곳"이라고 판단한 것이다.
+ * 그런데 **공백이야말로 다른 낱말이라는 표시**다 — 그걸 없애고 나서 글자가
+ * 붙어 있다고 말하면 앞뒤가 안 맞는다.
+ *
+ * 그래서 두 갈래로 본다:
+ *  ① 띄어쓰기를 **살린 채** 찾는다. 앞이 시작이거나 **공백·기호**면 인정한다
+ *     ("서울 경동시장" ✅ / "호남관세박물관" ❌ — 이쪽은 공백이 없다).
+ *  ② 띄어쓰기만 다른 경우를 위해 붙여 쓴 것끼리도 보되, **맨 앞에서 시작할 때만**
+ *     인정한다("여의도봄꽃축제" ✅ / "대구국립중앙박물관" ❌).
+ */
+function mentionsOnce(title, name) {
+  const T = nfc(title).replace(/\s+/g, " ").trim();
+  const N = nfc(name).replace(/\s+/g, " ").trim();
+  if (!T || !N) return false;
+  if (containsAsName(T, N)) return true; // ① 띄어쓰기를 살린 채
+  return norm(T).startsWith(norm(N)); // ② 띄어쓰기만 다른 경우
+}
+
 function titleMentions(title, name) {
-  const t = norm(title);
-  const n = norm(name);
-  if (!t || !n) return false;
-  if (containsAsName(t, n)) return true;
+  if (mentionsOnce(title, name)) return true;
   // "서울세계불꽃축제" ↔ "세계불꽃축제"처럼 앞의 '서울'만 다른 경우가 흔하다.
-  const short = n.replace(/^서울/, "");
-  return short.length >= 4 && containsAsName(t, short);
+  const short = nfc(name).replace(/^서울\s*/, "");
+  return norm(short).length >= 4 && mentionsOnce(title, short);
 }
 
 const out = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf-8")) : {};
