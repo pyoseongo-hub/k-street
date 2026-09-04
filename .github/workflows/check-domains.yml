@@ -24,6 +24,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      # whois 는 ubuntu 러너에 기본으로 없다. RDAP는 러너에서 안 열려서
+      # (2026-09-04 첫 실행에서 전부 실패) whois 로 바꿨다.
+      - name: whois 설치
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq whois
+
       - name: 도메인 확인
         env:
           DOMAINS: ${{ inputs.domains }}
