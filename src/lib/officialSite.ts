@@ -23,11 +23,18 @@
 //    다음 실행이 같은 곳을 또 물어보지 않는다(undefined/null/문자열 세 가지 구분).
 //    여기서는 **쓸지 말지만** 정한다.
 
+import deadLinks from "../data/dead-links.json";
+
 const NOT_OFFICIAL_HOST =
   /^(blog\.naver\.com|m\.blog\.naver\.com|cafe\.naver\.com|m\.cafe\.naver\.com|blog\.daum\.net|[\w-]+\.tistory\.com|instagram\.com|facebook\.com|m\.facebook\.com|youtube\.com|youtu\.be|band\.us|twitter\.com|x\.com|tiktok\.com|naver\.me|linktr\.ee)$/i;
 
+// 🪦 죽은 것을 확인한 주소. 기준과 이유는 dead-links.json에 적혀 있다
+//    (서로 다른 두 번의 실행에서 모두 DNS 단계로 실패한 것만 넣는다).
+const DEAD = new Set(Object.keys(deadLinks).filter((k) => !k.startsWith("_")));
+
 export function isOfficialSite(url: string | null | undefined): url is string {
   if (!url) return false;
+  if (DEAD.has(url)) return false;
   try {
     const host = new URL(url).hostname.replace(/^www\./, "");
     return !NOT_OFFICIAL_HOST.test(host);

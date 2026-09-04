@@ -182,7 +182,7 @@ export const FESTIVALS: Place[] = [
   // 10월 확인(2026-09-01): 제8회가 10월 25~26일 노량진수산시장 일대에서 열렸다.
   // 문화일보·헤럴드경제·시정일보와 서울문화포털 자치구브랜드축제 안내가 일치한다.
   { id: id(), gu: "동작구", category: "festival", name: "도심 속 바다축제", startMonth: 10, endMonth: 10, note: "노량진수산시장 일대", monthSource: "문화일보·헤럴드경제·서울문화포털 (제8회 10.25–26)", confirmed: true },
-  { id: id(), gu: "마포구", category: "festival", name: "서울와우북페스티벌", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "책문화예술축제, 구의 유일한 축제는 아닐 수 있음", officialUrl: "http://wowbookfest.com/", confirmed: true },
+  { id: id(), gu: "마포구", category: "festival", name: "서울와우북페스티벌", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "책문화예술축제, 구의 유일한 축제는 아닐 수 있음", confirmed: true },
   // 🙈 화면에서 뺐다 (사용자 지시 2026-09-02: "불확실 가려").
   //    **지금도 열리는지가 불확실하다.** 우리 자료는 "7월, 연세로"인데 마지막으로
   //    그랬던 것이 2019년(7.6–7)이다:
@@ -217,7 +217,7 @@ export const FESTIVALS: Place[] = [
   //    그대로 틀린 값이 된다 — 2026년은 9월 5일인데 2025년은 9월 말이었다
   //    (한화 발표: "지난해보다 3주 앞당겨"). 달까지만 적고 날짜는 공식 안내로 보낸다.
   { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "서울세계불꽃축제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "여의도 한강공원 일대, 무료", officialUrl: "https://hanwhafireworks.com/", monthSource: "한화 공식 발표 (2026 9.5). 2025년은 9월 말", confirmed: true },
-  { id: id(), gu: "용산구", category: "festival", name: "이태원 지구촌축제", startMonth: 10, endMonth: 10, note: "매년 10월경, 연도별 정확한 날짜는 미확정", officialUrl: "http://www.itaewon.or.kr/", monthSource: "위키백과·서울문화포털 — 매년 10월. 2025년 회차 날짜는 확인 못 함", confirmed: true },
+  { id: id(), gu: "용산구", category: "festival", name: "이태원 지구촌축제", startMonth: 10, endMonth: 10, note: "매년 10월경, 연도별 정확한 날짜는 미확정", monthSource: "위키백과·서울문화포털 — 매년 10월. 2025년 회차 날짜는 확인 못 함", confirmed: true },
   { id: id(), gu: "은평구", category: "festival", name: "은평누리축제", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "불광천변 일대", monthSource: "서울문화포털·은평문화재단 (2025 10.24–25)", confirmed: true },
   // 🙈 화면에서 뺐다 (사용자 지시 2026-09-02: "연등회도 가리자 종교행사이고
   //    특정 자리가 없는 절 전체").
