@@ -616,5 +616,761 @@
     "source": "한국관광공사 관광사진갤러리(포토코리아)",
     "license": "공공누리 제1유형",
     "fetchedAt": "2026-09-04"
+  },
+  "종로구|광장시장": {
+    "name": "광장시장",
+    "gu": "종로구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/68/2540168.jpg",
+        "title": "광장시장",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180322173000",
+        "contentId": "2540168"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/69/2540169.jpg",
+        "title": "광장시장",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180322173027",
+        "contentId": "2540169"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/70/2540170.jpg",
+        "title": "광장시장",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180322173105",
+        "contentId": "2540170"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/71/2540171.jpg",
+        "title": "광장시장",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180322173134",
+        "contentId": "2540171"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/67/2540167.jpg",
+        "title": "광장시장",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180322172746",
+        "contentId": "2540167"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "중구|남대문시장": {
+    "name": "남대문시장",
+    "gu": "중구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/45/2588645.jpg",
+        "title": "남대문시장",
+        "photographer": "니오타니 스튜디오",
+        "createdAt": "20190116145954",
+        "contentId": "2588645"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/52/2588652.jpg",
+        "title": "남대문시장",
+        "photographer": "니오타니 스튜디오",
+        "createdAt": "20190116151548",
+        "contentId": "2588652"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/51/2588651.jpg",
+        "title": "남대문시장",
+        "photographer": "니오타니 스튜디오",
+        "createdAt": "20190116151529",
+        "contentId": "2588651"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/50/2588650.jpg",
+        "title": "남대문시장",
+        "photographer": "니오타니 스튜디오",
+        "createdAt": "20190116151509",
+        "contentId": "2588650"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/49/2588649.jpg",
+        "title": "남대문시장",
+        "photographer": "니오타니 스튜디오",
+        "createdAt": "20190116151449",
+        "contentId": "2588649"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "종로구|백인제가옥": {
+    "name": "백인제가옥",
+    "gu": "종로구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/66/3011266.jpg",
+        "title": "백인제가옥",
+        "photographer": "이형찬",
+        "createdAt": "20230915135545",
+        "contentId": "3011266"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/67/3011267.jpg",
+        "title": "백인제가옥",
+        "photographer": "이형찬",
+        "createdAt": "20230915135644",
+        "contentId": "3011267"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/65/3011265.jpg",
+        "title": "백인제가옥",
+        "photographer": "이형찬",
+        "createdAt": "20230915135448",
+        "contentId": "3011265"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "성북구|간송미술관": {
+    "name": "간송미술관",
+    "gu": "성북구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/37/1675237.jpg",
+        "title": "간송미술관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20120719175150",
+        "contentId": "1675237"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/36/1675236.jpg",
+        "title": "간송미술관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20120719175028",
+        "contentId": "1675236"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/35/1675235.jpg",
+        "title": "간송미술관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20120719174858",
+        "contentId": "1675235"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/06/1675206.jpg",
+        "title": "간송미술관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20120719173650",
+        "contentId": "1675206"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/08/1675208.jpg",
+        "title": "간송미술관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20120719173825",
+        "contentId": "1675208"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "마포구|대안공간 루프": {
+    "name": "대안공간 루프",
+    "gu": "마포구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/52/1247052.jpg",
+        "title": "대안공간 루프",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20110331094617",
+        "contentId": "1247052"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/54/1247054.jpg",
+        "title": "대안공간 루프",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20110331095041",
+        "contentId": "1247054"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "중구|서울 중부시장": {
+    "name": "서울 중부시장",
+    "gu": "중구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/18/1834518.jpg",
+        "title": "서울중부시장",
+        "photographer": "한국관광공사 박은경",
+        "createdAt": "20130806152812",
+        "contentId": "1834518"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/19/1834519.jpg",
+        "title": "서울중부시장",
+        "photographer": "한국관광공사 박은경",
+        "createdAt": "20130806153046",
+        "contentId": "1834519"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "종로구|가회민화박물관": {
+    "name": "가회민화박물관",
+    "gu": "종로구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/57/2468957.jpg",
+        "title": "가회민화박물관",
+        "photographer": "스튜디오 홍반장",
+        "createdAt": "20161222094758",
+        "contentId": "2468957"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "동대문구|경희대학교 자연사박물관": {
+    "name": "경희대학교 자연사박물관",
+    "gu": "동대문구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/70/1483670.jpg",
+        "title": "경희대학교 자연사박물관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20111208153623",
+        "contentId": "1483670"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/02/1483702.jpg",
+        "title": "경희대학교 자연사박물관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20111208154435",
+        "contentId": "1483702"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/25/1483725.jpg",
+        "title": "경희대학교 자연사박물관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20111208154728",
+        "contentId": "1483725"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/34/1483734.jpg",
+        "title": "경희대학교 자연사박물관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20111208154854",
+        "contentId": "1483734"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/36/1483736.jpg",
+        "title": "경희대학교 자연사박물관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20111208155049",
+        "contentId": "1483736"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "성북구|고려대학교 박물관": {
+    "name": "고려대학교 박물관",
+    "gu": "성북구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/93/1484193.jpg",
+        "title": "고려대학교 박물관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20111209092040",
+        "contentId": "1484193"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/00/1484200.jpg",
+        "title": "고려대학교 박물관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20111209093104",
+        "contentId": "1484200"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/20/1484220.jpg",
+        "title": "고려대학교 박물관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20111209093409",
+        "contentId": "1484220"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/55/1484255.jpg",
+        "title": "고려대학교 박물관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20111209094449",
+        "contentId": "1484255"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/56/1484256.jpg",
+        "title": "고려대학교 박물관",
+        "photographer": "한국관광공사 박성근",
+        "createdAt": "20111209094511",
+        "contentId": "1484256"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "종로구|대한민국역사박물관": {
+    "name": "대한민국역사박물관",
+    "gu": "종로구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/70/1895870.jpg",
+        "title": "대한민국역사박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140218143206",
+        "contentId": "1895870"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/76/1895876.jpg",
+        "title": "대한민국역사박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140218143802",
+        "contentId": "1895876"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/80/1895880.jpg",
+        "title": "대한민국역사박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140218144023",
+        "contentId": "1895880"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/84/1895884.jpg",
+        "title": "대한민국역사박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140218144259",
+        "contentId": "1895884"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/86/1895886.jpg",
+        "title": "대한민국역사박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140218144334",
+        "contentId": "1895886"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "중구|배재학당역사박물관": {
+    "name": "배재학당역사박물관",
+    "gu": "중구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/11/1856611.jpg",
+        "title": "배재학당역사박물관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20131107164430",
+        "contentId": "1856611"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/97/1856597.jpg",
+        "title": "배재학당역사박물관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20131107164052",
+        "contentId": "1856597"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/98/1856598.jpg",
+        "title": "배재학당역사박물관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20131107164009",
+        "contentId": "1856598"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/08/1856608.jpg",
+        "title": "배재학당역사박물관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20131107164353",
+        "contentId": "1856608"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/09/1856609.jpg",
+        "title": "배재학당역사박물관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20131107164412",
+        "contentId": "1856609"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "종로구|서울역사박물관": {
+    "name": "서울역사박물관",
+    "gu": "종로구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/40/1906240.jpg",
+        "title": "서울역사박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140318154301",
+        "contentId": "1906240"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/00/1906300.jpg",
+        "title": "서울역사박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140318162726",
+        "contentId": "1906300"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/13/1906313.jpg",
+        "title": "서울역사박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140318163411",
+        "contentId": "1906313"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/15/1906315.jpg",
+        "title": "서울역사박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140318163604",
+        "contentId": "1906315"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/20/1906320.jpg",
+        "title": "서울역사박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140318164008",
+        "contentId": "1906320"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "종로구|아르코미술관": {
+    "name": "아르코미술관",
+    "gu": "종로구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/84/1856584.jpg",
+        "title": "아르코미술관(구 마로니에 미술관)",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20131107162557",
+        "contentId": "1856584"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "용산구|전쟁기념관": {
+    "name": "전쟁기념관",
+    "gu": "용산구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/58/2553158.jpg",
+        "title": "용산 전쟁기념관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20180709172915",
+        "contentId": "2553158"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/55/2553155.jpg",
+        "title": "용산 전쟁기념관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20180709172657",
+        "contentId": "2553155"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/54/2553154.jpg",
+        "title": "용산 전쟁기념관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20180709172625",
+        "contentId": "2553154"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/38/2553138.jpg",
+        "title": "용산 전쟁기념관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20180709170949",
+        "contentId": "2553138"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/36/2553136.jpg",
+        "title": "용산 전쟁기념관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20180709170851",
+        "contentId": "2553136"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "종로구|한국미술관": {
+    "name": "한국미술관",
+    "gu": "종로구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/48/1650848.jpg",
+        "title": "한국미술관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20120621222515",
+        "contentId": "1650848"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/20/1650920.jpg",
+        "title": "한국미술관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20120621135322",
+        "contentId": "1650920"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/97/1650897.jpg",
+        "title": "한국미술관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20120621135138",
+        "contentId": "1650897"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/95/1650895.jpg",
+        "title": "한국미술관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20120621134940",
+        "contentId": "1650895"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/66/1650866.jpg",
+        "title": "한국미술관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20120621134356",
+        "contentId": "1650866"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "종로구|환기미술관": {
+    "name": "환기미술관",
+    "gu": "종로구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/24/1079124.jpg",
+        "title": "환기미술관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20100823154530",
+        "contentId": "1079124"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "중구|덕수궁 돌담길": {
+    "name": "덕수궁 돌담길",
+    "gu": "중구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/90/3344090.jpg",
+        "title": "덕수궁 돌담길",
+        "photographer": "안영관",
+        "createdAt": "20240807102224",
+        "contentId": "3344090"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/44/2519444.jpg",
+        "title": "덕수궁 돌담길",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20171206105425",
+        "contentId": "2519444"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/42/2519442.jpg",
+        "title": "덕수궁 돌담길",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20171206105354",
+        "contentId": "2519442"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/36/2519436.jpg",
+        "title": "덕수궁 돌담길",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20171206105211",
+        "contentId": "2519436"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/31/2519431.jpg",
+        "title": "덕수궁 돌담길",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20171206105031",
+        "contentId": "2519431"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "관악구|관악산": {
+    "name": "관악산",
+    "gu": "관악구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/12/2909112.jpg",
+        "title": "관악산의 석양",
+        "photographer": "박정아",
+        "createdAt": "20221115162830",
+        "contentId": "2909112"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "종로구|서순라길": {
+    "name": "서순라길",
+    "gu": "종로구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/64/4061964.jpg",
+        "title": "서순라길",
+        "photographer": "한건우",
+        "createdAt": "20260504160306",
+        "contentId": "4061964"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/65/4061965.jpg",
+        "title": "서순라길",
+        "photographer": "한건우",
+        "createdAt": "20260504160319",
+        "contentId": "4061965"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/33/3589533.jpg",
+        "title": "서순라길",
+        "photographer": "서문교",
+        "createdAt": "20251230131601",
+        "contentId": "3589533"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/83/3046983.jpg",
+        "title": "서순라길",
+        "photographer": "김민수",
+        "createdAt": "20231123112358",
+        "contentId": "3046983"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/82/3046982.jpg",
+        "title": "서순라길",
+        "photographer": "김민수",
+        "createdAt": "20231123112246",
+        "contentId": "3046982"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "중구|신당동 떡볶이타운": {
+    "name": "신당동 떡볶이타운",
+    "gu": "중구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/84/2609484.jpg",
+        "title": "신당동떡볶이타운",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20190704140024",
+        "contentId": "2609484"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/82/2609482.jpg",
+        "title": "신당동떡볶이타운",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20190704135926",
+        "contentId": "2609482"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/81/2609481.jpg",
+        "title": "신당동떡볶이타운",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20190704135810",
+        "contentId": "2609481"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/80/2609480.jpg",
+        "title": "신당동떡볶이타운",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20190704135637",
+        "contentId": "2609480"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/74/2609474.jpg",
+        "title": "신당동떡볶이타운",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20190704135611",
+        "contentId": "2609474"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "강남구|신사동 가로수길": {
+    "name": "신사동 가로수길",
+    "gu": "강남구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/10/2535410.jpg",
+        "title": "신사동 가로수길",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180201170123",
+        "contentId": "2535410"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/07/2535407.jpg",
+        "title": "신사동 가로수길",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180201165941",
+        "contentId": "2535407"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/09/2535409.jpg",
+        "title": "신사동 가로수길",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180201170043",
+        "contentId": "2535409"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/08/2535408.jpg",
+        "title": "신사동 가로수길",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180201170012",
+        "contentId": "2535408"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/05/2535405.jpg",
+        "title": "신사동 가로수길",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180201165840",
+        "contentId": "2535405"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
   }
 }
