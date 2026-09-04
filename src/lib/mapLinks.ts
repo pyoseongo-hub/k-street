@@ -5,6 +5,8 @@
 // 구글은 한국 대중교통 데이터가 약하지만
 // (참고 사이트도 셋을 나란히 준다) 도보 길찾기·이미 구글에 익숙한 외국인
 // 관광객에게는 여전히 쓸모가 있어 뺴지 않는다.
+import { isOfficialSite } from "./officialSite";
+
 export interface MapLinkTarget {
   name: string;
   gu: string;
@@ -125,7 +127,10 @@ export function getPlaceInfoLink(place: MapLinkTarget): MapLink {
   //    「서울숲 JAZZ페스티벌」을 검색하면 올림픽공원에서 하는 「서울재즈페스티벌」
   //    자료가 섞여 나온다. 날짜가 해마다 바뀌는 축제라 **손님이 가장 최신을 보는
   //    자리**로 보내는 게 중요하다.
-  if (place.officialUrl) {
+  //    다만 블로그·SNS 주소는 여기서 한 번 더 걸러 낸다(officialSite.ts). 자료 쪽에서
+  //    이미 거르지만, 손으로 적어 넣는 자리(seed.ts)가 따로 있어 **화면에서도 같은
+  //    잣대를 통과해야** 반쪽 적용이 생기지 않는다.
+  if (isOfficialSite(place.officialUrl)) {
     return { label: "OFFICIAL", url: place.officialUrl };
   }
   // 검색어는 **이름 그대로**만 쓴다. 구·동을 덧붙이지 않는 이유는 지도 검색 때와 같다

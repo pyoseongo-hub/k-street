@@ -18,6 +18,8 @@ import type { Category, Place } from "./seed";
 import raw from "./tour-places-raw.json";
 import festivalDates from "./festival-dates.json";
 import aliases from "./name-aliases.json";
+// 블로그·SNS를 공식 창구에서 걸러내는 잣대. 화면 쪽(mapLinks.ts)과 **같은 함수**를 쓴다.
+import { isOfficialSite } from "../lib/officialSite";
 
 interface RawPlace {
   name: string;
@@ -68,9 +70,11 @@ interface FestivalDate {
 }
 const DATES = festivalDates as Record<string, FestivalDate>;
 
-/** contentId로 축제 공식 홈페이지를 찾는다. 없으면 undefined. */
-export const tourHomepage = (contentId?: string): string | undefined =>
-  (contentId ? DATES[contentId]?.homepage : null) ?? undefined;
+/** contentId로 축제 공식 홈페이지를 찾는다. 없거나 블로그·SNS면 undefined. */
+export function tourHomepage(contentId?: string): string | undefined {
+  const h = contentId ? DATES[contentId]?.homepage : undefined;
+  return isOfficialSite(h) ? h : undefined;
+}
 
 /**
  * "20251017" → "mid". 날짜가 이상하면 undefined — 지어내지 않는다.
@@ -87,6 +91,7 @@ function periodOf(yyyymmdd: string): Place["period"] {
 
 function toPlace(category: Category, p: RawPlace): Place {
   const date = category === "festival" ? DATES[p.contentId] : undefined;
+  const homepage = date?.homepage;
   return {
     id: idOf(p),
     gu: p.gu ?? "",
@@ -94,7 +99,8 @@ function toPlace(category: Category, p: RawPlace): Place {
     name: p.name,
     addr: p.addr,
     // 관광공사가 등록해 둔 공식 홈페이지. 없으면 이름을 눌렀을 때 네이버 검색으로 간다.
-    ...(date?.homepage ? { officialUrl: date.homepage } : null),
+    // 블로그·SNS는 여기서 걸린다(isOfficialSite 주석 참고).
+    ...(isOfficialSite(homepage) ? { officialUrl: homepage } : null),
     image: p.image,
     thumb: p.thumb ?? p.image,
     lat: p.lat,
