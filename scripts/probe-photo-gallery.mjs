@@ -73,70 +73,118 @@ const photoless = dump.festivals.filter(
 
 console.log(`축제 ${dump.festivals.length}곳 중 **사진 없는 곳 ${photoless.length}곳**을 찾아본다.\n`);
 
-// ── ② 갤러리 서비스 ──────────────────────────────────────────────────────
-const ROOT = "https://apis.data.go.kr/B551011/PhotoGalleryService1";
+// ── ② 어느 창구가 실제로 답하는지 **먼저 찾는다** ──────────────────────────
+//
+// 🐞 2026-09-04 첫 판이 이 자리에서 틀렸다. 창구 주소를 하나로 못 박아 두고,
+//    답이 안 오면 "조회 실패"라고만 적은 뒤 **마지막 요약에서는 "여기에도 없는
+//    축제 24곳"이라고 말했다.** 실패와 없음은 전혀 다른 말인데 하나로 뭉갠 것이다.
+//    게다가 ①에서 사진이 몇 장인지도 못 읽었으면서 "✅ 부를 수 있다"라고 적었다.
+//    **틀린 확신이 빈 칸보다 나쁘다** — 이 프로젝트가 계속 되뇌는 그 잘못이다.
+//
+// 그래서 고친 것 —
+//  · 후보 창구를 **여러 개 대 보고**, 돌아온 답을 **그대로 화면에 찍는다.**
+//  · 사진이 실제로 한 장이라도 왔을 때만 "부를 수 있다"고 말한다.
+//  · 마지막 요약에서 **없음 · 조회 실패**를 갈라서 센다.
+
+const ROOTS = [
+  "https://apis.data.go.kr/B551011/PhotoGalleryService1",
+  "https://apis.data.go.kr/B551011/PhotoGalleryService",
+];
+/** 목록 창구 후보 → 그 창구에 딸린 검색 창구 */
+const OPS = [
+  { list: "galleryList1", search: "gallerySearchList1" },
+  { list: "galleryList", search: "gallerySearchList" },
+];
 
 /** serviceKey를 URLSearchParams에 안 넣는 이유는 fetch-coords.mjs 주석 참고
  *  (data.go.kr '일반 인증키'가 이미 URL 인코딩된 값이라 이중 인코딩되면 깨진다). */
-async function call(path, extra) {
+async function call(root, path, extra) {
   const params = new URLSearchParams({
     MobileOS: "ETC",
     MobileApp: "KStreet",
     _type: "json",
     ...extra,
   });
-  const url = `${ROOT}/${path}?serviceKey=${API_KEY}&${params.toString()}`;
-  const res = await fetch(url, { signal: AbortSignal.timeout(20000) });
-  const text = await res.text();
-  // 거절당하면 JSON이 아니라 **XML 오류문**이 온다. 그 말을 그대로 보여 줘야
-  // 사장님이 공공데이터포털에서 무엇을 신청할지 알 수 있다.
-  if (!text.trim().startsWith("{")) {
-    return { http: res.status, raw: text.slice(0, 700) };
-  }
+  const url = `${root}/${path}?serviceKey=${API_KEY}&${params.toString()}`;
   try {
-    return { http: res.status, json: JSON.parse(text) };
-  } catch {
-    return { http: res.status, raw: text.slice(0, 700) };
+    const res = await fetch(url, { signal: AbortSignal.timeout(20000) });
+    const text = await res.text();
+    let json = null;
+    if (text.trim().startsWith("{")) {
+      try {
+        json = JSON.parse(text);
+      } catch {
+        /* 아래 raw로 보여 준다 */
+      }
+    }
+    return { http: res.status, json, text };
+  } catch (e) {
+    return { err: String(e?.cause?.code ?? e.name ?? e.message).slice(0, 60) };
   }
 }
 
 /** 응답에서 사진 목록을 꺼낸다. 0건일 때 items가 빈 문자열로 오는 창구다. */
 function itemsOf(json) {
-  const body = json?.response?.body;
-  const it = body?.items;
+  const it = json?.response?.body?.items;
   if (!it || typeof it === "string") return [];
   const arr = it.item;
   return Array.isArray(arr) ? arr : arr ? [arr] : [];
 }
 
-// ── ③ 먼저 **키가 이 서비스에 들어갈 수 있는지** 한 번 물어본다 ──────────
-console.log("① 이 키로 「관광사진 갤러리」를 부를 수 있나 확인한다.");
-const probe = await call("galleryList1", { numOfRows: "1", pageNo: "1", arrange: "A" });
+/** 응답이 무슨 말을 하는지 한 줄로. 못 알아보면 앞부분을 그대로 보여 준다. */
+function why(r) {
+  if (r.err) return `못 열었다 (${r.err})`;
+  const h = r.json?.response?.header;
+  if (h?.resultCode) return `${h.resultCode} ${h.resultMsg ?? ""}`.trim();
+  // 거절당하면 JSON이 아니라 XML 오류문이 온다. 그 말을 그대로 옮겨야
+  // 공공데이터포털에서 무엇을 신청할지 알 수 있다.
+  return `HTTP ${r.http} · ${r.text?.replace(/\s+/g, " ").slice(0, 300) ?? "(빈 답)"}`;
+}
 
-const header = probe.json?.response?.header;
-if (probe.raw) {
-  console.log(`\n❌ 부를 수 없다 (HTTP ${probe.http}). 돌아온 답:\n`);
-  console.log(probe.raw.split("\n").map((l) => "   " + l).join("\n"));
+console.log("① 어느 창구가 답하는지 하나씩 대 본다.\n");
+
+let live = null;
+for (const root of ROOTS) {
+  for (const op of OPS) {
+    const r = await call(root, op.list, { numOfRows: "3", pageNo: "1", arrange: "A" });
+    const items = r.json ? itemsOf(r.json) : [];
+    const tag = `${root.split("/").pop()}/${op.list}`;
+    if (items.length) {
+      console.log(`   ✅ ${tag} — 사진 ${items.length}장이 실제로 왔다`);
+      console.log(`      보기: ${items[0].galTitle ?? JSON.stringify(items[0]).slice(0, 120)}`);
+      live = { root, op };
+      break;
+    }
+    console.log(`   ❌ ${tag} — ${why(r)}`);
+    await new Promise((s) => setTimeout(s, 400));
+  }
+  if (live) break;
+}
+
+if (!live) {
   console.log(`
 ${"─".repeat(62)}
-🪪 **무엇을 하면 되나** — 공공데이터포털(data.go.kr)에 로그인해서
+❌ **어느 창구도 사진을 주지 않았다.**
+   위에 그대로 옮긴 답이 이유다. 대개 둘 중 하나다:
+
+   · SERVICE_KEY_IS_NOT_REGISTERED / SERVICE ACCESS DENIED
+     → 이 서비스는 **따로 활용신청을 해야 한다.**
+   · NO_OPENAPI_SERVICE_ERROR
+     → 창구 주소가 바뀐 것이다. 포털의 '참고문서'에서 지금 주소를 봐야 한다.
+
+🪪 **사장님이 하실 일** — 공공데이터포털(data.go.kr)에 로그인해서
    「한국관광공사_관광사진정보」를 찾아 **활용신청**을 누른다.
    지금 쓰는 키(TOUR_API_KEY)와 **같은 계정**이면 키는 그대로 쓰면 되고,
    승인은 보통 바로 난다(자동승인 서비스다).
-   신청한 뒤 이 워크플로를 다시 돌리면 여기서부터 이어진다.`);
-  process.exit(0);
-}
-if (header && header.resultCode !== "0000") {
-  console.log(`\n❌ 서비스가 거절했다 — ${header.resultCode} ${header.resultMsg}`);
-  console.log("   (SERVICE_KEY_IS_NOT_REGISTERED_ERROR 라면 활용신청이 안 된 것이다.)");
+   신청한 뒤 이 워크플로를 다시 돌리면 여기서부터 이어진다.
+
+⚠️ 이 결과는 **"사진이 없다"는 뜻이 아니다.** "우리가 못 물어봤다"는 뜻이다.
+   둘을 뭉개면 있는 사진을 영영 안 찾게 된다.`);
   process.exit(0);
 }
 
-const total = probe.json?.response?.body?.totalCount;
-console.log(`   ✅ 부를 수 있다. 갤러리에 사진 ${total ?? "?"}장이 있다.\n`);
-
-// ── ④ 사진 없는 축제 이름으로 하나씩 찾아본다 ────────────────────────────
-console.log("② 사진 없는 축제 이름으로 하나씩 찾아본다.\n");
+// ── ③ 사진 없는 축제 이름으로 하나씩 찾아본다 ────────────────────────────
+console.log("\n② 사진 없는 축제 이름으로 하나씩 찾아본다.\n");
 
 /** 제목에 상호(축제 이름)가 실제로 들어 있는가.
  *  🚨 검색 결과를 **그 축제 자료로 그냥 저장하지 않는다**(Kfood에서 데인 곳이다 —
@@ -154,18 +202,20 @@ function titleMentions(title, name) {
 }
 
 const hits = [];
-const misses = [];
+const none = [];
+const failed = [];
 
 for (const f of photoless) {
-  const r = await call("gallerySearchList1", {
+  const r = await call(live.root, live.op.search, {
     numOfRows: "20",
     pageNo: "1",
     arrange: "A",
     keyword: f.name,
   });
-  if (r.raw || r.json?.response?.header?.resultCode !== "0000") {
-    console.log(`⬜ ${f.name} — 조회 실패`);
-    misses.push([f, "조회 실패"]);
+  const ok = r.json?.response?.header?.resultCode === "0000" || (r.json && itemsOf(r.json).length);
+  if (!ok) {
+    failed.push([f, why(r)]);
+    console.log(`⬜ ${f.name} (${f.gu}) — 조회 실패: ${why(r)}`);
     await new Promise((s) => setTimeout(s, 400));
     continue;
   }
@@ -180,18 +230,24 @@ for (const f of photoless) {
       console.log(`        촬영: ${m.galPhotographer ?? "(없음)"} · 등록: ${m.galCreatedtime ?? "?"}`);
     }
   } else {
-    misses.push([f, items.length ? `${items.length}장 왔지만 이름이 안 맞음` : "0장"]);
+    none.push([f, items.length ? `${items.length}장 왔지만 이름이 안 맞음` : "0장"]);
     console.log(`❌ ${f.name} (${f.gu}) — ${items.length ? `${items.length}장 왔지만 이름이 안 맞는다` : "없다"}`);
   }
   // 연달아 부르면 막는다. 천천히.
   await new Promise((s) => setTimeout(s, 400));
 }
 
+// 🚨 **없음과 실패를 갈라서 센다.** 뭉치면 "찾아봤더니 없더라"로 읽히는데,
+//    실제로는 못 물어본 것일 수 있다(첫 판이 여기서 틀렸다).
 console.log("\n" + "─".repeat(62));
 console.log(`✅ 채울 수 있는 축제: ${hits.length}곳 / ${photoless.length}곳`);
 for (const [f] of hits) console.log(`   · ${f.name} (${f.gu})`);
-console.log(`\n❌ 여기에도 없는 축제: ${misses.length}곳`);
-for (const [f, why] of misses) console.log(`   · ${f.name} (${f.gu}) — ${why}`);
+console.log(`\n❌ 갤러리에도 없는 축제: ${none.length}곳`);
+for (const [f, w] of none) console.log(`   · ${f.name} (${f.gu}) — ${w}`);
+if (failed.length) {
+  console.log(`\n⬜ **못 물어본 축제: ${failed.length}곳** (없다는 뜻이 아니다)`);
+  for (const [f, w] of failed) console.log(`   · ${f.name} (${f.gu}) — ${w}`);
+}
 console.log(`
 🚨 **이 목록을 그대로 앱에 넣지 않는다.**
    갤러리 사진은 공공누리 유형이 사진마다 다르다. 쓰기 전에 사진마다
