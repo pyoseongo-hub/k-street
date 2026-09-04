@@ -148,22 +148,48 @@ function SummerMotif({ rng, dense }: { rng: () => number; dense: boolean }) {
   );
 }
 
+/**
+ * 🍁 단풍잎.
+ *
+ * 🚨 2026-09-04 사장님 폰 화면에서 잡혔다 — 여기 있던 path가
+ *    `M0 0 C4 -8 12 -8 12 0 C12 8 4 8 0 16 …` 로, **단풍잎이 아니라 하트 곡선**이었다.
+ *    가을 축제 카드에 분홍 하트가 흩날려서 밸런타인 화면처럼 보였다.
+ *    한성백제문화제·서울세계불꽃축제 같은 곳이 그렇게 떠 있었다.
+ *
+ * 이 그림이 중요한 이유 — 축제 80곳 중 **24곳은 사진이 아예 없다.**
+ * 관광공사 자료에 그 축제들이 없어서(확인함) 앞으로도 쉽게 안 채워진다.
+ * 그러니 **사진 대신 나오는 이 그림이 그 카드의 얼굴**이다.
+ *
+ * 잎 모양은 곡선(베지어)이 아니라 **꼭짓점 좌표**로 그린다 — 단풍잎은 뾰족한
+ * 톱니가 특징이라 곡선으로 그리면 자꾸 하트나 물방울로 뭉개진다.
+ * 위가 잎끝, 아래가 잎자루이고 x=0을 축으로 좌우 대칭이다.
+ */
+const MAPLE_LEAF =
+  "M0 -21 L3.5 -12.5 L10.5 -14 L8 -8 L16.5 -3.5 L13.5 -1 L18.5 4 " +
+  "L7.5 3.5 L8.5 8.5 L2 6.5 L2.2 17 L-2.2 17 L-2 6.5 L-8.5 8.5 L-7.5 3.5 " +
+  "L-18.5 4 L-13.5 -1 L-16.5 -3.5 L-8 -8 L-10.5 -14 L-3.5 -12.5 Z";
+
+/** 진짜 단풍은 한 가지 빨강이 아니다 — 노랑·주황·붉은빛이 섞여 있어야 단풍으로 보인다. */
+const LEAF_COLORS = ["#C0402A", "#D9622A", "#E08A1E", "#A8341F", "#CF7A22"];
+
 function AutumnMotif({ rng, dense }: { rng: () => number; dense: boolean }) {
-  const count = dense ? 16 : 12;
+  const count = dense ? 14 : 11;
   return (
-    <g opacity="0.88">
+    <g opacity="0.9">
       {Array.from({ length: count }, (_, i) => {
-        const x = (300 / count) * i + rng() * 24;
-        const y = 8 + rng() * 150;
-        const rot = rng() * 360;
-        const scale = 0.7 + rng() * 0.6;
+        const x = (300 / count) * i + rng() * 26;
+        const y = 10 + rng() * 145;
+        // 떨어지는 잎이라 방향이 제각각이다. 다만 완전히 뒤집힌 잎은 어색해서
+        // 좌우로 기운 범위(-70°~70°)만 쓴다.
+        const rot = (rng() - 0.5) * 140;
+        const scale = 0.55 + rng() * 0.5;
         return (
           <path
             key={i}
             transform={`translate(${x}, ${y}) rotate(${rot}) scale(${scale})`}
-            d="M0 0 C4 -8 12 -8 12 0 C12 8 4 8 0 16 C-4 8 -12 8 -12 0 C-12 -8 -4 -8 0 0 Z"
-            fill="#C0402A"
-            fillOpacity={0.5 + rng() * 0.35}
+            d={MAPLE_LEAF}
+            fill={LEAF_COLORS[Math.floor(rng() * LEAF_COLORS.length)]}
+            fillOpacity={0.45 + rng() * 0.4}
           />
         );
       })}
