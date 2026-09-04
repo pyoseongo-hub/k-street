@@ -49,7 +49,12 @@ export default function PlacePhoto({ place, className = "fc-art fc-art-photo" }:
           }
         : {})}
     >
-      <span className="fc-photo-credit">{place.photoCredit ?? t.photoCredit}</span>
+      {/* 🚨 출처는 **지금 보이는 그 한 장**의 것이어야 한다 (2026-09-04).
+          예전에는 카드에 하나(place.photoCredit)뿐이라, 관광공사 갤러리 사진과
+          구청 사진이 한 카드에 같이 놓이면 넘겨도 출처가 안 바뀌어 **남의 사진에
+          엉뚱한 출처**가 붙었다. 공공누리는 출처 표시가 의무다.
+          갤러리·관광공사 사진은 credit이 비어 있고, 그때 기본값(한국관광공사)이 뜬다. */}
+      <span className="fc-photo-credit">{current.credit ?? t.photoCredit}</span>
       {many && (
         <span className="fc-photo-dots" aria-hidden="true">
           {/* 장수가 많으면 점이 줄줄이 늘어져 사진을 가린다 — 여덟 개까지만 그리고

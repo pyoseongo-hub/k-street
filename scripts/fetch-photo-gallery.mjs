@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-// 📷 **사진이 없는 곳을 관광사진 갤러리(포토코리아)로 채운다.**
+// 📷 **관광사진 갤러리(포토코리아)에서 사진을 받아 온다 — 전 곳 대상.**
 //
 // 사용자 지시(2026-09-04): "쓸수있는 사진있나 전부 확인해 / 사진 있으면 여기
-// 사진을 우선으로 띄워".
+// 사진을 우선으로 띄워" → "사진 다른데도 전부 찾아본건가 / 이미 있는 곳도
+// 관광공사 사진있으면 방영해".
 //
 // ── 이 창구가 왜 따로 필요한가 ───────────────────────────────────────────
 // 지금 쓰는 사진은 전부 KorService2(국문 관광정보)가 주는 **대표 이미지**다.
@@ -74,15 +75,18 @@ try {
   process.exit(1);
 }
 
-const tourImages = JSON.parse(
-  readFileSync(join(__dirname, "..", "src", "data", "tour-images.json"), "utf-8")
-);
-
 const nfc = (s) => (s ?? "").normalize("NFC");
-const hasPhoto = (p) =>
-  Boolean(p.image || p.thumb || tourImages[p.id]?.image || tourImages[p.id]?.thumb);
 
-// 축제(사진 게이트가 없어 화면에 뜬다) + 가려 둔 곳(사진이 없어 안 보인다).
+// 🔎 **사진이 없는 곳만이 아니라 전부 물어본다** (사용자 지시 2026-09-04:
+//    "사진 다른데도 전부 찾아본건가 / 이미 있는 곳도 관광공사 사진있으면 방영해").
+//
+//    처음에는 빈 곳 156곳만 찾아봤다. 그런데 **이미 사진이 있는 285곳은 아예
+//    물어보지도 않았다** — 갤러리에 더 좋은 사진이 있어도 못 보는 구조였다.
+//    지금 쓰는 대표 이미지는 목록 API가 주는 한 장인데, 축제는 그게 아예
+//    **포스터**인 경우가 많다(정조대왕 능행차·서울건축문화제). 갤러리는 사진작가가
+//    찍은 사진이라 대개 그쪽이 낫다.
+//
+// 축제 + 화면에 뜨는 곳 + 가려 둔 곳을 다 넣는다.
 //
 // 🔑 **열쇠는 "구|이름"이다. 이름만으로는 안 된다** (2026-09-04에 당했다).
 //    이름은 같은데 구가 다른 곳이 7개 있다 — 남산(용산구·중구), 남산둘레길,
@@ -92,13 +96,12 @@ const hasPhoto = (p) =>
 //    잃었다.** 아무 오류도 안 나고 사진 자리만 사라지는 사고다.
 const byKey = new Map();
 for (const p of [...dump.festivals, ...dump.hidden, ...dump.rows]) {
-  if (hasPhoto(p)) continue;
   const key = `${nfc(p.gu)}|${nfc(p.name)}`;
   if (!byKey.has(key)) byKey.set(key, p);
 }
 const targets = [...byKey.values()].slice(0, LIMIT);
 
-console.log(`사진이 없는 곳 **${byKey.size}곳**을 갤러리에서 찾아본다.`);
+console.log(`**${byKey.size}곳**을 갤러리에서 찾아본다 (사진이 이미 있는 곳까지 전부).`);
 if (targets.length !== byKey.size) console.log(`(이번 실행은 앞 ${targets.length}곳만)`);
 console.log(APPLY ? "저장: 켬\n" : "저장: 끔 (맛보기)\n");
 
