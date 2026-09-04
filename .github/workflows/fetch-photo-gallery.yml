@@ -1,0 +1,102 @@
+name: Fetch photo gallery (사진 없는 곳 채우기)
+
+# 📷 사진이 없는 149곳을 **관광사진 갤러리(포토코리아)**에서 찾아 채운다.
+# 사용자 지시(2026-09-04): "쓸수있는 사진있나 전부 확인해".
+#
+# apply를 끄면 **아무것도 저장하지 않고** 몇 곳이 채워지는지만 본다.
+# 확인한 뒤 apply를 켜면 src/data/photo-gallery.json 에 저장·커밋한다.
+#
+# 🚨 이름이 제목에 실제로 들어 있는 사진만 저장한다(titleMentions).
+#    검색 결과를 그대로 저장하면 **남의 곳 사진**이 붙는다 — Kfood에서 겪은 사고다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "photo-gallery.json 에 실제로 저장할지 (꺼두면 로그만 확인)"
+        type: boolean
+        default: false
+      limit:
+        # 🚨 "빈 칸이면 전체"로 만들 수 없다 — workflow_dispatch는 빈 값을 받으면
+        #    여기 적힌 default로 되돌린다. 그래서 전체는 all이라고 적게 한다.
+        description: "이번 실행에서 볼 최대 곳 수. 전체로 하려면 all"
+        type: string
+        default: "all"
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      APPLY: ${{ inputs.apply }}
+      LIMIT: ${{ inputs.limit }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # 사진 없는 곳이 어디인지 **앱 코드 그대로** 뽑는다(잣대를 둘로 만들지 않는다).
+      - name: 사진 없는 곳 목록 뽑아내기
+        run: |
+          set -o pipefail
+          npx vite build --ssr scripts/dump-links.ts --outDir .linkdump --logLevel error
+          node .linkdump/dump-links.js > links.json
+
+      - name: 갤러리에서 찾기
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        # set -o pipefail이 없으면 node가 죽어도 tee가 성공해 이 단계가 초록불로
+        # 끝난다(2026-09-01 번역 워크플로에서 겪었다). 2>&1로 오류도 로그에 담는다.
+        run: |
+          set -o pipefail
+          ARGS="links.json"
+          if [ -n "$LIMIT" ] && [ "$LIMIT" != "all" ]; then ARGS="$ARGS --limit $LIMIT"; fi
+          if [ "$APPLY" = "true" ]; then ARGS="$ARGS --apply"; fi
+          node scripts/fetch-photo-gallery.mjs $ARGS 2>&1 | tee gallery-log.txt
+
+      # 🚨 커밋 **앞에서** 감사를 돌린다. B11(http:// 사진 주소)이 여기서 걸린다.
+      - name: 감사
+        if: env.APPLY == 'true'
+        run: npm run audit-seed
+
+      - name: Commit photo-gallery.json
+        id: commit
+        if: env.APPLY == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # 🚨 git diff는 **아직 git이 모르는 새 파일**을 못 본다. 처음 생기는
+          #    파일이라 diff로 검사하면 "바뀐 게 없다"가 나와 조용히 안 올라간다
+          #    (2026-09-02 tour-gallery.json 에서 실제로 겪었다).
+          git add src/data/photo-gallery.json
+          if git diff --cached --quiet -- src/data/photo-gallery.json; then
+            echo "committed=no" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "관광사진 갤러리에서 사진을 받아 온다 (fetch-photo-gallery)"
+            git push
+            echo "committed=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 결과 요약 (Summary에서 바로 확인)
+        if: always()
+        run: |
+          {
+            echo "## 📷 사진 없는 곳, 갤러리로 채우기"
+            echo ""
+            if [ "$APPLY" != "true" ]; then
+              echo "### 👀 맛보기만 했습니다 (저장 안 함)"
+              echo "아래에서 몇 곳이 채워지는지 보고, 괜찮으면 저장을 켜서 다시 실행하세요."
+            elif [ "${{ steps.commit.outputs.committed }}" = "yes" ]; then
+              echo "### ✅ 사진을 저장했습니다"
+            else
+              echo "### ⬜ 이번엔 새로 저장된 게 없습니다"
+            fi
+            echo ""
+            echo '```'
+            cat gallery-log.txt 2>/dev/null || echo "(로그 파일이 없습니다)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
