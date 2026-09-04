@@ -1,0 +1,81 @@
+name: Prelaunch check (출시 전 검수)
+
+# 🚦 출시 전 점검. **아무것도 저장하지 않는다** — 보기만 한다.
+#
+# 사장님 지시(2026-09-04): "주말 출시할거야 … 그전에 서비스에 이상 없는지,
+# 접속 과다해도 문제없는지, 링크는 올바른지, 맵도 잘 작동하는지, 목적지 맞는지
+# 검수작업 진행해."
+#
+# 왜 Actions에서 도나 — 작업 세션(에이전트 샌드박스)은 바깥 인터넷이 막혀 있어
+# 어떤 주소도 못 열어 보고 카카오도 못 부른다. 러너는 실제 인터넷이 된다.
+#
+# 결과는 이 실행 페이지의 Summary에 그대로 나온다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      what:
+        description: "무엇을 볼지"
+        type: choice
+        default: "all"
+        options: ["all", "links", "coords"]
+
+jobs:
+  prelaunch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # 앱이 실제로 내보내는 주소를 앱 코드 그대로 뽑아낸다(잣대를 둘로 만들지 않기 위해).
+      - name: 링크 뽑아내기
+        run: |
+          set -o pipefail
+          npx vite build --ssr scripts/dump-links.ts --outDir .linkdump --logLevel error
+          node .linkdump/dump-links.js > links.json
+          node -e "const d=require('./links.json');console.error('장소',d.counts.all,'· 축제',d.counts.festivals,'· 사진없어 숨김',d.counts.hiddenNoPhoto)"
+
+      - name: 🔗 링크 검사
+        if: inputs.what == 'all' || inputs.what == 'links'
+        run: |
+          set -o pipefail
+          node scripts/check-links.mjs links.json 2>&1 | tee links-log.txt
+
+      - name: 📍 좌표 검사 (목적지가 정말 그 구인가)
+        if: inputs.what == 'all' || inputs.what == 'coords'
+        env:
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/check-coords.mjs links.json 2>&1 | tee coords-log.txt
+
+      - name: 결과 요약 (Summary에서 바로 확인)
+        if: always()
+        run: |
+          {
+            echo "## 🚦 출시 전 검수 결과"
+            echo ""
+            echo "저장된 것은 없습니다 — 보기만 한 실행입니다."
+            echo ""
+            if [ -f links-log.txt ]; then
+              echo "<details open><summary>🔗 링크 검사</summary>"
+              echo ""
+              echo '```'
+              cat links-log.txt
+              echo '```'
+              echo "</details>"
+              echo ""
+            fi
+            if [ -f coords-log.txt ]; then
+              echo "<details open><summary>📍 좌표 검사 (목적지가 정말 그 구인가)</summary>"
+              echo ""
+              echo '```'
+              cat coords-log.txt
+              echo '```'
+              echo "</details>"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
