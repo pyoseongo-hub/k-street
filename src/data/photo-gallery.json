@@ -230,7 +230,7 @@
   },
   "남산": {
     "name": "남산",
-    "gu": "용산구",
+    "gu": "중구",
     "photos": [
       {
         "url": "https://tong.visitkorea.or.kr/cms2/website/93/3538493.jpg",
@@ -479,6 +479,94 @@
         "photographer": "한국관광공사 이범수",
         "createdAt": "20250822142710",
         "contentId": "3525619"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "여의도 봄꽃축제": {
+    "name": "여의도 봄꽃축제",
+    "gu": "영등포구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/59/2638059.jpg",
+        "title": "2019 영등포 여의도 봄꽃축제",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20191121153402",
+        "contentId": "2638059"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/58/2638058.jpg",
+        "title": "2019 영등포 여의도 봄꽃축제",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20191121153336",
+        "contentId": "2638058"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/57/2638057.jpg",
+        "title": "2019 영등포 여의도 봄꽃축제",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20191121153243",
+        "contentId": "2638057"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/56/2638056.jpg",
+        "title": "2019 영등포 여의도 봄꽃축제",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20191121153029",
+        "contentId": "2638056"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/55/2638055.jpg",
+        "title": "2019 영등포 여의도 봄꽃축제",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20191121152959",
+        "contentId": "2638055"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-09-04"
+  },
+  "경동시장": {
+    "name": "경동시장",
+    "gu": "동대문구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/62/2662262.jpg",
+        "title": "서울 경동시장",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20200706143337",
+        "contentId": "2662262"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/61/2662261.jpg",
+        "title": "서울 경동시장",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20200706143311",
+        "contentId": "2662261"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/60/2662260.jpg",
+        "title": "서울 경동시장",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20200706143250",
+        "contentId": "2662260"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/58/2662258.jpg",
+        "title": "서울 경동시장",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20200706143054",
+        "contentId": "2662258"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/57/2662257.jpg",
+        "title": "서울 경동시장",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20200706142742",
+        "contentId": "2662257"
       }
     ],
     "source": "한국관광공사 관광사진갤러리(포토코리아)",
