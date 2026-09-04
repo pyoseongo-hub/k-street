@@ -155,14 +155,39 @@ console.log("");
 /** 제목에 그 곳 이름이 실제로 들어 있는가. 등급 판정과 **같은 잣대 하나**를 쓴다 —
  *  잣대가 둘이면 수집은 통과하는데 화면은 틀린 상황이 생긴다. */
 const norm = (s) => nfc(s).replace(/\s+/g, "");
+
+/**
+ * 🐞 **이름 앞에 한글이 더 붙어 있으면 다른 곳이다.**
+ *
+ * 2026-09-04 첫 조사에서 잡혔다 — 강남구 「관세박물관」을 찾는데 갤러리가
+ * **「호남관세박물관」**(군산)을 줬고, 이름이 뒷부분에 들어 있다는 이유로 통과했다.
+ * Kfood에서 남의 가게 사진이 화면에 떴던 바로 그 구멍이다.
+ *
+ * 그래서 **이름이 제목의 맨 앞이거나, 앞 글자가 한글이 아닐 때만** 인정한다.
+ * 앞에 글자가 더 붙으면 대개 **다른 고유명사**가 된다(호남+관세박물관).
+ * 뒤에 더 붙는 것은 괜찮다 — 남산 → 「남산자락숲길」처럼 **그 안의 더 좁은 곳**이라
+ * 여전히 그곳 사진이다.
+ *
+ * ⚠️ 이 잣대는 놓치는 쪽으로 기운다("서울 남산"처럼 앞에 말이 붙은 제목은
+ *    떨어진다). 그래도 이쪽이 맞다 — **빈 칸이 틀린 사진보다 낫다.**
+ */
+function containsAsName(title, name) {
+  let i = title.indexOf(name);
+  while (i >= 0) {
+    if (i === 0 || !/[가-힣]/.test(title[i - 1])) return true;
+    i = title.indexOf(name, i + 1);
+  }
+  return false;
+}
+
 function titleMentions(title, name) {
   const t = norm(title);
   const n = norm(name);
   if (!t || !n) return false;
-  if (t.includes(n)) return true;
+  if (containsAsName(t, n)) return true;
   // "서울세계불꽃축제" ↔ "세계불꽃축제"처럼 앞의 '서울'만 다른 경우가 흔하다.
   const short = n.replace(/^서울/, "");
-  return short.length >= 4 && t.includes(short);
+  return short.length >= 4 && containsAsName(t, short);
 }
 
 const out = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf-8")) : {};
@@ -193,7 +218,10 @@ for (const p of targets) {
   if (matched.length) {
     hits.push([p, matched]);
     console.log(`✅ ${p.name} (${p.gu}${p.dong ? " " + p.dong : ""}) — ${matched.length}장`);
-    for (const m of matched.slice(0, 2)) console.log(`      · ${m.galTitle}`);
+    // 🚨 맛보기에서는 **제목을 하나도 빼놓지 않고** 찍는다. 앞 두 개만 보여 주다가
+    //    「관세박물관 → 호남관세박물관」을 놓칠 뻔했다(2026-09-04). 저장하기 전에
+    //    사람이 전부 눈으로 훑을 수 있어야 한다.
+    for (const m of matched) console.log(`      · ${m.galTitle}`);
     // 🚨 **이름을 열쇠로** 저장한다(위 주석의 id 재사용 사고 참고).
     //    matchedTitle을 같이 적어 둬야 나중에 "이 사진이 왜 이 곳에 붙었나"를
     //    감사에서 되짚을 수 있다.
