@@ -1,0 +1,35 @@
+name: Check Naver Maps (내 위치가 왜 안 되나)
+
+# 🗺️ 네이버 지도 열쇠가 우리 도메인에서 먹는지 직접 물어본다.
+#
+# 2026-09-04: 도메인을 옮긴 뒤 「내 위치」가 "위치를 못 찾았어요"를 냈다.
+# 그 문구는 네이버 조회가 실패했다는 뜻이라 우리 쪽 문제다.
+# 원인 후보가 여럿이라 감으로 찍지 않고 SDK 주소를 그대로 불러 본다.
+#
+# **아무것도 저장하지 않는다.** 보기만 한다.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 네이버 지도 SDK 불러 보기
+        run: |
+          set -o pipefail
+          node scripts/check-naver-maps.mjs 2>&1 | tee naver-log.txt
+      - name: 결과 요약 (Summary에서 바로 확인)
+        if: always()
+        run: |
+          {
+            echo "## 🗺️ 네이버 지도 열쇠 확인"
+            echo ""
+            echo '```'
+            cat naver-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
