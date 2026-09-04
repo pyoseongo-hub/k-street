@@ -94,7 +94,7 @@ console.log(APPLY ? "저장: 켬\n" : "저장: 끔 (맛보기)\n");
 // ── ② 창구 부르기 ────────────────────────────────────────────────────────
 /** serviceKey를 URLSearchParams에 안 넣는 이유는 fetch-coords.mjs 주석 참고
  *  (data.go.kr '일반 인증키'가 이미 URL 인코딩된 값이라 이중 인코딩되면 깨진다). */
-async function call(path, extra) {
+async function callOnce(path, extra) {
   const params = new URLSearchParams({
     MobileOS: "ETC",
     MobileApp: "KStreet",
@@ -109,6 +109,29 @@ async function call(path, extra) {
     return { http: res.status, json: JSON.parse(text), text };
   } catch (e) {
     return { err: String(e?.cause?.code ?? e.name ?? e.message).slice(0, 60) };
+  }
+}
+
+/**
+ * 🔁 **끊기면 다시 물어본다** (2026-09-04에 당했다).
+ *
+ * 두 번째 실행에서 **첫 호출 한 번이 CONNECT_TIMEOUT**이 나면서 149곳을 하나도
+ * 못 보고 끝났다. 7분 전 같은 키로 전부 돌았으니 권한 문제가 아니라 그쪽 서버가
+ * 잠깐 안 받은 것이다.
+ *
+ * 재시도를 안 하면 그런 한 번이 **"갤러리에 없다"로 둔갑한다** — 이 프로젝트가
+ * 계속 경계하는 "실패를 없음이라고 말하는" 그 잘못이다.
+ * 다만 재시도는 **연결이 안 된 경우와 5xx에만** 한다. 등록되지 않은 키 같은
+ * 4xx는 몇 번을 물어도 같은 답이라 시간만 버린다.
+ */
+async function call(path, extra) {
+  const waits = [1000, 3000, 6000];
+  let last;
+  for (let i = 0; ; i++) {
+    last = await callOnce(path, extra);
+    const worthRetry = last.err || (last.http >= 500 && last.http < 600);
+    if (!worthRetry || i >= waits.length) return last;
+    await new Promise((s) => setTimeout(s, waits[i]));
   }
 }
 

@@ -1,5 +1,6 @@
 import gallery from "../data/tour-gallery.json";
 import type { Place } from "../data/seed";
+import { galleryShotsFor } from "./photoGallery";
 
 // 📷 한 곳에 딸린 사진 여러 장 (scripts/fetch-tour-gallery.mjs가 채운다).
 //
@@ -49,6 +50,12 @@ export function galleryOf(place: Place): GalleryPhoto[] {
   };
   push(place.image ? { url: place.image, thumb: place.thumb } : undefined);
   for (const p of photos) push(p);
+  // 📷 관광사진 갤러리(포토코리아)에서 받아 온 사진도 뒤에 붙인다
+  //    (2026-09-04, lib/photoGallery.ts 참고).
+  //    이 곳들은 대표 이미지가 아예 없어서 seed의 withGalleryPhoto가 **첫 장을
+  //    대표 사진으로 올려 둔 상태**다 — 그래서 첫 장은 위 push에서 이미 들어갔고
+  //    여기서는 seen 덕분에 두 번 들어가지 않는다. 나머지가 넘겨 볼 사진이 된다.
+  for (const s of galleryShotsFor(place.name, place.gu)) push({ url: s.url });
   return out;
 }
 

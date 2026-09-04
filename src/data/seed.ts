@@ -11,6 +11,7 @@ import { sidoOf } from "./districts";
 import { getCoords } from "../lib/coords";
 import { TOUR_PLACES, findTourPlace, nameKey } from "./tourPlaces";
 import { getManualPhoto } from "../lib/manualPhotos";
+import { galleryShotsFor } from "../lib/photoGallery";
 
 // street(골목·거리)는 2026-09-01에 추가했다. 관광공사 자료에 경리단길·익선동 한옥거리·
 // 종로귀금속거리처럼 구·사진·좌표가 다 붙은 골목이 40곳 있는데, 앱 이름이 K-Street인데도
@@ -480,6 +481,28 @@ function withManualPhoto(p: Place): Place {
   return m ? { ...p, image: m.image, thumb: m.image, photoCredit: m.source } : p;
 }
 
+/**
+ * 📷 **관광사진 갤러리(포토코리아) 사진을 대표 사진으로 올린다**
+ * (사용자 지시 2026-09-04: "사진 있으면 여기 사진을 우선으로 띄워").
+ *
+ * 여기까지 와서도 사진이 없는 곳에만 붙인다 — 즉 **빈 자리만 채운다.**
+ * 사람이 직접 확인해 넣은 사진(manual-photos)이나 관광공사 대표 이미지가
+ * 이미 있으면 밀어내지 않는다. 갤러리에서 사진을 찾은 곳은 애초에 사진이
+ * 하나도 없던 149곳 안에서 나온 것이라, 실제로 부딪힐 일도 없다.
+ *
+ * 이 한 줄로 그 곳들이 **사진 게이트를 통과해 화면에 다시 나타난다** —
+ * 국립중앙박물관·남산·청계천·통인시장처럼 손님이 당연히 찾을 곳들이다.
+ *
+ * 나머지 사진은 galleryOf(lib/tourGallery.ts)가 뒤에 붙여 넘겨 볼 수 있게 한다.
+ * 출처는 관광공사 그대로라 photoCredit을 따로 안 바꾼다(기본값이 한국관광공사다).
+ */
+function withGalleryPhoto(p: Place): Place {
+  if (p.image ?? p.thumb) return p;
+  const shots = galleryShotsFor(p.name, p.gu);
+  if (!shots.length) return p;
+  return { ...p, image: shots[0].url, thumb: shots[0].url };
+}
+
 // 🚨 사진 게이트 (사용자 결정 2026-09-01: "사진 없는장소 일단 가리기 앱에 안보이게",
 // "이미지 채운 것은 보임으로").
 //
@@ -517,6 +540,7 @@ export const ALL_PLACES: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .filter((p) => isInLaunchScope(sidoOf(p.gu)))
   .map(withFetchedCoords)
   .map(withManualPhoto)
+  .map(withGalleryPhoto)
   .filter(hasPhoto);
 
 /** 사진이 없어 지금 가려져 있는 곳. 하루 3곳 채우기 작업의 대상 목록이다. */
@@ -527,6 +551,7 @@ export const HIDDEN_NO_PHOTO: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .filter((p) => !p.hidden)
   .filter((p) => isInLaunchScope(sidoOf(p.gu)))
   .map(withManualPhoto)
+  .map(withGalleryPhoto)
   .filter((p) => !hasPhoto(p));
 
 /**
@@ -594,7 +619,8 @@ export const ALL_FESTIVALS: Place[] = (() => {
   //    가려진 목록은 `npm run festival-todo`로 본다.
   .filter((p) => p.startMonth == null || p.monthSource)
   .map(withFetchedCoords)
-  .map(withManualPhoto);
+  .map(withManualPhoto)
+  .map(withGalleryPhoto);
 
 export const CATEGORY_META: Record<
   Category,
