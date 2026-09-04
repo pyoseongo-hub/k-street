@@ -18,6 +18,7 @@
 // src/data/tour-places-raw.json에 저장된다(공공누리 1유형, 비밀값 아님).
 
 import { writeFileSync, readFileSync } from "node:fs";
+import { httpsPhoto } from "./lib/https-photo.mjs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -146,8 +147,10 @@ function toPlace(it) {
     gu: extractGu(it.addr1),
     addr: it.addr1,
     contentId: it.contentid,
-    image: it.firstimage || undefined,
-    thumb: it.firstimage2 || it.firstimage || undefined,
+    // 📷 https로 올려 받는다 — 관광공사는 http로 주는데 앱은 https라 브라우저가
+    //    막는다(scripts/lib/https-photo.mjs 주석 참고).
+    image: httpsPhoto(it.firstimage) || undefined,
+    thumb: httpsPhoto(it.firstimage2 || it.firstimage) || undefined,
     lng: it.mapx && it.mapx !== "0" ? Number(it.mapx) : undefined,
     lat: it.mapy && it.mapy !== "0" ? Number(it.mapy) : undefined,
   };

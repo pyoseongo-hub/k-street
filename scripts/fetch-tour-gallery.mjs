@@ -21,6 +21,7 @@
 //    .github/workflows/fetch-tour-gallery.yml 로 GitHub Actions에서 돌린다.
 
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { httpsPhoto } from "./lib/https-photo.mjs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -169,8 +170,9 @@ for (const t of todo) {
     const photos = items
       .map((it) => ({
         // originimgurl이 원본(큰 것), smallimageurl이 썸네일이다.
-        url: it.originimgurl || it.smallimageurl,
-        thumb: it.smallimageurl || it.originimgurl,
+        // 📷 https로 올려 받는다(scripts/lib/https-photo.mjs 주석 참고).
+        url: httpsPhoto(it.originimgurl || it.smallimageurl),
+        thumb: httpsPhoto(it.smallimageurl || it.originimgurl),
         name: it.imgname || undefined,
       }))
       .filter((p) => p.url);

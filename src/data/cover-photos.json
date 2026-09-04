@@ -23,28 +23,28 @@
     "계절에 어울리는 사진을 찾으면 그때 하나씩 되돌린다 — 아래 why에 후보 번호를 남겼다."
   ],
   "winter": {
-    "url": "http://tong.visitkorea.or.kr/cms/resource/06/3581706_image2_1.jpg",
+    "url": "https://tong.visitkorea.or.kr/cms/resource/06/3581706_image2_1.jpg",
     "place": "서울라이트 광화문",
     "gu": "종로구",
     "credit": "한국관광공사",
     "why": "사용자가 ?pick=cover 에서 #124로 고름 (2026-09-02)"
   },
   "spring": {
-    "url": "http://tong.visitkorea.or.kr/cms/resource/06/3581706_image2_1.jpg",
+    "url": "https://tong.visitkorea.or.kr/cms/resource/06/3581706_image2_1.jpg",
     "place": "서울라이트 광화문",
     "gu": "종로구",
     "credit": "한국관광공사",
     "why": "⏳ 임시 — 사용자가 고른 야경(#124). 봄 후보: 안양천제방벚꽃길 #1402~#1406(이름으로만 고른 것이라 눈으로 보고 정할 것)"
   },
   "summer": {
-    "url": "http://tong.visitkorea.or.kr/cms/resource/06/3581706_image2_1.jpg",
+    "url": "https://tong.visitkorea.or.kr/cms/resource/06/3581706_image2_1.jpg",
     "place": "서울라이트 광화문",
     "gu": "종로구",
     "credit": "한국관광공사",
     "why": "⏳ 임시 — 사용자가 고른 야경(#124). 여름 후보: 우이동계곡, 한강 종이비행기 축제 #1545~#1554"
   },
   "autumn": {
-    "url": "http://tong.visitkorea.or.kr/cms/resource/06/3581706_image2_1.jpg",
+    "url": "https://tong.visitkorea.or.kr/cms/resource/06/3581706_image2_1.jpg",
     "place": "서울라이트 광화문",
     "gu": "종로구",
     "credit": "한국관광공사",

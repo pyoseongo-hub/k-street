@@ -29,6 +29,7 @@
 // 이름이 확실히 일치하는 것만 저장한다 — 애매하면 건너뛴다(정확도 원칙: 틀린 사진 < 빈 칸).
 
 import { readFileSync, writeFileSync } from "node:fs";
+import { httpsPhoto } from "./lib/https-photo.mjs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -188,8 +189,9 @@ async function main() {
     result[p.id] = {
       name: p.name,
       matchedTitle: hit.title,
-      image: hit.firstimage,
-      thumb: hit.firstimage2 || hit.firstimage,
+      // 📷 https로 올려 받는다(scripts/lib/https-photo.mjs 주석 참고).
+      image: httpsPhoto(hit.firstimage),
+      thumb: httpsPhoto(hit.firstimage2 || hit.firstimage),
       contentId: hit.contentid,
       // mapx/mapy: TourAPI가 주는 실제 좌표(경도/위도) — 지도에 핀을 찍을 때 이걸 쓴다.
       // 값이 "0"이거나 빈 문자열이면 좌표를 안 가진 항목이라 undefined로 남긴다(지어내지 않음).

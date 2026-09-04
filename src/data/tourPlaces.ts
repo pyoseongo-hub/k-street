@@ -18,6 +18,8 @@ import type { Category, Place } from "./seed";
 import raw from "./tour-places-raw.json";
 import festivalDates from "./festival-dates.json";
 import aliases from "./name-aliases.json";
+// 🚫 관광공사가 준 좌표 중 **가리키는 곳 자체가 엉뚱한** 것. 이유는 그 파일에 적혀 있다.
+import badCoords from "./bad-coords.json";
 // 블로그·SNS를 공식 창구에서 걸러내는 잣대. 화면 쪽(mapLinks.ts)과 **같은 함수**를 쓴다.
 import { isOfficialSite } from "../lib/officialSite";
 
@@ -70,6 +72,11 @@ interface FestivalDate {
 }
 const DATES = festivalDates as Record<string, FestivalDate>;
 
+// 🚫 좌표를 안 쓰기로 한 곳. `_읽어보세요`는 설명이라 열쇠에서 뺀다.
+const BAD_COORDS: Record<string, { name: string; why: string }> = Object.fromEntries(
+  Object.entries(badCoords as Record<string, unknown>).filter(([k]) => !k.startsWith("_"))
+) as Record<string, { name: string; why: string }>;
+
 /** contentId로 축제 공식 홈페이지를 찾는다. 없거나 블로그·SNS면 undefined. */
 export function tourHomepage(contentId?: string): string | undefined {
   const h = contentId ? DATES[contentId]?.homepage : undefined;
@@ -92,6 +99,7 @@ function periodOf(yyyymmdd: string): Place["period"] {
 function toPlace(category: Category, p: RawPlace): Place {
   const date = category === "festival" ? DATES[p.contentId] : undefined;
   const homepage = date?.homepage;
+  const distrusted = idOf(p) in BAD_COORDS;
   return {
     id: idOf(p),
     gu: p.gu ?? "",
@@ -103,8 +111,10 @@ function toPlace(category: Category, p: RawPlace): Place {
     ...(isOfficialSite(homepage) ? { officialUrl: homepage } : null),
     image: p.image,
     thumb: p.thumb ?? p.image,
-    lat: p.lat,
-    lng: p.lng,
+    // 🚫 가리키는 곳이 엉뚱한 좌표는 아예 안 쓴다 — 틀린 좌표 < 빈 칸.
+    //    좌표가 없으면 길찾기가 이름 검색으로 넘어가고, 없는 대로 티가 난다.
+    //    틀린 좌표는 티가 안 난다 — 손님이 도착한 뒤에야 안다.
+    ...(distrusted ? { lat: undefined, lng: undefined } : { lat: p.lat, lng: p.lng }),
     ...(date?.startMonth != null
       ? {
           startMonth: date.startMonth,

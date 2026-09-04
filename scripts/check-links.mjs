@@ -50,6 +50,27 @@ async function probe(url) {
   }
 }
 
+/**
+ * 한 번 실패했다고 죽은 주소로 단정하지 않는다 — **세 번 본다.**
+ *
+ * 사장님 지시(2026-09-04): "두번세번 검수해서 결과만 보고해".
+ * 실제로 첫 검사에서 안 열린 10곳 중에는 그때 잠깐 끊긴 것(TIMEOUT·ECONNRESET),
+ * 로봇을 막는 것(403), 진짜로 없어진 도메인(ENOTFOUND)이 섞여 있었다.
+ * 셋을 갈라야 **살아 있는 주소를 실수로 빼는 일**이 없다.
+ *
+ * 세 번 다 같은 이유로 실패해야 "죽었다"고 적는다.
+ */
+async function probe3(url) {
+  const tries = [];
+  for (let i = 0; i < 3; i++) {
+    const r = await probe(url);
+    tries.push(r);
+    if (r.ok) return { ...r, tries: i + 1 };
+    if (i < 2) await new Promise((s) => setTimeout(s, 2500 * (i + 1)));
+  }
+  return { ...tries[2], tries: 3, all: tries.map((t) => t.status || t.why) };
+}
+
 async function runAll(items, fn) {
   const out = new Array(items.length);
   let i = 0;
@@ -82,10 +103,16 @@ if (!ONLY || ONLY === "photos") {
   }
   const list = [...urls];
   const http = list.filter((u) => u.startsWith("http://"));
-  section(`① 카드 사진 ${list.length}개 (http:// ${http.length}개)`);
-  console.log("http:// 주소를 https:// 로 바꿔서 열리는지 본다 — 열리면 자료만 바꾸면 된다.\n");
+  section(`① 카드 사진 ${list.length}개`);
+  if (http.length) {
+    console.log(`   🚨 아직 http:// 인 사진이 ${http.length}개 있다 — https 앱에서는 안 보인다.`);
+    console.log("      (scripts/lib/https-photo.mjs · 감사 ❌B11 참고)\n");
+  } else {
+    console.log("   전부 https:// 다. 실제로 열리는지 한 장씩 확인한다.\n");
+  }
 
-  const res = await runAll(http, async (u) => ({ u, r: await probe(u.replace(/^http:/, "https:")) }));
+  // http로 남아 있는 것은 https로 바꿔서, 이미 https인 것은 그대로 열어 본다.
+  const res = await runAll(list, async (u) => ({ u, r: await probe3(u.replace(/^http:/, "https:")) }));
   const bad = res.filter((x) => !x.r.ok);
   const notImage = res.filter((x) => x.r.ok && x.r.type && !x.r.type.startsWith("image/"));
   console.log(`   ✅ https로 열림 : ${res.length - bad.length}개`);
@@ -103,7 +130,7 @@ if (!ONLY || ONLY === "official") {
   const list = [...seen.entries()];
   section(`② 이름을 눌렀을 때 가는 공식 홈페이지 ${list.length}개`);
 
-  const res = await runAll(list, async ([u, p]) => ({ u, p, r: await probe(u) }));
+  const res = await runAll(list, async ([u, p]) => ({ u, p, r: await probe3(u) }));
   const bad = res.filter((x) => !x.r.ok);
   console.log(`   ✅ 열림: ${res.length - bad.length}개   ❌ 안 열림: ${bad.length}개\n`);
   for (const x of res) {
@@ -111,7 +138,10 @@ if (!ONLY || ONLY === "official") {
     const moved = x.r.ok && x.r.finalUrl && x.r.finalUrl.replace(/\/$/, "") !== x.u.replace(/\/$/, "");
     console.log(
       `   ${mark} ${String(x.r.status || x.r.why).padEnd(14)} ${x.p.name}  ${x.u}` +
-        (moved ? `\n        ↳ 실제로는 ${x.r.finalUrl} 로 넘어간다` : "")
+        (moved ? `\n        ↳ 실제로는 ${x.r.finalUrl} 로 넘어간다` : "") +
+        // 세 번 다 실패했으면 그 세 번의 결과를 같이 적는다 — 매번 다른 이유로
+        // 실패했다면 그때그때 끊긴 것이고, 세 번 다 같은 이유면 진짜 죽은 것이다.
+        (x.r.all ? `\n        ↳ 세 번 다 실패: ${x.r.all.join(" / ")}` : "")
     );
   }
   if (bad.length) problems++;

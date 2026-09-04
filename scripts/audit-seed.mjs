@@ -86,6 +86,54 @@ const add = (bucket, code, title, items) => {
   ]);
 }
 
+// ❌ B11 — 사진 주소가 http:// 인 것
+//
+// 앱은 https:// 로 서비스되는데(GitHub Pages) 관광공사 API는 사진 주소를 http:// 로 준다.
+// https 페이지 안의 http 사진은 브라우저가 **혼합 콘텐츠**로 보고 막거나 https로
+// 조용히 승격한다 — 실패하면 오류 없이 **사진 자리만 빈 채로** 남는다.
+// 개발할 때는 http://localhost 라 멀쩡히 보여서, 2026-09-04 출시 전 검수 전까지
+// 사진 540개가 전부 http인 줄 아무도 몰랐다.
+//
+// 받아 적을 때 scripts/lib/https-photo.mjs가 올려 주지만, 새 스크립트가 그걸
+// 안 거치면 다시 들어온다. 그때도 아무도 모른다 — 그래서 여기서 막는다.
+{
+  const httpPhotos = [];
+  const seen = new Set();
+  const look = (file, obj, path = "") => {
+    if (typeof obj === "string") {
+      if (obj.startsWith("http://") && /\.(jpe?g|png|gif|webp)(\?|$)/i.test(obj)) {
+        const k = `${file} ${obj}`;
+        if (!seen.has(k)) {
+          seen.add(k);
+          httpPhotos.push(`${file}${path} — ${obj}`);
+        }
+      }
+      return;
+    }
+    if (obj && typeof obj === "object")
+      for (const [k, v] of Object.entries(obj)) look(file, v, `${path}.${k}`);
+  };
+  for (const f of [
+    "tour-places-raw.json",
+    "tour-gallery.json",
+    "tour-images.json",
+    "festival-dates.json",
+    "manual-photos.json",
+    "cover-photos.json",
+  ]) {
+    look(f, dataFile(f));
+  }
+  // 수백 개가 한꺼번에 터지면 로그가 안 읽히므로 앞의 몇 개만 보여 준다.
+  add(
+    blocking,
+    "B11",
+    "사진 주소가 http:// — https로 서비스되는 앱에서는 사진이 안 보인다",
+    httpPhotos.length > 8
+      ? [...httpPhotos.slice(0, 8), `…그 밖에 ${httpPhotos.length - 8}개 더`]
+      : httpPhotos
+  );
+}
+
 // ❌ B2 — 알 수 없는 카테고리
 add(
   blocking,

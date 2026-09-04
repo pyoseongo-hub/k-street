@@ -16,6 +16,7 @@
 // 결과는 src/data/festival-dates.json 에 저장된다(공공누리 1유형, 비밀값 아님).
 
 import { readFileSync, writeFileSync } from "node:fs";
+import { httpsPhoto } from "./lib/https-photo.mjs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -175,7 +176,8 @@ for (const it of raw) {
       end: String(it.eventenddate ?? ""),
       startMonth: monthOf(it.eventstartdate),
       endMonth: monthOf(it.eventenddate),
-      image: it.firstimage || null,
+      // 📷 https로 올려 받는다(scripts/lib/https-photo.mjs 주석 참고).
+      image: httpsPhoto(it.firstimage) || null,
       lat: it.mapy ? Number(it.mapy) : null,
       lng: it.mapx ? Number(it.mapx) : null,
     });
