@@ -356,6 +356,23 @@ function MyLocationChip({
   if (state.kind === "outside") {
     return <span className="myloc myloc-note">{t.myLocationOutside}</span>;
   }
+  // 🚨 **위치를 못 받은 것과 지도 조회가 실패한 것을 가른다** (2026-09-04에 당했다).
+  //
+  // myDistrict.ts는 결과를 네 가지로 나눠 두고 주석에 "뭉뚱그리면 안 된다"고까지
+  // 적어 뒀는데, 정작 여기서 noPosition과 failed를 **같은 문구로 합쳐** 놨었다.
+  // 그래서 「위치를 못 찾았어요」가 떴을 때 **폰 권한 문제인지 지도 열쇠 문제인지
+  // 아무도 몰랐다** — 도메인을 바꾼 날 그걸 확인하려다 막혔다.
+  //
+  // 둘은 고칠 사람이 다르다:
+  //   noPosition → 손님이 브라우저에서 위치 권한을 켜면 된다
+  //   failed     → 우리가 네이버 지도 열쇠·도메인 설정을 봐야 한다
+  if (state.kind === "noPosition") {
+    return (
+      <button type="button" className="myloc myloc-btn myloc-failed" onClick={onFind}>
+        {t.myLocationNoPermission}
+      </button>
+    );
+  }
   // 못 찾았을 때는 **다시 누를 수 있게** 버튼으로 남긴다 — 잠깐 안 됐을 수 있다.
   return (
     <button type="button" className="myloc myloc-btn myloc-failed" onClick={onFind}>
