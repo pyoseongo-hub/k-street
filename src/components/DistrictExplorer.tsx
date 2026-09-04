@@ -9,6 +9,7 @@ import SaveButton from "./SaveButton";
 import { openPlaceInfo } from "../lib/mapLinks";
 import { getTourImage } from "../lib/tourImages";
 import { getMyDistrict, type MyDistrict } from "../lib/myDistrict";
+import { isNaverAuthFailed } from "../lib/naverMaps";
 import { placeName, translateText } from "../lib/placeText";
 
 // 화면 위 갈래 칩. 칩 하나가 반드시 칸 하나는 아니다 — 아래 walk처럼 **여러 칸을
