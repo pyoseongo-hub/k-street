@@ -19,10 +19,15 @@
 // 저장한다(titleMentions). 한글은 자모 분해형(NFD)으로 오는 일이 있어
 // **비교 전에 NFC로 맞춘다** — 보이는 게 같다고 같은 문자열이 아니다.
 //
-// ── 🔀 왜 id가 아니라 '이름'을 열쇠로 쓰나 ──────────────────────────────
+// ── 🔀 왜 id가 아니라 '구|이름'을 열쇠로 쓰나 ──────────────────────────
 // seed의 id는 파일에 나오는 **순서대로** 매겨진다(ks_1, ks_2…). 항목 하나를 지우면
 // 그 뒤가 전부 한 칸씩 당겨져서, 지운 곳의 사진이 **남의 곳에 그대로 붙는다.**
-// 그래서 곁다리 자료는 이름(NFC)을 열쇠로 둔다.
+// 그래서 곁다리 자료는 id를 안 쓴다.
+//
+// 그런데 **이름만으로도 모자랐다** — 이름은 같은데 구가 다른 곳이 7개 있다
+// (남산·남산둘레길·서울둘레길 7·8·9·13·14코스). 실제로 「남산(중구)」이
+// 「남산(용산구)」을 덮어써서 용산구 남산이 조용히 사진을 잃었다.
+// 그래서 **구까지 붙여** 열쇠로 쓴다.
 //
 // ── 돌리는 법 ───────────────────────────────────────────────────────────
 //   npx vite build --ssr scripts/dump-links.ts --outDir .linkdump --logLevel error
@@ -78,17 +83,23 @@ const hasPhoto = (p) =>
   Boolean(p.image || p.thumb || tourImages[p.id]?.image || tourImages[p.id]?.thumb);
 
 // 축제(사진 게이트가 없어 화면에 뜬다) + 가려 둔 곳(사진이 없어 안 보인다).
-// 이름이 겹치는 것은 하나로 친다 — 어차피 이름을 열쇠로 저장한다.
-const byName = new Map();
+//
+// 🔑 **열쇠는 "구|이름"이다. 이름만으로는 안 된다** (2026-09-04에 당했다).
+//    이름은 같은데 구가 다른 곳이 7개 있다 — 남산(용산구·중구), 남산둘레길,
+//    서울둘레길 7·8·9·13·14코스가 구를 걸쳐 있다.
+//    이름만 열쇠로 쓰던 판에서는 뒤에 온 「남산(중구)」이 앞의 「남산(용산구)」을
+//    덮어썼고, 화면은 구까지 맞아야 사진을 주므로 **용산구 남산이 조용히 사진을
+//    잃었다.** 아무 오류도 안 나고 사진 자리만 사라지는 사고다.
+const byKey = new Map();
 for (const p of [...dump.festivals, ...dump.hidden, ...dump.rows]) {
   if (hasPhoto(p)) continue;
-  const key = nfc(p.name);
-  if (!byName.has(key)) byName.set(key, p);
+  const key = `${nfc(p.gu)}|${nfc(p.name)}`;
+  if (!byKey.has(key)) byKey.set(key, p);
 }
-const targets = [...byName.values()].slice(0, LIMIT);
+const targets = [...byKey.values()].slice(0, LIMIT);
 
-console.log(`사진이 없는 곳 **${byName.size}곳**을 갤러리에서 찾아본다.`);
-if (targets.length !== byName.size) console.log(`(이번 실행은 앞 ${targets.length}곳만)`);
+console.log(`사진이 없는 곳 **${byKey.size}곳**을 갤러리에서 찾아본다.`);
+if (targets.length !== byKey.size) console.log(`(이번 실행은 앞 ${targets.length}곳만)`);
 console.log(APPLY ? "저장: 켬\n" : "저장: 끔 (맛보기)\n");
 
 // ── ② 창구 부르기 ────────────────────────────────────────────────────────
@@ -265,9 +276,9 @@ for (const p of targets) {
     //    사람이 전부 눈으로 훑을 수 있어야 한다.
     for (const m of matched) console.log(`      · ${m.galTitle}`);
     // 🚨 **이름을 열쇠로** 저장한다(위 주석의 id 재사용 사고 참고).
-    //    matchedTitle을 같이 적어 둬야 나중에 "이 사진이 왜 이 곳에 붙었나"를
-    //    감사에서 되짚을 수 있다.
-    out[nfc(p.name)] = {
+    //    제목을 같이 적어 둬야 나중에 "이 사진이 왜 이 곳에 붙었나"를
+    //    되짚을 수 있다.
+    out[`${nfc(p.gu)}|${nfc(p.name)}`] = {
       name: p.name,
       gu: p.gu,
       photos: matched.map((m) => ({
