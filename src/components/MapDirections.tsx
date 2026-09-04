@@ -1,4 +1,5 @@
 import { useState } from "react";
+import DriverCard from "./DriverCard";
 import { getMapLinks, openMapLink, type MapLinkTarget } from "../lib/mapLinks";
 import { getPositionOrNull } from "../lib/userPosition";
 import { useLanguage } from "../lib/useLanguage";
@@ -25,6 +26,11 @@ import { useLanguage } from "../lib/useLanguage";
 export default function MapDirections({ place }: { place: MapLinkTarget }) {
   const { t } = useLanguage();
   const [locating, setLocating] = useState<"KAKAO" | "NAVER" | null>(null);
+  // 🇰🇷 기사에게 보여 주는 화면(DriverCard.tsx). 왜 만들었는지는 그쪽 주석에 있다 —
+  // 요약하면 **카카오맵에도 우버에도 택시 호출로 가는 길이 없었다**(사장님 폰에서
+  // 직접 확인). 남의 앱 연동을 기다리는 대신 원래 문제(기사와 말이 안 통함)를
+  // 우리 화면에서 푼다.
+  const [driver, setDriver] = useState(false);
 
   async function open(label: "KAKAO" | "NAVER") {
     setLocating(label);
@@ -59,6 +65,14 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
           {locating === "NAVER" ? t.mapLocating : t.naverMapLabel}
         </button>
       </div>
+      {/* 🚕 지도 두 개와 **한 줄 아래**에 따로 둔다. 지도 버튼과 성격이 다르기
+          때문이다 — 저 둘은 "앱을 연다"이고 이건 "이 자리에서 보여 준다"이다.
+          같은 줄에 셋을 욱여넣으면 글자가 줄어 셋 다 안 읽힌다(칸 차지 지적을
+          받은 적이 있어 줄 높이는 최소로 잡았다). */}
+      <button type="button" className="map-btn map-btn--driver" onClick={() => setDriver(true)}>
+        {t.showToDriver}
+      </button>
+      {driver && <DriverCard place={place} onClose={() => setDriver(false)} />}
       {/* 📏 "지도 앱이 바로 안 열리면…" 안내는 **여기서 뺐다**(2026-09-02 사용자
           지적: "칸차지가 심해"). 카드마다 두 줄씩 반복되어 목록 절반을 먹고
           있었다. 안내 자체는 여전히 필요하므로(앱 스킴이 안 먹는 폰이 있다 —

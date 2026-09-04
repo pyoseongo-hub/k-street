@@ -99,6 +99,23 @@ export interface Translations {
    * 끝난다 — 이 줄의 목적은 변명이 아니라 **다음 행동을 알려 주는 것**이다.
    */
   festivalNoPhoto: string;
+  /**
+   * 🚕 **택시 기사에게 보여 주는 화면**(2026-09-04 사용자 지시: "기사보여주기도 진행").
+   *
+   * 왜 만들었나 — 카카오맵·우버 어느 쪽도 택시 호출로 이어지지 않는 것을
+   * 사장님 폰에서 직접 확인했다(카카오맵 자동차 경로에는 택시 탭이 아예 없고,
+   * 우버 앱은 열리기는 하지만 픽업·도착이 비어 있었다). 남의 앱 연동을
+   * 기다리는 대신, **손님이 실제로 겪는 문제**를 우리 화면 안에서 푼다 —
+   * 기사와 말이 안 통해 목적지를 못 대는 것.
+   *
+   * 그래서 이 화면은 **한국어 상호와 주소만** 크게 띄운다. 번역되는 것은
+   * 버튼 이름과 안내 한 줄뿐이고, 기사가 읽는 부분은 언제나 한국어다.
+   */
+  showToDriver: string;
+  /** 손님에게 — "이 화면을 기사에게 보여 주세요". 손님 언어로 나온다. */
+  driverCardHint: string;
+  /** 기사 화면을 닫는 버튼. 손님 언어로 나온다. */
+  driverCardClose: string;
   /** 내 위치의 구를 찾는 버튼 */
   myLocationFind: string;
   /** 구를 찾았을 때 — "지금 용산구에 계세요" */
@@ -196,6 +213,9 @@ const translations: Record<Language, Translations> = {
     festivalBloomVaries: '꽃이 피는 때에 따라 날짜가 바뀝니다 — 이름을 눌러 올해 일정을 확인하세요.',
     festivalCheckDates: '날짜 확인',
     festivalNoPhoto: '사진은 사용 권한이 없어 싣지 못했습니다. 이름을 누르면 공식 안내로 갑니다.',
+    showToDriver: '🇰🇷 기사에게 보여 주기',
+    driverCardHint: '이 화면을 택시 기사에게 보여 주세요.',
+    driverCardClose: '닫기',
     myLocationFind: '📍 내 위치',
     myLocationHere: (gu) => `지금 ${gu}에 계세요`,
     myLocationOutside: '서울 밖에 계세요',
@@ -276,6 +296,9 @@ const translations: Record<Language, Translations> = {
     festivalBloomVaries: 'Dates shift with the bloom each year — tap the name for this year\'s schedule.',
     festivalCheckDates: 'Check dates',
     festivalNoPhoto: 'No photo — we don’t have the image rights. Tap the name for the official page.',
+    showToDriver: '🇰🇷 Show to driver',
+    driverCardHint: 'Show this screen to your taxi driver — it is written in Korean.',
+    driverCardClose: 'Close',
     myLocationFind: '📍 My location',
     myLocationHere: (gu) => `You're in ${gu}`,
     myLocationOutside: "You're outside Seoul",
@@ -356,6 +379,9 @@ const translations: Record<Language, Translations> = {
     festivalBloomVaries: '開花時期によって日程が変わります。名前をタップして今年の日程をご確認ください。',
     festivalCheckDates: '日程を確認',
     festivalNoPhoto: '写真は使用許諾がないため掲載していません。名前をタップすると公式案内に移動します。',
+    showToDriver: '🇰🇷 運転手に見せる',
+    driverCardHint: 'この画面をタクシーの運転手に見せてください。韓国語で書かれています。',
+    driverCardClose: '閉じる',
     myLocationFind: '📍 現在地',
     myLocationHere: (gu) => `いま ${gu} にいます`,
     myLocationOutside: 'ソウルの外にいます',
@@ -436,6 +462,9 @@ const translations: Record<Language, Translations> = {
     festivalBloomVaries: '日期随开花时间每年变动 — 点击名称查看今年日程。',
     festivalCheckDates: '查看日期',
     festivalNoPhoto: '因图片使用权未获授权，暂不提供照片。点击名称可前往官方介绍页。',
+    showToDriver: '🇰🇷 给司机看',
+    driverCardHint: '请把这个画面给出租车司机看，上面是韩语。',
+    driverCardClose: '关闭',
     myLocationFind: '📍 我的位置',
     myLocationHere: (gu) => `您现在在${gu}`,
     myLocationOutside: '您在首尔以外',
@@ -516,6 +545,9 @@ const translations: Record<Language, Translations> = {
     festivalBloomVaries: '日期隨開花時間逐年變動 — 點擊名稱查看今年日程。',
     festivalCheckDates: '查看日期',
     festivalNoPhoto: '因圖片使用權未取得授權，暫不提供照片。點擊名稱可前往官方介紹頁。',
+    showToDriver: '🇰🇷 給司機看',
+    driverCardHint: '請把這個畫面給計程車司機看，上面是韓文。',
+    driverCardClose: '關閉',
     myLocationFind: '📍 我的位置',
     myLocationHere: (gu) => `您現在在${gu}`,
     myLocationOutside: '您在首爾以外',
@@ -596,6 +628,9 @@ const translations: Record<Language, Translations> = {
     festivalBloomVaries: 'Ngày tổ chức thay đổi theo mùa hoa nở — nhấn vào tên để xem lịch năm nay.',
     festivalCheckDates: 'Xem ngày',
     festivalNoPhoto: 'Không có ảnh vì chưa có bản quyền sử dụng. Nhấn vào tên để mở trang chính thức.',
+    showToDriver: '🇰🇷 Cho tài xế xem',
+    driverCardHint: 'Hãy đưa màn hình này cho tài xế taxi xem — nội dung bằng tiếng Hàn.',
+    driverCardClose: 'Đóng',
     myLocationFind: '📍 Vị trí của tôi',
     myLocationHere: (gu) => `Bạn đang ở ${gu}`,
     myLocationOutside: 'Bạn đang ở ngoài Seoul',
@@ -676,6 +711,9 @@ const translations: Record<Language, Translations> = {
     festivalBloomVaries: 'Las fechas cambian con la floración cada año: toca el nombre para ver el calendario de este año.',
     festivalCheckDates: 'Ver fechas',
     festivalNoPhoto: 'Sin foto: no tenemos los derechos de imagen. Toca el nombre para ver la página oficial.',
+    showToDriver: '🇰🇷 Mostrar al taxista',
+    driverCardHint: 'Muestra esta pantalla al taxista: está escrita en coreano.',
+    driverCardClose: 'Cerrar',
     myLocationFind: '📍 Mi ubicación',
     myLocationHere: (gu) => `Estás en ${gu}`,
     myLocationOutside: 'Estás fuera de Seúl',
@@ -756,6 +794,9 @@ const translations: Record<Language, Translations> = {
     festivalBloomVaries: 'Les dates changent avec la floraison chaque année — appuyez sur le nom pour le calendrier de cette année.',
     festivalCheckDates: 'Voir les dates',
     festivalNoPhoto: 'Pas de photo : nous n’avons pas les droits d’image. Appuyez sur le nom pour la page officielle.',
+    showToDriver: '🇰🇷 Montrer au chauffeur',
+    driverCardHint: 'Montrez cet écran au chauffeur de taxi : il est rédigé en coréen.',
+    driverCardClose: 'Fermer',
     myLocationFind: '📍 Ma position',
     myLocationHere: (gu) => `Vous êtes à ${gu}`,
     myLocationOutside: 'Vous êtes hors de Séoul',
@@ -836,6 +877,9 @@ const translations: Record<Language, Translations> = {
     festivalBloomVaries: 'Die Termine richten sich nach der Blüte und ändern sich jedes Jahr – tippen Sie auf den Namen für den diesjährigen Termin.',
     festivalCheckDates: 'Termine prüfen',
     festivalNoPhoto: 'Kein Foto – die Bildrechte liegen uns nicht vor. Tippen Sie auf den Namen für die offizielle Seite.',
+    showToDriver: '🇰🇷 Dem Fahrer zeigen',
+    driverCardHint: 'Zeigen Sie diesen Bildschirm dem Taxifahrer – er ist auf Koreanisch.',
+    driverCardClose: 'Schließen',
     myLocationFind: '📍 Mein Standort',
     myLocationHere: (gu) => `Sie sind in ${gu}`,
     myLocationOutside: 'Sie sind außerhalb von Seoul',
@@ -916,6 +960,9 @@ const translations: Record<Language, Translations> = {
     festivalBloomVaries: 'Даты меняются каждый год вместе с цветением — нажмите на название, чтобы узнать расписание этого года.',
     festivalCheckDates: 'Уточнить даты',
     festivalNoPhoto: 'Фото нет — у нас нет прав на изображение. Нажмите на название, чтобы открыть официальную страницу.',
+    showToDriver: '🇰🇷 Показать водителю',
+    driverCardHint: 'Покажите этот экран таксисту — текст написан по-корейски.',
+    driverCardClose: 'Закрыть',
     myLocationFind: '📍 Моё местоположение',
     myLocationHere: (gu) => `Вы в районе ${gu}`,
     myLocationOutside: 'Вы за пределами Сеула',
@@ -996,6 +1043,9 @@ const translations: Record<Language, Translations> = {
     festivalBloomVaries: 'Tanggalnya berubah mengikuti masa mekar tiap tahun — ketuk nama untuk melihat jadwal tahun ini.',
     festivalCheckDates: 'Cek tanggal',
     festivalNoPhoto: 'Tidak ada foto karena hak gambar belum diperoleh. Ketuk nama untuk membuka halaman resmi.',
+    showToDriver: '🇰🇷 Tunjukkan ke sopir',
+    driverCardHint: 'Tunjukkan layar ini kepada sopir taksi — tulisannya dalam bahasa Korea.',
+    driverCardClose: 'Tutup',
     myLocationFind: '📍 Lokasi saya',
     myLocationHere: (gu) => `Anda di ${gu}`,
     myLocationOutside: 'Anda di luar Seoul',
@@ -1076,6 +1126,9 @@ const translations: Record<Language, Translations> = {
     festivalBloomVaries: 'วันจัดงานเปลี่ยนไปตามช่วงดอกไม้บานในแต่ละปี — แตะที่ชื่อเพื่อดูกำหนดการปีนี้',
     festivalCheckDates: 'ดูวันที่',
     festivalNoPhoto: 'ไม่มีรูปภาพเนื่องจากยังไม่ได้รับสิทธิ์ใช้ภาพ แตะที่ชื่อเพื่อไปยังหน้าทางการ',
+    showToDriver: '🇰🇷 แสดงให้คนขับดู',
+    driverCardHint: 'แสดงหน้าจอนี้ให้คนขับแท็กซี่ดู ข้อความเป็นภาษาเกาหลี',
+    driverCardClose: 'ปิด',
     myLocationFind: '📍 ตำแหน่งของฉัน',
     myLocationHere: (gu) => `คุณอยู่ใน ${gu}`,
     myLocationOutside: 'คุณอยู่นอกกรุงโซล',

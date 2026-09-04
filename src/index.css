@@ -1425,6 +1425,107 @@ button {
   color: #03C75A;
 }
 
+/* 🇰🇷 기사에게 보여 주기 — 지도 두 개 아래에 혼자 한 줄.
+   지도 버튼과 색을 일부러 다르게 뒀다. 저 둘은 "앱을 연다"고, 이건 "이 자리에서
+   보여 준다"라 성격이 다르다. 택시색(노랑)은 카카오와 겹쳐 안 쓴다. */
+.map-btn--driver {
+  width: 100%;
+  background: var(--sunk, #eceae4);
+  color: var(--ink, #16150f);
+  border: 1px solid var(--line, #ddd9d0);
+}
+
+/* 🚕 **택시 기사에게 보여 주는 화면** (DriverCard.tsx).
+   왜 만들었는지는 그쪽 주석에 있다 — 카카오맵·우버 어느 쪽도 택시 호출로
+   이어지지 않는 것을 사장님 폰에서 확인했다.
+
+   🚨 **색을 토큰으로 쓰지 않고 여기서 직접 박는다.** 손님 폰이 다크 모드여도
+      이 화면만은 흰 바탕·검은 글씨여야 한다. 택시 안은 어둡고, 기사는 운전석에서
+      팔을 뻗어 흘끗 본다 — 어두운 화면은 그 거리에서 안 읽힌다. */
+.driver-card-back {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px;
+  background: #ffffff;
+  color: #111111;
+  overflow-y: auto;
+}
+
+.driver-card {
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
+  word-break: keep-all;
+}
+
+.dc-hello {
+  font-size: clamp(15px, 4.5vw, 20px);
+  font-weight: 600;
+  color: #555555;
+  margin-bottom: 14px;
+}
+
+/* 상호와 주소가 이 화면의 전부다. 글자 크기를 화면 폭에 맡겨(clamp) 긴 이름도
+   두어 줄 안에 들어오게 한다. */
+.dc-name {
+  /* 9.5vw — 11vw 로 잡았더니 「서울세계불꽃축제」가 화면 양끝에 딱 붙었다.
+     기사는 팔을 뻗어 보므로 여백이 있어야 덩어리가 눈에 들어온다. */
+  font-size: clamp(30px, 9.5vw, 58px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #000000;
+  /* 「서울세계불꽃축제」처럼 띄어쓰기가 없는 긴 상호는 줄바꿈 자리가 없어
+     화면 밖으로 나간다. 잘려서 안 보이느니 중간에서라도 접는다. */
+  overflow-wrap: anywhere;
+}
+
+.dc-addr {
+  margin-top: 16px;
+  font-size: clamp(19px, 5.6vw, 30px);
+  font-weight: 600;
+  line-height: 1.35;
+  color: #1a1a1a;
+}
+
+.dc-thanks {
+  margin-top: 20px;
+  font-size: clamp(16px, 4.6vw, 22px);
+  color: #555555;
+}
+
+/* 아래 둘만 손님 언어로 나온다. 기사가 읽는 부분과 눈에 띄게 갈라 둔다. */
+.dc-hint {
+  margin: 0;
+  max-width: 480px;
+  text-align: center;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #777777;
+}
+
+.dc-close {
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 160px;
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 12px;
+  border: 1px solid #d5d5d5;
+  background: #f3f3f3;
+  color: #111111;
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 /* 지도 InfoWindow 안(네이버 지도 위 팝업)은 카드보다 폭이 좁으니 줄인다. */
 .map-info-window .map-btn {
   height: 34px;

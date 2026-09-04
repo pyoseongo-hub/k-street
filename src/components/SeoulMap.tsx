@@ -3,6 +3,8 @@ import { loadNaverMaps, SEOUL_CENTER } from "../lib/naverMaps";
 import { ALL_PLACES, CATEGORY_META } from "../data/seed";
 import { getUserLocation, calculateDistance, type UserLocation } from "../lib/geolocation";
 import { renderMapLinksHtml } from "../lib/mapLinks";
+import DriverCard, { type DriverTarget } from "./DriverCard";
+import { useLanguage } from "../lib/useLanguage";
 
 export default function SeoulMap() {
   const ref = useRef<HTMLDivElement>(null);
@@ -11,6 +13,36 @@ export default function SeoulMap() {
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
+  const [driver, setDriver] = useState<DriverTarget | null>(null);
+  const { t } = useLanguage();
+
+  // 🇰🇷 팝업(InfoWindow) 안의 「기사에게 보여 주기」 버튼이 부를 손잡이.
+  //
+  // 팝업은 React 가 아니라 **문자열로 그린 HTML**이라 onClick 을 못 붙인다
+  // (mapLinks.ts의 driverBtn 주석 참고). 그래서 버튼은 값을 data- 속성에 담고
+  // 이 손잡이에 자기 자신을 넘긴다. 여기서 받아 React 상태로 옮긴다.
+  //
+  // 목록 카드 쪽(MapDirections.tsx)과 **같은 DriverCard 를 쓴다** — 화면이 둘로
+  // 갈라지면 한쪽만 고쳐지는 '반쪽 적용'이 생긴다.
+  useEffect(() => {
+    const w = window as unknown as Record<string, unknown>;
+    w.__ksDriverCard = (el: HTMLElement) =>
+      setDriver({
+        name: el.dataset.dcName ?? "",
+        gu: el.dataset.dcGu ?? "",
+        dong: el.dataset.dcDong || undefined,
+        addr: el.dataset.dcAddr || undefined,
+      });
+    return () => {
+      delete w.__ksDriverCard;
+    };
+  }, []);
+
+  // 지도는 한 번만 그리는데(아래 effect 의 deps 가 []) 버튼 이름은 손님이 언어를
+  // 바꾸면 달라진다. 그래서 문구는 상자(ref)에 담아 두고 팝업을 **여는 순간**에
+  // 꺼내 쓴다 — 그렇지 않으면 처음 켰을 때의 언어가 그대로 굳는다.
+  const labelsRef = useRef(t);
+  labelsRef.current = t;
 
   useEffect(() => {
     let cancelled = false;
@@ -43,8 +75,14 @@ export default function SeoulMap() {
           // 마커 클릭시 정보 윈도우 표시 — 우리는 자체 길찾기가 없으니
           // 네이버·카카오·구글로 바로 넘기는 링크를 함께 보여준다.
           window.naver!.maps.Event.addListener(marker, "click", () => {
+            const tt = labelsRef.current;
+            const links = renderMapLinksHtml(place, {
+              kakao: tt.kakaoMapLabel,
+              naver: tt.naverMapLabel,
+              driver: tt.showToDriver,
+            });
             const infoWindow = new window.naver!.maps.InfoWindow({
-              content: `<div class="map-info-window"><strong>${place.name}</strong><br/><small>${place.gu}${place.dong ? ` ${place.dong}` : ""}</small><br/><em>${CATEGORY_META[place.category].label}</em>${renderMapLinksHtml(place)}</div>`,
+              content: `<div class="map-info-window"><strong>${place.name}</strong><br/><small>${place.gu}${place.dong ? ` ${place.dong}` : ""}</small><br/><em>${CATEGORY_META[place.category].label}</em>${links}</div>`,
               position: marker.getPosition(),
             });
             infoWindow.open(map);
@@ -140,6 +178,7 @@ export default function SeoulMap() {
           {locationError && <div className="map-location-error">📍 {locationError}</div>}
         </>
       )}
+      {driver && <DriverCard place={driver} onClose={() => setDriver(null)} />}
     </div>
   );
 }

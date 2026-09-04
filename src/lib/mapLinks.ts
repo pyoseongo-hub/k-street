@@ -15,6 +15,13 @@ export interface MapLinkTarget {
   lng?: number;
   /** 공식 안내 주소가 있으면 이름을 눌렀을 때 검색 대신 여기로 간다(seed.ts 참고). */
   officialUrl?: string;
+  /**
+   * 도로명 주소. **택시 기사에게 보여 주는 화면**(DriverCard.tsx)이 이걸 읽는다.
+   * 길찾기 링크는 좌표로 찍으므로 주소를 안 쓰지만, 사람에게 말로 대는 목적지는
+   * 좌표가 아니라 주소다. 365곳 중 319곳(87%)만 값이 있고, 없는 곳은
+   * 지어내지 않고 구·동까지만 적는다.
+   */
+  addr?: string;
 }
 
 export interface MapLink {
@@ -40,13 +47,47 @@ function naverBtn(url: string, label: string): string {
   return `<a class="map-btn map-btn--naver" href="${url}" target="_blank" rel="noopener noreferrer"><span class="map-btn-badge map-btn-badge--naver">N</span>${label}</a>`;
 }
 
+/** HTML 속성 안에 넣을 값. 상호에 따옴표가 섞여도 마크업이 안 깨지게 막는다. */
+function attr(v: string | undefined): string {
+  return (v ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+}
+
+/**
+ * 🇰🇷 기사에게 보여 주기 — 지도 팝업(InfoWindow) 안에서도 같은 버튼을 준다.
+ *
+ * ⚠️ 여기는 React 가 아니라 **문자열**이라 onClick 을 못 붙인다. 그래서 값을
+ *    data- 속성에 담아 두고, 지도 화면(SeoulMap.tsx)이 등록해 둔 손잡이
+ *    `window.__ksDriverCard` 에 그 버튼을 그대로 넘긴다.
+ *    손잡이가 없으면(등록 전) 아무 일도 안 일어난다 — 오류를 내는 것보다 낫다.
+ *
+ * 🚨 **버튼을 한쪽에만 달지 않는다.** 목록 카드(MapDirections.tsx)에만 달아 두면
+ *    지도에서 마커를 눌러 들어온 손님은 이 기능을 영영 못 본다 — 이 저장소가
+ *    여러 번 당한 '반쪽 적용'이다.
+ */
+function driverBtn(place: MapLinkTarget, label: string): string {
+  return (
+    `<button type="button" class="map-btn map-btn--driver"` +
+    ` data-dc-name="${attr(place.name)}" data-dc-gu="${attr(place.gu)}"` +
+    ` data-dc-dong="${attr(place.dong)}" data-dc-addr="${attr(place.addr)}"` +
+    ` onclick="window.__ksDriverCard&&window.__ksDriverCard(this)">${label}</button>`
+  );
+}
+
 /** 버튼 이름은 밖에서 받는다 — 이 파일은 raw HTML 문자열이라 훅(useLanguage)을 못 쓴다. */
 export function renderMapLinksHtml(
   place: MapLinkTarget,
-  labels: { kakao: string; naver: string } = { kakao: "KakaoMap", naver: "Naver Map" }
+  labels: { kakao: string; naver: string; driver: string } = {
+    kakao: "KakaoMap",
+    naver: "Naver Map",
+    driver: "🇰🇷 Show to driver",
+  }
 ): string {
   const [kakao, naver] = getMapLinks(place);
-  return `<div class="place-directions"><div class="map-directions-row">${kakaoBtn(kakao.url, labels.kakao)}${naverBtn(naver.url, labels.naver)}</div></div>`;
+  return (
+    `<div class="place-directions"><div class="map-directions-row">` +
+    `${kakaoBtn(kakao.url, labels.kakao)}${naverBtn(naver.url, labels.naver)}</div>` +
+    `${driverBtn(place, labels.driver)}</div>`
+  );
 }
 
 // 🚨 앱이 깔려 있으면 그 앱의 "길찾기 화면"으로 바로 데려가고, 없을 때만
