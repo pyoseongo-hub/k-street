@@ -13,6 +13,27 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="K-Street" />
 
+    <!-- 🌏 글꼴은 **화면을 막지 않고** 받는다 (2026-09-04 출시 전 검수).
+         media="print"로 걸어 두면 브라우저가 "인쇄용이라 지금은 안 쓴다"고 보고
+         화면 그리기를 멈추지 않는다. 다 받아진 순간 onload가 media를 all로 바꿔
+         그때부터 적용된다. 구글 글꼴 서버가 느리거나 막힌 곳(중국에서는 구글이
+         막혀 있다)에서도 첫 화면이 제때 뜬다 — 글꼴이 안 와도 index.css에 적어 둔
+         대체 서체로 읽힌다. 자바스크립트를 끈 브라우저를 위해 noscript로 한 번 더 둔다. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      />
+    </noscript>
+
     <title>K-Street</title>
     <script>
       window.__CONFIG__ = {
