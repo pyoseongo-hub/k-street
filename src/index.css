@@ -199,14 +199,19 @@ button {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  height: 40px;
+  /* 📏 그림 딱지를 빼고 **글자를 키웠다** (2026-09-05 사장님: "아이콘 몬지
+     모르겠어 / 가독성 좋게 텍스트 키우거나"). 이 줄은 화면 두 장을 오가는
+     **가장 큰 갈래**인데, 글자가 14px로 아래 잘래 칩(작은 갈래)과 같은 크기였다.
+     크기가 같으면 무엇이 큰 갈래인지 안 보인다. 딱지가 먹던 자리를 글자에 준다. */
+  height: 44px;
   padding: 0 10px;
   border: 1px solid var(--border);
   border-radius: 100px;
   background: var(--surface-2);
   color: var(--text-muted);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   cursor: pointer;
   /* 로마자·태국어 이름은 한글보다 훨씬 길다 — 잘리기 전에 한 줄로 눌러 담는다. */
   white-space: nowrap;
@@ -221,9 +226,7 @@ button {
   color: var(--bg);
 }
 
-.home-tab-icon {
-  font-size: 15px;
-}
+/* .home-tab-icon 은 없앴다 — 그림 딱지를 뺐기 때문이다(HomeSwitch.tsx 주석). */
 
 /* 숨긴 쪽은 확실히 사라져야 한다. 부모가 flex라 자칫 다른 규칙이 이겨서
    두 화면이 겹쳐 보이는 사고가 나기 쉬운 자리다. */
@@ -2065,20 +2068,20 @@ button {
 
 /* ── 💚 무료·가입 없음 표시 · 📲 설치 안내 (2026-09-04 홍보 준비) ──────── */
 
-/* 이름 아래 한 줄. 작지만 첫 화면에 늘 보인다 — 여행 앱은 대부분 열자마자
-   가입을 요구하므로, 이 한 줄이 기능 설명이 아니라 안심 신호로 읽힌다. */
-.app-free {
-  margin-top: 2px;
-  font-size: 9.5px;
+/* 화면 맨 아래 소개 한 줄. 원래는 이름 바로 아래(.app-free)에 있었는데
+   2026-09-05에 여기로 내렸다 — 사장님: "대표 이름 있는데 평생 무료 이런 것도
+   별로야 / 설명에 넣어". 간판 자리가 아니라 설명 자리다.
+
+   자리가 넉넉하니 nowrap·말줄임을 걷어 낸다. 헤더에 있을 때는 로마자·태국어가
+   잘려 나갔는데, 여기서는 두 줄이 되어도 아무 문제가 없다. */
+.app-note {
+  margin: 22px 0 4px;
+  text-align: center;
+  font-size: 11.5px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--walk);
-  white-space: nowrap;
-  /* 로마자·태국어는 한글보다 훨씬 길다 — 좁은 폰에서 로고를 밀어내지 않게
-     자리를 넘으면 조용히 자른다(안 보여도 앱은 멀쩡하다). */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 168px;
+  line-height: 1.6;
+  color: var(--text-muted);
 }
 
 .install-hint {

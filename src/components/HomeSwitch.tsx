@@ -59,14 +59,27 @@ export default function HomeSwitch({ season, district }: Props) {
     setView(dx < 0 ? "district" : "season");
   }
 
-  const tab = (key: HomeView, icon: string, label: string) => (
+  // 🚫 **그림 딱지를 뺐다** (2026-09-05 사장님: "아이콘 몬지 모르겠어 /
+  //    확실히 알수있게 넣거나 / 가독성 좋게 텍스트 키우거나").
+  //
+  //    「계절」에 🍂, 「동네」에 🗺️ 를 달아 뒀는데 **사장님이 무슨 뜻인지 못 읽었다.**
+  //    만든 사람이 못 읽으면 손님은 더 못 읽는다.
+  //
+  //    ⚠️ 🍂 는 애초에 틀린 그림이었다 — **가을 잎 하나**로 봄·여름·가을·겨울을 다
+  //       담는 탭을 가리키고 있었다. 지금이 9월이라 우연히 맞아 보였을 뿐이다.
+  //       🗺️ 도 '지도'지 '동네'가 아니다.
+  //
+  //    그리고 **12개 언어에 두루 통하는 그림이 애초에 없다.** 계절도 동네도 나라마다
+  //    떠올리는 그림이 다르다. 글자는 이미 그 나라 말로 번역돼 있으니, 그림을 더
+  //    고민하는 것보다 **글자를 키우는 쪽이 확실하다**(index.css의 .home-tab).
+  //    딱지가 먹던 자리도 글자에 돌아가 태국어처럼 긴 이름이 덜 잘린다.
+  const tab = (key: HomeView, label: string) => (
     <button
       type="button"
       className={"home-tab" + (view === key ? " active" : "")}
       aria-current={view === key ? "page" : undefined}
       onClick={() => setView(key)}
     >
-      <span className="home-tab-icon" aria-hidden="true">{icon}</span>
       {label}
     </button>
   );
@@ -77,8 +90,8 @@ export default function HomeSwitch({ season, district }: Props) {
           이 줄 하나만 붙이므로 자리를 많이 안 먹는다(예전에 고르는 것 전체를 붙여
           뒀다가 폰 화면 절반을 먹은 적이 있다 — DistrictExplorer 주석 참고). */}
       <div className="home-tabs" role="tablist">
-        {tab("season", "🍂", t.viewSeason)}
-        {tab("district", "🗺️", t.viewDistrict)}
+        {tab("season", t.viewSeason)}
+        {tab("district", t.viewDistrict)}
       </div>
 
       {/* 둘 다 그려 두고 하나만 보여 준다 — 오갈 때 보던 자리를 잃지 않게. */}
