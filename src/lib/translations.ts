@@ -38,6 +38,18 @@ export interface Translations {
   // District Explorer
   exploreNowLabel: string;
   exploreTitle: string;
+  /**
+   * 👆 **육각 지도 바로 위**에 붙는 한 줄 (2026-09-05 사장님: "동네지도 사용 은
+   * 어떤건지 한번에 이해하기 힘들수도 있다는 생각이 드네").
+   *
+   * 설명은 원래도 있었는데 **지도 아래**에 있었다. 벌집을 다 지나친 다음에야
+   * 나오니, 헷갈릴 사람은 이미 헷갈린 뒤였다. 안내는 **막히기 전에** 보여야 한다.
+   *
+   * 그래서 한 문장을 둘로 갈랐다 — 「누르면 나온다」는 지도 위로 올리고,
+   * 색 설명(진한 색·옅은 색)은 그 색이 보이는 지도 아래에 남긴다.
+   * 각자 설명하는 것 옆에 두는 것이다.
+   */
+  tapDistrictHint: string;
   mapDisclaimerStart: string;
   mapDisclaimerBold: string;
   mapDisclaimerEnd: string;
@@ -192,7 +204,8 @@ const translations: Record<Language, Translations> = {
     viewDistrict: '동네',
     exploreNowLabel: '지금 갈 수 있는 곳',
     exploreTitle: '동네마다 다른 서울',
-    mapDisclaimerStart: '구를 누르면 그 동네의 장소가 나온다. 진한 색은 ',
+    tapDistrictHint: '구를 눌러 보세요 — 그 동네의 장소가 나옵니다',
+    mapDisclaimerStart: '진한 색은 ',
     mapDisclaimerBold: '지금 볼 곳이 있는 구',
     mapDisclaimerEnd: ', 옅은 색은 아직 준비 중인 구다.',
     noPlacesInDistrictMessage: (gu) => `${gu}는 아직 확인 못했다.`,
@@ -275,7 +288,8 @@ const translations: Record<Language, Translations> = {
     viewDistrict: 'Neighborhoods',
     exploreNowLabel: 'Where you can go now',
     exploreTitle: 'A different Seoul in every neighborhood',
-    mapDisclaimerStart: 'Tap a district to see its places. Bold districts ',
+    tapDistrictHint: 'Tap a district to see its places',
+    mapDisclaimerStart: 'Bold districts ',
     mapDisclaimerBold: 'have places to visit now',
     mapDisclaimerEnd: '; faded ones are still being added.',
     noPlacesInDistrictMessage: (gu) => `${gu} hasn't been researched yet.`,
@@ -358,7 +372,8 @@ const translations: Record<Language, Translations> = {
     viewDistrict: '街めぐり',
     exploreNowLabel: '今行ける場所',
     exploreTitle: '街ごとに違うソウル',
-    mapDisclaimerStart: '区をタップするとその街の場所が出てきます。濃い色は',
+    tapDistrictHint: '区をタップすると、その街の場所が出てきます',
+    mapDisclaimerStart: '濃い色は',
     mapDisclaimerBold: '今行ける場所がある区',
     mapDisclaimerEnd: '、薄い色はまだ準備中の区です。',
     noPlacesInDistrictMessage: (gu) => `${gu}はまだ調査していません。`,
@@ -441,7 +456,8 @@ const translations: Record<Language, Translations> = {
     viewDistrict: '街区',
     exploreNowLabel: '现在可以去的地方',
     exploreTitle: '每个街区都不一样的首尔',
-    mapDisclaimerStart: '点击区可查看该区域的地点。深色表示',
+    tapDistrictHint: '点击一个区，即可查看该区的地点',
+    mapDisclaimerStart: '深色表示',
     mapDisclaimerBold: '现在就能去的区',
     mapDisclaimerEnd: '，浅色表示还在整理中的区。',
     noPlacesInDistrictMessage: (gu) => `${gu}尚未调查。`,
@@ -524,7 +540,8 @@ const translations: Record<Language, Translations> = {
     viewDistrict: '街區',
     exploreNowLabel: '現在可以去的地方',
     exploreTitle: '每個街區都不一樣的首爾',
-    mapDisclaimerStart: '點擊區可查看該區域的地點。深色表示',
+    tapDistrictHint: '點擊一個區，即可查看該區的地點',
+    mapDisclaimerStart: '深色表示',
     mapDisclaimerBold: '現在就能去的區',
     mapDisclaimerEnd: '，淺色表示還在整理中的區。',
     noPlacesInDistrictMessage: (gu) => `${gu}尚未調查。`,
@@ -607,7 +624,8 @@ const translations: Record<Language, Translations> = {
     viewDistrict: 'Khu phố',
     exploreNowLabel: 'Các địa điểm bạn có thể đến ngay',
     exploreTitle: 'Mỗi khu phố một Seoul khác',
-    mapDisclaimerStart: 'Chạm vào một quận để xem các địa điểm. Màu đậm là ',
+    tapDistrictHint: 'Chạm vào một quận để xem các địa điểm ở đó',
+    mapDisclaimerStart: 'Màu đậm là ',
     mapDisclaimerBold: 'quận đã có nơi để đi',
     mapDisclaimerEnd: ', màu nhạt là quận đang được cập nhật.',
     noPlacesInDistrictMessage: (gu) => `${gu} chưa được điều tra.`,
@@ -690,7 +708,8 @@ const translations: Record<Language, Translations> = {
     viewDistrict: 'Barrios',
     exploreNowLabel: 'Lugares donde puedes ir ahora',
     exploreTitle: 'Un Seúl distinto en cada barrio',
-    mapDisclaimerStart: 'Toca un distrito para ver sus lugares. Los distritos en color ',
+    tapDistrictHint: 'Toca un distrito para ver sus lugares',
+    mapDisclaimerStart: 'Los distritos en color ',
     mapDisclaimerBold: 'ya tienen lugares que visitar',
     mapDisclaimerEnd: '; los más claros aún están en preparación.',
     noPlacesInDistrictMessage: (gu) => `${gu} aún no ha sido investigado.`,
@@ -773,7 +792,8 @@ const translations: Record<Language, Translations> = {
     viewDistrict: 'Quartiers',
     exploreNowLabel: 'Où vous pouvez aller maintenant',
     exploreTitle: 'Un Séoul différent dans chaque quartier',
-    mapDisclaimerStart: 'Touchez un arrondissement pour voir ses lieux. Les arrondissements colorés ',
+    tapDistrictHint: 'Touchez un arrondissement pour voir ses lieux',
+    mapDisclaimerStart: 'Les arrondissements colorés ',
     mapDisclaimerBold: 'ont déjà des lieux à visiter',
     mapDisclaimerEnd: ' ; les plus pâles sont encore en préparation.',
     noPlacesInDistrictMessage: (gu) => `${gu} n'a pas encore été enquêté.`,
@@ -856,7 +876,8 @@ const translations: Record<Language, Translations> = {
     viewDistrict: 'Stadtviertel',
     exploreNowLabel: 'Orte, die Sie jetzt besuchen können',
     exploreTitle: 'In jedem Viertel ein anderes Seoul',
-    mapDisclaimerStart: 'Tippen Sie auf einen Bezirk, um seine Orte zu sehen. Farbige Bezirke ',
+    tapDistrictHint: 'Tippen Sie auf einen Bezirk, um seine Orte zu sehen',
+    mapDisclaimerStart: 'Farbige Bezirke ',
     mapDisclaimerBold: 'haben bereits Orte zu besuchen',
     mapDisclaimerEnd: '; blassere werden noch ergänzt.',
     noPlacesInDistrictMessage: (gu) => `${gu} wurde noch nicht untersucht.`,
@@ -939,7 +960,8 @@ const translations: Record<Language, Translations> = {
     viewDistrict: 'Районы',
     exploreNowLabel: 'Куда вы можете пойти сейчас',
     exploreTitle: 'В каждом районе — свой Сеул',
-    mapDisclaimerStart: 'Нажмите на район, чтобы увидеть места. Яркие районы ',
+    tapDistrictHint: 'Нажмите на район, чтобы увидеть места',
+    mapDisclaimerStart: 'Яркие районы ',
     mapDisclaimerBold: 'уже содержат места для посещения',
     mapDisclaimerEnd: '; бледные ещё готовятся.',
     noPlacesInDistrictMessage: (gu) => `${gu} еще не был исследован.`,
@@ -1022,7 +1044,8 @@ const translations: Record<Language, Translations> = {
     viewDistrict: 'Lingkungan',
     exploreNowLabel: 'Tempat yang bisa Anda kunjungi sekarang',
     exploreTitle: 'Seoul yang berbeda di tiap lingkungan',
-    mapDisclaimerStart: 'Ketuk sebuah distrik untuk melihat tempatnya. Distrik berwarna ',
+    tapDistrictHint: 'Ketuk sebuah distrik untuk melihat tempatnya',
+    mapDisclaimerStart: 'Distrik berwarna ',
     mapDisclaimerBold: 'sudah punya tempat untuk dikunjungi',
     mapDisclaimerEnd: '; yang pudar masih disiapkan.',
     noPlacesInDistrictMessage: (gu) => `${gu} belum diteliti.`,
@@ -1105,7 +1128,8 @@ const translations: Record<Language, Translations> = {
     viewDistrict: 'ย่าน',
     exploreNowLabel: 'สถานที่ที่คุณสามารถไปได้ตอนนี้',
     exploreTitle: 'โซลที่แตกต่างในทุกย่าน',
-    mapDisclaimerStart: 'แตะเขตเพื่อดูสถานที่ในย่านนั้น สีเข้มคือ',
+    tapDistrictHint: 'แตะเขตเพื่อดูสถานที่ในย่านนั้น',
+    mapDisclaimerStart: 'สีเข้มคือ',
     mapDisclaimerBold: 'เขตที่มีที่ให้ไปแล้ว',
     mapDisclaimerEnd: ' ส่วนสีจางคือเขตที่ยังเตรียมอยู่',
     noPlacesInDistrictMessage: (gu) => `${gu}ยังไม่ได้รับการสอบสวน`,
