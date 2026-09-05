@@ -420,7 +420,14 @@ function MyLocationChip({
   //    이 저장소가 이미 한 번 당한 자리다 — noPosition 과 failed 를 같은 문구로 합쳐
   //    뒀다가 원인을 못 찾아 문구를 갈랐는데, **그 아래 한 겹을 안 갈라** 또 막혔다.
   //    번역하지 않는다 — 오류 번호에 가깝고, **화면 캡처 한 장으로 원인을 가르려는** 것이다.
-  //    🧹 원인을 잡고 나면 이 코드와 FailWhy 표시는 지운다.
+  //
+  // ✅ 2026-09-05: 이걸로 원인을 한 번에 잡았다 — (no-geocoder) 가 떴고,
+  //    네이버 서브모듈을 안 기다린 것이 원인이었다(naverMaps.ts 의 onload 주석).
+  //
+  //    🧹 처음에는 "원인을 잡으면 지운다"고 적어 뒀는데 **안 지우기로 했다.**
+  //       이 코드는 **실패했을 때만** 나온다 — 제대로 도는 손님은 평생 못 본다.
+  //       반면 다시 막혔을 때는 이 한 단어가 며칠을 줄여 준다. 실제로 그랬다.
+  //       공짜로 얻는 안전장치를 성공하자마자 떼어 낼 이유가 없다.
   return (
     <button type="button" className="myloc myloc-btn myloc-failed" onClick={onFind}>
       {t.myLocationFailed}
