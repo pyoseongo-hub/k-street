@@ -47,7 +47,17 @@ export type MyDistrict =
 
 /** 조회가 실패한 갈래. 화면에 괄호로 그대로 붙는다. */
 export type FailWhy =
-  /** naver.maps.Service 가 없다 — geocoder 서브모듈이 안 붙었다. */
+  /** 지도 SDK 본체(naver.maps)조차 없다 — 스크립트를 못 받았다. */
+  | "no-sdk"
+  /**
+   * 본체는 있는데 naver.maps.Service 가 없다 — geocoder 서브모듈이 안 붙었다.
+   *
+   * 🐞 **2026-09-05에 실제로 이게 떴다.** 원인은 열쇠도 도메인도 아니고 **한 박자**였다 —
+   *    네이버는 서브모듈을 본체와 따로 받아 오는데, 우리는 script.onload 에서
+   *    곧바로 "다 됐다"고 답하고 있었다. naverMaps.ts 의 onload 주석 참고.
+   *    고친 뒤에도 이 코드가 또 뜨면 그때는 **정말로 서브모듈이 안 오는 것**이다
+   *    (주소에서 submodules=geocoder 가 빠졌거나 그 요청이 막힌 경우).
+   */
   | "no-geocoder"
   /** 네이버가 OK 가 아닌 상태를 돌려줬다. */
   | "naver-error"
@@ -78,10 +88,13 @@ type GeoResult = { ok: true; gu: string } | { ok: false; why: FailWhy };
 function reverseGeocode(lat: number, lng: number): Promise<GeoResult> {
   return new Promise((resolve) => {
     const naver = window.naver;
-    // geocoder 서브모듈이 안 붙었으면 Service 자체가 없다.
-    // 🚨 이게 가장 유력한 후보다 — 스크립트 주소에 submodules=geocoder 가 빠지거나,
-    //    그 부분만 못 받아 오면 지도는 멀쩡한데 이 조회만 통째로 죽는다.
-    if (!naver?.maps || !(naver.maps as any).Service) {
+    // 둘을 **가른다.** 뭉치면 "스크립트를 못 받았다"와 "서브모듈만 안 왔다"가
+    // 같은 코드로 뜨는데, 고칠 곳이 서로 다르다.
+    if (!naver?.maps) {
+      resolve({ ok: false, why: "no-sdk" });
+      return;
+    }
+    if (!(naver.maps as any).Service) {
       resolve({ ok: false, why: "no-geocoder" });
       return;
     }
