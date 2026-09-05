@@ -1,0 +1,7 @@
+{
+  "env": {
+    "TZ": "Asia/Seoul"
+  },
+  "timeZone": "Asia/Seoul",
+  "timeFormat": "24-hour"
+}
