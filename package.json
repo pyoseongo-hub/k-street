@@ -12,7 +12,9 @@
     "photo-todo": "node scripts/list-photo-todo.mjs",
     "festival-todo": "node scripts/audit-festivals.mjs",
     "audit-dupes": "node scripts/audit-duplicates.mjs",
-    "rekey": "node scripts/rekey-by-name.mjs"
+    "rekey": "node scripts/rekey-by-name.mjs",
+    "place-pages": "vite build --ssr scripts/build-place-pages.ts --outDir dist-ssr && node dist-ssr/build-place-pages.js",
+    "check-place-pages": "node scripts/check-place-pages.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

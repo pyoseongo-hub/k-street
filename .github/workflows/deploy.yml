@@ -26,6 +26,14 @@ jobs:
       - run: npm ci
       - run: npm run audit-seed
       - run: npm run build
+      # 🔎 곳마다 진짜 HTML 페이지를 만든다 — 검색엔진과 AI 가 읽을 수 있는 문.
+      #    이 앱은 화면을 자바스크립트로 그려서 index.html 본문이 0자다.
+      #    이유와 작전은 docs/홍보-작전.md · scripts/build-place-pages.ts 참고.
+      #    ⚠️ vite build 가 dist 를 지우고 다시 만드므로 **반드시 그 뒤에** 돈다.
+      - run: npm run place-pages
+      # 만들어 놓고 끝내지 않는다 — 얇은 페이지·겹치는 제목이 있으면 여기서 막는다.
+      # 그런 걸 300장 올리면 검색에 도움이 되기는커녕 벌점을 받는다.
+      - run: npm run check-place-pages
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
