@@ -48,12 +48,16 @@ function App() {
             <button className="icon-btn" onClick={toggleTheme} aria-label={t.themeSwitchLabel}>
               {getIcon()}
             </button>
-            <button className="icon-btn" disabled aria-label={t.searchLabel}>
-              🔍
-            </button>
-            <button className="icon-btn" disabled aria-label={t.notificationLabel}>
-              🔔
-            </button>
+            {/* 🔍 검색 · 🔔 알림은 **감췄다** (2026-09-05 사장님 결정: "죽은 단추만
+                감추기"). 홍보를 시작하면 처음 오는 손님이 늘어나는데, 눌리지 않는
+                단추가 둘이나 보이면 **앱 전체가 미완성으로 읽힌다.**
+                아래 탭바에서 캘린더·설정을 뺀 것과 같은 판단이다
+                (2026-09-04 "홈 하고 저장한 곳만 살릴까") — 단추는 없애든 되게
+                하든 둘 중 하나여야 한다.
+
+                🗓️ 진짜로 만들 때 여기에 되돌린다. 문구(t.searchLabel ·
+                   t.notificationLabel)는 12개 언어에 그대로 남겨 뒀다 —
+                   지우면 그때 12개를 다시 번역해야 한다. */}
           </div>
         </div>
       </header>
