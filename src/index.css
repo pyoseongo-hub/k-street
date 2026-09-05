@@ -872,6 +872,29 @@ button {
   filter: brightness(1.15);
 }
 
+/* 🔷 위 육각 지도를 축소한 표시 (DistrictExplorer.tsx의 HexMark 주석 참고).
+   그림 딱지 🗺️ 대신이다 — 사장님: "모양을 비슷하게 하던가 그거로는 아무도 몰라".
+   currentColor 라 밝은 화면·어두운 화면에서 글자와 같이 움직인다. */
+.to-map-mark {
+  width: 17px;
+  height: 15px;
+  flex-shrink: 0;
+  /* 벌집 칸은 **테두리만** 그린다 — 꽉 채우면 작은 크기에서 한 덩어리로 뭉개져
+     육각형인지 안 보인다. 위 지도의 칸 사이 틈까지 흉내 낸 셈이다. */
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+/* 🔍 「위치를 못 찾았어요」 뒤에 붙는 원인 표지. 임시다 — 원인을 잡으면 지운다.
+   문구를 가리지 않게 한 단계 흐리게 두고 크기도 줄인다. */
+.myloc-why {
+  opacity: 0.65;
+  font-size: 0.85em;
+  font-variant-numeric: tabular-nums;
+}
+
 @keyframes to-map-in {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: none; }

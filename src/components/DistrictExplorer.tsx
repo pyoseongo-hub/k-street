@@ -278,7 +278,8 @@ export default function DistrictExplorer() {
           className="to-map"
           onClick={() => map.ref.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
         >
-          <span aria-hidden="true">🗺️</span> {t.backToMap}
+          <HexMark />
+          {t.backToMap}
         </button>
       )}
     </section>
@@ -327,6 +328,38 @@ function useMapOffScreen() {
  * 특히 **서울 밖일 때 가장 가까운 구를 억지로 대지 않는다.** 틀린 구 이름은
  * 그 아래 목록 전체를 못 믿게 만든다(CLAUDE.md 정확도 원칙).
  */
+/**
+ * 🔷 위 육각 지도를 **그대로 축소한 표시**. 「다른 동네 고르기」 단추에 붙는다.
+ *
+ * 왜 그림 딱지(🗺️)를 버렸나 (2026-09-05 사장님: "이것도 뭐가뭔지 알수가없네 /
+ * 모양을 비슷하게 하던가 그거로는 아무도 몰라") —
+ *
+ * 그 자리에 🗺️(세계 지도)를 달아 뒀는데, 이 단추는 **지도를 여는 게 아니다.**
+ * 화면을 위로 굴려 **구를 고르는 육각 지도로 돌아가는** 단추다. 그림도 이름도
+ * "지도가 열리겠지"로 읽히니 두 번 어긋나 있었다.
+ *
+ * 그래서 사장님 말대로 **가려는 곳과 모양을 맞춘다.** 세 칸짜리 벌집은 위에 있는
+ * 그 지도를 축소해 놓은 것이라, 손님이 배울 것이 없다 — 방금 본 모양이다.
+ * 이름도 하는 일로 바꿨다(「지도」 → 「다른 동네 고르기」).
+ *
+ * 색은 currentColor 로 둔다 — 밝은 화면·어두운 화면에서 글자와 같이 움직인다.
+ */
+function HexMark() {
+  // 육각형 하나. cx,cy 를 중심으로 위아래가 뾰족한 모양(위 지도와 같은 방향).
+  const hex = (cx: number, cy: number, r: number) =>
+    Array.from({ length: 6 }, (_, i) => {
+      const a = (Math.PI / 180) * (60 * i - 90);
+      return `${(cx + r * Math.cos(a)).toFixed(2)},${(cy + r * Math.sin(a)).toFixed(2)}`;
+    }).join(" ");
+  return (
+    <svg className="to-map-mark" viewBox="0 0 20 18" aria-hidden="true">
+      <polygon points={hex(6.2, 5.8, 4.6)} />
+      <polygon points={hex(13.8, 5.8, 4.6)} />
+      <polygon points={hex(10.0, 12.4, 4.6)} />
+    </svg>
+  );
+}
+
 function MyLocationChip({
   state,
   onFind,
@@ -380,9 +413,18 @@ function MyLocationChip({
     return <span className="myloc myloc-note">{t.myLocationMapProblem}</span>;
   }
   // 못 찾았을 때는 **다시 누를 수 있게** 버튼으로 남긴다 — 잠깐 안 됐을 수 있다.
+  //
+  // 🔍 뒤에 붙는 작은 코드(why)는 **원인을 가리키는 표지**다 (2026-09-05).
+  //    사장님이 의정부에서 눌렀더니 이 문구가 떴는데, **의정부면 「서울 밖에 계세요」가
+  //    떠야 맞다.** 즉 네이버 조회가 실패한 건데 갈래가 넷이라 어느 것인지 알 수가 없었다.
+  //    이 저장소가 이미 한 번 당한 자리다 — noPosition 과 failed 를 같은 문구로 합쳐
+  //    뒀다가 원인을 못 찾아 문구를 갈랐는데, **그 아래 한 겹을 안 갈라** 또 막혔다.
+  //    번역하지 않는다 — 오류 번호에 가깝고, **화면 캡처 한 장으로 원인을 가르려는** 것이다.
+  //    🧹 원인을 잡고 나면 이 코드와 FailWhy 표시는 지운다.
   return (
     <button type="button" className="myloc myloc-btn myloc-failed" onClick={onFind}>
       {t.myLocationFailed}
+      {state.why && <span className="myloc-why"> ({state.why})</span>}
     </button>
   );
 }
