@@ -107,11 +107,17 @@ for (const path of ["/seoul/jongno-gu", "/seoul/", "/place/gwangjang-market"]) {
 const PARTNER = (process.env.PARTNER || "https://kfood-t493.onrender.com").replace(/\/$/, "");
 if (process.env.SKIP_PARTNER !== "1") {
   console.log(`\n⑦ 밥집 쪽 (${PARTNER})`);
-  for (const p of ["/seoul/jongno-gu", "/seoul/jongno-gu/", "/seoul/jung-gu?hl=en"]) {
+  for (const p of ["/seoul/jongno-gu", "/seoul/jongno-gu/", "/seoul/jongno-gu?hl=en", "/seoul/jung-gu?hl=ja"]) {
     try {
       const r = await fetch(PARTNER + p, { redirect: "follow" });
       const body = r.ok ? await r.text() : "";
-      console.log(`   HTTP ${r.status}  ${p}  (${body.length.toLocaleString()}자)`);
+      // 🈳 **영어로 열리나** — 200 만으로는 모자란다(연동 준비물 ④가 가장 중요한 칸이다).
+      //    12개 언어로 안내해 놓고 마지막에 한글 화면으로 보내면 손님은 거기서 끝난다.
+      //    제목과 한글 글자 수를 같이 적어 둔다 — 사람이 보고 판단할 수 있게.
+      const title = body.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1]?.trim() ?? "(제목 없음)";
+      const hangul = (body.match(/[가-힣]/g) ?? []).length;
+      console.log(`   HTTP ${r.status}  ${p}  (${body.length.toLocaleString()}자 · 한글 ${hangul}자)`);
+      console.log(`      제목: ${title}`);
       if (!r.ok) fail(`${r.status}  ${p}`);
       else ok(`${p}`);
     } catch (e) {
