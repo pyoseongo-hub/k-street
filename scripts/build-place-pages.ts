@@ -35,6 +35,8 @@ import { galleryShotsFor } from "../src/lib/photoGallery";
 //    영어 페이지에 「종로구」가 박혀 있으면 `Jongno` 로 검색하는 사람에게 영영 안 뜬다
 //    (앱 화면은 이미 이 표를 쓰고 있었다 — 여기만 안 쓰면 반쪽 적용이다).
 import { districtFullName, dongName } from "../src/data/districtNamesEn";
+// 🍚 밥집 쪽으로 잇는 주소는 **표 한 장**에서만 온다(src/lib/partnerLinks.ts).
+import { eatNearbyUrl } from "../src/lib/partnerLinks";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
@@ -180,6 +182,8 @@ dd{margin:0}
 .go .k{background:#FEE500;color:#191919}
 .go .n{background:#03C75A;color:#fff}
 .go .app{background:var(--ink);color:var(--bg)}
+/* 🍚 밥집 링크는 우리 앱 단추보다 조용하게 — 남의 집으로 보내는 문이라 주인공이 아니다. */
+.go .eat{background:var(--card);border:1px solid var(--line);color:var(--ink)}
 h2{margin:36px 0 0;font-size:16px}
 ul{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:7px}
 ul a{display:block;padding:11px 14px;background:var(--card);border:1px solid var(--line);border-radius:11px;text-decoration:none;color:var(--ink);font-weight:600;font-size:14.5px}
@@ -387,6 +391,8 @@ function hubPage(o: {
   groups: HubGroup[];
   chipsTitle?: string;
   chips?: { href: string; label: string }[];
+  /** 🍚 밥집 쪽으로 잇는 한 줄. 주소가 없으면(아직 안 켰거나 빈 동네) 안 그린다. */
+  eat?: { href: string; label: string } | null;
 }): string {
   const url = `${SITE}/${o.path}/`;
   const items = o.groups.flatMap((g) => g.items);
@@ -462,6 +468,14 @@ ${
     : ""
 }
 
+${
+  o.eat
+    ? // 🍚 손님이 시장을 구경하고 산책하면 배가 고프다 — 그때 갈 곳을 이어 준다.
+      //    rel="noopener" 만 붙인다. nofollow 는 안 붙인다: 손님에게 쓸모가 있어서
+      //    거는 링크라 숨길 이유가 없다(밀어주기가 아니다 — docs/홍보-작전.md).
+      `<div class="go"><a class="eat" href="${esc(o.eat.href)}" rel="noopener">${esc(o.eat.label)}</a></div>`
+    : ""
+}
 <div class="go"><a class="app" href="/">Open K-Street — free, no sign-up →</a></div>
 
 <footer>
@@ -572,6 +586,12 @@ for (const gu of GU_LIST) {
       })),
       chipsTitle: "Other districts",
       chips: guChips.filter((c) => c.label !== guEn(gu)),
+      // 🍚 밥집 — 구 단위로만 건다(저쪽 구 안에 빈 동네가 있다고 알려 왔다).
+      //    아직 안 켠 상태라 지금은 null 이 와서 아무것도 안 그려진다.
+      eat: (() => {
+        const href = eatNearbyUrl(gu, "en");
+        return href ? { href, label: `Where to eat in ${guEn(gu)} →` } : null;
+      })(),
     }),
   });
 }
