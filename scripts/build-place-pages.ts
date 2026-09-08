@@ -36,7 +36,7 @@ import { galleryShotsFor } from "../src/lib/photoGallery";
 //    (앱 화면은 이미 이 표를 쓰고 있었다 — 여기만 안 쓰면 반쪽 적용이다).
 import { districtFullName, dongName } from "../src/data/districtNamesEn";
 // 🍚 밥집 쪽으로 잇는 주소는 **표 한 장**에서만 온다(src/lib/partnerLinks.ts).
-import { eatNearbyUrl } from "../src/lib/partnerLinks";
+import { eatNearbyUrl, eatUrlForPlace } from "../src/lib/partnerLinks";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
@@ -207,6 +207,7 @@ function pageFor(p: Place, sameGu: Place[]): string {
   const kind = CATEGORY_EN[p.category] ?? "Place";
   const photo = p.image ?? p.thumb ?? galleryShotsFor(p.name, p.gu)[0]?.url;
   const [kakao, naver] = getMapLinks(p);
+  const eat = eatUrlForPlace({ slug, addr: p.addr, gu: p.gu });
   const url = `${SITE}/place/${slug}/`;
   const showKo = nameEn !== p.name;
 
@@ -318,6 +319,12 @@ ${p.officialUrl ? `<dt>Official</dt><dd><a href="${esc(p.officialUrl)}" rel="nof
 <a class="k" href="${esc(kakao.url)}" rel="nofollow noopener">Open in KakaoMap</a>
 <a class="n" href="${esc(naver.url)}" rel="nofollow noopener">Open in Naver Map</a>
 </div>
+${
+  // 🍚 밥 먹을 곳 — **지도 버튼 바로 아래**다. 이 곳을 어떻게 가는지 다음에 오는
+  //    물음이 「그럼 밥은?」이기 때문이다. 동네를 알면 동네로(홍대·광장시장…),
+  //    모르면 그 구로 보낸다. 아직 안 켰으면 null 이라 아무것도 안 그린다.
+  eat ? `<div class="go"><a class="eat" href="${esc(eat.href)}" rel="noopener">${esc(eat.label)}</a></div>` : ""
+}
 <div class="go"><a class="app" href="/">See more places in Seoul →</a></div>
 
 ${nearby ? `<h2>More in ${esc(guEn(p.gu))}</h2><ul>${nearby}</ul>` : ""}

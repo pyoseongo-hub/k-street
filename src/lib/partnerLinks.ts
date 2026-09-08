@@ -74,3 +74,83 @@ export function eatNearbyUrl(gu: string, lang: Language = "en"): string | null {
   if (!slug) return null;
   return `${BASE}/seoul/${slug}?hl=${partnerLang(lang)}`;
 }
+
+// ── 🏘️ 동네(관광객이 아는 이름) ──────────────────────────────────────────
+//
+// 저쪽이 구 25개 말고 **관광객이 부르는 이름**으로도 페이지를 만들었고
+// (홍대·이태원·북촌·을지로·광장시장 …), **어느 법정동을 묶은 것인지 표**까지
+// 보내 왔다(2026-09-08). 구보다 훨씬 정확하다 — 마포구 전체가 아니라 홍대다.
+//
+// 🚨 **도로명으로 동네를 추측하지 않는다.** 처음에 주소에 「이태원」이 들어가면
+//    이태원으로 쳤더니 **전쟁기념관**(용산동, 주소가 「이태원로 29」)이 걸렸다.
+//    도로는 여러 동을 가로지른다. 그래서 여기서는 **법정동 이름 전체**로만 찾고
+//    (「이태원」이 아니라 「이태원동」), 뒤에 길·로·숫자가 붙으면 버린다 —
+//    「인사동길」·「인사동9길」은 동이 아니라 길 이름이다.
+const AREA_DONGS: Record<string, string[]> = {
+  myeongdong: ["명동1가", "명동2가"],
+  hongdae: ["서교동", "동교동", "합정동", "상수동", "연남동", "망원동"],
+  itaewon: ["이태원동", "한남동"],
+  seongsu: ["성수동1가", "성수동2가"],
+  gangnam: ["역삼동", "논현동", "신사동", "청담동", "압구정동"],
+  bukchon: ["익선동", "인사동", "안국동", "소격동", "가회동", "삼청동"],
+  euljiro: ["을지로1가", "을지로2가", "을지로3가", "을지로4가", "을지로5가", "을지로6가", "을지로7가"],
+  "gwangjang-market": ["예지동", "종로4가", "종로5가"],
+};
+
+/** 화면에 뜨는 글자. 링크는 **무엇이 나오는지** 말해야 눌린다. */
+const AREA_LABEL: Record<string, string> = {
+  myeongdong: "Where to eat in Myeongdong",
+  hongdae: "Where to eat in Hongdae",
+  itaewon: "Where to eat in Itaewon",
+  seongsu: "Where to eat in Seongsu",
+  gangnam: "Where to eat in Gangnam",
+  bukchon: "Where to eat near Bukchon & Insadong",
+  euljiro: "Restaurants & bars in Euljiro",
+  "gwangjang-market": "Street food at Gwangjang Market",
+};
+
+/**
+ * 주소로는 못 푸는데 **이름만 봐도 확실한 곳**. 하나씩 눈으로 확인해 적었다.
+ *
+ * 왜 필요한가 — 곳 307장 중 44곳은 한국어 주소가 아예 없고, 있어도 도로명뿐이라
+ * 동이 안 적힌 곳이 있다. **광장시장이 바로 그렇다**(「종로구 창경궁로 88」).
+ * 양쪽에 같은 이름이 있는데 표로는 안 걸린다.
+ */
+const AREA_BY_SLUG: Record<string, string> = {
+  "gwangjang-market": "gwangjang-market", // 이름이 같다. 시장 자체가 먹거리다
+  "mangwon-market": "hongdae", // 망원시장 — 주소가 없다. 망원동은 저쪽 홍대 묶음이다
+  "itaewon-global-village-festival": "itaewon", // 주소가 없다. 이름이 이태원이다
+  "gyeongui-line-book-street": "hongdae", // 경의선책거리 — 홍대입구역 앞(서교동)
+  "autumn-to-myeongdong": "myeongdong", // 「가을, 명동으로」 — 명동에서 하는 행사다
+};
+
+/** 「(예지동)」은 동, 「인사동길」·「이태원로」는 길 — 뒤에 뭐가 붙는지로 가른다. */
+function areaFromAddr(addr: string): string | null {
+  for (const [area, dongs] of Object.entries(AREA_DONGS)) {
+    for (const d of dongs) {
+      const i = addr.indexOf(d);
+      if (i < 0) continue;
+      const next = addr[i + d.length] ?? "";
+      if (next && !/[\s),]/.test(next)) continue; // 뒤에 길·로·숫자가 붙으면 길 이름이다
+      return area;
+    }
+  }
+  return null;
+}
+
+/**
+ * 그 곳에서 밥 먹으러 갈 자리. **동네를 알면 동네로, 모르면 그 구로** 보낸다.
+ * 둘 다 없으면 null — 없는 주소는 지어내지 않는다.
+ */
+export function eatUrlForPlace(
+  p: { slug?: string; addr?: string; gu: string },
+  lang: Language = "en"
+): { href: string; label: string } | null {
+  if (!PARTNER_READY) return null;
+  const area = (p.slug ? AREA_BY_SLUG[p.slug] : undefined) ?? areaFromAddr(p.addr ?? "");
+  if (area)
+    return { href: `${BASE}/seoul/${area}?hl=${partnerLang(lang)}`, label: `${AREA_LABEL[area]} →` };
+
+  const href = eatNearbyUrl(p.gu, lang);
+  return href ? { href, label: `Where to eat in ${districtFullName(p.gu, "en")} →` } : null;
+}
