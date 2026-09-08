@@ -8,6 +8,12 @@
 import { isOfficialSite } from "./officialSite";
 
 export interface MapLinkTarget {
+  /**
+   * seed 의 id. **공유 링크(shareLink.ts)가 이걸로 그 곳의 주소를 찾는다** —
+   * 슬러그 표(`place-slugs.json`)가 id 를 열쇠로 쓰기 때문이다.
+   * 없으면 공유 단추를 아예 안 그린다(주소를 지어내지 않는다).
+   */
+  id?: string;
   name: string;
   gu: string;
   dong?: string;

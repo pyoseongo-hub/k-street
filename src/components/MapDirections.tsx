@@ -2,6 +2,7 @@ import { useState } from "react";
 import DriverCard from "./DriverCard";
 import { getMapLinks, openMapLink, type MapLinkTarget } from "../lib/mapLinks";
 import { getPositionOrNull } from "../lib/userPosition";
+import { placeUrl, sharePlace } from "../lib/shareLink";
 import { useLanguage } from "../lib/useLanguage";
 
 // SeoulMap.tsx(네이버 지도 InfoWindow)는 raw HTML 문자열이라 이 컴포넌트를 못 쓴다 —
@@ -31,6 +32,21 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
   // 직접 확인). 남의 앱 연동을 기다리는 대신 원래 문제(기사와 말이 안 통함)를
   // 우리 화면에서 푼다.
   const [driver, setDriver] = useState(false);
+
+  // 🔗 공유 — 이 곳의 **공개 페이지 주소**를 보낸다(앱 첫 화면이 아니라).
+  //    슬러그가 없는 곳은 주소를 지어내지 않고 단추를 아예 안 그린다.
+  const url = placeUrl(place.id);
+  const [copied, setCopied] = useState(false);
+
+  async function onShare() {
+    if (!url) return;
+    const r = await sharePlace(place.name, url);
+    // 「복사됨」은 복사했을 때만 띄운다. 공유창이 열렸으면 손님이 이미 봤다.
+    if (r === "copied") {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }
 
   async function open(label: "KAKAO" | "NAVER") {
     setLocating(label);
@@ -68,10 +84,26 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
       {/* 🚕 지도 두 개와 **한 줄 아래**에 따로 둔다. 지도 버튼과 성격이 다르기
           때문이다 — 저 둘은 "앱을 연다"이고 이건 "이 자리에서 보여 준다"이다.
           같은 줄에 셋을 욱여넣으면 글자가 줄어 셋 다 안 읽힌다(칸 차지 지적을
-          받은 적이 있어 줄 높이는 최소로 잡았다). */}
-      <button type="button" className="map-btn map-btn--driver" onClick={() => setDriver(true)}>
-        {t.showToDriver}
-      </button>
+          받은 적이 있어 줄 높이는 최소로 잡았다).
+
+          🔗 공유는 **이 줄 오른쪽 끝에** 붙인다 — 줄을 하나 더 만들지 않는다.
+             칸 차지 지적을 두 번 받은 자리라 높이를 늘리지 않는 것이 우선이다. */}
+      <div className="map-directions-row">
+        <button type="button" className="map-btn map-btn--driver" onClick={() => setDriver(true)}>
+          {t.showToDriver}
+        </button>
+        {url && (
+          <button
+            type="button"
+            className="map-btn map-btn--share"
+            onClick={onShare}
+            title={t.shareLabel}
+          >
+            <span aria-hidden="true">🔗</span>
+            {copied ? t.shareCopied : t.shareLabel}
+          </button>
+        )}
+      </div>
       {driver && <DriverCard place={place} onClose={() => setDriver(false)} />}
       {/* 📏 "지도 앱이 바로 안 열리면…" 안내는 **여기서 뺐다**(2026-09-02 사용자
           지적: "칸차지가 심해"). 카드마다 두 줄씩 반복되어 목록 절반을 먹고

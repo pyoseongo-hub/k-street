@@ -1470,9 +1470,22 @@ button {
    지도 버튼과 색을 일부러 다르게 뒀다. 저 둘은 "앱을 연다"고, 이건 "이 자리에서
    보여 준다"라 성격이 다르다. 택시색(노랑)은 카카오와 겹쳐 안 쓴다. */
 .map-btn--driver {
-  width: 100%;
   background: var(--sunk, #eceae4);
   color: var(--ink, #16150f);
+  border: 1px solid var(--line, #ddd9d0);
+}
+
+/* 🔗 공유 — 기사 단추와 **같은 줄**에 붙는다(2026-09-06).
+   줄을 하나 더 만들면 카드가 그만큼 길어지는데, 칸 차지 지적을 두 번 받은
+   자리다. 그래서 flex 를 안 늘리고(flex:0) 글자 폭만 차지하게 둔다 —
+   기사 단추가 남는 자리를 다 먹는다. */
+.map-btn--share {
+  flex: 0 0 auto;
+  gap: 5px;
+  padding-left: 12px;
+  padding-right: 12px;
+  background: transparent;
+  color: var(--muted, #6b6a63);
   border: 1px solid var(--line, #ddd9d0);
 }
 

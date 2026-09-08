@@ -124,6 +124,10 @@ export interface Translations {
    * 버튼 이름과 안내 한 줄뿐이고, 기사가 읽는 부분은 언제나 한국어다.
    */
   showToDriver: string;
+  /** 🔗 이 곳을 친구에게 보내기 — 곳 페이지 주소를 공유한다(shareLink.ts). */
+  shareLabel: string;
+  /** 공유창이 없는 기기에서 링크를 복사했을 때 잠깐 뜨는 말. */
+  shareCopied: string;
   /** 손님에게 — "이 화면을 기사에게 보여 주세요". 손님 언어로 나온다. */
   driverCardHint: string;
   /** 기사 화면을 닫는 버튼. 손님 언어로 나온다. */
@@ -227,6 +231,8 @@ const translations: Record<Language, Translations> = {
     festivalCheckDates: '날짜 확인',
     festivalNoPhoto: '사진은 사용 권한이 없어 싣지 못했습니다. 이름을 누르면 공식 안내로 갑니다.',
     showToDriver: '🇰🇷 기사에게 보여 주기',
+    shareLabel: '공유',
+    shareCopied: '복사됨',
     driverCardHint: '이 화면을 택시 기사에게 보여 주세요.',
     driverCardClose: '닫기',
     myLocationFind: '📍 내 위치',
@@ -311,6 +317,8 @@ const translations: Record<Language, Translations> = {
     festivalCheckDates: 'Check dates',
     festivalNoPhoto: 'No photo — we don’t have the image rights. Tap the name for the official page.',
     showToDriver: '🇰🇷 Show to driver',
+    shareLabel: 'Share',
+    shareCopied: 'Copied',
     driverCardHint: 'Show this screen to your taxi driver — it is written in Korean.',
     driverCardClose: 'Close',
     myLocationFind: '📍 My location',
@@ -395,6 +403,8 @@ const translations: Record<Language, Translations> = {
     festivalCheckDates: '日程を確認',
     festivalNoPhoto: '写真は使用許諾がないため掲載していません。名前をタップすると公式案内に移動します。',
     showToDriver: '🇰🇷 運転手に見せる',
+    shareLabel: '共有',
+    shareCopied: 'コピーしました',
     driverCardHint: 'この画面をタクシーの運転手に見せてください。韓国語で書かれています。',
     driverCardClose: '閉じる',
     myLocationFind: '📍 現在地',
@@ -479,6 +489,8 @@ const translations: Record<Language, Translations> = {
     festivalCheckDates: '查看日期',
     festivalNoPhoto: '因图片使用权未获授权，暂不提供照片。点击名称可前往官方介绍页。',
     showToDriver: '🇰🇷 给司机看',
+    shareLabel: '分享',
+    shareCopied: '已复制',
     driverCardHint: '请把这个画面给出租车司机看，上面是韩语。',
     driverCardClose: '关闭',
     myLocationFind: '📍 我的位置',
@@ -563,6 +575,8 @@ const translations: Record<Language, Translations> = {
     festivalCheckDates: '查看日期',
     festivalNoPhoto: '因圖片使用權未取得授權，暫不提供照片。點擊名稱可前往官方介紹頁。',
     showToDriver: '🇰🇷 給司機看',
+    shareLabel: '分享',
+    shareCopied: '已複製',
     driverCardHint: '請把這個畫面給計程車司機看，上面是韓文。',
     driverCardClose: '關閉',
     myLocationFind: '📍 我的位置',
@@ -647,6 +661,8 @@ const translations: Record<Language, Translations> = {
     festivalCheckDates: 'Xem ngày',
     festivalNoPhoto: 'Không có ảnh vì chưa có bản quyền sử dụng. Nhấn vào tên để mở trang chính thức.',
     showToDriver: '🇰🇷 Cho tài xế xem',
+    shareLabel: 'Chia sẻ',
+    shareCopied: 'Đã sao chép',
     driverCardHint: 'Hãy đưa màn hình này cho tài xế taxi xem — nội dung bằng tiếng Hàn.',
     driverCardClose: 'Đóng',
     myLocationFind: '📍 Vị trí của tôi',
@@ -731,6 +747,8 @@ const translations: Record<Language, Translations> = {
     festivalCheckDates: 'Ver fechas',
     festivalNoPhoto: 'Sin foto: no tenemos los derechos de imagen. Toca el nombre para ver la página oficial.',
     showToDriver: '🇰🇷 Mostrar al taxista',
+    shareLabel: 'Compartir',
+    shareCopied: 'Copiado',
     driverCardHint: 'Muestra esta pantalla al taxista: está escrita en coreano.',
     driverCardClose: 'Cerrar',
     myLocationFind: '📍 Mi ubicación',
@@ -815,6 +833,8 @@ const translations: Record<Language, Translations> = {
     festivalCheckDates: 'Voir les dates',
     festivalNoPhoto: 'Pas de photo : nous n’avons pas les droits d’image. Appuyez sur le nom pour la page officielle.',
     showToDriver: '🇰🇷 Montrer au chauffeur',
+    shareLabel: 'Partager',
+    shareCopied: 'Copié',
     driverCardHint: 'Montrez cet écran au chauffeur de taxi : il est rédigé en coréen.',
     driverCardClose: 'Fermer',
     myLocationFind: '📍 Ma position',
@@ -899,6 +919,8 @@ const translations: Record<Language, Translations> = {
     festivalCheckDates: 'Termine prüfen',
     festivalNoPhoto: 'Kein Foto – die Bildrechte liegen uns nicht vor. Tippen Sie auf den Namen für die offizielle Seite.',
     showToDriver: '🇰🇷 Dem Fahrer zeigen',
+    shareLabel: 'Teilen',
+    shareCopied: 'Kopiert',
     driverCardHint: 'Zeigen Sie diesen Bildschirm dem Taxifahrer – er ist auf Koreanisch.',
     driverCardClose: 'Schließen',
     myLocationFind: '📍 Mein Standort',
@@ -983,6 +1005,8 @@ const translations: Record<Language, Translations> = {
     festivalCheckDates: 'Уточнить даты',
     festivalNoPhoto: 'Фото нет — у нас нет прав на изображение. Нажмите на название, чтобы открыть официальную страницу.',
     showToDriver: '🇰🇷 Показать водителю',
+    shareLabel: 'Поделиться',
+    shareCopied: 'Скопировано',
     driverCardHint: 'Покажите этот экран таксисту — текст написан по-корейски.',
     driverCardClose: 'Закрыть',
     myLocationFind: '📍 Моё местоположение',
@@ -1067,6 +1091,8 @@ const translations: Record<Language, Translations> = {
     festivalCheckDates: 'Cek tanggal',
     festivalNoPhoto: 'Tidak ada foto karena hak gambar belum diperoleh. Ketuk nama untuk membuka halaman resmi.',
     showToDriver: '🇰🇷 Tunjukkan ke sopir',
+    shareLabel: 'Bagikan',
+    shareCopied: 'Tersalin',
     driverCardHint: 'Tunjukkan layar ini kepada sopir taksi — tulisannya dalam bahasa Korea.',
     driverCardClose: 'Tutup',
     myLocationFind: '📍 Lokasi saya',
@@ -1151,6 +1177,8 @@ const translations: Record<Language, Translations> = {
     festivalCheckDates: 'ดูวันที่',
     festivalNoPhoto: 'ไม่มีรูปภาพเนื่องจากยังไม่ได้รับสิทธิ์ใช้ภาพ แตะที่ชื่อเพื่อไปยังหน้าทางการ',
     showToDriver: '🇰🇷 แสดงให้คนขับดู',
+    shareLabel: 'แชร์',
+    shareCopied: 'คัดลอกแล้ว',
     driverCardHint: 'แสดงหน้าจอนี้ให้คนขับแท็กซี่ดู ข้อความเป็นภาษาเกาหลี',
     driverCardClose: 'ปิด',
     myLocationFind: '📍 ตำแหน่งของฉัน',
