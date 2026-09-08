@@ -2135,6 +2135,40 @@ button {
   color: var(--text-muted);
 }
 
+/* 🔗 앱을 통째로 보내는 단추(ShareApp.tsx) — 소개 줄 바로 아래, 화면 맨 끝.
+   ⚠️ 눈에 띄되 **주인공처럼 보이지 않게** 한다. 여기는 손님이 볼 것을 다 본
+      자리라 색을 채운 큰 단추를 두면 광고처럼 읽힌다 — 테두리만 두른 글자 단추다.
+   ⚠️ 그림(🔗) 옆에 **낱말이 늘 같이** 나온다(아이콘만으로는 못 알아본다는 지적을
+      두 번 받았다). 그래서 nowrap·말줄임을 걸지 않는다 — 독일어·러시아어는 길어
+      두 줄이 될 수 있고, 여기서는 두 줄이어도 괜찮다. */
+.app-share {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 2px;
+}
+
+.app-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 88%;
+  padding: 8px 16px;
+  border: 1px solid var(--line, #ddd9d0);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+  cursor: pointer;
+}
+
+.app-share-btn:active {
+  opacity: 0.6;
+}
+
 .install-hint {
   display: flex;
   align-items: center;

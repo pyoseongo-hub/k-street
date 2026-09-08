@@ -9,6 +9,7 @@ import DistrictExplorer from "./components/DistrictExplorer";
 import LanguageSelector from "./components/LanguageSelector";
 import CoverPicker from "./components/CoverPicker";
 import HomeSwitch from "./components/HomeSwitch";
+import ShareApp from "./components/ShareApp";
 
 function App() {
   const { toggleTheme, getIcon } = useTheme();
@@ -92,6 +93,10 @@ function App() {
                 간판처럼 튀지 않고, 자리가 넉넉해 로마자·태국어도 안 잘린다.
                 두 탭 밖에 두어 홈에서든 저장한 곳에서든 늘 끝에 붙는다. */}
             <p className="app-note">{t.freeNoSignup}</p>
+            {/* 🔗 앱을 통째로 보내는 단추. 곳 카드 안의 공유(MapDirections)는
+                "여기 가 봐"이고, 이건 "이 앱 써 봐"다 — 둘 다 필요하다.
+                왜 머리줄이 아니라 여기인지는 ShareApp.tsx 주석에 적었다. */}
+            <ShareApp />
           </>
         )}
       </main>

@@ -128,6 +128,15 @@ export interface Translations {
   shareLabel: string;
   /** 공유창이 없는 기기에서 링크를 복사했을 때 잠깐 뜨는 말. */
   shareCopied: string;
+  /**
+   * 🏠 **앱 자체**를 친구에게 보내는 단추 (2026-09-06 사장님: "우리 앱을 링크
+   * 공유가없네"). 곳 하나를 보내는 shareLabel 과 **쓰임이 다르다** —
+   * 이쪽은 "이거 써 봐"다.
+   *
+   * ⚠️ 그림(🔗)만 두지 않고 **낱말을 같이** 적는다. 머리줄 아이콘이 무슨 뜻인지
+   *    모르겠다는 지적을 두 번 받았다 — 화면 맨 아래 한 줄이라 자리는 넉넉하다.
+   */
+  shareAppLabel: string;
   /** 손님에게 — "이 화면을 기사에게 보여 주세요". 손님 언어로 나온다. */
   driverCardHint: string;
   /** 기사 화면을 닫는 버튼. 손님 언어로 나온다. */
@@ -233,6 +242,7 @@ const translations: Record<Language, Translations> = {
     showToDriver: '🇰🇷 기사에게 보여 주기',
     shareLabel: '공유',
     shareCopied: '복사됨',
+    shareAppLabel: '친구에게 이 앱 보내기',
     driverCardHint: '이 화면을 택시 기사에게 보여 주세요.',
     driverCardClose: '닫기',
     myLocationFind: '📍 내 위치',
@@ -319,6 +329,7 @@ const translations: Record<Language, Translations> = {
     showToDriver: '🇰🇷 Show to driver',
     shareLabel: 'Share',
     shareCopied: 'Copied',
+    shareAppLabel: 'Send this app to a friend',
     driverCardHint: 'Show this screen to your taxi driver — it is written in Korean.',
     driverCardClose: 'Close',
     myLocationFind: '📍 My location',
@@ -405,6 +416,7 @@ const translations: Record<Language, Translations> = {
     showToDriver: '🇰🇷 運転手に見せる',
     shareLabel: '共有',
     shareCopied: 'コピーしました',
+    shareAppLabel: 'このアプリを友だちに送る',
     driverCardHint: 'この画面をタクシーの運転手に見せてください。韓国語で書かれています。',
     driverCardClose: '閉じる',
     myLocationFind: '📍 現在地',
@@ -491,6 +503,7 @@ const translations: Record<Language, Translations> = {
     showToDriver: '🇰🇷 给司机看',
     shareLabel: '分享',
     shareCopied: '已复制',
+    shareAppLabel: '把这个应用发给朋友',
     driverCardHint: '请把这个画面给出租车司机看，上面是韩语。',
     driverCardClose: '关闭',
     myLocationFind: '📍 我的位置',
@@ -577,6 +590,7 @@ const translations: Record<Language, Translations> = {
     showToDriver: '🇰🇷 給司機看',
     shareLabel: '分享',
     shareCopied: '已複製',
+    shareAppLabel: '把這個應用程式傳給朋友',
     driverCardHint: '請把這個畫面給計程車司機看，上面是韓文。',
     driverCardClose: '關閉',
     myLocationFind: '📍 我的位置',
@@ -663,6 +677,7 @@ const translations: Record<Language, Translations> = {
     showToDriver: '🇰🇷 Cho tài xế xem',
     shareLabel: 'Chia sẻ',
     shareCopied: 'Đã sao chép',
+    shareAppLabel: 'Gửi ứng dụng này cho bạn bè',
     driverCardHint: 'Hãy đưa màn hình này cho tài xế taxi xem — nội dung bằng tiếng Hàn.',
     driverCardClose: 'Đóng',
     myLocationFind: '📍 Vị trí của tôi',
@@ -749,6 +764,7 @@ const translations: Record<Language, Translations> = {
     showToDriver: '🇰🇷 Mostrar al taxista',
     shareLabel: 'Compartir',
     shareCopied: 'Copiado',
+    shareAppLabel: 'Enviar esta app a un amigo',
     driverCardHint: 'Muestra esta pantalla al taxista: está escrita en coreano.',
     driverCardClose: 'Cerrar',
     myLocationFind: '📍 Mi ubicación',
@@ -835,6 +851,7 @@ const translations: Record<Language, Translations> = {
     showToDriver: '🇰🇷 Montrer au chauffeur',
     shareLabel: 'Partager',
     shareCopied: 'Copié',
+    shareAppLabel: 'Envoyer cette appli à un ami',
     driverCardHint: 'Montrez cet écran au chauffeur de taxi : il est rédigé en coréen.',
     driverCardClose: 'Fermer',
     myLocationFind: '📍 Ma position',
@@ -921,6 +938,7 @@ const translations: Record<Language, Translations> = {
     showToDriver: '🇰🇷 Dem Fahrer zeigen',
     shareLabel: 'Teilen',
     shareCopied: 'Kopiert',
+    shareAppLabel: 'Diese App an Freunde senden',
     driverCardHint: 'Zeigen Sie diesen Bildschirm dem Taxifahrer – er ist auf Koreanisch.',
     driverCardClose: 'Schließen',
     myLocationFind: '📍 Mein Standort',
@@ -1007,6 +1025,7 @@ const translations: Record<Language, Translations> = {
     showToDriver: '🇰🇷 Показать водителю',
     shareLabel: 'Поделиться',
     shareCopied: 'Скопировано',
+    shareAppLabel: 'Отправить приложение другу',
     driverCardHint: 'Покажите этот экран таксисту — текст написан по-корейски.',
     driverCardClose: 'Закрыть',
     myLocationFind: '📍 Моё местоположение',
@@ -1093,6 +1112,7 @@ const translations: Record<Language, Translations> = {
     showToDriver: '🇰🇷 Tunjukkan ke sopir',
     shareLabel: 'Bagikan',
     shareCopied: 'Tersalin',
+    shareAppLabel: 'Kirim aplikasi ini ke teman',
     driverCardHint: 'Tunjukkan layar ini kepada sopir taksi — tulisannya dalam bahasa Korea.',
     driverCardClose: 'Tutup',
     myLocationFind: '📍 Lokasi saya',
@@ -1179,6 +1199,7 @@ const translations: Record<Language, Translations> = {
     showToDriver: '🇰🇷 แสดงให้คนขับดู',
     shareLabel: 'แชร์',
     shareCopied: 'คัดลอกแล้ว',
+    shareAppLabel: 'ส่งแอปนี้ให้เพื่อน',
     driverCardHint: 'แสดงหน้าจอนี้ให้คนขับแท็กซี่ดู ข้อความเป็นภาษาเกาหลี',
     driverCardClose: 'ปิด',
     myLocationFind: '📍 ตำแหน่งของฉัน',
