@@ -126,5 +126,30 @@ if (process.env.SKIP_PARTNER !== "1") {
   }
 }
 
+// ── ⑧ 두 앱이 진짜로 이어졌나 (끝에서 끝까지) ──────────────────────────
+//
+// 앞의 ⑥⑦은 각자 열리는지만 봤다. 정작 중요한 것은 **손님이 밟는 길**이다 —
+// 우리 구별 페이지에 그 줄이 실제로 붙어 있고, 거기 적힌 주소를 눌렀을 때
+// 밥집 목록이 뜨는가. 우리가 켰다고 믿는 것과 손님 화면에 있는 것은 다르다.
+console.log("\n⑧ 두 앱이 이어졌나 (우리 페이지 → 밥집)");
+for (const gu of ["jongno-gu", "gangnam-gu"]) {
+  try {
+    const r = await fetch(`${SITE}/seoul/${gu}/`);
+    const html2 = await r.text();
+    const m = html2.match(/<a class="eat" href="([^"]+)"[^>]*>([^<]*)</);
+    if (!m) {
+      fail(`/seoul/${gu}/ 에 밥집 줄이 없다`);
+      continue;
+    }
+    ok(`/seoul/${gu}/ 에 「${m[2].trim()}」 있다`);
+    const r2 = await fetch(m[1], { redirect: "follow" });
+    const b2 = r2.ok ? await r2.text() : "";
+    const t2 = b2.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1]?.trim() ?? "";
+    r2.ok ? ok(`   눌러 보니 ${r2.status} — ${t2}`) : fail(`   눌러 보니 ${r2.status} — ${m[1]}`);
+  } catch (e) {
+    fail(`/seoul/${gu}/ — ${e?.cause?.code ?? e.name}`);
+  }
+}
+
 console.log(`\n${"─".repeat(60)}\n${bad ? `❌ 손봐야 할 것 ${bad}가지` : "✅ 새 주소가 제대로 서비스되고 있다"}`);
 process.exit(bad ? 1 : 0);
