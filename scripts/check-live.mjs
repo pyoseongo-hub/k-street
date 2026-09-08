@@ -73,5 +73,52 @@ try {
   r.body?.cancel?.();
 } catch (e) { console.log(`   못 열었다 (${e?.cause?.code ?? e.name})`); }
 
+// ── ⑥ 주소 끝 빗금 — 둘 다 열리나 ─────────────────────────────────────
+//
+// 왜 (2026-09-08, 밥집 연동) — 서로 링크를 걸기로 하면서 저쪽에서 물어 왔다.
+// `/seoul/jongno-gu` 와 `/seoul/jongno-gu/` 는 **다른 주소**다. 한쪽만 열리면,
+// 누군가 빗금을 붙이거나 떼는 날 **아무 소리 없이** 깨진다. 우리 페이지는
+// 폴더 안 index.html 이라 호스팅(GitHub Pages)이 빗금 없는 쪽을 넘겨 주는데,
+// 그건 **우리 코드가 아니라 남의 동작**이다 — 그러니 눈으로 확인해 둔다.
+console.log("\n⑥ 주소 끝 빗금 (둘 다 열려야 한다)");
+for (const path of ["/seoul/jongno-gu", "/seoul/", "/place/gwangjang-market"]) {
+  for (const p of [path.replace(/\/$/, ""), path.replace(/\/$/, "") + "/"]) {
+    try {
+      const r = await fetch(SITE + p, { redirect: "follow" });
+      const body = r.ok ? await r.text() : "";
+      // 200 만으로는 모자란다 — 첫 화면(앱)이 대신 뜬 것일 수도 있다.
+      // 그 페이지에만 있는 표시(canonical)가 있는지까지 본다.
+      const isPage = body.includes('rel="canonical"');
+      r.ok && isPage ? ok(`${r.status}  ${p}`) : fail(`${r.status}  ${p}${r.ok ? " — 열리긴 하는데 그 페이지가 아니다" : ""}`);
+    } catch (e) {
+      fail(`${p} — 못 열었다 (${e?.cause?.code ?? e.name})`);
+    }
+  }
+}
+
+// ── ⑦ 밥집 쪽 주소가 인터넷에서 열리나 ─────────────────────────────────
+//
+// 🚨 **우리가 링크를 켜기 전에 반드시 통과해야 하는 칸**이다
+//    (src/lib/partnerLinks.ts 의 PARTNER_READY). 저쪽 확인은 「로컬로 열어 본 것」
+//    이었다 — 로컬에서 되는 것과 인터넷에 올라간 것은 다른 이야기다.
+//    눌렀는데 빈 화면이면 손님은 **두 앱 다** 못 믿는다.
+//
+// ⚠️ 남의 서버다. 몇 개만 두드린다.
+const PARTNER = (process.env.PARTNER || "https://kfood-t493.onrender.com").replace(/\/$/, "");
+if (process.env.SKIP_PARTNER !== "1") {
+  console.log(`\n⑦ 밥집 쪽 (${PARTNER})`);
+  for (const p of ["/seoul/jongno-gu", "/seoul/jongno-gu/", "/seoul/jung-gu?hl=en"]) {
+    try {
+      const r = await fetch(PARTNER + p, { redirect: "follow" });
+      const body = r.ok ? await r.text() : "";
+      console.log(`   HTTP ${r.status}  ${p}  (${body.length.toLocaleString()}자)`);
+      if (!r.ok) fail(`${r.status}  ${p}`);
+      else ok(`${p}`);
+    } catch (e) {
+      fail(`${p} — 못 열었다 (${e?.cause?.code ?? e.name})`);
+    }
+  }
+}
+
 console.log(`\n${"─".repeat(60)}\n${bad ? `❌ 손봐야 할 것 ${bad}가지` : "✅ 새 주소가 제대로 서비스되고 있다"}`);
 process.exit(bad ? 1 : 0);
