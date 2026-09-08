@@ -26,7 +26,7 @@
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { ALL_PLACES, ALL_FESTIVALS, CATEGORY_META, type Place } from "../src/data/seed";
+import { ALL_PLACES, ALL_FESTIVALS, type Place } from "../src/data/seed";
 import { translateText } from "../src/lib/placeText";
 import { getMapLinks } from "../src/lib/mapLinks";
 import { galleryShotsFor } from "../src/lib/photoGallery";

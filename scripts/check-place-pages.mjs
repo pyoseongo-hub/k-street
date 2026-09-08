@@ -106,6 +106,30 @@ for (const [name, bad] of [
   if (bad.length) fail.push([`${name}이(가) 없는 곳 ${bad.length}장`, bad.slice(0, 5).map((r) => r.slug)]);
 }
 
+// ── ④ 서비스워커가 이 페이지들을 삼키지 않나 ────────────────────────────
+//
+// 🐞 **두 번 난 사고다.** 서비스워커는 기본으로 모든 화면 이동을 가로채
+//    앱 첫 화면(index.html)을 준다. SPA 라면 맞지만, 우리는 /place/ 와 /seoul/ 에
+//    **진짜 HTML** 을 따로 만들어 뒀다. denylist 에 안 적으면 이렇게 갈린다:
+//      · 처음 오는 손님·크롤러 → 진짜 페이지가 뜬다 ✅
+//      · 앱에 한 번이라도 들어온 적 있는 사람 → **앱 첫 화면**이 뜬다 ❌
+//    오류도 안 나고, 손으로 열어 보면 멀쩡해서 티가 안 난다.
+//    2026-09-05에 /place/ 로 한 번, 2026-09-08에 /seoul/ 로 또 났다.
+//    그래서 **사람 기억이 아니라 여기서 막는다** — 새 폴더를 만들면 자동으로 걸린다.
+const swFile = join(process.cwd(), "dist", "sw.js");
+if (existsSync(swFile)) {
+  const sw = readFileSync(swFile, "utf-8");
+  const dirs = [...new Set(rows.map((r) => r.slug.split("/")[0]))];
+  const missing = dirs.filter((d) => !sw.includes(`/^\\/${d}\\//`));
+  if (missing.length)
+    fail.push([
+      `서비스워커가 삼킬 폴더 ${missing.length}개 — vite.config.ts 의 navigateFallbackDenylist 에 넣을 것`,
+      missing.map((d) => `/${d}/ — 앱을 한 번이라도 연 사람에게는 첫 화면이 대신 뜬다`),
+    ]);
+} else {
+  warn.push(["dist/sw.js 가 없어 서비스워커 검사를 못 했다", []]);
+}
+
 // 설명이 너무 길면 검색 결과에서 잘린다. 잘리는 것 자체는 사고가 아니라 흔한 일이다.
 const longDesc = rows.filter((r) => r.desc.length > 160);
 if (longDesc.length) warn.push([`설명이 160자를 넘어 검색 결과에서 잘릴 수 있는 곳 ${longDesc.length}장`, []]);
