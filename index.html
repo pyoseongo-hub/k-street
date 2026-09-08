@@ -76,6 +76,24 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- 🗂️ 자바스크립트가 없을 때 보이는 문 (2026-09-08).
+         이 앱은 화면을 전부 자바스크립트로 그려서, 자바스크립트를 못 돌리는 쪽에는
+         **첫 화면이 빈 종이**다. AI 크롤러(GPTBot·ClaudeBot·Perplexity)가 바로
+         그렇다 — robots.txt 로 환영해 놓고 정작 볼 것을 안 준 셈이었다.
+         그래서 묶음 페이지(/seoul/…)로 가는 길을 여기에 둔다. 사람에게도 쓸모가
+         있다: 자바스크립트를 꺼 둔 브라우저에서도 목록을 볼 수 있다.
+         ⚠️ 화면에 보이는 것과 다른 말을 넣지 않는다 — 숨긴 글은 검색에서 벌점이다. -->
+    <noscript>
+      <p>K-Street — a free, no-sign-up guide to Seoul's neighbourhoods in 12 languages.</p>
+      <ul>
+        <li><a href="/seoul/">All of Seoul — by district, month and kind</a></li>
+        <li><a href="/seoul/festivals/">Festivals in Seoul</a></li>
+        <li><a href="/seoul/traditional-markets/">Traditional markets in Seoul</a></li>
+        <li><a href="/seoul/walking-paths/">Walking paths in Seoul</a></li>
+        <li><a href="/seoul/hiking-trails/">Hiking trails in Seoul</a></li>
+        <li><a href="/seoul/museums/">Museums in Seoul</a></li>
+      </ul>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

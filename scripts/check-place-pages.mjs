@@ -20,6 +20,11 @@ if (!existsSync(DIR)) {
   process.exit(1);
 }
 
+// 🗂️ 묶음 페이지(/seoul/…)도 **같은 잣대로** 잰다 (2026-09-08).
+//    곳 페이지만 검사하고 묶음은 안 하면, 벌점을 받는 쪽이 검사 밖에 남는다 —
+//    묶음 페이지야말로 얇아지기 쉬운 자리다(목록만 있고 내용이 없기 쉽다).
+const HUB_DIR = join(process.cwd(), "dist", "seoul");
+
 /** 태그·스크립트·스타일을 걷어 낸 **사람이 읽는 글**만 남긴다. */
 const textOf = (html) =>
   html
@@ -32,14 +37,25 @@ const textOf = (html) =>
 
 const pick = (html, re) => html.match(re)?.[1] ?? "";
 
-const slugs = readdirSync(DIR);
+const files = [
+  ...readdirSync(DIR).map((slug) => ({ slug: `place/${slug}`, f: join(DIR, slug, "index.html"), hub: false })),
+  ...(existsSync(HUB_DIR)
+    ? [
+        { slug: "seoul", f: join(HUB_DIR, "index.html"), hub: true },
+        ...readdirSync(HUB_DIR)
+          .filter((n) => n !== "index.html")
+          .map((n) => ({ slug: `seoul/${n}`, f: join(HUB_DIR, n, "index.html"), hub: true })),
+      ]
+    : []),
+];
+
 const rows = [];
-for (const slug of slugs) {
-  const f = join(DIR, slug, "index.html");
+for (const { slug, f, hub } of files) {
   if (!existsSync(f)) continue;
   const html = readFileSync(f, "utf-8");
   rows.push({
     slug,
+    hub,
     text: textOf(html).length,
     title: pick(html, /<title>([\s\S]*?)<\/title>/),
     desc: pick(html, /name="description" content="([^"]*)"/),
@@ -94,11 +110,12 @@ for (const [name, bad] of [
 const longDesc = rows.filter((r) => r.desc.length > 160);
 if (longDesc.length) warn.push([`설명이 160자를 넘어 검색 결과에서 잘릴 수 있는 곳 ${longDesc.length}장`, []]);
 
-const noPhoto = rows.filter((r) => !r.photo);
+// 사진은 곳 페이지에만 있다 — 묶음 페이지는 목록이라 원래 사진이 없다.
+const noPhoto = rows.filter((r) => !r.hub && !r.photo);
 
 // ── 결과 ─────────────────────────────────────────────────────────────────
 const lens = rows.map((r) => r.text).sort((a, b) => a - b);
-console.log(`📄 곳 페이지 ${rows.length}장`);
+console.log(`📄 곳 페이지 ${rows.filter((r) => !r.hub).length}장 · 묶음 페이지 ${rows.filter((r) => r.hub).length}장`);
 console.log(`   본문 글자   가장 적음 ${lens[0]} · 중간 ${lens[Math.floor(lens.length / 2)]} · 가장 많음 ${lens.at(-1)}`);
 console.log(`   사진 없는 곳 ${noPhoto.length}장`);
 console.log("");
