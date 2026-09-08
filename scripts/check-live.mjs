@@ -151,5 +151,26 @@ for (const gu of ["jongno-gu", "gangnam-gu"]) {
   }
 }
 
+// ── ⑨ 2단계 후보 — 저쪽 「동네」 페이지 (알아만 본다, 실패로 안 센다) ────
+//
+// 저쪽이 구 25개 말고 **관광객이 아는 이름** 12곳(홍대·이태원·강남·북촌·을지로·
+// 광장시장 …)에도 페이지를 만들었다고 알려 왔다. 우리 곳 페이지에서 이어 줄 때
+// 훨씬 정확해진다 — 특히 **광장시장은 우리 곳 페이지에도 있는 이름**이다.
+// 주소 규칙을 우리가 모르므로 몇 개 두드려 보고 **결과만 적는다.**
+// 🚨 여기서 안 열리는 것은 사고가 아니다 — 이름을 잘못 짚었을 뿐이라 실패로 안 센다.
+if (process.env.SKIP_PARTNER !== "1") {
+  console.log("\n⑨ 2단계 후보 — 저쪽 동네 페이지 (알아보기만)");
+  for (const p of ["/seoul/hongdae", "/seoul/gwangjang-market", "/seoul/gwangjang", "/seoul/bukchon", "/seoul/euljiro"]) {
+    try {
+      const r = await fetch(PARTNER + p, { redirect: "follow" });
+      const b = r.ok ? await r.text() : "";
+      const t = b.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1]?.trim() ?? "";
+      console.log(`   ${r.status}  ${p}${t ? `  — ${t}` : ""}`);
+    } catch (e) {
+      console.log(`   못 열었다  ${p} (${e?.cause?.code ?? e.name})`);
+    }
+  }
+}
+
 console.log(`\n${"─".repeat(60)}\n${bad ? `❌ 손봐야 할 것 ${bad}가지` : "✅ 새 주소가 제대로 서비스되고 있다"}`);
 process.exit(bad ? 1 : 0);
