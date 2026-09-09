@@ -1489,6 +1489,24 @@ button {
   border: 1px solid var(--line, #ddd9d0);
 }
 
+/* 🍚 밥집 — 공유와 **같은 줄, 같은 모양**이다 (2026-09-09).
+   사장님이 앱 화면에서 "안보이는데"라고 하셨다 — 웹 페이지에만 붙여 놨던 것이다.
+
+   ⚠️ 줄을 더 만들지 않는다. 이 줄에 이미 셋이 들어가므로(기사·공유·밥집)
+      **글자를 한두 낱말로** 잡고 flex 를 안 늘린다. 기사 단추가 남는 자리를 먹는다.
+   🚪 남의 앱으로 나가는 문이라 화살표(↗)를 붙인다 — 앱이 이미 쓰는 표시다.
+      링크(<a>)라서 밑줄을 지우고 글자 크기를 단추와 맞춘다. */
+.map-btn--eat {
+  flex: 0 0 auto;
+  gap: 4px;
+  padding-left: 11px;
+  padding-right: 11px;
+  background: transparent;
+  color: var(--muted, #6b6a63);
+  border: 1px solid var(--line, #ddd9d0);
+  text-decoration: none;
+}
+
 /* 🚕 **택시 기사에게 보여 주는 화면** (DriverCard.tsx).
    왜 만들었는지는 그쪽 주석에 있다 — 카카오맵·우버 어느 쪽도 택시 호출로
    이어지지 않는 것을 사장님 폰에서 확인했다.

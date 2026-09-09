@@ -31,6 +31,14 @@ export const APP_URL = `${SITE}/`;
 
 const slugMap = SLUGS as Record<string, string>;
 
+/**
+ * id → 슬러그. 밥집 연동(partnerLinks.ts)도 이 표를 쓴다 —
+ * 이름으로 이어 둔 곳(광장시장 등)을 슬러그로 찾기 때문이다.
+ */
+export function slugFor(id: string | undefined): string | undefined {
+  return id ? slugMap[id] : undefined;
+}
+
 /** 그 곳의 공개 주소. 슬러그가 없으면(아직 페이지가 안 만들어진 곳) null. */
 export function placeUrl(id: string | undefined): string | null {
   if (!id) return null;

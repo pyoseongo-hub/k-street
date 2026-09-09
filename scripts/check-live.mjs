@@ -170,7 +170,20 @@ for (const path of [
 // 🚨 여기서 안 열리는 것은 사고가 아니다 — 이름을 잘못 짚었을 뿐이라 실패로 안 센다.
 if (process.env.SKIP_PARTNER !== "1") {
   console.log("\n⑨ 2단계 후보 — 저쪽 동네 페이지 (알아보기만)");
-  for (const p of ["/seoul/hongdae", "/seoul/gwangjang-market", "/seoul/gwangjang", "/seoul/bukchon", "/seoul/euljiro"]) {
+  // 🚨 **우리가 실제로 링크를 거는 서울 동네 8곳 전부.** 2026-09-09에 세어 보니
+//    myeongdong·itaewon·seongsu·gangnam 네 개는 **열어 보지도 않고 링크를 걸어 뒀다**
+//    (곳 12장이 거기로 간다). 저쪽이 준 목록만 믿고 넘긴 것이다 — 목록은 근거가
+//    아니라 주장이다. 여기에 넣어 매번 같이 확인한다.
+for (const p of [
+  "/seoul/myeongdong",
+  "/seoul/hongdae",
+  "/seoul/itaewon",
+  "/seoul/seongsu",
+  "/seoul/gangnam",
+  "/seoul/bukchon",
+  "/seoul/euljiro",
+  "/seoul/gwangjang-market",
+]) {
     try {
       const r = await fetch(PARTNER + p, { redirect: "follow" });
       const b = r.ok ? await r.text() : "";

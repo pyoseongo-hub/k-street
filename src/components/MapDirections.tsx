@@ -2,7 +2,9 @@ import { useState } from "react";
 import DriverCard from "./DriverCard";
 import { getMapLinks, openMapLink, type MapLinkTarget } from "../lib/mapLinks";
 import { getPositionOrNull } from "../lib/userPosition";
-import { placeUrl, sharePlace } from "../lib/shareLink";
+import { placeUrl, sharePlace, slugFor } from "../lib/shareLink";
+// 🍚 밥집으로 가는 주소는 **표 한 장**에서만 온다(partnerLinks.ts).
+import { eatUrlForPlace } from "../lib/partnerLinks";
 import { useLanguage } from "../lib/useLanguage";
 
 // SeoulMap.tsx(네이버 지도 InfoWindow)는 raw HTML 문자열이라 이 컴포넌트를 못 쓴다 —
@@ -25,7 +27,7 @@ import { useLanguage } from "../lib/useLanguage";
 // 위치를 못 받아도(거절·실내·미지원·4초 초과) 목적지만으로 그대로 연다 —
 // 길찾기가 통째로 막히는 것보다 낫다.
 export default function MapDirections({ place }: { place: MapLinkTarget }) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [locating, setLocating] = useState<"KAKAO" | "NAVER" | null>(null);
   // 🇰🇷 기사에게 보여 주는 화면(DriverCard.tsx). 왜 만들었는지는 그쪽 주석에 있다 —
   // 요약하면 **카카오맵에도 우버에도 택시 호출로 가는 길이 없었다**(사장님 폰에서
@@ -37,6 +39,14 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
   //    슬러그가 없는 곳은 주소를 지어내지 않고 단추를 아예 안 그린다.
   const url = placeUrl(place.id);
   const [copied, setCopied] = useState(false);
+
+  // 🍚 그 동네 밥집. **동네를 알면 동네로, 모르면 그 구로** 보낸다.
+  //    손님이 쓰는 언어를 그대로 넘긴다(대만은 zhTW 로 갈아 끼운다 — partnerLinks.ts).
+  //    저쪽 주소가 없으면 null 이라 단추를 아예 안 그린다.
+  const eat = eatUrlForPlace(
+    { slug: slugFor(place.id), addr: place.addr, gu: place.gu },
+    language
+  );
 
   async function onShare() {
     if (!url) return;
@@ -102,6 +112,22 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
             <span aria-hidden="true">🔗</span>
             {copied ? t.shareCopied : t.shareLabel}
           </button>
+        )}
+        {/* 🍚 남의 앱으로 나가는 문이라 **새 탭**으로 연다 — 돌아왔을 때 보던
+            자리(고른 계절·구·스크롤)가 그대로 있어야 한다. 지도 단추와 달리
+            이건 그냥 링크라서 <a> 다. */}
+        {eat && (
+          <a
+            className="map-btn map-btn--eat"
+            href={eat.href}
+            target="_blank"
+            rel="noopener"
+            title={eat.label}
+          >
+            <span aria-hidden="true">🍚</span>
+            {t.eatNearbyLabel}
+            <span aria-hidden="true">↗</span>
+          </a>
         )}
       </div>
       {driver && <DriverCard place={place} onClose={() => setDriver(false)} />}
