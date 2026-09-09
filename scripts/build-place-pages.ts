@@ -36,7 +36,11 @@ import { galleryShotsFor } from "../src/lib/photoGallery";
 //    (앱 화면은 이미 이 표를 쓰고 있었다 — 여기만 안 쓰면 반쪽 적용이다).
 import { districtFullName, dongName } from "../src/data/districtNamesEn";
 // 🍚 밥집 쪽으로 잇는 주소는 **표 한 장**에서만 온다(src/lib/partnerLinks.ts).
-import { eatNearbyUrl, eatUrlForPlace } from "../src/lib/partnerLinks";
+import { eatNearbyUrl } from "../src/lib/partnerLinks";
+// 🌏 12개 언어. 곳 이름·메모는 place-translations.json 에서(translateText),
+//    틀에 박히는 낱말은 여기서 온다(scripts/lib/page-strings.ts).
+import { getTranslations, type Language } from "../src/lib/translations";
+import { PAGE_STRINGS, PAGE_LANGS, langPath } from "./lib/page-strings";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
@@ -147,11 +151,14 @@ const hubPathCategory = (c: string) => `seoul/${CATEGORY_HUB[c]?.slug ?? "places
  * 🚨 **날짜는 절대 안 만든다.** 우리가 아는 것은 "어느 달쯤"까지다
  *    (Place.period 주석 참고 — 지난해 날짜를 올해 것처럼 적으면 손님이 헛걸음한다).
  */
-function whenLabel(p: Place): string {
+function whenLabel(p: Place, lang: Language = "en"): string {
   if (p.startMonth == null) return "";
+  // 달 이름은 앱이 이미 12개 언어를 갖고 있다(T.months) — 여기서 또 만들지 않는다.
+  const m = lang === "en" ? MONTHS : getTranslations(lang).months;
+  const one = (n: number) => String(lang === "en" ? MONTHS[n] : (m as Record<number, string>)[n]);
   return p.endMonth != null && p.endMonth !== p.startMonth
-    ? `${MONTHS[p.startMonth]}–${MONTHS[p.endMonth]}`
-    : MONTHS[p.startMonth];
+    ? `${one(p.startMonth)}–${one(p.endMonth)}`
+    : one(p.startMonth);
 }
 
 // 🎨 곳 페이지와 묶음 페이지가 **같은 스타일을 쓴다.** 두 벌로 나누면 한쪽만
@@ -200,16 +207,45 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
 .chips a{display:inline-block;padding:7px 12px;background:var(--card);border:1px solid var(--line);border-radius:100px;text-decoration:none;color:var(--ink);font-size:13.5px;font-weight:600}
 `;
 
-function pageFor(p: Place, sameGu: Place[]): string {
+/**
+ * 🌏 **hreflang** — "같은 내용의 다른 언어판"이라고 구글에게 알려 준다.
+ *
+ * 🚨 이게 없으면 구글은 12개 언어판을 **같은 페이지를 12번 만든 것**으로 보고
+ *    하나만 남기고 나머지를 버린다(중복 콘텐츠). 있으면 나라·언어에 맞는 판을
+ *    골라서 보여 준다 — 일본에서 검색하면 일본어판이 뜬다.
+ *
+ * ⚠️ **모든 언어판이 서로를 다 가리켜야 한다**(자기 자신 포함). 한쪽만 가리키면
+ *    구글이 무시한다. x-default 는 어느 언어도 안 맞을 때 보여 줄 판 — 영어다.
+ */
+function hreflang(rest: string): string {
+  return (
+    PAGE_LANGS.map(
+      (l) => `<link rel="alternate" hreflang="${l}" href="${SITE}/${langPath(l, rest)}">`
+    ).join("\n") +
+    `\n<link rel="alternate" hreflang="x-default" href="${SITE}/${rest}">`
+  );
+}
+
+function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
   const slug = savedSlugs[p.id];
-  const nameEn = translateText(p.name, "en");
-  const noteEn = p.note ? translateText(p.note, "en") : "";
-  const kind = CATEGORY_EN[p.category] ?? "Place";
+  const S = PAGE_STRINGS[lang];
+  const T = getTranslations(lang);
+  // 구 이름도 앱과 **같은 표**를 쓴다 — 「종로구」/「Jongno-gu」/「鍾路区」.
+  const guName = districtFullName(p.gu, lang);
+  const title = translateText(p.name, lang);
+  const note = p.note ? translateText(p.note, lang) : "";
+  // 갈래 이름 — 영어는 곳 페이지에 어울리는 단수형(「Traditional market」)을 쓰고,
+  // 나머지 언어는 앱이 이미 가진 딱지를 그대로 쓴다(시장·축제·박물관…).
+  const kind =
+    (lang === "en" ? CATEGORY_EN[p.category] : T.categoryLabels[p.category]) ??
+    CATEGORY_EN[p.category] ??
+    "Place";
   const photo = p.image ?? p.thumb ?? galleryShotsFor(p.name, p.gu)[0]?.url;
   const [kakao, naver] = getMapLinks(p);
-  const eat = eatUrlForPlace({ slug, addr: p.addr, gu: p.gu });
-  const url = `${SITE}/place/${slug}/`;
-  const showKo = nameEn !== p.name;
+  // 🍚 밥집 — 손님 언어를 그대로 넘긴다(대만은 zhTW 로 갈아 끼운다).
+  const eatHref = eatNearbyUrl(p.gu, lang);
+  const url = `${SITE}/${langPath(lang, `place/${slug}/`)}`;
+  const showKo = title !== p.name;
 
   // 설명 한 줄 — 검색 결과에 그대로 뜬다. **지어내지 않고 아는 것만 잇는다.**
   //
@@ -219,17 +255,24 @@ function pageFor(p: Place, sameGu: Place[]): string {
   //    많게는 한 주소에 4장. 구글은 그런 걸 "같은 페이지를 여러 장 만든 것"으로 읽고,
   //    검색 결과에도 똑같은 줄이 나란히 떠서 손님이 뭘 눌러야 할지 모른다.
   //    이름은 곳마다 다르므로 그것만 앞에 세우면 겹침이 사라진다.
+  //    🌏 영어는 문장으로 쓰고(「Traditional market in Jongno-gu, Seoul.」),
+  //       나머지 언어는 **가운뎃점으로 잇는다.** 언어마다 어순·조사가 달라
+  //       문장 틀을 옮기면 어색해지는데, 이름·갈래·동네는 그대로 붙여도 읽힌다.
   const raw =
-    `${nameEn}${showKo ? ` (${p.name})` : ""} — ` +
-    (noteEn ? `${noteEn} ` : "") +
-    `${kind} in ${guEn(p.gu)}, Seoul.` +
-    (p.addr ? ` ${p.addr}` : "");
+    lang === "en"
+      ? `${title}${showKo ? ` (${p.name})` : ""} — ` +
+        (note ? `${note} ` : "") +
+        `${kind} in ${guEn(p.gu)}, Seoul.` +
+        (p.addr ? ` ${p.addr}` : "")
+      : [`${title}${showKo ? ` (${p.name})` : ""}`, note, `${kind} · ${guName}`, p.addr]
+          .filter(Boolean)
+          .join(" · ");
   // 검색 결과는 160자쯤에서 자른다. 우리가 먼저 **낱말 경계에서** 자르는 편이
   // 말 중간에 잘려 나가는 것보다 낫다.
   const desc =
     raw.length <= 160 ? raw : raw.slice(0, 160).replace(/\s+\S*$/, "") + "…";
 
-  const when = whenLabel(p);
+  const when = whenLabel(p, lang);
 
   // 🔗 같은 구의 다른 곳으로 이어 준다. 크롤러는 링크를 타고 다니므로,
   //    페이지들이 서로 이어져 있어야 **다 발견된다.** 섬처럼 떨어져 있으면
@@ -239,7 +282,7 @@ function pageFor(p: Place, sameGu: Place[]): string {
     .slice(0, 8)
     .map(
       (q) =>
-        `<li><a href="/place/${savedSlugs[q.id]}/">${esc(translateText(q.name, "en"))}` +
+        `<li><a href="/${langPath(lang, `place/${savedSlugs[q.id]}/`)}">${esc(translateText(q.name, lang))}` +
         `<span class="ko"> ${esc(q.name)}</span></a></li>`
     )
     .join("");
@@ -249,10 +292,10 @@ function pageFor(p: Place, sameGu: Place[]): string {
   const jsonLd: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": p.category === "festival" ? "Festival" : "TouristAttraction",
-    name: nameEn,
+    name: title,
     alternateName: p.name,
     url,
-    ...(noteEn ? { description: noteEn } : {}),
+    ...(note ? { description: note } : {}),
     ...(photo ? { image: photo } : {}),
     address: {
       "@type": "PostalAddress",
@@ -277,22 +320,24 @@ function pageFor(p: Place, sameGu: Place[]): string {
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "K-Street", item: `${SITE}/` },
       { "@type": "ListItem", position: 2, name: "Seoul", item: `${SITE}/seoul/` },
-      { "@type": "ListItem", position: 3, name: guEn(p.gu), item: `${SITE}/${hubPathGu(p.gu)}/` },
-      { "@type": "ListItem", position: 4, name: nameEn, item: url },
+      // 묶음 페이지는 아직 영어만 있다 — 길 표시는 그 영어 페이지를 가리킨다.
+      { "@type": "ListItem", position: 3, name: guName, item: `${SITE}/${hubPathGu(p.gu)}/` },
+      { "@type": "ListItem", position: 4, name: title, item: url },
     ],
   };
 
   return `<!doctype html>
-<html lang="en">
+<html lang="${lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${esc(nameEn)}${showKo ? ` (${esc(p.name)})` : ""} — ${esc(guEn(p.gu))}, Seoul | K-Street</title>
+<title>${esc(title)}${showKo ? ` (${esc(p.name)})` : ""} — ${esc(guName)}, ${esc(S.seoul)} | K-Street</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${url}">
+${hreflang(`place/${slug}/`)}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="K-Street">
-<meta property="og:title" content="${esc(nameEn)}${showKo ? ` · ${esc(p.name)}` : ""}">
+<meta property="og:title" content="${esc(title)}${showKo ? ` · ${esc(p.name)}` : ""}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="${esc(photo ?? `${SITE}/share-card.png`)}">
@@ -305,8 +350,8 @@ function pageFor(p: Place, sameGu: Place[]): string {
 <div class="wrap">
 <header><a href="/"><span class="mark">K</span> K-STREET</a></header>
 
-<span class="kind">${esc(kind)} · ${esc(guEn(p.gu))}</span>
-<h1>${esc(nameEn)}</h1>
+<span class="kind">${esc(kind)} · ${esc(guName)}</span>
+<h1>${esc(title)}</h1>
 ${showKo ? `<p class="ko-name" lang="ko">${esc(p.name)}</p>` : ""}
 
 ${
@@ -314,46 +359,55 @@ ${
     ? // 🕳️ 사진이 죽어 있으면 **칸째로 치운다.** 안 그러면 큰 빈 상자와
       //    "Photo: 한국관광공사"라는 출처만 남아서, 있지도 않은 사진의 출처를
       //    적어 둔 꼴이 된다. 관광공사 썸네일 중 실제로 404 인 것이 있다.
-      `<figure><img src="${esc(photo)}" alt="${esc(nameEn)}" loading="lazy" width="1200" height="800"
+      `<figure><img src="${esc(photo)}" alt="${esc(title)}" loading="lazy" width="1200" height="800"
  onerror="this.closest('figure').remove()">
-<figcaption>Photo: Korea Tourism Organization</figcaption></figure>`
+<figcaption>${esc(T.photoCredit)}</figcaption></figure>`
     : ""
 }
 
-${noteEn ? `<p class="note">${esc(noteEn)}</p>` : ""}
+${note ? `<p class="note">${esc(note)}</p>` : ""}
 
 <dl>
-<dt>What</dt><dd>${esc(kind)}</dd>
-<dt>District</dt><dd>${esc(guEn(p.gu))}${p.dong ? ` · ${esc(dongEn(p.dong))}` : ""}</dd>
-${p.addr ? `<dt>Address</dt><dd lang="ko">${esc(p.addr)}</dd>` : ""}
-${when ? `<dt>When</dt><dd>${esc(when)} — dates shift each year, check the official notice</dd>` : ""}
-${p.officialUrl ? `<dt>Official</dt><dd><a href="${esc(p.officialUrl)}" rel="nofollow noopener">${esc(new URL(p.officialUrl).hostname)}</a></dd>` : ""}
+<dt>${esc(S.what)}</dt><dd>${esc(kind)}</dd>
+<dt>${esc(S.district)}</dt><dd>${esc(guName)}${p.dong ? ` · ${esc(dongName(p.dong, lang))}` : ""}</dd>
+${p.addr ? `<dt>${esc(S.address)}</dt><dd lang="ko">${esc(p.addr)}</dd>` : ""}
+${when ? `<dt>${esc(S.when)}</dt><dd>${esc(when)} — ${esc(S.datesShift)}</dd>` : ""}
+${p.officialUrl ? `<dt>${esc(S.official)}</dt><dd><a href="${esc(p.officialUrl)}" rel="nofollow noopener">${esc(new URL(p.officialUrl).hostname)}</a></dd>` : ""}
 </dl>
 
 <div class="go">
-<a class="k" href="${esc(kakao.url)}" rel="nofollow noopener">Open in KakaoMap</a>
-<a class="n" href="${esc(naver.url)}" rel="nofollow noopener">Open in Naver Map</a>
+<a class="k" href="${esc(kakao.url)}" rel="nofollow noopener">${esc(T.kakaoMapLabel)}</a>
+<a class="n" href="${esc(naver.url)}" rel="nofollow noopener">${esc(T.naverMapLabel)}</a>
 </div>
 ${
   // 🍚 밥 먹을 곳 — **지도 버튼 바로 아래**다. 이 곳을 어떻게 가는지 다음에 오는
   //    물음이 「그럼 밥은?」이기 때문이다. 동네를 알면 동네로(홍대·광장시장…),
   //    모르면 그 구로 보낸다. 아직 안 켰으면 null 이라 아무것도 안 그린다.
-  eat ? `<div class="go"><a class="eat" href="${esc(eat.href)}" rel="noopener">${esc(eat.label)}</a></div>` : ""
+  eatHref
+    ? `<div class="go"><a class="eat" href="${esc(eatHref)}" rel="noopener">${esc(S.eatIn(guName))}</a></div>`
+    : ""
 }
-<div class="go"><a class="app" href="/">See more places in Seoul →</a></div>
+<div class="go"><a class="app" href="/">${esc(S.openApp)}</a></div>
 
-${nearby ? `<h2>More in ${esc(guEn(p.gu))}</h2><ul>${nearby}</ul>` : ""}
+${nearby ? `<h2>${esc(S.moreIn(guName))}</h2><ul>${nearby}</ul>` : ""}
 
-<h2>Browse</h2>
+<h2>${esc(S.browse)}</h2>
 <ul class="chips">
-<li><a href="/${hubPathGu(p.gu)}/">Everything in ${esc(guEn(p.gu))}</a></li>
-${p.startMonth != null ? `<li><a href="/${hubPathMonth(p.startMonth)}/">Seoul festivals in ${esc(MONTHS[p.startMonth])}</a></li>` : ""}
-${CATEGORY_HUB[p.category] ? `<li><a href="/${hubPathCategory(p.category)}/">${esc(CATEGORY_HUB[p.category].plural)} in Seoul</a></li>` : ""}
+<li><a href="/${hubPathGu(p.gu)}/">${esc(S.everythingIn(guName))}</a></li>
+${
+  // 🌏 달별·갈래별 묶음 페이지는 **아직 영어만 있다.** 그래서 영어 페이지에만
+  //    딱지를 건다 — 일본어 손님을 영어 목록으로 보내면 거기서 끝난다.
+  //    묶음 페이지를 번역하면 이 조건을 지운다.
+  lang === "en"
+    ? (p.startMonth != null ? `<li><a href="/${hubPathMonth(p.startMonth)}/">Seoul festivals in ${esc(MONTHS[p.startMonth])}</a></li>` : "") +
+      (CATEGORY_HUB[p.category] ? `<li><a href="/${hubPathCategory(p.category)}/">${esc(CATEGORY_HUB[p.category].plural)} in Seoul</a></li>` : "")
+    : ""
+}
 </ul>
 
 <footer>
-K-Street — a free, no-sign-up guide to Seoul's neighbourhoods in 12 languages.<br>
-Place data from the Korea Tourism Organization. Photos: Korea Tourism Organization (KOGL Type 1).
+${esc(S.footerAbout)}<br>
+${esc(S.footerData)}
 </footer>
 </div>
 </body>
@@ -368,12 +422,17 @@ for (const p of ALL) {
   byGu.get(p.gu)!.push(p);
 }
 
+// 🌏 **곳마다 12개 언어.** 307곳 × 12 = 3,684장.
+//    영어는 지금 주소 그대로(`/place/…/`), 나머지는 앞에 언어를 붙인다
+//    (`/ja/place/…/`) — 이미 낸 주소는 안 바꾼다(page-strings.ts 주석).
 let written = 0;
-for (const p of ALL) {
-  const dir = join(DIST, "place", savedSlugs[p.id]);
-  mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, "index.html"), pageFor(p, byGu.get(p.gu) ?? []));
-  written++;
+for (const lang of PAGE_LANGS) {
+  for (const p of ALL) {
+    const dir = join(DIST, ...langPath(lang, `place/${savedSlugs[p.id]}`).split("/"));
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, "index.html"), pageFor(p, byGu.get(p.gu) ?? [], lang));
+    written++;
+  }
 }
 
 // ── 🗂️ 묶음 페이지 ───────────────────────────────────────────────────────
@@ -686,8 +745,14 @@ const urls = [
   ...hubs.map(
     (h) => `  <url><loc>${SITE}/${h.path}/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`
   ),
-  ...ALL.map(
-    (p) => `  <url><loc>${SITE}/place/${savedSlugs[p.id]}/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>`
+  // 🌏 12개 언어판을 다 적는다. 언어판끼리는 hreflang 으로 묶여 있으므로
+  //    구글이 「같은 페이지 12장」이 아니라 「한 페이지의 12개 언어」로 읽는다.
+  ...PAGE_LANGS.flatMap((lang) =>
+    ALL.map(
+      (p) =>
+        `  <url><loc>${SITE}/${langPath(lang, `place/${savedSlugs[p.id]}/`)}</loc>` +
+        `<changefreq>weekly</changefreq><priority>${lang === "en" ? "0.7" : "0.6"}</priority></url>`
+    )
   ),
 ];
 writeFileSync(
@@ -695,5 +760,5 @@ writeFileSync(
   `<?xml version="1.0" encoding="UTF-8"?>\n<!-- scripts/build-place-pages.ts 가 만든다. 손으로 고치지 말 것. -->\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`
 );
 
-console.log(`✅ 곳 페이지 ${written}장 · 묶음 페이지 ${hubs.length}장 · 사이트맵 주소 ${urls.length}개`);
+console.log(`✅ 곳 페이지 ${written}장(${PAGE_LANGS.length}개 언어 × ${ALL.length}곳) · 묶음 페이지 ${hubs.length}장 · 사이트맵 주소 ${urls.length}개`);
 if (newSlugs) console.log(`   새 주소 ${newSlugs}개를 src/data/place-slugs.json 에 적었다 — 커밋할 것.`);
