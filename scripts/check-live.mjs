@@ -132,22 +132,32 @@ if (process.env.SKIP_PARTNER !== "1") {
 // 우리 구별 페이지에 그 줄이 실제로 붙어 있고, 거기 적힌 주소를 눌렀을 때
 // 밥집 목록이 뜨는가. 우리가 켰다고 믿는 것과 손님 화면에 있는 것은 다르다.
 console.log("\n⑧ 두 앱이 이어졌나 (우리 페이지 → 밥집)");
-for (const gu of ["jongno-gu", "gangnam-gu"]) {
+// 곳 페이지도 같이 본다 (2026-09-09) — 동네를 아는 곳은 동네로, 모르는 곳은 구로
+// 가야 한다. 셋을 고른 이유: 광장시장은 이름으로 이은 곳, 상수동 카페거리는
+// 주소의 법정동으로 이은 곳, 전쟁기념관은 **도로명 함정에 걸렸던 곳**이다
+// (「이태원로」 때문에 이태원으로 갈 뻔했다 — 지금 용산구로 가야 맞다).
+for (const path of [
+  "/seoul/jongno-gu/",
+  "/seoul/gangnam-gu/",
+  "/place/gwangjang-market/",
+  "/place/sangsu-dong-cafe-street/",
+  "/place/war-memorial-museum/",
+]) {
   try {
-    const r = await fetch(`${SITE}/seoul/${gu}/`);
+    const r = await fetch(`${SITE}${path}`);
     const html2 = await r.text();
     const m = html2.match(/<a class="eat" href="([^"]+)"[^>]*>([^<]*)</);
     if (!m) {
-      fail(`/seoul/${gu}/ 에 밥집 줄이 없다`);
+      fail(`${path} 에 밥집 줄이 없다`);
       continue;
     }
-    ok(`/seoul/${gu}/ 에 「${m[2].trim()}」 있다`);
+    ok(`${path} 에 「${m[2].trim()}」 있다`);
     const r2 = await fetch(m[1], { redirect: "follow" });
     const b2 = r2.ok ? await r2.text() : "";
     const t2 = b2.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1]?.trim() ?? "";
     r2.ok ? ok(`   눌러 보니 ${r2.status} — ${t2}`) : fail(`   눌러 보니 ${r2.status} — ${m[1]}`);
   } catch (e) {
-    fail(`/seoul/${gu}/ — ${e?.cause?.code ?? e.name}`);
+    fail(`${path} — ${e?.cause?.code ?? e.name}`);
   }
 }
 
