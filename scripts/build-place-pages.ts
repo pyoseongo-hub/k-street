@@ -266,8 +266,9 @@ function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
   const slug = savedSlugs[p.id];
   const S = PAGE_STRINGS[lang];
   const T = getTranslations(lang);
-  // 🗂️ 묶음 페이지로 갈 때 쓰는 언어. 그 언어에 묶음이 없으면 영어로 간다
-  //    (HUB_LANGS 가 아직 영어·일어·중국어 넷뿐이다).
+  // 🗂️ 묶음 페이지로 갈 때 쓰는 언어. 그 언어에 묶음이 없으면 영어로 간다.
+  //    2026-09-10에 12개 언어가 다 차서 지금은 늘 자기 언어로 가지만, 새 언어를
+  //    곳 페이지에만 먼저 넣는 일이 또 생길 수 있으므로 이 갈림은 남겨 둔다.
   const HL = hubLang(lang);
   const HS = HUB_STRINGS[HL] as HubStrings;
   // 구 이름도 앱과 **같은 표**를 쓴다 — 「종로구」/「Jongno-gu」/「鍾路区」.
@@ -668,13 +669,14 @@ function countByKind(items: Place[], max = 0, lang: Language = "en"): string {
   const S = HUB_STRINGS[lang] as HubStrings;
   const n = new Map<string, number>();
   for (const p of items) n.set(p.category, (n.get(p.category) ?? 0) + 1);
+  // 🧹 **영어만 따로 처리하던 갈래를 없앴다** (2026-09-10). 예전에는 여기서 영어의
+  //    단수·복수를 직접 갈랐는데, 그 규칙이 HUB_STRINGS 의 kindCount 에도 생기면서
+  //    **잣대가 둘**이 됐다. 실제로 갈라졌다 — catLead 는 kindCount 를 쓰는데
+  //    영어 kindCount 에 단수 처리가 없어서 「1 traditional markets」가 나왔다.
+  //    지금은 12개 언어가 전부 kindCount 한 군데를 지난다.
   const parts = [...n.entries()]
     .sort((a, b) => b[1] - a[1])
-    .map(([c, k]) =>
-      lang === "en"
-        ? `${k} ${(k === 1 ? CATEGORY_EN[c] ?? "place" : CATEGORY_HUB[c]?.plural ?? "places").toLowerCase()}`
-        : S.kindCount(kindLabel(c, lang), k)
-    );
+    .map(([c, k]) => S.kindCount(c, kindLabel(c, lang), k));
   // 검색 결과 한 줄에 넣을 때는 앞의 몇 개만 — 다 적으면 잘려서 문장이 끊긴다.
   if (max && parts.length > max) return parts.slice(0, max).join(S.join) + S.andMore;
   return parts.join(S.join);
@@ -790,7 +792,13 @@ for (const [cat, meta] of Object.entries(CATEGORY_HUB)) {
       kind: S.byKind,
       h1: S.catH1(kindLabel(cat, lang)),
       title: S.catTitle(kindLabel(cat, lang), items.length, gus.length),
-      lead: S.catLead(kindLabel(cat, lang), items.length, gus.length, cat === "festival"),
+      // 🚨 「수+갈래」는 **kindCount 한 군데서만** 만든다 — 스페인어·프랑스어·독일어는
+      //    1개일 때 단수형으로 갈라야 하고, 그 규칙이 두 곳에 있으면 한쪽만 고치게 된다.
+      lead: S.catLead(
+        S.kindCount(cat, kindLabel(cat, lang), items.length),
+        gus.length,
+        cat === "festival"
+      ),
       desc: clip(S.catDesc(kindLabel(cat, lang), items.length, gus.length)),
       groups: gus.map((gu) => ({ heading: guName(gu), items: items.filter((p) => p.gu === gu), showGu: false })),
       chipsTitle: S.otherKinds,
