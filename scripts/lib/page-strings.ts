@@ -265,3 +265,290 @@ export const langPath = (lang: Language, rest: string) =>
 export const PAGE_LANGS: Language[] = [
   "en", "ko", "ja", "zh", "zh-TW", "vi", "es", "fr", "de", "ru", "id", "th",
 ];
+
+// ─────────────────────────────────────────────────────────────────────────
+// 🗂️ 묶음 페이지에 박히는 낱말들
+// ─────────────────────────────────────────────────────────────────────────
+//
+// 곳 페이지와 **따로 두는 이유** (2026-09-10) — 곳 페이지는 「무엇 / 동네 / 주소」
+// 처럼 딱지만 갈아 끼우면 됐다. 묶음 페이지는 **문장에 숫자가 박힌다**:
+//   「4 traditional markets, 3 festivals in 12 districts of Seoul」
+// 그래서 낱말이 아니라 **함수**로 받아야 한다. 언어마다 셈하는 법이 다르다.
+//
+// 🚨 **영어·일어·중국어부터 시작한다** (사장님 지시 2026-09-10).
+//    CJK 세 언어는 **복수형이 없어서** 셈 문장이 오히려 안전하다 —
+//    영어의 "1 place / 2 places" 같은 갈림이 아예 없다.
+//    (예전에 뒤에 s 를 붙여 "3 street & alleys" 를 만든 적이 있다.)
+//    나머지 8개 언어는 복수형 규칙이 언어마다 달라(러시아어는 1/2~4/5+ 세 갈래)
+//    한꺼번에 하면 틀린 문장을 대량으로 만든다. 나중에 언어별로 더한다.
+//
+// 그래서 목록을 PAGE_LANGS 와 **따로 둔다.** 여기 없는 언어는 묶음 페이지가
+// 아예 안 만들어지고, 곳 페이지의 묶음 링크는 영어 묶음으로 간다.
+export const HUB_LANGS: Language[] = ["en", "ja", "zh", "zh-TW"];
+
+/** 이 언어에 묶음 페이지가 있나 — 없으면 영어 묶음으로 보낸다. */
+export const hubLang = (lang: Language): Language =>
+  HUB_LANGS.includes(lang) ? lang : "en";
+
+export interface HubStrings {
+  /** 페이지 위 작은 딱지 */
+  byMonth: string;
+  byDistrict: string;
+  byKind: string;
+  index: string;
+  /** 머리 줄 두 개 */
+  allOfSeoul: string;
+  openTheApp: string;
+  /** 세는 말 */
+  places: (n: number) => string;
+  festivals: (n: number) => string;
+  districts: (n: number) => string;
+  /** 「시장 4곳, 축제 3곳」 — 갈래 이름과 수를 잇는다 */
+  kindCount: (label: string, n: number) => string;
+  /** 위 조각들을 잇는 글자 */
+  join: string;
+  andMore: string;
+  /** 달별 */
+  monthH1: (month: string) => string;
+  monthTitle: (month: string, year: number, n: number) => string;
+  monthLead: (n: number, gus: number, month: string) => string;
+  monthDesc: (n: number, gus: number, month: string) => string;
+  otherMonths: string;
+  festivalsInMonth: (month: string) => string;
+  /** 구별 */
+  guH1: (gu: string) => string;
+  guTitle: (gu: string, n: number) => string;
+  guLead: (gu: string, guKo: string, n: number, kinds: string) => string;
+  guDesc: (gu: string, kinds: string) => string;
+  otherDistricts: string;
+  kindInGu: (kind: string, gu: string) => string;
+  /** 갈래별 */
+  catH1: (kind: string) => string;
+  catTitle: (kind: string, n: number, gus: number) => string;
+  catLead: (kind: string, n: number, gus: number, isFestival: boolean) => string;
+  catDesc: (kind: string, n: number, gus: number) => string;
+  otherKinds: string;
+  /** 대문 */
+  indexH1: string;
+  indexTitle: (n: number) => string;
+  indexLead: (n: number, gus: number, kinds: string) => string;
+  indexDesc: (kinds: string, gus: number) => string;
+  byDistrictChips: string;
+}
+
+/** 영어의 복수형 — 뒤에 s 를 붙이는 것은 여기 한 군데로만 모아 둔다. */
+const en = (n: number, one: string, many = one + "s") => `${n} ${n === 1 ? one : many}`;
+
+export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
+  en: {
+    byMonth: "By month",
+    byDistrict: "By district",
+    byKind: "By kind",
+    index: "Index",
+    allOfSeoul: "All of Seoul",
+    openTheApp: "Open the app",
+    places: (n) => en(n, "place"),
+    festivals: (n) => en(n, "festival"),
+    districts: (n) => en(n, "district"),
+    kindCount: (label, n) => `${n} ${label.toLowerCase()}`,
+    join: ", ",
+    andMore: " and more",
+    monthH1: (m) => `Seoul festivals in ${m}`,
+    monthTitle: (m, y, n) => `Seoul Festivals in ${m} ${y} — ${en(n, "festival")} | K-Street`,
+    monthLead: (n, gus, m) =>
+      `${en(n, "festival")} in ${en(gus, "district")} of Seoul are usually held in ${m}. ` +
+      `We list the month, not the exact dates — organisers set those anew each year, so open the official notice before you go. ` +
+      `Every entry has KakaoMap and Naver Map directions, and the Korean name to show a taxi driver.`,
+    monthDesc: (n, gus, m) =>
+      `${en(n, "festival")} usually held in ${m} across ${en(gus, "district")} of Seoul — with Korean names, districts and map directions.`,
+    otherMonths: "Other months",
+    festivalsInMonth: (m) => `Festivals in ${m}`,
+    guH1: (gu) => `What to see in ${gu}, Seoul`,
+    guTitle: (gu, n) => `${gu}, Seoul — ${en(n, "place")} to see | K-Street`,
+    guLead: (gu, guKo, n, kinds) =>
+      `${gu} (${guKo}) has ${en(n, "place")} in K-Street: ${kinds}. ` +
+      `Every entry keeps its Korean name to show a taxi driver, and opens straight into KakaoMap or Naver Map directions — ` +
+      `Google Maps cannot give walking or driving directions inside Korea.`,
+    guDesc: (gu, kinds) =>
+      `${gu}, Seoul: ${kinds}. Korean names and KakaoMap / Naver Map directions for every place.`,
+    otherDistricts: "Other districts",
+    kindInGu: (kind, gu) => `${kind} in ${gu}`,
+    catH1: (kind) => `${kind} in Seoul`,
+    catTitle: (kind, n, gus) => `${kind} in Seoul — ${n} across ${en(gus, "district")} | K-Street`,
+    catLead: (kind, n, gus, isFestival) =>
+      `${n} ${kind.toLowerCase()} across ${en(gus, "district")} of Seoul, listed by district with their Korean names. ` +
+      (isFestival
+        ? `Dates shift every year, so we list the month and link the official notice.`
+        : `Every entry opens straight into KakaoMap or Naver Map directions.`),
+    catDesc: (kind, n, gus) =>
+      `${kind} in Seoul — ${n} places in ${en(gus, "district")}, with Korean names and map directions.`,
+    otherKinds: "Other kinds",
+    indexH1: "Seoul by district, month and kind",
+    indexTitle: (n) => `Seoul by District, Month and Kind — ${n} places | K-Street`,
+    indexLead: (n, gus, kinds) =>
+      `${en(n, "place")} in ${en(gus, "district")} of Seoul: ${kinds}. ` +
+      `Pick a district, a month, or a kind of place. Everything here is free, needs no sign-up, and comes with Korean names for taxis and shops.`,
+    indexDesc: (kinds, gus) =>
+      `All of Seoul in K-Street: ${kinds} across ${en(gus, "district")} — browse by district, by month, or by kind.`,
+    byDistrictChips: "By district",
+  },
+
+  ja: {
+    byMonth: "月別",
+    byDistrict: "エリア別",
+    byKind: "種類別",
+    index: "一覧",
+    allOfSeoul: "ソウル全体",
+    openTheApp: "アプリを開く",
+    places: (n) => `${n}か所`,
+    festivals: (n) => `${n}件のフェスティバル`,
+    districts: (n) => `${n}区`,
+    kindCount: (label, n) => `${label}${n}件`,
+    join: "・",
+    andMore: "ほか",
+    monthH1: (m) => `${m}のソウルのフェスティバル`,
+    monthTitle: (m, y, n) => `${y}年${m} ソウルのフェスティバル — ${n}件 | K-Street`,
+    monthLead: (n, gus, m) =>
+      `ソウル${gus}区で行われる${n}件のフェスティバルは、通常${m}に開催されます。` +
+      `正確な日程は主催者が毎年決め直すため、ここでは月だけを載せています — お出かけ前に公式案内をご確認ください。` +
+      `すべての項目に KakaoMap と Naver Map の経路案内、そしてタクシーで見せる韓国語名が付いています。`,
+    monthDesc: (n, gus, m) =>
+      `ソウル${gus}区で通常${m}に開催される${n}件のフェスティバル — 韓国語名・エリア・地図の経路案内付き。`,
+    otherMonths: "ほかの月",
+    festivalsInMonth: (m) => `${m}のフェスティバル`,
+    guH1: (gu) => `ソウル${gu}の見どころ`,
+    guTitle: (gu, n) => `ソウル${gu} — 見どころ${n}か所 | K-Street`,
+    guLead: (gu, guKo, n, kinds) =>
+      `${gu}（${guKo}）には K-Street に${n}か所あります：${kinds}。` +
+      `すべての項目にタクシーで見せる韓国語名が付き、KakaoMap または Naver Map の経路案内がそのまま開きます — ` +
+      `韓国国内では Google マップが徒歩・車の経路を案内できません。`,
+    guDesc: (gu, kinds) =>
+      `ソウル${gu}：${kinds}。すべての場所に韓国語名と KakaoMap / Naver Map の経路案内。`,
+    otherDistricts: "ほかのエリア",
+    kindInGu: (kind, gu) => `${gu}の${kind}`,
+    catH1: (kind) => `ソウルの${kind}`,
+    catTitle: (kind, n, gus) => `ソウルの${kind} — ${gus}区に${n}件 | K-Street`,
+    catLead: (kind, n, gus, isFestival) =>
+      `ソウル${gus}区にある${kind}${n}件を、エリア別に韓国語名付きで並べました。` +
+      (isFestival
+        ? `日程は毎年変わるため、月だけを載せ、公式案内へのリンクを付けています。`
+        : `すべての項目から KakaoMap または Naver Map の経路案内がそのまま開きます。`),
+    catDesc: (kind, n, gus) =>
+      `ソウルの${kind} — ${gus}区に${n}か所。韓国語名と地図の経路案内付き。`,
+    otherKinds: "ほかの種類",
+    indexH1: "ソウルをエリア・月・種類から探す",
+    indexTitle: (n) => `ソウルをエリア・月・種類から — ${n}か所 | K-Street`,
+    indexLead: (n, gus, kinds) =>
+      `ソウル${gus}区の${n}か所：${kinds}。` +
+      `エリア、月、種類のどれからでも探せます。すべて無料・登録不要で、タクシーやお店で見せる韓国語名が付いています。`,
+    indexDesc: (kinds, gus) =>
+      `K-Street のソウル全体：${gus}区の${kinds} — エリア・月・種類から探せます。`,
+    byDistrictChips: "エリア別",
+  },
+
+  zh: {
+    byMonth: "按月份",
+    byDistrict: "按区域",
+    byKind: "按类型",
+    index: "总览",
+    allOfSeoul: "首尔全部",
+    openTheApp: "打开应用",
+    places: (n) => `${n}个地点`,
+    festivals: (n) => `${n}个节庆`,
+    districts: (n) => `${n}个区`,
+    kindCount: (label, n) => `${n}个${label}`,
+    join: "、",
+    andMore: "等",
+    monthH1: (m) => `首尔${m}的节庆`,
+    monthTitle: (m, y, n) => `${y}年${m}首尔节庆 — ${n}个 | K-Street`,
+    monthLead: (n, gus, m) =>
+      `首尔${gus}个区的${n}个节庆通常在${m}举行。` +
+      `确切日期由主办方每年重新决定，因此我们只标注月份 — 出发前请查看官方公告。` +
+      `每个项目都有 KakaoMap 和 Naver Map 路线，以及可以给出租车司机看的韩语名称。`,
+    monthDesc: (n, gus, m) =>
+      `首尔${gus}个区通常在${m}举行的${n}个节庆 — 附韩语名称、区域和地图路线。`,
+    otherMonths: "其他月份",
+    festivalsInMonth: (m) => `${m}的节庆`,
+    guH1: (gu) => `首尔${gu}有什么可看`,
+    guTitle: (gu, n) => `首尔${gu} — ${n}个值得一看的地方 | K-Street`,
+    guLead: (gu, guKo, n, kinds) =>
+      `${gu}（${guKo}）在 K-Street 收录${n}个地点：${kinds}。` +
+      `每个项目都保留可给出租车司机看的韩语名称，并可直接打开 KakaoMap 或 Naver Map 路线 — ` +
+      `在韩国境内，Google 地图无法提供步行或驾车路线。`,
+    guDesc: (gu, kinds) =>
+      `首尔${gu}：${kinds}。每个地点都有韩语名称和 KakaoMap / Naver Map 路线。`,
+    otherDistricts: "其他区域",
+    kindInGu: (kind, gu) => `${gu}的${kind}`,
+    catH1: (kind) => `首尔的${kind}`,
+    catTitle: (kind, n, gus) => `首尔的${kind} — ${gus}个区共${n}个 | K-Street`,
+    catLead: (kind, n, gus, isFestival) =>
+      `首尔${gus}个区的${n}个${kind}，按区域排列并附韩语名称。` +
+      (isFestival
+        ? `日期每年变动，因此我们只标注月份并附上官方公告链接。`
+        : `每个项目都可直接打开 KakaoMap 或 Naver Map 路线。`),
+    catDesc: (kind, n, gus) =>
+      `首尔的${kind} — ${gus}个区共${n}个地点，附韩语名称和地图路线。`,
+    otherKinds: "其他类型",
+    indexH1: "按区域、月份和类型浏览首尔",
+    indexTitle: (n) => `按区域、月份和类型浏览首尔 — ${n}个地点 | K-Street`,
+    indexLead: (n, gus, kinds) =>
+      `首尔${gus}个区的${n}个地点：${kinds}。` +
+      `可以按区域、月份或类型来找。全部免费、无需注册，并附有可给出租车和店家看的韩语名称。`,
+    indexDesc: (kinds, gus) =>
+      `K-Street 的首尔全部：${gus}个区的${kinds} — 可按区域、月份或类型浏览。`,
+    byDistrictChips: "按区域",
+  },
+
+  "zh-TW": {
+    byMonth: "按月份",
+    byDistrict: "按區域",
+    byKind: "按類型",
+    index: "總覽",
+    allOfSeoul: "首爾全部",
+    openTheApp: "開啟應用程式",
+    places: (n) => `${n}個地點`,
+    festivals: (n) => `${n}個節慶`,
+    districts: (n) => `${n}個區`,
+    kindCount: (label, n) => `${n}個${label}`,
+    join: "、",
+    andMore: "等",
+    monthH1: (m) => `首爾${m}的節慶`,
+    monthTitle: (m, y, n) => `${y}年${m}首爾節慶 — ${n}個 | K-Street`,
+    monthLead: (n, gus, m) =>
+      `首爾${gus}個區的${n}個節慶通常在${m}舉行。` +
+      `確切日期由主辦方每年重新決定，因此我們只標註月份 — 出發前請查看官方公告。` +
+      `每個項目都有 KakaoMap 和 Naver Map 路線，以及可以給計程車司機看的韓語名稱。`,
+    monthDesc: (n, gus, m) =>
+      `首爾${gus}個區通常在${m}舉行的${n}個節慶 — 附韓語名稱、區域和地圖路線。`,
+    otherMonths: "其他月份",
+    festivalsInMonth: (m) => `${m}的節慶`,
+    guH1: (gu) => `首爾${gu}有什麼可看`,
+    guTitle: (gu, n) => `首爾${gu} — ${n}個值得一看的地方 | K-Street`,
+    guLead: (gu, guKo, n, kinds) =>
+      `${gu}（${guKo}）在 K-Street 收錄${n}個地點：${kinds}。` +
+      `每個項目都保留可給計程車司機看的韓語名稱，並可直接開啟 KakaoMap 或 Naver Map 路線 — ` +
+      `在韓國境內，Google 地圖無法提供步行或駕車路線。`,
+    guDesc: (gu, kinds) =>
+      `首爾${gu}：${kinds}。每個地點都有韓語名稱和 KakaoMap / Naver Map 路線。`,
+    otherDistricts: "其他區域",
+    kindInGu: (kind, gu) => `${gu}的${kind}`,
+    catH1: (kind) => `首爾的${kind}`,
+    catTitle: (kind, n, gus) => `首爾的${kind} — ${gus}個區共${n}個 | K-Street`,
+    catLead: (kind, n, gus, isFestival) =>
+      `首爾${gus}個區的${n}個${kind}，按區域排列並附韓語名稱。` +
+      (isFestival
+        ? `日期每年變動，因此我們只標註月份並附上官方公告連結。`
+        : `每個項目都可直接開啟 KakaoMap 或 Naver Map 路線。`),
+    catDesc: (kind, n, gus) =>
+      `首爾的${kind} — ${gus}個區共${n}個地點，附韓語名稱和地圖路線。`,
+    otherKinds: "其他類型",
+    indexH1: "按區域、月份和類型瀏覽首爾",
+    indexTitle: (n) => `按區域、月份和類型瀏覽首爾 — ${n}個地點 | K-Street`,
+    indexLead: (n, gus, kinds) =>
+      `首爾${gus}個區的${n}個地點：${kinds}。` +
+      `可以按區域、月份或類型來找。全部免費、無需註冊，並附有可給計程車和店家看的韓語名稱。`,
+    indexDesc: (kinds, gus) =>
+      `K-Street 的首爾全部：${gus}個區的${kinds} — 可按區域、月份或類型瀏覽。`,
+    byDistrictChips: "按區域",
+  },
+};

@@ -227,5 +227,33 @@ for (const lang of ["ko", "ja", "zh", "zh-TW", "vi", "es", "fr", "de", "ru", "id
   }
 }
 
+// ── ⑪ 묶음 페이지의 언어판 ──────────────────────────────────────────────
+//
+// 🗂️ 2026-09-10에 묶음 44장을 영어·일어·중국어(간체·번체)로 만들었다(176장).
+//    곳 페이지와 **hreflang 줄 수가 다르다** — 묶음은 4개 언어 + x-default = 5줄.
+//    12줄이 나오면 없는 언어를 가리키고 있다는 뜻이라 그것도 사고다.
+console.log("\n⑪ 묶음 페이지의 언어판 (영어·일어·중국어)");
+for (const [lang, path] of [
+  ["en", "/seoul/"],
+  ["ja", "/ja/seoul/jongno-gu/"],
+  ["zh", "/zh/seoul/festivals-in-october/"],
+  ["zh-TW", "/zh-TW/seoul/traditional-markets/"],
+]) {
+  try {
+    const r = await fetch(SITE + path, { redirect: "follow" });
+    if (!r.ok) { fail(`${r.status}  ${path}`); continue; }
+    const b = await r.text();
+    const htmlLang = b.match(/<html[^>]*\slang="([^"]+)"/i)?.[1] ?? "";
+    const alts = (b.match(/rel="alternate"/g) ?? []).length;
+    const title = b.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1]?.trim() ?? "";
+    if (b.includes('<div id="root">')) fail(`${path} — 진짜 페이지가 아니라 앱 첫 화면이 나왔다`);
+    else if (htmlLang !== lang) fail(`${path} — html lang 이 "${htmlLang}" 이다 (${lang} 여야 한다)`);
+    else if (alts !== 5) fail(`${path} — hreflang 이 ${alts}줄이다 (묶음은 5줄: 4개 언어 + x-default)`);
+    else ok(`${lang.padEnd(5)} ${title}`);
+  } catch (e) {
+    fail(`${path} — ${e?.cause?.code ?? e.name}`);
+  }
+}
+
 console.log(`\n${"─".repeat(60)}\n${bad ? `❌ 손봐야 할 것 ${bad}가지` : "✅ 새 주소가 제대로 서비스되고 있다"}`);
 process.exit(bad ? 1 : 0);

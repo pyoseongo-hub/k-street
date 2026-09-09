@@ -40,7 +40,15 @@ import { eatNearbyUrl } from "../src/lib/partnerLinks";
 // 🌏 12개 언어. 곳 이름·메모는 place-translations.json 에서(translateText),
 //    틀에 박히는 낱말은 여기서 온다(scripts/lib/page-strings.ts).
 import { getTranslations, type Language } from "../src/lib/translations";
-import { PAGE_STRINGS, PAGE_LANGS, langPath } from "./lib/page-strings";
+import {
+  PAGE_STRINGS,
+  PAGE_LANGS,
+  langPath,
+  HUB_STRINGS,
+  HUB_LANGS,
+  hubLang,
+  type HubStrings,
+} from "./lib/page-strings";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
@@ -133,7 +141,13 @@ const hubSlugGu = (gu: string) => slugify(guEn(gu));
 const hubPathGu = (gu: string) => `seoul/${hubSlugGu(gu)}`;
 const hubPathMonth = (m: number) => `seoul/festivals-in-${MONTHS[m].toLowerCase()}`;
 
-/** 갈래 묶음 페이지의 주소와 이름. 없는 갈래는 페이지를 안 만든다. */
+/**
+ * 갈래 묶음 페이지의 주소와 이름. 없는 갈래는 페이지를 안 만든다.
+ *
+ * 🚨 **slug 는 언어와 무관하다.** 일본어 페이지도 `/ja/seoul/traditional-markets/` 다.
+ *    주소를 언어마다 번역하면(`/ja/seoul/伝統市場/`) 링크가 깨지기 쉽고,
+ *    나중에 표기를 다듬을 때마다 주소가 바뀐다 — 저장소 규칙: 한번 정한 주소는 안 바꾼다.
+ */
 const CATEGORY_HUB: Record<string, { slug: string; plural: string }> = {
   festival: { slug: "festivals", plural: "Festivals" },
   market: { slug: "traditional-markets", plural: "Traditional markets" },
@@ -151,6 +165,10 @@ const hubPathCategory = (c: string) => `seoul/${CATEGORY_HUB[c]?.slug ?? "places
  * 🚨 **날짜는 절대 안 만든다.** 우리가 아는 것은 "어느 달쯤"까지다
  *    (Place.period 주석 참고 — 지난해 날짜를 올해 것처럼 적으면 손님이 헛걸음한다).
  */
+/** 「October」/「10月」 — 달 이름 한 개. 앱이 가진 표를 쓴다(잣대를 둘로 만들지 않는다). */
+const monthLabel = (m: number, lang: Language): string =>
+  lang === "en" ? MONTHS[m] : String((getTranslations(lang).months as Record<number, string>)[m]);
+
 function whenLabel(p: Place, lang: Language = "en"): string {
   if (p.startMonth == null) return "";
   // 달 이름은 앱이 이미 12개 언어를 갖고 있다(T.months) — 여기서 또 만들지 않는다.
@@ -226,10 +244,32 @@ function hreflang(rest: string): string {
   );
 }
 
+/**
+ * 묶음 페이지의 hreflang — **있는 언어만 적는다** (2026-09-10).
+ *
+ * 🚨 곳 페이지와 목록이 다르다. 곳 페이지는 12개 언어가 다 있지만 묶음은
+ *    아직 영어·일어·중국어(간체·번체) 넷뿐이다. 여기에 12개를 적으면
+ *    **없는 페이지 8장을 가리킨다** — 구글이 404 를 8번 받고, hreflang 묶음
+ *    자체를 못 믿는 것으로 처리한다. 있는 것만 적는 게 안 적는 것보다 낫고,
+ *    없는 것을 적는 것보다 훨씬 낫다. HUB_LANGS 에 언어를 더하면 여기도 늘어난다.
+ */
+function hubHreflang(path: string): string {
+  return (
+    HUB_LANGS.map(
+      (l) => `<link rel="alternate" hreflang="${l}" href="${SITE}/${langPath(l, `${path}/`)}">`
+    ).join("\n") +
+    `\n<link rel="alternate" hreflang="x-default" href="${SITE}/${path}/">`
+  );
+}
+
 function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
   const slug = savedSlugs[p.id];
   const S = PAGE_STRINGS[lang];
   const T = getTranslations(lang);
+  // 🗂️ 묶음 페이지로 갈 때 쓰는 언어. 그 언어에 묶음이 없으면 영어로 간다
+  //    (HUB_LANGS 가 아직 영어·일어·중국어 넷뿐이다).
+  const HL = hubLang(lang);
+  const HS = HUB_STRINGS[HL] as HubStrings;
   // 구 이름도 앱과 **같은 표**를 쓴다 — 「종로구」/「Jongno-gu」/「鍾路区」.
   const guName = districtFullName(p.gu, lang);
   const title = translateText(p.name, lang);
@@ -319,9 +359,9 @@ function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "K-Street", item: `${SITE}/` },
-      { "@type": "ListItem", position: 2, name: "Seoul", item: `${SITE}/seoul/` },
+      { "@type": "ListItem", position: 2, name: S.seoul, item: `${SITE}/${langPath(HL, "seoul/")}` },
       // 묶음 페이지는 아직 영어만 있다 — 길 표시는 그 영어 페이지를 가리킨다.
-      { "@type": "ListItem", position: 3, name: guName, item: `${SITE}/${hubPathGu(p.gu)}/` },
+      { "@type": "ListItem", position: 3, name: guName, item: `${SITE}/${langPath(HL, `${hubPathGu(p.gu)}/`)}` },
       { "@type": "ListItem", position: 4, name: title, item: url },
     ],
   };
@@ -393,14 +433,20 @@ ${nearby ? `<h2>${esc(S.moreIn(guName))}</h2><ul>${nearby}</ul>` : ""}
 
 <h2>${esc(S.browse)}</h2>
 <ul class="chips">
-<li><a href="/${hubPathGu(p.gu)}/">${esc(S.everythingIn(guName))}</a></li>
+<li><a href="/${langPath(HL, `${hubPathGu(p.gu)}/`)}">${esc(S.everythingIn(guName))}</a></li>
 ${
-  // 🌏 달별·갈래별 묶음 페이지는 **아직 영어만 있다.** 그래서 영어 페이지에만
-  //    딱지를 건다 — 일본어 손님을 영어 목록으로 보내면 거기서 끝난다.
-  //    묶음 페이지를 번역하면 이 조건을 지운다.
-  lang === "en"
-    ? (p.startMonth != null ? `<li><a href="/${hubPathMonth(p.startMonth)}/">Seoul festivals in ${esc(MONTHS[p.startMonth])}</a></li>` : "") +
-      (CATEGORY_HUB[p.category] ? `<li><a href="/${hubPathCategory(p.category)}/">${esc(CATEGORY_HUB[p.category].plural)} in Seoul</a></li>` : "")
+  // 🌏 **묶음 페이지가 있는 언어로 보낸다** (2026-09-10).
+  //    전에는 「영어 페이지에만 딱지를 건다」였다 — 묶음이 영어뿐이라
+  //    일본어 손님을 영어 목록으로 보내면 거기서 끊기기 때문이었다.
+  //    이제 일어·중국어 묶음이 있으니 그 언어로 보내고, 아직 없는 언어(ko·vi·es…)는
+  //    **딱지를 아예 안 건다** — 영어로 떨어뜨리는 것보다 안 보여 주는 게 낫다.
+  HUB_LANGS.includes(lang)
+    ? (p.startMonth != null
+        ? `<li><a href="/${langPath(HL, `${hubPathMonth(p.startMonth)}/`)}">${esc(HS.monthH1(monthLabel(p.startMonth, lang)))}</a></li>`
+        : "") +
+      (CATEGORY_HUB[p.category]
+        ? `<li><a href="/${langPath(HL, `${hubPathCategory(p.category)}/`)}">${esc(HS.catH1(kindLabel(p.category, lang)))}</a></li>`
+        : "")
     : ""
 }
 </ul>
@@ -440,20 +486,43 @@ for (const lang of PAGE_LANGS) {
 // 곳 페이지가 「이름을 아는 사람」을 위한 문이라면, 이쪽은 **이름을 모르는
 // 사람**을 위한 문이다. 위 hubPathGu/hubPathMonth 주석에 이유를 적어 뒀다.
 
-/** 목록 한 줄. 이름 + 한글 이름 + 한 줄 설명(갈래·구·달·메모). */
-function hubItem(p: Place, showGu = true): string {
-  const nameEn = translateText(p.name, "en");
-  const showKo = nameEn !== p.name;
-  const noteEn = p.note ? translateText(p.note, "en") : "";
+/**
+ * 갈래 이름 — 언어별. 영어는 CATEGORY_HUB 의 복수형, 나머지는 앱의 표를 쓴다.
+ *
+ * 🐞 **`const` 화살표 함수로 쓰면 안 된다** (2026-09-10에 당했다). 이 함수는
+ *    파일에서 pageFor 보다 **아래**에 있는데, pageFor 는 위에서 곧바로 불린다.
+ *    `const` 는 끌어올려지지 않아 「kindLabel is not a function」으로 죽는다.
+ *    타입 검사도 이건 안 잡아 준다 — 그래서 `function` 선언으로 둔다.
+ */
+function kindLabel(cat: string, lang: Language): string {
+  return lang === "en"
+    ? CATEGORY_HUB[cat]?.plural ?? CATEGORY_EN[cat] ?? "Places"
+    : getTranslations(lang).categoryLabels[cat] ?? CATEGORY_EN[cat] ?? "Places";
+}
+
+/**
+ * 목록 한 줄. 이름 + 한글 이름 + 한 줄 설명(갈래·구·달·메모).
+ *
+ * 🌏 링크도 **같은 언어의 곳 페이지**로 보낸다 (2026-09-10). 일본어 묶음에서
+ *    누르면 일본어 곳 페이지가 떠야 한다 — 영어로 떨어뜨리면 손님이 거기서 끊긴다.
+ */
+function hubItem(p: Place, showGu = true, lang: Language = "en"): string {
+  const name = translateText(p.name, lang);
+  const showKo = name !== p.name;
+  const note = p.note ? translateText(p.note, lang) : "";
   const facts = [
-    CATEGORY_EN[p.category] ?? "Place",
-    showGu ? guEn(p.gu) + (p.dong ? ` · ${dongEn(p.dong)}` : "") : p.dong ? dongEn(p.dong) : "",
-    whenLabel(p),
+    lang === "en" ? CATEGORY_EN[p.category] ?? "Place" : getTranslations(lang).categoryLabels[p.category] ?? "",
+    showGu
+      ? districtFullName(p.gu, lang) + (p.dong ? ` · ${dongName(p.dong, lang)}` : "")
+      : p.dong
+        ? dongName(p.dong, lang)
+        : "",
+    whenLabel(p, lang),
   ].filter(Boolean);
   // 메모가 있으면 앞에 세운다 — 곳마다 다른 유일한 문장이라 목록이 안 똑같아진다.
-  const meta = [noteEn, facts.join(" · ")].filter(Boolean).join(" — ");
+  const meta = [note, facts.join(" · ")].filter(Boolean).join(" — ");
   return (
-    `<li><a href="/place/${savedSlugs[p.id]}/">${esc(nameEn)}` +
+    `<li><a href="/${langPath(lang, `place/${savedSlugs[p.id]}/`)}">${esc(name)}` +
     (showKo ? `<span class="ko" lang="ko"> ${esc(p.name)}</span>` : "") +
     `<span class="meta">${esc(meta)}</span></a></li>`
   );
@@ -474,8 +543,11 @@ function hubPage(o: {
   chips?: { href: string; label: string }[];
   /** 🍚 밥집 쪽으로 잇는 한 줄. 주소가 없으면(아직 안 켰거나 빈 동네) 안 그린다. */
   eat?: { href: string; label: string } | null;
+  lang?: Language;
 }): string {
-  const url = `${SITE}/${o.path}/`;
+  const lang = o.lang ?? "en";
+  const S = HUB_STRINGS[lang] as HubStrings;
+  const url = `${SITE}/${langPath(lang, `${o.path}/`)}`;
   const items = o.groups.flatMap((g) => g.items);
 
   const ld: Record<string, unknown>[] = [
@@ -484,7 +556,12 @@ function hubPage(o: {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "K-Street", item: `${SITE}/` },
-        { "@type": "ListItem", position: 2, name: "Seoul", item: `${SITE}/seoul/` },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: PAGE_STRINGS[lang].seoul,
+          item: `${SITE}/${langPath(lang, "seoul/")}`,
+        },
         { "@type": "ListItem", position: 3, name: o.h1, item: url },
       ],
     },
@@ -498,8 +575,8 @@ function hubPage(o: {
       itemListElement: items.map((p, i) => ({
         "@type": "ListItem",
         position: i + 1,
-        name: translateText(p.name, "en"),
-        url: `${SITE}/place/${savedSlugs[p.id]}/`,
+        name: translateText(p.name, lang),
+        url: `${SITE}/${langPath(lang, `place/${savedSlugs[p.id]}/`)}`,
       })),
     });
 
@@ -507,18 +584,19 @@ function hubPage(o: {
     .filter((g) => g.items.length)
     .map(
       (g) =>
-        `<h2>${esc(g.heading)}</h2><ul>${g.items.map((p) => hubItem(p, g.showGu ?? true)).join("")}</ul>`
+        `<h2>${esc(g.heading)}</h2><ul>${g.items.map((p) => hubItem(p, g.showGu ?? true, lang)).join("")}</ul>`
     )
     .join("\n");
 
   return `<!doctype html>
-<html lang="en">
+<html lang="${lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(o.title)}</title>
 <meta name="description" content="${esc(o.desc)}">
 <link rel="canonical" href="${url}">
+${hubHreflang(o.path)}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="K-Street">
 <meta property="og:title" content="${esc(o.h1)}">
@@ -537,13 +615,13 @@ function hubPage(o: {
 <span class="kind">${esc(o.kind)}</span>
 <h1>${esc(o.h1)}</h1>
 <p class="note">${esc(o.lead)}</p>
-<p class="crumbs"><a href="/seoul/">All of Seoul</a> · <a href="/">Open the app</a></p>
+<p class="crumbs"><a href="/${langPath(lang, "seoul/")}">${esc(S.allOfSeoul)}</a> · <a href="/">${esc(S.openTheApp)}</a></p>
 
 ${body}
 
 ${
   o.chips?.length
-    ? `<h2>${esc(o.chipsTitle ?? "Browse")}</h2><ul class="chips">${o.chips
+    ? `<h2>${esc(o.chipsTitle ?? PAGE_STRINGS[lang].browse)}</h2><ul class="chips">${o.chips
         .map((c) => `<li><a href="${esc(c.href)}">${esc(c.label)}</a></li>`)
         .join("")}</ul>`
     : ""
@@ -557,11 +635,11 @@ ${
       `<div class="go"><a class="eat" href="${esc(o.eat.href)}" rel="noopener">${esc(o.eat.label)}</a></div>`
     : ""
 }
-<div class="go"><a class="app" href="/">Open K-Street — free, no sign-up →</a></div>
+<div class="go"><a class="app" href="/">${esc(PAGE_STRINGS[lang].openApp)}</a></div>
 
 <footer>
-K-Street — a free, no-sign-up guide to Seoul's neighbourhoods in 12 languages.<br>
-Place data from the Korea Tourism Organization. Photos: Korea Tourism Organization (KOGL Type 1).
+${esc(PAGE_STRINGS[lang].footerAbout)}<br>
+${esc(PAGE_STRINGS[lang].footerData)}
 </footer>
 </div>
 </body>
@@ -576,24 +654,30 @@ Place data from the Korea Tourism Organization. Photos: Korea Tourism Organizati
 const NOW = new Date();
 const yearForMonth = (m: number) => (m >= NOW.getMonth() + 1 ? NOW.getFullYear() : NOW.getFullYear() + 1);
 
-const list = (n: number, one: string, many = one + "s") => `${n} ${n === 1 ? one : many}`;
-
 /**
  * 「4 traditional markets, 3 festivals, 1 hiking trail」 — 있는 갈래만 센다.
  *
- * ⚠️ 복수형을 **뒤에 s 를 붙여서 만들지 않는다.** 그렇게 했더니
+ * ⚠️ 영어 복수형을 **뒤에 s 를 붙여서 만들지 않는다.** 그렇게 했더니
  *    "3 street & alleys" 가 나왔다(맞는 말은 "streets & alleys"). 갈래마다
  *    올바른 복수형을 CATEGORY_HUB 에 적어 두고 그걸 쓴다.
+ *
+ * 🌏 일어·중국어는 **복수형이 없다** — 「市場4件・フェスティバル3件」처럼
+ *    갈래 이름 뒤에 수를 붙인다. 언어마다 다른 그 규칙은 HUB_STRINGS 에 있다.
  */
-function countByKind(items: Place[], max = 0): string {
+function countByKind(items: Place[], max = 0, lang: Language = "en"): string {
+  const S = HUB_STRINGS[lang] as HubStrings;
   const n = new Map<string, number>();
   for (const p of items) n.set(p.category, (n.get(p.category) ?? 0) + 1);
   const parts = [...n.entries()]
     .sort((a, b) => b[1] - a[1])
-    .map(([c, k]) => `${k} ${(k === 1 ? CATEGORY_EN[c] ?? "place" : CATEGORY_HUB[c]?.plural ?? "places").toLowerCase()}`);
+    .map(([c, k]) =>
+      lang === "en"
+        ? `${k} ${(k === 1 ? CATEGORY_EN[c] ?? "place" : CATEGORY_HUB[c]?.plural ?? "places").toLowerCase()}`
+        : S.kindCount(kindLabel(c, lang), k)
+    );
   // 검색 결과 한 줄에 넣을 때는 앞의 몇 개만 — 다 적으면 잘려서 문장이 끊긴다.
-  if (max && parts.length > max) return `${parts.slice(0, max).join(", ")} and more`;
-  return parts.join(", ");
+  if (max && parts.length > max) return parts.slice(0, max).join(S.join) + S.andMore;
+  return parts.join(S.join);
 }
 
 /**
@@ -603,7 +687,6 @@ function countByKind(items: Place[], max = 0): string {
 const clip = (s: string) => (s.length <= 160 ? s : s.slice(0, 160).replace(/\s+\S*$/, "") + "…");
 
 const GU_LIST = [...byGu.keys()].sort((a, b) => guEn(a).localeCompare(guEn(b)));
-const guChips = GU_LIST.map((gu) => ({ href: `/${hubPathGu(gu)}/`, label: guEn(gu) }));
 
 // 달별 — 축제가 있는 달만. 걸쳐 있는 축제는 두 달 모두에 나온다(앱 화면과 같은 규칙).
 const festivalsIn = (m: number) =>
@@ -611,9 +694,25 @@ const festivalsIn = (m: number) =>
     (a, b) => guEn(a.gu).localeCompare(guEn(b.gu)) || translateText(a.name, "en").localeCompare(translateText(b.name, "en"))
   );
 const MONTHS_WITH = [...Array(12).keys()].map((i) => i + 1).filter((m) => festivalsIn(m).length);
-const monthChips = MONTHS_WITH.map((m) => ({ href: `/${hubPathMonth(m)}/`, label: MONTHS[m] }));
 
-const hubs: { path: string; html: string }[] = [];
+const hubs: { path: string; lang: Language; html: string }[] = [];
+
+// 🌏 **묶음 페이지를 언어별로 만든다** (2026-09-10, 사장님 지시: 영어·일어·중국어부터).
+//
+// 늘어놓는 순서는 **어느 언어에서나 같게** 둔다(영어 이름 기준 정렬).
+// 언어마다 다시 정렬하면 같은 페이지의 언어판끼리 항목 순서가 어긋나는데,
+// 그러면 구글이 hreflang 으로 묶어 놓고도 "다른 페이지"처럼 읽을 여지가 생긴다.
+// 사람에게도 이쪽이 낫다 — 언어를 바꿔도 찾던 자리가 그 자리에 있다.
+for (const lang of HUB_LANGS) {
+const S = HUB_STRINGS[lang] as HubStrings;
+const P = PAGE_STRINGS[lang];
+const guName = (gu: string) => districtFullName(gu, lang);
+const monthName = (m: number) => monthLabel(m, lang);
+const guChips = GU_LIST.map((gu) => ({ href: `/${langPath(lang, `${hubPathGu(gu)}/`)}`, label: guName(gu) }));
+const monthChips = MONTHS_WITH.map((m) => ({
+  href: `/${langPath(lang, `${hubPathMonth(m)}/`)}`,
+  label: monthName(m),
+}));
 
 for (const m of MONTHS_WITH) {
   const items = festivalsIn(m);
@@ -621,22 +720,21 @@ for (const m of MONTHS_WITH) {
   const year = yearForMonth(m);
   hubs.push({
     path: hubPathMonth(m),
+    lang,
     html: hubPage({
+      lang,
       path: hubPathMonth(m),
-      kind: "By month",
-      h1: `Seoul festivals in ${MONTHS[m]}`,
-      title: `Seoul Festivals in ${MONTHS[m]} ${year} — ${list(items.length, "festival")} | K-Street`,
+      kind: S.byMonth,
+      h1: S.monthH1(monthName(m)),
+      title: S.monthTitle(monthName(m), year, items.length),
       // 🚨 "그 달에 열린다"까지만 말한다. 날짜를 말하는 순간 틀린 정보가 된다.
-      lead:
-        `${list(items.length, "festival")} in ${list(gus.size, "district")} of Seoul are usually held in ${MONTHS[m]}. ` +
-        `We list the month, not the exact dates — organisers set those anew each year, so open the official notice before you go. ` +
-        `Every entry has KakaoMap and Naver Map directions, and the Korean name to show a taxi driver.`,
-      desc: clip(`${list(items.length, "festival")} usually held in ${MONTHS[m]} across ${list(gus.size, "district")} of Seoul — with Korean names, districts and map directions.`),
+      lead: S.monthLead(items.length, gus.size, monthName(m)),
+      desc: clip(S.monthDesc(items.length, gus.size, monthName(m))),
       groups: [...new Set(items.map((p) => p.gu))]
         .sort((a, b) => guEn(a).localeCompare(guEn(b)))
-        .map((gu) => ({ heading: guEn(gu), items: items.filter((p) => p.gu === gu), showGu: false })),
-      chipsTitle: "Other months",
-      chips: monthChips.filter((c) => c.label !== MONTHS[m]),
+        .map((gu) => ({ heading: guName(gu), items: items.filter((p) => p.gu === gu), showGu: false })),
+      chipsTitle: S.otherMonths,
+      chips: monthChips.filter((c) => c.label !== monthName(m)),
     }),
   });
 }
@@ -648,30 +746,29 @@ for (const gu of GU_LIST) {
     .sort((a, b) => a.category.localeCompare(b.category) || translateText(a.name, "en").localeCompare(translateText(b.name, "en")));
   hubs.push({
     path: hubPathGu(gu),
+    lang,
     html: hubPage({
+      lang,
       path: hubPathGu(gu),
-      kind: "By district",
-      h1: `What to see in ${guEn(gu)}, Seoul`,
-      title: `${guEn(gu)}, Seoul — ${list(items.length, "place")} to see | K-Street`,
-      lead:
-        // ⚠️ "주소도 다 있다"고 쓰지 않는다 — 주소는 관광공사에서 받은 곳에만 있다.
-        //    한 곳이라도 없으면 그 문장은 거짓말이 된다.
-        `${guEn(gu)} (${gu}) has ${list(items.length, "place")} in K-Street: ${countByKind(items)}. ` +
-        `Every entry keeps its Korean name to show a taxi driver, and opens straight into KakaoMap or Naver Map directions — ` +
-        `Google Maps cannot give walking or driving directions inside Korea.`,
-      desc: clip(`${guEn(gu)}, Seoul: ${countByKind(items, 3)}. Korean names and KakaoMap / Naver Map directions for every place.`),
+      kind: S.byDistrict,
+      h1: S.guH1(guName(gu)),
+      title: S.guTitle(guName(gu), items.length),
+      // ⚠️ "주소도 다 있다"고 쓰지 않는다 — 주소는 관광공사에서 받은 곳에만 있다.
+      //    한 곳이라도 없으면 그 문장은 거짓말이 된다.
+      lead: S.guLead(guName(gu), gu, items.length, countByKind(items, 0, lang)),
+      desc: clip(S.guDesc(guName(gu), countByKind(items, 3, lang))),
       groups: [...new Set(items.map((p) => p.category))].map((c) => ({
-        heading: `${CATEGORY_HUB[c]?.plural ?? CATEGORY_EN[c] ?? "Places"} in ${guEn(gu)}`,
+        heading: S.kindInGu(kindLabel(c, lang), guName(gu)),
         items: items.filter((p) => p.category === c),
         showGu: false,
       })),
-      chipsTitle: "Other districts",
-      chips: guChips.filter((c) => c.label !== guEn(gu)),
+      chipsTitle: S.otherDistricts,
+      chips: guChips.filter((c) => c.label !== guName(gu)),
       // 🍚 밥집 — 구 단위로만 건다(저쪽 구 안에 빈 동네가 있다고 알려 왔다).
-      //    아직 안 켠 상태라 지금은 null 이 와서 아무것도 안 그려진다.
+      //    손님 언어를 그대로 넘긴다(대만은 partnerLinks 가 zhTW 로 갈아 끼운다).
       eat: (() => {
-        const href = eatNearbyUrl(gu, "en");
-        return href ? { href, label: `Where to eat in ${guEn(gu)} →` } : null;
+        const href = eatNearbyUrl(gu, lang);
+        return href ? { href, label: P.eatIn(guName(gu)) } : null;
       })(),
     }),
   });
@@ -686,23 +783,20 @@ for (const [cat, meta] of Object.entries(CATEGORY_HUB)) {
   const gus = [...new Set(items.map((p) => p.gu))].sort((a, b) => guEn(a).localeCompare(guEn(b)));
   hubs.push({
     path: hubPathCategory(cat),
+    lang,
     html: hubPage({
+      lang,
       path: hubPathCategory(cat),
-      kind: "By kind",
-      h1: `${meta.plural} in Seoul`,
-      title: `${meta.plural} in Seoul — ${items.length} across ${list(gus.length, "district")} | K-Street`,
-      lead:
-        `${list(items.length, (CATEGORY_EN[cat] ?? "place").toLowerCase(), meta.plural.toLowerCase())} across ${list(gus.length, "district")} of Seoul, ` +
-        `listed by district with their Korean names. ` +
-        (cat === "festival"
-          ? `Dates shift every year, so we list the month and link the official notice.`
-          : `Every entry opens straight into KakaoMap or Naver Map directions.`),
-      desc: clip(`${meta.plural} in Seoul — ${items.length} places in ${list(gus.length, "district")}, with Korean names and map directions.`),
-      groups: gus.map((gu) => ({ heading: guEn(gu), items: items.filter((p) => p.gu === gu), showGu: false })),
-      chipsTitle: "Other kinds",
+      kind: S.byKind,
+      h1: S.catH1(kindLabel(cat, lang)),
+      title: S.catTitle(kindLabel(cat, lang), items.length, gus.length),
+      lead: S.catLead(kindLabel(cat, lang), items.length, gus.length, cat === "festival"),
+      desc: clip(S.catDesc(kindLabel(cat, lang), items.length, gus.length)),
+      groups: gus.map((gu) => ({ heading: guName(gu), items: items.filter((p) => p.gu === gu), showGu: false })),
+      chipsTitle: S.otherKinds,
       chips: Object.entries(CATEGORY_HUB)
         .filter(([c]) => c !== cat && ALL.some((p) => p.category === c))
-        .map(([c, m]) => ({ href: `/${hubPathCategory(c)}/`, label: m.plural })),
+        .map(([c]) => ({ href: `/${langPath(lang, `${hubPathCategory(c)}/`)}`, label: kindLabel(c, lang) })),
     }),
   });
 }
@@ -710,29 +804,30 @@ for (const [cat, meta] of Object.entries(CATEGORY_HUB)) {
 // 묶음 페이지의 대문 — 크롤러가 여기 한 장만 봐도 나머지를 다 찾아간다.
 hubs.push({
   path: "seoul",
+  lang,
   html: hubPage({
+    lang,
     path: "seoul",
-    kind: "Index",
-    h1: "Seoul by district, month and kind",
-    title: `Seoul by District, Month and Kind — ${ALL.length} places | K-Street`,
-    lead:
-      `${list(ALL.length, "place")} in ${list(GU_LIST.length, "district")} of Seoul: ${countByKind(ALL)}. ` +
-      `Pick a district, a month, or a kind of place. Everything here is free, needs no sign-up, and comes with Korean names for taxis and shops.`,
-    desc: clip(`All of Seoul in K-Street: ${countByKind(ALL, 3)} across ${list(GU_LIST.length, "district")} — browse by district, by month, or by kind.`),
+    kind: S.index,
+    h1: S.indexH1,
+    title: S.indexTitle(ALL.length),
+    lead: S.indexLead(ALL.length, GU_LIST.length, countByKind(ALL, 0, lang)),
+    desc: clip(S.indexDesc(countByKind(ALL, 3, lang), GU_LIST.length)),
     groups: [],
-    chipsTitle: "By district",
+    chipsTitle: S.byDistrictChips,
     chips: [
       ...guChips,
-      ...monthChips.map((c) => ({ href: c.href, label: `Festivals in ${c.label}` })),
+      ...monthChips.map((c) => ({ href: c.href, label: S.festivalsInMonth(c.label) })),
       ...Object.entries(CATEGORY_HUB)
         .filter(([c]) => ALL.some((p) => p.category === c))
-        .map(([c, m]) => ({ href: `/${hubPathCategory(c)}/`, label: m.plural })),
+        .map(([c]) => ({ href: `/${langPath(lang, `${hubPathCategory(c)}/`)}`, label: kindLabel(c, lang) })),
     ],
   }),
 });
+} // ← 언어 되돌이 끝
 
 for (const h of hubs) {
-  const dir = join(DIST, ...h.path.split("/"));
+  const dir = join(DIST, ...langPath(h.lang, h.path).split("/"));
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, "index.html"), h.html);
 }
@@ -743,7 +838,9 @@ const urls = [
   // 묶음 페이지를 곳 페이지보다 **위에** 둔다. 크롤러가 먼저 보는 순서이기도 하고,
   // 이 페이지들이 나머지 307장으로 가는 길이라 먼저 발견될수록 좋다.
   ...hubs.map(
-    (h) => `  <url><loc>${SITE}/${h.path}/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`
+    (h) =>
+      `  <url><loc>${SITE}/${langPath(h.lang, `${h.path}/`)}</loc>` +
+      `<changefreq>weekly</changefreq><priority>${h.lang === "en" ? "0.8" : "0.7"}</priority></url>`
   ),
   // 🌏 12개 언어판을 다 적는다. 언어판끼리는 hreflang 으로 묶여 있으므로
   //    구글이 「같은 페이지 12장」이 아니라 「한 페이지의 12개 언어」로 읽는다.
@@ -760,5 +857,10 @@ writeFileSync(
   `<?xml version="1.0" encoding="UTF-8"?>\n<!-- scripts/build-place-pages.ts 가 만든다. 손으로 고치지 말 것. -->\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`
 );
 
-console.log(`✅ 곳 페이지 ${written}장(${PAGE_LANGS.length}개 언어 × ${ALL.length}곳) · 묶음 페이지 ${hubs.length}장 · 사이트맵 주소 ${urls.length}개`);
+console.log(
+  `✅ 곳 페이지 ${written}장(${PAGE_LANGS.length}개 언어 × ${ALL.length}곳) · ` +
+    `묶음 페이지 ${hubs.length}장(${HUB_LANGS.length}개 언어 × ${hubs.length / HUB_LANGS.length}장) · ` +
+    `사이트맵 주소 ${urls.length}개`
+);
+console.log(`   묶음 언어 — ${HUB_LANGS.join(" · ")} (나머지 ${PAGE_LANGS.length - HUB_LANGS.length}개 언어는 영어 묶음으로 보낸다)`);
 if (newSlugs) console.log(`   새 주소 ${newSlugs}개를 src/data/place-slugs.json 에 적었다 — 커밋할 것.`);
