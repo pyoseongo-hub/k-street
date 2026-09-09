@@ -229,9 +229,10 @@ for (const lang of ["ko", "ja", "zh", "zh-TW", "vi", "es", "fr", "de", "ru", "id
 
 // ── ⑪ 묶음 페이지의 언어판 ──────────────────────────────────────────────
 //
-// 🗂️ 묶음 44장을 언어별로 만들었다(2026-09-10). 언어 수는 계속 늘어난다 —
-//    영어·일어·중국어(간체·번체)로 시작해 한국어·베트남어·태국어·인도네시아어까지.
-console.log("\n⑪ 묶음 페이지의 언어판");
+// 🗂️ 묶음 44장 × **12개 언어 = 528장** (2026-09-10에 다 찼다).
+//    일부러 자리를 골고루 섞었다 — 구별·달별·갈래별·대문 네 종류가 다 들어가게.
+//    한 종류만 재면 다른 세 종류가 깨져도 통과한다.
+console.log("\n⑪ 묶음 페이지의 언어판 (12개 언어 × 네 종류)");
 for (const [lang, path] of [
   ["en", "/seoul/"],
   ["ja", "/ja/seoul/jongno-gu/"],
@@ -241,6 +242,10 @@ for (const [lang, path] of [
   ["vi", "/vi/seoul/festivals-in-october/"],
   ["th", "/th/seoul/museums/"],
   ["id", "/id/seoul/"],
+  ["es", "/es/seoul/festivals-in-october/"],
+  ["fr", "/fr/seoul/flower-walks/"],
+  ["de", "/de/seoul/traditional-markets/"],
+  ["ru", "/ru/seoul/"],
 ]) {
   try {
     const r = await fetch(SITE + path, { redirect: "follow" });
