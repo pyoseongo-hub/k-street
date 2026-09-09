@@ -102,20 +102,15 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
         <button type="button" className="map-btn map-btn--driver" onClick={() => setDriver(true)}>
           {t.showToDriver}
         </button>
-        {url && (
-          <button
-            type="button"
-            className="map-btn map-btn--share"
-            onClick={onShare}
-            title={t.shareLabel}
-          >
-            <span aria-hidden="true">🔗</span>
-            {copied ? t.shareCopied : t.shareLabel}
-          </button>
-        )}
-        {/* 🍚 남의 앱으로 나가는 문이라 **새 탭**으로 연다 — 돌아왔을 때 보던
-            자리(고른 계절·구·스크롤)가 그대로 있어야 한다. 지도 단추와 달리
-            이건 그냥 링크라서 <a> 다. */}
+      </div>
+      {/* 🧹 **자리 정리** (2026-09-09 사장님: "자리 정리좀 해").
+          재 보니 이 줄의 자리는 **298px** 인데 낱말 단추 셋을 더하면 316~426px 이다 —
+          **어느 언어에서도 한 줄에 안 들어간다.** 억지로 밀어 넣으면 셋 다 좁아져
+          아무것도 안 읽힌다. 그래서 **짝을 맞춰** 나눴다:
+            · 위: 목적지 보여주기 — 우리 기능이고 제일 많이 쓰니 한 줄을 다 준다
+            · 아래: 주변 먹거리(넓게) + 공유(글자 폭만)
+          아래 줄은 12개 언어에서 가장 긴 조합(독일어 267px)도 298px 안에 들어간다. */}
+      <div className="map-directions-row">
         {eat && (
           <a
             className="map-btn map-btn--eat"
@@ -128,6 +123,17 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
             {t.eatNearbyLabel}
             <span aria-hidden="true">↗</span>
           </a>
+        )}
+        {url && (
+          <button
+            type="button"
+            className="map-btn map-btn--share"
+            onClick={onShare}
+            title={t.shareLabel}
+          >
+            <span aria-hidden="true">🔗</span>
+            {copied ? t.shareCopied : t.shareLabel}
+          </button>
         )}
       </div>
       {driver && <DriverCard place={place} onClose={() => setDriver(false)} />}
