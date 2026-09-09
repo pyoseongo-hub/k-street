@@ -8,6 +8,7 @@ import { resolveSaved, savedKey, useSavedEntries } from "../lib/savedPlaces";
 import MapDirections from "./MapDirections";
 import PlacePhoto from "./PlacePhoto";
 import SaveButton from "./SaveButton";
+import ShareButton from "./ShareButton";
 import { getTourImage } from "../lib/tourImages";
 
 // 🤍 손님이 저장해 둔 곳만 모아 보여 준다.
@@ -75,13 +76,15 @@ export default function SavedPanel() {
                       {/* 사진이 없는 작은 카드에는 사진 위에 얹을 자리가 없으니
                           이 줄 끝에 붙인다 — 어느 카드에서도 저장을 뺄 수 있어야 한다. */}
                       {compact && <SaveButton place={p} className="save-btn save-btn--inline" />}
+                      {/* 🔗 공유 — 세 카드가 같은 자리에 둔다(ShareButton.tsx 주석). */}
+                      <ShareButton place={p} />
                     </div>
                     <button
                       type="button"
                       className="pr-name pr-name-link"
                       onClick={() => openPlaceInfo(p)}
                     >
-                      {placeName(p.name, language).main}
+                      <span className="pr-name-text">{placeName(p.name, language).main}</span>
                       <span className="pr-name-arrow" aria-hidden="true">↗</span>
                     </button>
                     {placeName(p.name, language).sub && (

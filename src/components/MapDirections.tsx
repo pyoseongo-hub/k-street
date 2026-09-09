@@ -2,7 +2,7 @@ import { useState } from "react";
 import DriverCard from "./DriverCard";
 import { getMapLinks, openMapLink, type MapLinkTarget } from "../lib/mapLinks";
 import { getPositionOrNull } from "../lib/userPosition";
-import { placeUrl, sharePlace, slugFor } from "../lib/shareLink";
+import { slugFor } from "../lib/shareLink";
 // 🍚 밥집으로 가는 주소는 **표 한 장**에서만 온다(partnerLinks.ts).
 import { eatUrlForPlace } from "../lib/partnerLinks";
 import { useLanguage } from "../lib/useLanguage";
@@ -35,10 +35,8 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
   // 우리 화면에서 푼다.
   const [driver, setDriver] = useState(false);
 
-  // 🔗 공유 — 이 곳의 **공개 페이지 주소**를 보낸다(앱 첫 화면이 아니라).
-  //    슬러그가 없는 곳은 주소를 지어내지 않고 단추를 아예 안 그린다.
-  const url = placeUrl(place.id);
-  const [copied, setCopied] = useState(false);
+  // 🔗 공유는 **카드 맨 윗줄로 옮겼다**(2026-09-09 사장님 지시) — ShareButton.tsx.
+  //    이 줄에 셋을 두면 자리가 298px 뿐이라 셋 다 좁아져 아무것도 안 읽힌다.
 
   // 🍚 그 동네 밥집. **동네를 알면 동네로, 모르면 그 구로** 보낸다.
   //    손님이 쓰는 언어를 그대로 넘긴다(대만은 zhTW 로 갈아 끼운다 — partnerLinks.ts).
@@ -47,16 +45,6 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
     { slug: slugFor(place.id), addr: place.addr, gu: place.gu },
     language
   );
-
-  async function onShare() {
-    if (!url) return;
-    const r = await sharePlace(place.name, url);
-    // 「복사됨」은 복사했을 때만 띄운다. 공유창이 열렸으면 손님이 이미 봤다.
-    if (r === "copied") {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  }
 
   async function open(label: "KAKAO" | "NAVER") {
     setLocating(label);
@@ -91,26 +79,18 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
           {locating === "NAVER" ? t.mapLocating : t.naverMapLabel}
         </button>
       </div>
-      {/* 🚕 지도 두 개와 **한 줄 아래**에 따로 둔다. 지도 버튼과 성격이 다르기
-          때문이다 — 저 둘은 "앱을 연다"이고 이건 "이 자리에서 보여 준다"이다.
-          같은 줄에 셋을 욱여넣으면 글자가 줄어 셋 다 안 읽힌다(칸 차지 지적을
-          받은 적이 있어 줄 높이는 최소로 잡았다).
+      {/* 🚕🍚 지도 두 개와 **한 줄 아래**에 따로 둔다. 지도 버튼과 성격이 다르기
+          때문이다 — 저 둘은 "남의 지도 앱을 연다"이고, 이 둘은 "여기서 다음에
+          할 일"이다(기사에게 보여 주기 · 밥 먹으러 가기).
 
-          🔗 공유는 **이 줄 오른쪽 끝에** 붙인다 — 줄을 하나 더 만들지 않는다.
-             칸 차지 지적을 두 번 받은 자리라 높이를 늘리지 않는 것이 우선이다. */}
+          🧹 **둘을 같은 칸으로 나눠 갖는다** (2026-09-09 사장님: "두개 같은칸으로").
+             자리는 298px 이라 낱말 단추 **둘까지만** 들어간다 — 셋을 욱여넣으면
+             316~426px 이 필요해서 어느 언어에서도 안 맞고, 셋 다 좁아져 아무것도
+             안 읽힌다. 그래서 공유는 카드 맨 윗줄로 올렸다(ShareButton.tsx). */}
       <div className="map-directions-row">
         <button type="button" className="map-btn map-btn--driver" onClick={() => setDriver(true)}>
           {t.showToDriver}
         </button>
-      </div>
-      {/* 🧹 **자리 정리** (2026-09-09 사장님: "자리 정리좀 해").
-          재 보니 이 줄의 자리는 **298px** 인데 낱말 단추 셋을 더하면 316~426px 이다 —
-          **어느 언어에서도 한 줄에 안 들어간다.** 억지로 밀어 넣으면 셋 다 좁아져
-          아무것도 안 읽힌다. 그래서 **짝을 맞춰** 나눴다:
-            · 위: 목적지 보여주기 — 우리 기능이고 제일 많이 쓰니 한 줄을 다 준다
-            · 아래: 주변 먹거리(넓게) + 공유(글자 폭만)
-          아래 줄은 12개 언어에서 가장 긴 조합(독일어 267px)도 298px 안에 들어간다. */}
-      <div className="map-directions-row">
         {eat && (
           <a
             className="map-btn map-btn--eat"
@@ -119,21 +99,12 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
             rel="noopener"
             title={eat.label}
           >
-            <span aria-hidden="true">🍚</span>
+            {/* 🚫 그림(🍚)을 뺐다 (2026-09-09 사장님: "가독성 떨어지고 아이콘빼").
+                낱말만 남기면 글자가 커 보이고 옆 단추와 무게가 같아진다.
+                ↗ 는 남긴다 — 남의 앱으로 나간다는 표시고, 이 앱이 이미 쓰는 것이다. */}
             {t.eatNearbyLabel}
             <span aria-hidden="true">↗</span>
           </a>
-        )}
-        {url && (
-          <button
-            type="button"
-            className="map-btn map-btn--share"
-            onClick={onShare}
-            title={t.shareLabel}
-          >
-            <span aria-hidden="true">🔗</span>
-            {copied ? t.shareCopied : t.shareLabel}
-          </button>
         )}
       </div>
       {driver && <DriverCard place={place} onClose={() => setDriver(false)} />}

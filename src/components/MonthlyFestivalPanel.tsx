@@ -9,6 +9,7 @@ import { districtFullName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
 import PlacePhoto from "./PlacePhoto";
 import SaveButton from "./SaveButton";
+import ShareButton from "./ShareButton";
 import { openPlaceInfo, naverSearchUrl } from "../lib/mapLinks";
 import { placeName, translateText, hasTranslation } from "../lib/placeText";
 import { FESTIVAL_THEMES, THEME_ICON, themeOf, type FestivalTheme } from "../data/festivalThemes";
@@ -295,6 +296,9 @@ export default function MonthlyFestivalPanel() {
                       return label ? <span className="fc-date">{label}</span> : null;
                     })()}
                     {compact && <SaveButton place={f} className="save-btn save-btn--inline" />}
+                    {/* 🔗 공유는 이 줄 **오른쪽 끝**에 붙는다(2026-09-09 사장님 지시).
+                        아래 단추 줄은 자리가 모자라고 이 줄은 오른쪽이 늘 비어 있다. */}
+                    <ShareButton place={f} />
                   </div>
                   {/* 이름을 누르면 네이버 통합검색 → 그 구청의 공식 행사 안내로 간다.
                       축제는 지도에 등록된 '장소'가 아니라 며칠만 열리는 '행사'라
@@ -304,7 +308,7 @@ export default function MonthlyFestivalPanel() {
                     className="fc-name pr-name-link"
                     onClick={() => openPlaceInfo(f)}
                   >
-                    {placeName(f.name, language).main}
+                    <span className="pr-name-text">{placeName(f.name, language).main}</span>
                     <span className="pr-name-arrow" aria-hidden="true">↗</span>
                   </button>
                   {/* 번역된 이름 아래에 한국어 원문 — placeText.ts 주석 참고. */}

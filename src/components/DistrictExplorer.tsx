@@ -6,6 +6,7 @@ import { districtShortName, districtFullName, dongName } from "../data/districtN
 import MapDirections from "./MapDirections";
 import PlacePhoto from "./PlacePhoto";
 import SaveButton from "./SaveButton";
+import ShareButton from "./ShareButton";
 import { openPlaceInfo } from "../lib/mapLinks";
 import { getTourImage } from "../lib/tourImages";
 import { getMyDistrict, type MyDistrict } from "../lib/myDistrict";
@@ -240,6 +241,8 @@ export default function DistrictExplorer() {
                       {p.dong ? ` ${dongName(p.dong, language)}` : ""}
                     </span>
                     {compact && <SaveButton place={p} className="save-btn save-btn--inline" />}
+                    {/* 🔗 공유 — 세 카드가 같은 자리에 둔다(ShareButton.tsx 주석). */}
+                    <ShareButton place={p} />
                   </div>
                   {/* 🔗 이름을 누르면 네이버 **통합검색**으로 간다.
                       처음엔 네이버 지도로 보냈는데 2026-09-01 사용자 캡처로 틀린 게
@@ -253,7 +256,7 @@ export default function DistrictExplorer() {
                       className="pr-name pr-name-link"
                       onClick={() => openPlaceInfo(p)}
                     >
-                      {placeName(p.name, language).main}
+                      <span className="pr-name-text">{placeName(p.name, language).main}</span>
                       <span className="pr-name-arrow" aria-hidden="true">↗</span>
                     </button>
                   ) : (
