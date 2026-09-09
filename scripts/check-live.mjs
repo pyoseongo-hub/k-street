@@ -195,5 +195,37 @@ for (const p of [
   }
 }
 
+// ── ⑩ 언어 페이지가 진짜로 서비스되나 ──────────────────────────────────
+//
+// 🌏 2026-09-09에 곳 페이지를 12개 언어로 늘렸다(3,684장). 그런데 **새로 만든
+//    3,377장을 여기서 한 장도 안 보고 있었다** — 그날 이 검사는 전부 ✅ 였다.
+//    안 보는 자리는 조용히 깨진다. 실제로 두 번 그랬다(/place/ · /seoul/).
+//
+// 언어마다 따로 걸릴 수 있는 사고가 있다:
+//   · GitHub Pages 가 `zh-TW` 처럼 **대문자 섞인 폴더**를 그대로 내주나
+//   · 언어 폴더에 진짜 HTML 이 아니라 **앱 첫 화면**이 나가지 않나
+//   · hreflang 이 13줄(12개 언어 + x-default) 다 붙었나 — 하나라도 빠지면
+//     구글이 언어판을 못 묶어 **서로 중복이라고 판정한다**
+console.log("\n⑩ 언어 페이지 (12개 언어를 한 장씩 열어 본다)");
+for (const lang of ["ko", "ja", "zh", "zh-TW", "vi", "es", "fr", "de", "ru", "id", "th", "en"]) {
+  const path = lang === "en" ? "/place/gwangjang-market/" : `/${lang}/place/gwangjang-market/`;
+  try {
+    const r = await fetch(SITE + path, { redirect: "follow" });
+    if (!r.ok) { fail(`${r.status}  ${path}`); continue; }
+    const b = await r.text();
+    const htmlLang = b.match(/<html[^>]*\slang="([^"]+)"/i)?.[1] ?? "";
+    const canon = b.match(/rel="canonical" href="([^"]*)"/)?.[1] ?? "";
+    const alts = (b.match(/rel="alternate"/g) ?? []).length;
+    const title = b.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1]?.trim() ?? "";
+    if (b.includes('<div id="root">')) fail(`${path} — 진짜 페이지가 아니라 앱 첫 화면이 나왔다`);
+    else if (htmlLang !== lang) fail(`${path} — html lang 이 "${htmlLang}" 이다 (${lang} 여야 한다)`);
+    else if (canon !== SITE + path) fail(`${path} — canonical 이 ${canon || "(없음)"} 이다`);
+    else if (alts !== 13) fail(`${path} — hreflang 이 ${alts}줄이다 (13줄이어야 한다)`);
+    else ok(`${lang.padEnd(5)} ${title}`);
+  } catch (e) {
+    fail(`${path} — ${e?.cause?.code ?? e.name}`);
+  }
+}
+
 console.log(`\n${"─".repeat(60)}\n${bad ? `❌ 손봐야 할 것 ${bad}가지` : "✅ 새 주소가 제대로 서비스되고 있다"}`);
 process.exit(bad ? 1 : 0);
