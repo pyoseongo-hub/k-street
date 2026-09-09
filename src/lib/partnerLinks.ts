@@ -139,17 +139,34 @@ function areaFromAddr(addr: string): string | null {
 }
 
 /**
- * 그 곳에서 밥 먹으러 갈 자리. **동네를 알면 동네로, 모르면 그 구로** 보낸다.
- * 둘 다 없으면 null — 없는 주소는 지어내지 않는다.
+ * 🔀 **동네로 좁히지 않고 구로 보낸다** (2026-09-09 사장님 결정:
+ *    "구로 연결. 선택지를 많게").
+ *
+ * 한동안 동네를 알면 동네로 보냈다(상수동 → 홍대, 성수동 → 성수). 좁아서 정확하지만
+ * **손님이 고를 것이 적다.** 성동구 전체가 성수 한 동네보다 훨씬 많고, 걸어서
+ * 옆 동네로 넘어가는 것은 손님이 알아서 한다. **고를 거리를 많이 주는 쪽**을 골랐다.
+ *
+ * 위 AREA_DONGS·AREA_LABEL·AREA_BY_SLUG 는 **지우지 않고 남겨 둔다** —
+ * 저쪽이 보내 준 「동네 = 어느 법정동」 표는 그 자체로 값진 자료이고,
+ * 나중에 「이 동네만」이 필요해지면 `AREA_LINKS = true` 한 줄로 되살아난다.
+ */
+const AREA_LINKS = false;
+
+/**
+ * 그 곳에서 밥 먹으러 갈 자리. **그 구의 밥집 목록**으로 보낸다.
+ * 주소가 없으면 null — 없는 주소는 지어내지 않는다.
  */
 export function eatUrlForPlace(
   p: { slug?: string; addr?: string; gu: string },
   lang: Language = "en"
 ): { href: string; label: string } | null {
   if (!PARTNER_READY) return null;
-  const area = (p.slug ? AREA_BY_SLUG[p.slug] : undefined) ?? areaFromAddr(p.addr ?? "");
-  if (area)
-    return { href: `${BASE}/seoul/${area}?hl=${partnerLang(lang)}`, label: `${AREA_LABEL[area]} →` };
+
+  if (AREA_LINKS) {
+    const area = (p.slug ? AREA_BY_SLUG[p.slug] : undefined) ?? areaFromAddr(p.addr ?? "");
+    if (area)
+      return { href: `${BASE}/seoul/${area}?hl=${partnerLang(lang)}`, label: `${AREA_LABEL[area]} →` };
+  }
 
   const href = eatNearbyUrl(p.gu, lang);
   return href ? { href, label: `Where to eat in ${districtFullName(p.gu, "en")} →` } : null;
