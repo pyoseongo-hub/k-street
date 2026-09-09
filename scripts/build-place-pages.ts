@@ -267,6 +267,21 @@ function pageFor(p: Place, sameGu: Place[]): string {
     ...(p.officialUrl ? { sameAs: p.officialUrl } : {}),
   };
 
+  // 🍞 **길 표시**(BreadcrumbList) — 검색 결과에서 주소 대신
+  //    「K-Street › Seoul › Jongno-gu › Gwangjang Market」로 뜬다.
+  //    긴 주소보다 읽기 쉬워 눌릴 확률이 올라가고, 구별 페이지가 이 곳의
+  //    **윗자리**라는 것도 구글에게 알려 준다(묶음 페이지가 그만큼 세진다).
+  const crumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "K-Street", item: `${SITE}/` },
+      { "@type": "ListItem", position: 2, name: "Seoul", item: `${SITE}/seoul/` },
+      { "@type": "ListItem", position: 3, name: guEn(p.gu), item: `${SITE}/${hubPathGu(p.gu)}/` },
+      { "@type": "ListItem", position: 4, name: nameEn, item: url },
+    ],
+  };
+
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -283,7 +298,7 @@ function pageFor(p: Place, sameGu: Place[]): string {
 <meta property="og:image" content="${esc(photo ?? `${SITE}/share-card.png`)}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/icons/icon-192.png">
-<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
+<script type="application/ld+json">${JSON.stringify([jsonLd, crumbs])}</script>
 <style>${CSS}</style>
 </head>
 <body>
