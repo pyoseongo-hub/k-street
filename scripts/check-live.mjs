@@ -229,30 +229,54 @@ for (const lang of ["ko", "ja", "zh", "zh-TW", "vi", "es", "fr", "de", "ru", "id
 
 // ── ⑪ 묶음 페이지의 언어판 ──────────────────────────────────────────────
 //
-// 🗂️ 2026-09-10에 묶음 44장을 영어·일어·중국어(간체·번체)로 만들었다(176장).
-//    곳 페이지와 **hreflang 줄 수가 다르다** — 묶음은 4개 언어 + x-default = 5줄.
-//    12줄이 나오면 없는 언어를 가리키고 있다는 뜻이라 그것도 사고다.
-console.log("\n⑪ 묶음 페이지의 언어판 (영어·일어·중국어)");
+// 🗂️ 묶음 44장을 언어별로 만들었다(2026-09-10). 언어 수는 계속 늘어난다 —
+//    영어·일어·중국어(간체·번체)로 시작해 한국어·베트남어·태국어·인도네시아어까지.
+console.log("\n⑪ 묶음 페이지의 언어판");
 for (const [lang, path] of [
   ["en", "/seoul/"],
   ["ja", "/ja/seoul/jongno-gu/"],
   ["zh", "/zh/seoul/festivals-in-october/"],
   ["zh-TW", "/zh-TW/seoul/traditional-markets/"],
+  ["ko", "/ko/seoul/jongno-gu/"],
+  ["vi", "/vi/seoul/festivals-in-october/"],
+  ["th", "/th/seoul/museums/"],
+  ["id", "/id/seoul/"],
 ]) {
   try {
     const r = await fetch(SITE + path, { redirect: "follow" });
     if (!r.ok) { fail(`${r.status}  ${path}`); continue; }
     const b = await r.text();
     const htmlLang = b.match(/<html[^>]*\slang="([^"]+)"/i)?.[1] ?? "";
-    const alts = (b.match(/rel="alternate"/g) ?? []).length;
     const title = b.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1]?.trim() ?? "";
     if (b.includes('<div id="root">')) fail(`${path} — 진짜 페이지가 아니라 앱 첫 화면이 나왔다`);
     else if (htmlLang !== lang) fail(`${path} — html lang 이 "${htmlLang}" 이다 (${lang} 여야 한다)`);
-    else if (alts !== 5) fail(`${path} — hreflang 이 ${alts}줄이다 (묶음은 5줄: 4개 언어 + x-default)`);
     else ok(`${lang.padEnd(5)} ${title}`);
   } catch (e) {
     fail(`${path} — ${e?.cause?.code ?? e.name}`);
   }
+}
+
+// ── ⑫ hreflang 이 가리키는 주소가 정말 열리나 ───────────────────────────
+//
+// 🔬 **줄 수를 세는 것으로는 부족하다** (2026-09-10에 잣대를 고쳤다).
+//    전에는 「묶음은 5줄이어야 한다」로 숫자를 박아 뒀다. 그러면 언어를 더할 때마다
+//    이 숫자를 손으로 고쳐야 하고, 무엇보다 **줄 수가 맞아도 그 주소가 없을 수 있다.**
+//    묶음은 언어 수가 곳 페이지보다 적어서(아직 8개) 실수로 12개를 적으면
+//    **없는 페이지 4장을 가리킨다** — 구글이 404 를 받고 hreflang 묶음을 못 믿는다.
+//    그래서 한 장을 골라 **적혀 있는 대체 주소를 전부 두드려 본다.** 이게 진짜 검사다.
+console.log("\n⑫ hreflang 이 가리키는 주소가 다 열리나 (묶음 한 장 · 곳 한 장)");
+for (const path of ["/seoul/jongno-gu/", "/place/gwangjang-market/"]) {
+  const r = await fetch(SITE + path, { redirect: "follow" });
+  const b = r.ok ? await r.text() : "";
+  const alts = [...b.matchAll(/rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)];
+  if (!alts.length) { fail(`${path} — hreflang 이 한 줄도 없다`); continue; }
+  let dead = 0;
+  for (const [, lang, href] of alts) {
+    const rr = await fetch(href, { redirect: "follow", method: "GET" });
+    if (!rr.ok) { fail(`${path} 의 hreflang="${lang}" → ${rr.status} ${href}`); dead++; }
+    rr.body?.cancel?.();
+  }
+  if (!dead) ok(`${path} — 대체 주소 ${alts.length}개 전부 열린다 (${alts.map((a) => a[1]).join(" ")})`);
 }
 
 console.log(`\n${"─".repeat(60)}\n${bad ? `❌ 손봐야 할 것 ${bad}가지` : "✅ 새 주소가 제대로 서비스되고 있다"}`);
