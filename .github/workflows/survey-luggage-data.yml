@@ -20,6 +20,7 @@ jobs:
       - name: 자료 훑기
         env:
           TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
         run: |
           set -o pipefail
           node scripts/survey-luggage-data.mjs 2>&1 | tee survey-log.txt
