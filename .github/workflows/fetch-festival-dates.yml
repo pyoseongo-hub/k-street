@@ -101,7 +101,10 @@ jobs:
             echo "매주 월요일에 기계가 재서 올리는 글입니다. **이 이슈 하나를 계속 고쳐 씁니다.**"
             echo ""
             echo '```'
-            head -8 freshness-log.txt
+            # 🐞 `head -8` 이었다 — **npm·vite 빌드 잡음만 퍼 왔다.** 정작 숫자는
+            #    그 아래에 있어서, 열린 이슈에 「✓ 20 modules transformed」만 적혔다.
+            #    맨 앞 몇 줄이 아니라 **찾는 줄**을 집는다.
+            sed -n '/🎪 축제 신선도/,/④/p' freshness-log.txt
             echo '```'
             echo ""
             echo "### 이게 손님에게 무슨 뜻인가"
@@ -144,7 +147,7 @@ jobs:
             echo ""
             echo "### 🎪 축제 신선도 (여기부터 보세요)"
             echo '```'
-            head -8 freshness-log.txt 2>/dev/null || echo "(못 쟀음)"
+            sed -n '/🎪 축제 신선도/,/④/p' freshness-log.txt 2>/dev/null || echo "(못 쟀음)"
             echo '```'
             echo "자세한 목록: [docs/축제-신선도.md](../blob/main/docs/%EC%B6%95%EC%A0%9C-%EC%8B%A0%EC%84%A0%EB%8F%84.md)"
             echo ""
