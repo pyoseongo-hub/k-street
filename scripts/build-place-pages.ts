@@ -37,6 +37,9 @@ import { galleryShotsFor } from "../src/lib/photoGallery";
 import { districtFullName, dongName } from "../src/data/districtNamesEn";
 // 🍚 밥집 쪽으로 잇는 주소는 **표 한 장**에서만 온다(src/lib/partnerLinks.ts).
 import { eatNearbyUrl } from "../src/lib/partnerLinks";
+// 🗓️ 이름에 지난 연도가 박힌 행사(「2025 서울한옥위크」)를 가려내는 잣대.
+//    앱과 이 생성기가 **같은 함수**를 쓴다 — 잣대가 둘이면 한쪽만 고치게 된다.
+import { pastEditionYear } from "../src/lib/pastEdition";
 // 🌏 12개 언어. 곳 이름·메모는 place-translations.json 에서(translateText),
 //    틀에 박히는 낱말은 여기서 온다(scripts/lib/page-strings.ts).
 import { getTranslations, type Language } from "../src/lib/translations";
@@ -270,6 +273,8 @@ function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
   //    2026-09-10에 12개 언어가 다 차서 지금은 늘 자기 언어로 가지만, 새 언어를
   //    곳 페이지에만 먼저 넣는 일이 또 생길 수 있으므로 이 갈림은 남겨 둔다.
   const HL = hubLang(lang);
+  // 이름에 지난 연도가 박혔나 — 「2025 서울한옥위크」 같은 것.
+  const pastYear = pastEditionYear(p.name);
   const HS = HUB_STRINGS[HL] as HubStrings;
   // 구 이름도 앱과 **같은 표**를 쓴다 — 「종로구」/「Jongno-gu」/「鍾路区」.
   const guName = districtFullName(p.gu, lang);
@@ -413,6 +418,14 @@ ${note ? `<p class="note">${esc(note)}</p>` : ""}
 <dt>${esc(S.district)}</dt><dd>${esc(guName)}${p.dong ? ` · ${esc(dongName(p.dong, lang))}` : ""}</dd>
 ${p.addr ? `<dt>${esc(S.address)}</dt><dd lang="ko">${esc(p.addr)}</dd>` : ""}
 ${when ? `<dt>${esc(S.when)}</dt><dd>${esc(when)} — ${esc(S.datesShift)}</dd>` : ""}
+${
+  // 🗓️ 이름에 지난 연도가 박힌 행사 — **아는 것만 말한다.**
+  //    「2025년에 열렸다」는 아는 사실이고, 「2026년에도 열린다」는 모르는 일이다.
+  //    지우지도 않고 올해 것처럼 보여 주지도 않는다.
+  pastYear
+    ? `<dt>${esc(S.when)}</dt><dd><strong>${esc(S.pastEdition(pastYear))}</strong></dd>`
+    : ""
+}
 ${p.officialUrl ? `<dt>${esc(S.official)}</dt><dd><a href="${esc(p.officialUrl)}" rel="nofollow noopener">${esc(new URL(p.officialUrl).hostname)}</a></dd>` : ""}
 </dl>
 
@@ -691,8 +704,20 @@ const clip = (s: string) => (s.length <= 160 ? s : s.slice(0, 160).replace(/\s+\
 const GU_LIST = [...byGu.keys()].sort((a, b) => guEn(a).localeCompare(guEn(b)));
 
 // 달별 — 축제가 있는 달만. 걸쳐 있는 축제는 두 달 모두에 나온다(앱 화면과 같은 규칙).
+// 🚨 **지난 회차는 달별 묶음에서 뺀다** (2026-09-10).
+//    이 페이지 제목은 「Seoul Festivals in October **2026**」 인데 목록에
+//    「**2025** Seoul Hanok Week」 가 올라와 있었다 — 한 화면에서 연도가 부딪힌다.
+//    달별 묶음은 「올해 그 달에 열린다」고 **약속하는 자리**라, 우리가 확인 못 한
+//    것을 여기 올리면 손님이 헛걸음한다. 곳 페이지에는 그대로 남기되(아는 사실이니까)
+//    거기서는 「2025년 회차 기록」이라고 밝힌다.
 const festivalsIn = (m: number) =>
-  ALL.filter((p) => p.startMonth != null && m >= p.startMonth && m <= (p.endMonth ?? p.startMonth)).sort(
+  ALL.filter(
+    (p) =>
+      p.startMonth != null &&
+      m >= p.startMonth &&
+      m <= (p.endMonth ?? p.startMonth) &&
+      !pastEditionYear(p.name)
+  ).sort(
     (a, b) => guEn(a.gu).localeCompare(guEn(b.gu)) || translateText(a.name, "en").localeCompare(translateText(b.name, "en"))
   );
 const MONTHS_WITH = [...Array(12).keys()].map((i) => i + 1).filter((m) => festivalsIn(m).length);

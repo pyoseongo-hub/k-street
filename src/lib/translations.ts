@@ -191,6 +191,14 @@ export interface Translations {
   mapLocating: string;
   categoryLabels: Record<string, string>;
 
+  /**
+   * 🗓️ 이름에 지난 연도가 박힌 행사 (2026-09-10).
+   *    badge = 카드에 붙는 짧은 딱지, note = 눌렀을 때 보이는 설명.
+   *    아는 것(그 해에 열렸다)과 모르는 것(올해도 열리는지)을 갈라서 말한다.
+   */
+  pastEditionBadge: (year: number) => string;
+  pastEditionNote: (year: number) => string;
+
   // Months
   months: Record<number, string>;
 
@@ -278,6 +286,8 @@ const translations: Record<Language, Translations> = {
       festival: '축제',
       street: '골목·거리',
     },
+    pastEditionBadge: (y) => `${y}년 기준`,
+    pastEditionNote: (y) => `${y}년 회차 기록입니다. 올해도 열리는지는 공식 안내를 확인하세요`,
 
     months: {
       1: '1월', 2: '2월', 3: '3월', 4: '4월', 5: '5월', 6: '6월',
@@ -366,6 +376,8 @@ const translations: Record<Language, Translations> = {
       festival: 'Festivals',
       street: 'Alleys & streets',
     },
+    pastEditionBadge: (y) => `${y} edition`,
+    pastEditionNote: (y) => `Record of the ${y} edition. Check the official notice to see if it runs this year`,
 
     months: {
       1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June',
@@ -454,6 +466,8 @@ const translations: Record<Language, Translations> = {
       festival: 'フェスティバル',
       street: '路地・通り',
     },
+    pastEditionBadge: (y) => `${y}年開催分`,
+    pastEditionNote: (y) => `${y}年開催分の記録です。今年も開催されるかは公式案内をご確認ください`,
 
     months: {
       1: '1月', 2: '2月', 3: '3月', 4: '4月', 5: '5月', 6: '6月',
@@ -542,6 +556,8 @@ const translations: Record<Language, Translations> = {
       festival: '节庆',
       street: '小巷·街道',
     },
+    pastEditionBadge: (y) => `${y}年那一届`,
+    pastEditionNote: (y) => `这是${y}年那一届的记录。今年是否举办请查看官方公告`,
 
     months: {
       1: '1月', 2: '2月', 3: '3月', 4: '4月', 5: '5月', 6: '6月',
@@ -630,6 +646,8 @@ const translations: Record<Language, Translations> = {
       festival: '節慶',
       street: '小巷‧街道',
     },
+    pastEditionBadge: (y) => `${y}年那一屆`,
+    pastEditionNote: (y) => `這是${y}年那一屆的紀錄。今年是否舉辦請查看官方公告`,
 
     months: {
       1: '1月', 2: '2月', 3: '3月', 4: '4月', 5: '5月', 6: '6月',
@@ -718,6 +736,8 @@ const translations: Record<Language, Translations> = {
       festival: 'Lễ hội',
       street: 'Ngõ & phố',
     },
+    pastEditionBadge: (y) => `Kỳ ${y}`,
+    pastEditionNote: (y) => `Ghi nhận của kỳ ${y}. Hãy xem thông báo chính thức để biết năm nay có tổ chức không`,
 
     months: {
       1: 'Tháng 1', 2: 'Tháng 2', 3: 'Tháng 3', 4: 'Tháng 4', 5: 'Tháng 5', 6: 'Tháng 6',
@@ -806,6 +826,8 @@ const translations: Record<Language, Translations> = {
       festival: 'Festivales',
       street: 'Callejones',
     },
+    pastEditionBadge: (y) => `Edición ${y}`,
+    pastEditionNote: (y) => `Registro de la edición de ${y}. Consulta el aviso oficial para saber si se celebra este año`,
 
     months: {
       1: 'Enero', 2: 'Febrero', 3: 'Marzo', 4: 'Abril', 5: 'Mayo', 6: 'Junio',
@@ -894,6 +916,8 @@ const translations: Record<Language, Translations> = {
       festival: 'Festivals',
       street: 'Ruelles',
     },
+    pastEditionBadge: (y) => `Édition ${y}`,
+    pastEditionNote: (y) => `Trace de l’édition ${y}. Consultez l’avis officiel pour savoir si elle a lieu cette année`,
 
     months: {
       1: 'Janvier', 2: 'Février', 3: 'Mars', 4: 'Avril', 5: 'Mai', 6: 'Juin',
@@ -982,6 +1006,8 @@ const translations: Record<Language, Translations> = {
       festival: 'Festivals',
       street: 'Gassen',
     },
+    pastEditionBadge: (y) => `Ausgabe ${y}`,
+    pastEditionNote: (y) => `Aufzeichnung der Ausgabe ${y}. Bitte die offizielle Ankündigung prüfen, ob sie dieses Jahr stattfindet`,
 
     months: {
       1: 'Januar', 2: 'Februar', 3: 'März', 4: 'April', 5: 'Mai', 6: 'Juni',
@@ -1070,6 +1096,8 @@ const translations: Record<Language, Translations> = {
       festival: 'Фестивали',
       street: 'Улочки',
     },
+    pastEditionBadge: (y) => `Выпуск ${y}`,
+    pastEditionNote: (y) => `Запись о выпуске ${y} года. Смотрите официальное объявление, проводится ли он в этом году`,
 
     months: {
       1: 'Январь', 2: 'Февраль', 3: 'Март', 4: 'Апрель', 5: 'Май', 6: 'Июнь',
@@ -1158,6 +1186,8 @@ const translations: Record<Language, Translations> = {
       festival: 'Festival',
       street: 'Gang & jalan',
     },
+    pastEditionBadge: (y) => `Edisi ${y}`,
+    pastEditionNote: (y) => `Catatan edisi ${y}. Cek pengumuman resmi apakah tahun ini digelar`,
 
     months: {
       1: 'Januari', 2: 'Februari', 3: 'Maret', 4: 'April', 5: 'Mei', 6: 'Juni',
@@ -1246,6 +1276,8 @@ const translations: Record<Language, Translations> = {
       festival: 'เทศกาล',
       street: 'ตรอกและถนน',
     },
+    pastEditionBadge: (y) => `ครั้งปี ${y}`,
+    pastEditionNote: (y) => `บันทึกของครั้งปี ${y} โปรดตรวจสอบประกาศทางการว่าปีนี้จัดหรือไม่`,
 
     months: {
       1: 'มกราคม', 2: 'กุมภาพันธ์', 3: 'มีนาคม', 4: 'เมษายน', 5: 'พฤษภาคม', 6: 'มิถุนายน',

@@ -23,6 +23,12 @@ export interface PageStrings {
   official: string;
   /** 「10월 — 날짜는 해마다 바뀝니다…」 뒤에 붙는 안내 */
   datesShift: string;
+  /**
+   * 🗓️ 이름에 지난 연도가 박힌 행사에 붙이는 한 줄 (2026-09-10).
+   *    「2025년 회차 기록입니다 — 올해도 열리는지 공식 안내를 확인하세요」
+   *    아는 것(그 해에 열렸다)과 모르는 것(올해도 열리는지)을 **갈라서** 말한다.
+   */
+  pastEdition: (year: number) => string;
   /** 같은 구의 다른 곳 목록 제목 */
   moreIn: (gu: string) => string;
   /** 아래 딱지 줄 제목 */
@@ -47,6 +53,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     when: "언제",
     official: "공식 안내",
     datesShift: "날짜는 해마다 바뀝니다 — 공식 안내를 확인하세요",
+    pastEdition: (y) => `${y}년 회차 기록입니다 — 올해도 열리는지 공식 안내를 확인하세요`,
     moreIn: (gu) => `${gu}의 다른 곳`,
     browse: "둘러보기",
     everythingIn: (gu) => `${gu} 전체 보기`,
@@ -63,6 +70,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     when: "When",
     official: "Official",
     datesShift: "dates shift each year, check the official notice",
+    pastEdition: (y) => `Record of the ${y} edition — check the official notice to see if it runs this year`,
     moreIn: (gu) => `More in ${gu}`,
     browse: "Browse",
     everythingIn: (gu) => `Everything in ${gu}`,
@@ -81,6 +89,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     when: "時期",
     official: "公式案内",
     datesShift: "日程は年によって変わります — 公式案内をご確認ください",
+    pastEdition: (y) => `${y}年開催分の記録です — 今年も開催されるかは公式案内をご確認ください`,
     moreIn: (gu) => `${gu}のほかの場所`,
     browse: "ほかを見る",
     everythingIn: (gu) => `${gu}をすべて見る`,
@@ -97,6 +106,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     when: "时间",
     official: "官方信息",
     datesShift: "日期每年不同 — 请查看官方公告",
+    pastEdition: (y) => `这是${y}年那一届的记录 — 今年是否举办请查看官方公告`,
     moreIn: (gu) => `${gu}的其他地方`,
     browse: "浏览",
     everythingIn: (gu) => `查看${gu}全部`,
@@ -113,6 +123,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     when: "時間",
     official: "官方資訊",
     datesShift: "日期每年不同 — 請查看官方公告",
+    pastEdition: (y) => `這是${y}年那一屆的紀錄 — 今年是否舉辦請查看官方公告`,
     moreIn: (gu) => `${gu}的其他地方`,
     browse: "瀏覽",
     everythingIn: (gu) => `查看${gu}全部`,
@@ -129,6 +140,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     when: "Thời gian",
     official: "Thông tin chính thức",
     datesShift: "ngày thay đổi mỗi năm — hãy xem thông báo chính thức",
+    pastEdition: (y) => `Ghi nhận của kỳ ${y} — hãy xem thông báo chính thức để biết năm nay có tổ chức không`,
     moreIn: (gu) => `Địa điểm khác ở ${gu}`,
     browse: "Xem thêm",
     everythingIn: (gu) => `Tất cả ở ${gu}`,
@@ -147,6 +159,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     when: "Cuándo",
     official: "Información oficial",
     datesShift: "las fechas cambian cada año — consulta el aviso oficial",
+    pastEdition: (y) => `Registro de la edición de ${y} — consulta el aviso oficial para saber si se celebra este año`,
     moreIn: (gu) => `Más en ${gu}`,
     browse: "Explorar",
     everythingIn: (gu) => `Todo en ${gu}`,
@@ -165,6 +178,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     when: "Quand",
     official: "Infos officielles",
     datesShift: "les dates changent chaque année — consultez l'avis officiel",
+    pastEdition: (y) => `Trace de l’édition ${y} — consultez l’avis officiel pour savoir si elle a lieu cette année`,
     moreIn: (gu) => `Autres lieux à ${gu}`,
     browse: "Parcourir",
     everythingIn: (gu) => `Tout à ${gu}`,
@@ -183,6 +197,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     when: "Wann",
     official: "Offizielle Info",
     datesShift: "die Termine ändern sich jedes Jahr — bitte offizielle Ankündigung prüfen",
+    pastEdition: (y) => `Aufzeichnung der Ausgabe ${y} — bitte die offizielle Ankündigung prüfen, ob sie dieses Jahr stattfindet`,
     moreIn: (gu) => `Mehr in ${gu}`,
     browse: "Entdecken",
     everythingIn: (gu) => `Alles in ${gu}`,
@@ -201,6 +216,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     when: "Когда",
     official: "Официально",
     datesShift: "даты меняются каждый год — смотрите официальное объявление",
+    pastEdition: (y) => `Запись о выпуске ${y} года — смотрите официальное объявление, проводится ли он в этом году`,
     moreIn: (gu) => `Ещё в ${gu}`,
     browse: "Смотреть",
     everythingIn: (gu) => `Всё в ${gu}`,
@@ -219,6 +235,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     when: "Kapan",
     official: "Info resmi",
     datesShift: "tanggal berubah setiap tahun — cek pengumuman resmi",
+    pastEdition: (y) => `Catatan edisi ${y} — cek pengumuman resmi apakah tahun ini digelar`,
     moreIn: (gu) => `Lainnya di ${gu}`,
     browse: "Jelajahi",
     everythingIn: (gu) => `Semua di ${gu}`,
@@ -237,6 +254,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     when: "ช่วงเวลา",
     official: "ข้อมูลทางการ",
     datesShift: "วันที่เปลี่ยนทุกปี — โปรดตรวจสอบประกาศทางการ",
+    pastEdition: (y) => `บันทึกของครั้งปี ${y} — โปรดตรวจสอบประกาศทางการว่าปีนี้จัดหรือไม่`,
     moreIn: (gu) => `ที่อื่นใน ${gu}`,
     browse: "ดูเพิ่มเติม",
     everythingIn: (gu) => `ทั้งหมดใน ${gu}`,

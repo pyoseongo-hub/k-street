@@ -13,6 +13,7 @@ import ShareButton from "./ShareButton";
 import { openPlaceInfo, naverSearchUrl } from "../lib/mapLinks";
 import { placeName, translateText, hasTranslation } from "../lib/placeText";
 import { FESTIVAL_THEMES, THEME_ICON, themeOf, type FestivalTheme } from "../data/festivalThemes";
+import { pastEditionYear } from "../lib/pastEdition";
 
 // 「봄 여름 가을 겨울 그리고 서울」 — 지도와 상관없이 **계절 · 달 · 테마**로
 // 축제를 고르는 화면이다(사용자 지시 2026-09-01: "이건 지도와상관없이 서울의
@@ -295,6 +296,18 @@ export default function MonthlyFestivalPanel() {
                               : t.months[f.startMonth];
                       return label ? <span className="fc-date">{label}</span> : null;
                     })()}
+                    {/* 🗓️ **지난 회차임을 밝힌다** (2026-09-10).
+                        다른 AI 평가가 「2025년에 열린 행사가 화면에 남아 있다」고
+                        짚었고, 재 보니 사실이었다(11곳). 이름이 「2025 서울한옥위크」인데
+                        날짜 칸에는 「9월」만 떠서, 손님에게는 **올해 9월에 열린다**는
+                        말로 읽힌다. 우리가 아는 것은 「2025년에 열렸다」까지다.
+                        지우지 않는 이유 — 그것도 아는 사실이고, 해마다 열리는 행사면
+                        올해도 열릴 수 있다. 다만 **모르는 것을 아는 척하지 않는다.** */}
+                    {pastEditionYear(f.name) && (
+                      <span className="fc-past" title={t.pastEditionNote(pastEditionYear(f.name)!)}>
+                        {t.pastEditionBadge(pastEditionYear(f.name)!)}
+                      </span>
+                    )}
                     {compact && <SaveButton place={f} className="save-btn save-btn--inline" />}
                     {/* 🔗 공유는 이 줄 **오른쪽 끝**에 붙는다(2026-09-09 사장님 지시).
                         아래 단추 줄은 자리가 모자라고 이 줄은 오른쪽이 늘 비어 있다. */}

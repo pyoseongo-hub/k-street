@@ -2292,3 +2292,21 @@ button {
 /* ↗ 밑에는 밑줄이 안 깔린다 — 밑줄을 링크 전체가 아니라 **이름 글자(.pr-name-text)**
    에만 걸기 때문이다. 처음엔 링크에 걸었더니 화살표 밑에 짧은 줄이 하나 더 그려져
    지저분했다(2026-09-09 화면으로 확인). CSS 로는 자식만 빼낼 수 없어 글자를 감쌌다. */
+
+/* 🗓️ 지난 회차 딱지 (2026-09-10).
+   이름에 「2025」가 박힌 행사가 날짜 칸에는 「9월」만 띄워서, 손님에게는
+   **올해 9월에 열린다**는 말로 읽히고 있었다(다른 AI 평가가 짚어 줬고 사실이었다).
+   눈에 띄되 겁주지 않게 — 빨강이 아니라 흐린 주황이다. 사고가 아니라
+   「우리가 아직 확인 못 했다」는 표시이기 때문이다. */
+.fc-past {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--muted);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
