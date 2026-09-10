@@ -1,0 +1,60 @@
+name: Survey city (새 도시 자료 먼저 보기)
+
+# 🔍 **새 도시를 만들기 전에 그 도시 자료가 어떻게 생겼는지 본다.**
+#
+# 왜 (2026-09-10, 사용자 지시: "진행 자료가 중요해. 만들기전에 … 자료받고 비교해서 만들어") —
+# 지금 K-Street 은 서울 모양으로 박혀 있다('seoul' 이 20개 파일 290자리, 구 이름 25개,
+# 서울 산 이름 목록). 제주에는 **구가 없고**(제주시·서귀포시), 서울에 없는 갈래
+# (오름·올레길)가 있다. 코드를 먼저 만들면 자료를 코드 모양에 우겨넣게 된다.
+#
+# 🚨 **왜 PC 가 아니라 여기서 도나** — K-Street 은 사장님 PC 에 내려받혀 있지 않다.
+#    지금까지 전부 클라우드 세션에서 만들어 GitHub 로 바로 올렸다. 그리고
+#    TOUR_API_KEY 는 **이미 이 저장소의 시크릿**이라(7개 워크플로가 쓴다) 여기서
+#    돌리면 사장님이 키를 다시 넣을 일도, 폴더를 찾을 일도 없다.
+#
+# ⚠️ 이 워크플로는 **아무것도 커밋하지 않는다.** seed.ts 도 안 건드린다.
+#    받아서 세어 보고 요약만 남긴다 — 조사 단계이기 때문이다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      area:
+        description: "지역 번호. 비워 두면 관광공사에 지역 목록을 물어봅니다 (제주가 몇 번인지 여기서 확인)"
+        type: string
+        required: false
+        default: ""
+
+jobs:
+  survey:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 조사
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        # set -o pipefail 이 없으면 node 가 죽어도 tee 가 성공해 초록불로 끝난다.
+        run: |
+          set -o pipefail
+          ARGS=""
+          if [ -n "${{ inputs.area }}" ]; then ARGS="--area ${{ inputs.area }}"; fi
+          node scripts/survey-city.mjs $ARGS 2>&1 | tee survey-log.txt
+      - name: 받은 원본 남기기 (내려받아 볼 수 있게)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: survey-raw
+          path: src/data/survey-*.json
+          if-no-files-found: ignore
+      - name: 결과 요약 (Summary 에서 바로 확인)
+        if: always()
+        run: |
+          {
+            echo "## 🔍 새 도시 자료 조사 (아직 앱엔 아무것도 안 넣었습니다)"
+            echo ""
+            echo '```'
+            cat survey-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
