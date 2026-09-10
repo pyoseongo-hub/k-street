@@ -157,6 +157,10 @@ export interface Translations {
   luggageLinkLabel: string;
   /** 🚨 1.5km 안에 역이 없을 때. **빈칸으로 두지 않는다** — 이것도 답이다 */
   stationNoneShort: string;
+  /** 🔒 짐 보관 카드 한 줄. 「있습니다」로 단정하지 않는다 — 273역 / 약 340역이다 */
+  lockerNote: string;
+  /** 공식 페이지로 나가는 링크 이름. 자세한 것은 우리가 안 적고 여기로 보낸다 */
+  lockerOfficialLabel: string;
   /** 손님에게 — "이 화면을 기사에게 보여 주세요". 손님 언어로 나온다. */
   driverCardHint: string;
   /** 기사 화면을 닫는 버튼. 손님 언어로 나온다. */
@@ -275,6 +279,8 @@ const translations: Record<Language, Translations> = {
     nearestStationLabel: '가까운 역',
     luggageLinkLabel: '짐 보관',
     stationNoneShort: '가까운 지하철역 없음',
+    lockerNote: '대부분의 역에 물품보관함(또타라커)이 있습니다.',
+    lockerOfficialLabel: '서울교통공사 안내',
     driverCardHint: '이 화면을 택시 기사에게 보여 주세요.',
     driverCardClose: '닫기',
     myLocationFind: '📍 내 위치',
@@ -368,6 +374,8 @@ const translations: Record<Language, Translations> = {
     nearestStationLabel: 'Nearest station',
     luggageLinkLabel: 'Luggage',
     stationNoneShort: 'No station within 1.5 km',
+    lockerNote: 'Most stations have coin lockers (T-Locker).',
+    lockerOfficialLabel: 'Official page — Seoul Metro',
     driverCardHint: 'Show this screen to your taxi driver — it is written in Korean.',
     driverCardClose: 'Close',
     myLocationFind: '📍 My location',
@@ -461,6 +469,8 @@ const translations: Record<Language, Translations> = {
     nearestStationLabel: '最寄り駅',
     luggageLinkLabel: '荷物預け',
     stationNoneShort: '近くに駅がありません',
+    lockerNote: '多くの駅にコインロッカー（T-Locker）があります。',
+    lockerOfficialLabel: 'ソウル交通公社の公式ページ',
     driverCardHint: 'この画面をタクシーの運転手に見せてください。韓国語で書かれています。',
     driverCardClose: '閉じる',
     myLocationFind: '📍 現在地',
@@ -554,6 +564,8 @@ const translations: Record<Language, Translations> = {
     nearestStationLabel: '最近车站',
     luggageLinkLabel: '寄存行李',
     stationNoneShort: '附近没有地铁站',
+    lockerNote: '多数车站设有自助储物柜（T-Locker）。',
+    lockerOfficialLabel: '首尔交通公社官方页面',
     driverCardHint: '请把这个画面给出租车司机看，上面是韩语。',
     driverCardClose: '关闭',
     myLocationFind: '📍 我的位置',
@@ -647,6 +659,8 @@ const translations: Record<Language, Translations> = {
     nearestStationLabel: '最近車站',
     luggageLinkLabel: '寄放行李',
     stationNoneShort: '附近沒有地鐵站',
+    lockerNote: '多數車站設有自助置物櫃（T-Locker）。',
+    lockerOfficialLabel: '首爾交通公社官方頁面',
     driverCardHint: '請把這個畫面給計程車司機看，上面是韓文。',
     driverCardClose: '關閉',
     myLocationFind: '📍 我的位置',
@@ -740,6 +754,8 @@ const translations: Record<Language, Translations> = {
     nearestStationLabel: 'Ga gần nhất',
     luggageLinkLabel: 'Gửi hành lý',
     stationNoneShort: 'Không có ga gần đây',
+    lockerNote: 'Phần lớn các ga có tủ khoá tự động (T-Locker).',
+    lockerOfficialLabel: 'Trang chính thức của Seoul Metro',
     driverCardHint: 'Hãy đưa màn hình này cho tài xế taxi xem — nội dung bằng tiếng Hàn.',
     driverCardClose: 'Đóng',
     myLocationFind: '📍 Vị trí của tôi',
@@ -833,6 +849,8 @@ const translations: Record<Language, Translations> = {
     nearestStationLabel: 'Estación más cercana',
     luggageLinkLabel: 'Equipaje',
     stationNoneShort: 'Sin estación cerca',
+    lockerNote: 'La mayoría de las estaciones tienen taquillas (T-Locker).',
+    lockerOfficialLabel: 'Página oficial del metro de Seúl',
     driverCardHint: 'Muestra esta pantalla al taxista: está escrita en coreano.',
     driverCardClose: 'Cerrar',
     myLocationFind: '📍 Mi ubicación',
@@ -926,6 +944,8 @@ const translations: Record<Language, Translations> = {
     nearestStationLabel: 'Station la plus proche',
     luggageLinkLabel: 'Bagages',
     stationNoneShort: 'Pas de station à proximité',
+    lockerNote: 'La plupart des stations ont des casiers (T-Locker).',
+    lockerOfficialLabel: 'Page officielle du métro de Séoul',
     driverCardHint: 'Montrez cet écran au chauffeur de taxi : il est rédigé en coréen.',
     driverCardClose: 'Fermer',
     myLocationFind: '📍 Ma position',
@@ -1019,6 +1039,8 @@ const translations: Record<Language, Translations> = {
     nearestStationLabel: 'Nächste Station',
     luggageLinkLabel: 'Gepäck',
     stationNoneShort: 'Keine Station in der Nähe',
+    lockerNote: 'Die meisten Stationen haben Schließfächer (T-Locker).',
+    lockerOfficialLabel: 'Offizielle Seite der Seouler U-Bahn',
     driverCardHint: 'Zeigen Sie diesen Bildschirm dem Taxifahrer – er ist auf Koreanisch.',
     driverCardClose: 'Schließen',
     myLocationFind: '📍 Mein Standort',
@@ -1112,6 +1134,8 @@ const translations: Record<Language, Translations> = {
     nearestStationLabel: 'Ближайшая станция',
     luggageLinkLabel: 'Багаж',
     stationNoneShort: 'Рядом нет станции',
+    lockerNote: 'На большинстве станций есть камеры хранения (T-Locker).',
+    lockerOfficialLabel: 'Официальная страница метро Сеула',
     driverCardHint: 'Покажите этот экран таксисту — текст написан по-корейски.',
     driverCardClose: 'Закрыть',
     myLocationFind: '📍 Моё местоположение',
@@ -1205,6 +1229,8 @@ const translations: Record<Language, Translations> = {
     nearestStationLabel: 'Stasiun terdekat',
     luggageLinkLabel: 'Titip barang',
     stationNoneShort: 'Tidak ada stasiun di dekat sini',
+    lockerNote: 'Sebagian besar stasiun punya loker (T-Locker).',
+    lockerOfficialLabel: 'Halaman resmi Seoul Metro',
     driverCardHint: 'Tunjukkan layar ini kepada sopir taksi — tulisannya dalam bahasa Korea.',
     driverCardClose: 'Tutup',
     myLocationFind: '📍 Lokasi saya',
@@ -1298,6 +1324,8 @@ const translations: Record<Language, Translations> = {
     nearestStationLabel: 'สถานีใกล้สุด',
     luggageLinkLabel: 'ฝากกระเป๋า',
     stationNoneShort: 'ไม่มีสถานีใกล้เคียง',
+    lockerNote: 'สถานีส่วนใหญ่มีตู้ล็อกเกอร์ (T-Locker)',
+    lockerOfficialLabel: 'หน้าทางการของ Seoul Metro',
     driverCardHint: 'แสดงหน้าจอนี้ให้คนขับแท็กซี่ดู ข้อความเป็นภาษาเกาหลี',
     driverCardClose: 'ปิด',
     myLocationFind: '📍 ตำแหน่งของฉัน',
