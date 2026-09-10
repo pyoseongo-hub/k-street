@@ -20,8 +20,11 @@ export default defineConfig({
       manifest: {
         name: 'K-Street',
         short_name: 'K-Street',
+        // ⚠️ 이 글은 **손님에게 그대로 보인다** — 설치할 때 뜨고, 스토어에 올리면
+        //    스토어 페이지에도 실린다. 2026-09-10까지 끝에 「(가제)」가 붙어 있었다.
+        //    영어로 적는다: 이 앱을 쓰는 사람은 대부분 한국어를 못 읽는다.
         description:
-          '서울 동네 축제·전통시장·꽃길·산책로·둘레길·박물관 안내 — 외국인 관광객을 위한 서비스(가제)',
+          "Seoul neighbourhood festivals, traditional markets, flower walks, trails and museums — in 12 languages. Free, no sign-up.",
         // Kfood와 같은 계열임을 암시하지 않도록 독립 색·아이콘을 쓴다.
         // 2026-08-25: 다크 엘레강스 테마로 바꾸면서 여기도 같이 맞췄다(src/styles/tokens.css의
         // --bg/--accent와 동일) — 안 맞으면 설치 시 스플래시 화면·주소창 색이 따로 논다.
@@ -30,11 +33,22 @@ export default defineConfig({
         display: 'standalone',
         start_url: '/',
         scope: '/',
-        lang: 'ko',
+        // 손님이 한국어를 읽는다는 뜻이 아니라 **위 description 이 무슨 말인가**를
+        // 브라우저에게 알려 주는 칸이다. 영어로 적었으니 en 이다.
+        lang: 'en',
         icons: [
           { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
           { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
           { src: 'icons/icon-512-maskable.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+        ],
+        // 📸 설치 창에서 미리 보여 주는 화면. 이게 있으면 안드로이드 크롬이
+        //    설치 창을 **더 크게, 사진과 함께** 띄운다 — 그냥 "설치하시겠습니까?"보다
+        //    훨씬 설득력이 있다. 스토어에 올릴 때도 같은 사진을 쓴다.
+        //    만드는 법: node scripts/make-screenshots.mjs (진짜 브라우저로 찍는다)
+        screenshots: [
+          { src: 'screenshots/phone-1-home.png', sizes: '1080x1920', type: 'image/png', form_factor: 'narrow' },
+          { src: 'screenshots/phone-2-district.png', sizes: '1080x1920', type: 'image/png', form_factor: 'narrow' },
+          { src: 'screenshots/phone-3-place.png', sizes: '1080x1920', type: 'image/png', form_factor: 'narrow' },
         ],
       },
       workbox: {
@@ -85,6 +99,9 @@ export default defineConfig({
           /^\/sitemap\.xml$/,
           /^\/robots\.txt$/,
           /^\/google[0-9a-f]+\.html$/,
+          // 개인정보처리방침 — 구글 플레이가 **주소를 요구한다.** 서비스워커가
+          // 앱 껍데기로 바꿔치기하면 심사원이 빈 화면을 본다.
+          /^\/privacy\//,
         ],
       },
     }),
