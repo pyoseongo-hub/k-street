@@ -39,6 +39,12 @@
 
 const KAKAO = process.env.KAKAO_REST_API_KEY ?? "";
 
+// 📄 찾은 것을 **파일로도 남긴다.** 로그를 보고 사람이 손으로 옮겨 적으면
+//    거기서 오타가 난다(상호 한 글자, 주소 숫자 하나). 러너가 받은 것을
+//    그대로 저장하고, 고르는 것만 사람이 한다.
+const OUT = process.env.OUT_JSON ?? "";
+const found = [];
+
 /** 받은 것 / 못 받은 것을 **갈라서** 돌려준다 (2차에서 이걸 섞어 헛짚었다). */
 async function kakao(path, params) {
   const qs = new URLSearchParams(params).toString();
@@ -117,6 +123,20 @@ for (const spot of SPOTS) {
       //    그건 **월세 창고**지 여행자가 몇 시간 맡기는 데가 아니다.
       //    「아트래블 명동서울호스텔」은 호스텔이었다.
       //    상호만 보고 넣으면 손님이 캐리어를 끌고 월세 창고 문 앞에 선다.
+      found.push({
+        area: spot,
+        anchor: { name: a.place_name, address: a.address_name, x: a.x, y: a.y },
+        id: d.id,
+        name: d.place_name,
+        category: d.category_name,
+        jibun: d.address_name,
+        road: d.road_address_name || "",
+        phone: d.phone || "",
+        distance: Number(d.distance),
+        x: d.x,
+        y: d.y,
+        url: d.place_url,
+      });
       console.log(
         `      · ${d.place_name}  (${d.distance}m)\n` +
           `        업종: ${d.category_name}\n` +
@@ -132,3 +152,10 @@ console.log("\n\n═══ 정리 ═══");
 console.log("여기 나온 것은 **카카오가 지금 들고 있는 자리**다. 그대로 쓰지 않는다 —");
 console.log("무엇을 안내에 올릴지는 이 목록을 보고 사람이 고른다.");
 console.log("⚠️ 「몇 번 출구」는 여기 안 나온다. 그건 따로 확인해야 한다.");
+
+if (OUT) {
+  const { writeFileSync } = await import("node:fs");
+  found.sort((p, q) => p.area.localeCompare(q.area) || p.distance - q.distance);
+  writeFileSync(OUT, JSON.stringify({ 받은날: new Date().toISOString().slice(0, 10), 출처: "카카오 지역검색", 곳: found }, null, 2) + "\n");
+  console.log(`\n📄 ${OUT} 에 ${found.length}곳을 적었다.`);
+}
