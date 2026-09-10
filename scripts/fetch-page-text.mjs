@@ -91,6 +91,27 @@ for (const url of URLS) {
   }
 
   console.log(`상태 ${r.status}${r.final !== url ? ` · ↪ ${r.final}` : ""} · 받은 글 ${r.html.length.toLocaleString()}자\n`);
+
+  // 🔗 **링크도 같이 뽑는다.** 글만 보면 「지점」이라는 메뉴가 있는 건 알겠는데
+  //    그게 어느 주소인지 몰라 다음 걸음을 못 뗀다. 한 번에 다음 자리를 알려 준다.
+  if (process.env.LINKS !== "0") {
+    const base = new URL(r.final);
+    const seen = new Map();
+    for (const m of r.html.matchAll(/<a\b[^>]*href="([^"#][^"]*)"[^>]*>([\s\S]*?)<\/a>/gi)) {
+      const label = m[2].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+      if (!label || label.length > 30) continue;
+      let abs;
+      try { abs = new URL(m[1], base).href; } catch { continue; }
+      if (!/^https?:/.test(abs)) continue;
+      if (!seen.has(abs)) seen.set(abs, label);
+    }
+    const rows = [...seen].filter(([u]) => u.startsWith(`${base.protocol}//${base.host}`));
+    if (rows.length) {
+      console.log(`🔗 이 페이지 안의 링크 ${rows.length}개 (같은 집 안만):`);
+      for (const [u, label] of rows.slice(0, 40)) console.log(`   · ${label.padEnd(18)} ${u}`);
+      console.log("");
+    }
+  }
   const text = toText(r.html);
   console.log(text.slice(0, LIMIT));
   if (text.length > LIMIT) console.log(`\n… (${(text.length - LIMIT).toLocaleString()}자 더 있다. CHARS 를 키우면 더 나온다)`);
