@@ -34,9 +34,9 @@ if (!KEY) {
 }
 
 // 곳과 좌표는 만들어 둔 파일에서 읽는다 (scripts/dump-place-coords 가 만든다).
-const { PLACES } = await import("../dist-ssr/place-coords.js").catch(() => ({ PLACES: null }));
+const { PLACES } = await import("../dist-ssr/dump-place-coords.js").catch(() => ({ PLACES: null }));
 if (!PLACES) {
-  console.error("❌ dist-ssr/place-coords.js 가 없다. 먼저 좌표를 뽑아야 한다:");
+  console.error("❌ dist-ssr/dump-place-coords.js 가 없다. 먼저 좌표를 뽑아야 한다:");
   console.error("   npx vite build --ssr scripts/dump-place-coords.ts --outDir dist-ssr");
   console.error("   node dist-ssr/dump-place-coords.js");
   process.exit(1);
