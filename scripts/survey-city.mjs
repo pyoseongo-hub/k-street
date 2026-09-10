@@ -81,8 +81,19 @@ async function tryOr(label, fallback, fn) {
   } catch (e) {
     const why = e?.cause?.code || e?.message || String(e);
     console.log(`   ⚠️ ${label} — 못 받았다 (${why})`);
-    console.log(`      (자료가 없는 게 아니라 **서버가 안 열린 것**이다. 나중에 다시 돌리면 채워진다.)`);
-    failures.push(label);
+    // 🚨 **원인을 단정하지 않는다** (2026-09-10에 내가 틀렸다).
+    //    처음엔 무조건 "서버가 안 열린 것"이라고 적어 뒀는데, 실제로 온 것은
+    //    **HTTP 400** 이었다 — 그건 서버 탓이 아니라 **내 호출이 틀렸다**는 뜻이다.
+    //    원인을 잘못 적으면 다음 사람이 엉뚱한 데를 고치거나, 고칠 것을 안 고치고
+    //    "다시 돌리면 되겠지" 하며 몇 번을 헛돌린다. 그래서 코드를 보고 갈라서 말한다.
+    const isTimeout = /TIMEOUT|ECONN|ENOTFOUND|fetch failed/i.test(String(why));
+    const is4xx = /HTTP 4\d\d/.test(String(why));
+    if (isTimeout)
+      console.log(`      → 서버가 안 열린 것이다. 자료가 없는 게 아니다 — 나중에 다시 돌리면 채워진다.`);
+    else if (is4xx)
+      console.log(`      → **부르는 쪽이 틀렸다.** 다시 돌려도 그대로다 — 이 호출을 고쳐야 한다.`);
+    else console.log(`      → 원인이 위 한 줄 말고는 분명하지 않다. 그대로 옮겨 적어 두고 확인할 것.`);
+    failures.push(`${label}(${why})`);
     return fallback;
   }
 }
