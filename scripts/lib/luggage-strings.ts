@@ -49,6 +49,16 @@ export interface LuggageStrings {
   afterHeading: string;
   afterLead: string;
   lastChecked: string;
+
+  /** 📍 동네별 짐 보관소 목록 (2026-09-10에 넣었다) */
+  placesHeading: string;
+  placesLead: string;
+  /** 🚨 목록 바로 아래 붙는 안내문. 우리가 가 본 곳이 아니라는 것을 분명히 한다. */
+  placesNotice: string;
+  /** 「역에서 41m」 — 걸어가는 거리 */
+  walkFrom: (metres: number) => string;
+  viewOnMap: string;
+  listedOn: string;
 }
 
 export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
@@ -76,6 +86,12 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterHeading: "Bags stored? Go for a walk",
     afterLead: "Pick a district and start walking.",
     lastChecked: "Links last checked",
+    placesHeading: "Where you can leave your bags",
+    placesLead: "Places near three stations that hold luggage. Distances are walking distance from the station exit area. Names and addresses are in Korean — show them to a taxi driver or paste them into a map app.",
+    placesNotice: "These are private businesses. We have not visited any of them — all we know is that they are listed on a Korean map service on the date below. Opening hours, prices and whether staff speak English are unknown to us. Call or check the map listing before you walk over with your suitcase.",
+    walkFrom: (m) => `${m} m from the station`,
+    viewOnMap: "Open in map",
+    listedOn: "Listing taken from KakaoMap on",
   },
 
   ko: {
@@ -102,6 +118,12 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterHeading: "짐을 맡겼다면, 걸어 보세요",
     afterLead: "구를 하나 골라 시작하세요.",
     lastChecked: "링크 확인일",
+    placesHeading: "짐을 맡길 수 있는 곳",
+    placesLead: "세 역 가까이에서 짐을 받아 주는 곳입니다. 거리는 역에서 걸어가는 거리입니다.",
+    placesNotice: "모두 사설 업체입니다. 저희가 직접 가 본 곳이 아닙니다 — 아래 날짜에 카카오맵에 이렇게 올라와 있었다는 것까지가 저희가 아는 전부입니다. 영업시간·요금·외국어가 되는지는 모릅니다. 캐리어를 끌고 가시기 전에 전화하시거나 지도에서 확인하세요.",
+    walkFrom: (m) => `역에서 ${m}m`,
+    viewOnMap: "지도에서 보기",
+    listedOn: "카카오맵에서 받은 날",
   },
 
   ja: {
@@ -128,6 +150,12 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterHeading: "預けたら、歩きに出かけましょう",
     afterLead: "エリアを一つ選んで歩き出してください。",
     lastChecked: "リンク確認日",
+    placesHeading: "荷物を預けられるところ",
+    placesLead: "三つの駅の近くで荷物を預かるところです。距離は駅から歩く距離です。 店名と住所は韓国語のままです ― タクシーの運転手に見せるか、地図アプリに貼り付けてお使いください。",
+    placesNotice: "いずれも民間の店舗です。私たちが行ってみたわけではありません ― 下の日付の時点で韓国の地図サービスに載っていた、というのが分かっていることのすべてです。営業時間・料金・英語が通じるかは分かりません。スーツケースを引いて向かう前に、電話するか地図で確認してください。",
+    walkFrom: (m) => `駅から${m}m`,
+    viewOnMap: "地図で見る",
+    listedOn: "カカオマップで確認した日",
   },
 
   zh: {
@@ -154,6 +182,12 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterHeading: "行李放好了？去走走吧",
     afterLead: "选一个区，开始走。",
     lastChecked: "链接确认日期",
+    placesHeading: "可以寄存行李的地方",
+    placesLead: "三个车站附近可以寄存行李的地方。距离是从车站步行的距离。 店名和地址保留韩文原文 —— 可以直接给出租车司机看，或粘贴到地图应用里。",
+    placesNotice: "这些都是私营店铺。我们并没有实际去过 ― 我们所知道的，只是在下面的日期它们出现在韩国的地图服务上。营业时间、价格以及能否用英语沟通，我们都不清楚。拖着行李箱过去之前，请先打电话或在地图上确认。",
+    walkFrom: (m) => `距车站 ${m} 米`,
+    viewOnMap: "在地图上查看",
+    listedOn: "资料取自 KakaoMap，日期",
   },
 
   "zh-TW": {
@@ -180,6 +214,12 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterHeading: "行李放好了？去走走吧",
     afterLead: "選一個區，開始走。",
     lastChecked: "連結確認日期",
+    placesHeading: "可以寄放行李的地方",
+    placesLead: "三個車站附近可以寄放行李的地方。距離是從車站步行的距離。 店名和地址保留韓文原文 —— 可以直接給計程車司機看，或貼到地圖應用程式裡。",
+    placesNotice: "這些都是私營店家。我們並沒有實際去過 ― 我們所知道的，只是在下面的日期它們出現在韓國的地圖服務上。營業時間、價格以及能否用英語溝通，我們都不清楚。拖著行李箱過去之前，請先打電話或在地圖上確認。",
+    walkFrom: (m) => `距車站 ${m} 公尺`,
+    viewOnMap: "在地圖上查看",
+    listedOn: "資料取自 KakaoMap，日期",
   },
 
   vi: {
@@ -206,6 +246,12 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterHeading: "Gửi xong rồi? Đi dạo thôi",
     afterLead: "Chọn một quận và bắt đầu đi bộ.",
     lastChecked: "Ngày kiểm tra liên kết",
+    placesHeading: "Nơi có thể gửi hành lý",
+    placesLead: "Những nơi nhận giữ hành lý gần ba ga tàu. Khoảng cách là quãng đường đi bộ từ ga. Tên và địa chỉ để nguyên tiếng Hàn — hãy đưa cho tài xế taxi xem hoặc dán vào ứng dụng bản đồ.",
+    placesNotice: "Đây đều là cơ sở tư nhân. Chúng tôi chưa từng đến — tất cả những gì chúng tôi biết là chúng có trên một dịch vụ bản đồ Hàn Quốc vào ngày ghi bên dưới. Chúng tôi không biết giờ mở cửa, giá cả, hay nhân viên có nói được tiếng Anh không. Hãy gọi điện hoặc kiểm tra trên bản đồ trước khi kéo vali đến.",
+    walkFrom: (m) => `${m} m từ ga`,
+    viewOnMap: "Xem trên bản đồ",
+    listedOn: "Lấy từ KakaoMap ngày",
   },
 
   es: {
@@ -232,6 +278,12 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterHeading: "¿Maletas guardadas? A caminar",
     afterLead: "Elige un distrito y empieza a andar.",
     lastChecked: "Enlaces comprobados el",
+    placesHeading: "Dónde dejar el equipaje",
+    placesLead: "Lugares que guardan equipaje cerca de tres estaciones. Las distancias son a pie desde la estación. Los nombres y las direcciones están en coreano: enséñeselos al taxista o péguelos en una aplicación de mapas.",
+    placesNotice: "Son negocios privados. No hemos ido a ninguno: lo único que sabemos es que aparecían en un servicio de mapas coreano en la fecha indicada abajo. No sabemos los horarios, los precios ni si atienden en inglés. Llame o consulte el mapa antes de ir hasta allí con la maleta.",
+    walkFrom: (m) => `a ${m} m de la estación`,
+    viewOnMap: "Ver en el mapa",
+    listedOn: "Datos de KakaoMap del",
   },
 
   fr: {
@@ -258,6 +310,12 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterHeading: "Bagages déposés ? En route",
     afterLead: "Choisissez un quartier et commencez à marcher.",
     lastChecked: "Liens vérifiés le",
+    placesHeading: "Où laisser vos bagages",
+    placesLead: "Des adresses qui gardent les bagages près de trois stations. Les distances sont à pied depuis la station. Les noms et adresses sont en coréen : montrez-les au chauffeur de taxi ou collez-les dans une application de cartes.",
+    placesNotice: "Ce sont des commerces privés. Nous n'y sommes allés dans aucun : tout ce que nous savons, c'est qu'ils figuraient sur un service de cartes coréen à la date indiquée ci-dessous. Nous ignorons les horaires, les tarifs et si l'on y parle anglais. Appelez ou vérifiez sur la carte avant de vous y rendre avec votre valise.",
+    walkFrom: (m) => `à ${m} m de la station`,
+    viewOnMap: "Voir sur la carte",
+    listedOn: "Données KakaoMap du",
   },
 
   de: {
@@ -284,6 +342,12 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterHeading: "Gepäck abgegeben? Dann los",
     afterLead: "Wählen Sie einen Stadtteil und gehen Sie los.",
     lastChecked: "Links zuletzt geprüft",
+    placesHeading: "Wo Sie Ihr Gepäck lassen können",
+    placesLead: "Adressen in der Nähe von drei Bahnhöfen, die Gepäck annehmen. Die Entfernungen sind Fußwege ab dem Bahnhof. Namen und Adressen stehen auf Koreanisch — zeigen Sie sie dem Taxifahrer oder fügen Sie sie in eine Karten-App ein.",
+    placesNotice: "Das sind private Betriebe. Wir waren bei keinem davon — wir wissen nur, dass sie zum unten genannten Datum in einem koreanischen Kartendienst verzeichnet waren. Öffnungszeiten, Preise und ob dort Englisch gesprochen wird, wissen wir nicht. Rufen Sie an oder schauen Sie in die Karte, bevor Sie mit dem Koffer hingehen.",
+    walkFrom: (m) => `${m} m vom Bahnhof`,
+    viewOnMap: "Auf der Karte ansehen",
+    listedOn: "Daten aus KakaoMap vom",
   },
 
   ru: {
@@ -310,6 +374,12 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterHeading: "Вещи оставили? Идём гулять",
     afterLead: "Выберите район и отправляйтесь пешком.",
     lastChecked: "Ссылки проверены",
+    placesHeading: "Где оставить багаж",
+    placesLead: "Места рядом с тремя станциями, где принимают багаж. Расстояние — пешком от станции. Названия и адреса даны по-корейски — покажите их таксисту или вставьте в приложение с картами.",
+    placesNotice: "Это частные компании. Мы ни в одной из них не были — всё, что нам известно: на указанную ниже дату они были в корейском картографическом сервисе. Часы работы, цены и говорят ли там по-английски, нам неизвестны. Позвоните или посмотрите на карте, прежде чем идти туда с чемоданом.",
+    walkFrom: (m) => `${m} м от станции`,
+    viewOnMap: "Открыть на карте",
+    listedOn: "Данные KakaoMap от",
   },
 
   id: {
@@ -336,6 +406,12 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterHeading: "Sudah dititipkan? Ayo jalan-jalan",
     afterLead: "Pilih satu distrik dan mulai berjalan.",
     lastChecked: "Tautan terakhir diperiksa",
+    placesHeading: "Tempat menitipkan barang",
+    placesLead: "Tempat penitipan barang di dekat tiga stasiun. Jarak dihitung dari stasiun dengan berjalan kaki. Nama dan alamat ditulis dalam bahasa Korea — tunjukkan kepada sopir taksi atau tempelkan ke aplikasi peta.",
+    placesNotice: "Semuanya usaha swasta. Kami belum pernah ke sana — yang kami tahu hanyalah bahwa tempat-tempat ini tercantum di layanan peta Korea pada tanggal di bawah. Kami tidak tahu jam buka, harga, atau apakah petugasnya bisa berbahasa Inggris. Teleponlah atau periksa di peta sebelum Anda menyeret koper ke sana.",
+    walkFrom: (m) => `${m} m dari stasiun`,
+    viewOnMap: "Buka di peta",
+    listedOn: "Data dari KakaoMap tanggal",
   },
 
   th: {
@@ -362,5 +438,11 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterHeading: "ฝากกระเป๋าแล้ว ออกไปเดินกันเลย",
     afterLead: "เลือกเขตหนึ่งแล้วเริ่มเดินได้เลย",
     lastChecked: "ตรวจสอบลิงก์ล่าสุด",
+    placesHeading: "ที่ฝากสัมภาระ",
+    placesLead: "สถานที่รับฝากสัมภาระใกล้สามสถานี ระยะทางคือระยะเดินจากสถานี ชื่อร้านและที่อยู่เป็นภาษาเกาหลี — ให้คนขับแท็กซี่ดู หรือคัดลอกไปวางในแอปแผนที่ได้",
+    placesNotice: "ทั้งหมดเป็นร้านของเอกชน เราไม่เคยไปเอง — สิ่งที่เรารู้คือร้านเหล่านี้ปรากฏบนบริการแผนที่ของเกาหลีตามวันที่ด้านล่าง เราไม่ทราบเวลาทำการ ราคา หรือว่าพนักงานพูดภาษาอังกฤษได้หรือไม่ กรุณาโทรถามหรือดูในแผนที่ก่อนลากกระเป๋าไป",
+    walkFrom: (m) => `ห่างจากสถานี ${m} ม.`,
+    viewOnMap: "ดูในแผนที่",
+    listedOn: "ข้อมูลจาก KakaoMap วันที่",
   },
 };

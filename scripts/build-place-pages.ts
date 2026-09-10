@@ -43,6 +43,8 @@ import { pastEditionYear } from "../src/lib/pastEdition";
 // 🧳 짐 보관 안내 (2026-09-10). 글은 luggage-strings, 링크는 luggage-links 에 있다 —
 //    링크는 **전부 러너에서 두드려 본 것만** 들어 있다.
 import { LUGGAGE_STRINGS } from "./lib/luggage-strings";
+import { LUGGAGE_AREAS, type LuggageCandidate } from "./lib/luggage-picks";
+import LUGGAGE_CANDIDATES from "../src/data/luggage-candidates.json";
 import {
   officialLinks,
   AIRPORT_LINKS,
@@ -917,6 +919,42 @@ hubs.push({
   const L = LUGGAGE_STRINGS[lang];
   const item = (name: string, desc: string) =>
     `<li><strong>${esc(name)}</strong><span class="meta">${esc(desc)}</span></li>`;
+  // 후보 파일에서 이름으로 찾는다. **못 찾으면 던진다** — 조용히 빈 줄을 내면
+  // 그 가게만 화면에서 사라져도 아무도 모른다. 오타는 시끄럽게 터져야 한다.
+  const findPlace = (areaKey: string, name: string) => {
+    const hit = (LUGGAGE_CANDIDATES.곳 as LuggageCandidate[]).find(
+      (c) => c.area === areaKey && c.name === name,
+    );
+    if (!hit) throw new Error(`짐 보관: 「${areaKey} / ${name}」를 luggage-candidates.json 에서 못 찾았다 — 이름이 바뀌었는지 볼 것`);
+    return hit;
+  };
+
+  const placesHtml = () =>
+    [
+      `<h2>${esc(L.placesHeading)}</h2>`,
+      `<p class="note">${esc(L.placesLead)}</p>`,
+      ...LUGGAGE_AREAS.map((area) => {
+        // 한국어 화면은 한국어 이름만. 나머지 말은 읽을 수 있는 이름 뒤에
+        // **한국어를 괄호로** 붙인다 — 택시 기사에게 그대로 보여 줄 수 있어야 한다.
+        const heading = lang === "ko" ? area.ko : `${area.en} (${area.ko})`;
+        const rows = area.names
+          .map((n) => findPlace(area.areaKey, n))
+          .map(
+            (c) =>
+              `<li><strong>${esc(c.name)}</strong>` +
+              `<span class="meta">${esc(L.walkFrom(c.distance))} · ${esc(c.road || c.jibun)}` +
+              (c.phone ? ` · ☎ ${esc(c.phone)}` : "") +
+              `</span>` +
+              `<span class="meta"><a href="${esc(c.url)}" rel="nofollow noopener" target="_blank">${esc(L.viewOnMap)} ↗</a></span></li>`,
+          )
+          .join("");
+        return `<h3>${esc(heading)}</h3><ul>${rows}</ul>`;
+      }),
+      // 🚨 목록 바로 아래. 우리가 가 본 곳이 아니라는 것을 여기서 분명히 한다.
+      `<p class="note">${esc(L.placesNotice)}</p>`,
+      `<p class="note">${esc(L.listedOn)}: ${esc(LUGGAGE_CANDIDATES.받은날)}</p>`,
+    ].join("\n");
+
   const linkList = (links: { label: string; url: string }[]) =>
     `<ul class="chips">${links
       .map((l) => `<li><a href="${esc(l.url)}" rel="nofollow noopener" target="_blank">${esc(l.label)} ↗</a></li>`)
@@ -929,6 +967,14 @@ hubs.push({
     item(L.centreName, L.centreDesc),
     item(L.bookedName, L.bookedDesc),
     `</ul>`,
+    // 📍 **동네별 실제 보관소.** 사장님 지적(2026-09-10): "특정 관광지 명동 강남
+    //    홍대 이런데 창고 길안내 … 설명 있을 줄 알았지 / 이 정도면 그냥 가이드
+    //    한 페이지로 만들고 말지". 맞는 말이었다 — 위치가 한 곳도 없었다.
+    //
+    //    상호·주소·전화는 **손으로 안 적었다.** 러너가 카카오에서 받아 커밋한
+    //    luggage-candidates.json 에서 이름으로 찾아 쓴다. 이름이 안 맞으면
+    //    아래에서 **페이지 만들기가 멈춘다** — 그게 오타를 잡는 장치다.
+    placesHtml(),
     `<h2>${esc(L.checkHeading)}</h2>`,
     `<ul>`,
     [L.check1, L.check2, L.check3, L.check4].map((c) => `<li>${esc(c)}</li>`).join(""),
