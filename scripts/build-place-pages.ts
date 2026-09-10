@@ -763,7 +763,23 @@ const S = HUB_STRINGS[lang] as HubStrings;
 const P = PAGE_STRINGS[lang];
 const guName = (gu: string) => districtFullName(gu, lang);
 const monthName = (m: number) => monthLabel(m, lang);
-const guChips = GU_LIST.map((gu) => ({ href: `/${langPath(lang, `${hubPathGu(gu)}/`)}`, label: guName(gu) }));
+// 🔤 **딱지는 딱지에 쓰인 글자 순으로 늘어놓는다** (2026-09-10, 사장님이 폰 화면을 보내 주셔서 찾았다).
+//    여태 12개 언어가 전부 **영어 알파벳순**을 그대로 썼다. GU_LIST 를 한 번만
+//    guEn() 으로 줄 세우고 모든 언어가 그걸 물려받았기 때문이다.
+//    그래서 한국어 화면에서 「강남구」가 일곱 번째에 있었다 —
+//    도봉·동대문·동작·은평·강북·강동·강남… 한국 사람이 못 찾는 차례다.
+//    (Dobong·Dongdaemun·Dongjak… 로마자로 읽으면 맞는 차례라 영어로만 보면 안 보인다.)
+//
+//    Intl.Collator 가 말마다 제 차례를 안다 — 재 보고 넣었다:
+//      ko  가나다순   강남구 · 강동구 · 강북구 · 강서구 · 관악구…
+//      ja  오십음순   永登浦区(エイ) · 恩平区(オン) · 冠岳区(カン) · 衿川区(キン)…
+//      zh  병음순     城北区(Chéng) · 道峰区(Dào) · 東大門区(Dōng) · 恩平区(Ēn)…
+//    나머지 언어는 이름표가 로마자라 지금까지와 같은 차례가 나온다.
+const guCollator = new Intl.Collator(lang);
+const guChips = GU_LIST.map((gu) => ({
+  href: `/${langPath(lang, `${hubPathGu(gu)}/`)}`,
+  label: guName(gu),
+})).sort((a, b) => guCollator.compare(a.label, b.label));
 const monthChips = MONTHS_WITH.map((m) => ({
   href: `/${langPath(lang, `${hubPathMonth(m)}/`)}`,
   label: monthName(m),
@@ -938,7 +954,11 @@ hubs.push({
     html: hubPage({
       lang,
       path: "seoul/luggage",
-      kind: S.index,
+      // 🏷️ 「一覧 / Index / 전체」가 아니라 「案内 / Guide / 안내」다
+      //    (2026-09-10, 사장님 폰 화면에서 찾았다). 이 페이지는 곳을 늘어놓은
+      //    목록이 아니라 **읽는 글**이다. 딱지가 목록이라고 하면 손님이
+      //    "여기 목록이 있겠거니" 하고 열었다가 글을 만난다.
+      kind: S.guide,
       h1: L.h1,
       title: L.title,
       lead: L.lead,

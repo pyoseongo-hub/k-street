@@ -327,6 +327,8 @@ export interface HubStrings {
   byDistrict: string;
   byKind: string;
   index: string;
+  /** 짐 보관처럼 **목록이 아니라 안내**인 페이지의 딱지 */
+  guide: string;
   /** 머리 줄 두 개 */
   allOfSeoul: string;
   openTheApp: string;
@@ -481,6 +483,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     byDistrict: "By district",
     byKind: "By kind",
     index: "Index",
+    guide: "Guide",
     allOfSeoul: "All of Seoul",
     openTheApp: "Open the app",
     kindCount: (cat, label, n) => `${n} ${n === 1 ? EN_ONE[cat] ?? lc(label) : label.toLowerCase()}`,
@@ -531,6 +534,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     byDistrict: "エリア別",
     byKind: "種類別",
     index: "一覧",
+    guide: "案内",
     allOfSeoul: "ソウル全体",
     openTheApp: "アプリを開く",
     kindCount: (_cat, label, n) => `${label}${n}件`,
@@ -581,6 +585,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     byDistrict: "按区域",
     byKind: "按类型",
     index: "总览",
+    guide: "指南",
     allOfSeoul: "首尔全部",
     openTheApp: "打开应用",
     kindCount: (_cat, label, n) => `${n}个${label}`,
@@ -631,6 +636,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     byDistrict: "按區域",
     byKind: "按類型",
     index: "總覽",
+    guide: "指南",
     allOfSeoul: "首爾全部",
     openTheApp: "開啟應用程式",
     kindCount: (_cat, label, n) => `${n}個${label}`,
@@ -686,6 +692,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     byDistrict: "구별",
     byKind: "갈래별",
     index: "전체",
+    guide: "안내",
     allOfSeoul: "서울 전체",
     openTheApp: "앱 열기",
     kindCount: (_cat, label, n) => `${label} ${n}곳`,
@@ -735,6 +742,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     byDistrict: "Theo quận",
     byKind: "Theo loại",
     index: "Tổng quan",
+    guide: "Hướng dẫn",
     allOfSeoul: "Toàn bộ Seoul",
     openTheApp: "Mở ứng dụng",
     kindCount: (_cat, label, n) => `${n} ${lc(label)}`,
@@ -788,6 +796,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     byDistrict: "ตามเขต",
     byKind: "ตามประเภท",
     index: "ภาพรวม",
+    guide: "คู่มือ",
     allOfSeoul: "โซลทั้งหมด",
     openTheApp: "เปิดแอป",
     kindCount: (_cat, label, n) => `${label} ${n} แห่ง`,
@@ -839,6 +848,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     byDistrict: "Menurut distrik",
     byKind: "Menurut jenis",
     index: "Ikhtisar",
+    guide: "Panduan",
     allOfSeoul: "Seluruh Seoul",
     openTheApp: "Buka aplikasi",
     kindCount: (_cat, label, n) => `${n} ${lc(label)}`,
@@ -895,6 +905,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     byDistrict: "Por distrito",
     byKind: "Por tipo",
     index: "Índice",
+    guide: "Guía",
     allOfSeoul: "Todo Seúl",
     openTheApp: "Abrir la app",
     kindCount: (cat, label, n) => `${n} ${n === 1 ? ES_ONE[cat] ?? lc(label) : lc(label)}`,
@@ -947,6 +958,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     byDistrict: "Par quartier",
     byKind: "Par type",
     index: "Sommaire",
+    guide: "Guide",
     allOfSeoul: "Tout Séoul",
     openTheApp: "Ouvrir l'appli",
     kindCount: (cat, label, n) => `${n} ${n === 1 ? FR_ONE[cat] ?? lc(label) : lc(label)}`,
@@ -1006,6 +1018,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     byDistrict: "Nach Stadtteil",
     byKind: "Nach Art",
     index: "Übersicht",
+    guide: "Ratgeber",
     allOfSeoul: "Ganz Seoul",
     openTheApp: "App öffnen",
     kindCount: (cat, label, n) => `${n} ${n === 1 ? DE_ONE[cat] ?? label : label}`,
@@ -1064,6 +1077,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     byDistrict: "По районам",
     byKind: "По типу",
     index: "Обзор",
+    guide: "Памятка",
     allOfSeoul: "Весь Сеул",
     openTheApp: "Открыть приложение",
     kindCount: (cat, label, n) => {
