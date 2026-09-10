@@ -44,9 +44,13 @@ const wantArea = args.includes("--area") && areaCode && !areaCode.startsWith("--
 
 const ROOT = "https://apis.data.go.kr/B551011/KorService2";
 
-// 관광공사 서버는 하루에 몇 번씩 접속 자체가 안 열린다(fetch-tour-places.mjs 주석 참고).
-async function fetchWithRetry(url, tries = 4) {
-  const WAITS = [5000, 15000, 30000];
+// 🔁 관광공사 서버는 **되다 말다 한다** (2026-09-10에 실측).
+//    같은 실행 안에서 지역 목록은 받아지는데 바로 다음 호출이 ConnectTimeoutError 로
+//    죽었다. 완전히 닫힌 게 아니라 **연결이 잡히는 때와 아닌 때가 섞여 있다.**
+//    조사는 호출을 7번 넘게 하므로, 4번 만에 포기하면 거의 못 끝낸다.
+//    그래서 더 길게, 더 여러 번 기다린다(총 2분 남짓).
+async function fetchWithRetry(url, tries = 6) {
+  const WAITS = [5000, 10000, 20000, 40000, 60000];
   let lastErr;
   for (let i = 1; i <= tries; i++) {
     try {
@@ -60,6 +64,27 @@ async function fetchWithRetry(url, tries = 4) {
     }
   }
   throw lastErr;
+}
+
+/**
+ * 🚨 **한 군데가 안 되면 그 한 군데만 비운다 — 통째로 죽지 않는다.**
+ *
+ * 이게 이 스크립트에서 가장 중요한 규칙이다. 조사는 여러 번 물어봐야 끝나는데,
+ * 서버가 되다 말다 하는 상황에서 「하나라도 실패하면 중단」이면 **아무것도 못 건진다.**
+ * 실제로 두 번 그렇게 날아갔다. 절반이라도 받아 두면 그걸로 판단을 시작할 수 있고,
+ * 무엇이 비었는지도 화면에 남는다 — **빈 것과 못 받은 것을 갈라서 적는 게 핵심이다.**
+ */
+const failures = [];
+async function tryOr(label, fallback, fn) {
+  try {
+    return await fn();
+  } catch (e) {
+    const why = e?.cause?.code || e?.message || String(e);
+    console.log(`   ⚠️ ${label} — 못 받았다 (${why})`);
+    console.log(`      (자료가 없는 게 아니라 **서버가 안 열린 것**이다. 나중에 다시 돌리면 채워진다.)`);
+    failures.push(label);
+    return fallback;
+  }
 }
 
 async function call(path, extraParams) {
@@ -112,7 +137,10 @@ if (!wantArea) {
 //    제주는 무엇으로 나오는지 봐야 우리 코드의 `gu` 칸에 무엇을 넣을지 정할 수 있다.
 console.log(`🔍 지역 ${areaCode} 를 조사한다\n`);
 console.log("① 이 지역은 무엇으로 나뉘나 (관광공사 기준)");
-const { list: sigungu } = await call("sigunguCode2", { areaCode, numOfRows: "60" });
+const sigungu = await tryOr("시군구 목록", [], async () => {
+  const { list } = await call("sigunguCode2", { areaCode, numOfRows: "60" });
+  return list;
+});
 for (const s of sigungu) console.log(`   ${String(s.code).padStart(2)}  ${s.name}`);
 console.log(`   → ${sigungu.length}개\n`);
 
@@ -153,7 +181,7 @@ async function fetchAll(contentTypeId) {
 console.log("② 곳을 받는다 (거르지 않고 통째로)");
 const pool = [];
 for (const t of POOL_TYPES) {
-  const items = await fetchAll(t.id);
+  const items = await tryOr(`${t.label} 받기`, [], () => fetchAll(t.id));
   items.forEach((it) => (it.__type = t.label));
   pool.push(...items);
   console.log(`   ${t.label.padEnd(8)} ${String(items.length).padStart(5)}곳`);
@@ -234,6 +262,15 @@ const top = [...words]
   .sort((a, b) => b[1] - a[1])
   .slice(0, 40);
 for (const [w, n] of top) console.log(`   ${String(n).padStart(4)}회  ${w}`);
+
+// ⚠️ **못 받은 것과 없는 것을 갈라서 적는다.**
+//    「시장 0곳」이 「이 도시엔 시장이 없다」인지 「서버가 안 열려 못 물어봤다」인지
+//    구분이 안 되면, 없는 자료를 근거로 칸을 만들게 된다 — 그게 가장 나쁜 실수다.
+if (failures.length) {
+  console.log(`\n⚠️ 못 받은 것 ${failures.length}가지 — ${failures.join(" · ")}`);
+  console.log("   위 숫자는 **그만큼 덜 센 것**이다. 「없다」로 읽으면 안 된다.");
+  console.log("   관광공사 서버가 되다 말다 하는 날이 있다 — 나중에 다시 돌리면 채워진다.");
+}
 
 console.log(`\n💾 원본 ${pool.length}곳을 저장했다: src/data/survey-${areaCode}.json`);
 console.log("   👉 이 파일과 위 요약을 세션에 알려 주면, 그걸 보고 칸(레지스트리)을 만든다.");
