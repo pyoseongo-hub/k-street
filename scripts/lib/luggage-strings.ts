@@ -106,6 +106,17 @@ export interface LuggageStrings {
    *    2026-09-10에 실제로 그렇게 나가 있었다. 자료마다 온 곳이 다르다.
    */
   checkedOn: string;
+
+  /**
+   * 🧱 사설을 공공과 **확실히 갈라** 주는 머리말 (2026-09-10 사장님 지시:
+   * "사설은 사설 따로 빼고 안내문").
+   */
+  privateHeading: string;
+  /** 지도 앱으로 여는 단추 — 낯선 주소 대신 손님이 이미 쓰는 앱을 연다 */
+  openKakao: string;
+  openNaver: string;
+  /** 지도 앱 단추가 왜 있는지 한 줄 */
+  mapAppNote: string;
 }
 
 export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
@@ -134,7 +145,7 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterLead: "Pick a district and start walking.",
     lastChecked: "Links last checked",
     placesHeading: "Where you can leave your bags",
-    placesLead: "Places near three stations that hold luggage. Distances are walking distance from the station exit area. Names and addresses are in Korean — show them to a taxi driver or paste them into a map app.",
+    placesLead: "Places near major stations that hold luggage. Distances are walking distance from the station exit area. Names and addresses are in Korean — show them to a taxi driver or paste them into a map app.",
     placesNotice: "These are private businesses. We have not visited any of them — all we know is that they are listed on a Korean map service on the date below. Opening hours, prices and whether staff speak English are unknown to us. Call or check the map listing before you walk over with your suitcase.",
     walkFrom: (m) => `${m} m from the station`,
     viewOnMap: "Open in map",
@@ -160,6 +171,10 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerMaxDays: (d) => `Left longer than ${d} days, your bag can be given away or thrown out.`,
     lockerFindIt: "Sizes and prices — Seoul Metro",
     checkedOn: "Checked on",
+    privateHeading: "Private shops — for reference only",
+    openKakao: "KakaoMap",
+    openNaver: "Naver Map",
+    mapAppNote: "These buttons open the map app on your phone, not an unfamiliar website.",
   },
 
   ko: {
@@ -187,7 +202,7 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterLead: "구를 하나 골라 시작하세요.",
     lastChecked: "링크 확인일",
     placesHeading: "짐을 맡길 수 있는 곳",
-    placesLead: "세 역 가까이에서 짐을 받아 주는 곳입니다. 거리는 역에서 걸어가는 거리입니다.",
+    placesLead: "주요 역 가까이에서 짐을 받아 주는 곳입니다. 거리는 역에서 걸어가는 거리입니다.",
     placesNotice: "모두 사설 업체입니다. 저희가 직접 가 본 곳이 아닙니다 — 아래 날짜에 카카오맵에 이렇게 올라와 있었다는 것까지가 저희가 아는 전부입니다. 영업시간·요금·외국어가 되는지는 모릅니다. 캐리어를 끌고 가시기 전에 전화하시거나 지도에서 확인하세요.",
     walkFrom: (m) => `역에서 ${m}m`,
     viewOnMap: "지도에서 보기",
@@ -213,6 +228,10 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerMaxDays: (d) => `${d}일이 지나면 짐이 기증되거나 폐기될 수 있습니다.`,
     lockerFindIt: "크기와 요금 — 서울교통공사",
     checkedOn: "확인한 날",
+    privateHeading: "사설 업체 — 참고용입니다",
+    openKakao: "카카오맵",
+    openNaver: "네이버지도",
+    mapAppNote: "이 단추는 낯선 사이트가 아니라 휴대폰에 있는 지도 앱을 엽니다.",
   },
 
   ja: {
@@ -240,7 +259,7 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterLead: "エリアを一つ選んで歩き出してください。",
     lastChecked: "リンク確認日",
     placesHeading: "荷物を預けられるところ",
-    placesLead: "三つの駅の近くで荷物を預かるところです。距離は駅から歩く距離です。 店名と住所は韓国語のままです ― タクシーの運転手に見せるか、地図アプリに貼り付けてお使いください。",
+    placesLead: "主要な駅の近くで荷物を預かるところです。距離は駅から歩く距離です。 店名と住所は韓国語のままです ― タクシーの運転手に見せるか、地図アプリに貼り付けてお使いください。",
     placesNotice: "いずれも民間の店舗です。私たちが行ってみたわけではありません ― 下の日付の時点で韓国の地図サービスに載っていた、というのが分かっていることのすべてです。営業時間・料金・英語が通じるかは分かりません。スーツケースを引いて向かう前に、電話するか地図で確認してください。",
     walkFrom: (m) => `駅から${m}m`,
     viewOnMap: "地図で見る",
@@ -266,6 +285,10 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerMaxDays: (d) => `${d}日を過ぎると、荷物は寄贈または廃棄されることがあります。`,
     lockerFindIt: "サイズと料金 — ソウル交通公社",
     checkedOn: "確認した日",
+    privateHeading: "民間の店舗 ― 参考まで",
+    openKakao: "カカオマップ",
+    openNaver: "ネイバー地図",
+    mapAppNote: "このボタンは、見慣れないサイトではなく、お使いのスマホの地図アプリを開きます。",
   },
 
   zh: {
@@ -293,7 +316,7 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterLead: "选一个区，开始走。",
     lastChecked: "链接确认日期",
     placesHeading: "可以寄存行李的地方",
-    placesLead: "三个车站附近可以寄存行李的地方。距离是从车站步行的距离。 店名和地址保留韩文原文 —— 可以直接给出租车司机看，或粘贴到地图应用里。",
+    placesLead: "主要车站附近可以寄存行李的地方。距离是从车站步行的距离。 店名和地址保留韩文原文 —— 可以直接给出租车司机看，或粘贴到地图应用里。",
     placesNotice: "这些都是私营店铺。我们并没有实际去过 ― 我们所知道的，只是在下面的日期它们出现在韩国的地图服务上。营业时间、价格以及能否用英语沟通，我们都不清楚。拖着行李箱过去之前，请先打电话或在地图上确认。",
     walkFrom: (m) => `距车站 ${m} 米`,
     viewOnMap: "在地图上查看",
@@ -319,6 +342,10 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerMaxDays: (d) => `超过${d}天未取，行李可能被捐赠或丢弃。`,
     lockerFindIt: "尺寸与价格 — 首尔交通公社",
     checkedOn: "确认日期",
+    privateHeading: "私营店铺 —— 仅供参考",
+    openKakao: "KakaoMap",
+    openNaver: "Naver 地图",
+    mapAppNote: "这些按钮会打开您手机上的地图应用，而不是陌生的网站。",
   },
 
   "zh-TW": {
@@ -346,7 +373,7 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterLead: "選一個區，開始走。",
     lastChecked: "連結確認日期",
     placesHeading: "可以寄放行李的地方",
-    placesLead: "三個車站附近可以寄放行李的地方。距離是從車站步行的距離。 店名和地址保留韓文原文 —— 可以直接給計程車司機看，或貼到地圖應用程式裡。",
+    placesLead: "主要車站附近可以寄放行李的地方。距離是從車站步行的距離。 店名和地址保留韓文原文 —— 可以直接給計程車司機看，或貼到地圖應用程式裡。",
     placesNotice: "這些都是私營店家。我們並沒有實際去過 ― 我們所知道的，只是在下面的日期它們出現在韓國的地圖服務上。營業時間、價格以及能否用英語溝通，我們都不清楚。拖著行李箱過去之前，請先打電話或在地圖上確認。",
     walkFrom: (m) => `距車站 ${m} 公尺`,
     viewOnMap: "在地圖上查看",
@@ -372,6 +399,10 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerMaxDays: (d) => `超過${d}天未取，行李可能被捐贈或丟棄。`,
     lockerFindIt: "尺寸與價格 — 首爾交通公社",
     checkedOn: "確認日期",
+    privateHeading: "私營店家 —— 僅供參考",
+    openKakao: "KakaoMap",
+    openNaver: "Naver 地圖",
+    mapAppNote: "這些按鈕會打開您手機上的地圖應用程式，而不是陌生的網站。",
   },
 
   vi: {
@@ -399,7 +430,7 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterLead: "Chọn một quận và bắt đầu đi bộ.",
     lastChecked: "Ngày kiểm tra liên kết",
     placesHeading: "Nơi có thể gửi hành lý",
-    placesLead: "Những nơi nhận giữ hành lý gần ba ga tàu. Khoảng cách là quãng đường đi bộ từ ga. Tên và địa chỉ để nguyên tiếng Hàn — hãy đưa cho tài xế taxi xem hoặc dán vào ứng dụng bản đồ.",
+    placesLead: "Những nơi nhận giữ hành lý gần các ga chính. Khoảng cách là quãng đường đi bộ từ ga. Tên và địa chỉ để nguyên tiếng Hàn — hãy đưa cho tài xế taxi xem hoặc dán vào ứng dụng bản đồ.",
     placesNotice: "Đây đều là cơ sở tư nhân. Chúng tôi chưa từng đến — tất cả những gì chúng tôi biết là chúng có trên một dịch vụ bản đồ Hàn Quốc vào ngày ghi bên dưới. Chúng tôi không biết giờ mở cửa, giá cả, hay nhân viên có nói được tiếng Anh không. Hãy gọi điện hoặc kiểm tra trên bản đồ trước khi kéo vali đến.",
     walkFrom: (m) => `${m} m từ ga`,
     viewOnMap: "Xem trên bản đồ",
@@ -425,6 +456,10 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerMaxDays: (d) => `Để quá ${d} ngày, hành lý có thể bị đem cho hoặc bỏ đi.`,
     lockerFindIt: "Kích thước và giá — Seoul Metro",
     checkedOn: "Ngày kiểm tra",
+    privateHeading: "Cửa hàng tư nhân — chỉ để tham khảo",
+    openKakao: "KakaoMap",
+    openNaver: "Naver Map",
+    mapAppNote: "Các nút này mở ứng dụng bản đồ trên điện thoại của bạn, không phải một trang web lạ.",
   },
 
   es: {
@@ -452,7 +487,7 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterLead: "Elige un distrito y empieza a andar.",
     lastChecked: "Enlaces comprobados el",
     placesHeading: "Dónde dejar el equipaje",
-    placesLead: "Lugares que guardan equipaje cerca de tres estaciones. Las distancias son a pie desde la estación. Los nombres y las direcciones están en coreano: enséñeselos al taxista o péguelos en una aplicación de mapas.",
+    placesLead: "Lugares que guardan equipaje cerca de las estaciones principales. Las distancias son a pie desde la estación. Los nombres y las direcciones están en coreano: enséñeselos al taxista o péguelos en una aplicación de mapas.",
     placesNotice: "Son negocios privados. No hemos ido a ninguno: lo único que sabemos es que aparecían en un servicio de mapas coreano en la fecha indicada abajo. No sabemos los horarios, los precios ni si atienden en inglés. Llame o consulte el mapa antes de ir hasta allí con la maleta.",
     walkFrom: (m) => `a ${m} m de la estación`,
     viewOnMap: "Ver en el mapa",
@@ -478,6 +513,10 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerMaxDays: (d) => `Pasados ${d} días, su equipaje puede ser donado o tirado.`,
     lockerFindIt: "Tamaños y precios — metro de Seúl",
     checkedOn: "Comprobado el",
+    privateHeading: "Negocios privados: solo como referencia",
+    openKakao: "KakaoMap",
+    openNaver: "Naver Map",
+    mapAppNote: "Estos botones abren la aplicación de mapas de su móvil, no una web desconocida.",
   },
 
   fr: {
@@ -505,7 +544,7 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterLead: "Choisissez un quartier et commencez à marcher.",
     lastChecked: "Liens vérifiés le",
     placesHeading: "Où laisser vos bagages",
-    placesLead: "Des adresses qui gardent les bagages près de trois stations. Les distances sont à pied depuis la station. Les noms et adresses sont en coréen : montrez-les au chauffeur de taxi ou collez-les dans une application de cartes.",
+    placesLead: "Des adresses qui gardent les bagages près des grandes stations. Les distances sont à pied depuis la station. Les noms et adresses sont en coréen : montrez-les au chauffeur de taxi ou collez-les dans une application de cartes.",
     placesNotice: "Ce sont des commerces privés. Nous n'y sommes allés dans aucun : tout ce que nous savons, c'est qu'ils figuraient sur un service de cartes coréen à la date indiquée ci-dessous. Nous ignorons les horaires, les tarifs et si l'on y parle anglais. Appelez ou vérifiez sur la carte avant de vous y rendre avec votre valise.",
     walkFrom: (m) => `à ${m} m de la station`,
     viewOnMap: "Voir sur la carte",
@@ -531,6 +570,10 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerMaxDays: (d) => `Au-delà de ${d} jours, vos bagages peuvent être donnés ou jetés.`,
     lockerFindIt: "Tailles et tarifs — métro de Séoul",
     checkedOn: "Vérifié le",
+    privateHeading: "Commerces privés — à titre indicatif",
+    openKakao: "KakaoMap",
+    openNaver: "Naver Map",
+    mapAppNote: "Ces boutons ouvrent l'application de cartes de votre téléphone, pas un site inconnu.",
   },
 
   de: {
@@ -558,7 +601,7 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterLead: "Wählen Sie einen Stadtteil und gehen Sie los.",
     lastChecked: "Links zuletzt geprüft",
     placesHeading: "Wo Sie Ihr Gepäck lassen können",
-    placesLead: "Adressen in der Nähe von drei Bahnhöfen, die Gepäck annehmen. Die Entfernungen sind Fußwege ab dem Bahnhof. Namen und Adressen stehen auf Koreanisch — zeigen Sie sie dem Taxifahrer oder fügen Sie sie in eine Karten-App ein.",
+    placesLead: "Adressen in der Nähe großer Bahnhöfe, die Gepäck annehmen. Die Entfernungen sind Fußwege ab dem Bahnhof. Namen und Adressen stehen auf Koreanisch — zeigen Sie sie dem Taxifahrer oder fügen Sie sie in eine Karten-App ein.",
     placesNotice: "Das sind private Betriebe. Wir waren bei keinem davon — wir wissen nur, dass sie zum unten genannten Datum in einem koreanischen Kartendienst verzeichnet waren. Öffnungszeiten, Preise und ob dort Englisch gesprochen wird, wissen wir nicht. Rufen Sie an oder schauen Sie in die Karte, bevor Sie mit dem Koffer hingehen.",
     walkFrom: (m) => `${m} m vom Bahnhof`,
     viewOnMap: "Auf der Karte ansehen",
@@ -584,6 +627,10 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerMaxDays: (d) => `Nach ${d} Tagen kann Ihr Gepäck verschenkt oder entsorgt werden.`,
     lockerFindIt: "Größen und Preise — Seouler U-Bahn",
     checkedOn: "Geprüft am",
+    privateHeading: "Private Anbieter — nur zur Orientierung",
+    openKakao: "KakaoMap",
+    openNaver: "Naver Map",
+    mapAppNote: "Diese Schaltflächen öffnen die Karten-App auf Ihrem Handy, keine fremde Website.",
   },
 
   ru: {
@@ -611,7 +658,7 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterLead: "Выберите район и отправляйтесь пешком.",
     lastChecked: "Ссылки проверены",
     placesHeading: "Где оставить багаж",
-    placesLead: "Места рядом с тремя станциями, где принимают багаж. Расстояние — пешком от станции. Названия и адреса даны по-корейски — покажите их таксисту или вставьте в приложение с картами.",
+    placesLead: "Места рядом с крупными станциями, где принимают багаж. Расстояние — пешком от станции. Названия и адреса даны по-корейски — покажите их таксисту или вставьте в приложение с картами.",
     placesNotice: "Это частные компании. Мы ни в одной из них не были — всё, что нам известно: на указанную ниже дату они были в корейском картографическом сервисе. Часы работы, цены и говорят ли там по-английски, нам неизвестны. Позвоните или посмотрите на карте, прежде чем идти туда с чемоданом.",
     walkFrom: (m) => `${m} м от станции`,
     viewOnMap: "Открыть на карте",
@@ -637,6 +684,10 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerMaxDays: (d) => `Если вещи пролежат дольше ${d} дней, их могут отдать или выбросить.`,
     lockerFindIt: "Размеры и цены — Сеульское метро",
     checkedOn: "Проверено",
+    privateHeading: "Частные компании — только для справки",
+    openKakao: "KakaoMap",
+    openNaver: "Naver Maps",
+    mapAppNote: "Эти кнопки открывают приложение с картами на вашем телефоне, а не незнакомый сайт.",
   },
 
   id: {
@@ -664,7 +715,7 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterLead: "Pilih satu distrik dan mulai berjalan.",
     lastChecked: "Tautan terakhir diperiksa",
     placesHeading: "Tempat menitipkan barang",
-    placesLead: "Tempat penitipan barang di dekat tiga stasiun. Jarak dihitung dari stasiun dengan berjalan kaki. Nama dan alamat ditulis dalam bahasa Korea — tunjukkan kepada sopir taksi atau tempelkan ke aplikasi peta.",
+    placesLead: "Tempat penitipan barang di dekat stasiun-stasiun utama. Jarak dihitung dari stasiun dengan berjalan kaki. Nama dan alamat ditulis dalam bahasa Korea — tunjukkan kepada sopir taksi atau tempelkan ke aplikasi peta.",
     placesNotice: "Semuanya usaha swasta. Kami belum pernah ke sana — yang kami tahu hanyalah bahwa tempat-tempat ini tercantum di layanan peta Korea pada tanggal di bawah. Kami tidak tahu jam buka, harga, atau apakah petugasnya bisa berbahasa Inggris. Teleponlah atau periksa di peta sebelum Anda menyeret koper ke sana.",
     walkFrom: (m) => `${m} m dari stasiun`,
     viewOnMap: "Buka di peta",
@@ -690,6 +741,10 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerMaxDays: (d) => `Lewat ${d} hari, barang bisa disumbangkan atau dibuang.`,
     lockerFindIt: "Ukuran dan harga — Seoul Metro",
     checkedOn: "Diperiksa pada",
+    privateHeading: "Usaha swasta — sebagai rujukan saja",
+    openKakao: "KakaoMap",
+    openNaver: "Naver Map",
+    mapAppNote: "Tombol ini membuka aplikasi peta di ponsel Anda, bukan situs web asing.",
   },
 
   th: {
@@ -717,7 +772,7 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     afterLead: "เลือกเขตหนึ่งแล้วเริ่มเดินได้เลย",
     lastChecked: "ตรวจสอบลิงก์ล่าสุด",
     placesHeading: "ที่ฝากสัมภาระ",
-    placesLead: "สถานที่รับฝากสัมภาระใกล้สามสถานี ระยะทางคือระยะเดินจากสถานี ชื่อร้านและที่อยู่เป็นภาษาเกาหลี — ให้คนขับแท็กซี่ดู หรือคัดลอกไปวางในแอปแผนที่ได้",
+    placesLead: "สถานที่รับฝากสัมภาระใกล้สถานีหลัก ระยะทางคือระยะเดินจากสถานี ชื่อร้านและที่อยู่เป็นภาษาเกาหลี — ให้คนขับแท็กซี่ดู หรือคัดลอกไปวางในแอปแผนที่ได้",
     placesNotice: "ทั้งหมดเป็นร้านของเอกชน เราไม่เคยไปเอง — สิ่งที่เรารู้คือร้านเหล่านี้ปรากฏบนบริการแผนที่ของเกาหลีตามวันที่ด้านล่าง เราไม่ทราบเวลาทำการ ราคา หรือว่าพนักงานพูดภาษาอังกฤษได้หรือไม่ กรุณาโทรถามหรือดูในแผนที่ก่อนลากกระเป๋าไป",
     walkFrom: (m) => `ห่างจากสถานี ${m} ม.`,
     viewOnMap: "ดูในแผนที่",
@@ -743,5 +798,9 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerMaxDays: (d) => `หากทิ้งไว้เกิน ${d} วัน สัมภาระอาจถูกบริจาคหรือทิ้ง`,
     lockerFindIt: "ขนาดและราคา — Seoul Metro",
     checkedOn: "ตรวจสอบเมื่อ",
+    privateHeading: "ร้านเอกชน — สำหรับอ้างอิงเท่านั้น",
+    openKakao: "KakaoMap",
+    openNaver: "Naver Map",
+    mapAppNote: "ปุ่มเหล่านี้จะเปิดแอปแผนที่ในโทรศัพท์ของคุณ ไม่ใช่เว็บไซต์ที่ไม่คุ้นเคย",
   },
 };

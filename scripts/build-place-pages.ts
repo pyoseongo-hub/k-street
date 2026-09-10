@@ -1016,7 +1016,12 @@ hubs.push({
 
   const placesHtml = () =>
     [
-      `<h2>${esc(L.placesHeading)}</h2>`,
+      // 🧱 **사설은 여기서부터.** 사장님 지시(2026-09-10): "사설은 사설 따로 빼고 안내문".
+      //    머리말에 「참고용」을 박고, **안내문을 목록 앞에** 놓는다 —
+      //    뒤에 두면 손님이 상호를 다 읽고 난 뒤에야 "우리가 확인 안 했다"를 만난다.
+      //    그때는 이미 믿은 뒤다.
+      `<h2>${esc(L.privateHeading)}</h2>`,
+      `<p class="note"><strong>${esc(L.placesNotice)}</strong></p>`,
       `<p class="note">${esc(L.placesLead)}</p>`,
       ...LUGGAGE_AREAS.map((area) => {
         // 한국어 화면은 한국어 이름만. 나머지 말은 읽을 수 있는 이름 뒤에
@@ -1024,19 +1029,30 @@ hubs.push({
         const heading = lang === "ko" ? area.ko : `${area.en} (${area.ko})`;
         const rows = area.names
           .map((n) => findPlace(area.areaKey, n))
-          .map(
-            (c) =>
+          .map((c) => {
+            // 📱 **낯선 주소 대신 지도 앱을 연다** (2026-09-10 사장님 지시:
+            //    "링크 주면 요즘은 꺼리게 되는데 / 어플로 해야 안정감 신뢰가").
+            //    place.map.kakao.com/26419247 같은 주소는 눌러도 되는 건지 알 수 없다.
+            //    카카오맵·네이버지도는 손님이 이름을 아는 앱이고, 폰에 깔려 있으면
+            //    앱이 열린다. 좌표는 후보 파일에 이미 있다.
+            const q = encodeURIComponent(c.name);
+            const kakao = `https://map.kakao.com/link/map/${q},${c.y},${c.x}`;
+            const naver = `https://map.naver.com/p/search/${q}`;
+            return (
               `<li><strong>${esc(c.name)}</strong>` +
               `<span class="meta">${esc(L.walkFrom(c.distance))} · ${esc(c.road || c.jibun)}` +
               (c.phone ? ` · ☎ ${esc(c.phone)}` : "") +
               `</span>` +
-              `<span class="meta"><a href="${esc(c.url)}" rel="nofollow noopener" target="_blank">${esc(L.viewOnMap)} ↗</a></span></li>`,
-          )
+              `<span class="meta">` +
+              `<a href="${esc(kakao)}" rel="nofollow noopener" target="_blank">${esc(L.openKakao)} ↗</a>` +
+              ` · <a href="${esc(naver)}" rel="nofollow noopener" target="_blank">${esc(L.openNaver)} ↗</a>` +
+              `</span></li>`
+            );
+          })
           .join("");
         return `<h3>${esc(heading)}</h3><ul>${rows}</ul>`;
       }),
-      // 🚨 목록 바로 아래. 우리가 가 본 곳이 아니라는 것을 여기서 분명히 한다.
-      `<p class="note">${esc(L.placesNotice)}</p>`,
+      `<p class="note">${esc(L.mapAppNote)}</p>`,
       `<p class="note">${esc(L.listedOn)}: ${esc(LUGGAGE_CANDIDATES.받은날)}</p>`,
     ].join("\n");
 
@@ -1059,9 +1075,10 @@ hubs.push({
     //    상호·주소·전화는 **손으로 안 적었다.** 러너가 카카오에서 받아 커밋한
     //    luggage-candidates.json 에서 이름으로 찾아 쓴다. 이름이 안 맞으면
     //    아래에서 **페이지 만들기가 멈춘다** — 그게 오타를 잡는 장치다.
+    // 차례: 공공(또타라커·또타러기지) → 물어볼 것 → 공식 안내 → **사설은 맨 아래.**
+    //       사설을 위에 두면 손님이 그걸 먼저 만난다. 공공이 먼저다.
     lockerHtml(),
     officialHtml(),
-    placesHtml(),
     `<h2>${esc(L.checkHeading)}</h2>`,
     `<ul>`,
     [L.check1, L.check2, L.check3, L.check4].map((c) => `<li>${esc(c)}</li>`).join(""),
@@ -1071,12 +1088,15 @@ hubs.push({
     `<p class="note"><strong>${esc(L.noPrices)}</strong></p>`,
     `<h2>${esc(L.officialHeading)}</h2>`,
     linkList([...officialLinks(lang), ...AIRPORT_LINKS]),
-    `<h2>${esc(L.bookedHeading)}</h2>`,
+    `<p class="note">${esc(L.lastChecked)}: ${esc(LINKS_CHECKED)}</p>`,
+    // 🧱 사설은 여기, 공식 안내를 전부 지나온 **맨 아래**에 모아 둔다.
+    //    Bounce·Radical Storage 도 **사설이다** — 공식 위쪽에 두면 안 된다.
+    placesHtml(),
+    `<h3>${esc(L.bookedHeading)}</h3>`,
     linkList(BOOKED_SERVICES),
     // 🚨 이 페이지에서 **가장 중요한 글**이다. 사설을 적는 순간 손님은 우리가
-    //    확인했다고 믿는다 — 확인 안 했다는 것을 바로 아래에서 분명히 말한다.
+    //    확인했다고 믿는다 — 확인 안 했다는 것을 분명히 말한다.
     `<p class="note">${esc(L.bookedNotice)}</p>`,
-    `<p class="note">${esc(L.lastChecked)}: ${esc(LINKS_CHECKED)}</p>`,
     `<h2>${esc(L.afterHeading)}</h2>`,
     `<p class="note">${esc(L.afterLead)}</p>`,
   ].join("\n");
