@@ -50,16 +50,29 @@ jobs:
         run: |
           set -o pipefail
           node scripts/fetch-festival-dates.mjs 2>&1 | tee fetch-log.txt
+      # 🎪 **날짜만 받고 끝내지 않는다** (2026-09-10, 사장님: "축제는 … 루틴화시켜").
+      #
+      #    이 워크플로는 매일 돌고 있었는데도 **이름에 2025 가 박힌 축제 11곳이
+      #    1년 가까이 그대로 남아 있었다.** 여기서 날짜만 갱신하고 「이 축제가 아직
+      #    열리는가」는 아무도 안 봤기 때문이다. 다른 AI 평가가 짚어 줘서 알았다 —
+      #    **사람이 짚어 줘야 찾아지는 구조**였다는 뜻이라, 매일 같이 재게 한다.
+      - name: 축제 신선도 재기
+        if: always()
+        run: |
+          set -o pipefail
+          npm run festival-freshness 2>&1 | tee freshness-log.txt
       - name: Commit festival-dates.json
         id: commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- src/data/festival-dates.json; then
+          # 신선도 표도 같이 커밋한다 — 화면 로그는 흘러가고, **파일이 남아야
+          # 다음 사람이 「무엇이 남았나」를 본다.** 이게 없어서 지난 1년을 놓쳤다.
+          git add -A src/data/festival-dates.json "docs/축제-신선도.md"
+          if git diff --cached --quiet; then
             echo "committed=no" >> "$GITHUB_OUTPUT"
           else
-            git add src/data/festival-dates.json
-            git commit -m "축제 날짜 받기 (fetch-festival-dates)"
+            git commit -m "축제 날짜·신선도 갱신 (fetch-festival-dates) [skip render]"
             git push
             echo "committed=yes" >> "$GITHUB_OUTPUT"
           fi
@@ -68,6 +81,12 @@ jobs:
         run: |
           {
             echo "## 📅 축제 날짜 받기 결과"
+            echo ""
+            echo "### 🎪 축제 신선도 (여기부터 보세요)"
+            echo '```'
+            head -8 freshness-log.txt 2>/dev/null || echo "(못 쟀음)"
+            echo '```'
+            echo "자세한 목록: [docs/축제-신선도.md](../blob/main/docs/%EC%B6%95%EC%A0%9C-%EC%8B%A0%EC%84%A0%EB%8F%84.md)"
             echo ""
             if [ "${{ steps.commit.outputs.committed }}" = "yes" ]; then
               echo "### ✅ 날짜를 받아 저장했습니다"
