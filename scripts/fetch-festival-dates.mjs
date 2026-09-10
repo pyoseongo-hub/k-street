@@ -20,6 +20,7 @@ import { httpsPhoto } from "./lib/https-photo.mjs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
+import { fetchWithRetry } from "./lib/tour-fetch.mjs";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dirname, "..", "src", "data", "festival-dates.json");
 const RAW = join(__dirname, "..", "src", "data", "tour-places-raw.json");
@@ -32,26 +33,6 @@ if (!API_KEY) {
 
 const ROOT = "https://apis.data.go.kr/B551011/KorService2";
 
-// 🔁 관광공사 서버는 하루에 몇 번씩 접속 자체가 안 열린다(ConnectTimeoutError).
-//    한 번 실패하면 통째로 멈추던 구조라, 기다렸다 다시 물어본다
-//    (fetch-tour-places.mjs와 같은 이유).
-async function fetchWithRetry(url, tries = 4) {
-  const WAITS = [5000, 15000, 30000];
-  let lastErr;
-  for (let i = 1; i <= tries; i++) {
-    try {
-      return await fetch(url);
-    } catch (e) {
-      lastErr = e;
-      if (i === tries) break;
-      const why = e?.cause?.code || e?.cause?.message || e?.message;
-      console.log(`     ↳ 접속 실패(${i}/${tries}, ${why}) — ${WAITS[i - 1] / 1000}초 뒤 다시 시도`);
-      await new Promise((r) => setTimeout(r, WAITS[i - 1]));
-    }
-  }
-  const why = lastErr?.cause?.code || lastErr?.cause?.message || lastErr?.message;
-  throw new Error(`관광공사 서버에 ${tries}번 다 연결하지 못했다 (${why})`);
-}
 
 async function callTourApi(path, extraParams) {
   // serviceKey를 URLSearchParams에 안 넣는다 — data.go.kr "일반 인증키"는 이미 URL

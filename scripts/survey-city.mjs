@@ -27,6 +27,7 @@ import { writeFileSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
+import { fetchWithRetry } from "./lib/tour-fetch.mjs";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = join(__dirname, "..", "src", "data");
 
@@ -44,27 +45,6 @@ const wantArea = args.includes("--area") && areaCode && !areaCode.startsWith("--
 
 const ROOT = "https://apis.data.go.kr/B551011/KorService2";
 
-// 🔁 관광공사 서버는 **되다 말다 한다** (2026-09-10에 실측).
-//    같은 실행 안에서 지역 목록은 받아지는데 바로 다음 호출이 ConnectTimeoutError 로
-//    죽었다. 완전히 닫힌 게 아니라 **연결이 잡히는 때와 아닌 때가 섞여 있다.**
-//    조사는 호출을 7번 넘게 하므로, 4번 만에 포기하면 거의 못 끝낸다.
-//    그래서 더 길게, 더 여러 번 기다린다(총 2분 남짓).
-async function fetchWithRetry(url, tries = 6) {
-  const WAITS = [5000, 10000, 20000, 40000, 60000];
-  let lastErr;
-  for (let i = 1; i <= tries; i++) {
-    try {
-      return await fetch(url);
-    } catch (e) {
-      lastErr = e;
-      if (i === tries) break;
-      const why = e?.cause?.code || e?.cause?.message || e?.message;
-      console.log(`     ↳ 접속 실패(${i}/${tries}, ${why}) — ${WAITS[i - 1] / 1000}초 뒤 다시`);
-      await new Promise((r) => setTimeout(r, WAITS[i - 1]));
-    }
-  }
-  throw lastErr;
-}
 
 /**
  * 🚨 **한 군데가 안 되면 그 한 군데만 비운다 — 통째로 죽지 않는다.**

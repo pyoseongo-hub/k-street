@@ -23,6 +23,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
+import { fetchWithRetry } from "./lib/tour-fetch.mjs";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const D = (f) => join(__dirname, "..", "src", "data", f);
 
@@ -34,24 +35,6 @@ if (!API_KEY) {
 
 const ROOT = "https://apis.data.go.kr/B551011/KorService2";
 
-// 관광공사 서버는 하루에 몇 번씩 접속 자체가 안 열린다 — fetch-tour-places.mjs와 같은 이유.
-async function fetchWithRetry(url, tries = 4) {
-  const WAITS = [5000, 15000, 30000];
-  let lastErr;
-  for (let i = 1; i <= tries; i++) {
-    try {
-      return await fetch(url);
-    } catch (e) {
-      lastErr = e;
-      if (i === tries) break;
-      const why = e?.cause?.code || e?.cause?.message || e?.message;
-      console.log(`     ↳ 접속 실패(${i}/${tries}, ${why}) — ${WAITS[i - 1] / 1000}초 뒤 다시 시도`);
-      await new Promise((r) => setTimeout(r, WAITS[i - 1]));
-    }
-  }
-  const why = lastErr?.cause?.code || lastErr?.cause?.message || lastErr?.message;
-  throw new Error(`관광공사 서버에 ${tries}번 다 연결하지 못했다 (${why})`);
-}
 
 // 🚦 429는 "오늘 몫을 다 썼다"는 뜻이다 — 코드가 틀린 게 아니다. 그런데 `HTTP 429`
 //    한 줄만 보면 무슨 일인지 알 수가 없어서, 무엇을 하면 되는지까지 적어 준다
