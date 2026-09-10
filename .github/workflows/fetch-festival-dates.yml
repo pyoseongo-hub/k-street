@@ -34,6 +34,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      # 🔔 신선도에 손볼 것이 있으면 **이슈를 연다** — 아래 단계 주석 참고.
+      issues: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -61,6 +63,54 @@ jobs:
         run: |
           set -o pipefail
           npm run festival-freshness 2>&1 | tee freshness-log.txt
+      # 🔔 **사람에게 닿는 고리** (2026-09-10).
+      #
+      #    지난 1년이 썩은 진짜 이유는 검사가 없어서가 아니라 **아무도 안 봐서**다.
+      #    Actions 요약과 커밋된 파일은 사장님이 들여다보는 자리가 아니다.
+      #    그래서 손볼 것이 있으면 **이슈를 연다** — 저장소 주인에게 메일이 간다.
+      #    (클로드 세션에 기대지 않는다. 세션은 끝나면 사라지지만 이건 남는다.)
+      #
+      #    ⚠️ **매일 알리지 않는다.** 월요일에만, 그리고 **이슈 하나를 계속 고쳐 쓴다.**
+      #       매일 새 이슈가 쌓이면 곧 아무도 안 본다 — 그러면 지금과 똑같아진다.
+      - name: 손볼 것이 있으면 알린다 (월요일만)
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          [ "$(date -u +%u)" = "1" ] || { echo "월요일이 아니라 건너뛴다"; exit 0; }
+          PAST=$(grep -oE '^ *[0-9]+곳  ① ' freshness-log.txt | grep -oE '[0-9]+' | head -1 || echo 0)
+          STALE=$(grep -oE '^ *[0-9]+곳  ② ' freshness-log.txt | grep -oE '[0-9]+' | head -1 || echo 0)
+          echo "① $PAST 곳 · ② $STALE 곳"
+          # 손볼 것이 없으면 조용히 지나간다. "이상 없음"을 매주 보내면 안 읽게 된다.
+          if [ "$PAST" -eq 0 ] && [ "$STALE" -lt 20 ]; then
+            echo "알릴 만한 것이 없다 — 이슈를 열지 않는다"; exit 0
+          fi
+          TITLE="🎪 축제 신선도 — 손볼 것이 있습니다"
+          {
+            echo "매주 월요일에 기계가 재서 올리는 글입니다. **이 이슈 하나를 계속 고쳐 씁니다.**"
+            echo ""
+            echo '```'
+            head -8 freshness-log.txt
+            echo '```'
+            echo ""
+            echo "### 이게 손님에게 무슨 뜻인가"
+            echo ""
+            echo "- **①** 이름에 작년 연도가 박힌 축제입니다. 화면에서는 이미 「지난 회차」로 밝히고 달별 목록에서 빼 두었지만, **자료 자체는 작년 것**입니다. 올해 회차가 관광공사에 올라왔으면 바꿔 줘야 합니다."
+            echo "- **②** 이름은 멀쩡한데 **올해도 열린다고 말할 근거가 우리에게 없는** 축제입니다. 근거가 작년 보도자료뿐입니다."
+            echo ""
+            echo "전체 목록: [docs/축제-신선도.md](../blob/main/docs/%EC%B6%95%EC%A0%9C-%EC%8B%A0%EC%84%A0%EB%8F%84.md)"
+            echo ""
+            echo "_기계가 자동으로 올립니다 (fetch-festival-dates 워크플로)._"
+          } > issue-body.md
+          NUM=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number' || true)
+          if [ -n "$NUM" ] && [ "$NUM" != "null" ]; then
+            gh issue edit "$NUM" --body-file issue-body.md
+            echo "이슈 #$NUM 을 갱신했다"
+          else
+            gh issue create --title "$TITLE" --body-file issue-body.md
+            echo "이슈를 새로 열었다"
+          fi
       - name: Commit festival-dates.json
         id: commit
         run: |
