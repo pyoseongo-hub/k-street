@@ -105,10 +105,21 @@ for (const url of URLS) {
       if (!/^https?:/.test(abs)) continue;
       if (!seen.has(abs)) seen.set(abs, label);
     }
-    const rows = [...seen].filter(([u]) => u.startsWith(`${base.protocol}//${base.host}`));
+    const here = `${base.protocol}//${base.host}`;
+    const rows = [...seen].filter(([u]) => u.startsWith(here));
     if (rows.length) {
-      console.log(`🔗 이 페이지 안의 링크 ${rows.length}개 (같은 집 안만):`);
+      console.log(`🔗 같은 집 안의 링크 ${rows.length}개:`);
       for (const [u, label] of rows.slice(0, 40)) console.log(`   · ${label.padEnd(18)} ${u}`);
+      console.log("");
+    }
+    // 🏪 **바깥으로 나가는 링크도 따로 보여 준다.** 앱 스토어·예약 사이트처럼
+    //    정작 필요한 것이 바깥에 있을 때가 많다(또타라커 앱이 그랬다).
+    //    많으면 못 읽으니 스토어·예약처럼 쓸 만한 것만 고른다.
+    const OUT = /play\.google\.com|apps\.apple\.com|itunes\.apple\.com|onelink|app\.link/i;
+    const outside = [...seen].filter(([u]) => !u.startsWith(here) && OUT.test(u));
+    if (outside.length) {
+      console.log(`🏪 바깥 링크(앱·스토어) ${outside.length}개:`);
+      for (const [u, label] of outside.slice(0, 12)) console.log(`   · ${label.padEnd(18)} ${u}`);
       console.log("");
     }
   }

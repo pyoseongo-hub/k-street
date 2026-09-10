@@ -59,6 +59,34 @@ export interface LuggageStrings {
   walkFrom: (metres: number) => string;
   viewOnMap: string;
   listedOn: string;
+
+  /** 🚇 또타러기지 — 서울교통공사 공식 (2026-09-10에 넣었다) */
+  officialName: string;
+  officialWhat: string;
+  /**
+   * 「1호선 · 지하 1층 · 1번 출구 방면」 — 역 이름은 **넣지 않는다.**
+   * 바로 위 <strong> 에 이미 있어서 두 번 찍혔다(2026-09-10에 화면에서 찾았다).
+   */
+  branchLine: (line: string, floor: string, towards: string) => string;
+  /**
+   * 「1번 출구」 · 「3,4번 출구」.
+   * ⚠️ **출구 번호가 아닌 곳이 있다** — 김포공항역은 「I-센터」다.
+   *    그걸 모르고 무조건 「번 출구」를 붙였다가 **「I-센터번 출구 방면」**이 나왔다.
+   *    숫자일 때만 이걸 쓰고, 아니면 원문을 그대로 넘긴다.
+   */
+  exitLabel: (exit: string) => string;
+  priceHeading: string;
+  /** 「기본 4시간」 */
+  priceBase: (hours: number) => string;
+  priceWeekday: string;
+  priceWeekend: string;
+  /** 「이후 1시간마다 1,000원」 */
+  priceExtra: (won: number) => string;
+  /** 「매일 09:00–22:00, 연중무휴」 */
+  openHours: (from: string, to: string) => string;
+  bookOnline: string;
+  officialSource: string;
+  priceMayChange: string;
 }
 
 export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
@@ -92,6 +120,19 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     walkFrom: (m) => `${m} m from the station`,
     viewOnMap: "Open in map",
     listedOn: "Listing taken from KakaoMap on",
+    officialName: "T-Luggage — run by Seoul Metro",
+    officialWhat: "Storage counters inside six subway stations, run by the city's subway operator. Staffed, not lockers. Because it is a public service, we can list its prices and hours here.",
+    branchLine: (line, floor, towards) => `Line ${line} · ${floor} · towards ${towards}`,
+    exitLabel: (e) => `exit ${e}`,
+    priceHeading: "What it costs",
+    priceBase: (h) => `First ${h} hours`,
+    priceWeekday: "Mon–Fri",
+    priceWeekend: "Sat–Sun",
+    priceExtra: (w) => `Then ₩${w.toLocaleString()} for each further hour`,
+    openHours: (a, b) => `Open ${a}–${b}, every day of the year`,
+    bookOnline: "Book online (English)",
+    officialSource: "Seoul Metro's official page",
+    priceMayChange: "Prices and hours are taken from Seoul Metro's own page on the date shown. They can change — check the official page before you go.",
   },
 
   ko: {
@@ -124,6 +165,19 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     walkFrom: (m) => `역에서 ${m}m`,
     viewOnMap: "지도에서 보기",
     listedOn: "카카오맵에서 받은 날",
+    officialName: "또타러기지 — 서울교통공사 운영",
+    officialWhat: "지하철 6개 역 안에 있는 짐 보관소입니다. 무인 보관함이 아니라 사람이 받아 줍니다. 공공 서비스라 여기만 요금과 시간을 적습니다.",
+    branchLine: (line, floor, towards) => `${line}호선 · ${floor}층 · ${towards} 방면`,
+    exitLabel: (e) => `${e}번 출구`,
+    priceHeading: "요금",
+    priceBase: (h) => `기본 ${h}시간`,
+    priceWeekday: "주중",
+    priceWeekend: "주말",
+    priceExtra: (w) => `이후 1시간마다 ${w.toLocaleString()}원`,
+    openHours: (a, b) => `${a}~${b} · 연중무휴`,
+    bookOnline: "인터넷 예약",
+    officialSource: "서울교통공사 공식 안내",
+    priceMayChange: "요금과 운영시간은 아래 날짜에 서울교통공사 공식 페이지에 적혀 있던 것입니다. 바뀔 수 있으니 가시기 전에 공식 페이지에서 확인하세요.",
   },
 
   ja: {
@@ -156,6 +210,19 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     walkFrom: (m) => `駅から${m}m`,
     viewOnMap: "地図で見る",
     listedOn: "カカオマップで確認した日",
+    officialName: "T-Luggage（ソウル交通公社の運営）",
+    officialWhat: "地下鉄6駅の構内にある、係員のいる手荷物預かり所です。コインロッカーではありません。公共サービスなので、ここでは料金と営業時間を載せています。",
+    branchLine: (line, floor, towards) => `${line}号線 ${floor}階 ${towards}方面`,
+    exitLabel: (e) => `${e}番出口`,
+    priceHeading: "料金",
+    priceBase: (h) => `基本${h}時間`,
+    priceWeekday: "平日",
+    priceWeekend: "土日",
+    priceExtra: (w) => `以降1時間ごとに ${w.toLocaleString()}ウォン`,
+    openHours: (a, b) => `${a}〜${b}・年中無休`,
+    bookOnline: "ネット予約（日本語）",
+    officialSource: "ソウル交通公社の公式案内",
+    priceMayChange: "料金と営業時間は、下の日付時点でソウル交通公社の公式ページに載っていたものです。変わることがあるので、行く前に公式ページでご確認ください。",
   },
 
   zh: {
@@ -188,6 +255,19 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     walkFrom: (m) => `距车站 ${m} 米`,
     viewOnMap: "在地图上查看",
     listedOn: "资料取自 KakaoMap，日期",
+    officialName: "T-Luggage（首尔交通公社运营）",
+    officialWhat: "设在6个地铁站内的人工行李寄存处，不是自助储物柜。因为是公共服务，我们在这里列出价格和营业时间。",
+    branchLine: (line, floor, towards) => `${line}号线 ${floor}层 ${towards}方向`,
+    exitLabel: (e) => `${e}号出口`,
+    priceHeading: "价格",
+    priceBase: (h) => `基本 ${h} 小时`,
+    priceWeekday: "平日",
+    priceWeekend: "周末",
+    priceExtra: (w) => `之后每小时加收 ${w.toLocaleString()} 韩元`,
+    openHours: (a, b) => `${a}–${b}，全年无休`,
+    bookOnline: "网上预约（中文）",
+    officialSource: "首尔交通公社官方页面",
+    priceMayChange: "价格和营业时间取自首尔交通公社官方页面，日期见下。可能会有变动，出发前请在官方页面确认。",
   },
 
   "zh-TW": {
@@ -220,6 +300,19 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     walkFrom: (m) => `距車站 ${m} 公尺`,
     viewOnMap: "在地圖上查看",
     listedOn: "資料取自 KakaoMap，日期",
+    officialName: "T-Luggage（首爾交通公社營運）",
+    officialWhat: "設在6個地鐵站內的人工行李寄放處，不是自助置物櫃。因為是公共服務，我們在這裡列出價格和營業時間。",
+    branchLine: (line, floor, towards) => `${line}號線 ${floor}層 ${towards}方向`,
+    exitLabel: (e) => `${e}號出口`,
+    priceHeading: "價格",
+    priceBase: (h) => `基本 ${h} 小時`,
+    priceWeekday: "平日",
+    priceWeekend: "週末",
+    priceExtra: (w) => `之後每小時加收 ${w.toLocaleString()} 韓元`,
+    openHours: (a, b) => `${a}–${b}，全年無休`,
+    bookOnline: "網路預約（中文）",
+    officialSource: "首爾交通公社官方頁面",
+    priceMayChange: "價格和營業時間取自首爾交通公社官方頁面，日期見下。可能會有變動，出發前請在官方頁面確認。",
   },
 
   vi: {
@@ -252,6 +345,19 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     walkFrom: (m) => `${m} m từ ga`,
     viewOnMap: "Xem trên bản đồ",
     listedOn: "Lấy từ KakaoMap ngày",
+    officialName: "T-Luggage — do Seoul Metro vận hành",
+    officialWhat: "Quầy giữ hành lý có nhân viên bên trong sáu ga tàu điện ngầm, không phải tủ khoá tự động. Vì là dịch vụ công nên chúng tôi ghi cả giá và giờ mở cửa.",
+    branchLine: (line, floor, towards) => `Tuyến ${line} · tầng ${floor} · hướng ${towards}`,
+    exitLabel: (e) => `lối ra ${e}`,
+    priceHeading: "Giá",
+    priceBase: (h) => `${h} giờ đầu`,
+    priceWeekday: "Thứ 2–6",
+    priceWeekend: "Thứ 7–CN",
+    priceExtra: (w) => `Sau đó ${w.toLocaleString()} won mỗi giờ`,
+    openHours: (a, b) => `Mở cửa ${a}–${b}, tất cả các ngày trong năm`,
+    bookOnline: "Đặt trước trên mạng",
+    officialSource: "Trang chính thức của Seoul Metro",
+    priceMayChange: "Giá và giờ mở cửa lấy từ trang chính thức của Seoul Metro vào ngày ghi bên dưới. Có thể thay đổi — hãy kiểm tra trang chính thức trước khi đi.",
   },
 
   es: {
@@ -284,6 +390,19 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     walkFrom: (m) => `a ${m} m de la estación`,
     viewOnMap: "Ver en el mapa",
     listedOn: "Datos de KakaoMap del",
+    officialName: "T-Luggage, del metro de Seúl",
+    officialWhat: "Mostradores de consigna atendidos por personal, dentro de seis estaciones de metro. No son taquillas. Al ser un servicio público, aquí sí indicamos precios y horarios.",
+    branchLine: (line, floor, towards) => `Línea ${line} · planta ${floor} · hacia ${towards}`,
+    exitLabel: (e) => `la salida ${e}`,
+    priceHeading: "Precio",
+    priceBase: (h) => `Primeras ${h} horas`,
+    priceWeekday: "Lun–Vie",
+    priceWeekend: "Sáb–Dom",
+    priceExtra: (w) => `Después, ${w.toLocaleString()} wones por cada hora más`,
+    openHours: (a, b) => `Abierto de ${a} a ${b}, todos los días del año`,
+    bookOnline: "Reservar por internet",
+    officialSource: "Página oficial del metro de Seúl",
+    priceMayChange: "Los precios y horarios están tomados de la página oficial del metro de Seúl en la fecha indicada. Pueden cambiar: compruébelo en la página oficial antes de ir.",
   },
 
   fr: {
@@ -316,6 +435,19 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     walkFrom: (m) => `à ${m} m de la station`,
     viewOnMap: "Voir sur la carte",
     listedOn: "Données KakaoMap du",
+    officialName: "T-Luggage, géré par le métro de Séoul",
+    officialWhat: "Des comptoirs de consigne tenus par du personnel, dans six stations de métro. Ce ne sont pas des casiers. Comme il s'agit d'un service public, nous en indiquons ici les tarifs et les horaires.",
+    branchLine: (line, floor, towards) => `Ligne ${line} · niveau ${floor} · vers ${towards}`,
+    exitLabel: (e) => `la sortie ${e}`,
+    priceHeading: "Tarifs",
+    priceBase: (h) => `${h} premières heures`,
+    priceWeekday: "Lun–Ven",
+    priceWeekend: "Sam–Dim",
+    priceExtra: (w) => `Puis ${w.toLocaleString()} wons par heure supplémentaire`,
+    openHours: (a, b) => `Ouvert de ${a} à ${b}, tous les jours de l’année`,
+    bookOnline: "Réserver en ligne",
+    officialSource: "Page officielle du métro de Séoul",
+    priceMayChange: "Les tarifs et horaires proviennent de la page officielle du métro de Séoul à la date indiquée. Ils peuvent changer : vérifiez sur la page officielle avant de vous déplacer.",
   },
 
   de: {
@@ -348,6 +480,19 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     walkFrom: (m) => `${m} m vom Bahnhof`,
     viewOnMap: "Auf der Karte ansehen",
     listedOn: "Daten aus KakaoMap vom",
+    officialName: "T-Luggage, betrieben von der Seouler U-Bahn",
+    officialWhat: "Betreute Gepäckschalter in sechs U-Bahn-Stationen — keine Schließfächer. Weil es ein öffentlicher Dienst ist, nennen wir hier Preise und Öffnungszeiten.",
+    branchLine: (line, floor, towards) => `Linie ${line} · Ebene ${floor} · Richtung ${towards}`,
+    exitLabel: (e) => `Ausgang ${e}`,
+    priceHeading: "Preise",
+    priceBase: (h) => `Erste ${h} Stunden`,
+    priceWeekday: "Mo–Fr",
+    priceWeekend: "Sa–So",
+    priceExtra: (w) => `Danach ${w.toLocaleString()} Won je weitere Stunde`,
+    openHours: (a, b) => `Geöffnet ${a}–${b}, an jedem Tag im Jahr`,
+    bookOnline: "Online reservieren",
+    officialSource: "Offizielle Seite der Seouler U-Bahn",
+    priceMayChange: "Preise und Öffnungszeiten stammen von der offiziellen Seite der Seouler U-Bahn zum unten genannten Datum. Sie können sich ändern — schauen Sie vor dem Hingehen auf die offizielle Seite.",
   },
 
   ru: {
@@ -380,6 +525,19 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     walkFrom: (m) => `${m} м от станции`,
     viewOnMap: "Открыть на карте",
     listedOn: "Данные KakaoMap от",
+    officialName: "T-Luggage — служба Сеульского метро",
+    officialWhat: "Пункты хранения багажа с сотрудниками внутри шести станций метро, а не автоматические ячейки. Это государственная служба, поэтому здесь мы указываем цены и часы работы.",
+    branchLine: (line, floor, towards) => `Линия ${line} · этаж ${floor} · в сторону ${towards}`,
+    exitLabel: (e) => `выхода ${e}`,
+    priceHeading: "Цены",
+    priceBase: (h) => `Первые ${h} часа`,
+    priceWeekday: "Пн–Пт",
+    priceWeekend: "Сб–Вс",
+    priceExtra: (w) => `Далее ${w.toLocaleString()} вон за каждый следующий час`,
+    openHours: (a, b) => `Открыто с ${a} до ${b}, каждый день в году`,
+    bookOnline: "Забронировать онлайн",
+    officialSource: "Официальная страница Сеульского метро",
+    priceMayChange: "Цены и часы работы взяты с официальной страницы Сеульского метро на указанную ниже дату. Они могут измениться — проверьте официальную страницу перед поездкой.",
   },
 
   id: {
@@ -412,6 +570,19 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     walkFrom: (m) => `${m} m dari stasiun`,
     viewOnMap: "Buka di peta",
     listedOn: "Data dari KakaoMap tanggal",
+    officialName: "T-Luggage — dikelola Seoul Metro",
+    officialWhat: "Loket penitipan barang berpetugas di dalam enam stasiun kereta bawah tanah, bukan loker otomatis. Karena ini layanan publik, kami mencantumkan harga dan jam bukanya.",
+    branchLine: (line, floor, towards) => `Jalur ${line} · lantai ${floor} · arah ${towards}`,
+    exitLabel: (e) => `pintu keluar ${e}`,
+    priceHeading: "Harga",
+    priceBase: (h) => `${h} jam pertama`,
+    priceWeekday: "Sen–Jum",
+    priceWeekend: "Sab–Min",
+    priceExtra: (w) => `Selanjutnya ${w.toLocaleString()} won per jam`,
+    openHours: (a, b) => `Buka ${a}–${b}, setiap hari sepanjang tahun`,
+    bookOnline: "Pesan daring",
+    officialSource: "Halaman resmi Seoul Metro",
+    priceMayChange: "Harga dan jam buka diambil dari halaman resmi Seoul Metro pada tanggal di bawah. Bisa berubah — periksa halaman resminya sebelum Anda ke sana.",
   },
 
   th: {
@@ -444,5 +615,18 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     walkFrom: (m) => `ห่างจากสถานี ${m} ม.`,
     viewOnMap: "ดูในแผนที่",
     listedOn: "ข้อมูลจาก KakaoMap วันที่",
+    officialName: "T-Luggage — ดำเนินการโดย Seoul Metro",
+    officialWhat: "จุดรับฝากสัมภาระที่มีเจ้าหน้าที่ประจำ อยู่ในสถานีรถไฟใต้ดิน 6 สถานี ไม่ใช่ตู้ล็อกเกอร์ เนื่องจากเป็นบริการของรัฐ เราจึงระบุราคาและเวลาทำการไว้ที่นี่",
+    branchLine: (line, floor, towards) => `สาย ${line} · ชั้น ${floor} · ไปทาง ${towards}`,
+    exitLabel: (e) => `ทางออก ${e}`,
+    priceHeading: "ราคา",
+    priceBase: (h) => `${h} ชั่วโมงแรก`,
+    priceWeekday: "จันทร์–ศุกร์",
+    priceWeekend: "เสาร์–อาทิตย์",
+    priceExtra: (w) => `หลังจากนั้นชั่วโมงละ ${w.toLocaleString()} วอน`,
+    openHours: (a, b) => `เปิด ${a}–${b} ทุกวันตลอดปี`,
+    bookOnline: "จองออนไลน์",
+    officialSource: "หน้าเว็บทางการของ Seoul Metro",
+    priceMayChange: "ราคาและเวลาทำการนำมาจากหน้าเว็บทางการของ Seoul Metro ตามวันที่ด้านล่าง อาจเปลี่ยนแปลงได้ กรุณาตรวจสอบหน้าเว็บทางการก่อนเดินทาง",
   },
 };

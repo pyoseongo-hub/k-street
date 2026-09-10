@@ -44,6 +44,18 @@ import { pastEditionYear } from "../src/lib/pastEdition";
 //    링크는 **전부 러너에서 두드려 본 것만** 들어 있다.
 import { LUGGAGE_STRINGS } from "./lib/luggage-strings";
 import { LUGGAGE_AREAS, type LuggageCandidate } from "./lib/luggage-picks";
+import {
+  OFFICIAL_BRANCHES,
+  OFFICIAL_PRICES,
+  OFFICIAL_BASE_HOURS,
+  OFFICIAL_EXTRA_PER_HOUR,
+  OFFICIAL_OPEN,
+  OFFICIAL_CLOSE,
+  OFFICIAL_CHECKED,
+  OFFICIAL_PAGE,
+  BOOKING_SITE,
+  BOOKING_SITE_BY_LANG,
+} from "./lib/luggage-official";
 import LUGGAGE_CANDIDATES from "../src/data/luggage-candidates.json";
 import {
   officialLinks,
@@ -929,6 +941,46 @@ hubs.push({
     return hit;
   };
 
+  // 🚇 **또타러기지 — 서울교통공사 공식.** 사설 목록보다 **위에** 놓고 눈에 띄게 가른다.
+  //    여기만 값과 운영시간을 적는다(사장님 결정 2026-09-10 "공공 서비스만 적는다").
+  //    근거는 서울교통공사가 스스로 공개한 공식 페이지다 — 가장 높은 등급이다.
+  //    📍 「몇 번 출구」가 여기 있다. 사장님이 처음 말씀하신 바로 그것이다.
+  const officialHtml = () =>
+    [
+      `<h2>${esc(L.officialName)}</h2>`,
+      `<p class="note">${esc(L.officialWhat)}</p>`,
+      `<ul>`,
+      OFFICIAL_BRANCHES.map((b) => {
+        // ⚠️ 김포공항역은 출구 번호가 아니라 **「I-센터」**다.
+        //    무조건 「번 출구」를 붙였다가 「I-센터번 출구 방면」이 나왔다.
+        const towards = /^[\d,]+$/.test(b.exit) ? L.exitLabel(b.exit) : b.exit;
+        return (
+          `<li><strong>${esc(b.station)}</strong>` +
+          `<span class="meta">${esc(L.branchLine(b.line, b.floor, towards))}</span></li>`
+        );
+      }).join(""),
+      `</ul>`,
+      `<h3>${esc(L.priceHeading)}</h3>`,
+      `<p class="note">${esc(L.priceBase(OFFICIAL_BASE_HOURS))}</p>`,
+      `<ul>`,
+      OFFICIAL_PRICES.map(
+        (r) =>
+          `<li><strong>${esc(r.size)}</strong>` +
+          `<span class="meta">${esc(L.priceWeekday)} ₩${r.weekday.toLocaleString()} · ` +
+          `${esc(L.priceWeekend)} ₩${r.weekend.toLocaleString()}</span></li>`,
+      ).join(""),
+      `</ul>`,
+      `<p class="note">${esc(L.priceExtra(OFFICIAL_EXTRA_PER_HOUR))}</p>`,
+      `<p class="note">${esc(L.openHours(OFFICIAL_OPEN, OFFICIAL_CLOSE))}</p>`,
+      // ⚠️ 값을 적은 이상 **바뀔 수 있다는 말과 공식 링크를 반드시 같이** 띄운다.
+      `<p class="note"><strong>${esc(L.priceMayChange)}</strong></p>`,
+      `<ul class="chips">` +
+        `<li><a href="${esc(OFFICIAL_PAGE)}" rel="nofollow noopener" target="_blank">${esc(L.officialSource)} ↗</a></li>` +
+        `<li><a href="${esc(BOOKING_SITE_BY_LANG[lang] ?? BOOKING_SITE)}" rel="nofollow noopener" target="_blank">${esc(L.bookOnline)} ↗</a></li>` +
+        `</ul>`,
+      `<p class="note">${esc(L.listedOn)}: ${esc(OFFICIAL_CHECKED)}</p>`,
+    ].join("\n");
+
   const placesHtml = () =>
     [
       `<h2>${esc(L.placesHeading)}</h2>`,
@@ -974,6 +1026,7 @@ hubs.push({
     //    상호·주소·전화는 **손으로 안 적었다.** 러너가 카카오에서 받아 커밋한
     //    luggage-candidates.json 에서 이름으로 찾아 쓴다. 이름이 안 맞으면
     //    아래에서 **페이지 만들기가 멈춘다** — 그게 오타를 잡는 장치다.
+    officialHtml(),
     placesHtml(),
     `<h2>${esc(L.checkHeading)}</h2>`,
     `<ul>`,
