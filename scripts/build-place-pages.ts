@@ -55,6 +55,14 @@ import {
   OFFICIAL_PAGE,
   BOOKING_SITE,
   BOOKING_SITE_BY_LANG,
+  LOCKER_PAGE,
+  LOCKER_STATIONS,
+  LOCKER_CELLS,
+  LOCKER_SIZES,
+  LOCKER_BASE_HOURS,
+  LOCKER_OPEN,
+  LOCKER_CLOSE,
+  LOCKER_MAX_DAYS,
 } from "./lib/luggage-official";
 import LUGGAGE_CANDIDATES from "../src/data/luggage-candidates.json";
 import {
@@ -941,6 +949,31 @@ hubs.push({
     return hit;
   };
 
+  // 🔒 **또타라커 — 273개 역의 무인 보관함.** 맨 위에 둔다.
+  //    또타러기지는 6개 역뿐이지만 이건 **273개 역**에 있다 —
+  //    손님이 어느 역에 있든 쓸 수 있으니 가장 먼저 보여 준다.
+  //    ⚠️ 운영시간이 또타러기지와 다르다(05~24시 vs 09~22시). 섞으면 안 된다.
+  const lockerHtml = () =>
+    [
+      `<h2>${esc(L.tlockerName)}</h2>`,
+      `<p class="note">${esc(L.lockerWhat(LOCKER_STATIONS, LOCKER_CELLS))}</p>`,
+      `<p class="note">${esc(L.priceBase(LOCKER_BASE_HOURS))}</p>`,
+      `<ul>`,
+      LOCKER_SIZES.map(
+        (z) =>
+          `<li><strong>${esc(z.code)} · ${esc(L.lockerSize(z.w, z.d, z.h))}</strong>` +
+          `<span class="meta">${esc(L.lockerRow(L.priceWeekday, z.weekday, L.priceWeekend, z.weekend, z.extra))}</span></li>`,
+      ).join(""),
+      `</ul>`,
+      `<p class="note">${esc(L.lockerHours(LOCKER_OPEN, LOCKER_CLOSE))}</p>`,
+      // 🚨 한 달 지나면 짐이 없어진다. 손님이 꼭 알아야 한다.
+      `<p class="note"><strong>${esc(L.lockerMaxDays(LOCKER_MAX_DAYS))}</strong></p>`,
+      `<p class="note">${esc(L.priceMayChange)}</p>`,
+      `<ul class="chips"><li><a href="${esc(LOCKER_PAGE)}" rel="nofollow noopener" target="_blank">${esc(L.lockerFindIt)} ↗</a></li></ul>`,
+      // ⚠️ 여기는 카카오가 아니라 **서울교통공사**에서 온 자료다. 출처를 섞지 않는다.
+      `<p class="note">${esc(L.checkedOn)}: ${esc(OFFICIAL_CHECKED)}</p>`,
+    ].join("\n");
+
   // 🚇 **또타러기지 — 서울교통공사 공식.** 사설 목록보다 **위에** 놓고 눈에 띄게 가른다.
   //    여기만 값과 운영시간을 적는다(사장님 결정 2026-09-10 "공공 서비스만 적는다").
   //    근거는 서울교통공사가 스스로 공개한 공식 페이지다 — 가장 높은 등급이다.
@@ -978,7 +1011,7 @@ hubs.push({
         `<li><a href="${esc(OFFICIAL_PAGE)}" rel="nofollow noopener" target="_blank">${esc(L.officialSource)} ↗</a></li>` +
         `<li><a href="${esc(BOOKING_SITE_BY_LANG[lang] ?? BOOKING_SITE)}" rel="nofollow noopener" target="_blank">${esc(L.bookOnline)} ↗</a></li>` +
         `</ul>`,
-      `<p class="note">${esc(L.listedOn)}: ${esc(OFFICIAL_CHECKED)}</p>`,
+      `<p class="note">${esc(L.checkedOn)}: ${esc(OFFICIAL_CHECKED)}</p>`,
     ].join("\n");
 
   const placesHtml = () =>
@@ -1026,6 +1059,7 @@ hubs.push({
     //    상호·주소·전화는 **손으로 안 적었다.** 러너가 카카오에서 받아 커밋한
     //    luggage-candidates.json 에서 이름으로 찾아 쓴다. 이름이 안 맞으면
     //    아래에서 **페이지 만들기가 멈춘다** — 그게 오타를 잡는 장치다.
+    lockerHtml(),
     officialHtml(),
     placesHtml(),
     `<h2>${esc(L.checkHeading)}</h2>`,

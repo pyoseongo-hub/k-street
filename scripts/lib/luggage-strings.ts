@@ -87,6 +87,25 @@ export interface LuggageStrings {
   bookOnline: string;
   officialSource: string;
   priceMayChange: string;
+
+  /** 🔒 또타라커 — 273개 역의 무인 보관함 (2026-09-10에 넣었다) */
+  tlockerName: string;
+  /** 「273개 역, 5,557칸」 */
+  lockerWhat: (stations: number, cells: number) => string;
+  /** 「50 × 90 × 60 cm」 */
+  lockerSize: (w: number, d: number, h: number) => string;
+  /** 「이후 1시간마다 500원」이 크기마다 다르다 */
+  lockerRow: (weekdayLabel: string, weekday: number, weekendLabel: string, weekend: number, extra: number) => string;
+  lockerHours: (from: string, to: string) => string;
+  /** 🚨 한 달 지나면 폐기된다 */
+  lockerMaxDays: (days: number) => string;
+  lockerFindIt: string;
+  /**
+   * 「확인한 날」 — 공공 자료(또타라커·또타러기지)에 붙인다.
+   * ⚠️ listedOn(「카카오맵에서 받은 날」)을 여기 쓰면 **출처를 잘못 적는 것**이다.
+   *    2026-09-10에 실제로 그렇게 나가 있었다. 자료마다 온 곳이 다르다.
+   */
+  checkedOn: string;
 }
 
 export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
@@ -133,6 +152,14 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     bookOnline: "Book online (English)",
     officialSource: "Seoul Metro's official page",
     priceMayChange: "Prices and hours are taken from Seoul Metro's own page on the date shown. They can change — check the official page before you go.",
+    tlockerName: "Coin lockers in the stations (T-Locker)",
+    lockerWhat: (st, c) => `Self-service lockers at ${st} subway stations — ${c.toLocaleString()} of them. No booking; if one is free, you use it.`,
+    lockerSize: (w, d, h) => `${w} × ${d} × ${h} cm`,
+    lockerRow: (a, wd, b, we, ex) => `${a} ₩${wd.toLocaleString()} · ${b} ₩${we.toLocaleString()} · then ₩${ex.toLocaleString()}/hour`,
+    lockerHours: (a, b) => `Open ${a}–${b}, weekdays, weekends and public holidays. You cannot get your bag outside these hours.`,
+    lockerMaxDays: (d) => `Left longer than ${d} days, your bag can be given away or thrown out.`,
+    lockerFindIt: "Sizes and prices — Seoul Metro",
+    checkedOn: "Checked on",
   },
 
   ko: {
@@ -178,6 +205,14 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     bookOnline: "인터넷 예약",
     officialSource: "서울교통공사 공식 안내",
     priceMayChange: "요금과 운영시간은 아래 날짜에 서울교통공사 공식 페이지에 적혀 있던 것입니다. 바뀔 수 있으니 가시기 전에 공식 페이지에서 확인하세요.",
+    tlockerName: "역 안의 물품보관함 (또타라커)",
+    lockerWhat: (st, c) => `지하철 ${st}개 역에 있는 무인 보관함입니다. 모두 ${c.toLocaleString()}칸. 예약은 안 되고, 빈 칸이 있으면 씁니다.`,
+    lockerSize: (w, d, h) => `${w} × ${d} × ${h} cm`,
+    lockerRow: (a, wd, b, we, ex) => `${a} ${wd.toLocaleString()}원 · ${b} ${we.toLocaleString()}원 · 이후 1시간마다 ${ex.toLocaleString()}원`,
+    lockerHours: (a, b) => `${a}~${b}. 평일·주말·공휴일 모두 같습니다. 이 시간 밖에는 짐을 넣거나 찾을 수 없습니다.`,
+    lockerMaxDays: (d) => `${d}일이 지나면 짐이 기증되거나 폐기될 수 있습니다.`,
+    lockerFindIt: "크기와 요금 — 서울교통공사",
+    checkedOn: "확인한 날",
   },
 
   ja: {
@@ -223,6 +258,14 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     bookOnline: "ネット予約（日本語）",
     officialSource: "ソウル交通公社の公式案内",
     priceMayChange: "料金と営業時間は、下の日付時点でソウル交通公社の公式ページに載っていたものです。変わることがあるので、行く前に公式ページでご確認ください。",
+    tlockerName: "駅のコインロッカー（T-Locker）",
+    lockerWhat: (st, c) => `地下鉄${st}駅にある、自分で使うコインロッカーです。全部で${c.toLocaleString()}box。予約はできず、空いていれば使えます。`,
+    lockerSize: (w, d, h) => `${w} × ${d} × ${h} cm`,
+    lockerRow: (a, wd, b, we, ex) => `${a} ${wd.toLocaleString()}ウォン ・ ${b} ${we.toLocaleString()}ウォン ・ 以降1時間ごとに ${ex.toLocaleString()}ウォン`,
+    lockerHours: (a, b) => `${a}〜${b}。平日・土日・祝日とも同じです。この時間外は荷物を出し入れできません。`,
+    lockerMaxDays: (d) => `${d}日を過ぎると、荷物は寄贈または廃棄されることがあります。`,
+    lockerFindIt: "サイズと料金 — ソウル交通公社",
+    checkedOn: "確認した日",
   },
 
   zh: {
@@ -268,6 +311,14 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     bookOnline: "网上预约（中文）",
     officialSource: "首尔交通公社官方页面",
     priceMayChange: "价格和营业时间取自首尔交通公社官方页面，日期见下。可能会有变动，出发前请在官方页面确认。",
+    tlockerName: "车站的自助储物柜（T-Locker）",
+    lockerWhat: (st, c) => `设在${st}个地铁站的自助储物柜，共${c.toLocaleString()}格。不能预约，有空位就能用。`,
+    lockerSize: (w, d, h) => `${w} × ${d} × ${h} 厘米`,
+    lockerRow: (a, wd, b, we, ex) => `${a} ${wd.toLocaleString()}韩元 · ${b} ${we.toLocaleString()}韩元 · 之后每小时 ${ex.toLocaleString()}韩元`,
+    lockerHours: (a, b) => `${a}–${b}，平日、周末和公休日相同。此时间外无法存取行李。`,
+    lockerMaxDays: (d) => `超过${d}天未取，行李可能被捐赠或丢弃。`,
+    lockerFindIt: "尺寸与价格 — 首尔交通公社",
+    checkedOn: "确认日期",
   },
 
   "zh-TW": {
@@ -313,6 +364,14 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     bookOnline: "網路預約（中文）",
     officialSource: "首爾交通公社官方頁面",
     priceMayChange: "價格和營業時間取自首爾交通公社官方頁面，日期見下。可能會有變動，出發前請在官方頁面確認。",
+    tlockerName: "車站的自助置物櫃（T-Locker）",
+    lockerWhat: (st, c) => `設在${st}個地鐵站的自助置物櫃，共${c.toLocaleString()}格。不能預約，有空位就能用。`,
+    lockerSize: (w, d, h) => `${w} × ${d} × ${h} 公分`,
+    lockerRow: (a, wd, b, we, ex) => `${a} ${wd.toLocaleString()}韓元 · ${b} ${we.toLocaleString()}韓元 · 之後每小時 ${ex.toLocaleString()}韓元`,
+    lockerHours: (a, b) => `${a}–${b}，平日、週末和國定假日相同。此時間外無法存取行李。`,
+    lockerMaxDays: (d) => `超過${d}天未取，行李可能被捐贈或丟棄。`,
+    lockerFindIt: "尺寸與價格 — 首爾交通公社",
+    checkedOn: "確認日期",
   },
 
   vi: {
@@ -358,6 +417,14 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     bookOnline: "Đặt trước trên mạng",
     officialSource: "Trang chính thức của Seoul Metro",
     priceMayChange: "Giá và giờ mở cửa lấy từ trang chính thức của Seoul Metro vào ngày ghi bên dưới. Có thể thay đổi — hãy kiểm tra trang chính thức trước khi đi.",
+    tlockerName: "Tủ khoá tự động trong ga (T-Locker)",
+    lockerWhat: (st, c) => `Tủ khoá tự phục vụ tại ${st} ga tàu điện ngầm, tổng cộng ${c.toLocaleString()} ngăn. Không đặt trước; còn trống thì dùng.`,
+    lockerSize: (w, d, h) => `${w} × ${d} × ${h} cm`,
+    lockerRow: (a, wd, b, we, ex) => `${a} ${wd.toLocaleString()} won · ${b} ${we.toLocaleString()} won · sau đó ${ex.toLocaleString()} won/giờ`,
+    lockerHours: (a, b) => `Mở ${a}–${b}, ngày thường, cuối tuần và ngày lễ. Ngoài giờ này bạn không lấy được hành lý.`,
+    lockerMaxDays: (d) => `Để quá ${d} ngày, hành lý có thể bị đem cho hoặc bỏ đi.`,
+    lockerFindIt: "Kích thước và giá — Seoul Metro",
+    checkedOn: "Ngày kiểm tra",
   },
 
   es: {
@@ -403,6 +470,14 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     bookOnline: "Reservar por internet",
     officialSource: "Página oficial del metro de Seúl",
     priceMayChange: "Los precios y horarios están tomados de la página oficial del metro de Seúl en la fecha indicada. Pueden cambiar: compruébelo en la página oficial antes de ir.",
+    tlockerName: "Taquillas en las estaciones (T-Locker)",
+    lockerWhat: (st, c) => `Taquillas de autoservicio en ${st} estaciones de metro, ${c.toLocaleString()} en total. No se reservan: si hay una libre, se usa.`,
+    lockerSize: (w, d, h) => `${w} × ${d} × ${h} cm`,
+    lockerRow: (a, wd, b, we, ex) => `${a} ${wd.toLocaleString()} wones · ${b} ${we.toLocaleString()} wones · después ${ex.toLocaleString()} wones por hora`,
+    lockerHours: (a, b) => `Abiertas de ${a} a ${b}, entre semana, fines de semana y festivos. Fuera de ese horario no podrá sacar su equipaje.`,
+    lockerMaxDays: (d) => `Pasados ${d} días, su equipaje puede ser donado o tirado.`,
+    lockerFindIt: "Tamaños y precios — metro de Seúl",
+    checkedOn: "Comprobado el",
   },
 
   fr: {
@@ -448,6 +523,14 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     bookOnline: "Réserver en ligne",
     officialSource: "Page officielle du métro de Séoul",
     priceMayChange: "Les tarifs et horaires proviennent de la page officielle du métro de Séoul à la date indiquée. Ils peuvent changer : vérifiez sur la page officielle avant de vous déplacer.",
+    tlockerName: "Casiers dans les stations (T-Locker)",
+    lockerWhat: (st, c) => `Des casiers en libre-service dans ${st} stations de métro, ${c.toLocaleString()} au total. Pas de réservation : si un casier est libre, il est à vous.`,
+    lockerSize: (w, d, h) => `${w} × ${d} × ${h} cm`,
+    lockerRow: (a, wd, b, we, ex) => `${a} ${wd.toLocaleString()} wons · ${b} ${we.toLocaleString()} wons · puis ${ex.toLocaleString()} wons par heure`,
+    lockerHours: (a, b) => `Ouverts de ${a} à ${b}, en semaine, le week-end et les jours fériés. En dehors, impossible de récupérer vos bagages.`,
+    lockerMaxDays: (d) => `Au-delà de ${d} jours, vos bagages peuvent être donnés ou jetés.`,
+    lockerFindIt: "Tailles et tarifs — métro de Séoul",
+    checkedOn: "Vérifié le",
   },
 
   de: {
@@ -493,6 +576,14 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     bookOnline: "Online reservieren",
     officialSource: "Offizielle Seite der Seouler U-Bahn",
     priceMayChange: "Preise und Öffnungszeiten stammen von der offiziellen Seite der Seouler U-Bahn zum unten genannten Datum. Sie können sich ändern — schauen Sie vor dem Hingehen auf die offizielle Seite.",
+    tlockerName: "Schließfächer in den Stationen (T-Locker)",
+    lockerWhat: (st, c) => `Selbstbedienungs-Schließfächer in ${st} U-Bahn-Stationen, insgesamt ${c.toLocaleString()} Stück. Keine Reservierung: Ist eines frei, gehört es Ihnen.`,
+    lockerSize: (w, d, h) => `${w} × ${d} × ${h} cm`,
+    lockerRow: (a, wd, b, we, ex) => `${a} ${wd.toLocaleString()} Won · ${b} ${we.toLocaleString()} Won · danach ${ex.toLocaleString()} Won je Stunde`,
+    lockerHours: (a, b) => `Geöffnet ${a}–${b}, werktags, am Wochenende und an Feiertagen. Außerhalb dieser Zeit kommen Sie nicht an Ihr Gepäck.`,
+    lockerMaxDays: (d) => `Nach ${d} Tagen kann Ihr Gepäck verschenkt oder entsorgt werden.`,
+    lockerFindIt: "Größen und Preise — Seouler U-Bahn",
+    checkedOn: "Geprüft am",
   },
 
   ru: {
@@ -538,6 +629,14 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     bookOnline: "Забронировать онлайн",
     officialSource: "Официальная страница Сеульского метро",
     priceMayChange: "Цены и часы работы взяты с официальной страницы Сеульского метро на указанную ниже дату. Они могут измениться — проверьте официальную страницу перед поездкой.",
+    tlockerName: "Камеры хранения на станциях (T-Locker)",
+    lockerWhat: (st, c) => `Автоматические ячейки на ${st} станциях метро — всего ${c.toLocaleString()}. Бронировать нельзя: свободна — занимайте.`,
+    lockerSize: (w, d, h) => `${w} × ${d} × ${h} см`,
+    lockerRow: (a, wd, b, we, ex) => `${a} ${wd.toLocaleString()} вон · ${b} ${we.toLocaleString()} вон · далее ${ex.toLocaleString()} вон в час`,
+    lockerHours: (a, b) => `Открыто с ${a} до ${b} — по будням, выходным и праздникам. Вне этого времени забрать вещи нельзя.`,
+    lockerMaxDays: (d) => `Если вещи пролежат дольше ${d} дней, их могут отдать или выбросить.`,
+    lockerFindIt: "Размеры и цены — Сеульское метро",
+    checkedOn: "Проверено",
   },
 
   id: {
@@ -583,6 +682,14 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     bookOnline: "Pesan daring",
     officialSource: "Halaman resmi Seoul Metro",
     priceMayChange: "Harga dan jam buka diambil dari halaman resmi Seoul Metro pada tanggal di bawah. Bisa berubah — periksa halaman resminya sebelum Anda ke sana.",
+    tlockerName: "Loker di dalam stasiun (T-Locker)",
+    lockerWhat: (st, c) => `Loker swalayan di ${st} stasiun kereta bawah tanah, seluruhnya ${c.toLocaleString()} kotak. Tidak bisa dipesan; kalau kosong, langsung dipakai.`,
+    lockerSize: (w, d, h) => `${w} × ${d} × ${h} cm`,
+    lockerRow: (a, wd, b, we, ex) => `${a} ${wd.toLocaleString()} won · ${b} ${we.toLocaleString()} won · lalu ${ex.toLocaleString()} won per jam`,
+    lockerHours: (a, b) => `Buka ${a}–${b}, hari kerja, akhir pekan, dan hari libur. Di luar jam itu barang tidak bisa diambil.`,
+    lockerMaxDays: (d) => `Lewat ${d} hari, barang bisa disumbangkan atau dibuang.`,
+    lockerFindIt: "Ukuran dan harga — Seoul Metro",
+    checkedOn: "Diperiksa pada",
   },
 
   th: {
@@ -628,5 +735,13 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     bookOnline: "จองออนไลน์",
     officialSource: "หน้าเว็บทางการของ Seoul Metro",
     priceMayChange: "ราคาและเวลาทำการนำมาจากหน้าเว็บทางการของ Seoul Metro ตามวันที่ด้านล่าง อาจเปลี่ยนแปลงได้ กรุณาตรวจสอบหน้าเว็บทางการก่อนเดินทาง",
+    tlockerName: "ตู้ล็อกเกอร์ในสถานี (T-Locker)",
+    lockerWhat: (st, c) => `ตู้ล็อกเกอร์บริการตนเองใน ${st} สถานีรถไฟใต้ดิน รวม ${c.toLocaleString()} ช่อง จองไม่ได้ ว่างเมื่อไหร่ใช้ได้เลย`,
+    lockerSize: (w, d, h) => `${w} × ${d} × ${h} ซม.`,
+    lockerRow: (a, wd, b, we, ex) => `${a} ${wd.toLocaleString()} วอน · ${b} ${we.toLocaleString()} วอน · จากนั้นชั่วโมงละ ${ex.toLocaleString()} วอน`,
+    lockerHours: (a, b) => `เปิด ${a}–${b} ทั้งวันธรรมดา วันหยุดสุดสัปดาห์ และวันหยุดราชการ นอกเวลานี้ไม่สามารถฝากหรือรับของได้`,
+    lockerMaxDays: (d) => `หากทิ้งไว้เกิน ${d} วัน สัมภาระอาจถูกบริจาคหรือทิ้ง`,
+    lockerFindIt: "ขนาดและราคา — Seoul Metro",
+    checkedOn: "ตรวจสอบเมื่อ",
   },
 };

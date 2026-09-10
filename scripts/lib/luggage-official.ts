@@ -82,3 +82,56 @@ export const OFFICIAL_BASE_HOURS = 4;
 export const OFFICIAL_EXTRA_PER_HOUR = 1000;
 export const OFFICIAL_OPEN = "09:00";
 export const OFFICIAL_CLOSE = "22:00";
+
+// ─────────────────────────────────────────────────────────────────────
+// 🔒 **또타라커 (T-Locker) — 역 안의 무인 물품보관함.**
+//
+// 2026-09-10, 사장님이 두 번째로 찾아 주셨다(menuIdx=897).
+// 또타러기지(사람이 받아 주는 6곳)와 **다른 것**이다. 이건 코인로커 쪽이고
+// **273개 역**에 있다 — 사실상 손님이 어느 역에 있든 쓸 수 있다는 뜻이다.
+//
+// 💡 여기 **칸 크기가 cm 로** 적혀 있다. 이게 중요한 이유는,
+//    우리 페이지가 「내 캐리어가 실제로 들어가나요?」를 물어보라고만 하고
+//    **답을 못 주고 있었기** 때문이다. 이제 답을 준다.
+//
+// ⚠️ 운영시간이 또타러기지와 다르다 — 이쪽이 05~24시로 훨씬 길다.
+//    둘을 섞어 적으면 손님이 밤 11시에 닫힌 문 앞에 선다.
+// ─────────────────────────────────────────────────────────────────────
+
+/** 또타라커 안내(공식). ⚠️ https 인증서가 깨져 있어 http 다. */
+export const LOCKER_PAGE = "http://www.seoulmetro.co.kr/kr/page.do?menuIdx=897";
+
+/** 얼마나 깔려 있나 — 공식 페이지의 「또타라커 운영현황」 그대로. */
+export const LOCKER_STATIONS = 273;
+export const LOCKER_SITES = 336;
+export const LOCKER_CELLS = 5557;
+
+export interface LockerSize {
+  /** S · M · L */
+  code: string;
+  /** 가로 cm */
+  w: number;
+  /** 세로 cm */
+  d: number;
+  /** 높이 cm */
+  h: number;
+  weekday: number;
+  weekend: number;
+  /** 시간당 추가 */
+  extra: number;
+}
+
+/** 기본 4시간 요금 + 시간당 추가. 공식 페이지의 「또타라커 요금안내」 그대로. */
+export const LOCKER_SIZES: LockerSize[] = [
+  { code: "S", w: 50, d: 30, h: 60, weekday: 2200, weekend: 3100, extra: 500 },
+  { code: "M", w: 50, d: 45, h: 60, weekday: 3300, weekend: 4600, extra: 800 },
+  { code: "L", w: 50, d: 90, h: 60, weekday: 4400, weekend: 6100, extra: 1000 },
+];
+
+export const LOCKER_BASE_HOURS = 4;
+export const LOCKER_OPEN = "05:00";
+export const LOCKER_CLOSE = "24:00";
+/** 「평일·주말 및 공휴일」 — 쉬는 날이 없다. */
+export const LOCKER_EVERY_DAY = true;
+/** 🚨 한 달 지나면 임의로 기증·폐기된다. 손님이 꼭 알아야 하는 사실이다. */
+export const LOCKER_MAX_DAYS = 30;
