@@ -63,6 +63,8 @@ import {
   LOCKER_OPEN,
   LOCKER_CLOSE,
   LOCKER_MAX_DAYS,
+  LOCKER_APP_ANDROID,
+  LOCKER_APP_IPHONE,
 } from "./lib/luggage-official";
 import LUGGAGE_CANDIDATES from "../src/data/luggage-candidates.json";
 import NEAREST_STATION from "../src/data/nearest-station.json";
@@ -331,10 +333,23 @@ function stationHtml(id: string, lang: Language): string {
   const S2 = PAGE_STRINGS[lang];
   if (r.none) return `<dt>${esc(S2.stationHeading)}</dt><dd>${esc(S2.stationNone)}</dd>`;
   if (!r.station || r.dist == null) return "";
+  // 📱 **여기서 앱을 안내한다** (2026-09-10 사장님: "어플을 안내해").
+  //    사장님 말씀이 이 기능의 경계를 정해 줬다 —
+  //      "이거는 어플이 우리보다 서비스 질이 좋아 / 우리는 가까운 역까지만 안내하는 게 답이야
+  //       / 남은 락커를 우리가 관리할 수 없잖아"
+  //    그래서 **우리는 역까지, 빈 칸 수는 앱**이다. 우리가 못 지키는 숫자는 적지 않는다.
+  // ⚠️ 앱 이름 글자는 짐 보관 안내(LUGGAGE_STRINGS)에 이미 12개 언어로 있다.
+  //    여기에 또 적으면 **둘이 어긋나는 날**이 온다. 하나만 둔다.
+  const A = LUGGAGE_STRINGS[lang];
   return (
     `<dt>${esc(S2.stationHeading)}</dt>` +
     `<dd>${esc(S2.stationLine(r.station, r.dist))}` +
-    `<br><span class="note">${esc(S2.stationLocker)}</span></dd>`
+    `<br><span class="note">${esc(S2.stationLocker)}</span>` +
+    `<br><span class="note">` +
+    `<a href="${esc(LOCKER_APP_ANDROID)}" rel="nofollow noopener" target="_blank">${esc(A.appAndroid)} ↗</a>` +
+    ` · ` +
+    `<a href="${esc(LOCKER_APP_IPHONE)}" rel="nofollow noopener" target="_blank">${esc(A.appIphone)} ↗</a>` +
+    `</span></dd>`
   );
 }
 
@@ -1012,7 +1027,14 @@ hubs.push({
       // 🚨 한 달 지나면 짐이 없어진다. 손님이 꼭 알아야 한다.
       `<p class="note"><strong>${esc(L.lockerMaxDays(LOCKER_MAX_DAYS))}</strong></p>`,
       `<p class="note">${esc(L.priceMayChange)}</p>`,
-      `<ul class="chips"><li><a href="${esc(LOCKER_PAGE)}" rel="nofollow noopener" target="_blank">${esc(L.lockerFindIt)} ↗</a></li></ul>`,
+      // 📱 **빈 칸 수는 앱에서 본다.** 우리가 숫자를 옮겨 적지 않는 이유는
+      //    실시간 값이기 때문이다 — 옮기는 순간 틀린다(사장님이 앱 지도를 보고 짚어 주셨다).
+      `<p class="note">${esc(L.lockerLive)}</p>`,
+      `<ul class="chips">` +
+        `<li><a href="${esc(LOCKER_APP_ANDROID)}" rel="nofollow noopener" target="_blank">${esc(L.appAndroid)} ↗</a></li>` +
+        `<li><a href="${esc(LOCKER_APP_IPHONE)}" rel="nofollow noopener" target="_blank">${esc(L.appIphone)} ↗</a></li>` +
+        `<li><a href="${esc(LOCKER_PAGE)}" rel="nofollow noopener" target="_blank">${esc(L.lockerFindIt)} ↗</a></li>` +
+      `</ul>`,
       // ⚠️ 여기는 카카오가 아니라 **서울교통공사**에서 온 자료다. 출처를 섞지 않는다.
       `<p class="note">${esc(L.checkedOn)}: ${esc(OFFICIAL_CHECKED)}</p>`,
     ].join("\n");

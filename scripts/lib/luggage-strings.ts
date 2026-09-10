@@ -101,6 +101,15 @@ export interface LuggageStrings {
   lockerMaxDays: (days: number) => string;
   lockerFindIt: string;
   /**
+   * 📱 「앱 지도에서 역을 누르면 지금 비어 있는 칸 수가 보입니다」 (2026-09-10 사장님).
+   * 🚨 그 숫자를 **우리 화면에 옮겨 적지 않는다.** 실시간 값이라 옮기는 순간 틀린다.
+   *    우리는 그 숫자가 있는 자리를 가리키기만 한다.
+   */
+  lockerLive: string;
+  /** 앱 단추 — 낯선 웹페이지 대신 스토어를 연다 */
+  appAndroid: string;
+  appIphone: string;
+  /**
    * 「확인한 날」 — 공공 자료(또타라커·또타러기지)에 붙인다.
    * ⚠️ listedOn(「카카오맵에서 받은 날」)을 여기 쓰면 **출처를 잘못 적는 것**이다.
    *    2026-09-10에 실제로 그렇게 나가 있었다. 자료마다 온 곳이 다르다.
@@ -170,6 +179,9 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerHours: (a, b) => `Open ${a}–${b}, weekdays, weekends and public holidays. You cannot get your bag outside these hours.`,
     lockerMaxDays: (d) => `Left longer than ${d} days, your bag can be given away or thrown out.`,
     lockerFindIt: "Sizes and prices — Seoul Metro",
+    lockerLive: "The app's map shows how many lockers are free at each station right now.",
+    appAndroid: "Android app",
+    appIphone: "iPhone app",
     checkedOn: "Checked on",
     privateHeading: "Private shops — for reference only",
     openKakao: "KakaoMap",
@@ -227,6 +239,9 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerHours: (a, b) => `${a}~${b}. 평일·주말·공휴일 모두 같습니다. 이 시간 밖에는 짐을 넣거나 찾을 수 없습니다.`,
     lockerMaxDays: (d) => `${d}일이 지나면 짐이 기증되거나 폐기될 수 있습니다.`,
     lockerFindIt: "크기와 요금 — 서울교통공사",
+    lockerLive: "앱 지도에서 역을 누르면 지금 비어 있는 칸 수가 보입니다.",
+    appAndroid: "안드로이드 앱",
+    appIphone: "아이폰 앱",
     checkedOn: "확인한 날",
     privateHeading: "사설 업체 — 참고용입니다",
     openKakao: "카카오맵",
@@ -284,6 +299,9 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerHours: (a, b) => `${a}〜${b}。平日・土日・祝日とも同じです。この時間外は荷物を出し入れできません。`,
     lockerMaxDays: (d) => `${d}日を過ぎると、荷物は寄贈または廃棄されることがあります。`,
     lockerFindIt: "サイズと料金 — ソウル交通公社",
+    lockerLive: "アプリの地図で駅をタップすると、今空いているロッカーの数が表示されます。",
+    appAndroid: "Android アプリ",
+    appIphone: "iPhone アプリ",
     checkedOn: "確認した日",
     privateHeading: "民間の店舗 ― 参考まで",
     openKakao: "カカオマップ",
@@ -341,6 +359,9 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerHours: (a, b) => `${a}–${b}，平日、周末和公休日相同。此时间外无法存取行李。`,
     lockerMaxDays: (d) => `超过${d}天未取，行李可能被捐赠或丢弃。`,
     lockerFindIt: "尺寸与价格 — 首尔交通公社",
+    lockerLive: "在应用的地图上点选车站，可以看到该站现在还有几个空柜。",
+    appAndroid: "Android 应用",
+    appIphone: "iPhone 应用",
     checkedOn: "确认日期",
     privateHeading: "私营店铺 —— 仅供参考",
     openKakao: "KakaoMap",
@@ -398,6 +419,9 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerHours: (a, b) => `${a}–${b}，平日、週末和國定假日相同。此時間外無法存取行李。`,
     lockerMaxDays: (d) => `超過${d}天未取，行李可能被捐贈或丟棄。`,
     lockerFindIt: "尺寸與價格 — 首爾交通公社",
+    lockerLive: "在應用程式的地圖上點選車站，可以看到該站現在還有幾個空櫃。",
+    appAndroid: "Android 應用程式",
+    appIphone: "iPhone 應用程式",
     checkedOn: "確認日期",
     privateHeading: "私營店家 —— 僅供參考",
     openKakao: "KakaoMap",
@@ -455,6 +479,9 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerHours: (a, b) => `Mở ${a}–${b}, ngày thường, cuối tuần và ngày lễ. Ngoài giờ này bạn không lấy được hành lý.`,
     lockerMaxDays: (d) => `Để quá ${d} ngày, hành lý có thể bị đem cho hoặc bỏ đi.`,
     lockerFindIt: "Kích thước và giá — Seoul Metro",
+    lockerLive: "Trên bản đồ của ứng dụng, chạm vào một ga để xem hiện còn bao nhiêu tủ trống.",
+    appAndroid: "Ứng dụng Android",
+    appIphone: "Ứng dụng iPhone",
     checkedOn: "Ngày kiểm tra",
     privateHeading: "Cửa hàng tư nhân — chỉ để tham khảo",
     openKakao: "KakaoMap",
@@ -512,6 +539,9 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerHours: (a, b) => `Abiertas de ${a} a ${b}, entre semana, fines de semana y festivos. Fuera de ese horario no podrá sacar su equipaje.`,
     lockerMaxDays: (d) => `Pasados ${d} días, su equipaje puede ser donado o tirado.`,
     lockerFindIt: "Tamaños y precios — metro de Seúl",
+    lockerLive: "En el mapa de la aplicación puedes ver cuántas taquillas están libres ahora mismo en cada estación.",
+    appAndroid: "App para Android",
+    appIphone: "App para iPhone",
     checkedOn: "Comprobado el",
     privateHeading: "Negocios privados: solo como referencia",
     openKakao: "KakaoMap",
@@ -569,6 +599,9 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerHours: (a, b) => `Ouverts de ${a} à ${b}, en semaine, le week-end et les jours fériés. En dehors, impossible de récupérer vos bagages.`,
     lockerMaxDays: (d) => `Au-delà de ${d} jours, vos bagages peuvent être donnés ou jetés.`,
     lockerFindIt: "Tailles et tarifs — métro de Séoul",
+    lockerLive: "Sur la carte de l'application, touchez une station pour voir combien de casiers sont libres en ce moment.",
+    appAndroid: "Application Android",
+    appIphone: "Application iPhone",
     checkedOn: "Vérifié le",
     privateHeading: "Commerces privés — à titre indicatif",
     openKakao: "KakaoMap",
@@ -626,6 +659,9 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerHours: (a, b) => `Geöffnet ${a}–${b}, werktags, am Wochenende und an Feiertagen. Außerhalb dieser Zeit kommen Sie nicht an Ihr Gepäck.`,
     lockerMaxDays: (d) => `Nach ${d} Tagen kann Ihr Gepäck verschenkt oder entsorgt werden.`,
     lockerFindIt: "Größen und Preise — Seouler U-Bahn",
+    lockerLive: "Auf der Karte der App sehen Sie, wie viele Schließfächer an einer Station gerade frei sind.",
+    appAndroid: "Android-App",
+    appIphone: "iPhone-App",
     checkedOn: "Geprüft am",
     privateHeading: "Private Anbieter — nur zur Orientierung",
     openKakao: "KakaoMap",
@@ -683,6 +719,9 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerHours: (a, b) => `Открыто с ${a} до ${b} — по будням, выходным и праздникам. Вне этого времени забрать вещи нельзя.`,
     lockerMaxDays: (d) => `Если вещи пролежат дольше ${d} дней, их могут отдать или выбросить.`,
     lockerFindIt: "Размеры и цены — Сеульское метро",
+    lockerLive: "На карте в приложении видно, сколько ячеек свободно на станции прямо сейчас.",
+    appAndroid: "Приложение для Android",
+    appIphone: "Приложение для iPhone",
     checkedOn: "Проверено",
     privateHeading: "Частные компании — только для справки",
     openKakao: "KakaoMap",
@@ -740,6 +779,9 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerHours: (a, b) => `Buka ${a}–${b}, hari kerja, akhir pekan, dan hari libur. Di luar jam itu barang tidak bisa diambil.`,
     lockerMaxDays: (d) => `Lewat ${d} hari, barang bisa disumbangkan atau dibuang.`,
     lockerFindIt: "Ukuran dan harga — Seoul Metro",
+    lockerLive: "Di peta aplikasi, ketuk sebuah stasiun untuk melihat berapa loker yang kosong saat ini.",
+    appAndroid: "Aplikasi Android",
+    appIphone: "Aplikasi iPhone",
     checkedOn: "Diperiksa pada",
     privateHeading: "Usaha swasta — sebagai rujukan saja",
     openKakao: "KakaoMap",
@@ -797,6 +839,9 @@ export const LUGGAGE_STRINGS: Record<Language, LuggageStrings> = {
     lockerHours: (a, b) => `เปิด ${a}–${b} ทั้งวันธรรมดา วันหยุดสุดสัปดาห์ และวันหยุดราชการ นอกเวลานี้ไม่สามารถฝากหรือรับของได้`,
     lockerMaxDays: (d) => `หากทิ้งไว้เกิน ${d} วัน สัมภาระอาจถูกบริจาคหรือทิ้ง`,
     lockerFindIt: "ขนาดและราคา — Seoul Metro",
+    lockerLive: "แตะสถานีบนแผนที่ในแอป เพื่อดูว่าตอนนี้มีตู้ว่างกี่ตู้",
+    appAndroid: "แอป Android",
+    appIphone: "แอป iPhone",
     checkedOn: "ตรวจสอบเมื่อ",
     privateHeading: "ร้านเอกชน — สำหรับอ้างอิงเท่านั้น",
     openKakao: "KakaoMap",
