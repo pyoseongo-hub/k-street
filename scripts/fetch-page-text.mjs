@@ -113,6 +113,24 @@ for (const url of URLS) {
     }
   }
   const text = toText(r.html);
-  console.log(text.slice(0, LIMIT));
-  if (text.length > LIMIT) console.log(`\n… (${(text.length - LIMIT).toLocaleString()}자 더 있다. CHARS 를 키우면 더 나온다)`);
+
+  // 🔎 **찾는 말 근처만** 뽑는다. 공공기관 페이지는 앞이 전부 사이트 메뉴라
+  //    앞에서부터 읽으면 본문에 닿기 전에 잘린다(서울교통공사가 그랬다).
+  const FIND = (process.env.FIND ?? "").split(/[,|]/).map((t) => t.trim()).filter(Boolean);
+  if (FIND.length) {
+    let hit = 0;
+    for (const kw of FIND) {
+      let i = -1;
+      while ((i = text.indexOf(kw, i + 1)) !== -1 && hit < 12) {
+        hit++;
+        console.log(`\n──── 「${kw}」 둘레 ────`);
+        console.log(text.slice(Math.max(0, i - 200), i + LIMIT));
+        break; // 같은 말은 첫 자리만
+      }
+    }
+    if (!hit) console.log(`⚠️ 찾는 말이 글 안에 없다: ${FIND.join(" · ")}\n   (글 ${text.length.toLocaleString()}자를 받기는 했다 — 없는 것과 못 받은 것은 다르다)`);
+  } else {
+    console.log(text.slice(0, LIMIT));
+    if (text.length > LIMIT) console.log(`\n… (${(text.length - LIMIT).toLocaleString()}자 더 있다. CHARS 를 키우거나 FIND 로 찾는 말을 주면 된다)`);
+  }
 }
