@@ -65,6 +65,7 @@ import {
   LOCKER_MAX_DAYS,
 } from "./lib/luggage-official";
 import LUGGAGE_CANDIDATES from "../src/data/luggage-candidates.json";
+import NEAREST_STATION from "../src/data/nearest-station.json";
 import {
   officialLinks,
   AIRPORT_LINKS,
@@ -307,6 +308,36 @@ function hubHreflang(path: string): string {
   );
 }
 
+/**
+ * 🚇 **가장 가까운 지하철역 한 줄.** (2026-09-10, 사장님 지시)
+ *
+ *   "가까운 지하철역 없으면 소비자가 알아야지 거긴 없구나
+ *    / 대부분 지하 타니 가까운 지하철"
+ *
+ * 이 자리라야 손님이 **「지금 역에서 맡기고 갈까, 가서 맡길까」**를 정할 수 있다.
+ * 홈 화면에 카드를 두면 아직 목적지를 안 정한 상태라 그 판단이 안 된다.
+ *
+ * 🚨 **역이 멀면 그것도 적는다.** 빈칸으로 두면 손님은 "이 앱이 모르는구나"로
+ *    읽지만, "여긴 역이 없습니다"라고 적으면 **미리 맡기고 오라는 답**이 된다.
+ * 🚨 「보관함이 **있습니다**」라고 하지 않는다 — 273역 / 약 340역이다.
+ *    「있을 수 있습니다」가 아는 것과 모르는 것의 경계다.
+ * ⚠️ 자료가 아직 없는 곳은 **조용히 아무것도 안 그린다** —
+ *    「역이 없다」와 「우리가 아직 안 알아봤다」는 다른 말이다.
+ */
+function stationHtml(id: string, lang: Language): string {
+  const rows = (NEAREST_STATION as { 곳: Record<string, { station?: string; dist?: number; none?: boolean }> }).곳;
+  const r = rows[id];
+  if (!r) return "";
+  const S2 = PAGE_STRINGS[lang];
+  if (r.none) return `<dt>${esc(S2.stationHeading)}</dt><dd>${esc(S2.stationNone)}</dd>`;
+  if (!r.station || r.dist == null) return "";
+  return (
+    `<dt>${esc(S2.stationHeading)}</dt>` +
+    `<dd>${esc(S2.stationLine(r.station, r.dist))}` +
+    `<br><span class="note">${esc(S2.stationLocker)}</span></dd>`
+  );
+}
+
 function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
   const slug = savedSlugs[p.id];
   const S = PAGE_STRINGS[lang];
@@ -469,6 +500,18 @@ ${
     : ""
 }
 ${p.officialUrl ? `<dt>${esc(S.official)}</dt><dd><a href="${esc(p.officialUrl)}" rel="nofollow noopener">${esc(new URL(p.officialUrl).hostname)}</a></dd>` : ""}
+${
+  // 🚇 **가장 가까운 지하철역** (2026-09-10, 사장님 지시).
+  //    "가까운 지하철역 없으면 소비자가 알아야지 거긴 없구나 / 대부분 지하 타니 가까운 지하철"
+  //
+  //    이 자리라야 손님이 **「지금 역에서 맡기고 갈까, 가서 맡길까」**를 정할 수 있다.
+  //    홈 화면에 카드를 두면 아직 목적지를 안 정한 상태라 그 판단이 안 된다.
+  //
+  //    🚨 **역이 멀면 그것도 적는다.** 빈칸으로 두면 손님은 "이 앱이 모르는구나"로
+  //       읽지만, "여긴 역이 없습니다"라고 적으면 **미리 맡기고 오라는 답**이 된다.
+  //    🚨 「보관함이 **있습니다**」라고 하지 않는다 — 273역 / 약 340역이다.
+  stationHtml(p.id, lang)
+}
 </dl>
 
 <div class="go">

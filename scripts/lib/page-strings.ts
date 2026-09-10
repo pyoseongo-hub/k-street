@@ -39,6 +39,24 @@ export interface PageStrings {
   openApp: string;
   /** 밥집으로 가는 단추 */
   eatIn: (gu: string) => string;
+
+  /**
+   * 🚇 가장 가까운 지하철역 (2026-09-10에 넣었다).
+   *
+   * 사장님: "가까운 지하철역 없으면 소비자가 알아야지 거긴 없구나
+   *         / 대부분 지하 타니 가까운 지하철"
+   *
+   * 🚨 **「보관함이 있습니다」라고 하지 않는다.** 또타라커는 273개 역인데
+   *    서울 지하철역은 약 340개다. 대부분 있지만 전부는 아니다.
+   *    「있을 수 있습니다」가 아는 것과 모르는 것의 경계다.
+   */
+  stationHeading: string;
+  /** 「성수역 2호선 · 350m」 */
+  stationLine: (station: string, metres: number) => string;
+  /** 역에 보관함이 있을 수 있다는 안내 */
+  stationLocker: string;
+  /** 🚨 역이 멀 때 — **빈칸이 아니라 답이다** */
+  stationNone: string;
   /** 맨 아래 두 줄 */
   footerAbout: string;
   footerData: string;
@@ -59,6 +77,10 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     everythingIn: (gu) => `${gu} 전체 보기`,
     openApp: "서울의 다른 곳 더 보기 →",
     eatIn: (gu) => `${gu} 주변 먹거리 →`,
+    stationHeading: "가장 가까운 지하철역",
+    stationLine: (st, m) => `${st} · ${m}m`,
+    stationLocker: "대부분의 역에 물품보관함(또타라커)이 있습니다. 현장에서 확인하세요.",
+    stationNone: "1.5km 안에 지하철역이 없습니다. 짐이 있으시면 오시기 전에 맡기고 오세요.",
     footerAbout: "K-Street — 서울 동네를 12개 언어로 안내합니다. 평생 무료, 가입 없음.",
     footerData: "자료: 한국관광공사. 사진: 한국관광공사(공공누리 제1유형).",
   },
@@ -76,6 +98,10 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     everythingIn: (gu) => `Everything in ${gu}`,
     openApp: "See more places in Seoul →",
     eatIn: (gu) => `Where to eat in ${gu} →`,
+    stationHeading: "Nearest subway station",
+    stationLine: (st, m) => `${st} · ${m} m away`,
+    stationLocker: "Most stations have coin lockers (T-Locker) — check on the spot.",
+    stationNone: "No subway station within 1.5 km. If you are carrying bags, leave them before you come.",
     footerAbout:
       "K-Street — a free, no-sign-up guide to Seoul's neighbourhoods in 12 languages.",
     footerData:
@@ -95,6 +121,10 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     everythingIn: (gu) => `${gu}をすべて見る`,
     openApp: "ソウルのほかの場所を見る →",
     eatIn: (gu) => `${gu}周辺のグルメ →`,
+    stationHeading: "いちばん近い地下鉄駅",
+    stationLine: (st, m) => `${st} ・ ${m}m`,
+    stationLocker: "多くの駅にコインロッカー（T-Locker）があります。現地でご確認ください。",
+    stationNone: "1.5km以内に地下鉄駅がありません。荷物がある場合は、来る前に預けておいてください。",
     footerAbout: "K-Street — ソウルの街を12言語で案内します。ずっと無料、登録不要。",
     footerData: "データ：韓国観光公社。写真：韓国観光公社（KOGL 第1類型）。",
   },
@@ -112,6 +142,10 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     everythingIn: (gu) => `查看${gu}全部`,
     openApp: "查看首尔更多地方 →",
     eatIn: (gu) => `${gu}附近美食 →`,
+    stationHeading: "最近的地铁站",
+    stationLine: (st, m) => `${st} · ${m} 米`,
+    stationLocker: "多数车站设有自助储物柜（T-Locker），请在现场确认。",
+    stationNone: "1.5 公里内没有地铁站。如果带着行李，请先寄存再过来。",
     footerAbout: "K-Street — 用12种语言介绍首尔的街区。永久免费，无需注册。",
     footerData: "地点数据：韩国观光公社。照片：韩国观光公社（KOGL 第1类型）。",
   },
@@ -129,6 +163,10 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     everythingIn: (gu) => `查看${gu}全部`,
     openApp: "查看首爾更多地方 →",
     eatIn: (gu) => `${gu}附近美食 →`,
+    stationHeading: "最近的地鐵站",
+    stationLine: (st, m) => `${st} · ${m} 公尺`,
+    stationLocker: "多數車站設有自助置物櫃（T-Locker），請在現場確認。",
+    stationNone: "1.5 公里內沒有地鐵站。如果帶著行李，請先寄放再過來。",
     footerAbout: "K-Street — 用12種語言介紹首爾的街區。永久免費，無需註冊。",
     footerData: "地點資料：韓國觀光公社。照片：韓國觀光公社（KOGL 第1類型）。",
   },
@@ -146,6 +184,10 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     everythingIn: (gu) => `Tất cả ở ${gu}`,
     openApp: "Xem thêm địa điểm ở Seoul →",
     eatIn: (gu) => `Quán ăn gần ${gu} →`,
+    stationHeading: "Ga tàu điện ngầm gần nhất",
+    stationLine: (st, m) => `${st} · cách ${m} m`,
+    stationLocker: "Phần lớn các ga có tủ khoá tự động (T-Locker) — hãy kiểm tra tại chỗ.",
+    stationNone: "Không có ga tàu điện ngầm trong vòng 1,5 km. Nếu mang hành lý, hãy gửi trước khi đến.",
     footerAbout:
       "K-Street — hướng dẫn các khu phố Seoul bằng 12 ngôn ngữ. Miễn phí mãi mãi, không cần đăng ký.",
     footerData:
@@ -165,6 +207,10 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     everythingIn: (gu) => `Todo en ${gu}`,
     openApp: "Ver más lugares de Seúl →",
     eatIn: (gu) => `Dónde comer en ${gu} →`,
+    stationHeading: "Estación de metro más cercana",
+    stationLine: (st, m) => `${st} · a ${m} m`,
+    stationLocker: "La mayoría de las estaciones tienen taquillas (T-Locker). Compruébelo allí.",
+    stationNone: "No hay estación de metro a menos de 1,5 km. Si lleva equipaje, déjelo antes de venir.",
     footerAbout:
       "K-Street — guía gratuita de los barrios de Seúl en 12 idiomas. Sin registro.",
     footerData:
@@ -184,6 +230,10 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     everythingIn: (gu) => `Tout à ${gu}`,
     openApp: "Voir plus de lieux à Séoul →",
     eatIn: (gu) => `Où manger à ${gu} →`,
+    stationHeading: "Station de métro la plus proche",
+    stationLine: (st, m) => `${st} · à ${m} m`,
+    stationLocker: "La plupart des stations ont des casiers (T-Locker). Vérifiez sur place.",
+    stationNone: "Pas de station de métro à moins de 1,5 km. Si vous avez des bagages, déposez-les avant de venir.",
     footerAbout:
       "K-Street — guide gratuit des quartiers de Séoul en 12 langues. Sans inscription.",
     footerData:
@@ -203,6 +253,10 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     everythingIn: (gu) => `Alles in ${gu}`,
     openApp: "Mehr Orte in Seoul ansehen →",
     eatIn: (gu) => `Essen in ${gu} →`,
+    stationHeading: "Nächste U-Bahn-Station",
+    stationLine: (st, m) => `${st} · ${m} m entfernt`,
+    stationLocker: "Die meisten Stationen haben Schließfächer (T-Locker). Prüfen Sie es vor Ort.",
+    stationNone: "Keine U-Bahn-Station im Umkreis von 1,5 km. Mit Gepäck: geben Sie es ab, bevor Sie herkommen.",
     footerAbout:
       "K-Street — kostenloser Führer durch Seouls Viertel in 12 Sprachen. Ohne Anmeldung.",
     footerData:
@@ -222,6 +276,10 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     everythingIn: (gu) => `Всё в ${gu}`,
     openApp: "Больше мест в Сеуле →",
     eatIn: (gu) => `Где поесть в ${gu} →`,
+    stationHeading: "Ближайшая станция метро",
+    stationLine: (st, m) => `${st} · ${m} м`,
+    stationLocker: "На большинстве станций есть камеры хранения (T-Locker) — уточните на месте.",
+    stationNone: "Станции метро нет в радиусе 1,5 км. Если у вас багаж, сдайте его заранее.",
     footerAbout:
       "K-Street — бесплатный гид по районам Сеула на 12 языках. Без регистрации.",
     footerData:
@@ -241,6 +299,10 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     everythingIn: (gu) => `Semua di ${gu}`,
     openApp: "Lihat tempat lain di Seoul →",
     eatIn: (gu) => `Tempat makan di ${gu} →`,
+    stationHeading: "Stasiun kereta bawah tanah terdekat",
+    stationLine: (st, m) => `${st} · ${m} m`,
+    stationLocker: "Sebagian besar stasiun punya loker (T-Locker) — periksa di tempat.",
+    stationNone: "Tidak ada stasiun dalam radius 1,5 km. Jika membawa barang, titipkan dulu sebelum datang.",
     footerAbout:
       "K-Street — panduan gratis lingkungan Seoul dalam 12 bahasa. Tanpa pendaftaran.",
     footerData:
@@ -260,6 +322,10 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     everythingIn: (gu) => `ทั้งหมดใน ${gu}`,
     openApp: "ดูสถานที่อื่นในโซล →",
     eatIn: (gu) => `ร้านอาหารใน ${gu} →`,
+    stationHeading: "สถานีรถไฟใต้ดินที่ใกล้ที่สุด",
+    stationLine: (st, m) => `${st} · ห่าง ${m} ม.`,
+    stationLocker: "สถานีส่วนใหญ่มีตู้ล็อกเกอร์ (T-Locker) กรุณาตรวจสอบที่สถานี",
+    stationNone: "ไม่มีสถานีรถไฟใต้ดินในระยะ 1.5 กม. หากมีสัมภาระ กรุณาฝากไว้ก่อนเดินทางมา",
     footerAbout:
       "K-Street — คู่มือย่านต่าง ๆ ในโซล 12 ภาษา ฟรีตลอดไป ไม่ต้องสมัคร",
     footerData:
