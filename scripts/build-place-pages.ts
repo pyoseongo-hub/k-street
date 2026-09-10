@@ -40,6 +40,15 @@ import { eatNearbyUrl } from "../src/lib/partnerLinks";
 // 🗓️ 이름에 지난 연도가 박힌 행사(「2025 서울한옥위크」)를 가려내는 잣대.
 //    앱과 이 생성기가 **같은 함수**를 쓴다 — 잣대가 둘이면 한쪽만 고치게 된다.
 import { pastEditionYear } from "../src/lib/pastEdition";
+// 🧳 짐 보관 안내 (2026-09-10). 글은 luggage-strings, 링크는 luggage-links 에 있다 —
+//    링크는 **전부 러너에서 두드려 본 것만** 들어 있다.
+import { LUGGAGE_STRINGS } from "./lib/luggage-strings";
+import {
+  officialLinks,
+  AIRPORT_LINKS,
+  BOOKED_SERVICES,
+  LINKS_CHECKED,
+} from "./lib/luggage-links";
 // 🌏 12개 언어. 곳 이름·메모는 place-translations.json 에서(translateText),
 //    틀에 박히는 낱말은 여기서 온다(scripts/lib/page-strings.ts).
 import { getTranslations, type Language } from "../src/lib/translations";
@@ -188,7 +197,18 @@ const CSS = `
 :root{--bg:#faf9f7;--card:#fff;--ink:#17150f;--muted:#6b6559;--line:#e4dfd4;--accent:#c1502e}
 @media(prefers-color-scheme:dark){:root{--bg:#111311;--card:#1a1c1a;--ink:#eceae4;--muted:#9b968c;--line:#2c2f2c;--accent:#e8815c}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;word-break:keep-all}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;word-break:keep-all;overflow-wrap:break-word}
+/* ⚠️ keep-all 은 **한국어 전용**이다. 한국어는 띄어쓰기가 있어서 낱말이 안 쪼개지는 게 예쁘지만,
+   일본어·중국어는 띄어쓰기가 없어 keep-all 을 걸면 **한 문장이 통째로 한 낱말**이 된다.
+   2026-09-10에 일본어 짐 보관 안내가 폰 폭(390px)에서 **215px 가로로 넘쳤다.**
+   글자가 화면 밖으로 나가서 손님이 옆으로 밀어야 읽혔다. lang 을 보고 갈라 준다.
+
+   💡 **둘 중 하나만 있어도 안 넘친다** (재 봤다 — scripts/check-phone-width.mjs):
+     · word-break:normal        — 제대로 된 고침. 일본어·중국어를 글자 사이에서 접는다
+     · overflow-wrap:break-word — 그물. 다른 언어의 긴 주소처럼 접을 자리가
+       없는 것이 나와도 화면 밖으로는 안 나간다
+   그물만 믿지 않는다. 그물은 "안 넘치게"만 하지 **읽기 좋게** 하지는 않는다. */
+html[lang^="ja"] body,html[lang^="zh"] body{word-break:normal}
 .wrap{max-width:640px;margin:0 auto;padding:22px 18px 60px}
 a{color:var(--accent)}
 header a{display:inline-flex;gap:8px;align-items:center;font-weight:700;text-decoration:none;color:var(--ink);font-size:15px}
@@ -558,6 +578,12 @@ function hubPage(o: {
   /** 🍚 밥집 쪽으로 잇는 한 줄. 주소가 없으면(아직 안 켰거나 빈 동네) 안 그린다. */
   eat?: { href: string; label: string } | null;
   lang?: Language;
+  /**
+   * 🧳 목록이 아닌 **글**이 들어가는 자리 (짐 보관 안내가 쓴다).
+   *    틀(머리·꼬리·hreflang·빵가루)을 두 벌로 만들지 않으려고 여기로 받는다 —
+   *    두 벌이 되면 한쪽만 고쳐 놓고 다른 쪽이 옛 모습으로 남는다.
+   */
+  extraHtml?: string;
 }): string {
   const lang = o.lang ?? "en";
   const S = HUB_STRINGS[lang] as HubStrings;
@@ -630,6 +656,8 @@ ${hubHreflang(o.path)}
 <h1>${esc(o.h1)}</h1>
 <p class="note">${esc(o.lead)}</p>
 <p class="crumbs"><a href="/${langPath(lang, "seoul/")}">${esc(S.allOfSeoul)}</a> · <a href="/">${esc(S.openTheApp)}</a></p>
+
+${o.extraHtml ?? ""}
 
 ${body}
 
@@ -857,6 +885,73 @@ hubs.push({
     ],
   }),
 });
+
+// ── 🧳 짐 보관 안내 ──────────────────────────────────────────────────────
+//
+// 사장님 지시가 세 번에 걸쳐 좁혀졌다(2026-09-10):
+//   ① "간단한 안내만으로도 좋을거 같아"           → 목록·가격표·필터를 안 만든다
+//   ② "결제나 그런거에 우리가 관여하여서는 안되"   → 예약·결제에 끼지 않는다
+//   ③ "사설 안내까지는 하고 안내문 넣어"           → 사설도 적되 안내문을 붙인다
+//
+// 🚨 **가격과 운영시간은 한 글자도 안 적는다.** 값이 틀린 식당은 다른 데 가면 되지만,
+//    닫힌 보관소 앞에 선 사람은 **캐리어를 끌고 오도 가도 못한다.**
+//    대신 「맡기기 전에 물어볼 것」을 준다 — 우리가 모르는 사실을 지어내지 않으면서
+//    외국인에게 실제로 쓸모 있는 유일한 방식이다.
+{
+  const L = LUGGAGE_STRINGS[lang];
+  const item = (name: string, desc: string) =>
+    `<li><strong>${esc(name)}</strong><span class="meta">${esc(desc)}</span></li>`;
+  const linkList = (links: { label: string; url: string }[]) =>
+    `<ul class="chips">${links
+      .map((l) => `<li><a href="${esc(l.url)}" rel="nofollow noopener" target="_blank">${esc(l.label)} ↗</a></li>`)
+      .join("")}</ul>`;
+
+  const extraHtml = [
+    `<h2>${esc(L.kindsHeading)}</h2>`,
+    `<ul>`,
+    item(L.lockerName, L.lockerDesc),
+    item(L.centreName, L.centreDesc),
+    item(L.bookedName, L.bookedDesc),
+    `</ul>`,
+    `<h2>${esc(L.checkHeading)}</h2>`,
+    `<ul>`,
+    [L.check1, L.check2, L.check3, L.check4].map((c) => `<li>${esc(c)}</li>`).join(""),
+    `</ul>`,
+    // ⚠️ 값을 안 적는 이유를 손님에게도 말해 준다. 안 적은 것이 게으름이 아니라
+    //    **일부러 그런 것**임을 알아야 손님이 우리를 믿는다.
+    `<p class="note"><strong>${esc(L.noPrices)}</strong></p>`,
+    `<h2>${esc(L.officialHeading)}</h2>`,
+    linkList([...officialLinks(lang), ...AIRPORT_LINKS]),
+    `<h2>${esc(L.bookedHeading)}</h2>`,
+    linkList(BOOKED_SERVICES),
+    // 🚨 이 페이지에서 **가장 중요한 글**이다. 사설을 적는 순간 손님은 우리가
+    //    확인했다고 믿는다 — 확인 안 했다는 것을 바로 아래에서 분명히 말한다.
+    `<p class="note">${esc(L.bookedNotice)}</p>`,
+    `<p class="note">${esc(L.lastChecked)}: ${esc(LINKS_CHECKED)}</p>`,
+    `<h2>${esc(L.afterHeading)}</h2>`,
+    `<p class="note">${esc(L.afterLead)}</p>`,
+  ].join("\n");
+
+  hubs.push({
+    path: "seoul/luggage",
+    lang,
+    html: hubPage({
+      lang,
+      path: "seoul/luggage",
+      kind: S.index,
+      h1: L.h1,
+      title: L.title,
+      lead: L.lead,
+      desc: clip(L.desc),
+      groups: [],
+      extraHtml,
+      // 짐을 맡겼으면 걸으러 간다 — 이미 있는 구 페이지로 보낸다.
+      chipsTitle: S.byDistrictChips,
+      chips: guChips,
+    }),
+  });
+}
+
 } // ← 언어 되돌이 끝
 
 for (const h of hubs) {

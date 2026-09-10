@@ -87,6 +87,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setLanguageState(detectLanguage(prefs.filter(Boolean)));
   }, []);
 
+  // 🏷️ <html lang> 을 지금 보는 말에 맞춰 준다. 여태 index.html 의 "en" 이
+  //    그대로 남아 있었다 — 일본어로 읽고 있어도 브라우저는 영어인 줄 알았다.
+  //    두 가지가 걸려 있다:
+  //      · 화면 낭독기가 일본어를 영어 발음으로 읽는다
+  //      · CSS 가 언어를 못 봐서 word-break 를 갈라 줄 수 없다
+  //        (keep-all 은 띄어쓰기가 있는 한국어 전용 — 아래 index.css 주석 참고)
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     try {

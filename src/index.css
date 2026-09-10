@@ -2310,3 +2310,20 @@ button {
   color: var(--muted);
   border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
 }
+
+/* ⚠️ **keep-all 은 한국어 전용이다** (2026-09-10에 실제로 넘치는 것을 보고 넣었다).
+   이 파일에는 `word-break: keep-all` 이 일곱 군데 있다. 한국어에서는 맞다 —
+   띄어쓰기가 있어서 "겨/울"처럼 낱말 중간이 쪼개지는 것을 막아 준다.
+
+   그런데 **일본어·중국어에는 띄어쓰기가 없다.** keep-all 을 걸면 브라우저가
+   한 문장을 통째로 한 낱말로 보고 **줄바꿈 자리를 하나도 안 만든다.**
+   폰 폭 390px에서 일본어 안내문이 **215px 가로로 넘쳤다** — 손님이 옆으로
+   밀어야 읽혔다. 한국어로만 확인하면 절대 안 보이는 자리다.
+
+   <html lang> 은 useLanguage.tsx 가 언어를 바꿀 때마다 맞춰 준다.
+   overflow-wrap 은 건드리지 않으므로 hex-tile 의 `anywhere`(긴 로마자 표기를
+   중간에서라도 접는 것)는 그대로 살아 있다. */
+html[lang^="ja"] *,
+html[lang^="zh"] * {
+  word-break: normal;
+}
