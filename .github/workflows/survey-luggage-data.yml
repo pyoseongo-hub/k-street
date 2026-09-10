@@ -1,0 +1,35 @@
+name: Survey luggage data (짐 보관 자료가 있나)
+
+# 🧳 짐 보관 **위치** 자료가 세상에 있는지 훑어본다.
+#    이 저장소를 만드는 세션은 바깥 인터넷이 막혀 있다. 러너는 나갈 수 있다.
+#
+# ⚠️ 아무것도 커밋하지 않는다. 보기만 하는 실행이다.
+#    결과는 실행 페이지 아래 **Summary** 에 그대로 나온다.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  survey:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 자료 훑기
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/survey-luggage-data.mjs 2>&1 | tee survey-log.txt
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🧳 짐 보관 자료 훑기"
+            echo ""
+            echo '```'
+            cat survey-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
