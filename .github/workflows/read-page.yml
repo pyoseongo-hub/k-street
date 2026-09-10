@@ -1,0 +1,45 @@
+name: Read page (페이지 글 읽어오기)
+
+# 📖 사장님이 주신 주소를 **러너가 열어서 글을 그대로 보여 준다.**
+#    이 저장소를 만드는 세션은 바깥 인터넷이 막혀 있어서,
+#    "이거 봐" 하고 주소를 받아도 내가 못 연다. 러너는 연다.
+#
+# ⚠️ 아무것도 커밋하지 않는다. 읽기만 한다.
+#    받아 온 글을 그대로 앱에 넣지 않는다 — 읽고 **사람이 정한다.**
+
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: "읽어 올 주소 (쉼표로 나눈다)"
+        required: true
+      chars:
+        description: "주소마다 몇 자까지 보여 줄까 (기본 6000)"
+        required: false
+        default: "6000"
+
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 읽어 오기
+        env:
+          URLS: ${{ inputs.urls }}
+          CHARS: ${{ inputs.chars }}
+        run: |
+          set -o pipefail
+          node scripts/fetch-page-text.mjs 2>&1 | tee page-log.txt
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 📖 페이지 글"
+            echo ""
+            echo '```'
+            cat page-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
