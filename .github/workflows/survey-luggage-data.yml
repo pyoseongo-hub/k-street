@@ -26,6 +26,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+      - run: npm ci
       - name: 자료 훑기
         env:
           TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
@@ -33,6 +35,15 @@ jobs:
         run: |
           set -o pipefail
           OUT_JSON=src/data/luggage-candidates.json node scripts/survey-luggage-data.mjs 2>&1 | tee survey-log.txt
+      # 🚨 **커밋하기 전에 사이트가 그래도 만들어지나 본다.**
+      #    골라 둔 12곳(scripts/lib/luggage-picks.ts)의 상호를 이 파일에서 찾아
+      #    쓰는데, 카카오에서 한 곳이라도 이름이 바뀌거나 사라지면 **페이지 만들기가
+      #    멈춘다.** 그대로 커밋하면 그 다음 배포가 깨진다 —
+      #    자료를 새로 받는 일이 사이트를 내리는 일이 되면 안 된다.
+      - name: 새 자료로도 사이트가 만들어지나
+        run: |
+          npm run build
+          npm run place-pages
       # 찾은 것을 저장소에 남긴다. **고르는 것은 사람이 한다** — 이 파일은
       # 후보 목록일 뿐 그대로 화면에 나가지 않는다.
       - name: 후보 목록 커밋

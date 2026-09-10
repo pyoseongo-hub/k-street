@@ -68,12 +68,31 @@ if (!KAKAO) {
   process.exit(1);
 }
 
-// 손님이 실제로 가는 곳부터. 25개 구를 다 하지 않는다 — 사장님 말씀대로
+// 손님이 실제로 가는 곳. 25개 구를 다 하지 않는다 — 사장님 말씀대로
 // "25개구 정도는 아녀도" 사람이 몰리는 데를 제대로 하는 게 먼저다.
-const SPOTS = ["명동역", "홍대입구역", "강남역", "경복궁역", "서울역"];
+//
+// 2026-09-10 2차 확장: 다섯 곳 → 열여섯 곳.
+// 첫 다섯 곳에서 강남·경복궁이 통째로 빠졌는데(월세 창고밖에 없었다),
+// 그게 **그 동네에 없어서인지 내가 좁게 봐서인지** 알 수가 없었다. 넓혀서 본다.
+const SPOTS = [
+  // 이미 올린 곳
+  "명동역", "홍대입구역", "서울역",
+  // 빠진 곳 — 다시 본다
+  "강남역", "경복궁역",
+  // 새로 보는 곳 (손님이 실제로 가는 데)
+  "이태원역", "안국역", "동대문역사문화공원역", "잠실역", "신촌역",
+  "광화문역", "성수역", "압구정로데오역", "여의도역", "김포공항역", "건대입구역",
+];
 
 // 카카오에 뭐라고 물어야 보관함이 나오나 — 말을 여러 개 던져 본다.
-const TERMS = ["물품보관함", "짐보관", "코인락커", "무인보관함"];
+const TERMS = ["물품보관함", "짐보관", "코인락커", "무인보관함", "러기지", "luggage storage"];
+
+// 🚨 **월세 창고를 걸러낼 근거를 같이 모은다.**
+//    1차에서 「짐프리」(여행자용)와 「박스풀 공유창고」(월세)가 카카오에서
+//    **똑같이 「서비스,산업 > 보관,저장」**이었다. 업종으로는 못 가른다.
+//    그래서 반대쪽 말로도 찾아 보고, **거기 걸린 곳에 표를 달아 둔다.**
+//    표가 달렸다고 자동으로 빼지 않는다 — 사람이 볼 때 쓰는 단서다.
+const NEGATIVE_TERMS = ["셀프스토리지", "공유창고", "개인창고"];
 
 console.log("═══ 카카오 지역검색으로 짐 보관 자리를 찾는다 ═══");
 console.log("⚠️ 좌표는 내 기억이 아니라 카카오가 준 것을 쓴다.\n");
@@ -93,14 +112,22 @@ for (const spot of SPOTS) {
   console.log(`\n■ ${spot}  →  ${a.place_name} · ${a.address_name}`);
   const seen = new Set(); // 같은 곳이 여러 검색어로 겹쳐 나온다 — 한 번만 적는다
 
+  // 먼저 **반대쪽 말**로 찾아 표를 만든다. 여기 걸린 곳은 월세 창고일 수 있다.
+  const suspect = new Set();
+  for (const term of NEGATIVE_TERMS) {
+    const r = await kakao("search/keyword.json", { query: term, x: a.x, y: a.y, radius: 900, size: 15, sort: "distance" });
+    if (r.ok) for (const d of r.docs) suspect.add(d.id);
+  }
+  if (suspect.size) console.log(`   (창고쪽 말로 먼저 걸린 곳 ${suspect.size}개 — 아래에 ⚠️ 로 표시한다)`);
+
   // ② 그 둘레 700m 안에서 보관함을 찾는다
   for (const term of TERMS) {
     const r = await kakao("search/keyword.json", {
       query: term,
       x: a.x,
       y: a.y,
-      radius: 700,
-      size: 8,
+      radius: 800,
+      size: 15,
       sort: "distance",
     });
     if (!r.got) {
@@ -133,12 +160,15 @@ for (const spot of SPOTS) {
         road: d.road_address_name || "",
         phone: d.phone || "",
         distance: Number(d.distance),
+        // ⚠️ 「셀프스토리지·공유창고·개인창고」로도 걸린 곳. 월세 창고일 수 있다.
+        //    자동으로 빼지 않는다 — 사람이 고를 때 쓰는 단서다.
+        창고쪽: suspect.has(d.id),
         x: d.x,
         y: d.y,
         url: d.place_url,
       });
       console.log(
-        `      · ${d.place_name}  (${d.distance}m)\n` +
+        `      · ${d.place_name}  (${d.distance}m)${suspect.has(d.id) ? "  ⚠️창고쪽" : ""}\n` +
           `        업종: ${d.category_name}\n` +
           `        지번: ${d.address_name}\n` +
           `        도로명: ${d.road_address_name || "(없음)"}${d.phone ? ` · ☎ ${d.phone}` : ""}\n` +
