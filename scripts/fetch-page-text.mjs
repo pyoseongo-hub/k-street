@@ -124,7 +124,9 @@ for (const url of URLS) {
       while ((i = text.indexOf(kw, i + 1)) !== -1 && hit < 12) {
         hit++;
         console.log(`\n──── 「${kw}」 둘레 ────`);
-        console.log(text.slice(Math.max(0, i - 200), i + LIMIT));
+        // 찾는 말 **앞**에 있는 표를 봐야 할 때가 있다 (지점표가 요금표 앞에 있었다).
+        const BEFORE = Number(process.env.BEFORE ?? 200);
+        console.log(text.slice(Math.max(0, i - BEFORE), i + LIMIT));
         break; // 같은 말은 첫 자리만
       }
     }

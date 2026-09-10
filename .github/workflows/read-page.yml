@@ -17,6 +17,10 @@ on:
         description: "주소마다 몇 자까지 보여 줄까 (기본 6000)"
         required: false
         default: "6000"
+      before:
+        description: "찾는 말 **앞쪽**을 몇 자까지 보여 줄까 (기본 200). 표가 그 말 앞에 있을 때 쓴다"
+        required: false
+        default: "200"
       find:
         description: "찾는 말 (쉼표로 나눈다). 주면 그 말 둘레만 보여 준다 — 공공기관 페이지는 앞이 전부 메뉴라 이게 필요하다"
         required: false
@@ -35,6 +39,7 @@ jobs:
           URLS: ${{ inputs.urls }}
           CHARS: ${{ inputs.chars }}
           FIND: ${{ inputs.find }}
+          BEFORE: ${{ inputs.before }}
         run: |
           set -o pipefail
           node scripts/fetch-page-text.mjs 2>&1 | tee page-log.txt
