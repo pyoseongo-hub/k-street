@@ -123,6 +123,30 @@ for (const url of URLS) {
       console.log("");
     }
   }
+  // 🧲 **원문에서 곧바로 캐낸다.** 위 링크 뽑기는 「글자 30자 이하」인 것만 줍는다 —
+  //    구글 플레이 검색 첫 결과는 제목·회사·설명이 **한 링크 안에** 들어 있어 걸러졌다.
+  //    주소(패키지 id)처럼 **글이 아니라 표시에 숨은 것**은 이걸로 캔다.
+  if (process.env.GREP) {
+    let re;
+    try {
+      re = new RegExp(process.env.GREP, "gi");
+    } catch (e) {
+      console.log(`❌ GREP 가 정규식이 아니다: ${e.message}`);
+      re = null;
+    }
+    if (re) {
+      const hits = [...new Set([...r.html.matchAll(re)].map((m) => m[0]))];
+      if (hits.length) {
+        console.log(`🧲 「${process.env.GREP}」 에 걸린 것 ${hits.length}가지 (앞에서부터 나온 차례):`);
+        for (const h of hits.slice(0, 40)) console.log(`   · ${h}`);
+        console.log("");
+      } else {
+        // 🚨 **없는 것과 못 받은 것을 가른다.** 이 저장소가 여러 번 데인 자리다.
+        console.log(`⚠️ 「${process.env.GREP}」 에 걸린 것이 없다 — 다만 원문 ${r.html.length.toLocaleString()}자는 받았다.\n`);
+      }
+    }
+  }
+
   const text = toText(r.html);
 
   // 🔎 **찾는 말 근처만** 뽑는다. 공공기관 페이지는 앞이 전부 사이트 메뉴라
