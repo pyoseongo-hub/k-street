@@ -234,6 +234,41 @@ async function main() {
     console.log("   정말 줄이려는 것이면 --force 를 붙여 다시 실행할 것.");
     process.exit(1);
   }
+  // 🔍 **무엇이 달라지나** (2026-09-10).
+  //
+  //    전에는 맛보기가 「269곳 → 260곳」처럼 **숫자만** 알려 줬다. 그런데 정작
+  //    알아야 할 것은 **어느 곳이 사라지고 어느 곳이 새로 오나**다.
+  //    관광공사는 끝난 축제를 내리므로, 그대로 덮어쓰면 **지금 살아 있는
+  //    페이지가 사라진다** — 이미 구글에 들어간 주소들이다.
+  //    20% 문턱만으로는 못 막는다(9곳이 줄어도 3%라 그냥 통과한다).
+  const idMap = (obj) => {
+    const m = new Map();
+    for (const [cat, list] of Object.entries(obj ?? {}))
+      for (const it of Array.isArray(list) ? list : [])
+        if (it?.contentId) m.set(String(it.contentId), { name: it.name, cat });
+    return m;
+  };
+  let prevRaw = {};
+  try {
+    prevRaw = JSON.parse(readFileSync(OUT_JSON, "utf-8"));
+  } catch {
+    /* 처음 만드는 경우 */
+  }
+  const before = idMap(prevRaw);
+  const after = idMap(result);
+  const gone = [...before].filter(([id]) => !after.has(id));
+  const fresh = [...after].filter(([id]) => !before.has(id));
+
+  console.log(`\n🔍 무엇이 달라지나 — 사라짐 ${gone.length}곳 · 새로 옴 ${fresh.length}곳`);
+  if (gone.length) {
+    console.log("   ❌ 사라지는 곳 (덮어쓰면 앱·검색에서 없어진다)");
+    for (const [id, v] of gone) console.log(`        ${v.cat.padEnd(9)} ${v.name}  (tour_${id})`);
+  }
+  if (fresh.length) {
+    console.log("   ✨ 새로 오는 곳");
+    for (const [id, v] of fresh) console.log(`        ${v.cat.padEnd(9)} ${v.name}  (tour_${id})`);
+  }
+
   if (!APPLY) {
     console.log(`\n👀 맛보기만 했다 — 저장하지 않았다(지금 ${prevCount}곳 → 받은 것 ${newCount}곳).`);
     console.log("   저장하려면 --apply 를 붙일 것.");
