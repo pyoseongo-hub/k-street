@@ -13,6 +13,14 @@ name: Fetch festival dates (축제 날짜 받기)
 
 on:
   workflow_dispatch:
+    inputs:
+      notify_now:
+        # 🧪 알림은 월요일에만 도는데, 그러면 **월요일이 될 때까지 그 부분이
+        #    검증 안 된 채로 남는다.** 안 돌려 본 길은 안 도는 길이다.
+        #    이 스위치로 아무 날에나 한 번 확인한다.
+        description: "오늘이 월요일이 아니어도 알림(이슈)을 올려 볼까요? (시험용)"
+        type: boolean
+        default: false
   # 🚨 하루 한 번 저절로 돈다 (2026-09-02 사용자 지시: "축제는 자주 서치").
   #
   # 2026-09-01 첫 실행에서 9~12월 57곳만 잡혔다 — 관광공사 축제 창구는 이미 끝난
@@ -78,7 +86,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -e
-          [ "$(date -u +%u)" = "1" ] || { echo "월요일이 아니라 건너뛴다"; exit 0; }
+          if [ "$(date -u +%u)" != "1" ] && [ "${{ inputs.notify_now }}" != "true" ]; then
+            echo "월요일이 아니라 건너뛴다"; exit 0
+          fi
           PAST=$(grep -oE '^ *[0-9]+곳  ① ' freshness-log.txt | grep -oE '[0-9]+' | head -1 || echo 0)
           STALE=$(grep -oE '^ *[0-9]+곳  ② ' freshness-log.txt | grep -oE '[0-9]+' | head -1 || echo 0)
           echo "① $PAST 곳 · ② $STALE 곳"
