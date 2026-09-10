@@ -42,14 +42,23 @@ jobs:
         run: |
           set -o pipefail
           node scripts/find-nearest-station.mjs ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee station-log.txt
+      # 🧳 또타러기지 6곳의 **역 좌표**. 「가까운 또타러기지가 있나」를 답하려면 필요하다.
+      #    여섯 번 부르고 끝이라 같은 판에서 함께 돌린다.
+      - name: 또타러기지 좌표 받기
+        env:
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
+        run: |
+          set -o pipefail
+          npx vite build --ssr scripts/lib/luggage-official.ts --outDir dist-ssr
+          node scripts/find-luggage-branches.mjs ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee branch-log.txt
       - name: 반영한 것 커밋
         if: ${{ inputs.apply }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/nearest-station.json
+          git add src/data/nearest-station.json src/data/luggage-branches.json
           git diff --cached --quiet && echo "바뀐 게 없다" || {
-            git commit -m "곳마다 가까운 지하철역을 새로 받는다 (카카오)"
+            git commit -m "가까운 역·또타러기지 좌표를 새로 받는다 (카카오)"
             git push
           }
       - name: 결과 요약
