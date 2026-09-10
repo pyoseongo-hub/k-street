@@ -14,8 +14,15 @@
 //  다른 물건이다. 이쪽은 **아직 자료에 안 넣은 후보**를 재 보는 자리다.)
 //
 //   node scripts/check-guide-links.mjs
+//
+// 📌 **다른 주소를 두드려 보고 싶으면** URLS 에 넣는다(쉼표나 줄바꿈으로 나눈다).
+//    Actions 의 「Check guide links」 입력칸이 그대로 이 자리로 들어온다.
+//    우리 페이지가 진짜 올라갔는지 확인할 때도 쓴다 — **배포가 성공했다는 것과
+//    주소가 열린다는 것은 다른 이야기**다(그 사이에 Pages·도메인·서비스워커가 있다).
+//
+//   URLS="https://korea-street.com/ja/seoul/luggage/" node scripts/check-guide-links.mjs
 
-const CANDIDATES = [
+const DEFAULT_CANDIDATES = [
   // ── 공공·공식 ────────────────────────────────────────────────────────
   ["서울교통공사", "https://www.seoulmetro.co.kr/"],
   ["티라커 (지하철 물품보관함)", "https://www.t-locker.co.kr/"],
@@ -34,6 +41,14 @@ const CANDIDATES = [
   ["Radical Storage", "https://radicalstorage.com/"],
   ["Bounce", "https://usebounce.com/"],
 ];
+
+// 준 게 있으면 그것만 본다. 없으면 위 후보를 본다.
+const FROM_ENV = (process.env.URLS ?? "")
+  .split(/[\s,]+/)
+  .map((t) => t.trim())
+  .filter(Boolean)
+  .map((url) => [url.replace(/^https?:\/\//, ""), url]);
+const CANDIDATES = FROM_ENV.length ? FROM_ENV : DEFAULT_CANDIDATES;
 
 let ok = 0;
 let bad = 0;

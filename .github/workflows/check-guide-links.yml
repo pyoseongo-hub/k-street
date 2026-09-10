@@ -8,6 +8,11 @@ name: Check guide links (안내에 넣을 링크가 열리나)
 
 on:
   workflow_dispatch:
+    inputs:
+      urls:
+        description: "두드려 볼 주소 (쉼표로 나눈다). 비우면 스크립트에 적힌 후보를 본다"
+        required: false
+        default: ""
 
 jobs:
   check:
@@ -18,6 +23,8 @@ jobs:
         with:
           node-version: 22
       - name: 링크 확인
+        env:
+          URLS: ${{ inputs.urls }}
         run: |
           set -o pipefail
           node scripts/check-guide-links.mjs 2>&1 | tee links-log.txt
