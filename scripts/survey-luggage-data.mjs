@@ -85,6 +85,7 @@ for (const spot of SPOTS) {
   }
   const a = anchor.docs[0];
   console.log(`\n■ ${spot}  →  ${a.place_name} · ${a.address_name}`);
+  const seen = new Set(); // 같은 곳이 여러 검색어로 겹쳐 나온다 — 한 번만 적는다
 
   // ② 그 둘레 700m 안에서 보관함을 찾는다
   for (const term of TERMS) {
@@ -109,12 +110,21 @@ for (const spot of SPOTS) {
       continue;
     }
     console.log(`   ⟨${term}⟩ ${r.docs.length}곳`);
-    for (const d of r.docs)
+    for (const d of r.docs) {
+      if (seen.has(d.id)) continue; // 말만 바꿔 다시 나온 같은 곳
+      seen.add(d.id);
+      // 🚨 **업종을 반드시 같이 본다.** 3차에서 「다락」·「박스풀」이 잡혔는데
+      //    그건 **월세 창고**지 여행자가 몇 시간 맡기는 데가 아니다.
+      //    「아트래블 명동서울호스텔」은 호스텔이었다.
+      //    상호만 보고 넣으면 손님이 캐리어를 끌고 월세 창고 문 앞에 선다.
       console.log(
         `      · ${d.place_name}  (${d.distance}m)\n` +
+          `        업종: ${d.category_name}\n` +
           `        지번: ${d.address_name}\n` +
-          `        도로명: ${d.road_address_name || "(없음)"}${d.phone ? ` · ☎ ${d.phone}` : ""}`,
+          `        도로명: ${d.road_address_name || "(없음)"}${d.phone ? ` · ☎ ${d.phone}` : ""}\n` +
+          `        카카오: ${d.place_url}`,
       );
+    }
   }
 }
 
