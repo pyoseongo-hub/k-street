@@ -1,0 +1,64 @@
+name: Nearest station (곳마다 가까운 지하철역)
+
+# 🚇 곳마다 **가장 가까운 지하철역**을 찾아 둔다.
+#
+# 사장님(2026-09-10): "가까운 지하철역 없으면 소비자가 알아야지 거긴 없구나
+#                     / 대부분 지하 타니 가까운 지하철"
+#
+# 또타라커가 273개 역에 있으므로 역을 알면 보관함은 거의 따라온다.
+# 그리고 **역이 멀면 「여긴 없구나」를 아는 것 자체가 쓸모**다 — 빈칸이 아니라 답이다.
+#
+# ⚠️ 여기서 아는 것은 **역과 거리**뿐이다. 그 역에 보관함이 있는지는 모른다.
+#    화면에서 "있습니다"라고 말하지 않는다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "파일에 반영할까 (끄면 숫자만 본다)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  find:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: 좌표 모으기
+        run: |
+          npx vite build --ssr scripts/dump-place-coords.ts --outDir dist-ssr
+          node dist-ssr/dump-place-coords.js
+      - name: 가까운 역 찾기
+        env:
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/find-nearest-station.mjs ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee station-log.txt
+      - name: 반영한 것 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/nearest-station.json
+          git diff --cached --quiet && echo "바뀐 게 없다" || {
+            git commit -m "곳마다 가까운 지하철역을 새로 받는다 (카카오)"
+            git push
+          }
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🚇 가까운 지하철역"
+            echo ""
+            echo '```'
+            tail -20 station-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
