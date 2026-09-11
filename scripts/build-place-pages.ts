@@ -91,6 +91,26 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
 const SITE = "https://korea-street.com";
 
+/**
+ * 🖼️ **검색 결과에 사진을 크게 띄우라고 허락하는 줄** (2026-09-11).
+ *
+ * 이 줄이 없으면 구글은 사진을 **엄지손톱만 하게** 띄우거나 아예 안 띄운다.
+ * 기본값이 그렇다 — 허락한 적이 없으니 조심스럽게 구는 것이다.
+ * 4,225장에 사진을 붙여 놓고 **그 사진을 보여 줄 허락을 안 해 둔 상태**였다.
+ *
+ * · `max-image-preview:large` — 큰 사진을 허락한다. **구글 디스커버**(안드로이드
+ *   크롬 첫 화면에 뜨는 추천 글)는 큰 사진이 없으면 아예 후보에 안 넣는다.
+ *   손님이 「서울 축제」를 검색하지 않아도 우리 글이 먼저 찾아갈 수 있는 유일한 길이다.
+ * · `max-snippet:-1` — 설명 글의 길이 제한을 푼다. 우리 설명은 짧아서 잘릴 일이
+ *   없지만, 막아 둘 이유도 없다.
+ *
+ * ⚠️ `index, follow` 는 기본값과 같다. 그래도 적어 두는 이유는, 다음 사람이
+ *    이 줄을 보고 **"여기가 검색 허락을 다루는 자리"**임을 알게 하려는 것이다.
+ *    (`noindex` 로 바꾸면 그 페이지가 검색에서 통째로 사라진다 — 404 페이지가
+ *     바로 그렇게 해 뒀다. 실수로 여기에 넣지 말 것.)
+ */
+const ROBOTS = '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">';
+
 /** 두 목록은 겹친다(축제가 양쪽에 있다) — id 로 한 번만 센다. */
 const ALL: Place[] = [
   ...new Map([...ALL_PLACES, ...ALL_FESTIVALS].map((p) => [p.id, p])).values(),
@@ -467,6 +487,7 @@ function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}${showKo ? ` (${esc(p.name)})` : ""} — ${esc(guName)}, ${esc(S.seoul)} | K-Street</title>
 <meta name="description" content="${esc(desc)}">
+${ROBOTS}
 <link rel="canonical" href="${url}">
 ${hreflang(`place/${slug}/`)}
 <meta property="og:type" content="website">
@@ -715,6 +736,7 @@ function hubPage(o: {
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(o.title)}</title>
 <meta name="description" content="${esc(o.desc)}">
+${ROBOTS}
 <link rel="canonical" href="${url}">
 ${hubHreflang(o.path)}
 <meta property="og:type" content="website">
