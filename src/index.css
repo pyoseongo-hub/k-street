@@ -1410,6 +1410,20 @@ button {
 
 .map-btn {
   flex: 1;
+  /* ✂️ **글씨가 잘리지 않게 하는 한 줄** (2026-09-11).
+     `flex: 1` 은 `flex-basis: 0` 이라 브라우저가 **단추 안의 글씨 길이를 아예 안 본다.**
+     그래서 셋으로 똑같이 나눠 주고(390px 폰에서 하나당 93px), 글씨가 그보다 길면
+     줄을 바꾸는 대신 **잘라 버렸다.** 윗줄의 `flex-wrap: wrap` 은 켜져 있었지만
+     작동할 기회 자체가 없었다 — 넘친다는 사실을 브라우저가 모르기 때문이다.
+     `min-width: max-content` 를 주면 "이 글씨보다는 좁아질 수 없다"가 되어,
+     자리가 모자라면 그제야 **다음 줄로 내려간다.**
+     🚨 이걸 재던 검사는 **줄 밖으로 넘쳤나**만 봤다 — 단추는 줄 안에 얌전히
+        있었으므로 「넘침 0」이 나왔고, 정작 **글씨가 잘린 것은 못 봤다.**
+        12개 언어 중 9개가 잘리고 있었다(독일어 「Essen in der Nähe ↗」가 가장 심해
+        93px 자리에 115px 필요). 재는 자리가 틀리면 초록불이 거짓말을 한다.
+     ⚠️ 단추 두 개짜리 줄(카카오맵·네이버지도)은 둘 다 자리가 남아 **폭이 똑같이
+        유지된다** — 재서 확인했다. */
+  min-width: max-content;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1480,7 +1494,9 @@ button {
 .map-btn--driver {
   /* 🧹 옆의 「주변 먹거리」와 **같은 칸**을 차지한다(2026-09-09). */
   flex: 1 1 0;
-  min-width: 0;
+  /* ✂️ `min-width: 0` 이었다 — **"글씨보다 좁아져도 된다"는 뜻**이라 글씨가 잘렸다
+     (2026-09-11에 찾음). 자세한 설명은 위 .map-btn 의 주석에 있다. */
+  min-width: max-content;
   background: var(--sunk, #eceae4);
   color: var(--ink, #16150f);
   border: 1px solid var(--line, #ddd9d0);
@@ -1498,7 +1514,8 @@ button {
    하는 둘이니 같은 모양이어야 한다. 그림은 뺐다 — 낱말만 남으니 더 잘 읽힌다. */
 .map-btn--eat {
   flex: 1 1 0;
-  min-width: 0;
+  /* ✂️ `min-width: 0` 이었다 — 글씨가 잘리던 원인. 위 .map-btn 주석 참고. */
+  min-width: max-content;
   gap: 5px;
   background: var(--sunk, #eceae4);
   color: var(--ink, #16150f);
@@ -1514,7 +1531,8 @@ button {
    지하철을 뜻하는 파랑을 쓴다. 카카오 노랑·네이버 초록과도 안 겹친다. */
 .map-btn--luggage {
   flex: 1 1 0;
-  min-width: 0;
+  /* ✂️ `min-width: 0` 이었다 — 글씨가 잘리던 원인. 위 .map-btn 주석 참고. */
+  min-width: max-content;
   background: var(--luggage, #37628f);
   color: #ffffff;
   border: 1px solid var(--luggage, #37628f);
