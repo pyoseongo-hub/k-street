@@ -1589,6 +1589,83 @@ button {
   color: var(--muted, #6b6559);
 }
 
+/* 🧳 또타러기지 지점 여섯 개 (2026-09-11 사장님: "6군데 버튼 만들어").
+   두 칸으로 나눈다 — 한 줄에 하나면 카드가 길어져 요금표가 화면 밖으로 밀린다. */
+.lg-branches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 4px 0 12px;
+}
+
+.lg-branch {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 9px 10px;
+  border-radius: 9px;
+  border: 1px solid var(--line, #ddd9d0);
+  background: var(--card, #fff);
+  color: var(--ink, #16150f);
+  text-align: left;
+}
+
+/* 고른 지점은 **눈에 띄게** — 바로 아래 지도 단추가 어느 지점 것인지 알아야 한다 */
+.lg-branch.picked {
+  border-color: var(--luggage, #37628f);
+  box-shadow: inset 0 0 0 1px var(--luggage, #37628f);
+}
+
+.lg-branch-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.lg-branch-where {
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--muted, #6b6559);
+}
+
+.lg-branch-maps {
+  margin-bottom: 12px;
+}
+
+.lg-note--top {
+  margin-top: 0;
+}
+
+.lg-price-head {
+  margin: 14px 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* 💰 요금표. 🚨 **인치**다(가방 크기) — 또타라커는 cm 다. 섞으면 안 된다. */
+.lg-prices {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.lg-prices th,
+.lg-prices td {
+  padding: 5px 4px;
+  border-bottom: 1px solid var(--line, #ddd9d0);
+  text-align: right;
+}
+
+.lg-prices thead th {
+  color: var(--muted, #6b6559);
+  font-weight: 600;
+}
+
+.lg-prices tbody th {
+  text-align: left;
+  font-weight: 700;
+}
+
 .lg-close {
   padding: 12px 30px;
   border-radius: 999px;

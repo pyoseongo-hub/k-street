@@ -17,8 +17,8 @@
 //    "지하철이면 몇 번 출구라던가 설명 있을 줄 알았지".
 //    카카오 지역검색에는 없던 값이고, 공식 페이지에만 있다.
 
-/** 공식 페이지에서 받은 날. 화면에 그대로 띄운다. */
-export const OFFICIAL_CHECKED = "2026-09-10";
+/** 공식 페이지에서 받은 날. 원본은 앱 쪽에 있다. */
+export { OFFICIAL_CHECKED } from "../../src/lib/luggageFacts";
 
 /** 서울교통공사 또타러기지 안내(공식). 원본은 앱 쪽에 있다. */
 export { OFFICIAL_PAGE } from "../../src/lib/luggageFacts";
@@ -27,40 +27,22 @@ export { OFFICIAL_PAGE } from "../../src/lib/luggageFacts";
  * 예약·안내 사이트. **영어·중국어·일본어 페이지가 따로 있다** —
  * 우리 손님 대부분이 한국어를 못 읽으므로 이게 중요하다.
  */
-export const BOOKING_SITE = "https://www.tluggage.co.kr/";
-export const BOOKING_SITE_BY_LANG: Record<string, string> = {
-  ko: "https://www.tluggage.co.kr/",
-  en: "https://www.tluggage.co.kr/eng",
-  zh: "https://www.tluggage.co.kr/chi",
-  "zh-TW": "https://www.tluggage.co.kr/chi",
-  ja: "https://www.tluggage.co.kr/jap",
-};
+export { BOOKING_SITE, BOOKING_SITE_BY_LANG } from "../../src/lib/luggageFacts";
 
 // 🧳 지점 여섯 곳은 **앱과 같은 자료를 쓴다**(src/lib/luggageFacts.ts).
 //    2026-09-11 에 옮겼다 — 같은 표를 두 파일에 적어 두면 언젠가 어긋난다.
 //    (「잣대가 둘이면 반쪽 적용이 생긴다」 — 이 저장소가 이미 겪은 사고다.)
 export { OFFICIAL_BRANCHES, type LuggageBranch as OfficialBranch } from "../../src/lib/luggageFacts";
 
-/** 공식 요금 (보관서비스). 기본 4시간, 이후 시간당 추가. */
-export interface OfficialPrice {
-  /** 가방 크기 (인치) */
-  size: string;
-  weekday: number;
-  weekend: number;
-}
-
-export const OFFICIAL_PRICES: OfficialPrice[] = [
-  { size: 'S (~20")', weekday: 3000, weekend: 4000 },
-  { size: 'M (20~23")', weekday: 4000, weekend: 6000 },
-  { size: 'L (23~27")', weekday: 6000, weekend: 9000 },
-  { size: 'XL (27"~)', weekday: 9000, weekend: 13000 },
-];
-
-/** 기본 시간(시간) · 추가 요금(원/시간) · 운영시간. 전부 공식 페이지에 적힌 그대로. */
-export const OFFICIAL_BASE_HOURS = 4;
-export const OFFICIAL_EXTRA_PER_HOUR = 1000;
-export const OFFICIAL_OPEN = "09:00";
-export const OFFICIAL_CLOSE = "22:00";
+// 💰 요금·시간도 **앱과 같은 자료를 쓴다**(src/lib/luggageFacts.ts).
+export {
+  OFFICIAL_PRICES,
+  type OfficialPrice,
+  OFFICIAL_BASE_HOURS,
+  OFFICIAL_EXTRA_PER_HOUR,
+  OFFICIAL_OPEN,
+  OFFICIAL_CLOSE,
+} from "../../src/lib/luggageFacts";
 
 // ─────────────────────────────────────────────────────────────────────
 // 🔒 **또타라커 (T-Locker) — 역 안의 무인 물품보관함.**
