@@ -2692,6 +2692,26 @@
       "thumb": "https://tong.visitkorea.or.kr/cms/resource/11/3478411_image3_1.jpg",
       "lng": 127.0809147499,
       "lat": 37.5566516806
+    },
+    {
+      "name": "북촌한옥마을 감고당길",
+      "gu": "종로구",
+      "addr": "서울특별시 종로구 송현동",
+      "contentId": "2946075",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/06/2945806_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/06/2945806_image3_1.jpg",
+      "lng": 126.9824147854,
+      "lat": 37.5779529898
+    },
+    {
+      "name": "세종마을 음식문화거리",
+      "gu": "종로구",
+      "addr": "서울특별시 종로구 자하문로1길 24 (체부동)",
+      "contentId": "2992822",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/62/3535062_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/62/3535062_image3_1.jpg",
+      "lng": 126.9710825243,
+      "lat": 37.576569614
     }
   ]
 }
