@@ -283,14 +283,47 @@ async function main() {
     for (const [id, v] of fresh) console.log(`        ${v.cat.padEnd(9)} ${v.name}  (tour_${id})`);
   }
 
+  // 🚨 **덮어쓰지 않고 합친다** (2026-09-11).
+  //
+  //    2026-09-11에 맛보기를 돌렸더니 「269곳 → 255곳」, **사라짐 14곳**이 나왔다.
+  //    끝난 축제 10곳에 더해 독립문영천시장 · 대한민국역사박물관 · 남산공원 ·
+  //    **충무로 인쇄골목**이 함께 빠졌다. 관광공사가 내린 것이지 **없어진 곳이 아니다.**
+  //    그대로 저장했으면 곳 페이지 14장과 거기 쌓인 검색 순위가 통째로 날아갔다.
+  //
+  //    위 20% 안전장치는 이걸 못 막는다 — 14곳은 5%라서 그냥 통과한다.
+  //    그래서 축제 날짜 스크립트와 **같은 방식**으로 바꾼다: 받은 것을 **보태고**,
+  //    관광공사가 더 이상 안 주는 곳은 **그대로 둔다.**
+  //
+  //    ⚠️ 정말로 지워야 할 때(폐업·중복)는 `--prune` 를 붙인다. 그때만 덮어쓴다.
+  //       기본이 「안 지움」인 이유는, 잘못 지우면 되돌리기가 훨씬 비싸기 때문이다 —
+  //       곳 페이지 주소가 죽고 검색이 그걸 기억한다.
+  const PRUNE = process.argv.includes("--prune");
+  const merged = {};
+  for (const cat of Object.keys(result)) {
+    const byId = new Map();
+    // 옛것을 먼저 깔고
+    if (!PRUNE) for (const it of prevRaw[cat] ?? []) if (it?.contentId) byId.set(String(it.contentId), it);
+    // 새로 받은 것으로 덮는다 — 사진·좌표가 갱신된다
+    for (const it of result[cat]) if (it?.contentId) byId.set(String(it.contentId), it);
+    merged[cat] = [...byId.values()];
+  }
+  const mergedCount = Object.values(merged).reduce((n, l) => n + l.length, 0);
+
   if (!APPLY) {
-    console.log(`\n👀 맛보기만 했다 — 저장하지 않았다(지금 ${prevCount}곳 → 받은 것 ${newCount}곳).`);
+    console.log(`\n👀 맛보기만 했다 — 저장하지 않았다.`);
+    console.log(`   지금 ${prevCount}곳 · 이번에 받은 것 ${newCount}곳 → ${PRUNE ? "지우면" : "합치면"} ${mergedCount}곳`);
+    if (!PRUNE && gone.length)
+      console.log(`   (위 ${gone.length}곳은 **그대로 남는다** — 합치기라서 안 사라진다)`);
     console.log("   저장하려면 --apply 를 붙일 것.");
     return;
   }
 
-  writeFileSync(OUT_JSON, JSON.stringify(result, null, 2) + "\n");
-  console.log(`\n${OUT_JSON}에 저장함 — seed.ts로 옮기기 전에 내용을 먼저 확인할 것.`);
+  writeFileSync(OUT_JSON, JSON.stringify(merged, null, 2) + "\n");
+  console.log(
+    `\n${OUT_JSON}에 저장함 — ${prevCount}곳 → ${mergedCount}곳` +
+      (PRUNE ? " (--prune: 안 주는 곳은 지웠다)" : ` (합침 — 안 주는 ${gone.length}곳은 그대로 뒀다)`)
+  );
+  console.log("   seed.ts로 옮기기 전에 내용을 먼저 확인할 것.");
 
   // 걸러지기 전의 원본을 통째로 남긴다. 키워드 규칙을 고칠 때 "실제로 어떤 이름이
   // 있었는지"를 볼 수 있어야 추측이 아니라 근거로 정할 수 있다.
