@@ -1531,12 +1531,19 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* 🚨 **가운데 정렬(center)로 두면 안 된다** (2026-09-11 사장님: "위 화면 짤려").
+     내용이 화면보다 길어지면 넘치는 만큼이 **위아래로 반씩** 밀려 나가는데,
+     스크롤은 아래쪽만 따라간다 — 위로는 못 올라간다. 그래서 제목과 역 이름이
+     잘린 채 시작했다. 카드가 둘이 되면서 길어져 드러난 것이다.
+     위에서부터 쌓으면 넘쳐도 **전부 스크롤로 닿는다.** */
+  justify-content: flex-start;
   gap: 14px;
-  padding: 20px;
+  padding: 20px 20px 40px;
   background: var(--bg, #faf9f7);
   color: var(--ink, #16150f);
   overflow-y: auto;
+  /* 폰에서 손가락 스크롤이 끊기지 않게 */
+  -webkit-overflow-scrolling: touch;
 }
 
 .luggage-card {
