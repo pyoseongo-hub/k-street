@@ -129,11 +129,32 @@ for (let i = 0; i < urls.length; i += CHUNK) {
     failed += urlList.length;
     // 몸통에 이유가 적혀 온다 — 삼키지 말고 그대로 보여 준다.
     const text = await res.text().catch(() => "");
-    console.log(`❌ ${i + 1}~${i + urlList.length}번째 거절됨 (HTTP ${res.status}) ${text.slice(0, 200)}`);
-    // 403 은 열쇠 파일을 못 읽었다는 뜻이다. 뒤도 다 같은 이유로 실패하니 멈춘다.
+    console.log(`❌ ${i + 1}~${i + urlList.length}번째 거절됨 (HTTP ${res.status}) ${text.slice(0, 300)}`);
+    // 🚨 **403 을 한 가지 이유로 뭉뚱그리지 않는다** (2026-09-11에 당했다).
+    //    처음엔 403이면 무조건 "열쇠 파일을 확인하라"고 적게 해 뒀는데, 실제로 받은
+    //    403은 **소유확인이 아직 안 끝났다**는 전혀 다른 뜻이었다. 열쇠 파일은 멀쩡했다.
+    //    틀린 설명은 없느니만 못하다 — 다음 사람이 멀쩡한 파일을 몇 시간 들여다본다.
+    //    그래서 빙이 준 errorCode 를 그대로 보고 갈라 준다.
+    const code = (() => {
+      try {
+        return JSON.parse(text)?.errorCode ?? "";
+      } catch {
+        return "";
+      }
+    })();
     if (res.status === 403) {
-      console.log(`   ↳ 열쇠 파일을 확인할 것: ${KEY_LOCATION}`);
-      console.log("     (배포가 끝나기 전에 보내면 이 오류가 난다 — 배포 뒤에 보낼 것)");
+      if (/SiteVerification/i.test(code)) {
+        console.log("   ↳ **우리 잘못이 아니다.** 빙이 이 사이트의 소유확인을 아직 안 끝냈다.");
+        console.log("     빙 웹마스터 도구에 사이트를 막 등록했으면 **최대 48시간** 걸린다.");
+        console.log("     하루쯤 지나 이 워크플로를 다시 돌리면 된다. 고칠 것이 없다.");
+      } else if (/Key/i.test(code)) {
+        console.log(`   ↳ 열쇠 파일 문제다. 여기가 열리는지 볼 것: ${KEY_LOCATION}`);
+        console.log("     (배포가 끝나기 전에 보내면 이 오류가 난다 — 배포 뒤에 보낼 것)");
+      } else {
+        console.log(`   ↳ 거절 사유(errorCode): ${code || "(빙이 안 알려 줬다)"}`);
+        console.log("     위 메시지를 그대로 읽고 판단할 것. 짐작으로 고치지 말 것.");
+      }
+      // 뒤 덩이도 같은 이유로 다 실패한다 — 괜히 더 때리지 않는다.
       break;
     }
   }
