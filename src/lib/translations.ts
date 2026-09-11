@@ -71,6 +71,20 @@ export interface Translations {
   themeLabels: Record<string, string>;
   /** "10월 중순" — 정확한 날짜는 일부러 안 적는다(Place.period 주석 참고) */
   monthPeriod: (month: string, period: "early" | "mid" | "late") => string;
+  /**
+   * 🗓️ 축제 목록 맨 위 안내 한 줄.
+   *
+   * 세 가지가 **다 들어가야 한다** (2026-09-12 사장님 지적:
+   * "축제가 고지가 몇일전에 올라오거나 하니 정확한 정보 확인하라고"):
+   *   ① 날짜는 해마다 바뀐다
+   *   ② **확정 일정은 며칠 전에야 공지되기도 한다** ← 이게 빠져 있었다
+   *   ③ 가기 전에 공식 안내에서 확인하라
+   *
+   * ②가 왜 필요한가 — 우리가 「9월」이라고만 적어 둔 것을 손님은 **우리가 대충
+   * 적었다**로 읽는다. 사실은 주최 측도 아직 안 정한 것이다. 그 사정을 말해 줘야
+   * 손님이 「그럼 언제 다시 봐야 하나」를 안다.
+   * 같은 문장이 곳 페이지에도 있다 — scripts/lib/page-strings.ts 의 datesShift.
+   */
   festivalDateDisclaimer: string;
   /**
    * ⚠️ 열리는 달이 해마다 옮겨 다니는 축제에만 붙는 안내.
@@ -290,7 +304,7 @@ const translations: Record<Language, Translations> = {
     themeAll: '전체',
     themeLabels: { nature: '꽃·자연', light: '빛·불꽃', music: '음악·춤', food: '먹거리', history: '역사·전통', street: '동네·거리' },
     monthPeriod: (month, period) => `${month} ${period === 'early' ? '초' : period === 'mid' ? '중순' : '말'}`,
-    festivalDateDisclaimer: '날짜는 해마다 바뀝니다. 이름을 누르면 그 구청의 공식 안내로 갑니다.',
+    festivalDateDisclaimer: '날짜는 해마다 바뀌고, 확정 일정은 며칠 전에야 공지되기도 합니다. 가시기 전에 공식 안내에서 꼭 확인하세요.',
     festivalMonthVaries: (m) => `해마다 ${m} 중 한 달에 열립니다 — 올해 날짜는 이름을 눌러 확인하세요.`,
     festivalBloomVaries: '꽃이 피는 때에 따라 날짜가 바뀝니다 — 이름을 눌러 올해 일정을 확인하세요.',
     festivalCheckDates: '날짜 확인',
@@ -399,7 +413,7 @@ const translations: Record<Language, Translations> = {
     themeAll: 'All',
     themeLabels: { nature: 'Flowers & nature', light: 'Lights & fireworks', music: 'Music & dance', food: 'Food & drink', history: 'History & tradition', street: 'Streets & neighborhoods' },
     monthPeriod: (month, period) => `${period === 'early' ? 'Early' : period === 'mid' ? 'Mid' : 'Late'} ${month}`,
-    festivalDateDisclaimer: 'Dates shift a little every year. Tap a name for the district office’s official notice.',
+    festivalDateDisclaimer: 'Dates shift every year, and the exact schedule is sometimes announced only days beforehand. Check the official notice before you go.',
     festivalMonthVaries: (m) => `Held in one of ${m}, and which one changes each year — tap the name for this year's dates.`,
     festivalBloomVaries: 'Dates shift with the bloom each year — tap the name for this year\'s schedule.',
     festivalCheckDates: 'Check dates',
@@ -508,7 +522,7 @@ const translations: Record<Language, Translations> = {
     themeAll: 'すべて',
     themeLabels: { nature: '花・自然', light: '光・花火', music: '音楽・踊り', food: 'グルメ', history: '歴史・伝統', street: '街・通り' },
     monthPeriod: (month, period) => `${month}${period === 'early' ? '上旬' : period === 'mid' ? '中旬' : '下旬'}`,
-    festivalDateDisclaimer: '日程は毎年少しずつ変わります。名前をタップすると区役所の公式案内が開きます。',
+    festivalDateDisclaimer: '日程は毎年変わり、確定日程は開催の数日前に発表されることもあります。おでかけ前に公式案内をご確認ください。',
     festivalMonthVaries: (m) => `毎年 ${m} のいずれか1か月に開催されます。今年の日程は名前をタップしてご確認ください。`,
     festivalBloomVaries: '開花時期によって日程が変わります。名前をタップして今年の日程をご確認ください。',
     festivalCheckDates: '日程を確認',
@@ -617,7 +631,7 @@ const translations: Record<Language, Translations> = {
     themeAll: '全部',
     themeLabels: { nature: '花与自然', light: '灯光与烟花', music: '音乐与舞蹈', food: '美食', history: '历史与传统', street: '街区' },
     monthPeriod: (month, period) => `${month}${period === 'early' ? '上旬' : period === 'mid' ? '中旬' : '下旬'}`,
-    festivalDateDisclaimer: '日期每年略有变动。点击名称可查看区厅的官方公告。',
+    festivalDateDisclaimer: '日期每年不同，确切日程有时在活动前几天才公布。出发前请查看官方公告。',
     festivalMonthVaries: (m) => `每年在 ${m} 中的某一个月举办，具体月份逐年不同 — 点击名称查看今年日期。`,
     festivalBloomVaries: '日期随开花时间每年变动 — 点击名称查看今年日程。',
     festivalCheckDates: '查看日期',
@@ -726,7 +740,7 @@ const translations: Record<Language, Translations> = {
     themeAll: '全部',
     themeLabels: { nature: '花與自然', light: '燈光與煙火', music: '音樂與舞蹈', food: '美食', history: '歷史與傳統', street: '街區' },
     monthPeriod: (month, period) => `${month}${period === 'early' ? '上旬' : period === 'mid' ? '中旬' : '下旬'}`,
-    festivalDateDisclaimer: '日期每年略有變動。點擊名稱可查看區廳的官方公告。',
+    festivalDateDisclaimer: '日期每年不同，確切日程有時在活動前幾天才公布。出發前請查看官方公告。',
     festivalMonthVaries: (m) => `每年在 ${m} 其中一個月舉辦，實際月份逐年不同 — 點擊名稱查看今年日期。`,
     festivalBloomVaries: '日期隨開花時間逐年變動 — 點擊名稱查看今年日程。',
     festivalCheckDates: '查看日期',
@@ -835,7 +849,7 @@ const translations: Record<Language, Translations> = {
     themeAll: 'Tất cả',
     themeLabels: { nature: 'Hoa & thiên nhiên', light: 'Ánh sáng & pháo hoa', music: 'Âm nhạc & vũ điệu', food: 'Ẩm thực', history: 'Lịch sử & truyền thống', street: 'Phố & khu dân cư' },
     monthPeriod: (month, period) => `${period === 'early' ? 'Đầu' : period === 'mid' ? 'Giữa' : 'Cuối'} ${month}`,
-    festivalDateDisclaimer: 'Ngày tổ chức thay đổi mỗi năm. Nhấn vào tên để xem thông báo chính thức của quận.',
+    festivalDateDisclaimer: 'Ngày tổ chức thay đổi mỗi năm, và lịch chính thức đôi khi chỉ được công bố vài ngày trước. Hãy xem thông báo chính thức trước khi đi.',
     festivalMonthVaries: (m) => `Được tổ chức vào một trong các tháng ${m}, thay đổi theo từng năm — nhấn vào tên để xem ngày năm nay.`,
     festivalBloomVaries: 'Ngày tổ chức thay đổi theo mùa hoa nở — nhấn vào tên để xem lịch năm nay.',
     festivalCheckDates: 'Xem ngày',
@@ -944,7 +958,7 @@ const translations: Record<Language, Translations> = {
     themeAll: 'Todos',
     themeLabels: { nature: 'Flores y naturaleza', light: 'Luces y fuegos artificiales', music: 'Música y danza', food: 'Gastronomía', history: 'Historia y tradición', street: 'Calles y barrios' },
     monthPeriod: (month, period) => `${period === 'early' ? 'Principios' : period === 'mid' ? 'Mediados' : 'Finales'} de ${month}`,
-    festivalDateDisclaimer: 'Las fechas cambian cada año. Toca un nombre para ver el aviso oficial del distrito.',
+    festivalDateDisclaimer: 'Las fechas cambian cada año y el calendario definitivo a veces se anuncia solo unos días antes. Consulta el aviso oficial antes de ir.',
     festivalMonthVaries: (m) => `Se celebra en uno de estos meses (${m}) y cambia cada año: toca el nombre para ver las fechas de este año.`,
     festivalBloomVaries: 'Las fechas cambian con la floración cada año: toca el nombre para ver el calendario de este año.',
     festivalCheckDates: 'Ver fechas',
@@ -1053,7 +1067,7 @@ const translations: Record<Language, Translations> = {
     themeAll: 'Tous',
     themeLabels: { nature: 'Fleurs et nature', light: 'Lumières et feux d’artifice', music: 'Musique et danse', food: 'Gastronomie', history: 'Histoire et tradition', street: 'Rues et quartiers' },
     monthPeriod: (month, period) => `${period === 'early' ? 'Début' : period === 'mid' ? 'Mi-' : 'Fin'} ${month}`,
-    festivalDateDisclaimer: 'Les dates changent chaque année. Touchez un nom pour l’annonce officielle de l’arrondissement.',
+    festivalDateDisclaimer: 'Les dates changent chaque année et le programme définitif n’est parfois annoncé que quelques jours avant. Consultez l’annonce officielle avant de partir.',
     festivalMonthVaries: (m) => `A lieu l'un de ces mois (${m}), et cela change chaque année — appuyez sur le nom pour les dates de cette année.`,
     festivalBloomVaries: 'Les dates changent avec la floraison chaque année — appuyez sur le nom pour le calendrier de cette année.',
     festivalCheckDates: 'Voir les dates',
@@ -1162,7 +1176,7 @@ const translations: Record<Language, Translations> = {
     themeAll: 'Alle',
     themeLabels: { nature: 'Blüten & Natur', light: 'Lichter & Feuerwerk', music: 'Musik & Tanz', food: 'Essen & Trinken', history: 'Geschichte & Tradition', street: 'Straßen & Viertel' },
     monthPeriod: (month, period) => `${period === 'early' ? 'Anfang' : period === 'mid' ? 'Mitte' : 'Ende'} ${month}`,
-    festivalDateDisclaimer: 'Die Termine ändern sich jedes Jahr. Tippen Sie auf einen Namen für die offizielle Ankündigung des Bezirks.',
+    festivalDateDisclaimer: 'Die Termine ändern sich jedes Jahr, und der genaue Zeitplan wird oft erst wenige Tage vorher bekannt gegeben. Bitte vor dem Besuch die offizielle Ankündigung prüfen.',
     festivalMonthVaries: (m) => `Findet in einem dieser Monate statt (${m}) und wechselt jedes Jahr – tippen Sie auf den Namen für die diesjährigen Termine.`,
     festivalBloomVaries: 'Die Termine richten sich nach der Blüte und ändern sich jedes Jahr – tippen Sie auf den Namen für den diesjährigen Termin.',
     festivalCheckDates: 'Termine prüfen',
@@ -1271,7 +1285,7 @@ const translations: Record<Language, Translations> = {
     themeAll: 'Все',
     themeLabels: { nature: 'Цветы и природа', light: 'Огни и фейерверки', music: 'Музыка и танцы', food: 'Еда и напитки', history: 'История и традиции', street: 'Улицы и кварталы' },
     monthPeriod: (month, period) => `${period === 'early' ? 'Начало' : period === 'mid' ? 'Середина' : 'Конец'} — ${month}`,
-    festivalDateDisclaimer: 'Даты меняются каждый год. Нажмите на название, чтобы открыть официальное объявление района.',
+    festivalDateDisclaimer: 'Даты меняются каждый год, а точное расписание иногда объявляют лишь за несколько дней. Перед поездкой проверьте официальное объявление.',
     festivalMonthVaries: (m) => `Проводится в один из этих месяцев (${m}), и каждый год месяц разный — нажмите на название, чтобы узнать даты этого года.`,
     festivalBloomVaries: 'Даты меняются каждый год вместе с цветением — нажмите на название, чтобы узнать расписание этого года.',
     festivalCheckDates: 'Уточнить даты',
@@ -1380,7 +1394,7 @@ const translations: Record<Language, Translations> = {
     themeAll: 'Semua',
     themeLabels: { nature: 'Bunga & alam', light: 'Cahaya & kembang api', music: 'Musik & tari', food: 'Kuliner', history: 'Sejarah & tradisi', street: 'Jalan & kampung' },
     monthPeriod: (month, period) => `${period === 'early' ? 'Awal' : period === 'mid' ? 'Pertengahan' : 'Akhir'} ${month}`,
-    festivalDateDisclaimer: 'Tanggal berubah setiap tahun. Ketuk nama untuk melihat pengumuman resmi kantor distrik.',
+    festivalDateDisclaimer: 'Tanggal berubah setiap tahun, dan jadwal pastinya kadang baru diumumkan beberapa hari sebelumnya. Cek pengumuman resmi sebelum berangkat.',
     festivalMonthVaries: (m) => `Diadakan pada salah satu bulan ${m}, dan bulannya berubah tiap tahun — ketuk nama untuk melihat tanggal tahun ini.`,
     festivalBloomVaries: 'Tanggalnya berubah mengikuti masa mekar tiap tahun — ketuk nama untuk melihat jadwal tahun ini.',
     festivalCheckDates: 'Cek tanggal',
@@ -1489,7 +1503,7 @@ const translations: Record<Language, Translations> = {
     themeAll: 'ทั้งหมด',
     themeLabels: { nature: 'ดอกไม้และธรรมชาติ', light: 'แสงไฟและพลุ', music: 'ดนตรีและการเต้น', food: 'อาหาร', history: 'ประวัติศาสตร์และประเพณี', street: 'ย่านและถนน' },
     monthPeriod: (month, period) => `${period === 'early' ? 'ต้น' : period === 'mid' ? 'กลาง' : 'ปลาย'}${month}`,
-    festivalDateDisclaimer: 'วันจัดงานเปลี่ยนแปลงทุกปี แตะที่ชื่อเพื่อดูประกาศอย่างเป็นทางการของเขต',
+    festivalDateDisclaimer: 'วันจัดงานเปลี่ยนทุกปี และกำหนดการที่แน่นอนบางครั้งประกาศก่อนงานเพียงไม่กี่วัน โปรดตรวจสอบประกาศทางการก่อนเดินทาง',
     festivalMonthVaries: (m) => `จัดขึ้นในเดือนใดเดือนหนึ่งของ ${m} ซึ่งเปลี่ยนไปในแต่ละปี — แตะที่ชื่อเพื่อดูวันที่ของปีนี้`,
     festivalBloomVaries: 'วันจัดงานเปลี่ยนไปตามช่วงดอกไม้บานในแต่ละปี — แตะที่ชื่อเพื่อดูกำหนดการปีนี้',
     festivalCheckDates: 'ดูวันที่',

@@ -21,7 +21,14 @@ export interface PageStrings {
   address: string;
   when: string;
   official: string;
-  /** 「10월 — 날짜는 해마다 바뀝니다…」 뒤에 붙는 안내 */
+  /**
+   * 「10월 — 확정 일정은 며칠 전에야 공지되기도 합니다…」 처럼 달 뒤에 붙는 안내.
+   *
+   * 2026-09-12 사장님 지적: "축제가 고지가 몇일전에 올라오거나 하니 정확한 정보
+   * 확인하라고". 예전 문구(「날짜는 해마다 바뀝니다」)는 **왜 바뀌는지**를 안 말해서,
+   * 우리가 대충 적은 것처럼 읽혔다. 주최 측도 아직 안 정했다는 사정을 적는다.
+   * 앱 화면의 같은 안내는 src/lib/translations.ts 의 festivalDateDisclaimer.
+   */
   datesShift: string;
   /**
    * 🗓️ 이름에 지난 연도가 박힌 행사에 붙이는 한 줄 (2026-09-10).
@@ -70,7 +77,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     address: "주소",
     when: "언제",
     official: "공식 안내",
-    datesShift: "날짜는 해마다 바뀝니다 — 공식 안내를 확인하세요",
+    datesShift: "확정 일정은 며칠 전에야 공지되기도 합니다. 가시기 전에 공식 안내를 확인하세요",
     pastEdition: (y) => `${y}년 회차 기록입니다 — 올해도 열리는지 공식 안내를 확인하세요`,
     moreIn: (gu) => `${gu}의 다른 곳`,
     browse: "둘러보기",
@@ -91,7 +98,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     address: "Address",
     when: "When",
     official: "Official",
-    datesShift: "dates shift each year, check the official notice",
+    datesShift: "the exact schedule is sometimes announced only days beforehand, check the official notice before you go",
     pastEdition: (y) => `Record of the ${y} edition — check the official notice to see if it runs this year`,
     moreIn: (gu) => `More in ${gu}`,
     browse: "Browse",
@@ -114,7 +121,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     address: "住所",
     when: "時期",
     official: "公式案内",
-    datesShift: "日程は年によって変わります — 公式案内をご確認ください",
+    datesShift: "確定日程は開催の数日前に発表されることもあります。おでかけ前に公式案内をご確認ください",
     pastEdition: (y) => `${y}年開催分の記録です — 今年も開催されるかは公式案内をご確認ください`,
     moreIn: (gu) => `${gu}のほかの場所`,
     browse: "ほかを見る",
@@ -135,7 +142,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     address: "地址",
     when: "时间",
     official: "官方信息",
-    datesShift: "日期每年不同 — 请查看官方公告",
+    datesShift: "确切日程有时在活动前几天才公布，出发前请查看官方公告",
     pastEdition: (y) => `这是${y}年那一届的记录 — 今年是否举办请查看官方公告`,
     moreIn: (gu) => `${gu}的其他地方`,
     browse: "浏览",
@@ -156,7 +163,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     address: "地址",
     when: "時間",
     official: "官方資訊",
-    datesShift: "日期每年不同 — 請查看官方公告",
+    datesShift: "確切日程有時在活動前幾天才公布，出發前請查看官方公告",
     pastEdition: (y) => `這是${y}年那一屆的紀錄 — 今年是否舉辦請查看官方公告`,
     moreIn: (gu) => `${gu}的其他地方`,
     browse: "瀏覽",
@@ -177,7 +184,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     address: "Địa chỉ",
     when: "Thời gian",
     official: "Thông tin chính thức",
-    datesShift: "ngày thay đổi mỗi năm — hãy xem thông báo chính thức",
+    datesShift: "lịch chính thức đôi khi chỉ được công bố vài ngày trước, hãy xem thông báo chính thức trước khi đi",
     pastEdition: (y) => `Ghi nhận của kỳ ${y} — hãy xem thông báo chính thức để biết năm nay có tổ chức không`,
     moreIn: (gu) => `Địa điểm khác ở ${gu}`,
     browse: "Xem thêm",
@@ -200,7 +207,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     address: "Dirección",
     when: "Cuándo",
     official: "Información oficial",
-    datesShift: "las fechas cambian cada año — consulta el aviso oficial",
+    datesShift: "el calendario definitivo a veces se anuncia solo unos días antes; consulta el aviso oficial antes de ir",
     pastEdition: (y) => `Registro de la edición de ${y} — consulta el aviso oficial para saber si se celebra este año`,
     moreIn: (gu) => `Más en ${gu}`,
     browse: "Explorar",
@@ -223,7 +230,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     address: "Adresse",
     when: "Quand",
     official: "Infos officielles",
-    datesShift: "les dates changent chaque année — consultez l'avis officiel",
+    datesShift: "le programme définitif n'est parfois annoncé que quelques jours avant ; consultez l'avis officiel avant de partir",
     pastEdition: (y) => `Trace de l’édition ${y} — consultez l’avis officiel pour savoir si elle a lieu cette année`,
     moreIn: (gu) => `Autres lieux à ${gu}`,
     browse: "Parcourir",
@@ -246,7 +253,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     address: "Adresse",
     when: "Wann",
     official: "Offizielle Info",
-    datesShift: "die Termine ändern sich jedes Jahr — bitte offizielle Ankündigung prüfen",
+    datesShift: "der genaue Zeitplan wird manchmal erst wenige Tage vorher bekannt gegeben; bitte vor dem Besuch die offizielle Ankündigung prüfen",
     pastEdition: (y) => `Aufzeichnung der Ausgabe ${y} — bitte die offizielle Ankündigung prüfen, ob sie dieses Jahr stattfindet`,
     moreIn: (gu) => `Mehr in ${gu}`,
     browse: "Entdecken",
@@ -269,7 +276,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     address: "Адрес",
     when: "Когда",
     official: "Официально",
-    datesShift: "даты меняются каждый год — смотрите официальное объявление",
+    datesShift: "точное расписание иногда объявляют лишь за несколько дней; перед поездкой смотрите официальное объявление",
     pastEdition: (y) => `Запись о выпуске ${y} года — смотрите официальное объявление, проводится ли он в этом году`,
     moreIn: (gu) => `Ещё в ${gu}`,
     browse: "Смотреть",
@@ -292,7 +299,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     address: "Alamat",
     when: "Kapan",
     official: "Info resmi",
-    datesShift: "tanggal berubah setiap tahun — cek pengumuman resmi",
+    datesShift: "jadwal pastinya kadang baru diumumkan beberapa hari sebelumnya; cek pengumuman resmi sebelum berangkat",
     pastEdition: (y) => `Catatan edisi ${y} — cek pengumuman resmi apakah tahun ini digelar`,
     moreIn: (gu) => `Lainnya di ${gu}`,
     browse: "Jelajahi",
@@ -315,7 +322,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     address: "ที่อยู่",
     when: "ช่วงเวลา",
     official: "ข้อมูลทางการ",
-    datesShift: "วันที่เปลี่ยนทุกปี — โปรดตรวจสอบประกาศทางการ",
+    datesShift: "กำหนดการที่แน่นอนบางครั้งประกาศก่อนงานเพียงไม่กี่วัน โปรดตรวจสอบประกาศทางการก่อนเดินทาง",
     pastEdition: (y) => `บันทึกของครั้งปี ${y} — โปรดตรวจสอบประกาศทางการว่าปีนี้จัดหรือไม่`,
     moreIn: (gu) => `ที่อื่นใน ${gu}`,
     browse: "ดูเพิ่มเติม",
