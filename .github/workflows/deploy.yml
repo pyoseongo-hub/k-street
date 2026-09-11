@@ -41,6 +41,12 @@ jobs:
       # 만들어 놓고 끝내지 않는다 — 얇은 페이지·겹치는 제목이 있으면 여기서 막는다.
       # 그런 걸 300장 올리면 검색에 도움이 되기는커녕 벌점을 받는다.
       - run: npm run check-place-pages
+      # 🎪 **행사 구조화 자료가 구글 기준에 맞나** (2026-09-11).
+      #    구글 서치 콘솔이 **메일로** 「startDate 누락 · location 누락 · 심각한 문제」를
+      #    보내왔다 — 심각한 문제가 있으면 그 페이지는 검색 결과에 **아예 안 나온다.**
+      #    1년 가까이 그 상태였고, **사람이 메일을 열어 봐야** 알 수 있었다.
+      #    이제 배포마다 기계가 먼저 막는다(브라우저가 필요 없어 여기 걸 수 있다).
+      - run: node scripts/check-event-jsonld.mjs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

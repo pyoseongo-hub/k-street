@@ -111,6 +111,42 @@ const SITE = "https://korea-street.com";
  */
 const ROBOTS = '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">';
 
+/**
+ * 🎪 **오늘 이후에 열리는 축제의 날짜.** 모르면 undefined — 그러면 행사로 안 낸다.
+ *
+ * 왜 「오늘 이후」인가 — 우리가 가진 날짜는 대개 **지난 회차(2025년) 것**이다.
+ * 그걸 startDate 로 내보내면 구글에 **틀린 날짜를 광고**하는 꼴이고, 손님이 그걸
+ * 보고 헛걸음한다. 오류를 없애려고 아무 날짜나 넣는 것이 가장 나쁜 선택이다.
+ *
+ * 관광공사 자료는 앱에서 `tour_<contentId>` 로 산다(tourPlaces.ts 의 idOf).
+ * 사람이 손으로 적은 축제(`ks_…`)는 **달만 알고 날짜를 모르므로** 늘 undefined 다.
+ */
+const FESTIVAL_DATES = JSON.parse(
+  readFileSync(join(ROOT, "src", "data", "festival-dates.json"), "utf-8")
+) as Record<string, { start?: string; end?: string }>;
+
+/** 빌드한 날. 날짜 비교는 "20261017" 같은 여덟 자리끼리 그대로 해도 맞다. */
+const TODAY_YMD = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+
+/** "20261017" → "2026-10-17". 여덟 자리가 아니면 undefined — 고쳐서 쓰지 않는다. */
+function isoDate(s: string | undefined): string | undefined {
+  return s && /^\d{8}$/.test(s) ? `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}` : undefined;
+}
+
+function upcomingEventDates(p: Place): { startDate: string; endDate?: string } | undefined {
+  if (!p.id.startsWith("tour_")) return undefined;
+  const rec = FESTIVAL_DATES[p.id.slice("tour_".length)];
+  const start = rec?.start;
+  if (!start || !/^\d{8}$/.test(start)) return undefined;
+  if (start < TODAY_YMD) return undefined; // 지난 회차 — 안 쓴다
+  const startDate = isoDate(start);
+  if (!startDate) return undefined;
+  // 끝나는 날은 있으면 넣고 없으면 뺀다. 시작보다 앞서면 자료가 깨진 것이라 뺀다.
+  const end = rec?.end;
+  const endDate = end && end >= start ? isoDate(end) : undefined;
+  return { startDate, ...(endDate ? { endDate } : {}) };
+}
+
 /** 두 목록은 겹친다(축제가 양쪽에 있다) — id 로 한 번만 센다. */
 const ALL: Place[] = [
   ...new Map([...ALL_PLACES, ...ALL_FESTIVALS].map((p) => [p.id, p])).values(),
@@ -443,26 +479,69 @@ function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
 
   // 📇 구조화 자료 — 구글과 AI 가 "이게 무엇인지" 기계로 읽는 부분이다.
   //    아는 칸만 넣는다. 없는 값을 넣으면 그게 곧 틀린 정보가 된다.
-  const jsonLd: Record<string, unknown> = {
-    "@context": "https://schema.org",
-    "@type": p.category === "festival" ? "Festival" : "TouristAttraction",
-    name: title,
-    alternateName: p.name,
-    url,
-    ...(note ? { description: note } : {}),
-    ...(photo ? { image: photo } : {}),
-    address: {
-      "@type": "PostalAddress",
-      addressCountry: "KR",
-      addressLocality: "Seoul",
-      addressRegion: guEn(p.gu),
-      ...(p.addr ? { streetAddress: p.addr } : {}),
-    },
-    ...(p.lat != null && p.lng != null
-      ? { geo: { "@type": "GeoCoordinates", latitude: p.lat, longitude: p.lng } }
-      : {}),
-    ...(p.officialUrl ? { sameAs: p.officialUrl } : {}),
+  const address = {
+    "@type": "PostalAddress",
+    addressCountry: "KR",
+    addressLocality: "Seoul",
+    addressRegion: guEn(p.gu),
+    ...(p.addr ? { streetAddress: p.addr } : {}),
   };
+  const geo =
+    p.lat != null && p.lng != null
+      ? { geo: { "@type": "GeoCoordinates", latitude: p.lat, longitude: p.lng } }
+      : {};
+
+  // 🎪 **축제는 날짜를 아는 것만 「행사」로 표시한다** (2026-09-11).
+  //
+  //    구글 서치 콘솔이 메일로 짚어 줬다 — 「이벤트 구조화된 데이터 문제 9개 ·
+  //    심각한 문제: startDate 누락 · location 누락」. **심각한 문제가 있으면 그
+  //    페이지는 검색 결과에 아예 안 나온다.** 즉 여태 축제 표시는 값이 0이었다.
+  //
+  //    두 가지가 틀려 있었다:
+  //      ① `startDate` 가 아예 없었다. 우리가 가진 건 **지난 회차(2025년) 날짜**뿐이다.
+  //      ② `address` 를 맨 위에 달았다. 행사(Event)는 주소를 **location 안에** 넣어야 한다.
+  //         장소(TouristAttraction)와 규칙이 다르다 — 같은 모양을 쓰면 안 된다.
+  //
+  //    🚨 **지난 회차 날짜를 적어서 오류만 없애지 않는다.** 그러면 구글에 틀린 날짜를
+  //       광고하는 꼴이고, 손님이 그걸 보고 헛걸음한다. 「빈 칸이 틀린 정보보다 낫다」.
+  //       그래서 **오늘 이후 날짜를 아는 축제만** Festival 로 내고,
+  //       모르는 축제는 **TouristAttraction 으로 낸다** — 오류도 없고 거짓말도 없다.
+  //
+  //    ⏳ 오늘 기준으로 해당되는 축제는 **0곳**이다(관광공사에 2026년 회차가 아직 없다).
+  //       올라오는 순간 `fetch-festival-dates` 의 「🆕 화면에 없는 새 축제」 알림이 울리고,
+  //       그 뒤 이 코드가 저절로 Festival 로 내보낸다. 손댈 것이 없다.
+  const ev = p.category === "festival" ? upcomingEventDates(p) : undefined;
+
+  const jsonLd: Record<string, unknown> = ev
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Festival",
+        name: title,
+        alternateName: p.name,
+        url,
+        startDate: ev.startDate,
+        ...(ev.endDate ? { endDate: ev.endDate } : {}),
+        // 둘 다 사실이다 — 우리가 싣는 축제는 전부 **자리가 있는, 예정된** 행사다.
+        // 확인 못 하는 칸(organizer·performer·offers)은 **비워 둔다.** 심각한 문제도 아니다.
+        eventStatus: "https://schema.org/EventScheduled",
+        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        location: { "@type": "Place", name: title, address, ...geo },
+        ...(note ? { description: note } : {}),
+        ...(photo ? { image: photo } : {}),
+        ...(p.officialUrl ? { sameAs: p.officialUrl } : {}),
+      }
+    : {
+        "@context": "https://schema.org",
+        "@type": "TouristAttraction",
+        name: title,
+        alternateName: p.name,
+        url,
+        ...(note ? { description: note } : {}),
+        ...(photo ? { image: photo } : {}),
+        address,
+        ...geo,
+        ...(p.officialUrl ? { sameAs: p.officialUrl } : {}),
+      };
 
   // 🍞 **길 표시**(BreadcrumbList) — 검색 결과에서 주소 대신
   //    「K-Street › Seoul › Jongno-gu › Gwangjang Market」로 뜬다.
