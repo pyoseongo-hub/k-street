@@ -1,0 +1,268 @@
+<title>종로 게스트하우스 전단</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --paper: #ffffff;
+    --ink: #1a1a18;
+    --soft: #5d5a52;
+    --rule: #d8d4ca;
+    --hair: #ebe7dd;
+    --mark: #c1502e;
+    /* 서울 지하철 실제 호선 색. 흑백으로 뽑아도 되게 **호선 숫자를 같이 적는다** —
+       색만으로 알려 주면 게스트하우스의 흑백 프린터에서 정보가 사라진다. */
+    --l1: #0052a4; --l2: #00a84d; --l3: #ef7c1c; --l4: #00a5de; --l5: #996cac; --l6: #cd7c2f;
+    --page-bg: #e8e5dd;
+    --panel: #f7f5f0;
+    --panel-ink: #2a2823;
+    --panel-soft: #6b665c;
+    --panel-rule: #d5d0c4;
+    --sans: "IBM Plex Sans KR", -apple-system, "Malgun Gothic", sans-serif;
+    --serif: "Cormorant Garamond", "IBM Plex Sans KR", Georgia, serif;
+    --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --page-bg: #171916; --panel: #1e211d; --panel-ink: #e9e7e0;
+      --panel-soft: #9b968b; --panel-rule: #32362f;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page-bg: #171916; --panel: #1e211d; --panel-ink: #e9e7e0;
+    --panel-soft: #9b968b; --panel-rule: #32362f;
+  }
+
+  * { box-sizing: border-box }
+  body {
+    margin: 0; padding: 0 16px; background: var(--page-bg); color: var(--panel-ink);
+    font-family: var(--sans); line-height: 1.6; word-break: keep-all; overflow-wrap: break-word;
+  }
+  .shell { max-width: 860px; margin: 0 auto; padding-block: 28px 56px }
+
+  /* ── 설명 패널 (화면 전용) ───────────────────────────── */
+  .brief { margin: 0 0 26px }
+  .brief .kicker {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--panel-soft); margin: 0 0 8px;
+  }
+  .brief h1 { margin: 0 0 10px; font-size: clamp(23px, 5.2vw, 31px); line-height: 1.22; letter-spacing: -.02em; text-wrap: balance }
+  .brief p { margin: 0 0 10px; color: var(--panel-soft); max-width: 62ch }
+  .brief p:last-child { margin: 0 }
+  .brief b { color: var(--panel-ink); font-weight: 600 }
+  .howto {
+    margin-top: 18px; padding: 16px 18px; background: var(--panel);
+    border: 1px solid var(--panel-rule); border-radius: 12px;
+  }
+  .howto h2 { margin: 0 0 10px; font-size: 15px; letter-spacing: -.01em }
+  .howto ol { margin: 0; padding-left: 19px; display: flex; flex-direction: column; gap: 7px }
+  .howto li { font-size: 14.5px; color: var(--panel-soft) }
+  .howto li b { color: var(--panel-ink) }
+
+  .sheetlabel {
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    margin: 30px 0 10px; padding-bottom: 8px; border-bottom: 2px solid var(--panel-ink);
+  }
+  .sheetlabel strong { font-size: 15px; letter-spacing: -.01em }
+  .sheetlabel span { font-size: 13px; color: var(--panel-soft) }
+
+  /* ── 종이 (A4) ───────────────────────────────────────── */
+  .paper {
+    background: var(--paper); color: var(--ink);
+    aspect-ratio: 210 / 297; width: 100%; max-width: 100%;
+    padding: 7% 6.5%; border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.14), 0 10px 30px rgba(0,0,0,.13);
+    display: flex; flex-direction: column;
+    container-type: inline-size;
+    overflow: hidden;
+  }
+  /* 종이 안쪽 글자는 종이 폭을 따라 커지고 작아진다 — 화면에서도 A4 비율 그대로 읽힌다 */
+  .paper { font-size: 1.55cqw }
+
+  .head { display: flex; gap: 4%; align-items: flex-start; border-bottom: .16em solid var(--ink); padding-bottom: .9em }
+  .head .who { flex: 1; min-width: 0 }
+  .mark {
+    display: inline-flex; align-items: center; gap: .4em;
+    font-family: var(--mono); font-size: .82em; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--mark);
+  }
+  .mark i { width: .95em; height: .95em; border-radius: .2em; background: var(--mark); display: inline-block }
+  h2.sheet-title {
+    font-family: var(--serif); font-weight: 700;
+    font-size: 2.9em; line-height: 1.04; letter-spacing: -.015em; margin: .3em 0 .12em;
+  }
+  .sheet-sub { font-size: .95em; color: var(--soft); margin: 0 }
+  .qr { width: 21%; flex: 0 0 auto; text-align: center }
+  .qr .box { width: 100%; aspect-ratio: 1; border: .1em solid var(--ink); padding: .35em; background: #fff }
+  .qr svg, .qr img { width: 100%; height: 100%; display: block }
+  .qr p { margin: .45em 0 0; font-size: .72em; line-height: 1.35; color: var(--soft) }
+
+  .cols { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 0 5%; padding-top: 1em; min-height: 0 }
+  section { break-inside: avoid; margin-bottom: 1.15em }
+  section h3 {
+    font-size: .82em; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    margin: 0 0 .12em; color: var(--ink);
+  }
+  section .note { font-size: .74em; color: var(--soft); margin: 0 0 .5em }
+  ul.places { list-style: none; margin: 0; padding: 0 }
+  ul.places li { padding: .42em 0; border-top: .06em solid var(--hair) }
+  ul.places li:first-child { border-top: .08em solid var(--rule) }
+  .en { font-size: .96em; font-weight: 600; line-height: 1.25 }
+  .ko { font-size: .94em; font-weight: 500; line-height: 1.3 }
+  .stn {
+    font-family: var(--mono); font-size: .76em; color: var(--soft);
+    display: flex; align-items: center; gap: .35em; margin-top: .1em;
+    font-variant-numeric: tabular-nums;
+  }
+  .ln {
+    flex: 0 0 auto; width: 1.35em; height: 1.35em; border-radius: 50%;
+    color: #fff; font-size: .82em; font-weight: 600;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .ln1{background:var(--l1)} .ln2{background:var(--l2)} .ln3{background:var(--l3)}
+  .ln4{background:var(--l4)} .ln5{background:var(--l5)} .ln6{background:var(--l6)}
+
+  .foot { border-top: .16em solid var(--ink); padding-top: .75em; display: grid; grid-template-columns: 1.35fr 1fr; gap: 4% }
+  .foot h4 { margin: 0 0 .18em; font-size: .84em; letter-spacing: -.01em }
+  .foot p { margin: 0; font-size: .78em; line-height: 1.45; color: var(--soft) }
+  .foot .url { font-family: var(--mono); font-size: .82em; color: var(--ink); font-weight: 600; margin-top: .3em }
+  .taxi { font-size: .82em; margin-top: .25em; padding: .4em .6em; border: .07em dashed var(--rule) }
+
+  .caveat {
+    margin-top: 22px; padding: 15px 17px; border-left: 3px solid var(--mark);
+    background: var(--panel); border-radius: 0 10px 10px 0;
+  }
+  .caveat h2 { margin: 0 0 8px; font-size: 15px }
+  .caveat ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px }
+  .caveat li { font-size: 14.5px; color: var(--panel-soft) }
+  .caveat li b { color: var(--panel-ink) }
+
+  @media (max-width: 560px) {
+    .cols { grid-template-columns: 1fr }
+    .paper { font-size: 2.6cqw; aspect-ratio: auto }
+    .foot { grid-template-columns: 1fr; gap: 10px }
+  }
+  @media print {
+    body { background: #fff; padding: 0 }
+    .shell { max-width: none; padding: 0 }
+    .brief, .sheetlabel, .caveat { display: none }
+    .paper { box-shadow: none; border-radius: 0; width: 100%; max-width: none; font-size: 9.6pt; aspect-ratio: auto; min-height: 100vh }
+    @page { size: A4 portrait; margin: 12mm }
+  }
+</style>
+
+<div class="shell">
+
+  <div class="brief">
+    <p class="kicker">7·8번 샘플 · 게스트하우스 전단</p>
+    <h1>종로 게스트하우스에 두고 갈 한 장</h1>
+    <p>아래는 <b>A4 한 장</b>입니다. 게스트하우스가 흑백으로 뽑아 카운터에 쌓아 두거나 방에 두는 것을 생각하고 만들었습니다. 실린 <b>20곳은 전부 K-Street에 실제로 들어 있는 자료</b>이고, 가까운 역과 거리도 카카오맵에서 받아 둔 값 그대로입니다.</p>
+
+    <div class="howto">
+      <h2>이걸 어떻게 쓰나 — 순서</h2>
+      <ol>
+        <li><b>동네별로 한 장씩</b> 만듭니다. 이 샘플은 종로구(북촌·인사동)용입니다. 홍대·이태원·강남도 같은 틀에 자료만 갈아 끼우면 됩니다.</li>
+        <li>게스트하우스에 <b>PDF를 그냥 드립니다.</b> 돈도 조건도 없습니다 — "손님들께 도움이 되면 쓰세요"가 전부입니다.</li>
+        <li>사장님이 하실 말은 한 줄입니다: <b>"외국인 손님용 무료 동네 안내입니다. 가입도 광고도 없습니다."</b></li>
+        <li>QR을 찍으면 그 동네 페이지가 <b>12개 언어로</b> 열립니다. 종이는 한 장인데 손님 언어는 열두 개입니다.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="sheetlabel">
+    <strong>A4 한 장 · 흑백으로 뽑아도 읽힙니다</strong>
+    <span>호선을 색으로만 알려 주지 않고 숫자를 같이 적었습니다</span>
+  </div>
+
+  <div class="paper">
+    <div class="head">
+      <div class="who">
+        <span class="mark"><i aria-hidden="true"></i> K-Street</span>
+        <h2 class="sheet-title">Jongno on foot</h2>
+        <p class="sheet-sub">Markets, alleys and museums around Bukchon &amp; Insadong — with the Korean names, so you can ask anyone.</p>
+      </div>
+      <div class="qr">
+        <div class="box"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges" role="img" aria-label="korea-street.com/seoul/jongno-gu"><rect width="29" height="29" fill="#fff"/><path d="M0 0h7v1h-7zM9 0h7v1h-7zM17 0h3v1h-3zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM10 1h1v1h-1zM13 1h4v1h-4zM18 1h1v1h-1zM20 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM9 2h1v1h-1zM11 2h1v1h-1zM14 2h2v1h-2zM17 2h1v1h-1zM19 2h1v1h-1zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM10 3h3v1h-3zM18 3h2v1h-2zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM9 4h1v1h-1zM11 4h2v1h-2zM14 4h5v1h-5zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM11 5h3v1h-3zM15 5h2v1h-2zM18 5h3v1h-3zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM9 7h1v1h-1zM11 7h1v1h-1zM14 7h1v1h-1zM17 7h4v1h-4zM0 8h1v1h-1zM3 8h1v1h-1zM5 8h2v1h-2zM8 8h3v1h-3zM12 8h3v1h-3zM16 8h1v1h-1zM18 8h2v1h-2zM21 8h1v1h-1zM23 8h1v1h-1zM1 9h2v1h-2zM4 9h2v1h-2zM7 9h1v1h-1zM9 9h5v1h-5zM16 9h1v1h-1zM21 9h2v1h-2zM25 9h1v1h-1zM28 9h1v1h-1zM0 10h1v1h-1zM5 10h4v1h-4zM11 10h1v1h-1zM17 10h1v1h-1zM19 10h2v1h-2zM23 10h5v1h-5zM0 11h1v1h-1zM3 11h2v1h-2zM7 11h3v1h-3zM13 11h1v1h-1zM16 11h1v1h-1zM18 11h2v1h-2zM23 11h1v1h-1zM26 11h2v1h-2zM0 12h1v1h-1zM2 12h1v1h-1zM4 12h5v1h-5zM10 12h1v1h-1zM13 12h1v1h-1zM15 12h3v1h-3zM22 12h1v1h-1zM25 12h1v1h-1zM27 12h2v1h-2zM1 13h2v1h-2zM4 13h2v1h-2zM10 13h1v1h-1zM12 13h1v1h-1zM14 13h1v1h-1zM17 13h5v1h-5zM2 14h5v1h-5zM8 14h2v1h-2zM11 14h2v1h-2zM14 14h1v1h-1zM18 14h1v1h-1zM20 14h2v1h-2zM23 14h1v1h-1zM25 14h4v1h-4zM0 15h1v1h-1zM3 15h2v1h-2zM8 15h2v1h-2zM13 15h2v1h-2zM16 15h5v1h-5zM23 15h1v1h-1zM25 15h1v1h-1zM27 15h1v1h-1zM0 16h3v1h-3zM4 16h3v1h-3zM9 16h3v1h-3zM14 16h2v1h-2zM17 16h1v1h-1zM19 16h3v1h-3zM23 16h1v1h-1zM27 16h1v1h-1zM4 17h2v1h-2zM8 17h4v1h-4zM14 17h1v1h-1zM16 17h1v1h-1zM22 17h2v1h-2zM25 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM2 18h1v1h-1zM4 18h3v1h-3zM12 18h2v1h-2zM16 18h1v1h-1zM22 18h2v1h-2zM27 18h2v1h-2zM7 19h1v1h-1zM9 19h2v1h-2zM14 19h1v1h-1zM16 19h3v1h-3zM20 19h1v1h-1zM24 19h1v1h-1zM27 19h2v1h-2zM0 20h1v1h-1zM3 20h4v1h-4zM8 20h1v1h-1zM12 20h1v1h-1zM15 20h2v1h-2zM20 20h5v1h-5zM26 20h1v1h-1zM8 21h3v1h-3zM16 21h1v1h-1zM19 21h2v1h-2zM24 21h1v1h-1zM26 21h3v1h-3zM0 22h7v1h-7zM10 22h2v1h-2zM16 22h2v1h-2zM20 22h1v1h-1zM22 22h1v1h-1zM24 22h1v1h-1zM27 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h2v1h-2zM11 23h2v1h-2zM14 23h1v1h-1zM16 23h1v1h-1zM18 23h1v1h-1zM20 23h1v1h-1zM24 23h3v1h-3zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM10 24h3v1h-3zM15 24h3v1h-3zM20 24h5v1h-5zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h2v1h-2zM11 25h1v1h-1zM16 25h3v1h-3zM20 25h1v1h-1zM22 25h6v1h-6zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM10 26h1v1h-1zM12 26h3v1h-3zM16 26h2v1h-2zM21 26h1v1h-1zM24 26h3v1h-3zM28 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM10 27h2v1h-2zM14 27h5v1h-5zM20 27h1v1h-1zM24 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h3v1h-3zM12 28h4v1h-4zM17 28h1v1h-1zM20 28h1v1h-1zM25 28h1v1h-1zM27 28h1v1h-1z" fill="#1a1a18"/></svg></div>
+        <p>Scan for all 54 places<br>in 12 languages</p>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div>
+        <section>
+          <h3>Traditional markets</h3>
+          <p class="note">Go hungry. Cash is still king at the food stalls.</p>
+          <ul class="places">
+            <li><div class="en">Gwangjang Market</div><div class="ko">광장시장</div><div class="stn"><span class="ln ln1">1</span>종로5가역 · 250 m</div></li>
+            <li><div class="en">Tongin Market</div><div class="ko">통인시장</div><div class="stn"><span class="ln ln3">3</span>경복궁역 · 642 m</div></li>
+            <li><div class="en">Dongmyo Flea Market</div><div class="ko">동묘벼룩시장</div><div class="stn"><span class="ln ln1">1</span>동묘앞역 · 119 m</div></li>
+            <li><div class="en">Chungsin Market</div><div class="ko">충신시장</div><div class="stn"><span class="ln ln1">1</span>종로5가역 · 562 m</div></li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Alleys worth the detour</h3>
+          <p class="note">Streets locals named after what is sold there.</p>
+          <ul class="places">
+            <li><div class="en">Insadong Cultural Street</div><div class="ko">인사동 문화의 거리</div><div class="stn"><span class="ln ln3">3</span>안국역 · 285 m</div></li>
+            <li><div class="en">Seosunra-gil</div><div class="ko">서순라길</div><div class="stn"><span class="ln ln1">1</span>종로3가역 · 182 m</div></li>
+            <li><div class="en">Dongdaemun Chicken Alley</div><div class="ko">서울 동대문 닭한마리 골목</div><div class="stn"><span class="ln ln4">4</span>동대문역 · 310 m</div></li>
+            <li><div class="en">Jongno Stir-fried Octopus Alley</div><div class="ko">서울 종로 낙지볶음 골목</div><div class="stn"><span class="ln ln1">1</span>종각역 · 293 m</div></li>
+            <li><div class="en">Jongno Jewelry Street</div><div class="ko">종로귀금속거리</div><div class="stn"><span class="ln ln3">3</span>종로3가역 · 65 m</div></li>
+            <li><div class="en">Changsin-dong Alley</div><div class="ko">창신동골목길</div><div class="stn"><span class="ln ln6">6</span>창신역 · 301 m</div></li>
+          </ul>
+        </section>
+      </div>
+
+      <div>
+        <section>
+          <h3>Museums &amp; old houses</h3>
+          <p class="note">Jongno has 24 of them. These six are the closest together.</p>
+          <ul class="places">
+            <li><div class="en">Seoul Craft Museum</div><div class="ko">서울공예박물관</div><div class="stn"><span class="ln ln3">3</span>안국역 · 167 m</div></li>
+            <li><div class="en">MMCA Seoul</div><div class="ko">국립현대미술관 서울관</div><div class="stn"><span class="ln ln3">3</span>안국역 · 526 m</div></li>
+            <li><div class="en">Baek In-je House</div><div class="ko">백인제가옥</div><div class="stn"><span class="ln ln3">3</span>안국역 · 491 m</div></li>
+            <li><div class="en">Dilkusha</div><div class="ko">딜쿠샤</div><div class="stn"><span class="ln ln3">3</span>독립문역 · 515 m</div></li>
+            <li><div class="en">Jeon Tae-il Memorial Hall</div><div class="ko">전태일기념관</div><div class="stn"><span class="ln ln2">2</span>을지로3가역 · 288 m</div></li>
+            <li><div class="en">Rice Cake Museum</div><div class="ko">떡박물관</div><div class="stn"><span class="ln ln5">5</span>종로3가역 · 263 m</div></li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>A walk, and a climb</h3>
+          <ul class="places">
+            <li><div class="en">Cheonggyecheon Stream</div><div class="ko">청계천</div><div class="stn"><span class="ln ln5">5</span>광화문역 · 340 m</div></li>
+            <li><div class="en">Bukaksan Mountain</div><div class="ko">북악산</div><div class="stn">종로구 청운동 · no station close by</div></li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Left your bags?</h3>
+          <p class="note">Jongno 3-ga Station, level B1, near Exit 6 — 또타러기지 luggage storage.</p>
+        </section>
+      </div>
+    </div>
+
+    <div class="foot">
+      <div>
+        <h4>Can't say it? Point at it.</h4>
+        <p>Every Korean name above is printed the way it is written on the street sign.</p>
+        <div class="taxi">기사님, <b>광장시장</b>으로 가 주세요.</div>
+      </div>
+      <div>
+        <h4>All 54 places, 12 languages</h4>
+        <p>Free, no sign-up, no ads. Opens in your phone's browser — nothing to install.</p>
+        <div class="url">korea-street.com/seoul/jongno-gu</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="caveat">
+    <h2>이 전단에 <em>일부러</em> 안 넣은 것</h2>
+    <ul>
+      <li><b>입장료·무료 여부</b> — 우리 자료에 없습니다. "무료"라고 적었다가 아니면 손님이 헛걸음합니다.</li>
+      <li><b>영업시간·휴무일</b> — 자주 바뀝니다. 종이는 한 번 뽑으면 1년을 굴러다닙니다.</li>
+      <li><b>소요시간·난이도</b> — 확인한 적이 없습니다. 지어내면 이 앱의 존재 이유가 무너집니다.</li>
+      <li><b>바뀌는 것은 전부 QR 뒤로</b> 보냅니다. 종이에는 <b>잘 안 바뀌는 것</b>만 — 이름, 동네, 가장 가까운 역.</li>
+    </ul>
+  </div>
+</div>
+
