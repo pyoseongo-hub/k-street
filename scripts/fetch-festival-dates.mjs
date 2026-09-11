@@ -241,6 +241,33 @@ console.log(`이번에 받은 축제: ${dated.size}곳 · 파일에 쌓인 전�
 console.log(`  · 앱에 이미 있는 ${already.length}곳 중 → ${matched.length}곳 채움, ${missing.length}곳 못 채움`);
 console.log(`  · 앱에 없던 새 축제 → ${brandNew.length}곳`);
 
+// ── 🆕 **새로 뜬 축제는 여기에만 담기고 화면에는 안 나온다** ──────────────
+//
+// 2026-09-11에 드러난 구멍이다. 이 작업은 매일 도는데도 이름에 「2025」가 박힌
+// 축제 11곳이 1년 가까이 그대로 남아 있었다. 이유는 이렇다 —
+//
+//   앱이 「축제가 뭐가 있나」를 읽는 곳은 이 파일이 아니라 tour-places-raw.json 이고,
+//   그 파일을 채우는 **Fetch tour places 워크플로에는 예약이 없다(손으로만 돈다).**
+//   매일 도는 이 작업은 **이미 있는 축제의 날짜·홈페이지만** 고친다.
+//
+// 그래서 관광공사에 「2026 …축제」가 **새 번호(contentId)로** 올라오면 날짜 파일에는
+// 담기지만 손님 화면에는 영영 안 뜬다. 작년 회차가 1년을 버틴 구조가 바로 이것이다.
+//
+// 숫자만 찍고 지나가면 또 아무도 안 본다(그게 지난 1년이었다). **이름까지 적어**
+// 워크플로가 그대로 이슈로 올릴 수 있게 한다 (사장님 지시 2026-09-11: "알림 주는걸로").
+//
+// ⚠️ 아래 「🆕」 줄과 그 밑의 `  · ` 줄을 워크플로가 그대로 퍼 간다 — 모양을 바꾸면
+//    이슈 본문이 빈다. 고칠 때는 .github/workflows/fetch-festival-dates.yml 도 같이 본다.
+if (brandNew.length) {
+  console.log("");
+  console.log(`🆕 화면에 없는 새 축제 ${brandNew.length}곳 — Fetch tour places 를 돌려야 들어갑니다:`);
+  for (const id of brandNew) {
+    const v = out[id];
+    const when = v.startMonth ? `${v.startMonth}월` : "달 모름";
+    console.log(`  · ${v.name} (${v.gu ?? "구 모름"}) — ${when} · ${v.start} · contentId ${id}`);
+  }
+}
+
 const byMonth = {};
 for (const v of Object.values(out)) byMonth[v.startMonth] = (byMonth[v.startMonth] ?? 0) + 1;
 console.log("");
