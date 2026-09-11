@@ -1215,6 +1215,105 @@ button {
   gap: 12px;
 }
 
+/* ── 📏 가까운 순 보기 (2026-09-12 사장님 생각) ────────────────────────────
+   "구를 선택 / 아래로 리스트 거리순 나열 / 1km 미만 장소 … / 거리순 보기 테마별보기"
+
+   🚨 **아래 넷은 카드가 아니라 「줄 제목」이다.** 1080px 이상에서 .place-list 는
+      3칸 격자가 되는데(2208줄), 그러면 이 넷도 **칸 하나씩 차지해 카드 사이에 끼어
+      버린다.** 그래서 전부 `grid-column: 1 / -1` 로 한 줄을 통째로 쓰게 못박는다.
+      flex(폰·태블릿)에서는 이 값이 무시되므로 넣어 둬도 손해가 없다. ── */
+.view-toggle,
+.band-note,
+.band-head,
+.empty-note {
+  grid-column: 1 / -1;
+}
+
+/* 🔀 보기 전환 — 두 칸을 붙여 하나의 알약처럼. 「탭」처럼 보여야 누를 생각이 든다. */
+.view-toggle {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--surface);
+}
+
+.view-tab {
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  flex: 1;
+  border: 0;
+  border-radius: 100px;
+  padding: 8px 10px;
+  cursor: pointer;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  /* ⚠️ 12개 언어라 글자 길이가 제각각이다(독일어가 가장 길다). 줄이 잘리면
+     「Nach Entfernung」이 「Nach Entfer…」가 된다 — 무엇을 누르는지 모르게 된다.
+     그래서 **글자만큼은 늘 자리를 준다**. scripts/check-btn-clip.mjs 가 지킨다. */
+  min-width: max-content;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.view-tab.on {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.view-tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* 🧭 「안국역 3호선에서 잰 거리예요」 — 기준점을 반드시 밝힌다.
+   어디서 잰 거리인지 안 적으면 손님은 **자기 위치에서 잰 줄 안다.** */
+.band-note {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  padding: 0 2px;
+  word-break: keep-all;
+}
+
+/* 거리 띠 제목 — 「~ 1 km」 옆에 곳 수. 숫자만 쓰므로 번역이 필요 없다. */
+.band-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.band-head::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.band-km {
+  font-family: "IBM Plex Mono", monospace;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.band-n {
+  min-width: 20px;
+  padding: 1px 7px;
+  border-radius: 100px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 11.5px;
+  text-align: center;
+}
+
 .place-row {
   border-radius: 20px;
   overflow: hidden;
@@ -1366,6 +1465,20 @@ button {
 .pr-gu {
   font-size: 12px;
   color: var(--text-muted);
+}
+
+/* 📏 대표 역에서 잰 **직선** 거리. 「걸어서 …분」이 아니다 —
+   길은 꺾이므로 실제로 걷는 거리는 이보다 멀다. 지어낸 값을 안 쓰려고
+   단위를 m·km 로만 적는다(districtDistance.ts 주석). */
+.pr-dist {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 1px 8px;
+  white-space: nowrap;
 }
 
 .pr-name {

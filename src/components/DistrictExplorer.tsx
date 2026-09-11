@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
-import { ALL_PLACES, CATEGORY_META, type Category } from "../data/seed";
+import { ALL_PLACES, CATEGORY_META, type Category, type Place } from "../data/seed";
 import { SEOUL_HEX_ROWS } from "../data/seoulHexMap";
 import { districtShortName, districtFullName, dongName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
 import PlacePhoto from "./PlacePhoto";
 import SaveButton from "./SaveButton";
 import ShareButton from "./ShareButton";
+import { districtOrigin, rankByDistance, toBands } from "../lib/districtDistance";
 import { openPlaceInfo } from "../lib/mapLinks";
 import { getTourImage } from "../lib/tourImages";
 import { getMyDistrict, type MyDistrict } from "../lib/myDistrict";
@@ -58,6 +59,54 @@ export default function DistrictExplorer() {
     () => (gu ? inCategory.filter((p) => p.gu === gu) : []),
     [gu, inCategory]
   );
+
+  // 📏 **가까운 순 보기** (2026-09-12 사장님 생각).
+  //
+  //    "구를 선택 / 아래로 리스트 거리순 나열 / 1km 미만 장소 …
+  //     그냥 나열하면 먼데부터 갈수잏자나"
+  //
+  //    갈래별 보기(지금까지의 화면)는 **고른 갈래만** 보여 준다. 가까운 순 보기는
+  //    반대로 **그 구의 곳을 전부** 모아 거리 띠(1km·2km·3km)로 끊는다 —
+  //    손님은 「무엇을 볼까」가 아니라 「여기서 뭘 볼 수 있나」를 묻기 때문이다.
+  //
+  //    🧭 기준점은 **그 구의 대표 역**이다. 내 위치가 아니다 — 사장님 지적:
+  //       "내 위치는 매일 숙소에서 계획 짜면 같은장소니 구를 선택하게".
+  //    🚨 시간(「2시간 코스」)은 **쓰지 않는다** — 머무는 시간은 사람마다 다르다.
+  //       거리만 쓴다. 자세한 이유는 src/lib/districtDistance.ts · docs/코스-추천.md.
+  const [view, setView] = useState<"theme" | "distance">("theme");
+
+  type Row =
+    | { kind: "band"; key: string; label: string; n: number }
+    | { kind: "place"; key: string; place: Place; meters?: number };
+
+  const distanceFrom = useMemo(() => {
+    if (!gu) return null;
+    return districtOrigin(ALL_PLACES.filter((p) => p.gu === gu));
+  }, [gu]);
+
+  const rows: Row[] = useMemo(() => {
+    if (!gu) return [];
+    // 갈래별 — 지금까지와 똑같다
+    if (view === "theme" || !distanceFrom)
+      return selected.map((p) => ({ kind: "place", key: p.id, place: p }));
+    // 가까운 순 — 그 구의 곳 **전부**를 거리 띠로 끊는다
+    const here = ALL_PLACES.filter((p) => p.gu === gu);
+    const out: Row[] = [];
+    for (const b of toBands(rankByDistance(here, distanceFrom))) {
+      // 띠 제목은 **숫자만** — 어느 언어에서도 그대로 읽힌다(번역할 것이 없다)
+      const lo = b.lower / 1000;
+      const hi = b.upper ? b.upper / 1000 : null;
+      out.push({
+        kind: "band",
+        key: `band-${b.lower}`,
+        label: hi === null ? `${lo} km +` : lo === 0 ? `~ ${hi} km` : `${lo} – ${hi} km`,
+        n: b.items.length,
+      });
+      for (const r of b.items)
+        out.push({ kind: "place", key: r.place.id, place: r.place, meters: r.meters });
+    }
+    return out;
+  }, [gu, view, selected, distanceFrom]);
 
   return (
     <section className="panel district-explorer">
@@ -182,10 +231,30 @@ export default function DistrictExplorer() {
 
       {gu && (
         <div className="place-list">
-          {selected.length === 0 && (
+          {/* 🔀 보기 전환 — 구를 고른 뒤에만 뜬다. 역 자료가 없는 구에서는 가까운 순을 감춘다. */}
+          {distanceFrom && (
+            <div className="view-toggle">
+              <button type="button" className={"view-tab" + (view === "theme" ? " on" : "")}
+                onClick={() => setView("theme")} aria-pressed={view === "theme"}>{t.viewByTheme}</button>
+              <button type="button" className={"view-tab" + (view === "distance" ? " on" : "")}
+                onClick={() => setView("distance")} aria-pressed={view === "distance"}>{t.viewByDistance}</button>
+            </div>
+          )}
+          {view === "distance" && distanceFrom && (
+            <p className="band-note">{t.fromStationNote(distanceFrom.station)}</p>
+          )}
+          {rows.length === 0 && (
             <p className="empty-note">{t.noPlacesInDistrictMessage(districtFullName(gu, language))}</p>
           )}
-          {selected.map((p) => {
+          {rows.map((row) => {
+            if (row.kind === "band")
+              return (
+                <h3 className="band-head" key={row.key}>
+                  <span className="band-km">{row.label}</span>
+                  <span className="band-n">{row.n}</span>
+                </h3>
+              );
+            const p = row.place;
             // 사진은 두 군데서 온다 — 관광공사에서 통째로 받아온 곳은 항목 자체에
             // 붙어 있고, 예전 fetch-tour-images.mjs로 따로 맞춰 붙인 것은
             // id를 열쇠로 tour-images.json에 있다.
@@ -241,6 +310,14 @@ export default function DistrictExplorer() {
                       {p.dong ? ` ${dongName(p.dong, language)}` : ""}
                     </span>
                     {compact && <SaveButton place={p} className="save-btn save-btn--inline" />}
+                    {/* 📏 가까운 순 보기일 때만 거리를 붙인다. 갈래별 보기에는 기준점이 없다. */}
+                    {row.meters != null && (
+                      <span className="pr-dist">
+                        {row.meters < 1000
+                          ? `${Math.round(row.meters)} m`
+                          : `${(row.meters / 1000).toFixed(1)} km`}
+                      </span>
+                    )}
                     {/* 🔗 공유 — 세 카드가 같은 자리에 둔다(ShareButton.tsx 주석). */}
                     <ShareButton place={p} />
                   </div>
