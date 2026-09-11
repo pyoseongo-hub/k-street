@@ -157,6 +157,16 @@ const NOT_MTN = /(근린공원|체육공원|배수지|한옥마을|역광장|신
 const STREET = /(골목|거리|가로수길|경리단길|우사단길|서순라길|로렌스길|감고당길|차이나타운|떡볶이타운|로데오)/;
 // 거리공원·우이동 먹거리마을·패션타운(동대문 도매상가)은 거리가 아니다.
 const NOT_STREET = /(공원|마을|패션타운|나눔누리|체험관|기념비)/;
+// 🚨 **한국어는 맨 뒤 낱말이 「그게 무엇인지」를 정한다** (2026-09-11).
+//    위 NOT_STREET 가 「마을」만 보고 진짜 골목 둘을 버리고 있었다:
+//      · 북촌한옥마을 감고당길   ← 북촌의 진짜 골목인데 「마을」 때문에 탈락
+//      · 세종마을 음식문화거리   ← 서촌의 음식 거리인데 같은 이유로 탈락
+//    둘 다 「마을」은 **어디에 있는지**를 말하는 앞머리고, 그것이 무엇인지는 맨 뒤의
+//    「길·거리」가 말한다. 반대로 「거리공원」·「구로거리공원」은 뒤가 공원이라 공원이 맞다.
+//    그래서 **이름이 거리 낱말로 끝나면 NOT_STREET 를 무시한다.**
+//    ⚠️ STREET 규칙 자체는 넓히지 않았다 — 이미 STREET 에 걸린 것에만 적용되므로
+//       쌈지길·초대길처럼 근거가 약한 것이 딸려 들어오지 않는다(돌려서 확인했다).
+const ENDS_STREET = /(거리|골목|길)$/;
 
 // ⚠️ 순서가 규칙의 일부다 — 앞에 있는 것이 이긴다. 한 곳이 두 칸에 겹쳐 들어가면
 // 화면에 같은 곳이 두 번 뜬다. 예: "노룬산골목시장"은 골목이 아니라 시장이고,
@@ -167,7 +177,7 @@ const RULES = [
   { key: "flower", re: /(벚꽃|꽃길|철쭉|장미원|연꽃|수목원|화훼단지)/ },
   { key: "walk", re: /(둘레길|나들길|산책|숲길|자락길|하늘길|트레일|올레|계곡|생태공원|수변|돌담길|서울로 7017)/ },
   { key: "hike", re: MTN, not: NOT_MTN },
-  { key: "street", re: STREET, not: NOT_STREET },
+  { key: "street", re: STREET, not: NOT_STREET, ends: ENDS_STREET },
 ];
 
 // 넓게 받아 두는 칸들. 여기서 키워드로 골라낸다.
@@ -201,7 +211,11 @@ async function main() {
   for (const { key } of RULES) result[key] = [];
   for (const it of pool) {
     const name = it.title || "";
-    const rule = RULES.find((r) => r.re.test(name) && !(r.not && r.not.test(name)));
+    // 「아니다」 규칙은 **이름이 그 갈래 낱말로 끝나면 무시한다** — 맨 뒤 낱말이
+    // 그게 무엇인지를 정하기 때문이다(ENDS_STREET 주석 참고).
+    const rule = RULES.find(
+      (r) => r.re.test(name) && !(r.not && r.not.test(name) && !(r.ends && r.ends.test(name.trim())))
+    );
     if (rule) result[rule.key].push(toPlace(it));
   }
 
