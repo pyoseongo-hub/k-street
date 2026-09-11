@@ -2124,31 +2124,37 @@ button {
     padding: 28px 36px 18px;
   }
 
+  /* 아래 본문이 900px 로 모이므로 이 띠도 같은 폭으로 맞춘다 —
+     띠만 넓으면 줄이 어긋나 보인다. */
   .tab-bar {
+    width: 100%;
+    max-width: 972px; /* 900 + 좌우 안쪽 여백 36씩 */
+    margin: 0 auto;
     padding: 0 36px 20px;
   }
 
+  /* 💻 **한 패널만 있을 때는 가운데로 모은다** (2026-09-11 사장님:
+     "링크 여니까 컴퓨터에 이렇게 보이는데" — 화면 사진).
+
+     🚨 여기 있던 2단 배치(축제 | 동네)는 **둘이 같이 있을 때**를 가정하고 짰다.
+        그런데 이 앱은 탭으로 **한 번에 하나만** 그린다. 그래서 어느 탭에 있든
+        오른쪽 절반이 늘 비어 있었다 — 1920px 창에서는 화면의 40%가 빈 채였다.
+        PC로 처음 들어온 사람 눈에는 **덜 만든 앱**으로 보인다.
+
+     고친 방법: 기본은 **가운데 한 줄**. 둘이 실제로 같이 있을 때만 2단으로 간다. */
   .app-main {
     display: grid;
-    grid-template-columns: 1.15fr 1fr;
-    grid-template-areas:
-      "weather  weather"
-      "festival district";
+    grid-template-columns: minmax(0, 900px);
+    justify-content: center;
     gap: 24px;
     padding: 8px 36px 48px;
   }
 
-  .weather-strip {
-    grid-area: weather;
-  }
-
-  .monthly-festival-panel {
-    grid-area: festival;
-  }
-
-  .district-explorer {
-    grid-area: district;
-  }
+  /* ⚠️ **2단으로 되돌리지 말 것.** 「축제 | 동네」를 나란히 두는 배치를 한 번 시도했다가
+        걷어냈다. 이 앱은 탭으로 **한 번에 하나만** 보여 주므로 나머지 칸이 늘 빈다.
+        `:has()` 로 "둘 다 있을 때만 2단"을 해 보려 했지만 그것도 안 된다 —
+        **안 보이는 패널도 DOM 에는 남아 있어서** 조건이 늘 참이 된다.
+        2단을 정말 하려면 화면 쪽(HomeSwitch)에서 **둘을 같이 그리게** 먼저 고쳐야 한다. */
 
   .panel-head h2 {
     font-size: 36px;
