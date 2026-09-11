@@ -186,10 +186,18 @@ try {
 const merged = { ...previous };
 let added = 0;
 let updated = 0;
+// 🔔 **실제로 바뀐 축제의 번호**를 모아 둔다 — IndexNow 로 검색엔진에 알릴 것이다
+//    (2026-09-11). 숫자만 세면 "몇 곳이 바뀌었다"는 알아도 **어느 곳인지**를 모른다.
+const changedIds = new Set();
 for (const [id, v] of dated) {
   const old = merged[id];
-  if (!old) added++;
-  else if (old.start !== v.start) updated++;
+  if (!old) {
+    added++;
+    changedIds.add(id);
+  } else if (old.start !== v.start) {
+    updated++;
+    changedIds.add(id);
+  }
   // 같은 축제가 새 회차로 다시 뜨면 최신으로 갈아 준다. 옛 회차보다 최신이 낫다.
   if (!old || v.start > old.start) merged[id] = v;
 }
@@ -333,6 +341,57 @@ if (missing.length) {
     console.log("   (관광공사 날짜는 지난 회차일 수 있다. 공식 안내를 보고 정할 것.)");
   } else {
     console.log("✅ 우리가 적어 둔 달과 관광공사 날짜가 어긋나는 축제 없음.");
+  }
+}
+
+// ── 🔔 바뀐 주소를 적어 둔다 (IndexNow) ─────────────────────────────────
+//
+// 왜 (2026-09-11 사장님 계획서 6번: "IndexNow를 적용해 … 변경될 때 URL을 자동 전송") —
+// 보통은 검색엔진이 제 발로 올 때까지 며칠~몇 주를 기다린다. IndexNow 는 우리가 먼저
+// 두드려 **그 주소만** 다시 보게 하는 방법이다. 축제는 날짜가 옮겨 다니므로 딱 맞는다.
+// 빙이 받아 주고, **챗GPT·코파일럿의 검색 바탕이 빙**이라 그 자리에 우리가 들어간다.
+//
+// 🚨 **바뀐 것만 적는다.** 안 바뀐 주소를 매일 보내면 엔진이 우리 알림을 무시한다.
+//    그래서 changedIds 가 비면 이 파일을 아예 안 만들고, 워크플로도 그냥 지나간다.
+//
+// ⚠️ **언어판 주소는 안 적는다.** 12개 언어를 다 적으면 곳 하나당 12줄이 되는데,
+//    그러려면 언어 목록을 이 파일에 또 베껴 써야 한다 — 이 저장소에 이미 네 군데
+//    흩어져 있고, CLAUDE.md 가 "잣대가 둘이면 반쪽 적용이 생긴다"고 못 박은 자리다.
+//    대표 주소 한 줄만 적는다. 그 페이지에 hreflang 13줄이 붙어 있으므로
+//    엔진이 거기서 언어판을 따라간다.
+{
+  const changedUrls = [];
+  if (changedIds.size) {
+    let slugs = {};
+    try {
+      slugs = JSON.parse(readFileSync(new URL("../src/data/place-slugs.json", import.meta.url), "utf-8"));
+    } catch {
+      /* 표가 없으면 주소를 못 만든다 — 지어내지 않고 비워 둔다 */
+    }
+    const months = new Set();
+    for (const id of changedIds) {
+      // 관광공사 자료는 앱에서 `tour_<contentId>` 로 산다(tourPlaces.ts 의 idOf).
+      const slug = slugs[`tour_${id}`];
+      // 🚨 슬러그가 없으면 **그 곳의 페이지가 아직 없다는 뜻**이다. 없는 주소를
+      //    알리면 엔진이 404 를 받고, 그런 알림이 쌓이면 우리를 덜 믿는다.
+      if (slug) changedUrls.push(`https://korea-street.com/place/${slug}/`);
+      const m = merged[id]?.startMonth;
+      if (m) months.add(m);
+    }
+    // 달별 묶음 페이지도 같이 바뀐다 — 그 축제가 그 목록에 들어 있으니까.
+    const MONTH_SLUG = ["january","february","march","april","may","june",
+                        "july","august","september","october","november","december"];
+    for (const m of months) changedUrls.push(`https://korea-street.com/seoul/festivals-in-${MONTH_SLUG[m - 1]}/`);
+    if (changedUrls.length) changedUrls.push("https://korea-street.com/seoul/festivals/");
+  }
+  const CHANGED = join(__dirname, "..", "changed-urls.txt");
+  if (changedUrls.length) {
+    writeFileSync(CHANGED, [...new Set(changedUrls)].join("\n") + "\n");
+    console.log("");
+    console.log(`🔔 바뀐 주소 ${new Set(changedUrls).size}개를 changed-urls.txt 에 적었다 (검색엔진에 알릴 것).`);
+  } else if (changedIds.size) {
+    console.log("");
+    console.log(`🔔 ${changedIds.size}곳이 바뀌었지만 **아직 페이지가 없는 곳**이라 알릴 주소가 없다.`);
   }
 }
 
