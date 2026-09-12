@@ -32,6 +32,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      # 🚀 배포를 **손으로 깨워야** 한다 — 아래 「배포를 깨운다」 단계 주석 참고.
+      actions: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -74,6 +76,21 @@ jobs:
             git push
             echo "committed=yes" >> "$GITHUB_OUTPUT"
           fi
+      # 🚀 **배포를 깨운다** (2026-09-12에 찾은 구멍).
+      #
+      #    🚨 깃허브는 **봇이 기본 토큰으로 민 커밋으로는 다른 워크플로를 안 띄운다.**
+      #       그래서 이 작업이 번역을 저장해도 **배포는 안 돌았다.** 아래 요약문이
+      #       「몇 분 뒤 앱에 반영됩니다」라고 말하고 있었는데 **사실이 아니었다** —
+      #       사람이 다른 것을 푸시할 때까지 손님 화면은 옛 번역 그대로였다.
+      #       (확인한 숫자: 봇이 띄운 Deploy 실행 0회)
+      #    ⚠️ **저장한 날에만** 부른다. 안 바뀐 날까지 깨우면 빌드를 헛되이 태운다.
+      - name: 바뀐 게 있으면 배포를 깨운다
+        if: ${{ inputs.apply && steps.commit.outputs.committed == 'yes' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run deploy.yml --ref main
+          echo "🚀 배포를 깨웠다 — 몇 분 뒤 korea-street.com 에 반영된다"
       - name: 결과 요약
         if: always()
         run: |
