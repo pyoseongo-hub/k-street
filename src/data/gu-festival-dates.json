@@ -1,0 +1,41 @@
+{
+ "설명": "구청·구 문화재단이 서울시 문화포털에 직접 올린 축제 확정 날짜. scripts/fetch-gu-festival-dates.ts 가 받는다. 손으로 고치지 말 것.",
+ "받은날": "2026-09-12",
+ "곳": {
+  "ks_7": {
+   "start": "2026-09-19",
+   "end": "2026-09-20",
+   "title": "[구로구] 구로G페스티벌(아시아문화축제)",
+   "gu": "구로구",
+   "org": "구로구청",
+   "orgLink": "https://www.gfestival.co.kr/default/index.php",
+   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159254&menuNo=200010",
+   "registered": "2026-08-27",
+   "source": "seoul-culture-portal",
+   "fetchedAt": "2026-09-12"
+  },
+  "tour_3012095": {
+   "start": "2026-10-02",
+   "end": "2026-10-11",
+   "title": "[서울시청] 2026 서울라이트 한강 빛섬축제 ",
+   "gu": "용산구",
+   "org": "서울시청",
+   "orgLink": "https://bitseomfestival.com",
+   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159242&menuNo=200010",
+   "registered": "2026-08-27",
+   "source": "seoul-culture-portal",
+   "fetchedAt": "2026-09-12"
+  },
+  "tour_2621558": {
+   "start": "2026-10-10",
+   "title": "[중랑문화재단] 2026 중랑용마폭포축제",
+   "gu": "중랑구",
+   "org": "중랑문화재단",
+   "orgLink": "https://www.instagram.com/yongma_fe/",
+   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159251&menuNo=200010",
+   "registered": "2026-08-27",
+   "source": "seoul-culture-portal",
+   "fetchedAt": "2026-09-12"
+  }
+ }
+}
