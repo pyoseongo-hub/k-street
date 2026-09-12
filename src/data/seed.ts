@@ -419,6 +419,42 @@ export const MUSEUMS: Place[] = [
   { id: id(), gu: "중랑구", category: "museum", name: "중랑역사문화센터", note: "망우역사문화공원 내, 서울장미축제(03-2) 인근", confirmed: true },
 ];
 
+/**
+ * 🆕 **나중에 들인 축제** — 여기에만 더한다. 위 FESTIVALS 를 건드리지 않는다.
+ *
+ * 🚨 **왜 따로 두나 — id 가 자리 순서로 매겨지기 때문이다.**
+ *    `id()` 는 이 파일에 적힌 **순서대로** ks_1, ks_2 … 를 준다. 그래서 FESTIVALS
+ *    한가운데에 한 줄만 끼워 넣어도 **그 뒤 290곳의 id 가 통째로 한 칸씩 밀린다.**
+ *    사진·좌표·블로그 자료가 전부 id 를 열쇠로 붙어 있으니, 밀리는 순간
+ *    **남의 집 사진이 뜬다.** (CLAUDE.md: 「id 는 재사용하지 않는다」)
+ *    → **새 곳은 늘 맨 뒤에.** 그래야 이미 매겨진 번호가 하나도 안 움직인다.
+ *
+ * 📌 어디서 왔나 (2026-09-12, 사장님 지시 "진행"):
+ *    매일 도는 `fetch-gu-festival-dates` 가 **「구청에는 있는데 우리 화면에 없는
+ *    축제」** 목록을 내놓는다. 그중 관광객이 갈 만한 것을 사람이 골라 들인다.
+ *    기계가 자동으로 넣지 않는다 — 목록에는 위령제·박람회·도서관 행사도 섞여 있다.
+ *
+ * 🗺️ **주소·좌표를 여기에 안 적는다.** 구청이 올린 장소를 그대로 쓰기 때문이다
+ *    (seed.ts 의 withGuFestival). 확정 회차가 끝나면 아래 addr 만 남는다 —
+ *    그래서 addr 에는 **해마다 안 바뀌는 자리**만 적는다(「남산골한옥마을 일대」).
+ *
+ * ⏳ 「2026 종로한복축제」(9.11~12)는 **일부러 뺐다.** 오늘(9/12)이 마지막 날이라
+ *    내일이면 목록에서 사라진다. 내년 회차가 올라오면 그때 들인다.
+ */
+export const FESTIVALS_ADDED: Place[] = [
+  // 🏞️ 2026년부터 **서울광장에서 한강으로 옮겼다** — 뚝섬한강공원·서울숲 일대.
+  //    그래서 문화포털에 광진구로 등록돼 있다(성동구 서울숲까지 걸친다).
+  //    공식 주소는 일부러 비워 둔다 — 구청이 올린 주소가 인스타그램이라
+  //    officialSite.ts 가 거른다. 그러면 화면은 문화포털 안내로 보낸다(guOfficialLink).
+  { id: id(), gu: "광진구", category: "festival", name: "서울거리예술축제", startMonth: 9, endMonth: 9, addr: "뚝섬한강공원, 서울숲", note: "국내외 20개 작품, 전 프로그램 무료. 2026년부터 서울광장 → 한강으로 옮겼다", monthSource: "서울시 문화포털·서울문화재단 등록 (2026 9.19–20) + 언론 보도", confirmed: true },
+  // 🏮 추석 연휴에 여는 한옥마을 축제. 외국인 손님이 가장 많이 찾는 때다.
+  { id: id(), gu: "중구", category: "festival", name: "남산골 추석축제", startMonth: 9, endMonth: 9, addr: "남산골한옥마을 일대", officialUrl: "https://www.hanokmaeul.co.kr", note: "추석 연휴 「남산달빛마당」", monthSource: "서울시 문화포털·남산골한옥마을 등록 (2026 9.25–27)", confirmed: true },
+  // 🖼️ 인사동 문화지구 전체가 장터가 된다 — 골목 자체가 볼거리인 자리라 잘 맞는다.
+  { id: id(), gu: "종로구", category: "festival", name: "인사동 엔틱&아트페어", startMonth: 10, endMonth: 10, addr: "인사아트프라자, 안녕인사동 및 인사동 문화지구 전 지역", officialUrl: "http://www.hiinsa.com", monthSource: "서울시 문화포털·종로구청 등록 (2026 10.1–4)", confirmed: true },
+  // 🍖 난지캠핑장. ⚠️ 요금은 적지 않는다 — 구청 자료에 「홈페이지 참고」로만 돼 있다.
+  { id: id(), gu: "마포구", category: "festival", name: "서울 바비큐 페스티벌", startMonth: 10, endMonth: 10, addr: "난지캠핑장", officialUrl: "https://www.seoulbbqfesta.com", monthSource: "서울시 문화포털·서울시청 등록 (2026 10.24–25)", confirmed: true },
+];
+
 const ALL_PLACES_RAW: Place[] = [
   ...FESTIVALS,
   ...MARKETS,
@@ -426,6 +462,8 @@ const ALL_PLACES_RAW: Place[] = [
   ...WALKS,
   ...HIKES,
   ...MUSEUMS,
+  // 🆕 맨 뒤에 붙인다 — 위 주석 참고. 순서를 바꾸면 id 가 밀린다.
+  ...FESTIVALS_ADDED,
 ];
 
 // scripts/fetch-coords.mjs가 채운 좌표를 덧씌운다 — seed.ts에 이미 직접 박아 둔
@@ -627,7 +665,10 @@ export const ALL_FESTIVALS: Place[] = (() => {
   // 뜬다(실제로 성북거리문화축제가 그랬다). 잣대가 둘이면 반쪽만 고쳐진다.
   const byName = new Map(tourFestivals.map((p) => [nameKey(p.name), p]));
   const used = new Set<string>();
-  const merged = FESTIVALS.map((p) => {
+  // 🆕 나중에 들인 축제(FESTIVALS_ADDED)도 여기 들어와야 계절·달 화면에 뜬다.
+  //    ⚠️ 빼먹으면 **자료는 있는데 어느 화면에도 안 나온다** — 관광공사 축제 57곳이
+  //       예전에 그랬다(이 함수 맨 위 주석). 같은 실수를 되풀이하지 않는다.
+  const merged = [...FESTIVALS, ...FESTIVALS_ADDED].map((p) => {
     const t = findTourPlace(p.name) ?? byName.get(nameKey(p.name));
     if (!t || t.category !== "festival") return p;
     used.add(t.id);
