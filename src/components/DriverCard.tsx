@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { createPortal } from "react-dom";
+import { useOverlay } from "../lib/useOverlay";
 import { useLanguage } from "../lib/useLanguage";
 
 /**
@@ -57,19 +57,9 @@ export default function DriverCard({
 
   // 뒤로 가기(안드로이드 물리 버튼·제스처)로도 닫히게 한다. 전체 화면을 덮는
   // 창인데 닫는 길이 버튼 하나뿐이면 손님이 갇혔다고 느낀다.
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKey);
-    // 화면이 떠 있는 동안 뒤 목록이 같이 스크롤되지 않게 잠근다.
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
-    };
-  }, [onClose]);
+  // 🔙 폰 뒤로가기·Esc 로 닫고, 떠 있는 동안 뒤 목록은 잠근다.
+  //    같은 고리가 화면 셋에 복사돼 있었다 — 잣대는 하나만 둔다(src/lib/useOverlay.ts).
+  useOverlay(onClose);
 
   // 🚨 **body 로 옮겨 그린다(portal).** 처음에는 버튼 옆에 그냥 그렸는데
   //    `position: fixed` 인데도 화면을 못 덮고 **카드 안에 갇혔다** — 축제 카드

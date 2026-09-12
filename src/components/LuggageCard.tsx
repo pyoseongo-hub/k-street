@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createPortal } from "react-dom";
+import { useOverlay } from "../lib/useOverlay";
 import { useLanguage } from "../lib/useLanguage";
 import { getMapLinks, openMapLink, type MapLinkTarget } from "../lib/mapLinks";
 import { getPositionOrNull } from "../lib/userPosition";
@@ -81,20 +82,11 @@ export default function LuggageCard({
   const [picked, setPicked] = useState<string | null>(null);
   const pickedCoord = picked ? BRANCH_COORDS[picked] : undefined;
 
-  // 뒤로 가기·Esc 로도 닫히게 한다. 화면을 덮는 창인데 닫는 길이 하나뿐이면
-  // 손님이 갇혔다고 느낀다 (DriverCard 와 같은 이유).
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
-    };
-  }, [onClose]);
+  // 🔙 폰 뒤로가기·Esc 로 닫고, 떠 있는 동안 뒤 목록은 잠근다.
+  //    ⚠️ 이 주석은 예전부터 「뒤로 가기·Esc 로도 닫히게 한다」고 적혀 있었는데
+  //       **실제로는 Esc 만 있었다**(2026-09-12에 사장님이 폰에서 잡으셨다) —
+  //       뒤로가기를 누르면 앱이 통째로 꺼졌다. 이제 src/lib/useOverlay.ts 하나가 맡는다.
+  useOverlay(onClose);
 
   const hasStation = !!station && !station.none && !!station.station && station.lat != null && station.lng != null;
 

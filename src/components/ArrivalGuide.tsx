@@ -40,6 +40,7 @@
 
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { useOverlay } from "../lib/useOverlay";
 import { useLanguage } from "../lib/useLanguage";
 import GUIDE from "../data/arrival-guide.json";
 
@@ -78,6 +79,9 @@ export function arrivalLabel(lang: string): string {
 }
 
 export default function ArrivalGuide({ onClose }: { onClose: () => void }) {
+  // 🔙 폰 뒤로가기로 닫는다 — 전체화면에서 손님이 실제로 쓰는 길이다.
+  //    주소 기록을 안 남기면 뒤로가기가 **앱을 통째로 꺼뜨린다**(useOverlay 머리말).
+  useOverlay(onClose);
   const { language } = useLanguage();
   const g = pick(DATA.안내, language);
   const linkLabel = pick(DATA.공식링크라벨, language);
