@@ -1,0 +1,62 @@
+name: Translate sells (판매품목 낱말 번역)
+
+# 🏪 시장 판매품목을 **낱말 단위**로 12개 언어로 번역한다.
+#    왜 문장이 아니라 낱말인지는 scripts/translate-sells.mjs 머리말에.
+#
+# 🔁 **이미 번역한 낱말은 다시 안 보낸다.** 구글 무료 한도(월 50만 자)를 아낀다.
+# ⚠️ apply 를 끈 채 먼저 돌려 번역을 눈으로 볼 것.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "번역을 파일로 저장하고 커밋할까 (끄면 맛보기만)"
+        type: boolean
+        default: false
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 열쇠가 있나 먼저 본다
+        env:
+          GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+        run: |
+          if [ -z "$GOOGLE_TRANSLATE_API_KEY" ]; then
+            echo "❌ GOOGLE_TRANSLATE_API_KEY 시크릿이 없다"; exit 1
+          fi
+          echo "✅ 열쇠 있음 (${#GOOGLE_TRANSLATE_API_KEY}자)"
+      - name: 번역하기
+        env:
+          GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/translate-sells.mjs ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee sells-log.txt
+      - name: 저장된 것이 있으면 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          if [ ! -f src/data/sells-words.json ]; then
+            echo "저장된 파일이 없다 — 커밋할 것도 없다"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/sells-words.json
+          git diff --cached --quiet && { echo "바뀐 게 없다"; exit 0; }
+          git commit -m "판매품목 낱말을 12개 언어로 번역했다 (translate-sells) [skip render]"
+          git push
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🏪 판매품목 낱말 번역"
+            echo ""
+            echo '```'
+            cat sells-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
