@@ -2988,3 +2988,78 @@ html[lang^="zh"] * {
 @media (min-width: 421px) {
   .lang-globe { display: none; }
 }
+
+/* 🚇 호선 고르기 — 「비 오는 날」이 거리순 나열에서 **호선별**로 바뀌었다
+   (2026-09-12 사장님: "1호선 방면 2호선 방면 이런 식이 되어야 사람이 계획을 잡지").
+   설계 이유는 src/lib/rainyPlaces.ts 의 rainyByLine 머리말에. */
+.rp-lines {
+  display: flex;
+  gap: 7px;
+  margin: 2px 0 12px;
+  padding-bottom: 4px;
+  /* 옆으로 굴린다 — 노선이 스무 개가 넘어도 **자리는 한 줄**이다. */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.rp-lines::-webkit-scrollbar { display: none; }
+.rp-line {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 13px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: .86rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.rp-line.active {
+  border-color: var(--rain);
+  background: color-mix(in srgb, var(--rain) 16%, transparent);
+  font-weight: 600;
+}
+.rp-line-n {
+  font-size: .76rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.rp-line.active .rp-line-n { color: var(--rain); }
+
+/* 🧭 노선의 양 끝 — 손님이 방향을 스스로 읽는 줄 */
+.rp-dir {
+  margin: 0 0 12px;
+  font-size: .82rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 🚇 역 한 칸 */
+.rp-stn { margin: 0 0 16px; }
+.rp-stn-h {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 8px;
+  font-size: .9rem;
+  font-weight: 600;
+}
+.rp-stn-nm { min-width: 0; }
+/* 🏮 아케이드 딱지 — 호선별로 묶으면서 「실내 / 아케이드」 묶음이 없어졌다.
+   그래도 이 사실은 **줄에서 떨어지면 안 된다**(중앙 통로만 덮여 있다). */
+.rp-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--market) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--market) 34%, transparent);
+  color: var(--market);
+  font-size: .68rem;
+  font-weight: 600;
+  vertical-align: middle;
+  white-space: nowrap;
+}

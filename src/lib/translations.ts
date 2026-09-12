@@ -292,6 +292,9 @@ export interface Translations {
   /** 🚨 **「예보」라고 적는다.** 사장님: "날씨는 기상청도 못 맞춰" —
    *  안 오면 우리가 틀린 말을 한 것이 되므로, 사실(비)과 예보를 갈라서 말한다. */
   rainyForecast: string;
+  /** 🚇 1~9호선이 아닌 노선들을 한 칸에 모을 때의 이름(경의중앙선·분당선…).
+   *  ⚠️ 노선 이름 자체는 여기 두지 않는다 — src/lib/stationName.ts 의 `lineLabel` 하나가 맡는다. */
+  rainyOtherLines: string;
 }
 
 const translations: Record<Language, Translations> = {
@@ -415,6 +418,7 @@ const translations: Record<Language, Translations> = {
     rainySub: '지붕 있고 역에서 가까운 곳만',
     rainyNow: '지금 비',
     rainyForecast: '오늘 비 예보',
+    rainyOtherLines: '그 밖의 노선',
   },
 
   en: {
@@ -537,6 +541,7 @@ const translations: Record<Language, Translations> = {
     rainySub: 'Covered, and close to a station',
     rainyNow: 'Raining now',
     rainyForecast: 'Rain forecast today',
+    rainyOtherLines: 'Other lines',
   },
 
   ja: {
@@ -659,6 +664,7 @@ const translations: Record<Language, Translations> = {
     rainySub: '屋根があって駅から近い所だけ',
     rainyNow: '今、雨',
     rainyForecast: '今日は雨の予報',
+    rainyOtherLines: 'その他の路線',
   },
 
   zh: {
@@ -781,6 +787,7 @@ const translations: Record<Language, Translations> = {
     rainySub: '有屋顶、离地铁站近的地方',
     rainyNow: '正在下雨',
     rainyForecast: '今天有雨',
+    rainyOtherLines: '其他线路',
   },
 
   'zh-TW': {
@@ -903,6 +910,7 @@ const translations: Record<Language, Translations> = {
     rainySub: '有屋頂、離地鐵站近的地方',
     rainyNow: '正在下雨',
     rainyForecast: '今天有雨',
+    rainyOtherLines: '其他線路',
   },
 
   vi: {
@@ -1025,6 +1033,7 @@ const translations: Record<Language, Translations> = {
     rainySub: 'Có mái che và gần ga tàu',
     rainyNow: 'Đang mưa',
     rainyForecast: 'Dự báo có mưa hôm nay',
+    rainyOtherLines: 'Các tuyến khác',
   },
 
   es: {
@@ -1147,6 +1156,7 @@ const translations: Record<Language, Translations> = {
     rainySub: 'Cubiertos y cerca del metro',
     rainyNow: 'Está lloviendo',
     rainyForecast: 'Lluvia prevista hoy',
+    rainyOtherLines: 'Otras líneas',
   },
 
   fr: {
@@ -1269,6 +1279,7 @@ const translations: Record<Language, Translations> = {
     rainySub: 'Couverts et près du métro',
     rainyNow: 'Il pleut',
     rainyForecast: 'Pluie prévue aujourd’hui',
+    rainyOtherLines: 'Autres lignes',
   },
 
   de: {
@@ -1391,6 +1402,7 @@ const translations: Record<Language, Translations> = {
     rainySub: 'Überdacht und nahe an einer Station',
     rainyNow: 'Es regnet',
     rainyForecast: 'Heute Regen erwartet',
+    rainyOtherLines: 'Weitere Linien',
   },
 
   ru: {
@@ -1513,6 +1525,7 @@ const translations: Record<Language, Translations> = {
     rainySub: 'Под крышей и рядом со станцией',
     rainyNow: 'Сейчас дождь',
     rainyForecast: 'Сегодня обещают дождь',
+    rainyOtherLines: 'Другие линии',
   },
 
   id: {
@@ -1635,6 +1648,7 @@ const translations: Record<Language, Translations> = {
     rainySub: 'Beratap dan dekat stasiun',
     rainyNow: 'Sedang hujan',
     rainyForecast: 'Hari ini diprakirakan hujan',
+    rainyOtherLines: 'Jalur lain',
   },
 
   th: {
@@ -1757,6 +1771,7 @@ const translations: Record<Language, Translations> = {
     rainySub: 'มีหลังคาและใกล้สถานีรถไฟฟ้า',
     rainyNow: 'ฝนตกอยู่',
     rainyForecast: 'วันนี้มีพยากรณ์ฝน',
+    rainyOtherLines: 'สายอื่น ๆ',
   },
 };
 

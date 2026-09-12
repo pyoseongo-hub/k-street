@@ -109,3 +109,38 @@ export function stationLabel(stored: string, lang: string): string {
   // 🚨 한국어 역 이름을 괄호로 같이 — 손님이 안내판·역무원에게 대조해야 한다.
   return `${name}${line ? ` ${line}` : ""} (${rawName})`;
 }
+
+/**
+ * 🚇 **노선 이름만** 그 언어로 — 「1호선」 → 「Line 1」/「1号線」.
+ *
+ * 「비 오는 날」 화면이 호선별로 묶기 때문에 **역 없이 노선만** 부를 자리가 생겼다
+ * (src/lib/rainyPlaces.ts). 위 `LINE` 표를 **그대로 쓴다** —
+ * 표가 둘이 되면 한쪽만 고쳐 놓고 다른 쪽이 한국어로 남는다.
+ *
+ * ⚠️ 이름 있는 노선(신분당선·경의중앙선)은 **한국어 그대로** 돌려준다.
+ *    서울시가 번역을 안 주고, **안 주는 것을 지어내지 않는다** — 안내판에도
+ *    로마자로 「Sinbundang」이라 적혀 있어 한국어를 보여 주는 편이 대조하기 쉽다.
+ */
+export function lineLabel(line: string, lang: string): string {
+  if (lang === "ko") return line;
+  const num = /^(\d{1,2})호선$/.exec(line.normalize("NFC"))?.[1];
+  return num ? (LINE[lang] ?? LINE.en)(num) : line;
+}
+
+/**
+ * 🚇 **역 이름만 짧게** 그 언어로 — 「서울역」 → 「Seoul」.
+ *
+ * 노선의 양 끝을 적는 줄(「Seoul → Cheongnyangni」)에 쓴다. 거기서는 「Station」도
+ * 노선 이름도 군더더기다 — 두 이름만 보이면 방향이 읽힌다.
+ *
+ * 🚨 **못 찾으면 한국어를 그대로 돌려준다.** 빈칸으로 두지 않는다 —
+ *    한글이라도 있으면 안내판과 대조할 수 있다.
+ */
+export function stationShort(korName: string, lang: string): string {
+  if (lang === "ko") return korName;
+  const hit = 역[key(korName)];
+  const foreign = lang === "ja" ? hit?.ja : lang === "zh" || lang === "zh-TW" ? hit?.zh : hit?.en;
+  if (!foreign) return korName;
+  // 「Seoul Station」처럼 이미 Station 이 붙어 온 것은 뗀다 — 여기서는 이름만 쓴다.
+  return foreign.replace(/\s*Station$/i, "").trim();
+}
