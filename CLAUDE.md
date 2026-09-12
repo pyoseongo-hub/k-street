@@ -202,6 +202,7 @@ npx vite build --ssr scripts/count-for-promo.ts --outDir dist-ssr && node dist-s
 | 🏛️ **축제 날짜는 어디서 받나** | `docs/축제-날짜-구청에서-받기.md` — 관광공사가 아니라 구청인 이유 |
 | **홍보를 어떻게 하나** | `docs/홍보-작전.md` — 왜 레딧이 아니라 검색이 먼저인지 |
 | 🤖 **AI 검색(ChatGPT·Perplexity)** | `docs/AI검색-최적화.md` — 11개 점검표. **「더 채우자」는 말이 나오면 먼저 볼 것** |
+| 🌧️ **「비 오는 날」 테마** | `docs/비오는날-계획.md` — 3단계 계획. **어느 자료가 되고 어느 게 막혔는지** 적혀 있다 |
 | 택시·카카오 연동 | `docs/택시-연결.md` · `docs/카카오-제안서.md` |
 | 출시해도 되나 | `docs/출시전-검수.md` |
 | 사진을 써도 되나 | `docs/사진-저작권.md` |
