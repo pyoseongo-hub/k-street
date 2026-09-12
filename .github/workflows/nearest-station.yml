@@ -26,6 +26,10 @@ on:
         description: "호출 사이에 몇 ms 쉴까. 🚨 카카오는 **분당 한도**가 있다 — 몰아치면 전부 400 이 온다"
         required: false
         default: "250"
+      limit:
+        description: "✂️ 한 판에 몇 곳까지만 (0 이면 전부). **받은 것은 합쳐지니 끊어서 여러 번 돌려도 된다**"
+        required: false
+        default: "10"
 
 permissions:
   contents: write
@@ -51,6 +55,7 @@ jobs:
         env:
           KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
           GAP_MS: ${{ inputs.gap_ms }}
+          LIMIT: ${{ inputs.limit }}
         run: |
           set -o pipefail
           node scripts/find-nearest-station.mjs ${{ inputs.apply && '--apply' || '' }} ${{ inputs.all && '--all' || '' }} 2>&1 | tee station-log.txt

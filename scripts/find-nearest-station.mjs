@@ -112,19 +112,49 @@ const old = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf-8"))["곳"] ?? {
 const out = { ...old };
 
 // 이미 아는 곳은 안 묻는다 — 곳이 움직이지 않는 한 역도 안 바뀐다(머리말 ③).
-const todo = ALL ? PLACES : PLACES.filter((p) => !old[p.id]);
+const 남은곳 = ALL ? PLACES : PLACES.filter((p) => !old[p.id]);
+/**
+ * ✂️ **한 판에 몇 곳까지만** (사장님 2026-09-12: "잘라서 해").
+ *
+ * 한 판을 짧게 끊으면 세 가지가 좋다:
+ *   ① **결과를 빨리 본다.** 15분을 기다려서 「전부 실패」를 아는 것보다,
+ *      1분에 10곳을 보고 되는지 안 되는지 아는 편이 낫다.
+ *   ② **한도를 조금씩 쓴다.** 하루치를 한 판에 다 태우지 않는다.
+ *   ③ **받은 것은 남는다.** 이 스크립트는 합쳐서 쓰므로(머리말 ②)
+ *      끊어서 여러 번 돌려도 앞판이 받은 것이 안 사라진다.
+ */
+const LIMIT = Number(process.env.LIMIT ?? 0);
+const todo = LIMIT > 0 ? 남은곳.slice(0, LIMIT) : 남은곳;
 let near = 0;
 let far = 0;
 let failed = 0;
 let limitHit = 0;
 const buckets = { 300: 0, 500: 0, 1000: 0, 1500: 0 };
 
-console.log(`🚇 곳 ${PLACES.length}개 중 **${todo.length}곳**에 가장 가까운 지하철역을 묻는다 (둘레 ${RADIUS}m)`);
-console.log(`   이미 아는 곳 ${PLACES.length - todo.length}곳은 건너뛴다${ALL ? " (--all 이라 건너뛰지 않는다)" : " — 전부 다시 받으려면 --all"}`);
+console.log(`🚇 곳 ${PLACES.length}개 중 역을 모르는 곳 ${남은곳.length}곳 — 이번 판에 **${todo.length}곳**을 묻는다 (둘레 ${RADIUS}m)`);
+if (LIMIT > 0 && 남은곳.length > todo.length) {
+  console.log(`   ✂️ 한 판에 ${LIMIT}곳까지만 (LIMIT). 남는 ${남은곳.length - todo.length}곳은 **다시 돌리면 이어진다** — 받은 것은 합쳐서 쓴다`);
+}
 console.log(`   호출 사이 ${GAP_MS}ms 쉰다 (카카오는 **분당 한도**가 있다)\n`);
+
+/**
+ * 🛑 **연달아 한도가 오면 바로 멈춘다** (2026-09-12에 15분을 헛돌았다).
+ *
+ * 한 곳마다 2·4·8초를 기다렸다 다시 묻는데, 한도가 안 풀린 상태면
+ * 그걸 55번 되풀이한다 = **13분을 기다려서 「전부 실패」를 아는 것**이다.
+ * 다섯 번 내리 막히면 **오늘은 안 열린 것**이다 — 그때는 바로 나와서
+ * 사람에게 알린다. 받은 곳은 이미 `out` 에 있으니 잃는 게 없다.
+ */
+const GIVE_UP_AFTER = 5;
+let streak = 0;
 
 let first = true;
 for (const p of todo) {
+  if (streak >= GIVE_UP_AFTER) {
+    console.log(`\n🛑 카카오가 **${GIVE_UP_AFTER}번 내리** 한도라고 했다 — 오늘은 안 열린다. 여기서 멈춘다.`);
+    console.log(`   남은 ${남은곳.length - (near + far + failed)}곳은 **내일 다시 돌리면 이어진다.**`);
+    break;
+  }
   if (!first) await sleep(GAP_MS);
   first = false;
   const r = await kakao({
@@ -143,10 +173,14 @@ for (const p of todo) {
   }
   if (!r.ok) {
     failed++;
-    if (r.limited) limitHit++;
+    if (r.limited) {
+      limitHit++;
+      streak++;
+    } else streak = 0;
     console.log(`   ❌ ${p.name} — ${r.why}`);
     continue;
   }
+  streak = 0; // 한 번이라도 답이 오면 다시 센다 — 「연달아」가 뜻이 있으려면 끊겨야 한다
   if (!r.docs.length) {
     far++;
     // 🚨 이건 **빈칸이 아니라 답**이다. 화면에서 "가까운 역이 없습니다"라고 말해 준다.
