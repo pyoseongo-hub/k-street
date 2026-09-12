@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "./lib/useTheme";
 import { useLanguage } from "./lib/useLanguage";
 import SavedPanel from "./components/SavedPanel";
@@ -24,6 +24,25 @@ function App() {
   //    사장님: "비는 어쩌다 오는데 두 번째 줄은 너무 과하고 / 예보 뜨면 깜박거리게"
   const [rainyOpen, setRainyOpen] = useState(false);
   const { weather } = useSeoulWeather();
+  /**
+   * ☔ **화면을 켤 때마다 다시 깜박이게 하는 셈** (2026-09-12 사장님: "화면 키면 이십초 점멸").
+   *
+   * 🚨 CSS 애니메이션은 **붙을 때 한 번만** 돈다. 그래서 그전에는 앱을 처음 열 때만
+   *    깜박이고, 폰을 잠갔다 다시 켜거나 다른 앱 갔다 돌아오면 **다시 안 돌았다** —
+   *    손님이 앱을 열어 둔 채 지하철을 타고 나오면 그때는 아무 표시가 없었다.
+   *    이 숫자를 올려 단추를 다시 그리게 하면 애니메이션이 처음부터 돈다.
+   *
+   * ⚠️ `focus` 가 아니라 `visibilitychange` 를 듣는다. focus 는 화면 안에서
+   *    여기저기 누를 때도 튀어서 **깜박임이 멈추지 않는다.**
+   */
+  const [blinkRun, setBlinkRun] = useState(0);
+  useEffect(() => {
+    const onShow = () => {
+      if (document.visibilityState === "visible") setBlinkRun((n) => n + 1);
+    };
+    document.addEventListener("visibilitychange", onShow);
+    return () => document.removeEventListener("visibilitychange", onShow);
+  }, []);
   const savedCount = useSavedEntries().length;
 
   return (
@@ -65,6 +84,9 @@ function App() {
                 🚨 깜박임은 **눈에 보이는 것뿐**이다. 무엇인지는 aria-label 이 말해 준다 —
                    색·움직임만으로 뜻을 전하면 화면을 읽어 주는 손님은 못 받는다. */}
             <button
+              /* 🔁 이 열쇠가 바뀌면 단추를 다시 그린다 → 깜박임이 처음부터 돈다.
+                 화면을 켤 때마다 20초 깜박이는 것이 이 한 줄로 된다. */
+              key={`rainy-${blinkRun}`}
               className={"icon-btn rainy-btn" + (weather?.rainToday ? " blink" : "")}
               onClick={() => setRainyOpen(true)}
               aria-label={`${t.rainyH1}${weather?.rainToday ? ` — ${weather.rainingNow ? t.rainyNow : t.rainyForecast}` : ""}`}
