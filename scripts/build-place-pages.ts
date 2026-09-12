@@ -45,6 +45,9 @@ import { pastEditionYear } from "../src/lib/pastEdition";
 import { isIndoor, isArcade, isRainOk, RAIN_WALK_MAX_M } from "../src/lib/indoor";
 // 🏪 「이 시장은 무엇을 파나」 — 관광공사 판매품목 + 12개 언어 낱말 사전.
 import { sellsFor } from "../src/lib/sells";
+// 🚇 역 이름을 손님 언어로 — 「종로5가역 1호선」 → 「Jongno 5(o)-ga Stn. Line 1 (종로5가역)」.
+//    한국어 이름을 괄호로 같이 둔다. 손님이 안내판·역무원에게 대조해야 한다.
+import { stationLabel } from "../src/lib/stationName";
 // 🧳 짐 보관 안내 (2026-09-10). 글은 luggage-strings, 링크는 luggage-links 에 있다 —
 //    링크는 **전부 러너에서 두드려 본 것만** 들어 있다.
 import { LUGGAGE_STRINGS } from "./lib/luggage-strings";
@@ -452,7 +455,7 @@ function stationHtml(p: Place, lang: Language): string {
   const A = LUGGAGE_STRINGS[lang];
   return (
     `<dt>${esc(S2.stationHeading)}</dt>` +
-    `<dd>${esc(S2.stationLine(r.station, r.dist))}` +
+    `<dd>${esc(S2.stationLine(stationLabel(r.station, lang), r.dist))}` +
     `<br><span class="note">${esc(S2.stationLocker)}</span>` +
     `<br><span class="note">` +
     `<a href="${esc(LOCKER_APP_ANDROID)}" rel="nofollow noopener" target="_blank">${esc(A.appAndroid)} ↗</a>` +
@@ -859,7 +862,9 @@ function hubItem(p: Place, showGu = true, lang: Language = "en", withStation = f
     withStation
       ? (() => {
           const r = nearestStation(p.id, p);
-          return r?.station && r.dist != null ? PAGE_STRINGS[lang].stationLine(r.station, r.dist) : "";
+          return r?.station && r.dist != null
+            ? PAGE_STRINGS[lang].stationLine(stationLabel(r.station, lang), r.dist)
+            : "";
         })()
       : "",
   ].filter(Boolean);
