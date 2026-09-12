@@ -22,11 +22,37 @@
 //   KAKAO_REST_API_KEY=xxx node scripts/find-nearest-station.mjs            # 맛보기
 //   KAKAO_REST_API_KEY=xxx node scripts/find-nearest-station.mjs --apply    # 파일에 씀
 
-import { writeFileSync } from "node:fs";
+// ─────────────────────────────────────────────────────────────────────────
+// 🚨 2026-09-12에 한 번 크게 당할 뻔했다 — 세 가지를 여기서 고쳤다.
+// ─────────────────────────────────────────────────────────────────────────
+//   상가 33곳을 새로 넣고 다시 돌렸더니 **317곳이 전부 실패**했다:
+//       ❌ 퇴계로 오토바이상가 — HTTP 400 — "API limit has been exceeded."
+//
+//   ① **분당 한도였다.** 바로 뒤 또타러기지 6곳은 **같은 키로 성공**했다 —
+//      실패는 09:18:16~09:19:15, 성공은 **그 다음 분**이었다. 일일 한도면
+//      6곳도 막힌다. 317건을 **0.18초 간격**으로 몰아친 것이 원인이다.
+//      → `GAP_MS` 로 쉬어 가고, 한도라고 하면 **기다렸다 다시 묻는다.**
+//
+//   ② 🚨 **실패해도 가진 것을 잃지 않는다.** 그전에는 받은 것만으로 파일을
+//      **새로 썼다.** 그날 `apply` 를 켰더라면 이미 아는 262곳이
+//      **텅 빈 채로 커밋**됐을 것이다. 맛보기 먼저 돌리는 규칙이 자료를 구했다.
+//      → 이제 **기존 파일에 합친다.** 못 물어본 곳은 **옛 값이 그대로 남는다.**
+//
+//   ③ **이미 아는 곳은 안 묻는다**(`--all` 로 전부 다시 받을 수 있다).
+//      새로 들어온 33곳만 물으면 호출이 317 → 33으로 줄어 한도에 안 닿는다.
+//      곳이 움직이지 않는 한 역도 안 바뀐다 — 해마다 한 번 `--all` 이면 된다.
+
+import { writeFileSync, readFileSync, existsSync } from "node:fs";
 
 const KEY = process.env.KAKAO_REST_API_KEY ?? "";
 const APPLY = process.argv.includes("--apply");
+/** 이미 아는 곳까지 전부 다시 받는다(좌표를 크게 고친 뒤에만 쓴다). */
+const ALL = process.argv.includes("--all");
+/** 🐢 호출 사이에 쉬는 시간(ms). 분당 한도에 안 닿게 하는 유일한 장치다. */
+const GAP_MS = Number(process.env.GAP_MS ?? 250);
 const OUT = "src/data/nearest-station.json";
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 if (!KEY) {
   console.error("❌ KAKAO_REST_API_KEY 가 없다. Actions 시크릿을 워크플로에 넘겼는지 볼 것.");
@@ -42,34 +68,65 @@ if (!PLACES) {
   process.exit(1);
 }
 
-/** 받은 것 / 못 받은 것을 갈라서 돌려준다 — 섞으면 "없다"고 잘못 적는다. */
+/**
+ * 받은 것 / 못 받은 것을 갈라서 돌려준다 — 섞으면 "없다"고 잘못 적는다.
+ *
+ * 🚨 **「API limit has been exceeded」는 답이 아니라 「조금 있다 다시 물어」다.**
+ *    이걸 실패로 세면 그 곳은 「역이 없다」가 되어 **화면에 틀린 말이 나간다.**
+ *    분당 한도라 **몇 초만 쉬면 풀린다** — 2초 · 4초 · 8초로 세 번 더 물어본다.
+ */
 async function kakao(params) {
   const url = `https://dapi.kakao.com/v2/local/search/category.json?${new URLSearchParams(params)}`;
-  try {
-    const r = await fetch(url, {
-      headers: { Authorization: `KakaoAK ${KEY}` },
-      signal: AbortSignal.timeout(20000),
-    });
-    const text = await r.text();
-    if (!r.ok) return { got: true, ok: false, why: `HTTP ${r.status} — ${text.slice(0, 100)}` };
-    return { got: true, ok: true, docs: JSON.parse(text).documents ?? [] };
-  } catch (e) {
-    return { got: false, ok: false, why: e?.cause?.code || e?.name || e?.message };
+  for (let try_ = 0; ; try_++) {
+    try {
+      const r = await fetch(url, {
+        headers: { Authorization: `KakaoAK ${KEY}` },
+        signal: AbortSignal.timeout(20000),
+      });
+      const text = await r.text();
+      if (!r.ok) {
+        const limited = /API limit has been exceeded/i.test(text) || r.status === 429;
+        if (limited && try_ < 3) {
+          await sleep(2000 * 2 ** try_);
+          continue;
+        }
+        return { got: true, ok: false, why: `HTTP ${r.status} — ${text.slice(0, 100)}`, limited };
+      }
+      return { got: true, ok: true, docs: JSON.parse(text).documents ?? [] };
+    } catch (e) {
+      if (try_ < 3) {
+        await sleep(2000 * 2 ** try_);
+        continue;
+      }
+      return { got: false, ok: false, why: e?.cause?.code || e?.name || e?.message };
+    }
   }
 }
 
 // 1.5km 밖이면 "가깝다"고 할 수 없다. 캐리어를 끌고 갈 거리가 아니다.
 const RADIUS = 1500;
 
-const out = {};
+// 🚨 **가진 것부터 깔고 시작한다.** 이 판에서 못 물어본 곳은 옛 값이 그대로 남는다
+//    (머리말 ②). 실패한 판이 자료를 지우는 일은 이제 없다.
+const old = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf-8"))["곳"] ?? {} : {};
+const out = { ...old };
+
+// 이미 아는 곳은 안 묻는다 — 곳이 움직이지 않는 한 역도 안 바뀐다(머리말 ③).
+const todo = ALL ? PLACES : PLACES.filter((p) => !old[p.id]);
 let near = 0;
 let far = 0;
 let failed = 0;
+let limitHit = 0;
 const buckets = { 300: 0, 500: 0, 1000: 0, 1500: 0 };
 
-console.log(`🚇 곳 ${PLACES.length}개의 가장 가까운 지하철역을 찾는다 (둘레 ${RADIUS}m)\n`);
+console.log(`🚇 곳 ${PLACES.length}개 중 **${todo.length}곳**에 가장 가까운 지하철역을 묻는다 (둘레 ${RADIUS}m)`);
+console.log(`   이미 아는 곳 ${PLACES.length - todo.length}곳은 건너뛴다${ALL ? " (--all 이라 건너뛰지 않는다)" : " — 전부 다시 받으려면 --all"}`);
+console.log(`   호출 사이 ${GAP_MS}ms 쉰다 (카카오는 **분당 한도**가 있다)\n`);
 
-for (const p of PLACES) {
+let first = true;
+for (const p of todo) {
+  if (!first) await sleep(GAP_MS);
+  first = false;
   const r = await kakao({
     category_group_code: "SW8",
     x: String(p.lng),
@@ -86,6 +143,7 @@ for (const p of PLACES) {
   }
   if (!r.ok) {
     failed++;
+    if (r.limited) limitHit++;
     console.log(`   ❌ ${p.name} — ${r.why}`);
     continue;
   }
@@ -118,11 +176,18 @@ for (const p of PLACES) {
 console.log(`\n가까운 역이 있는 곳  ${near}`);
 for (const b of [300, 500, 1000, 1500]) console.log(`   ${String(b).padStart(4)}m 안  ${buckets[b]}`);
 console.log(`${RADIUS}m 안에 역이 없는 곳  ${far}   ← 이것도 답이다("미리 맡기고 오세요")`);
-if (failed) console.log(`❌ 못 물어본 곳  ${failed}  — 다시 돌릴 것`);
+if (failed) console.log(`❌ 못 물어본 곳  ${failed}  — 다시 돌릴 것 (옛 값은 그대로 남는다)`);
+if (limitHit) {
+  console.log(
+    `\n🚨 그중 ${limitHit}곳은 **카카오 분당 한도**에 걸린 것이다 — 우리 코드나 키가 틀린 게 아니다.` +
+      `\n   GAP_MS 를 올려서(지금 ${GAP_MS}ms) 다시 돌리면 된다. 받은 곳은 이미 파일에 남는다.`,
+  );
+}
 
 if (APPLY) {
+  // 🚨 **합쳐서 쓴다.** 이 판에서 못 받은 곳은 옛 값이 그대로다(머리말 ②).
   writeFileSync(OUT, JSON.stringify({ 받은날: new Date().toISOString().slice(0, 10), 출처: "카카오 지역검색 (SW8 지하철역)", 곳: out }, null, 2) + "\n");
-  console.log(`\n📄 ${OUT} 에 ${Object.keys(out).length}곳을 적었다.`);
+  console.log(`\n📄 ${OUT} 에 ${Object.keys(out).length}곳을 적었다 (이번에 새로 받은 것 ${near + far}곳).`);
 } else {
   console.log("\n(맛보기였다. 파일에 쓰려면 --apply)");
 }
