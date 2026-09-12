@@ -65,8 +65,25 @@ if (!existsSync(DUMP)) {
 }
 const { TARGETS } = await import(`../${DUMP}`);
 
+/**
+ * 🔁 **이미 받은 곳은 건너뛴다** (2026-09-12, 사장님: "6개씩 잘라서 해봐").
+ *
+ * 왜 필요한가 — 안 건너뛰면 LIMIT=6 이 **늘 앞의 여섯 곳**을 다시 받는다.
+ * 「6개씩 잘라서」가 성립하려면 **다음 여섯 곳**으로 넘어가야 한다.
+ *
+ * 📌 그리고 이게 예약(매일 6시 20분)이 도는 방식이기도 하다 — **빈 곳만** 채운다.
+ * ⚠️ 값을 새로 받고 싶으면 `--refresh` 를 준다(영업시간이 바뀌었을 때).
+ */
+const REFRESH = process.argv.includes("--refresh");
+const already = new Set(
+  REFRESH || !existsSync(OUT) ? [] : Object.keys(JSON.parse(readFileSync(OUT, "utf-8"))["곳"] ?? {}),
+);
+
 let targets = TARGETS;
 if (ONLY) targets = targets.filter((t) => t.category === ONLY);
+const before = targets.length;
+targets = targets.filter((t) => !already.has(t.id));
+if (already.size) console.log(`🔁 이미 받아 둔 ${already.size}곳은 건너뛴다 (${before} → ${targets.length}곳 남음)`);
 if (LIMIT) targets = targets.slice(0, LIMIT);
 
 const ROOT = "https://apis.data.go.kr/B551011/KorService2";
@@ -142,6 +159,10 @@ const MAP = {
   25: { sells: null, hours: null, closed: null, fee: null, tel: "infocentertourcourse" },
 };
 
+if (!targets.length) {
+  console.log("✅ 더 받을 곳이 없다 — 다 채워져 있다.");
+  process.exit(0);
+}
 console.log(`🏪 ${targets.length}곳의 속사정을 받아 온다${ONLY ? ` (갈래 ${ONLY}만)` : ""}\n`);
 
 const out = {};
@@ -197,7 +218,9 @@ for (const t of targets) {
   if (got.hours) bits.push(`시간: ${got.hours.slice(0, 40)}`);
   if (got.fee) bits.push(`요금: ${got.fee.slice(0, 40)}`);
   console.log(`✅ ${t.name.padEnd(22)} ${bits.join(" | ")}`);
-  await new Promise((f) => setTimeout(f, 80));
+  // 🐢 **곳 사이를 조금 쉰다.** 6곳은 되고 64곳은 0이었다 —
+  //    「되다 말다」가 아니라 **몰아치면 막는 것**일 수도 있다. 천천히 가 본다.
+  await new Promise((f) => setTimeout(f, Number(process.env.GAP_MS || 600)));
 }
 
 const n = Object.keys(out).length;
