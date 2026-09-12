@@ -487,3 +487,58 @@ writeFileSync(
   ) + "\n",
 );
 console.log(`\n💾 ${Object.keys(merged).length}곳을 src/data/gu-festival-dates.json 에 저장했다.`);
+
+// ── 🔔 **바뀐 주소를 검색엔진에 먼저 알린다** (IndexNow) ──────────────────
+//
+// 왜 이게 축제에 특히 맞나 — 보통은 엔진이 제 발로 올 때까지 며칠~몇 주를 기다린다.
+// 그런데 구청은 **행사 2~6주 전에야** 날짜를 올린다. 엔진이 늦게 오면 손님은
+// 축제가 끝난 뒤에야 우리 페이지를 본다. 먼저 두드리면 그 격차가 줄어든다.
+// 빙이 받아 주고, **챗GPT·코파일럿의 검색 바탕이 빙**이라 그 자리에 우리가 들어간다.
+// (관광공사 쪽 fetch-festival-dates 에 이미 같은 장치가 있다 — 잣대를 맞춘다.)
+//
+// 🚨 **바뀐 것만 적는다.** 안 바뀐 주소를 매일 보내면 엔진이 우리 알림을 무시한다.
+//    그래서 바뀐 게 없으면 파일을 아예 안 만들고, 워크플로도 그냥 지나간다.
+// ⚠️ **언어판 주소는 안 적는다.** 대표 주소 한 줄이면 된다 — 그 페이지에 hreflang
+//    13줄이 붙어 있어 엔진이 거기서 언어판을 따라간다. 12개 언어를 여기에 또
+//    베껴 쓰면 언어 목록이 다섯 군데가 된다(「잣대가 둘이면 반쪽 적용이 생긴다」).
+{
+  // 무엇이 「바뀐 것」인가 — 새로 붙었거나, 날짜·장소·구가 달라진 것.
+  //   ⚠️ fetchedAt 은 매일 바뀌므로 보면 안 된다. 그걸 보면 **매일 전부 바뀐 것**이 된다.
+  const moved = (a: Hit | undefined, b: Hit) =>
+    !a || a.start !== b.start || a.end !== b.end || a.place !== b.place || a.gu !== b.gu;
+  const changed = Object.entries(merged).filter(([id, h]) => moved(prev[id], h));
+
+  let slugs: Record<string, string> = {};
+  try {
+    slugs = JSON.parse(readFileSync(join(ROOT, "src", "data", "place-slugs.json"), "utf-8"));
+  } catch {
+    /* 표가 없으면 주소를 못 만든다 — 지어내지 않고 비워 둔다 */
+  }
+
+  const MONTH_SLUG = ["january", "february", "march", "april", "may", "june",
+                      "july", "august", "september", "october", "november", "december"];
+  const urls: string[] = [];
+  const months = new Set<number>();
+  for (const [id, h] of changed) {
+    const slug = slugs[id];
+    // 🚨 주소가 없으면 **그 곳의 페이지가 아직 없다는 뜻**이다. 없는 주소를 알리면
+    //    엔진이 404 를 받고, 그런 알림이 쌓이면 우리를 덜 믿는다.
+    if (slug) urls.push(`https://korea-street.com/place/${slug}/`);
+    const m = Number(h.start.slice(5, 7));
+    if (m >= 1 && m <= 12) months.add(m);
+  }
+  for (const m of months) urls.push(`https://korea-street.com/seoul/festivals-in-${MONTH_SLUG[m - 1]}/`);
+  if (urls.length) urls.push("https://korea-street.com/seoul/festivals/");
+
+  const CHANGED = join(ROOT, "changed-urls.txt");
+  if (urls.length) {
+    writeFileSync(CHANGED, [...new Set(urls)].join("\n") + "\n");
+    console.log(`\n🔔 바뀐 축제 ${changed.length}곳 · 알릴 주소 ${new Set(urls).size}개를 changed-urls.txt 에 적었다.`);
+    for (const [, h] of changed.slice(0, 20))
+      console.log(`   ${h.gu.padEnd(5)} ${h.start}${h.end ? `~${h.end.slice(5)}` : ""}  ${h.title.slice(0, 46)}`);
+  } else if (changed.length) {
+    console.log(`\n🔔 ${changed.length}곳이 바뀌었지만 **아직 페이지가 없는 곳**이라 알릴 주소가 없다.`);
+  } else {
+    console.log("\n🔕 바뀐 축제가 없다 — 검색엔진에 알리지 않는다.");
+  }
+}
