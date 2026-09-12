@@ -32,6 +32,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      # 🚀 배포를 **손으로 깨워야** 한다 — 아래 「배포를 깨운다」 단계 주석 참고.
+      actions: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -104,6 +106,29 @@ jobs:
             git push
             echo "committed=yes" >> "$GITHUB_OUTPUT"
           fi
+
+      # 🚀 **배포를 깨운다** (2026-09-12에 찾은 구멍).
+      #
+      #    🚨 깃허브는 **봇이 기본 토큰(GITHUB_TOKEN)으로 민 커밋으로는 다른 워크플로를
+      #       안 띄운다.** 무한 반복을 막으려는 규칙이다. 그래서 이 작업이 매일 자료를
+      #       받아 커밋해도 **배포는 한 번도 안 돌았다** — 실제로 확인했다:
+      #
+      #         봇이 띄운 Deploy 실행 횟수 … **0회**
+      #
+      #       받아 온 날짜가 저장소에는 있는데 **손님 화면에는 없었다.** 사람이 다른
+      #       것을 푸시할 때 묻어 나가야 겨우 반영됐다. 아무도 안 짚으면 모를 일이다.
+      #
+      #    ✅ 고치는 법: 이 작업이 **배포를 직접 부른다.** workflow_dispatch 는
+      #       기본 토큰으로도 부를 수 있다(위 permissions 의 actions: write).
+      #    ⚠️ **커밋한 날에만 부른다.** 안 바뀐 날까지 배포하면 하루 한 번씩
+      #       빌드를 태우는 셈이고, 이 앱의 초심(적은 비용으로 오래)과 어긋난다.
+      - name: 바뀐 게 있으면 배포를 깨운다
+        if: steps.commit.outputs.committed == 'yes'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run deploy.yml --ref main
+          echo "🚀 배포를 깨웠다 — 몇 분 뒤 korea-street.com 에 반영된다"
 
       - name: 결과 요약
         if: always()
