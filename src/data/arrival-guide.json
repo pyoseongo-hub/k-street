@@ -1,0 +1,1780 @@
+{
+ "옮긴날": "2026-09-12",
+ "출처": "Kfood(dongne-hanip) public/app.jsx 의 ARRIVAL_GUIDE — 같은 제작자가 만든 자료를 그대로 옮겼다",
+ "값확인일": "2026-08-03",
+ "단추라벨": {
+  "ko": "도착 안내",
+  "en": "Arrival",
+  "ja": "到着ガイド",
+  "zh": "到达指南",
+  "zh-TW": "抵達指南",
+  "es": "Llegada",
+  "fr": "Arrivée",
+  "de": "Ankunft",
+  "vi": "Vừa đến?",
+  "th": "มาถึง",
+  "ru": "Прилёт",
+  "id": "Tiba"
+ },
+ "공식링크라벨": {
+  "ko": "공식 안내 (영어 지원)",
+  "en": "Official guides",
+  "ja": "公式ガイド",
+  "zh": "官方指南",
+  "zh-TW": "官方指南",
+  "es": "Guías oficiales",
+  "fr": "Guides officiels",
+  "de": "Offizielle Infos",
+  "vi": "Hướng dẫn chính thức",
+  "th": "คู่มือทางการ",
+  "ru": "Официальные гиды",
+  "id": "Panduan resmi"
+ },
+ "안내": {
+  "ko": {
+   "title": "공항 도착 가이드",
+   "intro": "한국에 막 도착했나요? 공항에서 바로 필요한 것만 모았어요. 각 항목을 누르면 자세한 내용과 설명 영상이 열려요.",
+   "sections": [
+    {
+     "icon": "🚆",
+     "title": "공항에서 시내로",
+     "summary": "공항철도(AREX)가 가장 쉽고 저렴해요",
+     "videoQuery": "인천공항 공항철도 서울역 가는법",
+     "details": [
+      "인천공항 → 서울역: 공항철도(AREX) 일반열차 약 60분, 직통열차 약 45분",
+      "표지판의 기차 그림과 파란 화살표를 따라 지하 1층 교통센터로 내려가면 돼요",
+      "일반열차는 지하철처럼 중간역에 서고 환승 가능, 직통열차는 서울역까지 논스톱",
+      "짐이 많거나 밤늦게 도착하면 공항 리무진 버스나 택시(카카오 T)도 편해요"
+     ]
+    },
+    {
+     "icon": "📱",
+     "title": "인터넷 (유심·eSIM·와이파이)",
+     "summary": "공항에서 유심이나 eSIM을 바로 개통",
+     "videoQuery": "한국 여행 유심 eSIM 추천 개통",
+     "details": [
+      "공항 도착층 통신사 부스(SKT·KT·LG U+)에서 여행용 유심(SIM) 구입·개통 — 여권 필요",
+      "최신 폰이면 eSIM을 도착 전 온라인으로 미리 사두면 줄 안 서서 편해요",
+      "요금은 기간·데이터량에 따라 달라요(예: 5일 무제한). 부스에서 비교해 고르세요",
+      "공항·지하철·카페엔 무료 와이파이가 많지만, 지도·번역·택시 앱을 쓰려면 데이터가 있는 게 좋아요"
+     ]
+    },
+    {
+     "icon": "💳",
+     "title": "교통카드 구입·충전 (T-money)",
+     "summary": "카드 한 장으로 지하철·버스·편의점까지",
+     "videoQuery": "티머니 카드 사용법 충전 방법",
+     "details": [
+      "구입 장소: 공항·지하철역 자판기 또는 편의점(GS25·CU·세븐일레븐·이마트24)",
+      "충전 장소: 편의점 계산대에서 '충전(charge)'이라고 말하거나, 지하철역의 파란 충전 기계 이용",
+      "⚠️ 구입·충전은 현금만 돼요 — 원화 현금을 조금 준비하세요. 1만원 단위로 넣으면 편해요",
+      "지하철·버스 탈 때 단말기에 카드를 대면(태그) 요금이 자동으로 빠져요",
+      "떠날 때 남은 잔액은 편의점에서 환불 가능",
+      "2026년 3월부터 서울 지하철 1~8호선의 새 발권기에서 해외 카드(Visa·MC)로 1회권과 단기 패스(1~7일)를 살 수 있어요. 개찰구에 해외 카드를 바로 대는 건 아직 안 됩니다"
+     ]
+    },
+    {
+     "icon": "🚇",
+     "title": "지하철·버스 타기",
+     "summary": "지도 앱 하나면 환승·도착 시각까지 다 나와요",
+     "videoQuery": "서울 지하철 버스 타는 법 외국인",
+     "details": [
+      "교통 앱을 따로 더 깔 필요는 없어요 — 아래 지도 앱(네이버 지도·카카오맵)의 '길찾기'가 지하철·버스 환승과 실시간 도착 시각까지 알려 줍니다",
+      "지하철: 몇 번 출구로 나가야 하는지, 어느 칸이 환승에 가까운지까지 나와요. 역 이름·노선 번호는 역 안에도 영어로 적혀 있습니다",
+      "버스: 정류장 안내가 한국어로만 나올 수 있어요. 앱 지도에서 내 위치를 보며 내리는 게 확실합니다",
+      "⚠️ 버스는 내릴 때도 카드를 대세요 — 안 대면 환승 할인이 안 되고 다음 요금이 더 나옵니다",
+      "지하철 막차는 자정 무렵입니다. 늦게 다닐 계획이면 앱에서 막차 시각을 미리 확인하세요"
+     ]
+    },
+    {
+     "icon": "🚕",
+     "title": "택시 타기 (앱·카드)",
+     "summary": "팁 없음 · 외국인은 k.ride나 우버가 제일 쉬워요",
+     "videoQuery": "korea taxi app kride uber kakao tourist",
+     "details": [
+      "한국 택시는 안전하고 비교적 저렴해요. 팁은 없습니다 — 미터기 요금만 내면 돼요",
+      "k.ride — 카카오가 만든 외국인 전용 호출 앱. 구글·애플 계정과 본국 전화번호로 가입하고 해외 카드로 자동 결제돼요 (영어·일본어·중국어, 기사와의 채팅 자동 번역). 단 프리미엄 차량 위주라 요금이 더 나올 수 있어요",
+      "카카오T — 한국인이 쓰는 그 앱. 해외 번호(+국가코드)로 가입은 되지만 해외 카드 자동 결제는 안 돼요. 결제 방법에서 '직접 결제'를 고르면 내릴 때 현금·실물 카드·티머니로 내면 됩니다",
+      "우버 — 서울·부산·인천 등에서 면허 택시를 연결해요. 해외 카드 등록 그대로, 익숙한 그 화면",
+      "밤 10시~새벽 4시엔 심야 할증이 붙어요. 길에서 안 잡히면 앱 호출이 답입니다",
+      "행선지는 한글 이름·주소가 정확해요 — 이 앱 곳 화면의 길찾기 버튼을 쓰면 옮겨 적을 필요가 없어요"
+     ]
+    },
+    {
+     "icon": "💵",
+     "title": "돈 (환전·카드·ATM)",
+     "summary": "카드가 잘 되지만 약간의 현금도 유용",
+     "videoQuery": "한국 여행 환전 방법 카드 ATM",
+     "details": [
+      "대부분의 식당·상점·택시에서 해외 카드(Visa·Mastercard)가 잘 됩니다",
+      "환전은 공항보다 시내(명동 등) 사설 환전소가 환율이 더 좋은 편이에요",
+      "전통시장·노점·작은 가게에서는 현금이 필요할 수 있어요",
+      "'Global ATM' 표시가 있는 기계(편의점·은행)에서 해외 카드로 원화를 뽑을 수 있어요"
+     ]
+    },
+    {
+     "icon": "📞",
+     "title": "식당 예약·웨이팅 (전화번호 문제)",
+     "summary": "한국 번호가 없어도 캐치테이블 글로벌이면 돼요",
+     "videoQuery": "catchtable global korea restaurant reservation",
+     "details": [
+      "유명 맛집이 아니면 예약 없이 그냥 가는 게 한국 기본이에요. 줄 서는 집은 오픈 30분 전에 가는 '오픈런'이 요령",
+      "캐치테이블 글로벌 — 외국인용 예약 앱. 구글·애플 계정으로 가입(한국 번호 불필요), 보증금은 해외 카드로. 영어·일본어·중국어(간·번) 지원, 예약과 원격 줄서기 둘 다 돼요 (줄서기는 보증금 없음)",
+      "테이블링 등 한국인용 앱은 010 본인인증이 필요해 관광객은 어렵습니다",
+      "입구의 대기 태블릿은 한국 전화번호를 요구하는 곳이 많아요 — 없으면 직원에게 직접 말하는 게 확실합니다",
+      "많은 식당이 오후 3~5시 '브레이크 타임'에 문을 닫아요. 가기 전에 영업시간을 확인하세요"
+     ]
+    },
+    {
+     "icon": "🍜",
+     "title": "배달 음식 시키기",
+     "summary": "배민이 영어·해외카드를 지원해요 — 한국 번호가 없어도 방법이 있어요",
+     "videoQuery": "korea food delivery app baemin english tourist",
+     "details": [
+      "배달의민족(배민) — 한국 1등 배달 앱. 2026년부터 영어·일본어·중국어를 지원하고 해외 카드와 애플페이(해외 발급 Visa·MC·JCB·Amex)로 결제할 수 있어요",
+      "가입은 구글·애플 계정(소셜 로그인)으로 되는 경우가 많아요. 안 되면 문자(SMS)를 받을 수 있는 010 선불 유심·eSIM이 필요합니다",
+      "Shuttle — 처음부터 영어로 만든 외국인 전용 배달 앱. 해외 카드·PayPal, 영어 상담. 서울 주요 지역과 부산·대구 일부에서 돼요",
+      "쿠팡이츠·요기요는 한국 본인인증(한국 번호 명의)이 필요해 관광객은 쓰기 어렵습니다",
+      "숙소 주소로 시키고 '문 앞에 놓아주세요'가 기본이에요. ⚠️ 가입 요건은 자주 바뀌니 최신 상태는 앱에서 확인하세요"
+     ]
+    },
+    {
+     "icon": "🗺️",
+     "title": "꼭 깔아야 할 앱 (로그인 안내 포함)",
+     "summary": "지도·번역·택시 3가지면 충분해요",
+     "videoQuery": "카카오택시 외국인 사용법 가입",
+     "details": [
+      "🗺️ 네이버 지도 / 카카오맵 — 한국은 구글 지도가 부정확해요. 이 앱들이 정확합니다. 네이버 지도는 로그인 없이 검색·길찾기를 바로 쓸 수 있어요",
+      "🌐 앱이 한국어로 열리면: 두 앱 다 영어·일본어·중국어를 지원합니다. 톱니바퀴(⚙)나 '설정'을 누르고 '언어'를 찾아 English로 바꾸세요",
+      "찾을 한국어 두 낱말 — 「설정」(Settings) · 「언어」(Language). 이 두 글자만 알면 화면이 바뀌어도 찾을 수 있어요",
+      "휴대폰 언어가 영어면 앱이 처음부터 영어로 열리는 경우가 많습니다",
+      "⚠️ 영어로 바꿔도 가게 이름은 한국어로 뜰 수 있어요. 검색은 한국어 이름으로 하는 게 더 잘 찾아집니다",
+      "💬 파파고(Papago) — 사진·음성·실시간 번역. 메뉴판을 찍으면 바로 번역돼요(로그인 불필요)",
+      "🚕 카카오 T — 택시 부르기. 회원가입이 필요하고, 앱에서 국가번호를 골라 '해외 전화번호'로 문자(SMS) 인증할 수 있어요(영어 지원)",
+      "⚠️ 카카오 T: 해외번호는 승인에 며칠 걸릴 수 있어 한국 도착 전에 미리 가입해 두는 걸 추천. 인증 문자를 받으려면 데이터·와이파이가 켜져 있어야 해요"
+     ]
+    }
+   ]
+  },
+  "en": {
+   "title": "Airport Arrival Guide",
+   "intro": "Just landed in Korea? Here's only what you need right at the airport. Tap any item for the details and a video guide.",
+   "sections": [
+    {
+     "icon": "🚆",
+     "title": "From the airport to the city",
+     "summary": "The Airport Railroad (AREX) is easiest & cheapest",
+     "videoQuery": "Incheon airport to Seoul AREX train guide",
+     "details": [
+      "Incheon Airport → Seoul Station: AREX all-stop train ~60 min, express ~45 min",
+      "Follow the train icon and blue arrows down to the Transportation Center (B1)",
+      "The all-stop train works like a subway (stops en route, transfers OK); the express runs non-stop to Seoul Station",
+      "With lots of luggage or a late arrival, an airport limousine bus or taxi (Kakao T) is also easy"
+     ]
+    },
+    {
+     "icon": "📱",
+     "title": "Internet (SIM · eSIM · Wi-Fi)",
+     "summary": "Activate a SIM or eSIM right at the airport",
+     "videoQuery": "Korea travel SIM card eSIM airport guide",
+     "details": [
+      "Buy and activate a travel SIM at a carrier booth (SKT·KT·LG U+) on the arrivals floor — bring your passport",
+      "On a recent phone, buying an eSIM online before you land saves you the queue",
+      "Prices depend on days and data (e.g., 5-day unlimited). Compare options at the booth",
+      "Airports, subways and cafés have lots of free Wi-Fi, but mobile data helps for map, translation and taxi apps"
+     ]
+    },
+    {
+     "icon": "💳",
+     "title": "Buy & top up a transit card (T-money)",
+     "summary": "One card for subway, bus, even convenience stores",
+     "videoQuery": "Korea T-money card how to use and charge",
+     "details": [
+      "Where to buy: vending machines at the airport/stations, or convenience stores (GS25·CU·7-Eleven·emart24)",
+      "Where to top up: say 'charge' at a convenience-store counter, or use the blue top-up machines in subway stations",
+      "⚠️ Buying & topping up is CASH ONLY — keep some Korean won ready; ₩10,000 at a time is convenient",
+      "Tap the card on the reader when boarding subway/bus and the fare is deducted automatically",
+      "When you leave, refund the remaining balance at a convenience store",
+      "Since March 2026, new ticket machines on Seoul subway lines 1–8 accept foreign cards (Visa/MC) for single-ride tickets and short-term passes (1–7 days). Tapping a foreign card directly at the gate doesn't work yet"
+     ]
+    },
+    {
+     "icon": "🚇",
+     "title": "Riding the subway & bus",
+     "summary": "One map app shows transfers and live arrival times",
+     "videoQuery": "Seoul subway and bus guide for foreigners",
+     "details": [
+      "You don't need an extra transit app — the 'directions' feature in the map apps below (Naver Map, KakaoMap) covers subway/bus transfers and live arrival times",
+      "Subway: it even tells you which exit to take and which car is closest to your transfer. Station names and line numbers are written in English inside stations too",
+      "Bus: stop announcements may be in Korean only. Watching your position on the app map is the sure way to know when to get off",
+      "⚠️ On buses, tap your card again when getting OFF — if you don't, you lose the transfer discount and pay more next ride",
+      "The last subway runs around midnight. If you'll be out late, check the last-train time in the app first"
+     ]
+    },
+    {
+     "icon": "🚕",
+     "title": "Taking taxis (apps & cards)",
+     "summary": "No tipping · k.ride or Uber is easiest for visitors",
+     "videoQuery": "korea taxi app kride uber kakao tourist",
+     "details": [
+      "Korean taxis are safe and relatively cheap. No tipping — just pay the meter",
+      "k.ride — Kakao's app built for foreigners. Sign up with Google/Apple + your home number, pay automatically with a foreign card (EN/JA/ZH, auto-translated chat with drivers). Note it leans premium, so fares can run higher",
+      "Kakao T — the app locals use. You can sign up with a foreign number (+country code), but foreign cards can't be linked for in-app payment. Choose 'Pay driver directly' and pay with cash, a physical card, or T-money at drop-off",
+      "Uber — connects licensed taxis in Seoul, Busan, Incheon and more. Your existing foreign card and the familiar interface just work",
+      "Late-night surcharge applies roughly 10pm–4am. If street-hailing fails, app-hailing is the answer",
+      "Destinations work best as Korean names/addresses — the directions button on this app's place pages saves you retyping them"
+     ]
+    },
+    {
+     "icon": "💵",
+     "title": "Money (exchange · cards · ATM)",
+     "summary": "Cards work well, but a little cash is handy",
+     "videoQuery": "Korea travel money exchange card ATM guide",
+     "details": [
+      "Most restaurants, shops and taxis accept foreign cards (Visa·Mastercard)",
+      "Private exchange shops downtown (e.g., Myeongdong) usually give better rates than the airport",
+      "Traditional markets, street stalls and small shops may need cash",
+      "Withdraw Korean won with a foreign card at machines marked 'Global ATM' (in stores & banks)"
+     ]
+    },
+    {
+     "icon": "📞",
+     "title": "Reservations & waitlists (the phone-number problem)",
+     "summary": "No Korean number? CatchTable Global has you covered",
+     "videoQuery": "catchtable global korea restaurant reservation",
+     "details": [
+      "Unless it's a famous spot, Koreans mostly just walk in. For places with lines, arriving 30 min before opening ('open run') is the trick",
+      "CatchTable Global — the reservation app for foreigners. Sign up with Google/Apple (no Korean number), deposits by foreign card. EN/JA/ZH support, and it does both reservations and remote waitlisting (waitlists need no deposit)",
+      "Korean-market apps like Tabling require 010 identity verification — hard for tourists",
+      "The waitlist tablets at entrances often demand a Korean phone number — if you don't have one, just tell the staff directly",
+      "Many restaurants close for a 3–5pm 'break time'. Check hours before you go"
+     ]
+    },
+    {
+     "icon": "🍜",
+     "title": "Ordering food delivery",
+     "summary": "Baemin now works in English with foreign cards — no Korean number needed in most cases",
+     "videoQuery": "korea food delivery app baemin english tourist",
+     "details": [
+      "Baemin — Korea's #1 delivery app. Since 2026 it supports English, Japanese and Chinese, and takes foreign cards plus Apple Pay with overseas-issued Visa/MC/JCB/Amex",
+      "Signup often works with a Google/Apple (social) login. If not, you'll need a prepaid SIM/eSIM with an 010 number that can receive SMS",
+      "Shuttle — a delivery app built for foreigners, fully in English. Foreign cards & PayPal, English support. Covers central Seoul plus parts of Busan and Daegu",
+      "Coupang Eats and Yogiyo require Korean identity verification (a Korean number in your name) — hard for tourists",
+      "Order to your accommodation and choose 'leave at the door'. ⚠️ Requirements change often — check the app for the latest"
+     ]
+    },
+    {
+     "icon": "🗺️",
+     "title": "Apps to install (with login tips)",
+     "summary": "Maps, translation and taxi — three is enough",
+     "videoQuery": "Kakao T taxi app for foreigners how to sign up",
+     "details": [
+      "🗺️ Naver Map / KakaoMap — Google Maps is inaccurate in Korea; these are the accurate ones. Naver Map works for search & directions without any login",
+      "🌐 If the app opens in Korean: both apps support English, Japanese and Chinese. Tap the gear (⚙) or '설정' and look for '언어' to switch to English",
+      "Two Korean words to look for — 「설정」 (Settings) · 「언어」 (Language). Knowing just these two lets you find it even if the screen changes",
+      "If your phone's language is English, the apps often open in English from the start",
+      "⚠️ Even in English, shop names may still show in Korean. Searching with the Korean name finds places more reliably",
+      "💬 Papago — photo, voice and live translation. Snap a menu and it translates instantly (no login needed)",
+      "🚕 Kakao T — to call a taxi you must sign up; you can verify with a foreign phone number by choosing your country code and getting an SMS code (English supported)",
+      "⚠️ Kakao T: with a foreign number, approval can take a few days, so sign up before you arrive. Keep data/Wi-Fi on to receive the verification SMS"
+     ]
+    }
+   ]
+  },
+  "ja": {
+   "title": "空港到着ガイド",
+   "intro": "韓国に着いたばかりですか?空港ですぐ必要なものだけまとめました。各項目をタップすると詳細と解説動画が開きます。",
+   "sections": [
+    {
+     "icon": "🚆",
+     "title": "空港から市内へ",
+     "summary": "空港鉄道(AREX)が一番簡単で安いです",
+     "videoQuery": "仁川空港 ソウル 空港鉄道 行き方",
+     "details": [
+      "仁川空港 → ソウル駅:空港鉄道(AREX)一般列車 約60分、直通列車 約45分",
+      "案内板の列車マークと青い矢印に従って地下1階の交通センターへ",
+      "一般列車は地下鉄のように途中駅に停まり乗換可、直通列車はソウル駅までノンストップ",
+      "荷物が多い・深夜到着なら空港リムジンバスやタクシー(Kakao T)も便利"
+     ]
+    },
+    {
+     "icon": "📱",
+     "title": "ネット(SIM・eSIM・Wi-Fi)",
+     "summary": "空港でSIMやeSIMをすぐ開通",
+     "videoQuery": "韓国 旅行 SIM eSIM 開通",
+     "details": [
+      "空港到着階の通信会社ブース(SKT・KT・LG U+)で旅行用SIMを購入・開通 — パスポート必要",
+      "最新のスマホならeSIMを到着前にオンライン購入すると行列を回避できます",
+      "料金は日数・データ量で変わります(例:5日間無制限)。ブースで比較を",
+      "空港・地下鉄・カフェは無料Wi-Fiが多いですが、地図・翻訳・タクシーアプリにはデータがあると安心"
+     ]
+    },
+    {
+     "icon": "💳",
+     "title": "交通カードの購入・チャージ(T-money)",
+     "summary": "1枚で地下鉄・バス・コンビニまで",
+     "videoQuery": "韓国 T-money カード 使い方 チャージ",
+     "details": [
+      "購入場所:空港・駅の自販機、またはコンビニ(GS25・CU・セブン・emart24)",
+      "チャージ場所:コンビニのレジで「チャージ(charge)」と伝える、または駅の青いチャージ機を利用",
+      "⚠️ 購入・チャージは現金のみ — ウォンの現金を少し用意。1万ウォン単位が便利",
+      "地下鉄・バス乗車時に読み取り機へタッチすると自動で運賃が引かれます",
+      "帰国時、残額はコンビニで払い戻し可",
+      "2026年3月から、ソウル地下鉄1~8号線の新しい券売機で海外カード(Visa/MC)で1回券や短期パス(1~7日)が買えます。改札に海外カードを直接タッチするのはまだできません"
+     ]
+    },
+    {
+     "icon": "🚇",
+     "title": "地下鉄・バスの乗り方",
+     "summary": "地図アプリ一つで乗り換えも到着時刻も分かります",
+     "videoQuery": "ソウル 地下鉄 バス 乗り方 外国人",
+     "details": [
+      "交通アプリを別に入れる必要はありません — 下の地図アプリ(NAVER地図・カカオマップ)の「経路検索」で地下鉄・バスの乗り換えとリアルタイム到着時刻まで分かります",
+      "地下鉄: 何番出口か、どの車両が乗り換えに近いかまで出ます。駅名と路線番号は駅構内にも英語で書かれています",
+      "バス: 停留所の案内が韓国語だけの場合があります。アプリの地図で自分の位置を見ながら降りるのが確実です",
+      "⚠️ バスは降りるときもカードをタッチしてください — しないと乗り換え割引が効かず、次の運賃が高くなります",
+      "地下鉄の終電は0時前後です。遅くなる予定なら、アプリで終電時刻を先に確認しておきましょう"
+     ]
+    },
+    {
+     "icon": "🚕",
+     "title": "タクシーの乗り方(アプリ・カード)",
+     "summary": "チップ不要 · 外国人はk.rideかUberが一番簡単",
+     "videoQuery": "韓国 タクシー アプリ kride uber",
+     "details": [
+      "韓国のタクシーは安全で比較的安いです。チップは不要 — メーター料金だけ払えばOK",
+      "k.ride — カカオが作った外国人専用アプリ。Google/Appleアカウント+母国の番号で登録し、海外カードで自動決済(英・日・中、運転手とのチャット自動翻訳)。プレミアム中心なので料金は高めになることも",
+      "カカオT — 韓国人が使う定番アプリ。海外番号(+国番号)で登録はできますが、海外カードのアプリ内決済は不可。支払い方法で「直接決済」を選び、降車時に現金・カード・T-moneyで払います",
+      "Uber — ソウル・釜山・仁川などで正規タクシーを呼べます。海外カードそのまま、慣れた画面で",
+      "夜10時~朝4時ごろは深夜割増。道で拾えなければアプリ呼び出しが確実です",
+      "行き先は韓国語の店名・住所が正確 — このアプリの場所ページの経路ボタンを使えば書き写す必要がありません"
+     ]
+    },
+    {
+     "icon": "💵",
+     "title": "お金(両替・カード・ATM)",
+     "summary": "カードがよく使えますが現金も少し便利",
+     "videoQuery": "韓国 旅行 両替 カード ATM",
+     "details": [
+      "ほとんどの飲食店・店・タクシーで海外カード(Visa・Mastercard)が使えます",
+      "両替は空港より市内(明洞など)の両替所の方がレートが良い傾向",
+      "伝統市場・屋台・小さな店では現金が必要な場合があります",
+      "「Global ATM」表示の機械(コンビニ・銀行)で海外カードからウォンを引き出せます"
+     ]
+    },
+    {
+     "icon": "📞",
+     "title": "予約・順番待ち(電話番号問題)",
+     "summary": "韓国番号がなくてもCatchTable Globalで解決",
+     "videoQuery": "catchtable global korea restaurant reservation",
+     "details": [
+      "有名店でなければ予約なしで行くのが韓国流。行列店は開店30分前に行く「オープンラン」がコツ",
+      "CatchTable Global — 外国人向け予約アプリ。Google/Appleアカウントで登録(韓国番号不要)、デポジットは海外カードで。英・日・中対応、予約もリモート順番待ちも可能(順番待ちはデポジット不要)",
+      "Tablingなど韓国人向けアプリは010本人認証が必要で、観光客には難しいです",
+      "入口の順番待ちタブレットは韓国の電話番号を求める店が多い — なければ店員に直接伝えるのが確実",
+      "多くの食堂は15~17時ごろ「ブレイクタイム」で閉まります。行く前に営業時間を確認しましょう"
+     ]
+    },
+    {
+     "icon": "🍜",
+     "title": "出前(デリバリー)を頼む",
+     "summary": "配達民族(ペミン)が英語・海外カード対応に — 韓国番号がなくても方法があります",
+     "videoQuery": "韓国 デリバリー アプリ ペミン 使い方",
+     "details": [
+      "配達の民族(ペミン) — 韓国最大手。2026年から英語・日本語・中国語に対応し、海外カードとApple Pay(海外発行のVisa/MC/JCB/Amex)で決済できます",
+      "登録はGoogle・Appleアカウント(ソーシャルログイン)でできる場合が多いです。だめならSMSを受信できる010プリペイドSIM・eSIMが必要です",
+      "Shuttle — 外国人向けに作られた英語のデリバリーアプリ。海外カード・PayPal、英語サポート。ソウル中心部と釜山・大邱の一部で使えます",
+      "クーパンイーツ・ヨギヨは韓国の本人認証(本人名義の韓国番号)が必要で、観光客には難しいです",
+      "宿の住所に頼んで「ドアの前に置いてください」が基本。⚠️ 条件はよく変わるので最新はアプリで確認を"
+     ]
+    },
+    {
+     "icon": "🗺️",
+     "title": "入れておくアプリ(ログイン案内あり)",
+     "summary": "地図・翻訳・タクシーの3つで十分",
+     "videoQuery": "カカオタクシー 外国人 使い方 登録",
+     "details": [
+      "🗺️ NAVERマップ / カカオマップ — 韓国ではGoogleマップは不正確。この2つが正確です。NAVERマップはログインなしで検索・経路検索が可能",
+      "🌐 アプリが韓国語で開いたら: 両方とも英語・日本語・中国語に対応しています。歯車(⚙)か「설정」を押して「언어」を探し、日本語/Englishに変更してください",
+      "探す韓国語は2つ — 「설정」(設定)・「언어」(言語)。この2語だけ覚えれば画面が変わっても見つけられます",
+      "スマホの言語が日本語なら、最初から日本語で開くことが多いです",
+      "⚠️ 言語を変えても店名は韓国語のまま表示されることがあります。検索は韓国語の店名のほうがよく見つかります",
+      "💬 パパゴ(Papago) — 写真・音声・リアルタイム翻訳。メニューを撮ればすぐ翻訳(ログイン不要)",
+      "🚕 カカオ T — タクシー配車には会員登録が必要。アプリで国番号を選び「海外の電話番号」でSMS認証できます(英語対応)",
+      "⚠️ カカオ T:海外番号は承認に数日かかることがあるため、韓国到着前の登録がおすすめ。認証SMS受信にはデータ・Wi-Fiが必要です"
+     ]
+    }
+   ]
+  },
+  "zh": {
+   "title": "机场到达指南",
+   "intro": "刚到韩国吗?这里只汇总了在机场马上会用到的信息。点击每一项可展开详细内容和讲解视频。",
+   "sections": [
+    {
+     "icon": "🚆",
+     "title": "从机场到市区",
+     "summary": "机场铁路(AREX)最简单也最便宜",
+     "videoQuery": "仁川机场 到 首尔 机场铁路 乘坐",
+     "details": [
+      "仁川机场 → 首尔站:机场铁路(AREX)普通列车约60分钟,直通列车约45分钟",
+      "跟着指示牌上的列车图标和蓝色箭头下到地下1层交通中心",
+      "普通列车像地铁一样中途停靠、可换乘;直通列车直达首尔站不停站",
+      "行李多或深夜到达,机场大巴或出租车(Kakao T)也很方便"
+     ]
+    },
+    {
+     "icon": "📱",
+     "title": "上网(SIM·eSIM·WiFi)",
+     "summary": "在机场即可开通SIM或eSIM",
+     "videoQuery": "韩国 旅行 SIM eSIM 开通",
+     "details": [
+      "在机场到达层的运营商柜台(SKT·KT·LG U+)购买并开通旅行SIM卡 — 需要护照",
+      "较新的手机可在到达前网上先买好eSIM,免排队",
+      "价格按天数·流量不同(如5天无限量)。可在柜台比较后选择",
+      "机场·地铁·咖啡店有很多免费WiFi,但用地图·翻译·打车App最好有流量"
+     ]
+    },
+    {
+     "icon": "💳",
+     "title": "购买·充值交通卡(T-money)",
+     "summary": "一张卡搞定地铁·公交·便利店",
+     "videoQuery": "韩国 T-money 交通卡 充值 使用",
+     "details": [
+      "购买地点:机场·地铁站自助机,或便利店(GS25·CU·7-Eleven·emart24)",
+      "充值地点:在便利店收银台说「充值(charge)」,或使用地铁站蓝色充值机",
+      "⚠️ 购买·充值只收现金 — 请备好一些韩元现金,每次充1万韩元较方便",
+      "乘地铁·公交时把卡贴近读卡器,车费自动扣除",
+      "离开时余额可在便利店退款",
+      "2026年3月起,首尔地铁1~8号线的新售票机可用海外卡(Visa/MC)购买单程票和短期通票(1~7日)。海外卡直接刷闸机还不行"
+     ]
+    },
+    {
+     "icon": "🚇",
+     "title": "地铁·公交乘坐方法",
+     "summary": "一个地图App就能查换乘和实时到站",
+     "videoQuery": "首尔 地铁 公交 乘坐方法 外国人",
+     "details": [
+      "不用另外装交通App — 下面地图App(NAVER地图·KakaoMap)的「路线」功能就能查地铁·公交换乘和实时到站时间",
+      "地铁: 连从几号出口出、哪节车厢离换乘最近都会显示。站名和线路号在站内也有英文标识",
+      "公交: 报站可能只有韩语。在App地图上看着自己的位置下车最稳妥",
+      "⚠️ 坐公交下车时也要刷卡 — 不刷就享受不到换乘优惠，下一程会多付钱",
+      "地铁末班车在午夜前后。如果要玩到很晚，先在App里确认末班车时间"
+     ]
+    },
+    {
+     "icon": "🚕",
+     "title": "打车(App·银行卡)",
+     "summary": "无需小费 · 外国人用k.ride或Uber最简单",
+     "videoQuery": "韩国 打车 app kride uber",
+     "details": [
+      "韩国出租车安全且相对便宜。不用给小费 — 按计价器付款即可",
+      "k.ride — Kakao为外国人打造的叫车App。用Google/Apple账号+本国号码注册,海外卡自动扣款(英·日·中,与司机聊天自动翻译)。以高级车为主,车费可能略高",
+      "Kakao T — 韩国人常用的App。可用海外号码(+国家代码)注册,但海外卡无法绑定App内支付。选择'直接付款',下车时用现金·实体卡·T-money支付",
+      "Uber — 在首尔·釜山·仁川等地连接正规出租车。海外卡直接用,界面也熟悉",
+      "晚10点~凌晨4点有深夜加价。路边拦不到车时,用App叫车最可靠",
+      "目的地用韩文店名·地址最准确 — 用本App地点页的导航按钮就不用抄写了"
+     ]
+    },
+    {
+     "icon": "💵",
+     "title": "钱(换汇·刷卡·ATM)",
+     "summary": "刷卡很方便,备点现金也有用",
+     "videoQuery": "韩国 旅行 换钱 换汇 ATM",
+     "details": [
+      "大多数餐厅·商店·出租车都能刷境外卡(Visa·Mastercard)",
+      "换汇通常市区(如明洞)的私人换钱所比机场汇率更好",
+      "传统市场·路边摊·小店可能需要现金",
+      "在标有「Global ATM」的机器(便利店·银行)可用境外卡取韩元"
+     ]
+    },
+    {
+     "icon": "📞",
+     "title": "餐厅预订·排队(电话号码问题)",
+     "summary": "没有韩国号码也能用CatchTable Global解决",
+     "videoQuery": "catchtable global korea restaurant reservation",
+     "details": [
+      "不是名店的话,韩国人一般直接走进去。排队名店的诀窍是开门前30分钟到场('open run')",
+      "CatchTable Global — 面向外国人的预订App。用Google/Apple账号注册(不需要韩国号码),订金用海外卡支付。支持英·日·中(简繁),预订和远程排队都可以(排队无需订金)",
+      "Tabling等韩国本地App需要010实名认证,游客很难使用",
+      "门口的排队平板很多要求输入韩国电话号码 — 没有的话直接跟店员说最稳妥",
+      "很多餐厅下午3~5点有'休息时间'不营业。去之前先确认营业时间"
+     ]
+    },
+    {
+     "icon": "🍜",
+     "title": "点外卖",
+     "summary": "配达民族(Baemin)已支持英文和海外卡 — 没有韩国号码也有办法",
+     "videoQuery": "韩国 外卖 app baemin 教程",
+     "details": [
+      "配达民族(Baemin) — 韩国第一外卖平台。2026年起支持英文·日文·中文,可用海外卡及Apple Pay(海外发行的Visa/MC/JCB/Amex)付款",
+      "注册多数情况可用Google·Apple账号(社交登录)。不行的话需要一张能收短信的010预付SIM/eSIM",
+      "Shuttle — 专为外国人打造的全英文外卖App。支持海外卡·PayPal,英文客服。覆盖首尔市中心及釜山·大邱部分地区",
+      "Coupang Eats和Yogiyo需要韩国实名认证(本人名下的韩国号码),游客较难使用",
+      "送到住处并选'放在门口'即可。⚠️ 注册条件常变,以App内最新说明为准"
+     ]
+    },
+    {
+     "icon": "🗺️",
+     "title": "必装的App(含登录说明)",
+     "summary": "地图·翻译·打车三个就够",
+     "videoQuery": "Kakao T 打车 外国人 注册 使用",
+     "details": [
+      "🗺️ Naver地图 / KakaoMap — 韩国的谷歌地图不准,这两个才准确。Naver地图无需登录即可搜索·导航",
+      "🌐 如果App显示韩语: 两个App都支持英语·日语·中文。点齿轮(⚙)或「설정」,找到「언어」改成中文/English",
+      "要找的两个韩语词 — 「설정」(设置)·「언어」(语言)。记住这两个词,界面改版了也能找到",
+      "手机系统语言是中文的话,App往往一开始就是中文",
+      "⚠️ 就算改了语言,店名仍可能显示韩语。用韩语店名搜索更容易找到",
+      "💬 Papago — 照片·语音·实时翻译,拍下菜单即可翻译(无需登录)",
+      "🚕 Kakao T — 叫车需要注册;可在App里选择国家区号,用「境外手机号」接收短信验证(支持英文)",
+      "⚠️ Kakao T:境外号码审核可能需要几天,建议抵达韩国前先注册。接收验证短信需开启数据·WiFi"
+     ]
+    }
+   ]
+  },
+  "zh-TW": {
+   "title": "機場抵達指南",
+   "intro": "剛到韓國嗎?這裡只彙整了在機場馬上會用到的資訊。點擊每一項可展開詳細內容和講解影片。",
+   "sections": [
+    {
+     "icon": "🚆",
+     "title": "從機場到市區",
+     "summary": "機場鐵路(AREX)最簡單也最便宜",
+     "videoQuery": "仁川機場 到 首爾 機場鐵路 搭乘",
+     "details": [
+      "仁川機場 → 首爾站:機場鐵路(AREX)普通列車約60分鐘,直達列車約45分鐘",
+      "跟著指示牌上的列車圖示和藍色箭頭下到地下交通中心(B1)",
+      "普通列車像地鐵一樣中途停靠、可轉乘;直達列車直達首爾站不停站",
+      "行李多或深夜抵達,機場巴士或計程車(Kakao T)也很方便"
+     ]
+    },
+    {
+     "icon": "📱",
+     "title": "上網(SIM·eSIM·WiFi)",
+     "summary": "在機場即可開通SIM或eSIM",
+     "videoQuery": "韓國 旅遊 SIM eSIM 開通",
+     "details": [
+      "在機場入境層的電信商櫃台(SKT·KT·LG U+)購買並開通旅遊SIM卡 — 需要護照",
+      "較新的手機可在抵達前先在網路買好eSIM,免排隊",
+      "價格依天數·流量而不同(如5天無限量)。可在櫃台比較後選擇",
+      "機場·地鐵·咖啡廳有很多免費WiFi,但用地圖·翻譯·叫車App最好有行動網路"
+     ]
+    },
+    {
+     "icon": "💳",
+     "title": "購買·儲值交通卡(T-money)",
+     "summary": "一張卡搞定地鐵·公車·便利商店",
+     "videoQuery": "韓國 T-money 交通卡 儲值 使用",
+     "details": [
+      "購買地點:機場·地鐵站自助機,或便利商店(GS25·CU·7-Eleven·emart24)",
+      "儲值地點:在便利商店收銀台說「charge」,或使用地鐵站藍色儲值機",
+      "⚠️ 購買·儲值只收現金 — 請備好一些韓元現金,每次儲1萬韓元較方便",
+      "搭地鐵·公車時把卡貼近感應機,車資自動扣除",
+      "離開時餘額可在便利商店退款",
+      "2026年3月起,首爾地鐵1~8號線的新售票機可用海外卡(Visa/MC)購買單程票和短期通票(1~7日)。海外卡直接刷閘門還不行"
+     ]
+    },
+    {
+     "icon": "🚇",
+     "title": "地鐵·公車搭乘方法",
+     "summary": "一個地圖App就能查轉乘和即時到站",
+     "videoQuery": "首爾 地鐵 公車 搭乘方法 外國人",
+     "details": [
+      "不用另外裝交通App — 下面地圖App(NAVER地圖·KakaoMap)的「路線」功能就能查地鐵·公車轉乘和即時到站時間",
+      "地鐵: 連從幾號出口出、哪節車廂離轉乘最近都會顯示。站名和路線號在站內也有英文標示",
+      "公車: 報站可能只有韓語。在App地圖上看著自己的位置下車最穩妥",
+      "⚠️ 搭公車下車時也要刷卡 — 不刷就享受不到轉乘優惠，下一程會多付錢",
+      "地鐵末班車在午夜前後。如果要玩到很晚，先在App裡確認末班車時間"
+     ]
+    },
+    {
+     "icon": "🚕",
+     "title": "搭計程車(App·信用卡)",
+     "summary": "無需小費 · 外國人用k.ride或Uber最簡單",
+     "videoQuery": "韓國 計程車 app kride uber",
+     "details": [
+      "韓國計程車安全且相對便宜。不用給小費 — 按跳表付款即可",
+      "k.ride — Kakao為外國人打造的叫車App。用Google/Apple帳號+本國號碼註冊,海外卡自動扣款(英·日·中,與司機聊天自動翻譯)。以高級車為主,車資可能略高",
+      "Kakao T — 韓國人常用的App。可用海外號碼(+國碼)註冊,但海外卡無法綁定App內支付。選擇'直接付款',下車時用現金·實體卡·T-money支付",
+      "Uber — 在首爾·釜山·仁川等地連接正規計程車。海外卡直接用,介面也熟悉",
+      "晚10點~凌晨4點有深夜加成。路邊攔不到車時,用App叫車最可靠",
+      "目的地用韓文店名·地址最準確 — 用本App地點頁的導航按鈕就不用抄寫了"
+     ]
+    },
+    {
+     "icon": "💵",
+     "title": "錢(換匯·刷卡·ATM)",
+     "summary": "刷卡很方便,備點現金也有用",
+     "videoQuery": "韓國 旅遊 換錢 換匯 ATM",
+     "details": [
+      "大多數餐廳·商店·計程車都能刷海外卡(Visa·Mastercard)",
+      "市區(如明洞)的私人換錢所通常比機場匯率更好",
+      "傳統市場·路邊攤·小店可能需要現金",
+      "在標有「Global ATM」的機器(便利商店·銀行)可用海外卡提領韓元"
+     ]
+    },
+    {
+     "icon": "📞",
+     "title": "餐廳預訂·排隊(電話號碼問題)",
+     "summary": "沒有韓國號碼也能用CatchTable Global解決",
+     "videoQuery": "catchtable global korea restaurant reservation",
+     "details": [
+      "不是名店的話,韓國人一般直接走進去。排隊名店的訣竅是開門前30分鐘到場('open run')",
+      "CatchTable Global — 面向外國人的預訂App。用Google/Apple帳號註冊(不需要韓國號碼),訂金用海外卡支付。支援英·日·中(簡繁),預訂和遠端排隊都可以(排隊無需訂金)",
+      "Tabling等韓國本地App需要010實名認證,遊客很難使用",
+      "門口的排隊平板很多要求輸入韓國電話號碼 — 沒有的話直接跟店員說最穩妥",
+      "很多餐廳下午3~5點有'休息時間'不營業。去之前先確認營業時間"
+     ]
+    },
+    {
+     "icon": "🍜",
+     "title": "點外送",
+     "summary": "配達民族(Baemin)已支援英文和海外卡 — 沒有韓國號碼也有辦法",
+     "videoQuery": "韓國 外送 app baemin 教學",
+     "details": [
+      "配達民族(Baemin) — 韓國第一外送平台。2026年起支援英文·日文·中文,可用海外卡及Apple Pay(海外發行的Visa/MC/JCB/Amex)付款",
+      "註冊多數情況可用Google·Apple帳號(社群登入)。不行的話需要一張能收簡訊的010預付SIM/eSIM",
+      "Shuttle — 專為外國人打造的全英文外送App。支援海外卡·PayPal,英文客服。涵蓋首爾市中心及釜山·大邱部分地區",
+      "Coupang Eats和Yogiyo需要韓國實名認證(本人名下的韓國號碼),遊客較難使用",
+      "送到住處並選'放在門口'即可。⚠️ 註冊條件常變,以App內最新說明為準"
+     ]
+    },
+    {
+     "icon": "🗺️",
+     "title": "必裝的App(含登入說明)",
+     "summary": "地圖·翻譯·叫車三個就夠",
+     "videoQuery": "Kakao T 叫車 外國人 註冊 使用",
+     "details": [
+      "🗺️ Naver地圖 / KakaoMap — 韓國的Google地圖不準,這兩個才準確。Naver地圖免登入即可搜尋·導航",
+      "🌐 如果App顯示韓語: 兩個App都支援英語·日語·中文。點齒輪(⚙)或「설정」,找到「언어」改成中文/English",
+      "要找的兩個韓語詞 — 「설정」(設定)·「언어」(語言)。記住這兩個詞,介面改版了也能找到",
+      "手機系統語言是中文的話,App往往一開始就是中文",
+      "⚠️ 就算改了語言,店名仍可能顯示韓語。用韓語店名搜尋更容易找到",
+      "💬 Papago — 照片·語音·即時翻譯,拍下菜單即可翻譯(免登入)",
+      "🚕 Kakao T — 叫車需要註冊;可在App中選擇國碼,用「海外手機號碼」接收簡訊驗證(支援英文)",
+      "⚠️ Kakao T:海外號碼審核可能需要幾天,建議抵達韓國前先註冊。接收驗證簡訊需開啟行動網路·WiFi"
+     ]
+    }
+   ]
+  },
+  "es": {
+   "title": "Guía de llegada al aeropuerto",
+   "intro": "¿Acabas de aterrizar en Corea? Aquí tienes solo lo que necesitas nada más llegar al aeropuerto. Toca cada elemento para ver los detalles y un vídeo.",
+   "sections": [
+    {
+     "icon": "🚆",
+     "title": "Del aeropuerto a la ciudad",
+     "summary": "El tren del aeropuerto (AREX) es lo más fácil y barato",
+     "videoQuery": "Aeropuerto Incheon a Seúl AREX tren guía",
+     "details": [
+      "Aeropuerto de Incheon → Estación de Seúl: tren AREX con paradas ~60 min, exprés ~45 min",
+      "Sigue el icono del tren y las flechas azules hasta el Centro de Transporte (planta B1)",
+      "El tren con paradas funciona como el metro (para en el trayecto, permite transbordos); el exprés va directo a la Estación de Seúl",
+      "Con mucho equipaje o si llegas de noche, el autobús limusina del aeropuerto o un taxi (Kakao T) también son cómodos"
+     ]
+    },
+    {
+     "icon": "📱",
+     "title": "Internet (SIM · eSIM · Wi-Fi)",
+     "summary": "Activa una SIM o eSIM en el propio aeropuerto",
+     "videoQuery": "Corea viaje SIM eSIM aeropuerto guía",
+     "details": [
+      "Compra y activa una SIM de viaje en un puesto de operador (SKT·KT·LG U+) en la planta de llegadas — lleva tu pasaporte",
+      "En un móvil reciente, comprar una eSIM online antes de aterrizar te ahorra la cola",
+      "El precio depende de los días y los datos (p. ej., 5 días ilimitado). Compara opciones en el puesto",
+      "Aeropuertos, metro y cafeterías tienen mucho Wi-Fi gratis, pero los datos ayudan con los mapas, la traducción y el taxi"
+     ]
+    },
+    {
+     "icon": "💳",
+     "title": "Compra y recarga una tarjeta de transporte (T-money)",
+     "summary": "Una tarjeta para metro, bus e incluso tiendas",
+     "videoQuery": "Corea tarjeta T-money cómo usar y recargar",
+     "details": [
+      "Dónde comprar: máquinas en el aeropuerto/estaciones o tiendas 24h (GS25·CU·7-Eleven·emart24)",
+      "Dónde recargar: di 'charge' en el mostrador de una tienda, o usa las máquinas azules de recarga del metro",
+      "Las recargas suelen ser solo en efectivo — va bien añadir ₩10.000 cada vez",
+      "Al subir al metro/bus, acerca la tarjeta al lector y se descuenta el importe automáticamente",
+      "Al marcharte, puedes reembolsar el saldo restante en una tienda",
+      "Desde marzo de 2026, las nuevas máquinas del metro de Seúl (líneas 1–8) aceptan tarjetas extranjeras (Visa/MC) para billetes sencillos y pases cortos (1–7 días). Pasar la tarjeta extranjera directamente por el torno aún no funciona"
+     ]
+    },
+    {
+     "icon": "🚇",
+     "title": "Cómo usar metro y autobús",
+     "summary": "Una app de mapas ya muestra transbordos y llegadas en vivo",
+     "videoQuery": "Seúl metro autobús guía extranjeros",
+     "details": [
+      "No necesitas otra app de transporte: la función de rutas de las apps de mapas de abajo (Naver Map, KakaoMap) incluye transbordos de metro/bus y horarios de llegada en tiempo real",
+      "Metro: te indica incluso por qué salida salir y qué vagón queda más cerca del transbordo. Los nombres de estación y números de línea también están en inglés dentro de las estaciones",
+      "Autobús: los avisos de parada pueden ser solo en coreano. Mirar tu posición en el mapa de la app es la forma segura de saber cuándo bajar",
+      "⚠️ En el autobús, pasa la tarjeta también AL BAJAR: si no, pierdes el descuento por transbordo y pagas más en el siguiente viaje",
+      "El último metro pasa alrededor de medianoche. Si vas a salir tarde, consulta antes la hora del último tren en la app"
+     ]
+    },
+    {
+     "icon": "🚕",
+     "title": "Tomar taxi (apps y tarjetas)",
+     "summary": "Sin propinas · k.ride o Uber es lo más fácil",
+     "videoQuery": "korea taxi app kride uber tourist",
+     "details": [
+      "Los taxis coreanos son seguros y relativamente baratos. Sin propinas — solo paga el taxímetro",
+      "k.ride — la app de Kakao para extranjeros. Regístrate con Google/Apple + tu número de tu país y paga automáticamente con tarjeta extranjera (EN/JA/ZH, chat con el conductor autotraducido). Tiende a lo premium, la tarifa puede ser mayor",
+      "Kakao T — la app de los locales. Puedes registrarte con número extranjero (+código de país), pero no vincula tarjetas extranjeras. Elige 'pagar al conductor' y paga en efectivo, tarjeta física o T-money al bajar",
+      "Uber — conecta taxis con licencia en Seúl, Busan, Incheon y más. Tu tarjeta extranjera y la interfaz de siempre",
+      "Recargo nocturno aprox. de 22:00 a 4:00. Si nadie para en la calle, pide por app",
+      "El destino funciona mejor con nombre/dirección en coreano — el botón de ruta en las páginas de esta app te ahorra copiarlo"
+     ]
+    },
+    {
+     "icon": "💵",
+     "title": "Dinero (cambio · tarjetas · cajeros)",
+     "summary": "Las tarjetas funcionan bien, pero algo de efectivo viene bien",
+     "videoQuery": "Corea viaje cambio de dinero tarjeta ATM",
+     "details": [
+      "La mayoría de restaurantes, tiendas y taxis aceptan tarjetas extranjeras (Visa·Mastercard)",
+      "Las casas de cambio del centro (p. ej., Myeongdong) suelen dar mejor tasa que el aeropuerto",
+      "En mercados tradicionales, puestos callejeros y tiendas pequeñas puede hacer falta efectivo",
+      "Saca wones con una tarjeta extranjera en cajeros marcados como 'Global ATM' (en tiendas y bancos)"
+     ]
+    },
+    {
+     "icon": "📞",
+     "title": "Reservas y listas de espera (el problema del número)",
+     "summary": "¿Sin número coreano? CatchTable Global lo resuelve",
+     "videoQuery": "catchtable global korea restaurant reservation",
+     "details": [
+      "Salvo en sitios famosos, en Corea se entra sin reserva. En los de cola, llegar 30 min antes de abrir es el truco",
+      "CatchTable Global — la app de reservas para extranjeros. Registro con Google/Apple (sin número coreano), depósitos con tarjeta extranjera. EN/JA/ZH; sirve para reservar y para la cola remota (la cola no pide depósito)",
+      "Apps locales como Tabling exigen verificación 010 — difícil para turistas",
+      "Las tablets de espera en la entrada suelen pedir número coreano — si no tienes, díselo al personal directamente",
+      "Muchos restaurantes cierran de 15 a 17 h ('break time'). Comprueba el horario antes de ir"
+     ]
+    },
+    {
+     "icon": "🍜",
+     "title": "Pedir comida a domicilio",
+     "summary": "Baemin ya funciona en inglés con tarjetas extranjeras",
+     "videoQuery": "korea food delivery app baemin english tourist",
+     "details": [
+      "Baemin — la app de reparto n.º 1 de Corea. Desde 2026 tiene inglés, japonés y chino, y acepta tarjetas extranjeras y Apple Pay (Visa/MC/JCB/Amex emitidas fuera)",
+      "El registro suele funcionar con cuenta de Google/Apple. Si no, necesitarás una SIM/eSIM prepago con número 010 que reciba SMS",
+      "Shuttle — app de reparto hecha para extranjeros, todo en inglés. Tarjetas extranjeras y PayPal. Cubre el centro de Seúl y partes de Busan y Daegu",
+      "Coupang Eats y Yogiyo exigen verificación de identidad coreana — difícil para turistas",
+      "Pide a tu alojamiento y elige 'dejar en la puerta'. ⚠️ Los requisitos cambian a menudo — confirma en la app"
+     ]
+    },
+    {
+     "icon": "🗺️",
+     "title": "Apps para instalar (con consejos de registro)",
+     "summary": "Mapas, traducción y taxi: con tres basta",
+     "videoQuery": "Kakao T taxi extranjeros cómo registrarse",
+     "details": [
+      "🗺️ Naver Map / KakaoMap — Google Maps es impreciso en Corea; estas son las precisas. Naver Map permite buscar y navegar sin iniciar sesión",
+      "🌐 Si la app se abre en coreano: ambas admiten inglés, japonés y chino. Toca el engranaje (⚙) o '설정' y busca '언어' para cambiar a English",
+      "Dos palabras coreanas que buscar — 「설정」 (Ajustes) · 「언어」 (Idioma). Con solo estas dos lo encuentras aunque cambie la pantalla",
+      "Si el idioma del móvil es inglés, las apps suelen abrirse ya en inglés",
+      "⚠️ Aun en inglés, los nombres de locales pueden salir en coreano. Buscar con el nombre coreano funciona mejor",
+      "💬 Papago — traducción por foto, voz y en directo. Fotografía un menú y lo traduce al instante (sin registro)",
+      "🚕 Kakao T — para pedir taxi hay que registrarse; puedes verificar con un número extranjero eligiendo tu prefijo de país y recibiendo un SMS (con inglés)",
+      "⚠️ Kakao T: con un número extranjero la aprobación puede tardar días, así que regístrate antes de llegar. Mantén datos/Wi-Fi para recibir el SMS de verificación"
+     ]
+    }
+   ]
+  },
+  "fr": {
+   "title": "Guide d'arrivée à l'aéroport",
+   "intro": "Vous venez d'atterrir en Corée ? Voici l'essentiel, directement à l'aéroport. Touchez chaque élément pour voir les détails et une vidéo.",
+   "sections": [
+    {
+     "icon": "🚆",
+     "title": "De l'aéroport au centre-ville",
+     "summary": "Le train de l'aéroport (AREX) est le plus simple et le moins cher",
+     "videoQuery": "Aéroport Incheon à Séoul AREX train guide",
+     "details": [
+      "Aéroport d'Incheon → Gare de Séoul : train AREX omnibus ~60 min, express ~45 min",
+      "Suivez l'icône du train et les flèches bleues jusqu'au Centre de transport (niveau B1)",
+      "L'omnibus fonctionne comme le métro (arrêts en route, correspondances possibles) ; l'express va sans arrêt jusqu'à la gare de Séoul",
+      "Avec beaucoup de bagages ou une arrivée tardive, le bus limousine de l'aéroport ou un taxi (Kakao T) sont aussi pratiques"
+     ]
+    },
+    {
+     "icon": "📱",
+     "title": "Internet (SIM · eSIM · Wi-Fi)",
+     "summary": "Activez une SIM ou une eSIM directement à l'aéroport",
+     "videoQuery": "Corée voyage SIM eSIM aéroport guide",
+     "details": [
+      "Achetez et activez une SIM de voyage à un stand d'opérateur (SKT·KT·LG U+) au niveau des arrivées — munissez-vous de votre passeport",
+      "Sur un téléphone récent, acheter une eSIM en ligne avant d'atterrir évite la file d'attente",
+      "Le prix dépend de la durée et des données (ex. : 5 jours illimité). Comparez au stand",
+      "Aéroports, métro et cafés offrent beaucoup de Wi-Fi gratuit, mais les données aident pour les cartes, la traduction et le taxi"
+     ]
+    },
+    {
+     "icon": "💳",
+     "title": "Acheter et recharger une carte de transport (T-money)",
+     "summary": "Une carte pour le métro, le bus et même les supérettes",
+     "videoQuery": "Corée carte T-money utilisation recharge",
+     "details": [
+      "Où l'acheter : distributeurs à l'aéroport/en gare, ou supérettes (GS25·CU·7-Eleven·emart24)",
+      "Où la recharger : dites 'charge' à la caisse d'une supérette, ou utilisez les bornes bleues de recharge dans le métro",
+      "Les recharges se font souvent en espèces uniquement — ajouter ₩10 000 à la fois est pratique",
+      "En montant dans le métro/bus, posez la carte sur le lecteur : le tarif est débité automatiquement",
+      "En partant, vous pouvez vous faire rembourser le solde restant dans une supérette",
+      "Depuis mars 2026, les nouvelles bornes du métro de Séoul (lignes 1–8) acceptent les cartes étrangères (Visa/MC) pour les tickets à l'unité et les pass courts (1–7 jours). Passer sa carte étrangère directement au portique ne marche pas encore"
+     ]
+    },
+    {
+     "icon": "🚇",
+     "title": "Prendre le métro et le bus",
+     "summary": "Une appli de cartes suffit : correspondances et arrivées en direct",
+     "videoQuery": "Séoul métro bus guide étrangers",
+     "details": [
+      "Pas besoin d'une appli de transport en plus : l'itinéraire des applis de cartes ci-dessous (Naver Map, KakaoMap) couvre les correspondances métro/bus et les horaires en temps réel",
+      "Métro : elle indique même quelle sortie prendre et quelle voiture est la plus proche de la correspondance. Les noms de station et numéros de ligne sont aussi en anglais dans les stations",
+      "Bus : les annonces d'arrêt peuvent être uniquement en coréen. Suivre sa position sur la carte de l'appli est le moyen sûr de savoir quand descendre",
+      "⚠️ Dans le bus, repassez votre carte EN DESCENDANT : sinon vous perdez la réduction de correspondance et payez plus au trajet suivant",
+      "Le dernier métro passe vers minuit. Si vous sortez tard, vérifiez d'abord l'heure du dernier train dans l'appli"
+     ]
+    },
+    {
+     "icon": "🚕",
+     "title": "Prendre le taxi (applis et cartes)",
+     "summary": "Pas de pourboire · k.ride ou Uber, le plus simple",
+     "videoQuery": "korea taxi app kride uber tourist",
+     "details": [
+      "Les taxis coréens sont sûrs et plutôt bon marché. Pas de pourboire — payez le compteur",
+      "k.ride — l'appli de Kakao pour les étrangers. Inscription avec Google/Apple + votre numéro, paiement automatique par carte étrangère (EN/JA/ZH, chat traduit avec le chauffeur). Plutôt premium : la course peut coûter plus cher",
+      "Kakao T — l'appli des locaux. Inscription possible avec un numéro étranger (+indicatif), mais pas de carte étrangère en paiement intégré. Choisissez « payer le chauffeur » : espèces, carte physique ou T-money à l'arrivée",
+      "Uber — met en relation avec des taxis licenciés à Séoul, Busan, Incheon… Votre carte étrangère et l'interface habituelle",
+      "Majoration de nuit d'environ 22 h à 4 h. Si héler ne marche pas, commandez par appli",
+      "Indiquez la destination en coréen — le bouton itinéraire des fiches de cette appli vous évite de recopier l'adresse"
+     ]
+    },
+    {
+     "icon": "💵",
+     "title": "Argent (change · cartes · DAB)",
+     "summary": "Les cartes marchent bien, mais un peu d'espèces est utile",
+     "videoQuery": "Corée voyage change argent carte ATM",
+     "details": [
+      "La plupart des restaurants, boutiques et taxis acceptent les cartes étrangères (Visa·Mastercard)",
+      "Les bureaux de change du centre-ville (ex. : Myeongdong) offrent souvent un meilleur taux que l'aéroport",
+      "Marchés traditionnels, stands de rue et petites boutiques peuvent exiger des espèces",
+      "Retirez des wons avec une carte étrangère aux distributeurs marqués 'Global ATM' (en boutique et en banque)"
+     ]
+    },
+    {
+     "icon": "📞",
+     "title": "Réservations et files d'attente (le problème du numéro)",
+     "summary": "Pas de numéro coréen ? CatchTable Global s'en charge",
+     "videoQuery": "catchtable global korea restaurant reservation",
+     "details": [
+      "Hors adresses célèbres, en Corée on entre sans réserver. Pour les files, arriver 30 min avant l'ouverture est l'astuce",
+      "CatchTable Global — l'appli de réservation pour étrangers. Inscription Google/Apple (pas de numéro coréen), acompte par carte étrangère. EN/JA/ZH ; réservations et file d'attente à distance (sans acompte)",
+      "Les applis locales comme Tabling exigent la vérification 010 — difficile pour les touristes",
+      "Les tablettes d'attente à l'entrée demandent souvent un numéro coréen — sinon, adressez-vous directement au personnel",
+      "Beaucoup de restaurants ferment de 15 h à 17 h (« break time »). Vérifiez les horaires avant d'y aller"
+     ]
+    },
+    {
+     "icon": "🍜",
+     "title": "Commander en livraison",
+     "summary": "Baemin fonctionne désormais en anglais avec les cartes étrangères",
+     "videoQuery": "korea food delivery app baemin english tourist",
+     "details": [
+      "Baemin — l'app de livraison n°1 en Corée. Depuis 2026 : anglais, japonais, chinois, cartes étrangères et Apple Pay (Visa/MC/JCB/Amex émises à l'étranger)",
+      "L'inscription passe souvent par un compte Google/Apple. Sinon, il faut une SIM/eSIM prépayée avec un numéro 010 recevant les SMS",
+      "Shuttle — app de livraison conçue pour les étrangers, entièrement en anglais. Cartes étrangères et PayPal. Centre de Séoul + parties de Busan et Daegu",
+      "Coupang Eats et Yogiyo exigent une vérification d'identité coréenne — difficile pour les touristes",
+      "Faites livrer à votre logement et choisissez « laisser devant la porte ». ⚠️ Les conditions changent souvent — vérifiez dans l'app"
+     ]
+    },
+    {
+     "icon": "🗺️",
+     "title": "Applis à installer (avec conseils de connexion)",
+     "summary": "Cartes, traduction et taxi — trois suffisent",
+     "videoQuery": "Kakao T taxi étrangers comment s'inscrire",
+     "details": [
+      "🗺️ Naver Map / KakaoMap — Google Maps est imprécis en Corée ; ce sont ces applis qui sont fiables. Naver Map permet la recherche et l'itinéraire sans connexion",
+      "🌐 Si l'appli s'ouvre en coréen : les deux prennent en charge l'anglais, le japonais et le chinois. Touchez l'engrenage (⚙) ou « 설정 » puis cherchez « 언어 » pour passer en English",
+      "Deux mots coréens à repérer — 「설정」 (Réglages) · 「언어」 (Langue). Ces deux mots suffisent, même si l'écran change",
+      "Si la langue du téléphone est l'anglais, les applis s'ouvrent souvent déjà en anglais",
+      "⚠️ Même en anglais, les noms des établissements peuvent rester en coréen. La recherche avec le nom coréen donne de meilleurs résultats",
+      "💬 Papago — traduction par photo, voix et en direct. Photographiez un menu, il le traduit aussitôt (sans compte)",
+      "🚕 Kakao T — pour appeler un taxi, il faut s'inscrire ; vous pouvez vérifier avec un numéro étranger en choisissant votre indicatif pays et en recevant un SMS (anglais pris en charge)",
+      "⚠️ Kakao T : avec un numéro étranger, la validation peut prendre quelques jours ; inscrivez-vous avant d'arriver. Gardez data/Wi-Fi pour recevoir le SMS de vérification"
+     ]
+    }
+   ]
+  },
+  "de": {
+   "title": "Ankunfts-Guide für den Flughafen",
+   "intro": "Gerade in Korea gelandet? Hier steht nur das, was du direkt am Flughafen brauchst. Tippe auf einen Punkt für Details und ein Video.",
+   "sections": [
+    {
+     "icon": "🚆",
+     "title": "Vom Flughafen in die Stadt",
+     "summary": "Der Flughafen-Express (AREX) ist am einfachsten und günstigsten",
+     "videoQuery": "Incheon Flughafen nach Seoul AREX Zug Anleitung",
+     "details": [
+      "Flughafen Incheon → Bahnhof Seoul: AREX-Bummelzug ~60 Min, Express ~45 Min",
+      "Folge dem Zug-Symbol und den blauen Pfeilen hinunter zum Transport-Center (B1)",
+      "Der Bummelzug fährt wie die U-Bahn (Zwischenhalte, Umstieg möglich); der Express fährt ohne Halt bis zum Bahnhof Seoul",
+      "Bei viel Gepäck oder später Ankunft sind auch der Flughafen-Limousinenbus oder ein Taxi (Kakao T) praktisch"
+     ]
+    },
+    {
+     "icon": "📱",
+     "title": "Internet (SIM · eSIM · WLAN)",
+     "summary": "SIM oder eSIM direkt am Flughafen aktivieren",
+     "videoQuery": "Korea Reise SIM eSIM Flughafen Anleitung",
+     "details": [
+      "Reise-SIM an einem Anbieterstand (SKT·KT·LG U+) in der Ankunftsebene kaufen und aktivieren — Reisepass mitnehmen",
+      "Bei einem neueren Handy spart eine online vorab gekaufte eSIM die Warteschlange",
+      "Der Preis hängt von Tagen und Datenvolumen ab (z. B. 5 Tage unbegrenzt). Am Stand vergleichen",
+      "Flughäfen, U-Bahnen und Cafés haben viel kostenloses WLAN, aber mobile Daten helfen bei Karten-, Übersetzungs- und Taxi-Apps"
+     ]
+    },
+    {
+     "icon": "💳",
+     "title": "Verkehrskarte kaufen & aufladen (T-money)",
+     "summary": "Eine Karte für U-Bahn, Bus und sogar Kioske",
+     "videoQuery": "Korea T-money Karte benutzen aufladen",
+     "details": [
+      "Wo kaufen: Automaten am Flughafen/in Stationen oder Convenience-Stores (GS25·CU·7-Eleven·emart24)",
+      "Wo aufladen: an der Kasse im Store 'charge' sagen oder die blauen Aufladeautomaten in U-Bahn-Stationen nutzen",
+      "Aufladen geht meist nur bar — ₩10.000 auf einmal ist praktisch",
+      "Beim Einsteigen in U-Bahn/Bus die Karte an den Leser halten, der Fahrpreis wird automatisch abgebucht",
+      "Beim Abreisen kannst du das Restguthaben im Store zurückerstatten lassen",
+      "Seit März 2026 nehmen die neuen Automaten der Seouler U-Bahn (Linien 1–8) ausländische Karten (Visa/MC) für Einzeltickets und Kurzpässe (1–7 Tage). Die ausländische Karte direkt ans Drehkreuz halten geht noch nicht"
+     ]
+    },
+    {
+     "icon": "🚇",
+     "title": "U-Bahn & Bus fahren",
+     "summary": "Eine Karten-App zeigt Umstiege und Live-Ankunftszeiten",
+     "videoQuery": "Seoul U-Bahn Bus Anleitung Ausländer",
+     "details": [
+      "Sie brauchen keine zusätzliche Verkehrs-App — die Routenfunktion der Karten-Apps unten (Naver Map, KakaoMap) deckt U-Bahn-/Bus-Umstiege und Live-Ankunftszeiten ab",
+      "U-Bahn: Sie sehen sogar, welchen Ausgang Sie nehmen und welcher Wagen dem Umstieg am nächsten ist. Stationsnamen und Liniennummern stehen auch auf Englisch in den Stationen",
+      "Bus: Haltestellenansagen kommen eventuell nur auf Koreanisch. Am sichersten verfolgen Sie Ihre Position auf der Karte in der App",
+      "⚠️ Im Bus die Karte auch BEIM AUSSTEIGEN auflegen — sonst verfällt der Umstiegsrabatt und die nächste Fahrt kostet mehr",
+      "Die letzte U-Bahn fährt gegen Mitternacht. Wenn Sie spät unterwegs sind, prüfen Sie die Zeit vorher in der App"
+     ]
+    },
+    {
+     "icon": "🚕",
+     "title": "Taxi fahren (Apps & Karten)",
+     "summary": "Kein Trinkgeld · k.ride oder Uber ist am einfachsten",
+     "videoQuery": "korea taxi app kride uber tourist",
+     "details": [
+      "Koreanische Taxis sind sicher und relativ günstig. Kein Trinkgeld — einfach den Taxameter zahlen",
+      "k.ride — Kakaos App für Ausländer. Anmeldung mit Google/Apple + Heimatnummer, automatische Zahlung mit ausländischer Karte (EN/JA/ZH, Chat mit Fahrer wird übersetzt). Eher Premium — Fahrten können teurer sein",
+      "Kakao T — die App der Einheimischen. Anmeldung mit ausländischer Nummer (+Ländercode) möglich, aber keine ausländische Karte in der App. 'Direkt beim Fahrer zahlen' wählen: bar, physische Karte oder T-money beim Aussteigen",
+      "Uber — vermittelt lizenzierte Taxis in Seoul, Busan, Incheon u. a. Ausländische Karte und gewohnte Oberfläche funktionieren einfach",
+      "Nachtzuschlag etwa 22–4 Uhr. Wenn Winken nicht klappt: per App rufen",
+      "Ziele am besten mit koreanischem Namen/Adresse — der Routen-Button auf den Ortsseiten dieser App erspart das Abtippen"
+     ]
+    },
+    {
+     "icon": "💵",
+     "title": "Geld (Wechsel · Karten · Geldautomat)",
+     "summary": "Karten funktionieren gut, etwas Bargeld ist aber nützlich",
+     "videoQuery": "Korea Reise Geld wechseln Karte ATM",
+     "details": [
+      "Die meisten Restaurants, Geschäfte und Taxis akzeptieren ausländische Karten (Visa·Mastercard)",
+      "Wechselstuben in der Innenstadt (z. B. Myeongdong) bieten oft bessere Kurse als der Flughafen",
+      "Auf traditionellen Märkten, an Straßenständen und in kleinen Läden kann Bargeld nötig sein",
+      "Won mit einer ausländischen Karte an Automaten mit 'Global ATM' (in Läden & Banken) abheben"
+     ]
+    },
+    {
+     "icon": "📞",
+     "title": "Reservieren & Warteliste (das Nummern-Problem)",
+     "summary": "Keine koreanische Nummer? CatchTable Global hilft",
+     "videoQuery": "catchtable global korea restaurant reservation",
+     "details": [
+      "Außer bei berühmten Läden geht man in Korea einfach rein. Bei Schlangen: 30 Min. vor Öffnung da sein ('open run')",
+      "CatchTable Global — die Reservierungs-App für Ausländer. Anmeldung mit Google/Apple (keine koreanische Nummer), Anzahlung per ausländischer Karte. EN/JA/ZH; Reservierung und Fern-Warteliste (Warteliste ohne Anzahlung)",
+      "Lokale Apps wie Tabling verlangen 010-Verifizierung — für Touristen schwierig",
+      "Die Warte-Tablets am Eingang wollen oft eine koreanische Nummer — sonst einfach direkt beim Personal melden",
+      "Viele Restaurants machen 15–17 Uhr 'Break Time'. Öffnungszeiten vorher prüfen"
+     ]
+    },
+    {
+     "icon": "🍜",
+     "title": "Essen liefern lassen",
+     "summary": "Baemin funktioniert jetzt auf Englisch mit ausländischen Karten",
+     "videoQuery": "korea food delivery app baemin english tourist",
+     "details": [
+      "Baemin — Koreas Liefer-App Nr. 1. Seit 2026 mit Englisch, Japanisch, Chinesisch, ausländischen Karten und Apple Pay (im Ausland ausgestellte Visa/MC/JCB/Amex)",
+      "Die Anmeldung klappt oft per Google-/Apple-Konto. Sonst braucht es eine Prepaid-SIM/eSIM mit 010-Nummer, die SMS empfängt",
+      "Shuttle — eine Liefer-App für Ausländer, komplett auf Englisch. Ausländische Karten & PayPal. Zentrales Seoul plus Teile von Busan und Daegu",
+      "Coupang Eats und Yogiyo verlangen koreanische Identitätsprüfung — für Touristen schwierig",
+      "An die Unterkunft liefern lassen und 'vor der Tür abstellen' wählen. ⚠️ Bedingungen ändern sich oft — in der App prüfen"
+     ]
+    },
+    {
+     "icon": "🗺️",
+     "title": "Apps zum Installieren (mit Login-Tipps)",
+     "summary": "Karten, Übersetzung und Taxi — drei reichen",
+     "videoQuery": "Kakao T Taxi Ausländer Anmeldung",
+     "details": [
+      "🗺️ Naver Map / KakaoMap — Google Maps ist in Korea ungenau; diese sind die genauen. Naver Map funktioniert für Suche & Route ohne Login",
+      "🌐 Öffnet sich die App auf Koreanisch: Beide unterstützen Englisch, Japanisch und Chinesisch. Tippen Sie auf das Zahnrad (⚙) oder „설정\" und suchen Sie „언어\", um auf English zu wechseln",
+      "Zwei koreanische Wörter zum Merken — 「설정」 (Einstellungen) · 「언어」 (Sprache). Damit finden Sie es auch nach einem Update",
+      "Ist die Handysprache Englisch, starten die Apps oft gleich auf Englisch",
+      "⚠️ Auch auf Englisch erscheinen Lokalnamen teils weiter auf Koreanisch. Die Suche mit dem koreanischen Namen findet mehr",
+      "💬 Papago — Foto-, Sprach- und Live-Übersetzung. Menü abfotografieren, sofort übersetzt (kein Login nötig)",
+      "🚕 Kakao T — zum Taxirufen musst du dich registrieren; du kannst mit einer ausländischen Nummer verifizieren, indem du deine Ländervorwahl wählst und einen SMS-Code erhältst (Englisch verfügbar)",
+      "⚠️ Kakao T: mit ausländischer Nummer kann die Freigabe einige Tage dauern, also vor der Ankunft registrieren. Daten/WLAN anlassen, um die Bestätigungs-SMS zu erhalten"
+     ]
+    }
+   ]
+  },
+  "vi": {
+   "title": "Cẩm nang khi đến sân bay",
+   "intro": "Vừa hạ cánh ở Hàn Quốc? Đây là những thứ bạn cần ngay tại sân bay. Chạm vào từng mục để xem chi tiết và video.",
+   "sections": [
+    {
+     "icon": "🚆",
+     "title": "Từ sân bay vào thành phố",
+     "summary": "Tàu sân bay (AREX) là cách dễ và rẻ nhất",
+     "videoQuery": "Sân bay Incheon đi Seoul tàu AREX hướng dẫn",
+     "details": [
+      "Sân bay Incheon → Ga Seoul: tàu AREX thường ~60 phút, tàu tốc hành ~45 phút",
+      "Đi theo biểu tượng tàu và mũi tên xanh xuống Trung tâm Giao thông (tầng B1)",
+      "Tàu thường chạy như tàu điện ngầm (dừng dọc đường, đổi tuyến được); tàu tốc hành chạy thẳng tới Ga Seoul",
+      "Nếu nhiều hành lý hoặc đến muộn, xe buýt limousine sân bay hay taxi (Kakao T) cũng tiện"
+     ]
+    },
+    {
+     "icon": "📱",
+     "title": "Internet (SIM · eSIM · Wi-Fi)",
+     "summary": "Kích hoạt SIM hoặc eSIM ngay tại sân bay",
+     "videoQuery": "Hàn Quốc du lịch SIM eSIM sân bay",
+     "details": [
+      "Mua và kích hoạt SIM du lịch tại quầy nhà mạng (SKT·KT·LG U+) ở tầng đến — mang theo hộ chiếu",
+      "Nếu dùng điện thoại đời mới, mua eSIM online trước khi hạ cánh sẽ khỏi xếp hàng",
+      "Giá tùy theo số ngày và dung lượng data (ví dụ: 5 ngày không giới hạn). So sánh tại quầy",
+      "Sân bay, tàu điện và quán cà phê có nhiều Wi-Fi miễn phí, nhưng có data sẽ tiện cho app bản đồ, dịch và taxi"
+     ]
+    },
+    {
+     "icon": "💳",
+     "title": "Mua & nạp thẻ giao thông (T-money)",
+     "summary": "Một thẻ dùng cho tàu điện, xe buýt, cả cửa hàng tiện lợi",
+     "videoQuery": "Hàn Quốc thẻ T-money cách dùng nạp tiền",
+     "details": [
+      "Mua ở đâu: máy bán tự động tại sân bay/nhà ga, hoặc cửa hàng tiện lợi (GS25·CU·7-Eleven·emart24)",
+      "Nạp ở đâu: nói 'charge' tại quầy cửa hàng tiện lợi, hoặc dùng máy nạp màu xanh trong ga tàu điện",
+      "Nạp tiền thường chỉ nhận tiền mặt — nạp ₩10.000 mỗi lần cho tiện",
+      "Khi lên tàu/xe buýt, chạm thẻ vào máy đọc, tiền vé tự động bị trừ",
+      "Khi rời đi, có thể hoàn lại số dư còn lại tại cửa hàng tiện lợi",
+      "Từ tháng 3/2026, máy bán vé mới ở tàu điện Seoul (tuyến 1–8) nhận thẻ nước ngoài (Visa/MC) để mua vé lượt và vé ngắn hạn (1–7 ngày). Chạm thẻ nước ngoài trực tiếp vào cổng soát vé thì chưa được"
+     ]
+    },
+    {
+     "icon": "🚇",
+     "title": "Đi tàu điện ngầm & xe buýt",
+     "summary": "Chỉ một app bản đồ là có cả chuyển tuyến và giờ đến",
+     "videoQuery": "Seoul tàu điện ngầm xe buýt hướng dẫn người nước ngoài",
+     "details": [
+      "Bạn không cần cài thêm app giao thông — tính năng chỉ đường của các app bản đồ bên dưới (Naver Map, KakaoMap) đã có chuyển tuyến tàu/buýt và giờ đến theo thời gian thực",
+      "Tàu điện ngầm: app còn cho biết ra cửa số mấy và toa nào gần chỗ chuyển tuyến nhất. Tên ga và số tuyến trong ga cũng có tiếng Anh",
+      "Xe buýt: thông báo điểm dừng có thể chỉ bằng tiếng Hàn. Nhìn vị trí của mình trên bản đồ app là cách chắc chắn nhất để biết khi nào xuống",
+      "⚠️ Với xe buýt, hãy quẹt thẻ cả KHI XUỐNG — không quẹt thì mất ưu đãi chuyển tuyến và chuyến sau sẽ đắt hơn",
+      "Chuyến tàu điện ngầm cuối khoảng nửa đêm. Nếu định đi chơi khuya, hãy xem giờ tàu cuối trong app trước"
+     ]
+    },
+    {
+     "icon": "🚕",
+     "title": "Đi taxi (app & thẻ)",
+     "summary": "Không tiền tip · k.ride hoặc Uber dễ nhất cho khách nước ngoài",
+     "videoQuery": "korea taxi app kride uber tourist",
+     "details": [
+      "Taxi Hàn Quốc an toàn và khá rẻ. Không có văn hóa tip — trả đúng đồng hồ là xong",
+      "k.ride — app gọi xe của Kakao dành riêng cho người nước ngoài. Đăng ký bằng Google/Apple + số điện thoại nước bạn, thanh toán tự động bằng thẻ nước ngoài (EN/JA/ZH, chat với tài xế tự dịch). Thiên về xe cao cấp nên giá có thể cao hơn",
+      "Kakao T — app người Hàn hay dùng. Đăng ký được bằng số nước ngoài (+mã quốc gia) nhưng không gắn được thẻ nước ngoài. Chọn 'trả trực tiếp cho tài xế' rồi trả bằng tiền mặt, thẻ vật lý hoặc T-money khi xuống xe",
+      "Uber — kết nối taxi có phép ở Seoul, Busan, Incheon... Thẻ nước ngoài và giao diện quen thuộc dùng được ngay",
+      "Phụ phí đêm khoảng 22h–4h. Vẫy không được thì gọi qua app là chắc nhất",
+      "Điểm đến nên nhập tên/địa chỉ tiếng Hàn — nút chỉ đường trong trang quán của app này giúp khỏi chép lại"
+     ]
+    },
+    {
+     "icon": "💵",
+     "title": "Tiền (đổi tiền · thẻ · ATM)",
+     "summary": "Thẻ dùng tốt, nhưng có ít tiền mặt vẫn tiện",
+     "videoQuery": "Hàn Quốc du lịch đổi tiền thẻ ATM",
+     "details": [
+      "Đa số nhà hàng, cửa hàng và taxi chấp nhận thẻ nước ngoài (Visa·Mastercard)",
+      "Tiệm đổi tiền trong trung tâm (ví dụ: Myeongdong) thường có tỷ giá tốt hơn sân bay",
+      "Chợ truyền thống, hàng rong và cửa hàng nhỏ có thể cần tiền mặt",
+      "Rút tiền won bằng thẻ nước ngoài tại máy có ghi 'Global ATM' (ở cửa hàng & ngân hàng)"
+     ]
+    },
+    {
+     "icon": "📞",
+     "title": "Đặt bàn & xếp hàng (vấn đề số điện thoại)",
+     "summary": "Không có số Hàn? CatchTable Global lo được",
+     "videoQuery": "catchtable global korea restaurant reservation",
+     "details": [
+      "Trừ quán nổi tiếng, ở Hàn thường cứ đến thẳng. Quán xếp hàng thì mẹo là đến trước giờ mở cửa 30 phút ('open run')",
+      "CatchTable Global — app đặt bàn cho người nước ngoài. Đăng ký bằng Google/Apple (không cần số Hàn), đặt cọc bằng thẻ nước ngoài. Hỗ trợ EN/JA/ZH; vừa đặt bàn vừa xếp hàng từ xa (xếp hàng không cần cọc)",
+      "App nội địa như Tabling cần xác thực 010 — khó cho khách du lịch",
+      "Máy tính bảng xếp hàng ở cửa thường đòi số Hàn — không có thì nói trực tiếp với nhân viên là chắc nhất",
+      "Nhiều quán nghỉ 'break time' 15–17h. Kiểm tra giờ mở cửa trước khi đi"
+     ]
+    },
+    {
+     "icon": "🍜",
+     "title": "Đặt đồ ăn giao tận nơi",
+     "summary": "Baemin đã hỗ trợ tiếng Anh và thẻ nước ngoài",
+     "videoQuery": "korea food delivery app baemin english tourist",
+     "details": [
+      "Baemin — app giao đồ ăn số 1 Hàn Quốc. Từ 2026 hỗ trợ tiếng Anh·Nhật·Trung, nhận thẻ nước ngoài và Apple Pay (Visa/MC/JCB/Amex phát hành ở nước ngoài)",
+      "Đăng ký thường được bằng tài khoản Google/Apple. Nếu không, cần SIM/eSIM trả trước có số 010 nhận được SMS",
+      "Shuttle — app giao đồ ăn dành riêng cho người nước ngoài, toàn tiếng Anh. Thẻ nước ngoài & PayPal. Phủ trung tâm Seoul và một phần Busan, Daegu",
+      "Coupang Eats và Yogiyo yêu cầu xác thực danh tính Hàn Quốc — khó cho khách du lịch",
+      "Đặt về chỗ ở và chọn 'để trước cửa'. ⚠️ Điều kiện hay thay đổi — kiểm tra trong app"
+     ]
+    },
+    {
+     "icon": "🗺️",
+     "title": "App nên cài (kèm hướng dẫn đăng nhập)",
+     "summary": "Bản đồ, dịch và taxi — ba app là đủ",
+     "videoQuery": "Kakao T taxi người nước ngoài cách đăng ký",
+     "details": [
+      "🗺️ Naver Map / KakaoMap — Google Maps không chính xác ở Hàn Quốc; hai app này mới chuẩn. Naver Map tìm kiếm & chỉ đường được mà không cần đăng nhập",
+      "🌐 Nếu app mở bằng tiếng Hàn: cả hai đều hỗ trợ tiếng Anh, Nhật, Trung. Chạm bánh răng (⚙) hoặc '설정' rồi tìm '언어' để đổi sang English",
+      "Hai từ tiếng Hàn cần nhớ — 「설정」 (Cài đặt) · 「언어」 (Ngôn ngữ). Chỉ cần hai từ này là tìm được dù giao diện có đổi",
+      "Nếu ngôn ngữ điện thoại là tiếng Anh, app thường mở sẵn bằng tiếng Anh",
+      "⚠️ Dù đã đổi sang tiếng Anh, tên quán vẫn có thể hiện bằng tiếng Hàn. Tìm bằng tên tiếng Hàn sẽ ra chuẩn hơn",
+      "💬 Papago — dịch bằng ảnh, giọng nói và trực tiếp. Chụp thực đơn là dịch ngay (không cần đăng nhập)",
+      "🚕 Kakao T — muốn gọi taxi phải đăng ký; có thể xác minh bằng số điện thoại nước ngoài, chọn mã quốc gia và nhận mã SMS (hỗ trợ tiếng Anh)",
+      "⚠️ Kakao T: với số nước ngoài, việc duyệt có thể mất vài ngày, nên đăng ký trước khi đến. Bật data/Wi-Fi để nhận SMS xác minh"
+     ]
+    }
+   ]
+  },
+  "th": {
+   "title": "คู่มือเมื่อมาถึงสนามบิน",
+   "intro": "เพิ่งมาถึงเกาหลีใช่ไหม? นี่คือสิ่งที่ต้องใช้ทันทีที่สนามบิน แตะแต่ละหัวข้อเพื่อดูรายละเอียดและวิดีโอ",
+   "sections": [
+    {
+     "icon": "🚆",
+     "title": "จากสนามบินเข้าเมือง",
+     "summary": "รถไฟสนามบิน (AREX) ง่ายและถูกที่สุด",
+     "videoQuery": "สนามบินอินชอน ไป โซล รถไฟ AREX วิธี",
+     "details": [
+      "สนามบินอินชอน → สถานีโซล: รถไฟ AREX แบบจอดทุกสถานี ~60 นาที, แบบด่วน ~45 นาที",
+      "เดินตามสัญลักษณ์รถไฟและลูกศรสีน้ำเงินลงไปที่ศูนย์คมนาคม (ชั้น B1)",
+      "รถไฟแบบจอดทุกสถานีเหมือนรถไฟใต้ดิน (จอดระหว่างทาง เปลี่ยนสายได้) ส่วนแบบด่วนวิ่งตรงถึงสถานีโซล",
+      "ถ้าสัมภาระเยอะหรือมาถึงดึก รถบัสลีมูซีนสนามบินหรือแท็กซี่ (แอป Kakao T) ก็สะดวก"
+     ]
+    },
+    {
+     "icon": "📱",
+     "title": "อินเทอร์เน็ต (ซิม · eSIM · Wi-Fi)",
+     "summary": "เปิดใช้ซิมหรือ eSIM ได้ทันทีที่สนามบิน",
+     "videoQuery": "เกาหลี เที่ยว ซิม eSIM สนามบิน",
+     "details": [
+      "ซื้อและเปิดใช้ซิมสำหรับนักท่องเที่ยวที่บูธค่ายมือถือ (SKT·KT·LG U+) ที่ชั้นผู้โดยสารขาเข้า — เตรียมพาสปอร์ต",
+      "ถ้าเป็นมือถือรุ่นใหม่ ซื้อ eSIM ออนไลน์ก่อนถึงจะได้ไม่ต้องต่อคิว",
+      "ราคาขึ้นกับจำนวนวันและปริมาณเน็ต (เช่น 5 วันไม่จำกัด) เปรียบเทียบที่บูธได้",
+      "สนามบิน รถไฟใต้ดิน และคาเฟ่มี Wi-Fi ฟรีเยอะ แต่ถ้ามีเน็ตมือถือจะสะดวกสำหรับแอปแผนที่ แปลภาษา และแท็กซี่"
+     ]
+    },
+    {
+     "icon": "💳",
+     "title": "ซื้อและเติมบัตรโดยสาร (T-money)",
+     "summary": "บัตรใบเดียวใช้ได้ทั้งรถไฟใต้ดิน รถเมล์ ร้านสะดวกซื้อ",
+     "videoQuery": "เกาหลี บัตร T-money วิธีใช้ เติมเงิน",
+     "details": [
+      "ซื้อที่ไหน: ตู้จำหน่ายที่สนามบิน/สถานี หรือร้านสะดวกซื้อ (GS25·CU·7-Eleven·emart24)",
+      "เติมที่ไหน: บอกว่า 'charge' ที่เคาน์เตอร์ร้านสะดวกซื้อ หรือใช้ตู้เติมเงินสีน้ำเงินในสถานีรถไฟใต้ดิน",
+      "การเติมส่วนใหญ่รับเฉพาะเงินสด — เติมครั้งละ ₩10,000 สะดวกดี",
+      "ตอนขึ้นรถไฟ/รถเมล์ แตะบัตรที่เครื่องอ่าน ค่าโดยสารจะถูกหักอัตโนมัติ",
+      "ตอนกลับ สามารถขอคืนยอดคงเหลือที่ร้านสะดวกซื้อได้",
+      "ตั้งแต่มีนาคม 2026 เครื่องขายตั๋วรุ่นใหม่ของรถไฟใต้ดินโซล (สาย 1–8) รับบัตรต่างชาติ (Visa/MC) สำหรับตั๋วเที่ยวเดียวและบัตรระยะสั้น (1–7 วัน) แต่แตะบัตรต่างชาติที่ประตูโดยตรงยังไม่ได้"
+     ]
+    },
+    {
+     "icon": "🚇",
+     "title": "วิธีขึ้นรถไฟใต้ดินและรถเมล์",
+     "summary": "แอปแผนที่ตัวเดียวก็ดูการต่อรถและเวลามาถึงได้",
+     "videoQuery": "โซล รถไฟใต้ดิน รถเมล์ วิธีขึ้น ชาวต่างชาติ",
+     "details": [
+      "ไม่ต้องลงแอปขนส่งเพิ่ม — ฟังก์ชันนำทางของแอปแผนที่ด้านล่าง (Naver Map, KakaoMap) มีทั้งการต่อรถไฟใต้ดิน/รถเมล์และเวลามาถึงแบบเรียลไทม์",
+      "รถไฟใต้ดิน: บอกได้ถึงว่าต้องออกทางออกหมายเลขอะไร และตู้ไหนใกล้จุดต่อรถที่สุด ชื่อสถานีและหมายเลขสายในสถานีก็มีภาษาอังกฤษ",
+      "รถเมล์: ประกาศป้ายอาจมีแค่ภาษาเกาหลี ดูตำแหน่งตัวเองบนแผนที่ในแอปคือวิธีที่ชัวร์ที่สุด",
+      "⚠️ ขึ้นรถเมล์ต้องแตะบัตรตอนลงด้วย — ถ้าไม่แตะจะไม่ได้ส่วนลดต่อรถ และเที่ยวถัดไปจะแพงขึ้น",
+      "รถไฟใต้ดินเที่ยวสุดท้ายประมาณเที่ยงคืน ถ้าจะเที่ยวดึก ให้เช็กเวลารถเที่ยวสุดท้ายในแอปก่อน"
+     ]
+    },
+    {
+     "icon": "🚕",
+     "title": "นั่งแท็กซี่ (แอป·บัตร)",
+     "summary": "ไม่ต้องทิป · ชาวต่างชาติใช้ k.ride หรือ Uber ง่ายสุด",
+     "videoQuery": "korea taxi app kride uber tourist",
+     "details": [
+      "แท็กซี่เกาหลีปลอดภัยและราคาไม่แพง ไม่มีวัฒนธรรมทิป — จ่ายตามมิเตอร์",
+      "k.ride — แอปเรียกรถของ Kakao สำหรับชาวต่างชาติ สมัครด้วยบัญชี Google/Apple + เบอร์ประเทศตัวเอง จ่ายอัตโนมัติด้วยบัตรต่างชาติ (EN/JA/ZH แชทกับคนขับแปลอัตโนมัติ) เน้นรถพรีเมียม ราคาอาจสูงกว่า",
+      "Kakao T — แอปที่คนเกาหลีใช้ สมัครด้วยเบอร์ต่างชาติ (+รหัสประเทศ) ได้ แต่ผูกบัตรต่างชาติในแอปไม่ได้ เลือก 'จ่ายคนขับโดยตรง' แล้วจ่ายเงินสด·บัตรจริง·T-money ตอนลง",
+      "Uber — เรียกแท็กซี่ถูกกฎหมายในโซล·ปูซาน·อินชอน ฯลฯ ใช้บัตรต่างชาติและหน้าจอที่คุ้นเคยได้เลย",
+      "ช่วงประมาณ 4 ทุ่ม–ตี 4 มีค่าบริการกลางคืน โบกไม่ได้ให้เรียกผ่านแอป",
+      "จุดหมายใส่ชื่อ/ที่อยู่ภาษาเกาหลีแม่นสุด — ปุ่มนำทางในหน้าสถานที่ของแอปนี้ช่วยไม่ต้องคัดลอกเอง"
+     ]
+    },
+    {
+     "icon": "💵",
+     "title": "เงิน (แลกเงิน · บัตร · ATM)",
+     "summary": "บัตรใช้ได้ดี แต่มีเงินสดติดตัวไว้บ้างก็ดี",
+     "videoQuery": "เกาหลี เที่ยว แลกเงิน บัตร ATM",
+     "details": [
+      "ร้านอาหาร ร้านค้า และแท็กซี่ส่วนใหญ่รับบัตรต่างประเทศ (Visa·Mastercard)",
+      "ร้านแลกเงินในเมือง (เช่น เมียงดง) มักให้เรตดีกว่าที่สนามบิน",
+      "ตลาดดั้งเดิม แผงลอย และร้านเล็ก ๆ อาจต้องใช้เงินสด",
+      "ถอนเงินวอนด้วยบัตรต่างประเทศได้ที่ตู้ที่มีป้าย 'Global ATM' (ในร้านสะดวกซื้อและธนาคาร)"
+     ]
+    },
+    {
+     "icon": "📞",
+     "title": "จองร้าน·ต่อคิว (ปัญหาเบอร์โทร)",
+     "summary": "ไม่มีเบอร์เกาหลีก็ใช้ CatchTable Global ได้",
+     "videoQuery": "catchtable global korea restaurant reservation",
+     "details": [
+      "ถ้าไม่ใช่ร้านดัง คนเกาหลีมักเดินเข้าไปเลย ร้านคิวยาวให้ไปก่อนเปิด 30 นาที ('open run')",
+      "CatchTable Global — แอปจองร้านสำหรับชาวต่างชาติ สมัครด้วย Google/Apple (ไม่ต้องมีเบอร์เกาหลี) มัดจำจ่ายด้วยบัตรต่างชาติ รองรับ EN/JA/ZH ทั้งจองและต่อคิวทางไกล (ต่อคิวไม่ต้องมัดจำ)",
+      "แอปท้องถิ่นอย่าง Tabling ต้องยืนยันตัวตนด้วยเบอร์ 010 — ยากสำหรับนักท่องเที่ยว",
+      "แท็บเล็ตต่อคิวหน้าร้านมักขอเบอร์เกาหลี — ถ้าไม่มีให้บอกพนักงานโดยตรง",
+      "หลายร้านปิดพัก 15.00–17.00 น. ('break time') เช็กเวลาเปิดก่อนไป"
+     ]
+    },
+    {
+     "icon": "🍜",
+     "title": "สั่งเดลิเวอรี",
+     "summary": "Baemin ใช้ภาษาอังกฤษและบัตรต่างชาติได้แล้ว",
+     "videoQuery": "korea food delivery app baemin english tourist",
+     "details": [
+      "Baemin — แอปเดลิเวอรีอันดับ 1 ของเกาหลี ตั้งแต่ปี 2026 รองรับอังกฤษ·ญี่ปุ่น·จีน รับบัตรต่างชาติและ Apple Pay (Visa/MC/JCB/Amex ที่ออกในต่างประเทศ)",
+      "สมัครด้วยบัญชี Google/Apple ได้ในหลายกรณี ถ้าไม่ได้ต้องมีซิม/eSIM เติมเงินเบอร์ 010 ที่รับ SMS ได้",
+      "Shuttle — แอปเดลิเวอรีสำหรับชาวต่างชาติ เป็นภาษาอังกฤษทั้งหมด รับบัตรต่างชาติ·PayPal ครอบคลุมใจกลางโซลและบางส่วนของปูซาน·แทกู",
+      "Coupang Eats และ Yogiyo ต้องยืนยันตัวตนแบบเกาหลี — ยากสำหรับนักท่องเที่ยว",
+      "สั่งไปที่ที่พักแล้วเลือก 'วางไว้หน้าประตู' ⚠️ เงื่อนไขเปลี่ยนบ่อย ตรวจสอบในแอปอีกครั้ง"
+     ]
+    },
+    {
+     "icon": "🗺️",
+     "title": "แอปที่ควรติดตั้ง (พร้อมวิธีล็อกอิน)",
+     "summary": "แผนที่ แปลภาษา แท็กซี่ — สามแอปก็พอ",
+     "videoQuery": "Kakao T แท็กซี่ ชาวต่างชาติ วิธีสมัคร",
+     "details": [
+      "🗺️ Naver Map / KakaoMap — Google Maps ไม่แม่นในเกาหลี สองแอปนี้แม่นกว่า Naver Map ค้นหาและนำทางได้โดยไม่ต้องล็อกอิน",
+      "🌐 ถ้าแอปเปิดเป็นภาษาเกาหลี: ทั้งสองแอปรองรับอังกฤษ ญี่ปุ่น จีน แตะรูปเฟือง (⚙) หรือ '설정' แล้วหา '언어' เพื่อเปลี่ยนเป็น English",
+      "คำเกาหลีสองคำที่ต้องมองหา — 「설정」 (ตั้งค่า) · 「언어」 (ภาษา) จำแค่สองคำนี้ก็หาเจอแม้หน้าจอจะเปลี่ยน",
+      "ถ้าภาษาของมือถือเป็นอังกฤษ แอปมักเปิดเป็นภาษาอังกฤษตั้งแต่แรก",
+      "⚠️ ถึงเปลี่ยนเป็นอังกฤษแล้ว ชื่อร้านก็ยังอาจเป็นภาษาเกาหลี ค้นด้วยชื่อเกาหลีจะเจอง่ายกว่า",
+      "💬 Papago — แปลด้วยรูป เสียง และแบบเรียลไทม์ ถ่ายเมนูแล้วแปลได้ทันที (ไม่ต้องล็อกอิน)",
+      "🚕 Kakao T — เรียกแท็กซี่ต้องสมัครสมาชิก ยืนยันด้วยเบอร์ต่างประเทศได้โดยเลือกรหัสประเทศแล้วรับรหัส SMS (รองรับภาษาอังกฤษ)",
+      "⚠️ Kakao T: เบอร์ต่างประเทศอาจใช้เวลาอนุมัติหลายวัน ควรสมัครก่อนมาถึง เปิดเน็ต/Wi-Fi ไว้เพื่อรับ SMS ยืนยัน"
+     ]
+    }
+   ]
+  },
+  "ru": {
+   "title": "Гид по прилёту в аэропорт",
+   "intro": "Только что прилетели в Корею? Здесь только то, что нужно прямо в аэропорту. Нажмите на пункт, чтобы открыть детали и видео.",
+   "sections": [
+    {
+     "icon": "🚆",
+     "title": "Из аэропорта в город",
+     "summary": "Аэроэкспресс (AREX) — самый простой и дешёвый способ",
+     "videoQuery": "Аэропорт Инчхон до Сеула поезд AREX инструкция",
+     "details": [
+      "Аэропорт Инчхон → станция Сеул: поезд AREX со всеми остановками ~60 мин, экспресс ~45 мин",
+      "Идите по значку поезда и синим стрелкам вниз, к Транспортному центру (этаж B1)",
+      "Поезд со всеми остановками ходит как метро (остановки в пути, пересадки возможны); экспресс идёт без остановок до станции Сеул",
+      "С большим багажом или при позднем прилёте удобны также автобус-лимузин или такси (Kakao T)"
+     ]
+    },
+    {
+     "icon": "📱",
+     "title": "Интернет (SIM · eSIM · Wi-Fi)",
+     "summary": "Активируйте SIM или eSIM прямо в аэропорту",
+     "videoQuery": "Корея путешествие SIM eSIM аэропорт",
+     "details": [
+      "Купите и активируйте туристическую SIM на стойке оператора (SKT·KT·LG U+) в зоне прилёта — нужен паспорт",
+      "На современном телефоне удобнее купить eSIM онлайн до посадки — не придётся стоять в очереди",
+      "Цена зависит от числа дней и объёма данных (напр., 5 дней безлимит). Сравните на стойке",
+      "В аэропортах, метро и кафе много бесплатного Wi-Fi, но мобильные данные пригодятся для карт, перевода и такси"
+     ]
+    },
+    {
+     "icon": "💳",
+     "title": "Купить и пополнить транспортную карту (T-money)",
+     "summary": "Одна карта для метро, автобуса и даже магазинов",
+     "videoQuery": "Корея карта T-money как пользоваться пополнить",
+     "details": [
+      "Где купить: автоматы в аэропорту/на станциях или магазины у дома (GS25·CU·7-Eleven·emart24)",
+      "Где пополнить: скажите 'charge' на кассе магазина или используйте синие автоматы пополнения в метро",
+      "Пополнение обычно только наличными — удобно класть по ₩10 000",
+      "При посадке в метро/автобус приложите карту к считывателю — плата спишется автоматически",
+      "При отъезде остаток можно вернуть в магазине",
+      "С марта 2026 новые автоматы в метро Сеула (линии 1–8) принимают зарубежные карты (Visa/MC) для разовых билетов и краткосрочных проездных (1–7 дней). Прикладывать зарубежную карту прямо к турникету пока нельзя"
+     ]
+    },
+    {
+     "icon": "🚇",
+     "title": "Метро и автобусы",
+     "summary": "Одного картографического приложения хватает: пересадки и прибытие",
+     "videoQuery": "Сеул метро автобус инструкция для иностранцев",
+     "details": [
+      "Отдельное транспортное приложение не нужно — построение маршрута в картах ниже (Naver Map, KakaoMap) уже включает пересадки в метро и на автобусах и время прибытия в реальном времени",
+      "Метро: приложение подскажет даже нужный выход и вагон, ближайший к пересадке. Названия станций и номера линий внутри станций продублированы на английском",
+      "Автобус: объявления остановок могут быть только на корейском. Надёжнее следить за своим положением на карте в приложении",
+      "⚠️ В автобусе прикладывайте карту и ПРИ ВЫХОДЕ — иначе пропадёт скидка на пересадку и следующая поездка обойдётся дороже",
+      "Последний поезд метро — около полуночи. Если задержитесь допоздна, заранее проверьте время в приложении"
+     ]
+    },
+    {
+     "icon": "🚕",
+     "title": "Такси (приложения и карты)",
+     "summary": "Без чаевых · иностранцам проще всего k.ride или Uber",
+     "videoQuery": "korea taxi app kride uber tourist",
+     "details": [
+      "Корейские такси безопасны и относительно недороги. Чаевых нет — платите по счётчику",
+      "k.ride — приложение Kakao для иностранцев. Регистрация через Google/Apple + номер вашей страны, автоматическая оплата зарубежной картой (EN/JA/ZH, чат с водителем переводится). Уклон в премиум — поездка может стоить дороже",
+      "Kakao T — приложение местных. Зарегистрироваться можно с иностранным номером (+код страны), но зарубежную карту привязать нельзя. Выберите «оплатить водителю напрямую»: наличные, физическая карта или T-money при выходе",
+      "Uber — вызывает лицензированные такси в Сеуле, Пусане, Инчхоне и др. Ваша зарубежная карта и привычный интерфейс просто работают",
+      "Ночная надбавка примерно с 22:00 до 4:00. Если поймать с улицы не выходит — вызывайте через приложение",
+      "Пункт назначения лучше вводить корейским названием/адресом — кнопка маршрута на страницах этого приложения избавит от переписывания"
+     ]
+    },
+    {
+     "icon": "💵",
+     "title": "Деньги (обмен · карты · банкоматы)",
+     "summary": "Карты работают хорошо, но немного наличных не помешает",
+     "videoQuery": "Корея путешествие обмен валюты карта ATM",
+     "details": [
+      "Большинство ресторанов, магазинов и такси принимают иностранные карты (Visa·Mastercard)",
+      "Обменники в центре (напр., Мёндон) обычно дают курс лучше, чем в аэропорту",
+      "На традиционных рынках, у уличных лотков и в маленьких лавках могут понадобиться наличные",
+      "Снять воны иностранной картой можно в банкоматах с надписью 'Global ATM' (в магазинах и банках)"
+     ]
+    },
+    {
+     "icon": "📞",
+     "title": "Брони и очереди (проблема номера телефона)",
+     "summary": "Нет корейского номера? Выручит CatchTable Global",
+     "videoQuery": "catchtable global korea restaurant reservation",
+     "details": [
+      "Кроме знаменитых мест, в Корее обычно просто заходят. Для очередей приём такой: прийти за 30 минут до открытия ('open run')",
+      "CatchTable Global — приложение бронирования для иностранцев. Регистрация через Google/Apple (без корейского номера), депозит зарубежной картой. EN/JA/ZH; и брони, и удалённая очередь (очередь без депозита)",
+      "Местные приложения вроде Tabling требуют верификацию 010 — туристам сложно",
+      "Планшеты очереди у входа часто просят корейский номер — если его нет, просто обратитесь к персоналу",
+      "Многие рестораны закрываются на 'break time' с 15 до 17. Проверяйте часы работы заранее"
+     ]
+    },
+    {
+     "icon": "🍜",
+     "title": "Заказ еды с доставкой",
+     "summary": "Baemin теперь работает на английском и принимает зарубежные карты",
+     "videoQuery": "korea food delivery app baemin english tourist",
+     "details": [
+      "Baemin — приложение доставки №1 в Корее. С 2026 года: английский, японский, китайский, зарубежные карты и Apple Pay (Visa/MC/JCB/Amex, выпущенные за рубежом)",
+      "Регистрация часто проходит через аккаунт Google/Apple. Иначе нужна предоплаченная SIM/eSIM с номером 010, принимающим SMS",
+      "Shuttle — приложение доставки для иностранцев, полностью на английском. Зарубежные карты и PayPal. Центр Сеула и части Пусана и Тэгу",
+      "Coupang Eats и Yogiyo требуют корейскую верификацию личности — туристам сложно",
+      "Заказывайте на адрес жилья и выбирайте «оставить у двери». ⚠️ Условия часто меняются — проверяйте в приложении"
+     ]
+    },
+    {
+     "icon": "🗺️",
+     "title": "Приложения для установки (с советами по входу)",
+     "summary": "Карты, перевод и такси — трёх достаточно",
+     "videoQuery": "Kakao T такси иностранцы как зарегистрироваться",
+     "details": [
+      "🗺️ Naver Map / KakaoMap — Google Maps в Корее неточен; эти приложения точные. Naver Map ищет и строит маршруты без входа в аккаунт",
+      "🌐 Если приложение открылось на корейском: оба поддерживают английский, японский и китайский. Нажмите шестерёнку (⚙) или «설정», найдите «언어» и выберите English",
+      "Два корейских слова, которые нужно найти — 「설정」 (Настройки) · 「언어」 (Язык). Их достаточно, даже если интерфейс изменится",
+      "Если язык телефона английский, приложения часто сразу открываются на английском",
+      "⚠️ Даже на английском названия заведений могут оставаться корейскими. Поиск по корейскому названию работает точнее",
+      "💬 Papago — перевод по фото, голосу и в реальном времени. Сфотографируйте меню — переведёт сразу (без регистрации)",
+      "🚕 Kakao T — чтобы вызвать такси, нужна регистрация; подтвердить можно иностранным номером, выбрав код страны и получив SMS-код (есть английский)",
+      "⚠️ Kakao T: с иностранным номером одобрение может занять несколько дней, поэтому зарегистрируйтесь до приезда. Держите данные/Wi-Fi включёнными, чтобы получить SMS"
+     ]
+    }
+   ]
+  },
+  "id": {
+   "title": "Panduan Tiba di Bandara",
+   "intro": "Baru mendarat di Korea? Ini hanya hal yang langsung Anda butuhkan di bandara. Ketuk tiap item untuk melihat detail dan video.",
+   "sections": [
+    {
+     "icon": "🚆",
+     "title": "Dari bandara ke kota",
+     "summary": "Kereta bandara (AREX) paling mudah & murah",
+     "videoQuery": "Bandara Incheon ke Seoul kereta AREX panduan",
+     "details": [
+      "Bandara Incheon → Stasiun Seoul: kereta AREX biasa ~60 menit, ekspres ~45 menit",
+      "Ikuti ikon kereta dan panah biru turun ke Pusat Transportasi (lantai B1)",
+      "Kereta biasa seperti kereta bawah tanah (berhenti di tiap stasiun, bisa transit); ekspres langsung tanpa henti ke Stasiun Seoul",
+      "Jika bagasi banyak atau tiba larut malam, bus limosin bandara atau taksi (aplikasi Kakao T) juga praktis"
+     ]
+    },
+    {
+     "icon": "📱",
+     "title": "Internet (SIM · eSIM · Wi-Fi)",
+     "summary": "Aktifkan SIM atau eSIM langsung di bandara",
+     "videoQuery": "Korea wisata SIM eSIM bandara panduan",
+     "details": [
+      "Beli dan aktifkan SIM wisata di gerai operator (SKT·KT·LG U+) di lantai kedatangan — bawa paspor",
+      "Untuk ponsel terbaru, membeli eSIM online sebelum mendarat menghindari antrean",
+      "Harga tergantung jumlah hari dan kuota (mis. 5 hari unlimited). Bandingkan di gerai",
+      "Bandara, kereta, dan kafe banyak Wi-Fi gratis, tapi data seluler membantu untuk aplikasi peta, terjemahan, dan taksi"
+     ]
+    },
+    {
+     "icon": "💳",
+     "title": "Beli & isi kartu transportasi (T-money)",
+     "summary": "Satu kartu untuk kereta, bus, bahkan minimarket",
+     "videoQuery": "Korea kartu T-money cara pakai isi ulang",
+     "details": [
+      "Beli di mana: mesin otomatis di bandara/stasiun, atau minimarket (GS25·CU·7-Eleven·emart24)",
+      "Isi ulang di mana: bilang 'charge' di kasir minimarket, atau pakai mesin isi ulang biru di stasiun kereta",
+      "Isi ulang umumnya hanya tunai — mengisi ₩10.000 sekali cukup praktis",
+      "Saat naik kereta/bus, tempelkan kartu ke pembaca, ongkos terpotong otomatis",
+      "Saat pulang, sisa saldo bisa dikembalikan di minimarket",
+      "Sejak Maret 2026, mesin tiket baru di subway Seoul (jalur 1–8) menerima kartu asing (Visa/MC) untuk tiket sekali jalan dan pass singkat (1–7 hari). Menempelkan kartu asing langsung di gerbang belum bisa"
+     ]
+    },
+    {
+     "icon": "🚇",
+     "title": "Naik subway & bus",
+     "summary": "Satu aplikasi peta sudah menampilkan transit dan waktu kedatangan",
+     "videoQuery": "Seoul subway bus panduan orang asing",
+     "details": [
+      "Anda tidak perlu aplikasi transportasi tambahan — fitur rute pada aplikasi peta di bawah (Naver Map, KakaoMap) sudah mencakup transit subway/bus dan waktu kedatangan real-time",
+      "Subway: aplikasi bahkan memberi tahu pintu keluar nomor berapa dan gerbong mana yang paling dekat ke titik transit. Nama stasiun dan nomor jalur juga tertulis dalam bahasa Inggris di dalam stasiun",
+      "Bus: pengumuman halte bisa jadi hanya bahasa Korea. Memantau posisi Anda di peta aplikasi adalah cara paling pasti untuk tahu kapan turun",
+      "⚠️ Di bus, tempelkan kartu lagi SAAT TURUN — kalau tidak, diskon transit hangus dan perjalanan berikutnya jadi lebih mahal",
+      "Subway terakhir sekitar tengah malam. Kalau berencana pulang larut, cek dulu jam kereta terakhir di aplikasi"
+     ]
+    },
+    {
+     "icon": "🚕",
+     "title": "Naik taksi (app & kartu)",
+     "summary": "Tanpa tip · k.ride atau Uber paling mudah untuk turis",
+     "videoQuery": "korea taxi app kride uber tourist",
+     "details": [
+      "Taksi Korea aman dan relatif murah. Tidak ada budaya tip — bayar sesuai argo saja",
+      "k.ride — app panggil taksi buatan Kakao khusus orang asing. Daftar dengan akun Google/Apple + nomor negara asal, bayar otomatis dengan kartu asing (EN/JA/ZH, chat dengan sopir diterjemahkan otomatis). Cenderung premium, tarif bisa lebih tinggi",
+      "Kakao T — app yang dipakai orang lokal. Bisa daftar dengan nomor asing (+kode negara), tapi kartu asing tidak bisa ditautkan. Pilih 'bayar langsung ke sopir' lalu bayar tunai, kartu fisik, atau T-money saat turun",
+      "Uber — menghubungkan taksi berizin di Seoul, Busan, Incheon, dll. Kartu asing dan tampilan yang sudah akrab langsung jalan",
+      "Ada biaya tambahan malam sekitar pukul 22–04. Kalau susah dapat di jalan, panggil lewat app",
+      "Tujuan paling akurat pakai nama/alamat Korea — tombol rute di halaman restoran app ini membuat tak perlu menyalin"
+     ]
+    },
+    {
+     "icon": "💵",
+     "title": "Uang (tukar · kartu · ATM)",
+     "summary": "Kartu berfungsi baik, tapi sedikit tunai tetap berguna",
+     "videoQuery": "Korea wisata tukar uang kartu ATM",
+     "details": [
+      "Sebagian besar restoran, toko, dan taksi menerima kartu asing (Visa·Mastercard)",
+      "Money changer di pusat kota (mis. Myeongdong) biasanya memberi kurs lebih baik daripada bandara",
+      "Pasar tradisional, pedagang kaki lima, dan toko kecil mungkin butuh tunai",
+      "Tarik won dengan kartu asing di mesin bertanda 'Global ATM' (di toko & bank)"
+     ]
+    },
+    {
+     "icon": "📞",
+     "title": "Reservasi & antre (masalah nomor telepon)",
+     "summary": "Tak punya nomor Korea? CatchTable Global solusinya",
+     "videoQuery": "catchtable global korea restaurant reservation",
+     "details": [
+      "Kecuali tempat terkenal, di Korea biasanya langsung masuk saja. Untuk yang antre, triknya datang 30 menit sebelum buka ('open run')",
+      "CatchTable Global — app reservasi untuk orang asing. Daftar dengan Google/Apple (tanpa nomor Korea), deposit pakai kartu asing. Mendukung EN/JA/ZH; bisa reservasi dan antre jarak jauh (antre tanpa deposit)",
+      "App lokal seperti Tabling butuh verifikasi 010 — sulit untuk turis",
+      "Tablet antrean di pintu masuk sering minta nomor Korea — kalau tidak punya, bilang langsung ke staf",
+      "Banyak restoran tutup 'break time' pukul 15–17. Cek jam buka sebelum pergi"
+     ]
+    },
+    {
+     "icon": "🍜",
+     "title": "Pesan antar makanan",
+     "summary": "Baemin kini mendukung bahasa Inggris dan kartu asing",
+     "videoQuery": "korea food delivery app baemin english tourist",
+     "details": [
+      "Baemin — app antar makanan No. 1 Korea. Sejak 2026 mendukung Inggris·Jepang·Mandarin, menerima kartu asing dan Apple Pay (Visa/MC/JCB/Amex terbitan luar negeri)",
+      "Pendaftaran sering bisa lewat akun Google/Apple. Jika tidak, perlu SIM/eSIM prabayar bernomor 010 yang bisa menerima SMS",
+      "Shuttle — app antar makanan khusus orang asing, sepenuhnya bahasa Inggris. Kartu asing & PayPal. Meliputi pusat Seoul serta sebagian Busan dan Daegu",
+      "Coupang Eats dan Yogiyo memerlukan verifikasi identitas Korea — sulit untuk turis",
+      "Pesan ke penginapan dan pilih 'taruh di depan pintu'. ⚠️ Syarat sering berubah — cek di aplikasinya"
+     ]
+    },
+    {
+     "icon": "🗺️",
+     "title": "Aplikasi yang perlu diinstal (dengan tips login)",
+     "summary": "Peta, terjemahan, dan taksi — tiga sudah cukup",
+     "videoQuery": "Kakao T taksi orang asing cara daftar",
+     "details": [
+      "🗺️ Naver Map / KakaoMap — Google Maps tidak akurat di Korea; dua ini yang akurat. Naver Map bisa mencari & menunjukkan rute tanpa login",
+      "🌐 Kalau aplikasi terbuka dalam bahasa Korea: keduanya mendukung Inggris, Jepang, dan Mandarin. Ketuk ikon roda gigi (⚙) atau '설정', lalu cari '언어' untuk mengubah ke English",
+      "Dua kata Korea yang perlu dicari — 「설정」 (Pengaturan) · 「언어」 (Bahasa). Dua kata ini cukup meski tampilan berubah",
+      "Kalau bahasa ponsel Anda Inggris, aplikasi sering langsung terbuka dalam bahasa Inggris",
+      "⚠️ Meski sudah Inggris, nama tempat bisa tetap tampil dalam bahasa Korea. Mencari dengan nama Korea lebih akurat",
+      "💬 Papago — terjemahan foto, suara, dan langsung. Foto menu langsung diterjemahkan (tanpa login)",
+      "🚕 Kakao T — untuk memesan taksi harus mendaftar; bisa verifikasi dengan nomor asing dengan memilih kode negara dan menerima kode SMS (mendukung bahasa Inggris)",
+      "⚠️ Kakao T: dengan nomor asing, persetujuan bisa beberapa hari, jadi daftar sebelum tiba. Aktifkan data/Wi-Fi untuk menerima SMS verifikasi"
+     ]
+    }
+   ]
+  }
+ },
+ "공식링크": [
+  [
+   {
+    "icon": "🚆",
+    "url": "https://www.airport.kr/ap_en/1499/subview.do",
+    "label": {
+     "ko": "공항철도 안내 (공항 공식)",
+     "en": "Airport railroad (official)",
+     "ja": "空港鉄道案内(公式)",
+     "zh": "机场铁路指南(官方)",
+     "zhTW": "機場鐵路指南(官方)"
+    }
+   },
+   {
+    "icon": "🚌",
+    "url": "https://www.airport.kr/ap_en/1504/subview.do",
+    "label": {
+     "ko": "공항버스 찾기 (공항 공식)",
+     "en": "Airport bus search (official)",
+     "ja": "空港バス検索(公式)",
+     "zh": "机场大巴查询(官方)",
+     "zhTW": "機場巴士查詢(官方)"
+    }
+   },
+   {
+    "icon": "🚕",
+    "url": "https://www.airport.kr/ap_en/1515/subview.do",
+    "label": {
+     "ko": "택시 안내 (공항 공식)",
+     "en": "Taxi guide (official)",
+     "ja": "タクシー案内(公式)",
+     "zh": "出租车指南(官方)",
+     "zhTW": "計程車指南(官方)"
+    }
+   },
+   {
+    "icon": "🚉",
+    "urls": {
+     "en": "https://www.youtube.com/watch?v=6LaMrRYxmfA",
+     "ja": "https://www.youtube.com/watch?v=UX9bpU0m2cU",
+     "zh": "https://www.youtube.com/watch?v=wDA2IHyc3iQ",
+     "zhTW": "https://www.youtube.com/watch?v=wDA2IHyc3iQ"
+    },
+    "label": {
+     "ko": "서울역 환승 영상 (AREX 공식)",
+     "en": "Seoul Stn. transfer (AREX video)",
+     "ja": "ソウル駅乗り換え(AREX公式動画)",
+     "zh": "首尔站换乘(AREX官方视频)",
+     "zhTW": "首爾站轉乘(AREX官方影片)"
+    }
+   }
+  ],
+  [
+   {
+    "icon": "📱",
+    "url": "https://roaming.kt.com/m/rental/eng/product/presim.asp",
+    "label": {
+     "ko": "유심 안내 (KT 공식)",
+     "en": "Prepaid SIM (KT official)",
+     "ja": "プリペイドSIM(KT公式)",
+     "zh": "预付SIM卡(KT官方)",
+     "zhTW": "預付SIM卡(KT官方)"
+    }
+   }
+  ],
+  [
+   {
+    "icon": "💳",
+    "url": "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=140663",
+    "label": {
+     "ko": "교통카드 안내 (관광공사)",
+     "en": "Transportation cards (KTO official)",
+     "ja": "交通カード案内(観光公社)",
+     "zh": "交通卡指南(官方)",
+     "zhTW": "交通卡指南(官方)"
+    }
+   },
+   {
+    "icon": "💰",
+    "url": "https://www.youtube.com/watch?v=UV2KBdk9PpI",
+    "label": {
+     "ko": "충전하는 법 (영상)",
+     "en": "How to top up (video)",
+     "ja": "チャージ方法(動画)",
+     "zh": "怎么充值(视频)",
+     "zhTW": "怎麼儲值(影片)"
+    }
+   },
+   {
+    "icon": "💳",
+    "url": "https://english.seoul.go.kr/seoul-implements-open-loop-payments-for-international-tourists/",
+    "label": {
+     "ko": "해외카드 승차권 안내 (서울시 공식)",
+     "en": "Foreign-card tickets (Seoul official)",
+     "ja": "海外カード乗車券案内(ソウル市公式)",
+     "zh": "海外卡车票指南(首尔市官方)",
+     "zhTW": "海外卡車票指南(首爾市官方)"
+    }
+   }
+  ],
+  [
+   {
+    "icon": "🚇",
+    "url": "https://english.visitseoul.net/transportation",
+    "label": {
+     "ko": "서울 교통 안내 (공식)",
+     "en": "Seoul transport (official)",
+     "ja": "ソウル交通案内(公式)",
+     "zh": "首尔交通指南(官方)",
+     "zhTW": "首爾交通指南(官方)"
+    }
+   }
+  ],
+  [
+   {
+    "icon": "🚕",
+    "url": "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=197907",
+    "label": {
+     "ko": "택시 앱 안내 (관광공사)",
+     "en": "Ride-hailing apps (KTO official)",
+     "ja": "タクシーアプリ案内(観光公社)",
+     "zh": "打车App指南(官方)",
+     "zhTW": "叫車App指南(官方)"
+    }
+   },
+   {
+    "icon": "🚕",
+    "url": "https://www.kakaomobility.com",
+    "label": {
+     "ko": "카카오T (공식)",
+     "en": "Kakao T (official)",
+     "ja": "Kakao T(公式)",
+     "zh": "Kakao T(官方)",
+     "zhTW": "Kakao T(官方)"
+    }
+   },
+   {
+    "icon": "🚘",
+    "url": "https://www.uber.com/kr/en/",
+    "label": {
+     "ko": "우버 코리아 (공식)",
+     "en": "Uber Korea (official)",
+     "ja": "Uber Korea(公式)",
+     "zh": "Uber韩国(官方)",
+     "zhTW": "Uber韓國(官方)"
+    }
+   }
+  ],
+  [
+   {
+    "icon": "💱",
+    "url": "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=195350",
+    "label": {
+     "ko": "환전·은행 안내 (관광공사)",
+     "en": "Currency exchange (KTO official)",
+     "ja": "両替・銀行案内(観光公社)",
+     "zh": "换钱·银行指南(官方)",
+     "zhTW": "換錢·銀行指南(官方)"
+    }
+   }
+  ],
+  [
+   {
+    "icon": "📞",
+    "url": "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=205615",
+    "label": {
+     "ko": "예약 앱 안내 (관광공사)",
+     "en": "CatchTable Global (KTO official)",
+     "ja": "予約アプリ案内(観光公社)",
+     "zh": "预订App指南(官方)",
+     "zhTW": "預訂App指南(官方)"
+    }
+   }
+  ],
+  [
+   {
+    "icon": "🛺",
+    "url": "https://www.shuttledelivery.co.kr",
+    "label": {
+     "ko": "Shuttle 배달 (공식)",
+     "en": "Shuttle delivery (official)",
+     "ja": "Shuttle配達(公式)",
+     "zh": "Shuttle外卖(官方)",
+     "zhTW": "Shuttle外送(官方)"
+    }
+   },
+   {
+    "icon": "📖",
+    "url": "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=226767",
+    "label": {
+     "ko": "외국인 배달 안내 (관광공사)",
+     "en": "Delivery for foreigners (KTO)",
+     "ja": "外国人向け出前案内(観光公社)",
+     "zh": "外国人外卖指南(官方)",
+     "zhTW": "外國人外送指南(官方)"
+    }
+   },
+   {
+    "icon": "🛵",
+    "url": "https://www.coupangeats.com",
+    "label": {
+     "ko": "쿠팡이츠 (공식)",
+     "en": "Coupang Eats (official)",
+     "ja": "Coupang Eats(公式)",
+     "zh": "Coupang Eats(官方)",
+     "zhTW": "Coupang Eats(官方)"
+    }
+   }
+  ],
+  [
+   {
+    "icon": "🗺️",
+    "url": "https://map.naver.com",
+    "label": {
+     "ko": "네이버 지도 (공식)",
+     "en": "Naver Map (official)",
+     "ja": "NAVERマップ(公式)",
+     "zh": "Naver地图(官方)",
+     "zhTW": "Naver地圖(官方)"
+    }
+   },
+   {
+    "icon": "🈯",
+    "url": "https://papago.naver.com",
+    "label": {
+     "ko": "파파고 (네이버 공식)",
+     "en": "Papago (Naver official)",
+     "ja": "Papago(NAVER公式)",
+     "zh": "Papago(Naver官方)",
+     "zhTW": "Papago(Naver官方)"
+    }
+   },
+   {
+    "icon": "📖",
+    "url": "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=198570",
+    "label": {
+     "ko": "필수 앱 안내 (관광공사)",
+     "en": "Helpful apps (KTO official)",
+     "ja": "便利アプリ案内(観光公社)",
+     "zh": "实用App指南(官方)",
+     "zhTW": "實用App指南(官方)"
+    }
+   }
+  ]
+ ]
+}

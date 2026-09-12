@@ -2708,7 +2708,10 @@ button {
   font-weight: 600;
   white-space: nowrap;
   background: color-mix(in srgb, var(--accent) 14%, transparent);
-  color: var(--muted);
+  /* 🐞 여기 `var(--muted)` 라고 적혀 있었다 — **그런 변수는 없다**(2026-09-12에 찾음).
+     없는 변수를 부르면 색이 통째로 안 먹어서, 「눈에 띄되 겁주지 않게」 하려던 이 딱지가
+     둘레 글자색을 그대로 물려받고 있었다. 우리 이름은 `--text-muted` 다. */
+  color: var(--text-muted);
   border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
@@ -2728,3 +2731,106 @@ html[lang^="ja"] *,
 html[lang^="zh"] * {
   word-break: normal;
 }
+
+/* ✈️ 도착 안내 — 머리줄 ✈️ 단추로 여는 전체화면 (2026-09-12)
+   설계 이유는 src/components/ArrivalGuide.tsx 머리말에 적었다. */
+.arrival-back {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  /* 🚨 가운데 정렬로 두지 않는다 — 내용이 화면보다 길면 위쪽이 잘려 나가고
+     스크롤로 못 올라간다(LuggageCard 에서 겪은 것과 같은 자리).
+     아홉 칸짜리라 여기가 훨씬 길다. 위에서부터 쌓는다. */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 0 40px;
+  overflow-y: auto;
+  background: var(--bg);
+}
+.arrival-card {
+  width: 100%;
+  max-width: 640px;
+  padding: 16px 16px 0;
+}
+.ag-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* 제목은 스크롤해도 위에 붙어 있다 — 아홉 칸을 내려가다 보면
+     어디에 있는지 잃기 쉽고, 닫는 단추가 늘 손에 닿아야 한다. */
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 10px 0;
+  background: var(--bg);
+}
+.ag-title {
+  flex: 1;
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.ag-close {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+}
+.ag-intro {
+  margin: 0 0 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.ag-sec {
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.ag-sec-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px;
+  border: 0;
+  background: none;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+.ag-icon { flex: none; font-size: 1.5rem; }
+.ag-sec-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.ag-sec-title { font-weight: 700; }
+.ag-sec-sum { font-size: 0.86rem; color: var(--text-muted); line-height: 1.45; }
+.ag-chev { flex: none; color: var(--text-muted); }
+.ag-body { padding: 0 14px 14px; }
+.ag-list { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 9px; }
+.ag-list li { line-height: 1.62; }
+.ag-link-label { margin: 14px 0 8px; font-size: 0.86rem; color: var(--text-muted); }
+/* 단추 두 칸씩 — 좁은 폰에서는 한 칸으로 접힌다(auto-fit). */
+.ag-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 8px; }
+.ag-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--bg);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+.ag-link-icon { flex: none; font-size: 1.1rem; }
+.ag-link-text { flex: 1; min-width: 0; }
+.ag-link-go { flex: none; color: var(--text-muted); }

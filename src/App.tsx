@@ -10,11 +10,14 @@ import LanguageSelector from "./components/LanguageSelector";
 import CoverPicker from "./components/CoverPicker";
 import HomeSwitch from "./components/HomeSwitch";
 import ShareApp from "./components/ShareApp";
+import ArrivalGuide, { arrivalLabel } from "./components/ArrivalGuide";
 
 function App() {
   const { toggleTheme, getIcon } = useTheme();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [tab, setTab] = useState<"home" | "saved">("home");
+  // ✈️ 도착 안내 (2026-09-12 사장님: "여기도 푸드에 있는 가이드가 필요할거같아").
+  const [guideOpen, setGuideOpen] = useState(false);
   const savedCount = useSavedEntries().length;
 
   return (
@@ -46,6 +49,17 @@ function App() {
             <LanguageSelector />
           </div>
           <div className="app-header-actions">
+            {/* ✈️ 갓 내린 손님이 바로 알아보도록 머리줄에 둔다.
+                ⚠️ **라벨을 한 단어로 유지할 것.** 머리줄 한 줄에 이름·언어·이 단추·
+                   테마가 같이 들어가는데, 길어지면 줄이 갈라져 이름만 위에 남는다
+                   (Kfood 에서 실제로 그랬다). 「안내」라는 뜻은 ✈️ 가 이미 전한다. */}
+            <button
+              className="icon-btn arrival-btn"
+              onClick={() => setGuideOpen(true)}
+              aria-label={arrivalLabel(language)}
+            >
+              ✈️
+            </button>
             <button className="icon-btn" onClick={toggleTheme} aria-label={t.themeSwitchLabel}>
               {getIcon()}
             </button>
@@ -127,6 +141,10 @@ function App() {
           <span>{t.savedPlacesTab}</span>
         </button>
       </nav>
+
+      {/* ✈️ 전체화면. 열렸을 때만 그린다 — 12개 언어 × 9칸짜리 자료라
+          안 열어 보는 손님에게까지 그려 둘 이유가 없다. */}
+      {guideOpen && <ArrivalGuide onClose={() => setGuideOpen(false)} />}
     </div>
   );
 }
