@@ -357,6 +357,12 @@ dd{margin:0}
 /* 🍚 밥집 링크는 우리 앱 단추보다 조용하게 — 남의 집으로 보내는 문이라 주인공이 아니다. */
 .go .eat{background:var(--card);border:1px solid var(--line);color:var(--ink)}
 h2{margin:36px 0 0;font-size:16px}
+/* ❓ 자주 묻는 질문 — 목록과 눈에 띄게 갈라 놓는다. 위에 줄 하나를 긋고
+   질문은 굵게, 답은 본문 색보다 한 톤 낮춰 읽는 차례가 분명해지게 한다. */
+.faq{margin:40px 0 0;padding:22px 0 0;border-top:1px solid var(--line)}
+.faq h3{margin:22px 0 6px;font-size:16px;line-height:1.5}
+.faq h3:first-child{margin-top:0}
+.faq p{margin:0;color:var(--muted);font-size:15.5px}
 ul{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:7px}
 ul a{display:block;padding:11px 14px;background:var(--card);border:1px solid var(--line);border-radius:11px;text-decoration:none;color:var(--ink);font-weight:600;font-size:14.5px}
 .ko{color:var(--muted);font-weight:400}
@@ -889,6 +895,12 @@ function hubPage(o: {
    *    두 벌이 되면 한쪽만 고쳐 놓고 다른 쪽이 옛 모습으로 남는다.
    */
   extraHtml?: string;
+  /**
+   * ❓ **자주 묻는 질문.** 화면에 보이는 글과 FAQPage 구조화 자료를
+   *    **같은 배열 하나**에서 만든다 — 둘로 나누면 한쪽만 고쳐 놓고
+   *    다른 쪽이 옛말로 남는다(구글이 「화면에 없는 것」이라고 벌점을 준다).
+   */
+  faq?: { q: string; a: string }[];
 }): string {
   const lang = o.lang ?? "en";
   const S = HUB_STRINGS[lang] as HubStrings;
@@ -922,6 +934,20 @@ function hubPage(o: {
         position: i + 1,
         name: translateText(p.name, lang),
         url: `${SITE}/${langPath(lang, `place/${savedSlugs[p.id]}/`)}`,
+      })),
+    });
+
+  // ❓ FAQPage — AI 검색과 구글이 **질문–답 쌍**을 그대로 뽑아 간다.
+  //    🚨 아래 body 에 같은 글을 **눈에 보이게** 그린다. 보이지 않는 것을
+  //       구조화 자료에만 넣는 것은 규칙 위반이다.
+  if (o.faq?.length)
+    ld.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: o.faq.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
       })),
     });
 
@@ -964,6 +990,13 @@ ${hubHreflang(o.path)}
 <p class="crumbs"><a href="/${langPath(lang, "seoul/")}">${esc(S.allOfSeoul)}</a> · <a href="/">${esc(S.openTheApp)}</a></p>
 
 ${o.extraHtml ?? ""}
+${
+  o.faq?.length
+    ? `<div class="faq">` +
+      o.faq.map((f) => `<h3>${esc(f.q)}</h3><p>${esc(f.a)}</p>`).join("") +
+      `</div>`
+    : ""
+}
 
 ${body}
 
@@ -1225,6 +1258,7 @@ for (const [cat, meta] of Object.entries(CATEGORY_HUB)) {
       ],
       // 🕳️ 아직 없는 것을 **페이지 안에서** 밝힌다.
       extraHtml: `<p class="note">${esc(S.rainyMissing)}</p>`,
+      faq: S.rainyFaq,
       chipsTitle: S.byDistrictChips,
       chips: guChips,
     }),

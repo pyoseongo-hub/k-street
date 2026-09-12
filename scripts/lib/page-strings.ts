@@ -471,6 +471,36 @@ export interface HubStrings {
   indexLead: (n: number, gus: number, kinds: string) => string;
   indexDesc: (kinds: string, gus: number) => string;
   byDistrictChips: string;
+
+  /**
+   * 🌧️ **테마 묶음** (2026-09-12, 사장님 지시: "비오는날 쇼핑이나 실내시장 이런쪽
+   *    안내가 있으면 아주 좋아할 거야 — 한쪽 테마로 만들어두자").
+   *
+   *    🚨 **잣대를 화면에 그대로 적는다** — 「실내 + 역에서 600m 안」.
+   *       안 적으면 손님은 우리가 어떻게 골랐는지 모르고, AI 도 인용할 근거가 없다.
+   *    ⚠️ 거리는 **직선거리**다. 그 한계도 같이 적는다 — 실제 걷는 길은 더 길다.
+   */
+  theme: string;
+  rainyH1: string;
+  rainyTitle: (n: number) => string;
+  rainyLead: (n: number, gus: number) => string;
+  rainyDesc: (n: number) => string;
+  rainyNear: string;
+  rainyFar: string;
+  /** 🕳️ **빈 칸을 빈 칸이라고 말한다.** 아는 것과 모르는 것을 가르는 줄이다. */
+  rainyMissing: string;
+  /**
+   * ❓ **자주 묻는 질문** — AI 검색이 제일 좋아하는 것이 질문–답 쌍이다
+   *    (2026-09-12 조사. docs/AI검색-최적화.md §비 오는 날).
+   *
+   *    🚨 **우리가 답할 수 있는 질문만 넣는다.** 영업시간·입장료는 모르므로
+   *       「왜 없는지」를 답으로 삼았다 — 그게 우리가 남과 다른 이유이기도 하다.
+   *       검색 결과를 덮고 있는 AI 글들은 그 칸을 「확인 필요」로 비워 둔 채
+   *       표만 갖춰 놓았다. 우리는 **왜 비었는지**를 말한다.
+   *    ⚠️ 화면에 보이는 글과 FAQPage 구조화 자료가 **같은 글**이어야 한다 —
+   *       안 보이는 것을 구조화 자료에만 넣으면 구글이 벌점을 준다.
+   */
+  rainyFaq: { q: string; a: string }[];
 }
 
 /** 영어의 복수형 — 뒤에 s 를 붙이는 것은 여기 한 군데로만 모아 둔다. */
@@ -635,6 +665,12 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyFar: "300–600 m from a station — about 5 minutes",
     rainyMissing:
       "Covered markets and underground shopping arcades are not here yet. We are still checking which markets have a roof — we do not list what we have not checked.",
+    rainyFaq: [
+      { q: "What is there to do in Seoul when it rains?", a: "This page lists indoor places that are within 600 m of a subway station, so you barely get wet on the way. Each entry names the nearest station and the distance to it." },
+      { q: "How were these places chosen?", a: "A place appears here only if both are true: it is indoors, and it is within 600 m of a subway station. On a rainy day the walk to the door matters as much as the roof over it." },
+      { q: "How is the distance measured?", a: "Straight-line distance on the map, so the actual walk is a little longer. Within 300 m is about a 3-minute walk with an umbrella." },
+      { q: "Why are opening hours and admission fees missing?", a: "Because we have not verified them. A wrong opening time sends you to a locked door, and a blank is better than that. Every place links to its official page, where the current hours are." },
+    ],
     byDistrictChips: "By district",
   },
 
@@ -698,6 +734,12 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyFar: "駅から300〜600m — 5分ほど",
     rainyMissing:
       "屋根のある市場と地下商店街はまだ載せていません。どの市場に屋根があるか確認中です — 確認できていないものは載せません。",
+    rainyFaq: [
+      { q: "雨の日のソウルでは何ができますか？", a: "このページには、地下鉄駅から600m以内にある屋内スポットだけを載せています。道中でほとんど濡れません。それぞれ最寄り駅と駅からの距離を書いてあります。" },
+      { q: "どうやって選んでいますか？", a: "二つとも満たす場所だけを載せます — 屋内であること、そして地下鉄駅から600m以内であること。雨の日は屋根の有無と同じくらい、そこまでの道のりが大事だからです。" },
+      { q: "距離はどう測っていますか？", a: "地図上の直線距離です。実際に歩く道のりは少し長くなります。300m以内なら傘をさして3分ほどです。" },
+      { q: "営業時間と入場料が書かれていないのはなぜですか？", a: "確認できていないからです。間違った営業時間は閉まった扉の前に立たせます。それより空欄のほうがましです。各スポットに公式案内へのリンクがあります。" },
+    ],
     byDistrictChips: "エリア別",
   },
 
@@ -761,6 +803,12 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyFar: "距车站300~600米 — 约5分钟",
     rainyMissing:
       "有顶棚的市场和地下商街尚未收录。我们仍在核实哪些市场有顶棚 — 没有核实过的不收录。",
+    rainyFaq: [
+      { q: "下雨天在首尔可以做什么？", a: "本页只收录距地铁站600米以内的室内去处，路上几乎不会淋湿。每一处都标注了最近的车站和距离。" },
+      { q: "这些地方是怎么挑选的？", a: "只有同时满足两点才会出现在这里：在室内，且距地铁站600米以内。下雨天，走到门口的那段路和头顶的屋顶一样重要。" },
+      { q: "距离是怎么算的？", a: "地图上的直线距离，实际步行会稍远一些。300米以内大约是撑伞走3分钟。" },
+      { q: "为什么没有营业时间和门票？", a: "因为我们没有核实过。错误的营业时间会让你站在锁着的门前，留空比那样更好。每一处都附有官方页面链接，那里有最新的时间。" },
+    ],
     byDistrictChips: "按区域",
   },
 
@@ -824,6 +872,12 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyFar: "距車站300~600公尺 — 約5分鐘",
     rainyMissing:
       "有頂棚的市場與地下商街尚未收錄。我們仍在確認哪些市場有頂棚 — 沒有確認過的不收錄。",
+    rainyFaq: [
+      { q: "下雨天在首爾可以做什麼？", a: "本頁只收錄距地鐵站600公尺以內的室內去處，路上幾乎不會淋濕。每一處都標註了最近的車站與距離。" },
+      { q: "這些地方是怎麼挑選的？", a: "只有同時滿足兩點才會出現在這裡：在室內，且距地鐵站600公尺以內。下雨天，走到門口的那段路和頭頂的屋頂一樣重要。" },
+      { q: "距離是怎麼算的？", a: "地圖上的直線距離，實際步行會稍遠一些。300公尺以內大約是撐傘走3分鐘。" },
+      { q: "為什麼沒有營業時間和門票？", a: "因為我們沒有確認過。錯誤的營業時間會讓你站在鎖著的門前，留空比那樣更好。每一處都附有官方頁面連結，那裡有最新的時間。" },
+    ],
     byDistrictChips: "按區域",
   },
 
@@ -889,6 +943,12 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyFar: "역에서 300~600m — 5분쯤",
     rainyMissing:
       "지붕 있는 시장과 지하상가는 아직 없습니다. 어느 시장에 지붕이 있는지 확인되는 대로 넣겠습니다 — 확인 못 한 것은 넣지 않습니다.",
+    rainyFaq: [
+      { q: "비 오는 날 서울에서 뭘 하면 좋을까요?", a: "이 페이지에는 지하철역에서 600m 안에 있는 실내만 모아 뒀습니다. 가는 길에 거의 안 젖습니다. 곳마다 가장 가까운 역과 거리를 적어 뒀습니다." },
+      { q: "어떻게 고른 곳인가요?", a: "두 가지를 다 만족해야 넣습니다 — 실내일 것, 그리고 지하철역에서 600m 안일 것. 비 오는 날에는 지붕이 있느냐만큼 거기까지 가는 길이 안 젖느냐가 중요하기 때문입니다." },
+      { q: "거리는 어떻게 쟀나요?", a: "지도 위 직선거리입니다. 실제로 걷는 길은 조금 더 깁니다. 300m 안이면 우산 쓰고 3분쯤입니다." },
+      { q: "영업시간과 입장료는 왜 없나요?", a: "확인하지 못한 값이라 안 적습니다. 틀린 영업시간을 보고 갔다가 닫힌 문 앞에 서는 것보다 빈 칸이 낫습니다. 곳마다 공식 안내 링크가 있으니 거기서 확인하세요." },
+    ],
     byDistrictChips: "구별",
   },
 
@@ -954,6 +1014,12 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyFar: "Cách ga 300–600 m — khoảng 5 phút",
     rainyMissing:
       "Chợ có mái che và phố mua sắm ngầm chưa có ở đây. Chúng tôi vẫn đang kiểm tra chợ nào có mái — chưa kiểm tra thì chúng tôi chưa đưa vào.",
+    rainyFaq: [
+      { q: "Trời mưa thì đi đâu ở Seoul?", a: "Trang này chỉ liệt kê những điểm trong nhà cách ga tàu điện ngầm dưới 600 m, nên bạn hầu như không bị ướt trên đường. Mỗi mục đều ghi rõ ga gần nhất và khoảng cách." },
+      { q: "Các địa điểm này được chọn thế nào?", a: "Một nơi chỉ xuất hiện ở đây khi thỏa cả hai điều: ở trong nhà, và cách ga tàu điện ngầm dưới 600 m. Ngày mưa, quãng đường đi tới cửa cũng quan trọng như mái che." },
+      { q: "Khoảng cách được đo thế nào?", a: "Khoảng cách đường chim bay trên bản đồ, nên quãng đi bộ thực tế dài hơn một chút. Dưới 300 m là khoảng 3 phút đi bộ với ô." },
+      { q: "Vì sao không có giờ mở cửa và giá vé?", a: "Vì chúng tôi chưa kiểm chứng. Giờ mở cửa sai sẽ khiến bạn đứng trước cánh cửa đã khóa — để trống còn hơn thế. Mỗi nơi đều có liên kết tới trang chính thức." },
+    ],
     byDistrictChips: "Theo quận",
   },
 
@@ -1020,6 +1086,12 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyFar: "ห่างจากสถานี 300–600 ม. — ราว 5 นาที",
     rainyMissing:
       "ตลาดมีหลังคาและย่านการค้าใต้ดินยังไม่มีที่นี่ เรากำลังตรวจสอบว่าตลาดใดมีหลังคา — สิ่งที่ยังไม่ได้ตรวจสอบ เราจะไม่ลง",
+    rainyFaq: [
+      { q: "วันฝนตกในโซลไปไหนดี", a: "หน้านี้รวมเฉพาะจุดในร่มที่อยู่ห่างจากสถานีรถไฟใต้ดินไม่เกิน 600 เมตร จึงแทบไม่เปียกระหว่างทาง แต่ละแห่งระบุสถานีที่ใกล้ที่สุดและระยะทางไว้" },
+      { q: "เลือกสถานที่เหล่านี้อย่างไร", a: "จะขึ้นในหน้านี้ได้ต้องครบสองข้อ คือ อยู่ในร่ม และห่างจากสถานีรถไฟใต้ดินไม่เกิน 600 เมตร ในวันฝนตก ทางเดินไปถึงประตูสำคัญพอ ๆ กับหลังคาที่อยู่เหนือหัว" },
+      { q: "วัดระยะทางอย่างไร", a: "เป็นระยะเส้นตรงบนแผนที่ ทางเดินจริงจึงไกลกว่าเล็กน้อย ภายใน 300 เมตรคือเดินราว 3 นาทีพร้อมร่ม" },
+      { q: "ทำไมไม่มีเวลาทำการและค่าเข้าชม", a: "เพราะเรายังไม่ได้ตรวจสอบ เวลาทำการที่ผิดจะทำให้คุณไปยืนหน้าประตูที่ล็อกอยู่ เว้นว่างไว้ยังดีกว่า ทุกแห่งมีลิงก์ไปยังหน้าทางการ" },
+    ],
     byDistrictChips: "ตามเขต",
   },
 
@@ -1084,6 +1156,12 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyFar: "300–600 m dari stasiun — sekitar 5 menit",
     rainyMissing:
       "Pasar beratap dan pusat belanja bawah tanah belum ada di sini. Kami masih memeriksa pasar mana yang beratap — yang belum kami periksa tidak kami cantumkan.",
+    rainyFaq: [
+      { q: "Mau ke mana di Seoul saat hujan?", a: "Halaman ini hanya memuat tempat indoor yang berjarak kurang dari 600 m dari stasiun kereta bawah tanah, jadi Anda hampir tidak basah di jalan. Setiap entri mencantumkan stasiun terdekat dan jaraknya." },
+      { q: "Bagaimana tempat-tempat ini dipilih?", a: "Sebuah tempat masuk ke sini hanya jika keduanya benar: berada di dalam ruangan, dan dalam 600 m dari stasiun. Saat hujan, jalan menuju pintu sama pentingnya dengan atap di atasnya." },
+      { q: "Bagaimana jaraknya diukur?", a: "Jarak garis lurus di peta, jadi jalan kaki sebenarnya sedikit lebih jauh. Dalam 300 m kira-kira 3 menit berjalan dengan payung." },
+      { q: "Kenapa jam buka dan tiket masuk tidak ada?", a: "Karena kami belum memverifikasinya. Jam buka yang salah membuat Anda berdiri di depan pintu terkunci — kosong lebih baik daripada itu. Setiap tempat punya tautan ke halaman resminya." },
+    ],
     byDistrictChips: "Menurut distrik",
   },
 
@@ -1155,6 +1233,12 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyFar: "De 300 a 600 m de una estación — unos 5 minutos",
     rainyMissing:
       "Los mercados cubiertos y las galerías comerciales subterráneas aún no están aquí. Seguimos comprobando qué mercados tienen techo: no publicamos lo que no hemos comprobado.",
+    rainyFaq: [
+      { q: "¿Qué hacer en Seúl cuando llueve?", a: "Esta página solo recoge lugares cubiertos que están a menos de 600 m de una estación de metro, así que apenas te mojas por el camino. Cada entrada indica la estación más cercana y la distancia." },
+      { q: "¿Cómo se han elegido estos lugares?", a: "Un lugar aparece aquí solo si cumple ambas cosas: está bajo techo y está a menos de 600 m de una estación de metro. En un día de lluvia, el trayecto hasta la puerta importa tanto como el techo." },
+      { q: "¿Cómo se mide la distancia?", a: "En línea recta sobre el mapa, así que el camino a pie es algo más largo. Menos de 300 m son unos 3 minutos andando con paraguas." },
+      { q: "¿Por qué no aparecen los horarios ni las entradas?", a: "Porque no los hemos comprobado. Un horario equivocado te deja ante una puerta cerrada, y un hueco es mejor que eso. Cada lugar enlaza a su página oficial, donde están los horarios actuales." },
+    ],
     byDistrictChips: "Por distrito",
   },
 
@@ -1219,6 +1303,12 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyFar: "De 300 à 600 m d'une station — environ 5 minutes",
     rainyMissing:
       "Les marchés couverts et les galeries souterraines n'y figurent pas encore. Nous vérifions encore quels marchés sont abrités : nous ne publions pas ce que nous n'avons pas vérifié.",
+    rainyFaq: [
+      { q: "Que faire à Séoul quand il pleut ?", a: "Cette page ne recense que des lieux couverts situés à moins de 600 m d'une station de métro : on ne se mouille presque pas en chemin. Chaque entrée indique la station la plus proche et la distance." },
+      { q: "Comment ces lieux ont-ils été choisis ?", a: "Un lieu n'y figure que si les deux conditions sont réunies : il est à l'abri, et il est à moins de 600 m d'une station de métro. Un jour de pluie, le trajet jusqu'à la porte compte autant que le toit." },
+      { q: "Comment la distance est-elle mesurée ?", a: "À vol d'oiseau sur la carte : le trajet à pied est donc un peu plus long. Moins de 300 m, c'est environ 3 minutes de marche avec un parapluie." },
+      { q: "Pourquoi les horaires et les tarifs ne sont-ils pas indiqués ?", a: "Parce que nous ne les avons pas vérifiés. Un horaire faux vous laisse devant une porte close, et un blanc vaut mieux que cela. Chaque lieu renvoie à sa page officielle." },
+    ],
     byDistrictChips: "Par quartier",
   },
 
@@ -1290,6 +1380,12 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyFar: "300–600 m bis zur Station — etwa 5 Minuten",
     rainyMissing:
       "Überdachte Märkte und Untergrundpassagen fehlen noch. Wir prüfen noch, welche Märkte überdacht sind — was wir nicht geprüft haben, nehmen wir nicht auf.",
+    rainyFaq: [
+      { q: "Was kann man in Seoul bei Regen unternehmen?", a: "Diese Seite listet nur überdachte Orte auf, die höchstens 600 m von einer U-Bahn-Station entfernt sind — unterwegs wird man kaum nass. Bei jedem Eintrag stehen die nächste Station und die Entfernung." },
+      { q: "Wie wurden diese Orte ausgewählt?", a: "Ein Ort steht hier nur, wenn beides zutrifft: Er ist überdacht, und er liegt höchstens 600 m von einer U-Bahn-Station entfernt. An einem Regentag zählt der Weg zur Tür ebenso wie das Dach darüber." },
+      { q: "Wie wird die Entfernung gemessen?", a: "Luftlinie auf der Karte, der Fußweg ist also etwas länger. Bis 300 m sind es etwa 3 Minuten zu Fuß mit Schirm." },
+      { q: "Warum fehlen Öffnungszeiten und Eintrittspreise?", a: "Weil wir sie nicht geprüft haben. Eine falsche Öffnungszeit stellt Sie vor eine verschlossene Tür — eine Lücke ist besser als das. Jeder Ort verlinkt auf seine offizielle Seite." },
+    ],
     byDistrictChips: "Nach Stadtteil",
   },
 
@@ -1365,6 +1461,12 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyFar: "300–600 м от станции — около 5 минут",
     rainyMissing:
       "Крытых рынков и подземных торговых галерей здесь пока нет. Мы ещё проверяем, какие рынки крытые — непроверенное мы не публикуем.",
+    rainyFaq: [
+      { q: "Чем заняться в Сеуле в дождь?", a: "На этой странице только места под крышей не дальше 600 м от станции метро — по дороге почти не промокнешь. У каждого указаны ближайшая станция и расстояние до неё." },
+      { q: "Как выбирались эти места?", a: "Место попадает сюда, только если верно и то и другое: оно под крышей и не дальше 600 м от станции метро. В дождь дорога до двери важна не меньше, чем крыша над ней." },
+      { q: "Как измеряется расстояние?", a: "По прямой на карте, поэтому пешком получится чуть дольше. До 300 м — это около 3 минут пешком под зонтом." },
+      { q: "Почему не указаны часы работы и стоимость входа?", a: "Потому что мы их не проверяли. Неверные часы работы оставят вас перед закрытой дверью — пустое место лучше этого. У каждого места есть ссылка на официальную страницу." },
+    ],
     byDistrictChips: "По районам",
   },
 };
