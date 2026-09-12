@@ -1,0 +1,41 @@
+name: Probe tour intro (시장 판매품목 찔러보기)
+
+# 🏪 관광공사 detailIntro 에 **판매품목·영업시간**이 실제로 들어 있는지 눈으로 본다.
+#    왜 이걸 보는지는 scripts/probe-tour-intro.mjs 머리말에.
+#
+# 🚨 **아무것도 저장하지 않는다. 보기만 한다.**
+#    값을 보고 나서 쓸지 정한다 — 칸 이름만 보고 「있겠지」 하면 그게 추측이다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      how_many:
+        description: "몇 곳이나 찔러 볼까 (기본 6)"
+        required: false
+        default: "6"
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 찔러 보기
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+          HOW_MANY: ${{ inputs.how_many }}
+        run: |
+          set -o pipefail
+          node scripts/probe-tour-intro.mjs 2>&1 | tee intro-log.txt
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🏪 시장 판매품목 찔러보기"
+            echo ""
+            echo '```'
+            cat intro-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
