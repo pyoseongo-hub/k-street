@@ -40,6 +40,9 @@ import { eatNearbyUrl } from "../src/lib/partnerLinks";
 // 🗓️ 이름에 지난 연도가 박힌 행사(「2025 서울한옥위크」)를 가려내는 잣대.
 //    앱과 이 생성기가 **같은 함수**를 쓴다 — 잣대가 둘이면 한쪽만 고치게 된다.
 import { pastEditionYear } from "../src/lib/pastEdition";
+// 🌧️ 「비 오는 날」 테마의 잣대 — 실내인가, 역에서 얼마나 먼가.
+//    왜 이 둘인지는 src/lib/indoor.ts 머리말에 적어 뒀다(글 6개를 읽고 나온 것이다).
+import { isIndoor, RAIN_WALK_MAX_M, RAIN_WALK_NEAR_M } from "../src/lib/indoor";
 // 🧳 짐 보관 안내 (2026-09-10). 글은 luggage-strings, 링크는 luggage-links 에 있다 —
 //    링크는 **전부 러너에서 두드려 본 것만** 들어 있다.
 import { LUGGAGE_STRINGS } from "./lib/luggage-strings";
@@ -259,6 +262,19 @@ const CATEGORY_HUB: Record<string, { slug: string; plural: string }> = {
   street: { slug: "streets-and-alleys", plural: "Streets & alleys" },
 };
 const hubPathCategory = (c: string) => `seoul/${CATEGORY_HUB[c]?.slug ?? "places"}`;
+
+/**
+ * 🌧️ **테마 묶음** — 구·달·갈래가 아니라 **상황**으로 묶는다 (2026-09-12).
+ *
+ * 구·달·갈래는 「이름은 모르지만 어디를 볼지는 아는」 사람을 위한 문이다.
+ * 그런데 손님이 AI 에게 실제로 묻는 말은 **「비 오는데 뭐 하지」**다.
+ * 그 말에 걸리려면 그 말로 된 페이지가 있어야 한다.
+ *
+ * 주소를 `/seoul/rainy-day/` 로 잡았다 — 영어권이 실제로 치는 말이
+ * "rainy day Seoul" 이다(한국어 쪽은 「비오는날 갈만한곳」).
+ * 🚨 **한 번 내면 못 바꾼다.** 남이 걸어 둔 링크가 깨지기 때문이다.
+ */
+const hubPathRainy = "seoul/rainy-day";
 
 /**
  * 「October」 · 「September–October」. 축제가 아니면 빈 문자열.
@@ -809,7 +825,7 @@ function kindLabel(cat: string, lang: Language): string {
  * 🌏 링크도 **같은 언어의 곳 페이지**로 보낸다 (2026-09-10). 일본어 묶음에서
  *    누르면 일본어 곳 페이지가 떠야 한다 — 영어로 떨어뜨리면 손님이 거기서 끊긴다.
  */
-function hubItem(p: Place, showGu = true, lang: Language = "en"): string {
+function hubItem(p: Place, showGu = true, lang: Language = "en", withStation = false): string {
   const name = translateText(p.name, lang);
   const showKo = name !== p.name;
   const note = p.note ? translateText(p.note, lang) : "";
@@ -821,6 +837,14 @@ function hubItem(p: Place, showGu = true, lang: Language = "en"): string {
         ? dongName(p.dong, lang)
         : "",
     whenLabel(p, lang),
+    // 🚇 「성수역 2호선 · 350m」 — 곳 페이지와 **같은 함수**로 잰다.
+    //    잣대가 둘이면 목록과 곳 페이지가 다른 거리를 말하는 날이 온다.
+    withStation
+      ? (() => {
+          const r = nearestStation(p.id, p);
+          return r?.station && r.dist != null ? PAGE_STRINGS[lang].stationLine(r.station, r.dist) : "";
+        })()
+      : "",
   ].filter(Boolean);
   // 메모가 있으면 앞에 세운다 — 곳마다 다른 유일한 문장이라 목록이 안 똑같아진다.
   const meta = [note, facts.join(" · ")].filter(Boolean).join(" — ");
@@ -831,7 +855,19 @@ function hubItem(p: Place, showGu = true, lang: Language = "en"): string {
   );
 }
 
-type HubGroup = { heading: string; items: Place[]; showGu?: boolean };
+type HubGroup = {
+  heading: string;
+  items: Place[];
+  showGu?: boolean;
+  /**
+   * 🚇 목록 줄에 **가장 가까운 역과 거리**를 같이 적을까 (2026-09-12).
+   *
+   *    「비 오는 날」 테마에서만 켠다. 그 페이지에서는 **역까지 몇 m 인가가
+   *    곧 고르는 이유**라서, 안 적으면 손님이 우리가 왜 이 곳을 골랐는지 모른다.
+   *    다른 묶음(구별·달별)에서는 줄만 길어지므로 끈다.
+   */
+  station?: boolean;
+};
 
 function hubPage(o: {
   path: string;
@@ -893,7 +929,7 @@ function hubPage(o: {
     .filter((g) => g.items.length)
     .map(
       (g) =>
-        `<h2>${esc(g.heading)}</h2><ul>${g.items.map((p) => hubItem(p, g.showGu ?? true, lang)).join("")}</ul>`
+        `<h2>${esc(g.heading)}</h2><ul>${g.items.map((p) => hubItem(p, g.showGu ?? true, lang, g.station ?? false)).join("")}</ul>`
     )
     .join("\n");
 
@@ -1148,6 +1184,53 @@ for (const [cat, meta] of Object.entries(CATEGORY_HUB)) {
   });
 }
 
+// ── 🌧️ 테마: 비 오는 날 ──────────────────────────────────────────────────
+//
+// 사장님 지시 (2026-09-12): "비오는날 쇼핑이나 실내시장 이런쪽 안내가 있으면
+//   아주 좋아할 거야 — 한쪽 테마로 만들어두자."
+//
+// 잣대 둘 **다** 만족해야 들어온다. 잣대와 그 한계를 화면에 그대로 적는다:
+//   ① 실내다(isIndoor)          — 갈래로 알거나, 확인해서 seed 에 적어 둔 것
+//   ② 역에서 600m 안(직선거리)  — 「가는 길이 안 젖는가」가 이 테마의 핵심이다
+//
+// 🚨 **역 자료가 없는 곳은 안 넣는다.** 「역이 먼지 모른다」와 「역이 가깝다」는
+//    다른 말이다. 모르는 것을 가까운 쪽으로 반올림하면 손님이 젖는다.
+// 📌 지금은 박물관뿐이다. 지붕 있는 시장·지하상가는 **빈 칸**이고,
+//    화면에 그렇게 적는다(S.rainyMissing). 빈 칸을 빈 칸이라 말하지 않으면
+//    다음 사람이 「없구나」가 아니라 「서울엔 그런 게 없구나」로 읽는다.
+{
+  const picked = ALL.map((p) => ({ p, s: nearestStation(p.id, p) }))
+    .filter(
+      (x): x is { p: Place; s: { station: string; dist: number } } =>
+        isIndoor(x.p) && !!x.s?.station && x.s.dist != null && x.s.dist <= RAIN_WALK_MAX_M,
+    )
+    .sort((a, b) => a.s.dist - b.s.dist);
+  const near = picked.filter((x) => x.s.dist <= RAIN_WALK_NEAR_M).map((x) => x.p);
+  const far = picked.filter((x) => x.s.dist > RAIN_WALK_NEAR_M).map((x) => x.p);
+  const gus = new Set(picked.map((x) => x.p.gu)).size;
+  hubs.push({
+    path: hubPathRainy,
+    lang,
+    html: hubPage({
+      lang,
+      path: hubPathRainy,
+      kind: S.theme,
+      h1: S.rainyH1,
+      title: S.rainyTitle(picked.length),
+      lead: S.rainyLead(picked.length, gus),
+      desc: clip(S.rainyDesc(picked.length)),
+      groups: [
+        ...(near.length ? [{ heading: S.rainyNear, items: near, station: true }] : []),
+        ...(far.length ? [{ heading: S.rainyFar, items: far, station: true }] : []),
+      ],
+      // 🕳️ 아직 없는 것을 **페이지 안에서** 밝힌다.
+      extraHtml: `<p class="note">${esc(S.rainyMissing)}</p>`,
+      chipsTitle: S.byDistrictChips,
+      chips: guChips,
+    }),
+  });
+}
+
 // 묶음 페이지의 대문 — 크롤러가 여기 한 장만 봐도 나머지를 다 찾아간다.
 hubs.push({
   path: "seoul",
@@ -1168,6 +1251,9 @@ hubs.push({
       ...Object.entries(CATEGORY_HUB)
         .filter(([c]) => ALL.some((p) => p.category === c))
         .map(([c]) => ({ href: `/${langPath(lang, `${hubPathCategory(c)}/`)}`, label: kindLabel(c, lang) })),
+      // 🌧️ 테마도 여기서 잇는다. 대문에서 안 이어 주면 **크롤러가 영영 못 찾는다** —
+      //    사이트맵에만 있는 주소는 구글이 「아무도 안 가리키는 페이지」로 읽는다.
+      { href: `/${langPath(lang, `${hubPathRainy}/`)}`, label: S.rainyH1 },
     ],
   }),
 });

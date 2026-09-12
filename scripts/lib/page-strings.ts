@@ -623,6 +623,18 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `Pick a district, a month, or a kind of place. Everything here is free, needs no sign-up, and comes with Korean names for taxis and shops.`,
     indexDesc: (kinds, gus) =>
       `All of Seoul in K-Street: ${kinds} across ${en(gus, "district")} — browse by district, by month, or by kind.`,
+    theme: "Theme",
+    rainyH1: "Seoul on a rainy day",
+    rainyTitle: (n) => `Seoul on a Rainy Day — ${n} indoor places near a station | K-Street`,
+    rainyLead: (n, gus) =>
+      `${en(n, "indoor place")} in ${en(gus, "district")} of Seoul, each within 600 m of a subway station. ` +
+      `Distances are straight-line, so the walk is a little longer.`,
+    rainyDesc: (n) =>
+      `${en(n, "indoor place")} in Seoul for a rainy day — sorted by how close they are to a station. Free, no sign-up, 12 languages.`,
+    rainyNear: "Within 300 m of a station — about a 3-minute walk",
+    rainyFar: "300–600 m from a station — about 5 minutes",
+    rainyMissing:
+      "Covered markets and underground shopping arcades are not here yet. We are still checking which markets have a roof — we do not list what we have not checked.",
     byDistrictChips: "By district",
   },
 
@@ -674,6 +686,18 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `エリア、月、種類のどれからでも探せます。すべて無料・登録不要で、タクシーやお店で見せる韓国語名が付いています。`,
     indexDesc: (kinds, gus) =>
       `K-Street のソウル全体：${gus}区の${kinds} — エリア・月・種類から探せます。`,
+    theme: "テーマ",
+    rainyH1: "雨の日のソウル",
+    rainyTitle: (n) => `雨の日のソウル — 駅に近い屋内スポット${n}件 | K-Street`,
+    rainyLead: (n, gus) =>
+      `ソウル${gus}区の屋内スポット${n}件です。いずれも地下鉄駅から600m以内にあります。` +
+      `距離は直線距離なので、実際に歩く道のりは少し長くなります。`,
+    rainyDesc: (n) =>
+      `雨の日のソウルで行ける屋内スポット${n}件 — 駅から近い順。無料・登録不要・12言語。`,
+    rainyNear: "駅から300m以内 — 傘をさして3分ほど",
+    rainyFar: "駅から300〜600m — 5分ほど",
+    rainyMissing:
+      "屋根のある市場と地下商店街はまだ載せていません。どの市場に屋根があるか確認中です — 確認できていないものは載せません。",
     byDistrictChips: "エリア別",
   },
 
@@ -725,6 +749,18 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `可以按区域、月份或类型来找。全部免费、无需注册，并附有可给出租车和店家看的韩语名称。`,
     indexDesc: (kinds, gus) =>
       `K-Street 的首尔全部：${gus}个区的${kinds} — 可按区域、月份或类型浏览。`,
+    theme: "主题",
+    rainyH1: "下雨天的首尔",
+    rainyTitle: (n) => `下雨天的首尔 — 地铁站附近的${n}处室内去处 | K-Street`,
+    rainyLead: (n, gus) =>
+      `首尔${gus}个区的${n}处室内去处，都在地铁站600米以内。` +
+      `距离为直线距离，实际步行会稍远一些。`,
+    rainyDesc: (n) =>
+      `下雨天在首尔可去的${n}处室内去处 — 按距地铁站远近排列。免费、免注册、12种语言。`,
+    rainyNear: "距车站300米以内 — 撑伞约3分钟",
+    rainyFar: "距车站300~600米 — 约5分钟",
+    rainyMissing:
+      "有顶棚的市场和地下商街尚未收录。我们仍在核实哪些市场有顶棚 — 没有核实过的不收录。",
     byDistrictChips: "按区域",
   },
 
@@ -776,6 +812,18 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `可以按區域、月份或類型來找。全部免費、無需註冊，並附有可給計程車和店家看的韓語名稱。`,
     indexDesc: (kinds, gus) =>
       `K-Street 的首爾全部：${gus}個區的${kinds} — 可按區域、月份或類型瀏覽。`,
+    theme: "主題",
+    rainyH1: "下雨天的首爾",
+    rainyTitle: (n) => `下雨天的首爾 — 地鐵站附近的${n}處室內去處 | K-Street`,
+    rainyLead: (n, gus) =>
+      `首爾${gus}個區的${n}處室內去處，都在地鐵站600公尺以內。` +
+      `距離為直線距離，實際步行會稍遠一些。`,
+    rainyDesc: (n) =>
+      `下雨天在首爾可去的${n}處室內去處 — 依距地鐵站遠近排列。免費、免註冊、12種語言。`,
+    rainyNear: "距車站300公尺以內 — 撐傘約3分鐘",
+    rainyFar: "距車站300~600公尺 — 約5分鐘",
+    rainyMissing:
+      "有頂棚的市場與地下商街尚未收錄。我們仍在確認哪些市場有頂棚 — 沒有確認過的不收錄。",
     byDistrictChips: "按區域",
   },
 
@@ -829,6 +877,18 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `구, 달, 갈래 어느 쪽으로나 찾아보세요. 전부 무료고 가입이 필요 없습니다.`,
     indexDesc: (kinds, gus) =>
       `K-Street의 서울 전체: ${gus}개 구의 ${kinds} — 구·달·갈래로 찾아보세요.`,
+    theme: "테마",
+    rainyH1: "비 와도 괜찮은 서울",
+    rainyTitle: (n) => `비 오는 날 서울 — 역에서 가까운 실내 ${n}곳 | K-Street`,
+    rainyLead: (n, gus) =>
+      `서울 ${gus}개 구의 실내 ${n}곳입니다. 모두 지하철역에서 600m 안에 있습니다. ` +
+      `거리는 직선거리라 실제로 걷는 길은 조금 더 깁니다.`,
+    rainyDesc: (n) =>
+      `비 오는 날 서울에서 갈 만한 실내 ${n}곳 — 역에서 가까운 순. 무료, 가입 없음, 12개 언어.`,
+    rainyNear: "역에서 300m 안 — 우산 쓰고 3분쯤",
+    rainyFar: "역에서 300~600m — 5분쯤",
+    rainyMissing:
+      "지붕 있는 시장과 지하상가는 아직 없습니다. 어느 시장에 지붕이 있는지 확인되는 대로 넣겠습니다 — 확인 못 한 것은 넣지 않습니다.",
     byDistrictChips: "구별",
   },
 
@@ -882,6 +942,18 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `Chọn một quận, một tháng, hoặc một loại địa điểm. Tất cả đều miễn phí, không cần đăng ký, và có tên tiếng Hàn để dùng khi đi taxi hay vào cửa hàng.`,
     indexDesc: (kinds, gus) =>
       `Toàn bộ Seoul trong K-Street: ${kinds} tại ${gus} quận — xem theo quận, theo tháng, hoặc theo loại.`,
+    theme: "Chủ đề",
+    rainyH1: "Seoul ngày mưa",
+    rainyTitle: (n) => `Seoul Ngày Mưa — ${n} điểm trong nhà gần ga tàu điện ngầm | K-Street`,
+    rainyLead: (n, gus) =>
+      `${n} điểm trong nhà ở ${gus} quận của Seoul, tất cả đều cách ga tàu điện ngầm dưới 600 m. ` +
+      `Khoảng cách tính theo đường chim bay nên quãng đi bộ thực tế dài hơn một chút.`,
+    rainyDesc: (n) =>
+      `${n} điểm trong nhà ở Seoul cho ngày mưa — xếp theo khoảng cách tới ga. Miễn phí, không cần đăng ký, 12 ngôn ngữ.`,
+    rainyNear: "Cách ga dưới 300 m — đi bộ khoảng 3 phút",
+    rainyFar: "Cách ga 300–600 m — khoảng 5 phút",
+    rainyMissing:
+      "Chợ có mái che và phố mua sắm ngầm chưa có ở đây. Chúng tôi vẫn đang kiểm tra chợ nào có mái — chưa kiểm tra thì chúng tôi chưa đưa vào.",
     byDistrictChips: "Theo quận",
   },
 
@@ -936,6 +1008,18 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `เลือกจากเขต เดือน หรือประเภทก็ได้ ทั้งหมดฟรี ไม่ต้องสมัคร และมีชื่อภาษาเกาหลีสำหรับใช้กับแท็กซี่และร้านค้า`,
     indexDesc: (kinds, gus) =>
       `โซลทั้งหมดใน K-Street: ${kinds} ใน ${gus} เขต — ดูตามเขต เดือน หรือประเภท`,
+    theme: "ธีม",
+    rainyH1: "โซลในวันฝนตก",
+    rainyTitle: (n) => `โซลในวันฝนตก — ${n} จุดในร่มใกล้สถานีรถไฟใต้ดิน | K-Street`,
+    rainyLead: (n, gus) =>
+      `${n} จุดในร่มใน ${gus} เขตของโซล ทั้งหมดอยู่ห่างจากสถานีรถไฟใต้ดินไม่เกิน 600 เมตร ` +
+      `ระยะทางเป็นเส้นตรง ทางเดินจริงจึงไกลกว่าเล็กน้อย`,
+    rainyDesc: (n) =>
+      `${n} จุดในร่มในโซลสำหรับวันฝนตก — เรียงตามระยะห่างจากสถานี ฟรี ไม่ต้องสมัคร 12 ภาษา`,
+    rainyNear: "ห่างจากสถานีไม่เกิน 300 ม. — เดินราว 3 นาที",
+    rainyFar: "ห่างจากสถานี 300–600 ม. — ราว 5 นาที",
+    rainyMissing:
+      "ตลาดมีหลังคาและย่านการค้าใต้ดินยังไม่มีที่นี่ เรากำลังตรวจสอบว่าตลาดใดมีหลังคา — สิ่งที่ยังไม่ได้ตรวจสอบ เราจะไม่ลง",
     byDistrictChips: "ตามเขต",
   },
 
@@ -988,6 +1072,18 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `Pilih distrik, bulan, atau jenis tempat. Semuanya gratis, tanpa pendaftaran, dan dilengkapi nama Korea untuk taksi dan toko.`,
     indexDesc: (kinds, gus) =>
       `Seluruh Seoul di K-Street: ${kinds} di ${gus} distrik — telusuri menurut distrik, bulan, atau jenis.`,
+    theme: "Tema",
+    rainyH1: "Seoul saat hujan",
+    rainyTitle: (n) => `Seoul Saat Hujan — ${n} tempat indoor dekat stasiun | K-Street`,
+    rainyLead: (n, gus) =>
+      `${n} tempat indoor di ${gus} distrik Seoul, semuanya dalam 600 m dari stasiun kereta bawah tanah. ` +
+      `Jarak dihitung garis lurus, jadi jalan kakinya sedikit lebih jauh.`,
+    rainyDesc: (n) =>
+      `${n} tempat indoor di Seoul untuk hari hujan — diurutkan dari yang terdekat ke stasiun. Gratis, tanpa daftar, 12 bahasa.`,
+    rainyNear: "Dalam 300 m dari stasiun — sekitar 3 menit jalan kaki",
+    rainyFar: "300–600 m dari stasiun — sekitar 5 menit",
+    rainyMissing:
+      "Pasar beratap dan pusat belanja bawah tanah belum ada di sini. Kami masih memeriksa pasar mana yang beratap — yang belum kami periksa tidak kami cantumkan.",
     byDistrictChips: "Menurut distrik",
   },
 
@@ -1047,6 +1143,18 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `Elige un distrito, un mes o un tipo de lugar. Todo es gratis, sin registro, y viene con nombres en coreano para taxis y tiendas.`,
     indexDesc: (kinds, gus) =>
       `Todo Seúl en K-Street: ${kinds} en ${gus} ${gus === 1 ? "distrito" : "distritos"} — explora por distrito, por mes o por tipo.`,
+    theme: "Tema",
+    rainyH1: "Seúl en un día de lluvia",
+    rainyTitle: (n) => `Seúl en un Día de Lluvia — ${n} lugares cubiertos cerca del metro | K-Street`,
+    rainyLead: (n, gus) =>
+      `${n} lugares cubiertos en ${gus} distritos de Seúl, todos a menos de 600 m de una estación de metro. ` +
+      `Las distancias son en línea recta, así que el camino a pie es algo más largo.`,
+    rainyDesc: (n) =>
+      `${n} lugares cubiertos en Seúl para un día de lluvia — ordenados por cercanía al metro. Gratis, sin registro, 12 idiomas.`,
+    rainyNear: "A menos de 300 m de una estación — unos 3 minutos a pie",
+    rainyFar: "De 300 a 600 m de una estación — unos 5 minutos",
+    rainyMissing:
+      "Los mercados cubiertos y las galerías comerciales subterráneas aún no están aquí. Seguimos comprobando qué mercados tienen techo: no publicamos lo que no hemos comprobado.",
     byDistrictChips: "Por distrito",
   },
 
@@ -1099,6 +1207,18 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `Choisissez un quartier, un mois ou un type de lieu. Tout est gratuit, sans inscription, avec les noms coréens pour les taxis et les commerces.`,
     indexDesc: (kinds, gus) =>
       `Tout Séoul dans K-Street : ${kinds} dans ${gus} ${gus === 1 ? "quartier" : "quartiers"} — parcourez par quartier, par mois ou par type.`,
+    theme: "Thème",
+    rainyH1: "Séoul un jour de pluie",
+    rainyTitle: (n) => `Séoul un Jour de Pluie — ${n} lieux couverts près du métro | K-Street`,
+    rainyLead: (n, gus) =>
+      `${n} lieux couverts dans ${gus} quartiers de Séoul, tous à moins de 600 m d'une station de métro. ` +
+      `Les distances sont à vol d'oiseau : le trajet à pied est un peu plus long.`,
+    rainyDesc: (n) =>
+      `${n} lieux couverts à Séoul pour un jour de pluie — classés par proximité du métro. Gratuit, sans inscription, 12 langues.`,
+    rainyNear: "À moins de 300 m d'une station — environ 3 minutes à pied",
+    rainyFar: "De 300 à 600 m d'une station — environ 5 minutes",
+    rainyMissing:
+      "Les marchés couverts et les galeries souterraines n'y figurent pas encore. Nous vérifions encore quels marchés sont abrités : nous ne publions pas ce que nous n'avons pas vérifié.",
     byDistrictChips: "Par quartier",
   },
 
@@ -1158,6 +1278,18 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `Wählen Sie einen Stadtteil, einen Monat oder eine Art von Ort. Alles ist kostenlos, ohne Anmeldung, und mit koreanischen Namen für Taxi und Geschäfte.`,
     indexDesc: (kinds, gus) =>
       `Ganz Seoul in K-Street: ${kinds} in ${deIn(gus)} — nach Stadtteil, Monat oder Art durchsuchen.`,
+    theme: "Thema",
+    rainyH1: "Seoul an einem Regentag",
+    rainyTitle: (n) => `Seoul an einem Regentag — ${n} überdachte Orte nahe der U-Bahn | K-Street`,
+    rainyLead: (n, gus) =>
+      `${n} überdachte Orte in ${deIn(gus)} von Seoul, alle höchstens 600 m von einer U-Bahn-Station entfernt. ` +
+      `Die Entfernungen sind Luftlinie, der Fußweg ist also etwas länger.`,
+    rainyDesc: (n) =>
+      `${n} überdachte Orte in Seoul für einen Regentag — nach Nähe zur U-Bahn sortiert. Kostenlos, ohne Anmeldung, 12 Sprachen.`,
+    rainyNear: "Höchstens 300 m bis zur Station — etwa 3 Minuten zu Fuß",
+    rainyFar: "300–600 m bis zur Station — etwa 5 Minuten",
+    rainyMissing:
+      "Überdachte Märkte und Untergrundpassagen fehlen noch. Wir prüfen noch, welche Märkte überdacht sind — was wir nicht geprüft haben, nehmen wir nicht auf.",
     byDistrictChips: "Nach Stadtteil",
   },
 
@@ -1221,6 +1353,18 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `Выберите район, месяц или тип места. Всё бесплатно, без регистрации, с корейскими названиями для такси и магазинов.`,
     indexDesc: (kinds, gus) =>
       `Весь Сеул в K-Street: ${kinds} ${ruDistrictsIn(gus)} — смотрите по районам, месяцам или типам.`,
+    theme: "Тема",
+    rainyH1: "Сеул в дождливый день",
+    rainyTitle: (n) => `Сеул в дождливый день — ${ru3(n, "место", "места", "мест")} под крышей рядом с метро | K-Street`,
+    rainyLead: (n, gus) =>
+      `${ru3(n, "место", "места", "мест")} под крышей в Сеуле (районов: ${gus}), все не дальше 600 м от станции метро. ` +
+      `Расстояния по прямой, поэтому пешком получится чуть дольше.`,
+    rainyDesc: (n) =>
+      `${ru3(n, "место", "места", "мест")} под крышей в Сеуле на дождливый день — по близости к метро. Бесплатно, без регистрации, 12 языков.`,
+    rainyNear: "Не дальше 300 м от станции — около 3 минут пешком",
+    rainyFar: "300–600 м от станции — около 5 минут",
+    rainyMissing:
+      "Крытых рынков и подземных торговых галерей здесь пока нет. Мы ещё проверяем, какие рынки крытые — непроверенное мы не публикуем.",
     byDistrictChips: "По районам",
   },
 };
