@@ -43,6 +43,8 @@ import { pastEditionYear } from "../src/lib/pastEdition";
 // 🌧️ 「비 오는 날」 테마의 잣대 — 실내인가, 역에서 얼마나 먼가.
 //    왜 이 둘인지는 src/lib/indoor.ts 머리말에 적어 뒀다(글 6개를 읽고 나온 것이다).
 import { isIndoor, isArcade, isRainOk, RAIN_WALK_MAX_M } from "../src/lib/indoor";
+// 🏪 「이 시장은 무엇을 파나」 — 관광공사 판매품목 + 12개 언어 낱말 사전.
+import { sellsFor } from "../src/lib/sells";
 // 🧳 짐 보관 안내 (2026-09-10). 글은 luggage-strings, 링크는 luggage-links 에 있다 —
 //    링크는 **전부 러너에서 두드려 본 것만** 들어 있다.
 import { LUGGAGE_STRINGS } from "./lib/luggage-strings";
@@ -673,6 +675,15 @@ ${note ? `<p class="note">${esc(note)}</p>` : ""}
 
 <dl>
 <dt>${esc(S.what)}</dt><dd>${esc(kind)}</dd>
+${
+  // 🏪 **갈래 바로 밑이다.** 「무슨 곳인가」 다음에 오는 물음이 「뭘 파나」이기 때문이다.
+  //    시장 68곳 중 63곳에 값이 있다(관광공사 판매품목).
+  //    🚨 곳 페이지에서는 **줄이지 않는다** — 여기까지 온 손님은 다 보고 싶어 한다.
+  (() => {
+    const sells = sellsFor(p.id, lang);
+    return sells ? `<dt>${esc(S.sells)}</dt><dd>${esc(sells)}</dd>` : "";
+  })()
+}
 <dt>${esc(S.district)}</dt><dd>${esc(guName)}${p.dong ? ` · ${esc(dongName(p.dong, lang))}` : ""}</dd>
 ${p.addr ? `<dt>${esc(S.address)}</dt><dd lang="ko">${esc(p.addr)}</dd>` : ""}
 ${
@@ -852,8 +863,14 @@ function hubItem(p: Place, showGu = true, lang: Language = "en", withStation = f
         })()
       : "",
   ].filter(Boolean);
+  // 🏪 **판매품목을 맨 앞에 세운다** (2026-09-12). 목록에서 시장 이름만 스무 개가
+  //    늘어서면 손님은 고를 수가 없다 — 「방산 종합시장」과 「광장시장」이
+  //    **무엇이 다른지** 알려 주는 유일한 글자다.
+  //    🚨 네 낱말까지만 — 「원단·의류부자재 / 액세서리 부자재 / 혼수용품 및
+  //       홈인테리어」는 한 줄에 안 들어간다. 다 보려면 곳 페이지로 들어온다.
+  const sells = sellsFor(p.id, lang, 4);
   // 메모가 있으면 앞에 세운다 — 곳마다 다른 유일한 문장이라 목록이 안 똑같아진다.
-  const meta = [note, facts.join(" · ")].filter(Boolean).join(" — ");
+  const meta = [sells || note, facts.join(" · ")].filter(Boolean).join(" — ");
   return (
     `<li><a href="/${langPath(lang, `place/${savedSlugs[p.id]}/`)}">${esc(name)}` +
     (showKo ? `<span class="ko" lang="ko"> ${esc(p.name)}</span>` : "") +

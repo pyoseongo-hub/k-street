@@ -20,6 +20,15 @@ export interface PageStrings {
   district: string;
   address: string;
   when: string;
+  /**
+   * 🏪 **이 시장은 무엇을 파나** (2026-09-12, 사장님 지시:
+   *    "방산 시장 동대문 시장처럼 먹거리나 그런 것이 아닌 특성화된 장소도 있으니
+   *     시장 자료 올려줘야 해").
+   *
+   *    한국관광공사가 시장마다 적어 둔 「판매품목」이다.
+   *    방산시장은 인쇄·종이, 동대문종합시장은 원단·한복 — **그걸 알아야 안내다.**
+   */
+  sells: string;
   official: string;
   /**
    * 「10월 — 확정 일정은 며칠 전에야 공지되기도 합니다…」 처럼 달 뒤에 붙는 안내.
@@ -88,6 +97,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     district: "동네",
     address: "주소",
     when: "언제",
+    sells: "파는 것",
     official: "공식 안내",
     datesShift: "확정 일정은 며칠 전에야 공지되기도 합니다. 가시기 전에 공식 안내를 확인하세요",
     pastEdition: (y) => `${y}년 회차 기록입니다 — 올해도 열리는지 공식 안내를 확인하세요`,
@@ -110,6 +120,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     district: "District",
     address: "Address",
     when: "When",
+    sells: "What's sold",
     official: "Official",
     datesShift: "the exact schedule is sometimes announced only days beforehand, check the official notice before you go",
     pastEdition: (y) => `Record of the ${y} edition — check the official notice to see if it runs this year`,
@@ -134,6 +145,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     district: "エリア",
     address: "住所",
     when: "時期",
+    sells: "扱う品",
     official: "公式案内",
     datesShift: "確定日程は開催の数日前に発表されることもあります。おでかけ前に公式案内をご確認ください",
     pastEdition: (y) => `${y}年開催分の記録です — 今年も開催されるかは公式案内をご確認ください`,
@@ -156,6 +168,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     district: "区域",
     address: "地址",
     when: "时间",
+    sells: "经营品类",
     official: "官方信息",
     datesShift: "确切日程有时在活动前几天才公布，出发前请查看官方公告",
     pastEdition: (y) => `这是${y}年那一届的记录 — 今年是否举办请查看官方公告`,
@@ -178,6 +191,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     district: "區域",
     address: "地址",
     when: "時間",
+    sells: "經營品項",
     official: "官方資訊",
     datesShift: "確切日程有時在活動前幾天才公布，出發前請查看官方公告",
     pastEdition: (y) => `這是${y}年那一屆的紀錄 — 今年是否舉辦請查看官方公告`,
@@ -200,6 +214,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     district: "Khu vực",
     address: "Địa chỉ",
     when: "Thời gian",
+    sells: "Mặt hàng",
     official: "Thông tin chính thức",
     datesShift: "lịch chính thức đôi khi chỉ được công bố vài ngày trước, hãy xem thông báo chính thức trước khi đi",
     pastEdition: (y) => `Ghi nhận của kỳ ${y} — hãy xem thông báo chính thức để biết năm nay có tổ chức không`,
@@ -224,6 +239,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     district: "Distrito",
     address: "Dirección",
     when: "Cuándo",
+    sells: "Qué se vende",
     official: "Información oficial",
     datesShift: "el calendario definitivo a veces se anuncia solo unos días antes; consulta el aviso oficial antes de ir",
     pastEdition: (y) => `Registro de la edición de ${y} — consulta el aviso oficial para saber si se celebra este año`,
@@ -248,6 +264,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     district: "Quartier",
     address: "Adresse",
     when: "Quand",
+    sells: "Ce qu'on y vend",
     official: "Infos officielles",
     datesShift: "le programme définitif n'est parfois annoncé que quelques jours avant ; consultez l'avis officiel avant de partir",
     pastEdition: (y) => `Trace de l’édition ${y} — consultez l’avis officiel pour savoir si elle a lieu cette année`,
@@ -272,6 +289,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     district: "Stadtteil",
     address: "Adresse",
     when: "Wann",
+    sells: "Angebot",
     official: "Offizielle Info",
     datesShift: "der genaue Zeitplan wird manchmal erst wenige Tage vorher bekannt gegeben; bitte vor dem Besuch die offizielle Ankündigung prüfen",
     pastEdition: (y) => `Aufzeichnung der Ausgabe ${y} — bitte die offizielle Ankündigung prüfen, ob sie dieses Jahr stattfindet`,
@@ -296,6 +314,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     district: "Район",
     address: "Адрес",
     when: "Когда",
+    sells: "Что продают",
     official: "Официально",
     datesShift: "точное расписание иногда объявляют лишь за несколько дней; перед поездкой смотрите официальное объявление",
     pastEdition: (y) => `Запись о выпуске ${y} года — смотрите официальное объявление, проводится ли он в этом году`,
@@ -320,6 +339,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     district: "Distrik",
     address: "Alamat",
     when: "Kapan",
+    sells: "Yang dijual",
     official: "Info resmi",
     datesShift: "jadwal pastinya kadang baru diumumkan beberapa hari sebelumnya; cek pengumuman resmi sebelum berangkat",
     pastEdition: (y) => `Catatan edisi ${y} — cek pengumuman resmi apakah tahun ini digelar`,
@@ -344,6 +364,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     district: "ย่าน",
     address: "ที่อยู่",
     when: "ช่วงเวลา",
+    sells: "สินค้าที่ขาย",
     official: "ข้อมูลทางการ",
     datesShift: "กำหนดการที่แน่นอนบางครั้งประกาศก่อนงานเพียงไม่กี่วัน โปรดตรวจสอบประกาศทางการก่อนเดินทาง",
     pastEdition: (y) => `บันทึกของครั้งปี ${y} — โปรดตรวจสอบประกาศทางการว่าปีนี้จัดหรือไม่`,
