@@ -12,6 +12,7 @@ import HomeSwitch from "./components/HomeSwitch";
 import ShareApp from "./components/ShareApp";
 import ArrivalGuide, { arrivalLabel } from "./components/ArrivalGuide";
 import RainyPanel from "./components/RainyPanel";
+import { useSeoulWeather } from "./lib/weather";
 
 function App() {
   const { toggleTheme, getIcon } = useTheme();
@@ -19,6 +20,10 @@ function App() {
   const [tab, setTab] = useState<"home" | "saved">("home");
   // ✈️ 도착 안내 (2026-09-12 사장님: "여기도 푸드에 있는 가이드가 필요할거같아").
   const [guideOpen, setGuideOpen] = useState(false);
+  // ☔ 비 오는 날 (2026-09-12). 단추는 **늘** 있고, 예보가 있으면 **깜박인다** —
+  //    사장님: "비는 어쩌다 오는데 두 번째 줄은 너무 과하고 / 예보 뜨면 깜박거리게"
+  const [rainyOpen, setRainyOpen] = useState(false);
+  const { weather } = useSeoulWeather();
   const savedCount = useSavedEntries().length;
 
   return (
@@ -54,6 +59,18 @@ function App() {
                 ⚠️ **라벨을 한 단어로 유지할 것.** 머리줄 한 줄에 이름·언어·이 단추·
                    테마가 같이 들어가는데, 길어지면 줄이 갈라져 이름만 위에 남는다
                    (Kfood 에서 실제로 그랬다). 「안내」라는 뜻은 ✈️ 가 이미 전한다. */}
+            {/* ☔ **늘 있다.** 날씨는 「있느냐」를 정하지 않고 「눈에 띄느냐」만 정한다.
+                예보가 있으면 `blink` 가 붙어 잠깐 깜박이고, 그 뒤에도 테두리가 남는다
+                (index.css — 계속 깜박이면 아무도 안 본다).
+                🚨 깜박임은 **눈에 보이는 것뿐**이다. 무엇인지는 aria-label 이 말해 준다 —
+                   색·움직임만으로 뜻을 전하면 화면을 읽어 주는 손님은 못 받는다. */}
+            <button
+              className={"icon-btn rainy-btn" + (weather?.rainToday ? " blink" : "")}
+              onClick={() => setRainyOpen(true)}
+              aria-label={`${t.rainyH1}${weather?.rainToday ? ` — ${weather.rainingNow ? t.rainyNow : t.rainyForecast}` : ""}`}
+            >
+              ☂️
+            </button>
             <button
               className="icon-btn arrival-btn"
               onClick={() => setGuideOpen(true)}
@@ -98,11 +115,7 @@ function App() {
           //    같은 방식을 쓴다.
           <>
             <div hidden={tab !== "home"}>
-              <HomeSwitch
-                season={<MonthlyFestivalPanel />}
-                district={<DistrictExplorer />}
-                rainy={<RainyPanel />}
-              />
+              <HomeSwitch season={<MonthlyFestivalPanel />} district={<DistrictExplorer />} />
             </div>
             <div hidden={tab !== "saved"}>
               <SavedPanel />
@@ -150,6 +163,7 @@ function App() {
       {/* ✈️ 전체화면. 열렸을 때만 그린다 — 12개 언어 × 9칸짜리 자료라
           안 열어 보는 손님에게까지 그려 둘 이유가 없다. */}
       {guideOpen && <ArrivalGuide onClose={() => setGuideOpen(false)} />}
+      {rainyOpen && <RainyPanel onClose={() => setRainyOpen(false)} />}
     </div>
   );
 }

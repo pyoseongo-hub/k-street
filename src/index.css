@@ -2838,40 +2838,14 @@ html[lang^="zh"] * {
 /* ☔ 비 오는 날 — 「계절 | 동네」 옆 세 번째 칸 (2026-09-12)
    설계 이유는 src/components/RainyPanel.tsx 머리말에. */
 
-/* 🚨 칸이 둘에서 **셋**이 되었다. 좁은 폰에서 글자가 잘리지 않게 두 가지를 둔다:
-   · min-width 로 **너무 좁아지면 둘째 줄로 내려가게** 한다
-     (사장님이 허락한 모양이다 — "둘째 줄에 넣든지")
-   · 글자는 한 줄로 유지하고 넘치면 … 로 — 반 잘린 글자가 제일 나쁘다 */
-.home-tabs { flex-wrap: wrap; }
-.home-tab {
-  flex: 1 1 auto;
-  min-width: 88px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+/* 📌 「계절 | 동네」는 **둘로 되돌렸다** — 비 오는 날은 머리줄 ☂️ 로 갔다
+   (사장님: "비는 어쩌다 오는데 두 번째 줄은 너무 과하고"). HomeSwitch.tsx 주석 참고. */
 
-/* ── 비 예보가 있을 때만 뜨는 한 줄 ── */
-.rain-hint {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  margin: 0 0 12px;
-  padding: 11px 13px;
-  border: 1px solid color-mix(in srgb, var(--rain) 40%, var(--border));
-  border-radius: 13px;
-  background: color-mix(in srgb, var(--rain) 12%, transparent);
-  color: var(--text);
-  text-align: left;
-  font: inherit;
-  cursor: pointer;
-}
-.rain-hint > span:first-child { flex: none; font-size: 1.2rem; }
-.rain-hint-tx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.rain-hint-tx strong { font-size: .92rem; color: var(--rain); }
-.rain-hint-tx span { font-size: .82rem; color: var(--text-muted); }
-.rain-hint-go { flex: none; color: var(--rain); }
+/* 📌 「계절|동네」 위에 띠 한 줄을 띄우던 CSS(.rain-hint)는 **뺐다** —
+   그 안이 퇴짜났다(사장님: "비는 어쩌다 오는데 두 번째 줄은 너무 과하고").
+   지금은 머리줄 ☂️ 가 깜박이는 쪽이다. 되살릴 일이 생기면 다시 쓰면 된다 —
+   번역이 걸린 것이 아니라 CSS 뿐이라 되돌리는 값이 싸다.
+   (반대로 12개 언어 문구는 지우지 않는다 — 지우면 그때 12개를 다시 번역해야 한다.) */
 
 /* ── 목록 ── */
 .rainy-panel { display: flex; flex-direction: column; gap: 4px; }
@@ -2937,3 +2911,77 @@ html[lang^="zh"] * {
 }
 .rp-row.open { border-color: color-mix(in srgb, var(--rain) 45%, var(--border)); }
 .rp-open { padding: 0 12px 12px; }
+
+/* ☂️ 예보가 있을 때 머리줄 단추가 깜박인다 (2026-09-12 사장님: "예보 뜨면 깜박거리게").
+   🚨 **영원히 깜박이지 않는다.** 계속 움직이는 것은 며칠이면 아무도 안 보고,
+      읽는 것을 방해한다. 여덟 번(약 12초) 깜박이고 나면 멈추되
+      **테두리와 점은 남긴다** — 놓친 손님도 나중에 알아볼 수 있게. */
+.rainy-btn.blink {
+  position: relative;
+  border-color: var(--rain);
+  animation: rain-blink 1.5s ease-in-out 8;
+}
+/* 깜박임이 끝난 뒤에도 남는 표시. 색만으로 말하지 않고 **점**을 같이 둔다 —
+   색을 구별하기 어려운 손님에게도 「뭔가 붙었다」가 보여야 한다. */
+.rainy-btn.blink::after {
+  content: "";
+  position: absolute;
+  top: -1px; right: -1px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--rain);
+  border: 1.5px solid var(--bg);
+}
+@keyframes rain-blink {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--rain) 60%, transparent); }
+  50%      { box-shadow: 0 0 0 6px color-mix(in srgb, var(--rain) 0%, transparent); }
+}
+/* ♿ 움직임을 줄여 달라고 설정한 손님에게는 **깜박이지 않는다.**
+   테두리와 점은 그대로 남으므로 알 수 있는 것은 똑같다. */
+@media (prefers-reduced-motion: reduce) {
+  .rainy-btn.blink { animation: none; }
+}
+
+/* 🔤 **언어 칸을 지킨다** — ☂️ 를 넣으면 머리줄 단추가 셋이 되어 언어 고르는 칸이
+   **정확히 40px** 줄어든다(재 봤다: 320px 에서 57 → 17px, 「한국어」가 사라졌다).
+   12개 언어 앱에서 언어 단추는 **한국어를 못 읽는 손님이 가장 먼저 찾는 것**이다.
+
+   🐞 **처음에 엉뚱한 데를 고쳤다.** 이름 아래 소개말(「서울의 길을 걷다」)을
+      접었는데 **폭이 한 뼘도 안 돌아왔다** — 그건 이름 *아래*라 세로만 줄었다.
+      재 보고서야 알았다(320px 에서 그대로 17px). **눈으로 짚지 말고 재야 한다.**
+
+   진짜 원인: `.app-wordmark` 가 `flex-shrink: 0` 이라 **줄어드는 손실을 언어 칸이
+   혼자 받는다.** 그래서 좁은 폭에서는 언어 칸을 **다른 단추와 같은 34px 그림**으로
+   바꾼다 — 글자를 안 쓰니 폭 싸움에서 빠진다.
+   ⚠️ 대표 이름(K-STREET)은 접지 않는다 — 그건 간판이다. */
+@media (max-width: 420px) {
+  /* 소개말도 같이 접는다. 폭은 안 벌지만 **머리줄이 얕아져** 첫 화면이 넓어진다. */
+  .app-tagline { display: none; }
+  .app-header-center { flex: 0 0 auto; }
+  .language-selector { position: relative; width: 34px; height: 34px; }
+  .lang-globe {
+    display: grid;
+    place-items: center;
+    width: 34px; height: 34px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--surface);
+    font-size: .95rem;
+  }
+  /* 🚨 select 를 **지우지 않고 투명하게 덮는다.** 누르면 늘 쓰던 그 목록이 뜨고,
+     aria-label·키보드·폼 동작이 그대로다. 그림으로 갈아 끼우면 그게 다 사라진다. */
+  .lang-select {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    opacity: 0;
+    padding: 0;
+    border: 0;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+/* 넓은 폭에서는 그림을 안 쓴다 — 언어 이름이 글자로 보이는 편이 낫다. */
+@media (min-width: 421px) {
+  .lang-globe { display: none; }
+}

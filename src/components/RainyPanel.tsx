@@ -1,27 +1,34 @@
-// 🌧️ **비 오는 날** — 「계절 | 동네」 옆 **세 번째 화면**.
+// 🌧️ **비 오는 날** — 머리줄 ☂️ 단추로 여는 전체화면.
 //
 // ─────────────────────────────────────────────────────────────────────────
-// 사장님이 내 제안을 두 번 고쳐 주셨고, 두 번 다 맞다
+// 자리를 세 번 옮겼다. 옮긴 이유를 다 남긴다 — 다음 사람이 되돌리지 않게
 // ─────────────────────────────────────────────────────────────────────────
-// ① 나는 「비 올 때만 보이게」를 권했다. 답:
+// ① 내 첫 안: **비 올 때만** 날씨 띠에 띄운다. → 뒤집혔다.
 //      *"좋은 생각이긴 한데 **날씨는 기상청도 못 맞춰.** 그러니 **항시 보이게**"*
-//    그러면 예보가 틀린 날 이 기능이 **아예 없는 앱**이 된다 — 손님은 그런 화면이
-//    있는 줄도 모른다. 게다가 「내일 비 온다는데」 하고 미리 찾는 손님을 놓친다.
-//    → **날씨는 「있느냐」를 정하지 않는다. 「얼마나 눈에 띄느냐」만 정한다.**
+//    예보가 틀린 날 이 기능이 **아예 없는 앱**이 된다. 손님은 그런 화면이 있는
+//    줄도 모르고, 「내일 비 온다는데」 하고 미리 찾는 손님도 놓친다.
+//    🔑 **날씨는 「있느냐」를 정하지 않는다. 「얼마나 눈에 띄느냐」만 정한다.**
 //
-// ② 그다음 나는 머리줄에 ☂️ 단추를 더하려 했다(✈️ 옆). 답은 화면을 찍어
-//    「계절 | 동네」 줄에 빨간 줄을 그어 주신 것이었다:
-//      *"자리는 충분해. **첫 번째 칸 넣고** 비 오면 안내문구 뜨든지, 둘째 줄에 넣든지"*
-//    이쪽이 낫다 —
-//      · 머리줄 단추가 넷이 되는 문제가 **아예 없어진다**(좁은 폰에서 줄이 갈라졌다)
-//      · 비 오는 날은 **계절·동네와 같은 급의 보는 방식**이다. 딸린 기능이 아니다
-//      · 그래서 이 파일은 **전체화면(portal)이 아니다.** 뒤로가기 문제도 안 생긴다
+// ② 그다음: 「계절 | 동네」 옆 **세 번째 칸**. → 이것도 뒤집혔다.
+//      *"이게 맞다. **비는 어쩌다 오는데** 두 번째 줄은 너무 과하고"*
+//    그 줄은 **늘 쓰는 두 가지**를 오가는 자리다. 한 달에 며칠 쓰는 것에
+//    자리의 3분의 1을 영구히 주면 평소에 **안 쓰는 칸이 계속 눈에 들어온다.**
+//
+// ③ 지금: **머리줄 ☂️**(✈️ 옆). 늘 있지만 **자리를 안 먹고**, 예보가 있으면
+//    그 단추가 **깜박인다**(App.tsx · .icon-btn.blink).
+//
+//    ⚠️ 이 자리의 대가는 내가 먼저 짚었고 **재서 확인했다** — ☂️ 하나가 언어
+//       고르는 칸에서 **정확히 40px**을 가져간다(320px에서 57→17px, 「한국어」가
+//       사라진다). 그래서 좁은 폭에서는 **이름 아래 소개말을 접어** 그 폭을
+//       돌려준다(index.css 의 .app-tagline). 대가를 알고 넘긴 것이 아니라 **막았다.**
 //
 // ⚠️ 문구는 **묶음 페이지와 같은 말**을 쓴다 — translations.ts 의 rainy… 칸은
 //    scripts/lib/page-strings.ts 의 HUB_STRINGS 에서 그대로 옮겨 온 것이다.
 //    갈리면 검색으로 들어온 손님과 앱을 쓰는 손님이 **다른 말**을 읽는다.
 
 import { useState } from "react";
+import { createPortal } from "react-dom";
+import { useOverlay } from "../lib/useOverlay";
 import { useLanguage } from "../lib/useLanguage";
 import { rainyPlaces, type RainyRow } from "../lib/rainyPlaces";
 import { CATEGORY_META } from "../data/seed";
@@ -67,22 +74,35 @@ function Row({ row, lang }: { row: RainyRow; lang: string }) {
   );
 }
 
-export default function RainyPanel() {
+export default function RainyPanel({ onClose }: { onClose: () => void }) {
+  // 🔙 폰 뒤로가기로 닫는다 — 주소 기록을 안 남기면 앱이 통째로 꺼진다(useOverlay 머리말).
+  useOverlay(onClose);
   const { language, t } = useLanguage();
   const { indoors, arcades, total, gus } = rainyPlaces();
 
-  return (
-    <div className="rainy-panel">
-      <p className="rp-lead">
+  return createPortal(
+    // ✈️ 도착 안내와 **같은 껍데기**를 쓴다(.arrival-back/.arrival-card) — 손님이
+    //    한 번 익힌 모양을 두 번 익히게 하지 않는다.
+    <div className="arrival-back" role="dialog" aria-modal="true" aria-label={t.rainyH1}>
+      <div className="arrival-card rainy-panel">
+        <div className="ag-head">
+          <h2 className="ag-title">
+            <span aria-hidden="true">☔</span> {t.rainyH1}
+          </h2>
+          <button className="ag-close" onClick={onClose} aria-label="✕">
+            ✕
+          </button>
+        </div>
+        <p className="rp-lead">
         <strong>{t.rainyCta(total)}</strong>
         <span>
           {t.rainySub}
           {" · "}
           {language === "ko" ? `${gus}개 구` : `${gus} districts`}
         </span>
-      </p>
+        </p>
 
-      {indoors.length > 0 && (
+        {indoors.length > 0 && (
         <section className="rp-grp">
           <h3 className="rp-grp-h">
             <span aria-hidden="true">🏢</span> {t.rainyIndoorGroup}
@@ -94,9 +114,9 @@ export default function RainyPanel() {
             ))}
           </ul>
         </section>
-      )}
+        )}
 
-      {arcades.length > 0 && (
+        {arcades.length > 0 && (
         <section className="rp-grp">
           <h3 className="rp-grp-h">
             <span aria-hidden="true">🏮</span> {t.rainyArcadeGroup}
@@ -112,11 +132,13 @@ export default function RainyPanel() {
             ))}
           </ul>
         </section>
-      )}
+        )}
 
-      {/* 📭 **빈 칸을 빈 칸이라 말한다.** 지하상가 25곳은 아직 못 넣었다 —
+        {/* 📭 **빈 칸을 빈 칸이라 말한다.** 지하상가 25곳은 아직 못 넣었다 —
           안 적으면 손님은 「없구나」가 아니라 「서울엔 그런 게 없구나」로 읽는다. */}
-      <p className="rp-missing">{t.rainyMissing}</p>
-    </div>
+        <p className="rp-missing">{t.rainyMissing}</p>
+      </div>
+    </div>,
+    document.body,
   );
 }
