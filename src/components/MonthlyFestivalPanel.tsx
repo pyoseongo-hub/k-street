@@ -14,6 +14,7 @@ import { openPlaceInfo, naverSearchUrl } from "../lib/mapLinks";
 import { placeName, translateText, hasTranslation } from "../lib/placeText";
 import { FESTIVAL_THEMES, THEME_ICON, themeOf, type FestivalTheme } from "../data/festivalThemes";
 import { pastEditionYear } from "../lib/pastEdition";
+import { guFestivalDate, guOfficialLink, formatRange } from "../lib/guFestival";
 
 // 「봄 여름 가을 겨울 그리고 서울」 — 지도와 상관없이 **계절 · 달 · 테마**로
 // 축제를 고르는 화면이다(사용자 지시 2026-09-01: "이건 지도와상관없이 서울의

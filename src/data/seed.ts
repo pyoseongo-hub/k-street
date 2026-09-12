@@ -9,6 +9,7 @@
 import { isInLaunchScope } from "../config/launchScope";
 import { sidoOf } from "./districts";
 import { getCoords } from "../lib/coords";
+import { guFestivalDate } from "../lib/guFestival";
 import { TOUR_PLACES, findTourPlace, nameKey } from "./tourPlaces";
 import { getManualPhoto } from "../lib/manualPhotos";
 import { galleryShotsFor } from "../lib/photoGallery";
@@ -437,6 +438,35 @@ function withFetchedCoords(p: Place): Place {
   return c ? { ...p, lat: c.lat, lng: c.lng } : p;
 }
 
+/**
+ * 🏛️ **구청이 올린 올해 회차로 자리를 고친다** (2026-09-12).
+ *
+ * 🚨 이게 왜 필요했나 — 「서울라이트 한강 빛섬축제」는 **한강 6개 섬을 해마다
+ *    순회**한다(난지·여의·선유도·서래·노들·뚝섬). 2025년은 뚝섬(광진구),
+ *    **2026년은 노들섬(용산구)**. 우리 자료는 관광공사에서 받은 **작년 회차**라
+ *    광진구 강변북로로 적혀 있었다 — 손님을 **한강 건너편**으로 보낼 뻔했다.
+ *    사장님이 공식 사이트에서 직접 확인해 줬다: 「2026.10.2~10.11 · 노들섬」.
+ *
+ * 📌 **손으로 안 고친다.** 손으로 고치면 내년에 또 틀리고, 그때는 아무도 모른다.
+ *    매일 아침 받아 오는 자료가 따라가게 둔다.
+ *
+ * ⚠️ 날짜만 고치고 자리를 그냥 두면 **「올해 날짜 · 작년 장소」**가 된다 —
+ *    아무것도 안 적은 것보다 나쁘다. 그래서 **구·주소·좌표를 한 세트로** 바꾼다.
+ *    (달 정보 startMonth·period 는 화면이 확정 날짜를 직접 쓰므로 건드리지 않는다.)
+ */
+function withGuFestival(p: Place): Place {
+  if (p.category !== "festival") return p;
+  const d = guFestivalDate(p.id);
+  if (!d) return p;
+  return {
+    ...p,
+    gu: d.gu || p.gu,
+    // 장소 이름이 「노들섬」처럼 짧아도 그게 주최 측이 적은 자리다. 예전 지번보다 낫다.
+    addr: d.place ?? p.addr,
+    ...(d.lat != null && d.lng != null ? { lat: d.lat, lng: d.lng } : {}),
+  };
+}
+
 // ── 관광공사 자료와 합치기 (2026-09-01, 사용자 지시 "합치자") ──────────────
 //
 // 위 185곳은 사람이 25개 구를 직접 조사한 것이고, TOUR_PLACES는 관광공사에서 받은 269곳이다.
@@ -539,6 +569,9 @@ export const ALL_PLACES: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .filter((p) => !p.hidden)
   .filter((p) => isInLaunchScope(sidoOf(p.gu)))
   .map(withFetchedCoords)
+  // 🏛️ 구청이 올린 올해 회차가 **좌표까지 이긴다** — 위 주석 참고.
+  //    withFetchedCoords 뒤에 둔다: 저쪽은 빈 칸만 채우고, 이쪽은 덮어쓴다.
+  .map(withGuFestival)
   .map(withManualPhoto)
   .map(withGalleryPhoto)
   .filter(hasPhoto);
@@ -619,6 +652,9 @@ export const ALL_FESTIVALS: Place[] = (() => {
   //    가려진 목록은 `npm run festival-todo`로 본다.
   .filter((p) => p.startMonth == null || p.monthSource)
   .map(withFetchedCoords)
+  // 🏛️ 구청이 올린 올해 회차가 **좌표까지 이긴다** — 위 주석 참고.
+  //    withFetchedCoords 뒤에 둔다: 저쪽은 빈 칸만 채우고, 이쪽은 덮어쓴다.
+  .map(withGuFestival)
   .map(withManualPhoto)
   .map(withGalleryPhoto);
 

@@ -113,6 +113,19 @@ export interface Translations {
    */
   festivalCheckDates: string;
   /**
+   * 🏛️ 구청이 확정 일정을 올린 축제에만 붙는 두 줄 (2026-09-12).
+   *
+   * 사장님 지시: "항상 공식 페이지 링크 주고 직접 확인 가능하게"
+   * 우리가 「10월 2일~11일」이라고 단정해 놓고 근거를 안 보여 주면, 우리가 틀렸을 때
+   * 손님이 확인할 길이 없다. **확정 날짜와 공식 링크는 늘 한 세트로 나간다.**
+   *
+   * org 에는 「서울시청」·「구로구청」처럼 **한국어 기관 이름**이 그대로 들어온다.
+   * 번역하지 않는다 — 역 이름(안국역 3호선)과 같은 이유로, 손님이 현지에서
+   * 그대로 보여 주고 물어볼 수 있어야 한다.
+   */
+  festivalOfficialNotice: string;
+  festivalConfirmedBy: (org: string) => string;
+  /**
    * 🖼️ **사진이 없는 축제 카드**에 붙는 한 줄 설명 (사용자 지시 2026-09-04:
    * "이미지가 사용권한이 없어서 홈페이지 링크로 연결합니다 라든가").
    *
@@ -308,6 +321,8 @@ const translations: Record<Language, Translations> = {
     festivalMonthVaries: (m) => `해마다 ${m} 중 한 달에 열립니다 — 올해 날짜는 이름을 눌러 확인하세요.`,
     festivalBloomVaries: '꽃이 피는 때에 따라 날짜가 바뀝니다 — 이름을 눌러 올해 일정을 확인하세요.',
     festivalCheckDates: '날짜 확인',
+    festivalOfficialNotice: '공식 안내',
+    festivalConfirmedBy: (org) => `${org}이(가) 올린 확정 일정입니다`,
     festivalNoPhoto: '사진은 사용 권한이 없어 싣지 못했습니다. 이름을 누르면 공식 안내로 갑니다.',
     showToDriver: '목적지 보여주기',
     shareLabel: '공유',
@@ -417,6 +432,8 @@ const translations: Record<Language, Translations> = {
     festivalMonthVaries: (m) => `Held in one of ${m}, and which one changes each year — tap the name for this year's dates.`,
     festivalBloomVaries: 'Dates shift with the bloom each year — tap the name for this year\'s schedule.',
     festivalCheckDates: 'Check dates',
+    festivalOfficialNotice: 'Official notice',
+    festivalConfirmedBy: (org) => `Dates confirmed by ${org}`,
     festivalNoPhoto: 'No photo — we don’t have the image rights. Tap the name for the official page.',
     showToDriver: 'Show destination',
     shareLabel: 'Share',
@@ -526,6 +543,8 @@ const translations: Record<Language, Translations> = {
     festivalMonthVaries: (m) => `毎年 ${m} のいずれか1か月に開催されます。今年の日程は名前をタップしてご確認ください。`,
     festivalBloomVaries: '開花時期によって日程が変わります。名前をタップして今年の日程をご確認ください。',
     festivalCheckDates: '日程を確認',
+    festivalOfficialNotice: '公式案内',
+    festivalConfirmedBy: (org) => `${org}が登録した確定日程です`,
     festivalNoPhoto: '写真は使用許諾がないため掲載していません。名前をタップすると公式案内に移動します。',
     showToDriver: '目的地を表示',
     shareLabel: '共有',
@@ -635,6 +654,8 @@ const translations: Record<Language, Translations> = {
     festivalMonthVaries: (m) => `每年在 ${m} 中的某一个月举办，具体月份逐年不同 — 点击名称查看今年日期。`,
     festivalBloomVaries: '日期随开花时间每年变动 — 点击名称查看今年日程。',
     festivalCheckDates: '查看日期',
+    festivalOfficialNotice: '官方公告',
+    festivalConfirmedBy: (org) => `由${org}发布的确定日程`,
     festivalNoPhoto: '因图片使用权未获授权，暂不提供照片。点击名称可前往官方介绍页。',
     showToDriver: '出示目的地',
     shareLabel: '分享',
@@ -744,6 +765,8 @@ const translations: Record<Language, Translations> = {
     festivalMonthVaries: (m) => `每年在 ${m} 其中一個月舉辦，實際月份逐年不同 — 點擊名稱查看今年日期。`,
     festivalBloomVaries: '日期隨開花時間逐年變動 — 點擊名稱查看今年日程。',
     festivalCheckDates: '查看日期',
+    festivalOfficialNotice: '官方公告',
+    festivalConfirmedBy: (org) => `由${org}發布的確定日程`,
     festivalNoPhoto: '因圖片使用權未取得授權，暫不提供照片。點擊名稱可前往官方介紹頁。',
     showToDriver: '出示目的地',
     shareLabel: '分享',
@@ -853,6 +876,8 @@ const translations: Record<Language, Translations> = {
     festivalMonthVaries: (m) => `Được tổ chức vào một trong các tháng ${m}, thay đổi theo từng năm — nhấn vào tên để xem ngày năm nay.`,
     festivalBloomVaries: 'Ngày tổ chức thay đổi theo mùa hoa nở — nhấn vào tên để xem lịch năm nay.',
     festivalCheckDates: 'Xem ngày',
+    festivalOfficialNotice: 'Thông báo chính thức',
+    festivalConfirmedBy: (org) => `Lịch đã được ${org} xác nhận`,
     festivalNoPhoto: 'Không có ảnh vì chưa có bản quyền sử dụng. Nhấn vào tên để mở trang chính thức.',
     showToDriver: 'Hiện điểm đến',
     shareLabel: 'Chia sẻ',
@@ -962,6 +987,8 @@ const translations: Record<Language, Translations> = {
     festivalMonthVaries: (m) => `Se celebra en uno de estos meses (${m}) y cambia cada año: toca el nombre para ver las fechas de este año.`,
     festivalBloomVaries: 'Las fechas cambian con la floración cada año: toca el nombre para ver el calendario de este año.',
     festivalCheckDates: 'Ver fechas',
+    festivalOfficialNotice: 'Aviso oficial',
+    festivalConfirmedBy: (org) => `Fechas confirmadas por ${org}`,
     festivalNoPhoto: 'Sin foto: no tenemos los derechos de imagen. Toca el nombre para ver la página oficial.',
     showToDriver: 'Ver destino',
     shareLabel: 'Compartir',
@@ -1071,6 +1098,8 @@ const translations: Record<Language, Translations> = {
     festivalMonthVaries: (m) => `A lieu l'un de ces mois (${m}), et cela change chaque année — appuyez sur le nom pour les dates de cette année.`,
     festivalBloomVaries: 'Les dates changent avec la floraison chaque année — appuyez sur le nom pour le calendrier de cette année.',
     festivalCheckDates: 'Voir les dates',
+    festivalOfficialNotice: 'Avis officiel',
+    festivalConfirmedBy: (org) => `Dates confirmées par ${org}`,
     festivalNoPhoto: 'Pas de photo : nous n’avons pas les droits d’image. Appuyez sur le nom pour la page officielle.',
     showToDriver: 'Voir destination',
     shareLabel: 'Partager',
@@ -1180,6 +1209,8 @@ const translations: Record<Language, Translations> = {
     festivalMonthVaries: (m) => `Findet in einem dieser Monate statt (${m}) und wechselt jedes Jahr – tippen Sie auf den Namen für die diesjährigen Termine.`,
     festivalBloomVaries: 'Die Termine richten sich nach der Blüte und ändern sich jedes Jahr – tippen Sie auf den Namen für den diesjährigen Termin.',
     festivalCheckDates: 'Termine prüfen',
+    festivalOfficialNotice: 'Offizielle Ankündigung',
+    festivalConfirmedBy: (org) => `Termine bestätigt von ${org}`,
     festivalNoPhoto: 'Kein Foto – die Bildrechte liegen uns nicht vor. Tippen Sie auf den Namen für die offizielle Seite.',
     showToDriver: 'Ziel zeigen',
     shareLabel: 'Teilen',
@@ -1289,6 +1320,8 @@ const translations: Record<Language, Translations> = {
     festivalMonthVaries: (m) => `Проводится в один из этих месяцев (${m}), и каждый год месяц разный — нажмите на название, чтобы узнать даты этого года.`,
     festivalBloomVaries: 'Даты меняются каждый год вместе с цветением — нажмите на название, чтобы узнать расписание этого года.',
     festivalCheckDates: 'Уточнить даты',
+    festivalOfficialNotice: 'Официальное объявление',
+    festivalConfirmedBy: (org) => `Даты подтверждены: ${org}`,
     festivalNoPhoto: 'Фото нет — у нас нет прав на изображение. Нажмите на название, чтобы открыть официальную страницу.',
     showToDriver: 'Показать адрес',
     shareLabel: 'Поделиться',
@@ -1398,6 +1431,8 @@ const translations: Record<Language, Translations> = {
     festivalMonthVaries: (m) => `Diadakan pada salah satu bulan ${m}, dan bulannya berubah tiap tahun — ketuk nama untuk melihat tanggal tahun ini.`,
     festivalBloomVaries: 'Tanggalnya berubah mengikuti masa mekar tiap tahun — ketuk nama untuk melihat jadwal tahun ini.',
     festivalCheckDates: 'Cek tanggal',
+    festivalOfficialNotice: 'Pengumuman resmi',
+    festivalConfirmedBy: (org) => `Tanggal dikonfirmasi oleh ${org}`,
     festivalNoPhoto: 'Tidak ada foto karena hak gambar belum diperoleh. Ketuk nama untuk membuka halaman resmi.',
     showToDriver: 'Tunjukkan tujuan',
     shareLabel: 'Bagikan',
@@ -1507,6 +1542,8 @@ const translations: Record<Language, Translations> = {
     festivalMonthVaries: (m) => `จัดขึ้นในเดือนใดเดือนหนึ่งของ ${m} ซึ่งเปลี่ยนไปในแต่ละปี — แตะที่ชื่อเพื่อดูวันที่ของปีนี้`,
     festivalBloomVaries: 'วันจัดงานเปลี่ยนไปตามช่วงดอกไม้บานในแต่ละปี — แตะที่ชื่อเพื่อดูกำหนดการปีนี้',
     festivalCheckDates: 'ดูวันที่',
+    festivalOfficialNotice: 'ประกาศทางการ',
+    festivalConfirmedBy: (org) => `กำหนดการยืนยันโดย ${org}`,
     festivalNoPhoto: 'ไม่มีรูปภาพเนื่องจากยังไม่ได้รับสิทธิ์ใช้ภาพ แตะที่ชื่อเพื่อไปยังหน้าทางการ',
     showToDriver: 'แสดงจุดหมาย',
     shareLabel: 'แชร์',

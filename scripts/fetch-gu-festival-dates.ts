@@ -116,6 +116,21 @@ interface Row {
   RGSTDATE?: string;
   USE_FEE?: string;
   PRO_TIME?: string;
+  /** 경도·위도. 문자열로 온다 */
+  LOT?: string;
+  LAT?: string;
+}
+
+/**
+ * 🗺️ 서울 안인가. 이상한 좌표는 **안 쓴다** — 지어내는 것보다 비워 두는 게 낫다.
+ *    서울은 대략 위도 37.4~37.7 · 경도 126.7~127.2 안에 있다.
+ */
+function coord(lat?: string, lng?: string): { lat: number; lng: number } | undefined {
+  const la = Number(lat);
+  const ln = Number(lng);
+  if (!Number.isFinite(la) || !Number.isFinite(ln)) return undefined;
+  if (la < 37.3 || la > 37.75 || ln < 126.6 || ln > 127.25) return undefined;
+  return { lat: la, lng: ln };
 }
 
 /** 「2026-10-17 00:00:00.0」 → 「2026-10-17」. 못 읽으면 undefined — 지어내지 않는다. */
@@ -223,7 +238,26 @@ interface Hit {
   start: string;
   end?: string;
   title: string;
+  /**
+   * 🗺️ **그해 열리는 구.** 우리 자료와 다를 수 있고, 다르면 **이쪽이 맞다** —
+   *    주최자가 올린 것이기 때문이다.
+   *
+   *    2026-09-12에 이걸로 실제 사고를 하나 잡았다. 서울라이트 한강 빛섬축제는
+   *    **한강 6개 섬을 해마다 순회**한다(난지·여의·선유도·서래·노들·뚝섬).
+   *    2025년은 뚝섬(광진구), **2026년은 노들섬(용산구)**. 우리 자료는 관광공사에서
+   *    받은 **작년 회차**라 광진구로 적혀 있었다 — 손님을 한강 건너편으로 보낼 뻔했다.
+   *    사장님이 공식 사이트에서 직접 확인해 줬다: 「10.2~10.11 · 노들섬」.
+   *
+   *    🚨 그래서 **손으로 고치지 않는다.** 손으로 고치면 내년에 또 틀리고,
+   *       그때는 아무도 모른다. 해마다 받아서 따라가게 둔다.
+   */
   gu: string;
+  /** 「노들섬」처럼 주최 측이 적은 장소 이름 */
+  place?: string;
+  lat?: number;
+  lng?: number;
+  /** 「18:30~22:30」 */
+  time?: string;
   org?: string;
   orgLink?: string;
   page?: string;
@@ -282,6 +316,11 @@ for (const f of festivals) {
       ...(ymd(exact.END_DATE) && ymd(exact.END_DATE) !== start ? { end: ymd(exact.END_DATE)! } : {}),
       title: (exact.TITLE ?? "").normalize("NFC"),
       gu: exact.GUNAME!,
+      // 🗺️ **장소도 같이 받는다.** 날짜만 받고 장소를 작년 것으로 두면
+      //    「올해 날짜 · 작년 장소」라는 반쪽짜리가 화면에 뜬다 — 그게 제일 나쁘다.
+      ...(exact.PLACE?.trim() ? { place: exact.PLACE.trim().normalize("NFC") } : {}),
+      ...(coord(exact.LAT, exact.LOT) ?? {}),
+      ...(exact.PRO_TIME?.trim() ? { time: exact.PRO_TIME.trim() } : {}),
       ...(exact.ORG_NAME ? { org: exact.ORG_NAME } : {}),
       ...(exact.ORG_LINK ? { orgLink: exact.ORG_LINK } : {}),
       ...(exact.HMPG_ADDR ? { page: exact.HMPG_ADDR } : {}),
