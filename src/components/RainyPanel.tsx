@@ -32,6 +32,7 @@ import { useOverlay } from "../lib/useOverlay";
 import { useLanguage } from "../lib/useLanguage";
 import { rainyPlaces, rainyByLine, type RainyRow } from "../lib/rainyPlaces";
 import { CATEGORY_META } from "../data/seed";
+import { placeName } from "../lib/placeText";
 import { lineLabel, stationLabel, stationShort } from "../lib/stationName";
 import MapDirections from "./MapDirections";
 import { isArcade, isIndoor } from "../lib/indoor";
@@ -45,7 +46,7 @@ import { isArcade, isIndoor } from "../lib/indoor";
  *    「어디로 갈까」를 정한 다음에 길찾기를 누른다. 그 순서대로 만든다.
  */
 function Row({ row }: { row: RainyRow }) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [open, setOpen] = useState(false);
   const meta = CATEGORY_META[row.place.category];
   const label = t.categoryLabels[row.place.category] ?? "";
@@ -61,10 +62,19 @@ function Row({ row }: { row: RainyRow }) {
           {meta?.icon ?? "📍"}
         </span>
         <span className="rp-tx">
+          {/* 🐞 **이름을 번역해서 보여 준다.** 여기만 한국어 원문을 그대로 쓰고 있었다 —
+              다른 화면은 전부 `placeName()` 을 거친다(동네·계절·저장한 곳).
+              인스타용 스샷을 영어로 찍어 보고서야 찾았다: 영어 화면에
+              「백범김구기념관」이 그대로 떠 있었다. **12개 언어 전부 그랬다.**
+              ⚠️ 한국어 원문은 **작게 아래에 같이 둔다** — 손님이 택시 기사나
+                 안내판에 보여 줘야 한다(placeText.ts 주석과 같은 이유). */}
           <span className="rp-nm">
-            {row.place.name}
+            {placeName(row.place.name, language).main}
             {arcadeOnly && <span className="rp-badge">🏮 {t.rainyArcadeGroup}</span>}
           </span>
+          {placeName(row.place.name, language).sub && (
+            <span className="rp-ko" lang="ko">{row.place.name}</span>
+          )}
           <span className="rp-mt">{[label, row.place.gu].filter(Boolean).join(" · ")}</span>
         </span>
         {/* 🚨 거리는 **늘 적는다.** 잣대가 하는 일은 목록을 짧게 유지하는 것이지
@@ -152,9 +162,11 @@ export default function RainyPanel({ onClose }: { onClose: () => void }) {
               <section className="rp-stn" key={st.name}>
                 <h3 className="rp-stn-h">
                   <span aria-hidden="true">🚇</span>
-                  <span className="rp-stn-nm">
-                    {stationLabel(`${st.name}역 ${cur.line}`, language)}
-                  </span>
+                  {/* 🐞 노선 이름을 뺐다. 칩에 이미 「4호선」이 있어 **같은 말이 두 번**
+                      나왔고, 이름 있는 노선(경의중앙선)은 번역이 없어 영어 화면에
+                      **「Sinchon Station 경의중앙선 (신촌역)」**처럼 한국어가 섞여 들어갔다.
+                      역 이름만 두면 짧고 섞이지 않는다. */}
+                  <span className="rp-stn-nm">{stationLabel(`${st.name}역`, language)}</span>
                   <span className="rp-cnt">{st.rows.length}</span>
                 </h3>
                 <ul className="rp-list">

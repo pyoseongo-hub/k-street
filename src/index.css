@@ -3063,3 +3063,5 @@ html[lang^="zh"] * {
   vertical-align: middle;
   white-space: nowrap;
 }
+/* 한국어 원문 — 번역된 이름 아래 작게. 손님이 기사·안내판에 보여 줄 수 있어야 한다. */
+.rp-ko { font-size: .78rem; color: var(--text-muted); }
