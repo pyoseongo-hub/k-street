@@ -30,19 +30,19 @@
    "id": "produk ternak",
    "th": "ผลิตภัณฑ์ปศุสัตว์"
   },
-  "수산물": {
-   "나온횟수": 14,
-   "en": "Seafood",
-   "ja": "水産物",
-   "zh": "海鲜",
-   "zh-TW": "海鮮",
-   "vi": "Hải sản",
-   "es": "Mariscos",
-   "fr": "Fruit de mer",
-   "de": "Meeresfrüchte",
-   "ru": "Морепродукты",
-   "id": "Hidangan laut",
-   "th": "อาหารทะเล"
+  "잡화": {
+   "나온횟수": 15,
+   "en": "Household goods",
+   "ja": "生活雑貨",
+   "zh": "家用物品",
+   "zh-TW": "家用物品",
+   "vi": "Đồ gia dụng",
+   "es": "Artículos del hogar",
+   "fr": "Articles ménagers",
+   "de": "Haushaltswaren",
+   "ru": "Товары для дома",
+   "id": "Barang-barang rumah tangga",
+   "th": "ของใช้ในครัวเรือน"
   },
   "과일": {
    "나온횟수": 13,
@@ -57,6 +57,20 @@
    "ru": "фрукты",
    "id": "buah",
    "th": "ผลไม้"
+  },
+  "수산물": {
+   "나온횟수": 14,
+   "en": "Seafood",
+   "ja": "水産物",
+   "zh": "海鲜",
+   "zh-TW": "海鮮",
+   "vi": "Hải sản",
+   "es": "Mariscos",
+   "fr": "Fruit de mer",
+   "de": "Meeresfrüchte",
+   "ru": "Морепродукты",
+   "id": "Hidangan laut",
+   "th": "อาหารทะเล"
   },
   "농산물": {
    "나온횟수": 11,
@@ -366,20 +380,6 @@
    "id": "daging",
    "th": "เนื้อ"
   },
-  "패션잡화": {
-   "나온횟수": 2,
-   "en": "fashion accessories",
-   "ja": "ファッション雑貨",
-   "zh": "时尚配饰",
-   "zh-TW": "時尚配件",
-   "vi": "phụ kiện thời trang",
-   "es": "accesorios de moda",
-   "fr": "accessoires de mode",
-   "de": "Modeaccessoires",
-   "ru": "модные аксессуары",
-   "id": "aksesoris fesyen",
-   "th": "เครื่องประดับแฟชั่น"
-  },
   "가공품": {
    "나온횟수": 1,
    "en": "processed goods",
@@ -464,6 +464,62 @@
    "id": "Aneka Daging Panggang",
    "th": "เนื้อย่างรวมนานาชนิด"
   },
+  "구제": {
+   "나온횟수": 1,
+   "en": "second-hand clothing",
+   "ja": "中古服",
+   "zh": "二手服装",
+   "zh-TW": "二手服裝",
+   "vi": "quần áo cũ",
+   "es": "ropa de segunda mano",
+   "fr": "vêtements d'occasion",
+   "de": "Secondhand-Kleidung",
+   "ru": "подержанная одежда",
+   "id": "pakaian bekas",
+   "th": "เสื้อผ้ามือสอง"
+  },
+  "나무": {
+   "나온횟수": 1,
+   "en": "Tree planted in a pot",
+   "ja": "鉢植えの木",
+   "zh": "盆栽树",
+   "zh-TW": "盆栽樹",
+   "vi": "Cây được trồng trong chậu",
+   "es": "Árbol plantado en una maceta",
+   "fr": "Arbre planté dans un pot",
+   "de": "Baum in einen Topf gepflanzt",
+   "ru": "Дерево, посаженное в горшок.",
+   "id": "Pohon yang ditanam di dalam pot",
+   "th": "ต้นไม้ที่ปลูกในกระถาง"
+  },
+  "농·수·축산물": {
+   "나온횟수": 1,
+   "en": "agricultural, fishery, and livestock products",
+   "ja": "農・水・畜産物",
+   "zh": "农产品、渔业产品和畜牧产品",
+   "zh-TW": "農產品、漁業產品及畜牧產品",
+   "vi": "sản phẩm nông nghiệp, thủy sản và chăn nuôi",
+   "es": "productos agrícolas, pesqueros y ganaderos",
+   "fr": "produits agricoles, de la pêche et de l'élevage",
+   "de": "landwirtschaftliche, Fischerei- und Viehprodukte",
+   "ru": "сельскохозяйственная, рыбная и животноводческая продукция",
+   "id": "produk pertanian, perikanan, dan peternakan",
+   "th": "ผลิตภัณฑ์ทางการเกษตร การประมง และปศุสัตว์"
+  },
+  "농·수산물": {
+   "나온횟수": 1,
+   "en": "agricultural and fishery products",
+   "ja": "農・水産物",
+   "zh": "农产品和渔业产品",
+   "zh-TW": "農產品和漁業產品",
+   "vi": "sản phẩm nông nghiệp và thủy sản",
+   "es": "productos agrícolas y pesqueros",
+   "fr": "produits agricoles et de la pêche",
+   "de": "landwirtschaftliche und Fischereiprodukte",
+   "ru": "сельскохозяйственная и рыбная продукция",
+   "id": "produk pertanian dan perikanan",
+   "th": "ผลิตภัณฑ์ทางการเกษตรและการประมง"
+  },
   "농산물 등 도매유통시장": {
    "나온횟수": 1,
    "en": "Wholesale distribution market for agricultural products, etc.",
@@ -491,6 +547,20 @@
    "ru": "закуски",
    "id": "camilan",
    "th": "ขนมขบเคี้ยว"
+  },
+  "분화": {
+   "나온횟수": 1,
+   "en": "Flowers planted in a pot",
+   "ja": "鉢植えの花",
+   "zh": "花盆里种着花",
+   "zh-TW": "花盆裡種著花",
+   "vi": "Hoa được trồng trong chậu",
+   "es": "Flores plantadas en una maceta",
+   "fr": "Fleurs plantées dans un pot",
+   "de": "Blumen in einem Topf",
+   "ru": "Цветы, посаженные в горшок",
+   "id": "Bunga yang ditanam di dalam pot",
+   "th": "ดอกไม้ที่ปลูกในกระถาง"
   },
   "비단원단": {
    "나온횟수": 1,
@@ -534,6 +604,20 @@
    "id": "Iga sapi",
    "th": "ซี่โครงเนื้อวัว"
   },
+  "시계": {
+   "나온횟수": 1,
+   "en": "wristwatch",
+   "ja": "腕時計",
+   "zh": "手表",
+   "zh-TW": "手錶",
+   "vi": "đồng hồ đeo tay",
+   "es": "reloj de pulsera",
+   "fr": "montre-bracelet",
+   "de": "Armbanduhr",
+   "ru": "наручные часы",
+   "id": "jam tangan",
+   "th": "นาฬิกาข้อมือ"
+  },
   "식료품": {
    "나온횟수": 1,
    "en": "foodstuffs",
@@ -561,6 +645,20 @@
    "ru": "обувь",
    "id": "sepatu",
    "th": "รองเท้า"
+  },
+  "신변잡화": {
+   "나온횟수": 1,
+   "en": "Household goods",
+   "ja": "生活雑貨",
+   "zh": "家用物品",
+   "zh-TW": "家用物品",
+   "vi": "Đồ gia dụng",
+   "es": "Artículos del hogar",
+   "fr": "Articles ménagers",
+   "de": "Haushaltswaren",
+   "ru": "Товары для дома",
+   "id": "Barang-barang rumah tangga",
+   "th": "ของใช้ในครัวเรือน"
   },
   "야채": {
    "나온횟수": 1,
@@ -590,19 +688,19 @@
    "id": "Lidah sapi",
    "th": "ลิ้นวัว"
   },
-  "원단": {
+  "원단·의류부자재": {
    "나온횟수": 1,
-   "en": "fabric",
-   "ja": "生地",
-   "zh": "织物",
-   "zh-TW": "織物",
-   "vi": "vải vóc",
-   "es": "tela",
-   "fr": "tissu",
-   "de": "Stoff",
-   "ru": "ткань",
-   "id": "kain",
-   "th": "ผ้า"
+   "en": "Fabrics and Garment Accessories",
+   "ja": "生地・衣類副資材",
+   "zh": "面料和服装辅料",
+   "zh-TW": "布料和服裝輔料",
+   "vi": "Vải và phụ kiện may mặc",
+   "es": "Telas y accesorios para prendas de vestir",
+   "fr": "Tissus et accessoires pour vêtements",
+   "de": "Stoffe und Bekleidungsaccessoires",
+   "ru": "Ткани и швейная фурнитура",
+   "id": "Kain dan Aksesoris Pakaian",
+   "th": "ผ้าและอุปกรณ์ประกอบเครื่องแต่งกาย"
   },
   "음식": {
    "나온횟수": 1,
@@ -618,19 +716,19 @@
    "id": "makanan",
    "th": "อาหาร"
   },
-  "의류부자재": {
+  "의류·패션잡화": {
    "나온횟수": 1,
-   "en": "Clothing accessories",
-   "ja": "衣料部品",
-   "zh": "服装配饰",
-   "zh-TW": "服飾配件",
-   "vi": "Phụ kiện quần áo",
-   "es": "Accesorios de ropa",
-   "fr": "Accessoires vestimentaires",
-   "de": "Bekleidungsaccessoires",
-   "ru": "аксессуары для одежды",
-   "id": "Aksesoris pakaian",
-   "th": "เครื่องประดับเสื้อผ้า"
+   "en": "Clothing and fashion accessories",
+   "ja": "衣類・ファッション雑貨",
+   "zh": "服装和时尚配饰",
+   "zh-TW": "服裝和時尚配件",
+   "vi": "Quần áo và phụ kiện thời trang",
+   "es": "Ropa y accesorios de moda",
+   "fr": "Vêtements et accessoires de mode",
+   "de": "Bekleidung und Modeaccessoires",
+   "ru": "Одежда и модные аксессуары",
+   "id": "Pakaian dan aksesoris fesyen",
+   "th": "เสื้อผ้าและเครื่องประดับแฟชั่น"
   },
   "인삼": {
    "나온횟수": 1,
@@ -645,6 +743,20 @@
    "ru": "женьшень",
    "id": "ginseng",
    "th": "โสม"
+  },
+  "인쇄": {
+   "나온횟수": 1,
+   "en": "prints",
+   "ja": "印刷物",
+   "zh": "印刷",
+   "zh-TW": "印刷",
+   "vi": "bản in",
+   "es": "huellas dactilares",
+   "fr": "impressions",
+   "de": "Drucke",
+   "ru": "отпечатки",
+   "id": "cetakan",
+   "th": "ภาพพิมพ์"
   },
   "잡곡류": {
    "나온횟수": 1,
@@ -674,6 +786,34 @@
    "id": "produk elektronik",
    "th": "ผลิตภัณฑ์อิเล็กทรอนิกส์"
   },
+  "전통품": {
+   "나온횟수": 1,
+   "en": "traditional crafts",
+   "ja": "伝統工芸品",
+   "zh": "传统工艺",
+   "zh-TW": "傳統工藝",
+   "vi": "nghề thủ công truyền thống",
+   "es": "artesanías tradicionales",
+   "fr": "artisanat traditionnel",
+   "de": "traditionelles Handwerk",
+   "ru": "традиционные ремесла",
+   "id": "kerajinan tradisional",
+   "th": "งานหัตถกรรมแบบดั้งเดิม"
+  },
+  "종합": {
+   "나온횟수": 1,
+   "en": "diversity",
+   "ja": "いろいろ",
+   "zh": "多样性",
+   "zh-TW": "多樣性",
+   "vi": "đa dạng",
+   "es": "diversidad",
+   "fr": "diversité",
+   "de": "Diversität",
+   "ru": "разнообразие",
+   "id": "keberagaman",
+   "th": "ความหลากหลาย"
+  },
   "주방": {
    "나온횟수": 1,
    "en": "kitchen",
@@ -702,6 +842,20 @@
    "id": "dompet",
    "th": "กระเป๋าสตางค์"
   },
+  "지류": {
+   "나온횟수": 1,
+   "en": "Paper products",
+   "ja": "紙製品",
+   "zh": "纸制品",
+   "zh-TW": "紙製品",
+   "vi": "Sản phẩm giấy",
+   "es": "productos de papel",
+   "fr": "Produits en papier",
+   "de": "Papierprodukte",
+   "ru": "Бумажная продукция",
+   "id": "Produk kertas",
+   "th": "ผลิตภัณฑ์กระดาษ"
+  },
   "직물": {
    "나온횟수": 1,
    "en": "textile",
@@ -716,6 +870,20 @@
    "id": "tekstil",
    "th": "สิ่งทอ"
   },
+  "청과": {
+   "나온횟수": 1,
+   "en": "Fruits and vegetables",
+   "ja": "果物と野菜",
+   "zh": "水果和蔬菜",
+   "zh-TW": "水果和蔬菜",
+   "vi": "Trái cây và rau quả",
+   "es": "Frutas y verduras",
+   "fr": "Fruits et légumes",
+   "de": "Obst und Gemüse",
+   "ru": "Фрукты и овощи",
+   "id": "Buah-buahan dan sayuran",
+   "th": "ผลไม้และผัก"
+  },
   "청과물": {
    "나온횟수": 1,
    "en": "greengrocery",
@@ -729,6 +897,20 @@
    "ru": "овощные продукты",
    "id": "toko sayur",
    "th": "ร้านขายผักผลไม้"
+  },
+  "초화": {
+   "나온횟수": 1,
+   "en": "Flowering plants",
+   "ja": "花草",
+   "zh": "开花植物",
+   "zh-TW": "開花植物",
+   "vi": "Cây có hoa",
+   "es": "plantas con flores",
+   "fr": "plantes à fleurs",
+   "de": "Blühende Pflanzen",
+   "ru": "Цветущие растения",
+   "id": "Tanaman berbunga",
+   "th": "พืชดอก"
   },
   "침구": {
    "나온횟수": 1,
@@ -757,6 +939,20 @@
    "ru": "занавес",
    "id": "tirai",
    "th": "ม่าน"
+  },
+  "패션잡화": {
+   "나온횟수": 2,
+   "en": "fashion accessories",
+   "ja": "ファッション雑貨",
+   "zh": "时尚配饰",
+   "zh-TW": "時尚配件",
+   "vi": "phụ kiện thời trang",
+   "es": "accesorios de moda",
+   "fr": "accessoires de mode",
+   "de": "Modeaccessoires",
+   "ru": "модные аксессуары",
+   "id": "aksesoris fesyen",
+   "th": "เครื่องประดับแฟชั่น"
   },
   "혼수용품 및 홈인테리어": {
    "나온횟수": 1,
