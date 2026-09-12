@@ -458,12 +458,22 @@ function withGuFestival(p: Place): Place {
   if (p.category !== "festival") return p;
   const d = guFestivalDate(p.id);
   if (!d) return p;
+  // 🚨 **구가 옮겨졌는데 예전 주소·좌표가 남으면 그게 제일 나쁘다.**
+  //    처음 만들 때 딱 이 사고가 났다 — 곳 페이지에 이렇게 찍혔다:
+  //      동네: 용산구   주소: 서울특별시 **광진구** 강변북로 2273 (자양동)
+  //    한 카드가 서로 다른 말을 한다. 게다가 좌표가 남아 있으면 **길찾기 단추가
+  //    작년 자리(뚝섬)로 보낸다** — 손님이 한강을 건너간다.
+  //    그래서 구가 바뀌었는데 새 값이 없으면 **비운다.** 빈 칸이 틀린 값보다 낫다.
+  const moved = !!d.gu && d.gu !== p.gu;
+  const addr = d.place ?? (moved ? undefined : p.addr);
+  const hasNewCoord = d.lat != null && d.lng != null;
   return {
     ...p,
     gu: d.gu || p.gu,
     // 장소 이름이 「노들섬」처럼 짧아도 그게 주최 측이 적은 자리다. 예전 지번보다 낫다.
-    addr: d.place ?? p.addr,
-    ...(d.lat != null && d.lng != null ? { lat: d.lat, lng: d.lng } : {}),
+    addr,
+    lat: hasNewCoord ? d.lat : moved ? undefined : p.lat,
+    lng: hasNewCoord ? d.lng : moved ? undefined : p.lng,
   };
 }
 

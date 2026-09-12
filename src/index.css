@@ -737,6 +737,47 @@ button {
   color: var(--text-muted);
 }
 
+/* ── 🏛️ 구청이 올린 **확정 일정** (2026-09-12) ───────────────────────────
+   보통 날짜 칸(.fc-date)은 흐린 회색이다 — 「어느 철에 열리나」까지만 아는
+   값이라 일부러 조용하게 뒀다. 확정 일정은 **아는 것의 무게가 다르다.**
+   주최 측이 직접 올린 그해 날짜라, 눈에 띄어야 한다.
+   ⚠️ 그래도 **강조는 여기 하나만** — 카드에 강조가 둘이면 둘 다 안 보인다. */
+.fc-date--sure {
+  color: var(--text);
+  font-weight: 600;
+  background: color-mix(in srgb, var(--festival) 16%, transparent);
+  border-radius: 100px;
+  padding: 2px 9px;
+  white-space: nowrap;
+}
+
+/* 확정 일정이 있으면 「날짜 확인」이 **공식 안내**로 바뀐다. 점선 밑줄을 실선으로
+   올려서 「여기가 근거다」를 표시한다 — 네이버 검색으로 가던 때와 무게가 다르다. */
+.fc-date-check--sure {
+  color: var(--accent);
+  border-bottom-style: solid;
+  border-bottom-color: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+/* 🏛️ 「서울시청이(가) 올린 확정 일정입니다 · 📍 노들섬 · 18:30~22:30」
+   근거를 밝히는 줄이다. 작게 두되 **줄을 자르지 않는다** — 장소가 잘리면
+   이 줄이 있는 이유(한강 축제는 해마다 섬이 바뀐다)가 사라진다. */
+.fc-sure {
+  font-size: 12.5px;
+  line-height: 1.5;
+  margin-top: 5px;
+  padding: 6px 9px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--festival) 10%, transparent);
+  color: var(--text);
+  word-break: keep-all;
+}
+
+.fc-sure-at {
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
 .fc-name {
   font-family: var(--font-display);
   font-weight: 600;

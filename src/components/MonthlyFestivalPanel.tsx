@@ -236,6 +236,10 @@ export default function MonthlyFestivalPanel() {
             // .fc-nophoto). 계절은 위 표지에서 이미 크게 보여 주고 있으므로
             // 카드에서는 작은 아이콘 하나로 충분하다.
             const compact = !photoUrl;
+            // 🏛️ **구청이 올린 올해 확정 일정.** 있으면 이 카드의 날짜 칸이 통째로 바뀐다.
+            //    없으면(대부분) 지금까지와 똑같이 달만 보여 준다 — 지어내지 않는다.
+            const sure = guFestivalDate(f.id);
+            const sureLink = sure ? guOfficialLink(sure) : undefined;
             return (
               <div className={"festival-card" + (compact ? " fc-compact" : "")} key={f.id}>
                 {/* 🤍 저장 단추는 사진 위에 얹는다. 사진이 없는 작은 카드에서는
@@ -269,15 +273,30 @@ export default function MonthlyFestivalPanel() {
                         멈춰 있는 곳이 많은데 네이버 축제정보 카드는 올해 날짜가 같은
                         자리에 뜨므로, 날짜만 그쪽으로 보낸다. 이름을 누르는 쪽은
                         공식 창구 그대로다 — 손님이 알고 싶은 것이 서로 다르다. */}
+                    {/* 🏛️ 구청이 올린 확정 일정이 있으면 **거기로 보낸다** (2026-09-12).
+                        사장님 지시: "항상 공식 페이지 링크 주고 직접 확인 가능하게".
+                        네이버 검색보다 한 걸음 앞이다 — 주최 측 홈페이지, 없으면
+                        구청이 직접 등록한 문화포털 안내(guOfficialLink). */}
                     <a
-                      className="fc-date-check"
-                      href={naverSearchUrl(f.name)}
+                      className={"fc-date-check" + (sureLink ? " fc-date-check--sure" : "")}
+                      href={sureLink ?? naverSearchUrl(f.name)}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {t.festivalCheckDates} ↗
+                      {sureLink ? t.festivalOfficialNotice : t.festivalCheckDates} ↗
                     </a>
                     {(() => {
+                      // 🏛️ **확정 일정이 있으면 달 대신 그 날짜를 쓴다.**
+                      //    「10월」이 아니라 「10월 2일 – 11일」. 구청이 직접 올린 값이다.
+                      //    Intl 이 12개 언어를 다 알아서 번역 문자열이 필요 없다 —
+                      //    사람이 적어 둘 것이 없으니 **틀릴 자리도 없다.**
+                      if (sure) {
+                        return (
+                          <span className="fc-date fc-date--sure">
+                            {formatRange(sure, language)}
+                          </span>
+                        );
+                      }
                       // 🗓️ 달이 해마다 옮겨 다니는 축제는 **걸린 달을 다 적는다**
                       //    ("9월·10월"). 첫 달만 적으면 10월에 열리는 해에 9월이라고
                       //    말하는 셈이다(seed.ts monthVaries 주석 참고).
@@ -304,7 +323,12 @@ export default function MonthlyFestivalPanel() {
                         말로 읽힌다. 우리가 아는 것은 「2025년에 열렸다」까지다.
                         지우지 않는 이유 — 그것도 아는 사실이고, 해마다 열리는 행사면
                         올해도 열릴 수 있다. 다만 **모르는 것을 아는 척하지 않는다.** */}
-                    {pastEditionYear(f.name) && (
+                    {/* 🏛️ 다만 **올해 확정 일정이 들어온 축제에는 안 붙인다**(2026-09-12).
+                        「10월 2일 – 11일」 옆에 「2025년 회차 기록」이 같이 뜨면 서로
+                        다른 말을 하는 카드가 된다. 구청이 올린 올해 날짜가 더 앞선 사실이다.
+                        ⚠️ 그런 축제의 **이름에 옛 연도가 남아 있으면** 그건 따로 고친다
+                        (src/data/display-names.json). 지금 셋은 해당 없다. */}
+                    {!sure && pastEditionYear(f.name) && (
                       <span className="fc-past" title={t.pastEditionNote(pastEditionYear(f.name)!)}>
                         {t.pastEditionBadge(pastEditionYear(f.name)!)}
                       </span>
@@ -339,7 +363,9 @@ export default function MonthlyFestivalPanel() {
                       것을 여기서 말해 준다. 이 줄이 없으면 9월에 온 손님이 그해 10월
                       축제를 보러 헛걸음한다(사용자 지시 2026-09-02: "9 10 다 뜨게 하고
                       안내문구"). 올해 날짜는 이름을 눌러 공식 안내에서 본다. */}
-                  {f.monthVaries && (
+                  {/* 🏛️ 올해 날짜를 아는 축제에는 안 띄운다 — 「10월 2일 – 11일」 아래에
+                      「9월일 수도 10월일 수도 있습니다」가 붙으면 손님만 헷갈린다. */}
+                  {!sure && f.monthVaries && (
                     <div className="fc-varies">⚠️ {t.festivalMonthVaries(monthsLabel(f, t))}</div>
                   )}
                   {/* 🌸 꽃 축제는 **날짜가 꽃 따라 움직인다.** 벚꽃은 그 해 날씨에
@@ -349,8 +375,23 @@ export default function MonthlyFestivalPanel() {
                       표기하고 안내문구").
                       이름으로 가른다 — 이 축제들은 이름에 꽃 이름이 그대로 들어 있어
                       따로 표시를 달 필요가 없다. */}
-                  {BLOOM_RE.test(f.name) && (
+                  {!sure && BLOOM_RE.test(f.name) && (
                     <div className="fc-varies">🌸 {t.festivalBloomVaries}</div>
+                  )}
+                  {/* 🏛️ **누가 올린 날짜인지 밝힌다** (사장님 지시 2026-09-12:
+                      "항상 공식 페이지 링크 주고 직접 확인 가능하게").
+                      우리가 「10월 2일 – 11일」이라고 단정해 놓고 근거를 안 보여 주면,
+                      우리가 틀렸을 때 손님이 확인할 길이 없다.
+                      · 기관 이름(서울시청·구로구청)은 **한국어 그대로** 둔다 —
+                        역 이름과 같은 이유로, 현지에서 그대로 보여 주고 물어볼 수 있어야 한다.
+                      · 장소도 여기 적는다. 「노들섬」처럼 주최 측이 적은 자리다 —
+                        한강 축제는 해마다 섬이 바뀌어서, 이 한 줄이 헛걸음을 막는다. */}
+                  {sure && (
+                    <div className="fc-sure">
+                      🏛️ {t.festivalConfirmedBy(sure.org ?? sure.gu)}
+                      {sure.place && <span className="fc-sure-at" lang="ko"> · 📍 {sure.place}</span>}
+                      {sure.time && <span className="fc-sure-at"> · {sure.time}</span>}
+                    </div>
                   )}
                   {f.note && <div className="fc-note">{translateText(f.note, language)}</div>}
                   {/* 🖼️ **사진이 없는 이유를 화면에 적는다** (사용자 지시 2026-09-04:
