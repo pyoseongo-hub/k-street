@@ -1,0 +1,85 @@
+name: Fetch place intro (곳의 속사정 받기)
+
+# 🏪 곳마다 **판매품목 · 영업시간 · 휴무 · 요금**을 관광공사에서 받아 온다.
+#    왜 이게 필요한지는 scripts/fetch-place-intro.mjs 머리말에.
+#
+# ⚠️ **apply 를 끈 채 먼저 돌린다.** 몇 곳이 차는지 숫자를 보고 켠다.
+# 🚨 「점포 별로 상이함」처럼 **손님에게 아무것도 안 알려 주는 값은 버린다.**
+#    빈 칸이 소음보다 낫다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "갈래 하나만 받을까 (market · museum · street … 비우면 전부)"
+        required: false
+        default: "market"
+      limit:
+        description: "몇 곳까지만 (0 이면 전부)"
+        required: false
+        default: "0"
+      apply:
+        description: "받은 것을 파일로 저장하고 커밋할까 (끄면 맛보기만)"
+        type: boolean
+        default: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: 열쇠가 있나 먼저 본다
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          if [ -z "$TOUR_API_KEY" ]; then
+            echo "❌ TOUR_API_KEY 시크릿이 없다"; exit 1
+          fi
+          echo "✅ 열쇠 있음 (${#TOUR_API_KEY}자)"
+
+      - name: 물어볼 곳 목록을 뽑는다
+        run: |
+          npx vite build --ssr scripts/dump-intro-targets.ts --outDir dist-ssr
+          node dist-ssr/dump-intro-targets.js
+
+      - name: 받아 오기
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+          ONLY: ${{ inputs.only }}
+          LIMIT: ${{ inputs.limit }}
+        run: |
+          set -o pipefail
+          node scripts/fetch-place-intro.mjs ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee intro-log.txt
+
+      - name: 저장된 것이 있으면 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          # 🐞 파일이 없는데 git add 하면 워크플로가 통째로 빨개진다 — 받기는 성공했는데도.
+          if [ ! -f src/data/place-intro.json ]; then
+            echo "저장된 파일이 없다 — 커밋할 것도 없다"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/place-intro.json
+          git diff --cached --quiet && { echo "바뀐 게 없다"; exit 0; }
+          git commit -m "곳의 속사정을 받았다 (fetch-place-intro) [skip render]"
+          git push
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🏪 곳의 속사정"
+            echo ""
+            echo '```'
+            tail -c 60000 intro-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
