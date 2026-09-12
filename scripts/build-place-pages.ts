@@ -42,7 +42,7 @@ import { eatNearbyUrl } from "../src/lib/partnerLinks";
 import { pastEditionYear } from "../src/lib/pastEdition";
 // 🌧️ 「비 오는 날」 테마의 잣대 — 실내인가, 역에서 얼마나 먼가.
 //    왜 이 둘인지는 src/lib/indoor.ts 머리말에 적어 뒀다(글 6개를 읽고 나온 것이다).
-import { isIndoor, RAIN_WALK_MAX_M, RAIN_WALK_NEAR_M } from "../src/lib/indoor";
+import { isIndoor, isArcade, isRainOk, RAIN_WALK_MAX_M } from "../src/lib/indoor";
 // 🧳 짐 보관 안내 (2026-09-10). 글은 luggage-strings, 링크는 luggage-links 에 있다 —
 //    링크는 **전부 러너에서 두드려 본 것만** 들어 있다.
 import { LUGGAGE_STRINGS } from "./lib/luggage-strings";
@@ -873,6 +873,12 @@ type HubGroup = {
    *    다른 묶음(구별·달별)에서는 줄만 길어지므로 끈다.
    */
   station?: boolean;
+  /**
+   * 📝 무리 제목 **바로 밑**에 붙는 한 줄. 「지붕 있는 시장」이 쓴다 —
+   *    「중앙 통로만 덮여 있다」는 사실은 **그 목록 옆에 있어야** 뜻이 있다.
+   *    페이지 맨 위에 적으면 손님이 목록을 보는 순간 이미 지나쳐 있다.
+   */
+  note?: string;
 };
 
 function hubPage(o: {
@@ -955,7 +961,9 @@ function hubPage(o: {
     .filter((g) => g.items.length)
     .map(
       (g) =>
-        `<h2>${esc(g.heading)}</h2><ul>${g.items.map((p) => hubItem(p, g.showGu ?? true, lang, g.station ?? false)).join("")}</ul>`
+        `<h2>${esc(g.heading)}</h2>` +
+        (g.note ? `<p class="note">${esc(g.note)}</p>` : "") +
+        `<ul>${g.items.map((p) => hubItem(p, g.showGu ?? true, lang, g.station ?? false)).join("")}</ul>`
     )
     .join("\n");
 
@@ -1235,11 +1243,14 @@ for (const [cat, meta] of Object.entries(CATEGORY_HUB)) {
   const picked = ALL.map((p) => ({ p, s: nearestStation(p.id, p) }))
     .filter(
       (x): x is { p: Place; s: { station: string; dist: number } } =>
-        isIndoor(x.p) && !!x.s?.station && x.s.dist != null && x.s.dist <= RAIN_WALK_MAX_M,
+        isRainOk(x.p) && !!x.s?.station && x.s.dist != null && x.s.dist <= RAIN_WALK_MAX_M,
     )
     .sort((a, b) => a.s.dist - b.s.dist);
-  const near = picked.filter((x) => x.s.dist <= RAIN_WALK_NEAR_M).map((x) => x.p);
-  const far = picked.filter((x) => x.s.dist > RAIN_WALK_NEAR_M).map((x) => x.p);
+  // 🏢 건물 안 / 🏪 지붕 있는 시장 — **갈라서 보여 준다.**
+  //    같은 목록에 섞으면 「중앙 통로만 덮였다」는 안내문구를 어디에 붙일 데가 없고,
+  //    손님은 박물관과 시장을 같은 정도로 마른 곳이라 읽는다. 그건 사실이 아니다.
+  const indoors = picked.filter((x) => isIndoor(x.p)).map((x) => x.p);
+  const arcades = picked.filter((x) => isArcade(x.p) && !isIndoor(x.p)).map((x) => x.p);
   const gus = new Set(picked.map((x) => x.p.gu)).size;
   hubs.push({
     path: hubPathRainy,
@@ -1253,8 +1264,12 @@ for (const [cat, meta] of Object.entries(CATEGORY_HUB)) {
       lead: S.rainyLead(picked.length, gus),
       desc: clip(S.rainyDesc(picked.length)),
       groups: [
-        ...(near.length ? [{ heading: S.rainyNear, items: near, station: true }] : []),
-        ...(far.length ? [{ heading: S.rainyFar, items: far, station: true }] : []),
+        ...(indoors.length ? [{ heading: S.rainyIndoorGroup, items: indoors, station: true }] : []),
+        // 🚨 안내문구는 **목록과 한 세트**다. 사장님이 목록을 주시면서 함께 짚어
+        //    주신 사실이라, 하나만 넣으면 나머지 반이 거짓말이 된다.
+        ...(arcades.length
+          ? [{ heading: S.rainyArcadeGroup, items: arcades, station: true, note: S.rainyArcadeNote }]
+          : []),
       ],
       // 🕳️ 아직 없는 것을 **페이지 안에서** 밝힌다.
       extraHtml: `<p class="note">${esc(S.rainyMissing)}</p>`,

@@ -657,20 +657,23 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyH1: "Seoul on a rainy day",
     rainyTitle: (n) => `Seoul on a Rainy Day — ${n} indoor places near a station | K-Street`,
     rainyLead: (n, gus) =>
-      `${en(n, "indoor place")} in ${en(gus, "district")} of Seoul, each within 600 m of a subway station. ` +
-      `Distances are straight-line, so the walk is a little longer.`,
+      `${en(n, "place")} in ${en(gus, "district")} of Seoul — either fully indoors, or a market with a covered main aisle. ` +
+      `Every one is within 600 m of a subway station. Distances are straight-line, so the walk is a little longer.`,
     rainyDesc: (n) =>
       `${en(n, "indoor place")} in Seoul for a rainy day — sorted by how close they are to a station. Free, no sign-up, 12 languages.`,
     rainyNear: "Within 300 m of a station — about a 3-minute walk",
     rainyFar: "300–600 m from a station — about 5 minutes",
     rainyMissing:
-      "Covered markets and underground shopping arcades are not here yet. We are still checking which markets have a roof — we do not list what we have not checked.",
+      "Underground shopping arcades are not here yet. Seoul Facilities Corporation runs 25 of them; we will add each once verified — we do not list what we have not checked.",
     rainyFaq: [
       { q: "What is there to do in Seoul when it rains?", a: "This page lists indoor places that are within 600 m of a subway station, so you barely get wet on the way. Each entry names the nearest station and the distance to it." },
       { q: "How were these places chosen?", a: "A place appears here only if both are true: it is indoors, and it is within 600 m of a subway station. On a rainy day the walk to the door matters as much as the roof over it." },
       { q: "How is the distance measured?", a: "Straight-line distance on the map, so the actual walk is a little longer. Within 300 m is about a 3-minute walk with an umbrella." },
       { q: "Why are opening hours and admission fees missing?", a: "Because we have not verified them. A wrong opening time sends you to a locked door, and a blank is better than that. Every place links to its official page, where the current hours are." },
     ],
+    rainyIndoorGroup: "Fully indoors — you stay dry",
+    rainyArcadeGroup: "Markets with a covered main aisle",
+    rainyArcadeNote: "The roof covers the main aisle, not the whole market. Side lanes may be open to the sky, so bring an umbrella anyway.",
     byDistrictChips: "By district",
   },
 
@@ -726,20 +729,23 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyH1: "雨の日のソウル",
     rainyTitle: (n) => `雨の日のソウル — 駅に近い屋内スポット${n}件 | K-Street`,
     rainyLead: (n, gus) =>
-      `ソウル${gus}区の屋内スポット${n}件です。いずれも地下鉄駅から600m以内にあります。` +
-      `距離は直線距離なので、実際に歩く道のりは少し長くなります。`,
+      `ソウル${gus}区の${n}件です — 建物の中か、中央通路に屋根がある市場です。` +
+      `いずれも地下鉄駅から600m以内。距離は直線距離なので、実際に歩く道のりは少し長くなります。`,
     rainyDesc: (n) =>
       `雨の日のソウルで行ける屋内スポット${n}件 — 駅から近い順。無料・登録不要・12言語。`,
     rainyNear: "駅から300m以内 — 傘をさして3分ほど",
     rainyFar: "駅から300〜600m — 5分ほど",
     rainyMissing:
-      "屋根のある市場と地下商店街はまだ載せていません。どの市場に屋根があるか確認中です — 確認できていないものは載せません。",
+      "地下商店街はまだありません。ソウル施設公団が25か所を運営しています。一つずつ確認できしだい載せます — 確認できていないものは載せません。",
     rainyFaq: [
       { q: "雨の日のソウルでは何ができますか？", a: "このページには、地下鉄駅から600m以内にある屋内スポットだけを載せています。道中でほとんど濡れません。それぞれ最寄り駅と駅からの距離を書いてあります。" },
       { q: "どうやって選んでいますか？", a: "二つとも満たす場所だけを載せます — 屋内であること、そして地下鉄駅から600m以内であること。雨の日は屋根の有無と同じくらい、そこまでの道のりが大事だからです。" },
       { q: "距離はどう測っていますか？", a: "地図上の直線距離です。実際に歩く道のりは少し長くなります。300m以内なら傘をさして3分ほどです。" },
       { q: "営業時間と入場料が書かれていないのはなぜですか？", a: "確認できていないからです。間違った営業時間は閉まった扉の前に立たせます。それより空欄のほうがましです。各スポットに公式案内へのリンクがあります。" },
     ],
+    rainyIndoorGroup: "建物の中 — 雨に当たりません",
+    rainyArcadeGroup: "屋根のある市場 — 中央通路",
+    rainyArcadeNote: "屋根があるのは中央通路で、市場全体ではありません。脇の路地は空が開いていることがあるので、傘はお持ちください。",
     byDistrictChips: "エリア別",
   },
 
@@ -795,20 +801,23 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyH1: "下雨天的首尔",
     rainyTitle: (n) => `下雨天的首尔 — 地铁站附近的${n}处室内去处 | K-Street`,
     rainyLead: (n, gus) =>
-      `首尔${gus}个区的${n}处室内去处，都在地铁站600米以内。` +
-      `距离为直线距离，实际步行会稍远一些。`,
+      `首尔${gus}个区的${n}处 — 或在建筑内，或是中央通道有顶棚的市场。` +
+      `都在地铁站600米以内。距离为直线距离，实际步行会稍远一些。`,
     rainyDesc: (n) =>
       `下雨天在首尔可去的${n}处室内去处 — 按距地铁站远近排列。免费、免注册、12种语言。`,
     rainyNear: "距车站300米以内 — 撑伞约3分钟",
     rainyFar: "距车站300~600米 — 约5分钟",
     rainyMissing:
-      "有顶棚的市场和地下商街尚未收录。我们仍在核实哪些市场有顶棚 — 没有核实过的不收录。",
+      "地下商街尚未收录。首尔设施公团运营着25处，我们会逐一核实后加入 — 没有核实过的不收录。",
     rainyFaq: [
       { q: "下雨天在首尔可以做什么？", a: "本页只收录距地铁站600米以内的室内去处，路上几乎不会淋湿。每一处都标注了最近的车站和距离。" },
       { q: "这些地方是怎么挑选的？", a: "只有同时满足两点才会出现在这里：在室内，且距地铁站600米以内。下雨天，走到门口的那段路和头顶的屋顶一样重要。" },
       { q: "距离是怎么算的？", a: "地图上的直线距离，实际步行会稍远一些。300米以内大约是撑伞走3分钟。" },
       { q: "为什么没有营业时间和门票？", a: "因为我们没有核实过。错误的营业时间会让你站在锁着的门前，留空比那样更好。每一处都附有官方页面链接，那里有最新的时间。" },
     ],
+    rainyIndoorGroup: "在建筑内 — 完全淋不到雨",
+    rainyArcadeGroup: "有顶棚的市场 — 中央通道",
+    rainyArcadeNote: "有顶棚的是中央通道，不是整个市场。旁边的小巷可能是露天的，还是带把伞吧。",
     byDistrictChips: "按区域",
   },
 
@@ -864,20 +873,23 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyH1: "下雨天的首爾",
     rainyTitle: (n) => `下雨天的首爾 — 地鐵站附近的${n}處室內去處 | K-Street`,
     rainyLead: (n, gus) =>
-      `首爾${gus}個區的${n}處室內去處，都在地鐵站600公尺以內。` +
-      `距離為直線距離，實際步行會稍遠一些。`,
+      `首爾${gus}個區的${n}處 — 或在建築內，或是中央通道有頂棚的市場。` +
+      `都在地鐵站600公尺以內。距離為直線距離，實際步行會稍遠一些。`,
     rainyDesc: (n) =>
       `下雨天在首爾可去的${n}處室內去處 — 依距地鐵站遠近排列。免費、免註冊、12種語言。`,
     rainyNear: "距車站300公尺以內 — 撐傘約3分鐘",
     rainyFar: "距車站300~600公尺 — 約5分鐘",
     rainyMissing:
-      "有頂棚的市場與地下商街尚未收錄。我們仍在確認哪些市場有頂棚 — 沒有確認過的不收錄。",
+      "地下商街尚未收錄。首爾設施公團經營著25處，我們會逐一確認後加入 — 沒有確認過的不收錄。",
     rainyFaq: [
       { q: "下雨天在首爾可以做什麼？", a: "本頁只收錄距地鐵站600公尺以內的室內去處，路上幾乎不會淋濕。每一處都標註了最近的車站與距離。" },
       { q: "這些地方是怎麼挑選的？", a: "只有同時滿足兩點才會出現在這裡：在室內，且距地鐵站600公尺以內。下雨天，走到門口的那段路和頭頂的屋頂一樣重要。" },
       { q: "距離是怎麼算的？", a: "地圖上的直線距離，實際步行會稍遠一些。300公尺以內大約是撐傘走3分鐘。" },
       { q: "為什麼沒有營業時間和門票？", a: "因為我們沒有確認過。錯誤的營業時間會讓你站在鎖著的門前，留空比那樣更好。每一處都附有官方頁面連結，那裡有最新的時間。" },
     ],
+    rainyIndoorGroup: "在建築內 — 完全淋不到雨",
+    rainyArcadeGroup: "有頂棚的市場 — 中央通道",
+    rainyArcadeNote: "有頂棚的是中央通道，不是整個市場。旁邊的小巷可能是露天的，還是帶把傘吧。",
     byDistrictChips: "按區域",
   },
 
@@ -935,20 +947,23 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyH1: "비 와도 괜찮은 서울",
     rainyTitle: (n) => `비 오는 날 서울 — 역에서 가까운 실내 ${n}곳 | K-Street`,
     rainyLead: (n, gus) =>
-      `서울 ${gus}개 구의 실내 ${n}곳입니다. 모두 지하철역에서 600m 안에 있습니다. ` +
-      `거리는 직선거리라 실제로 걷는 길은 조금 더 깁니다.`,
+      `서울 ${gus}개 구의 ${n}곳입니다 — 건물 안이거나, 중앙 통로에 지붕이 있는 시장입니다. ` +
+      `모두 지하철역에서 600m 안입니다. 거리는 직선거리라 실제로 걷는 길은 조금 더 깁니다.`,
     rainyDesc: (n) =>
       `비 오는 날 서울에서 갈 만한 실내 ${n}곳 — 역에서 가까운 순. 무료, 가입 없음, 12개 언어.`,
     rainyNear: "역에서 300m 안 — 우산 쓰고 3분쯤",
     rainyFar: "역에서 300~600m — 5분쯤",
     rainyMissing:
-      "지붕 있는 시장과 지하상가는 아직 없습니다. 어느 시장에 지붕이 있는지 확인되는 대로 넣겠습니다 — 확인 못 한 것은 넣지 않습니다.",
+      "지하상가는 아직 없습니다. 서울시설공단이 25곳을 운영하는데, 한 곳씩 확인되는 대로 넣겠습니다 — 확인 못 한 것은 넣지 않습니다.",
     rainyFaq: [
       { q: "비 오는 날 서울에서 뭘 하면 좋을까요?", a: "이 페이지에는 지하철역에서 600m 안에 있는 실내만 모아 뒀습니다. 가는 길에 거의 안 젖습니다. 곳마다 가장 가까운 역과 거리를 적어 뒀습니다." },
       { q: "어떻게 고른 곳인가요?", a: "두 가지를 다 만족해야 넣습니다 — 실내일 것, 그리고 지하철역에서 600m 안일 것. 비 오는 날에는 지붕이 있느냐만큼 거기까지 가는 길이 안 젖느냐가 중요하기 때문입니다." },
       { q: "거리는 어떻게 쟀나요?", a: "지도 위 직선거리입니다. 실제로 걷는 길은 조금 더 깁니다. 300m 안이면 우산 쓰고 3분쯤입니다." },
       { q: "영업시간과 입장료는 왜 없나요?", a: "확인하지 못한 값이라 안 적습니다. 틀린 영업시간을 보고 갔다가 닫힌 문 앞에 서는 것보다 빈 칸이 낫습니다. 곳마다 공식 안내 링크가 있으니 거기서 확인하세요." },
     ],
+    rainyIndoorGroup: "건물 안 — 비를 아예 안 맞습니다",
+    rainyArcadeGroup: "지붕 있는 시장 — 중앙 통로",
+    rainyArcadeNote: "지붕이 있는 곳은 중앙 통로고, 시장 전체가 아닙니다. 안쪽 골목은 하늘이 열려 있을 수 있으니 우산은 챙기세요.",
     byDistrictChips: "구별",
   },
 
@@ -1006,20 +1021,23 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyH1: "Seoul ngày mưa",
     rainyTitle: (n) => `Seoul Ngày Mưa — ${n} điểm trong nhà gần ga tàu điện ngầm | K-Street`,
     rainyLead: (n, gus) =>
-      `${n} điểm trong nhà ở ${gus} quận của Seoul, tất cả đều cách ga tàu điện ngầm dưới 600 m. ` +
-      `Khoảng cách tính theo đường chim bay nên quãng đi bộ thực tế dài hơn một chút.`,
+      `${n} điểm ở ${gus} quận của Seoul — hoặc nằm hẳn trong nhà, hoặc là chợ có mái che ở lối đi chính. ` +
+      `Tất cả đều cách ga tàu điện ngầm dưới 600 m. Khoảng cách tính theo đường chim bay nên quãng đi bộ thực tế dài hơn một chút.`,
     rainyDesc: (n) =>
       `${n} điểm trong nhà ở Seoul cho ngày mưa — xếp theo khoảng cách tới ga. Miễn phí, không cần đăng ký, 12 ngôn ngữ.`,
     rainyNear: "Cách ga dưới 300 m — đi bộ khoảng 3 phút",
     rainyFar: "Cách ga 300–600 m — khoảng 5 phút",
     rainyMissing:
-      "Chợ có mái che và phố mua sắm ngầm chưa có ở đây. Chúng tôi vẫn đang kiểm tra chợ nào có mái — chưa kiểm tra thì chúng tôi chưa đưa vào.",
+      "Phố mua sắm ngầm chưa có ở đây. Seoul Facilities Corporation vận hành 25 khu; chúng tôi sẽ thêm sau khi kiểm chứng từng khu — chưa kiểm tra thì chưa đưa vào.",
     rainyFaq: [
       { q: "Trời mưa thì đi đâu ở Seoul?", a: "Trang này chỉ liệt kê những điểm trong nhà cách ga tàu điện ngầm dưới 600 m, nên bạn hầu như không bị ướt trên đường. Mỗi mục đều ghi rõ ga gần nhất và khoảng cách." },
       { q: "Các địa điểm này được chọn thế nào?", a: "Một nơi chỉ xuất hiện ở đây khi thỏa cả hai điều: ở trong nhà, và cách ga tàu điện ngầm dưới 600 m. Ngày mưa, quãng đường đi tới cửa cũng quan trọng như mái che." },
       { q: "Khoảng cách được đo thế nào?", a: "Khoảng cách đường chim bay trên bản đồ, nên quãng đi bộ thực tế dài hơn một chút. Dưới 300 m là khoảng 3 phút đi bộ với ô." },
       { q: "Vì sao không có giờ mở cửa và giá vé?", a: "Vì chúng tôi chưa kiểm chứng. Giờ mở cửa sai sẽ khiến bạn đứng trước cánh cửa đã khóa — để trống còn hơn thế. Mỗi nơi đều có liên kết tới trang chính thức." },
     ],
+    rainyIndoorGroup: "Trong nhà — không bị ướt",
+    rainyArcadeGroup: "Chợ có mái che ở lối đi chính",
+    rainyArcadeNote: "Mái che nằm trên lối đi chính, không phải toàn bộ chợ. Các ngõ bên có thể lộ thiên, nên bạn vẫn nên mang ô.",
     byDistrictChips: "Theo quận",
   },
 
@@ -1078,20 +1096,23 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyH1: "โซลในวันฝนตก",
     rainyTitle: (n) => `โซลในวันฝนตก — ${n} จุดในร่มใกล้สถานีรถไฟใต้ดิน | K-Street`,
     rainyLead: (n, gus) =>
-      `${n} จุดในร่มใน ${gus} เขตของโซล ทั้งหมดอยู่ห่างจากสถานีรถไฟใต้ดินไม่เกิน 600 เมตร ` +
-      `ระยะทางเป็นเส้นตรง ทางเดินจริงจึงไกลกว่าเล็กน้อย`,
+      `${n} จุดใน ${gus} เขตของโซล — อยู่ในอาคาร หรือเป็นตลาดที่มีหลังคาคลุมทางเดินกลาง ` +
+      `ทั้งหมดอยู่ห่างจากสถานีรถไฟใต้ดินไม่เกิน 600 เมตร ระยะทางเป็นเส้นตรง ทางเดินจริงจึงไกลกว่าเล็กน้อย`,
     rainyDesc: (n) =>
       `${n} จุดในร่มในโซลสำหรับวันฝนตก — เรียงตามระยะห่างจากสถานี ฟรี ไม่ต้องสมัคร 12 ภาษา`,
     rainyNear: "ห่างจากสถานีไม่เกิน 300 ม. — เดินราว 3 นาที",
     rainyFar: "ห่างจากสถานี 300–600 ม. — ราว 5 นาที",
     rainyMissing:
-      "ตลาดมีหลังคาและย่านการค้าใต้ดินยังไม่มีที่นี่ เรากำลังตรวจสอบว่าตลาดใดมีหลังคา — สิ่งที่ยังไม่ได้ตรวจสอบ เราจะไม่ลง",
+      "ย่านการค้าใต้ดินยังไม่มีที่นี่ Seoul Facilities Corporation ดูแลอยู่ 25 แห่ง เราจะเพิ่มเมื่อตรวจสอบทีละแห่ง — สิ่งที่ยังไม่ได้ตรวจสอบ เราจะไม่ลง",
     rainyFaq: [
       { q: "วันฝนตกในโซลไปไหนดี", a: "หน้านี้รวมเฉพาะจุดในร่มที่อยู่ห่างจากสถานีรถไฟใต้ดินไม่เกิน 600 เมตร จึงแทบไม่เปียกระหว่างทาง แต่ละแห่งระบุสถานีที่ใกล้ที่สุดและระยะทางไว้" },
       { q: "เลือกสถานที่เหล่านี้อย่างไร", a: "จะขึ้นในหน้านี้ได้ต้องครบสองข้อ คือ อยู่ในร่ม และห่างจากสถานีรถไฟใต้ดินไม่เกิน 600 เมตร ในวันฝนตก ทางเดินไปถึงประตูสำคัญพอ ๆ กับหลังคาที่อยู่เหนือหัว" },
       { q: "วัดระยะทางอย่างไร", a: "เป็นระยะเส้นตรงบนแผนที่ ทางเดินจริงจึงไกลกว่าเล็กน้อย ภายใน 300 เมตรคือเดินราว 3 นาทีพร้อมร่ม" },
       { q: "ทำไมไม่มีเวลาทำการและค่าเข้าชม", a: "เพราะเรายังไม่ได้ตรวจสอบ เวลาทำการที่ผิดจะทำให้คุณไปยืนหน้าประตูที่ล็อกอยู่ เว้นว่างไว้ยังดีกว่า ทุกแห่งมีลิงก์ไปยังหน้าทางการ" },
     ],
+    rainyIndoorGroup: "อยู่ในอาคาร — ไม่โดนฝนเลย",
+    rainyArcadeGroup: "ตลาดที่มีหลังคาคลุมทางเดินกลาง",
+    rainyArcadeNote: "หลังคาคลุมทางเดินกลาง ไม่ใช่ทั้งตลาด ซอยด้านข้างอาจเปิดโล่ง จึงควรพกร่มไปด้วย",
     byDistrictChips: "ตามเขต",
   },
 
@@ -1148,20 +1169,23 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyH1: "Seoul saat hujan",
     rainyTitle: (n) => `Seoul Saat Hujan — ${n} tempat indoor dekat stasiun | K-Street`,
     rainyLead: (n, gus) =>
-      `${n} tempat indoor di ${gus} distrik Seoul, semuanya dalam 600 m dari stasiun kereta bawah tanah. ` +
-      `Jarak dihitung garis lurus, jadi jalan kakinya sedikit lebih jauh.`,
+      `${n} tempat di ${gus} distrik Seoul — sepenuhnya di dalam ruangan, atau pasar dengan lorong utama beratap. ` +
+      `Semuanya dalam 600 m dari stasiun kereta bawah tanah. Jarak dihitung garis lurus, jadi jalan kakinya sedikit lebih jauh.`,
     rainyDesc: (n) =>
       `${n} tempat indoor di Seoul untuk hari hujan — diurutkan dari yang terdekat ke stasiun. Gratis, tanpa daftar, 12 bahasa.`,
     rainyNear: "Dalam 300 m dari stasiun — sekitar 3 menit jalan kaki",
     rainyFar: "300–600 m dari stasiun — sekitar 5 menit",
     rainyMissing:
-      "Pasar beratap dan pusat belanja bawah tanah belum ada di sini. Kami masih memeriksa pasar mana yang beratap — yang belum kami periksa tidak kami cantumkan.",
+      "Pusat belanja bawah tanah belum ada di sini. Seoul Facilities Corporation mengelola 25 lokasi; kami akan menambahkannya setelah memverifikasi satu per satu — yang belum kami periksa tidak kami cantumkan.",
     rainyFaq: [
       { q: "Mau ke mana di Seoul saat hujan?", a: "Halaman ini hanya memuat tempat indoor yang berjarak kurang dari 600 m dari stasiun kereta bawah tanah, jadi Anda hampir tidak basah di jalan. Setiap entri mencantumkan stasiun terdekat dan jaraknya." },
       { q: "Bagaimana tempat-tempat ini dipilih?", a: "Sebuah tempat masuk ke sini hanya jika keduanya benar: berada di dalam ruangan, dan dalam 600 m dari stasiun. Saat hujan, jalan menuju pintu sama pentingnya dengan atap di atasnya." },
       { q: "Bagaimana jaraknya diukur?", a: "Jarak garis lurus di peta, jadi jalan kaki sebenarnya sedikit lebih jauh. Dalam 300 m kira-kira 3 menit berjalan dengan payung." },
       { q: "Kenapa jam buka dan tiket masuk tidak ada?", a: "Karena kami belum memverifikasinya. Jam buka yang salah membuat Anda berdiri di depan pintu terkunci — kosong lebih baik daripada itu. Setiap tempat punya tautan ke halaman resminya." },
     ],
+    rainyIndoorGroup: "Di dalam ruangan — tidak kehujanan sama sekali",
+    rainyArcadeGroup: "Pasar dengan lorong utama beratap",
+    rainyArcadeNote: "Yang beratap adalah lorong utama, bukan seluruh pasar. Gang di sampingnya bisa terbuka ke langit, jadi tetap bawa payung.",
     byDistrictChips: "Menurut distrik",
   },
 
@@ -1225,20 +1249,23 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyH1: "Seúl en un día de lluvia",
     rainyTitle: (n) => `Seúl en un Día de Lluvia — ${n} lugares cubiertos cerca del metro | K-Street`,
     rainyLead: (n, gus) =>
-      `${n} lugares cubiertos en ${gus} distritos de Seúl, todos a menos de 600 m de una estación de metro. ` +
-      `Las distancias son en línea recta, así que el camino a pie es algo más largo.`,
+      `${n} lugares en ${gus} distritos de Seúl: o bien bajo techo por completo, o mercados con el pasillo central cubierto. ` +
+      `Todos están a menos de 600 m de una estación de metro. Las distancias son en línea recta, así que el camino a pie es algo más largo.`,
     rainyDesc: (n) =>
       `${n} lugares cubiertos en Seúl para un día de lluvia — ordenados por cercanía al metro. Gratis, sin registro, 12 idiomas.`,
     rainyNear: "A menos de 300 m de una estación — unos 3 minutos a pie",
     rainyFar: "De 300 a 600 m de una estación — unos 5 minutos",
     rainyMissing:
-      "Los mercados cubiertos y las galerías comerciales subterráneas aún no están aquí. Seguimos comprobando qué mercados tienen techo: no publicamos lo que no hemos comprobado.",
+      "Las galerías comerciales subterráneas aún no están aquí. La Corporación de Instalaciones de Seúl gestiona 25; las añadiremos cuando hayamos comprobado cada una: no publicamos lo que no hemos comprobado.",
     rainyFaq: [
       { q: "¿Qué hacer en Seúl cuando llueve?", a: "Esta página solo recoge lugares cubiertos que están a menos de 600 m de una estación de metro, así que apenas te mojas por el camino. Cada entrada indica la estación más cercana y la distancia." },
       { q: "¿Cómo se han elegido estos lugares?", a: "Un lugar aparece aquí solo si cumple ambas cosas: está bajo techo y está a menos de 600 m de una estación de metro. En un día de lluvia, el trayecto hasta la puerta importa tanto como el techo." },
       { q: "¿Cómo se mide la distancia?", a: "En línea recta sobre el mapa, así que el camino a pie es algo más largo. Menos de 300 m son unos 3 minutos andando con paraguas." },
       { q: "¿Por qué no aparecen los horarios ni las entradas?", a: "Porque no los hemos comprobado. Un horario equivocado te deja ante una puerta cerrada, y un hueco es mejor que eso. Cada lugar enlaza a su página oficial, donde están los horarios actuales." },
     ],
+    rainyIndoorGroup: "Bajo techo — no te mojas nada",
+    rainyArcadeGroup: "Mercados con el pasillo central cubierto",
+    rainyArcadeNote: "El techo cubre el pasillo central, no todo el mercado. Los callejones laterales pueden estar al aire libre, así que lleva paraguas de todos modos.",
     byDistrictChips: "Por distrito",
   },
 
@@ -1295,20 +1322,23 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyH1: "Séoul un jour de pluie",
     rainyTitle: (n) => `Séoul un Jour de Pluie — ${n} lieux couverts près du métro | K-Street`,
     rainyLead: (n, gus) =>
-      `${n} lieux couverts dans ${gus} quartiers de Séoul, tous à moins de 600 m d'une station de métro. ` +
-      `Les distances sont à vol d'oiseau : le trajet à pied est un peu plus long.`,
+      `${n} lieux dans ${gus} quartiers de Séoul : soit entièrement à l'intérieur, soit des marchés dont l'allée centrale est couverte. ` +
+      `Tous sont à moins de 600 m d'une station de métro. Les distances sont à vol d'oiseau : le trajet à pied est un peu plus long.`,
     rainyDesc: (n) =>
       `${n} lieux couverts à Séoul pour un jour de pluie — classés par proximité du métro. Gratuit, sans inscription, 12 langues.`,
     rainyNear: "À moins de 300 m d'une station — environ 3 minutes à pied",
     rainyFar: "De 300 à 600 m d'une station — environ 5 minutes",
     rainyMissing:
-      "Les marchés couverts et les galeries souterraines n'y figurent pas encore. Nous vérifions encore quels marchés sont abrités : nous ne publions pas ce que nous n'avons pas vérifié.",
+      "Les galeries commerçantes souterraines n'y figurent pas encore. La Seoul Facilities Corporation en gère 25 ; nous les ajouterons après avoir vérifié chacune — nous ne publions pas ce que nous n'avons pas vérifié.",
     rainyFaq: [
       { q: "Que faire à Séoul quand il pleut ?", a: "Cette page ne recense que des lieux couverts situés à moins de 600 m d'une station de métro : on ne se mouille presque pas en chemin. Chaque entrée indique la station la plus proche et la distance." },
       { q: "Comment ces lieux ont-ils été choisis ?", a: "Un lieu n'y figure que si les deux conditions sont réunies : il est à l'abri, et il est à moins de 600 m d'une station de métro. Un jour de pluie, le trajet jusqu'à la porte compte autant que le toit." },
       { q: "Comment la distance est-elle mesurée ?", a: "À vol d'oiseau sur la carte : le trajet à pied est donc un peu plus long. Moins de 300 m, c'est environ 3 minutes de marche avec un parapluie." },
       { q: "Pourquoi les horaires et les tarifs ne sont-ils pas indiqués ?", a: "Parce que nous ne les avons pas vérifiés. Un horaire faux vous laisse devant une porte close, et un blanc vaut mieux que cela. Chaque lieu renvoie à sa page officielle." },
     ],
+    rainyIndoorGroup: "À l'intérieur — on ne se mouille pas du tout",
+    rainyArcadeGroup: "Marchés à l'allée centrale couverte",
+    rainyArcadeNote: "Le toit couvre l'allée centrale, pas tout le marché. Les ruelles latérales peuvent être à ciel ouvert : prenez tout de même un parapluie.",
     byDistrictChips: "Par quartier",
   },
 
@@ -1372,20 +1402,23 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyH1: "Seoul an einem Regentag",
     rainyTitle: (n) => `Seoul an einem Regentag — ${n} überdachte Orte nahe der U-Bahn | K-Street`,
     rainyLead: (n, gus) =>
-      `${n} überdachte Orte in ${deIn(gus)} von Seoul, alle höchstens 600 m von einer U-Bahn-Station entfernt. ` +
-      `Die Entfernungen sind Luftlinie, der Fußweg ist also etwas länger.`,
+      `${n} Orte in ${deIn(gus)} von Seoul — entweder ganz im Gebäude oder Märkte mit überdachtem Hauptgang. ` +
+      `Alle höchstens 600 m von einer U-Bahn-Station entfernt. Die Entfernungen sind Luftlinie, der Fußweg ist also etwas länger.`,
     rainyDesc: (n) =>
       `${n} überdachte Orte in Seoul für einen Regentag — nach Nähe zur U-Bahn sortiert. Kostenlos, ohne Anmeldung, 12 Sprachen.`,
     rainyNear: "Höchstens 300 m bis zur Station — etwa 3 Minuten zu Fuß",
     rainyFar: "300–600 m bis zur Station — etwa 5 Minuten",
     rainyMissing:
-      "Überdachte Märkte und Untergrundpassagen fehlen noch. Wir prüfen noch, welche Märkte überdacht sind — was wir nicht geprüft haben, nehmen wir nicht auf.",
+      "Unterirdische Einkaufspassagen fehlen noch. Die Seoul Facilities Corporation betreibt 25 davon; wir nehmen sie auf, sobald wir jede geprüft haben — was wir nicht geprüft haben, nehmen wir nicht auf.",
     rainyFaq: [
       { q: "Was kann man in Seoul bei Regen unternehmen?", a: "Diese Seite listet nur überdachte Orte auf, die höchstens 600 m von einer U-Bahn-Station entfernt sind — unterwegs wird man kaum nass. Bei jedem Eintrag stehen die nächste Station und die Entfernung." },
       { q: "Wie wurden diese Orte ausgewählt?", a: "Ein Ort steht hier nur, wenn beides zutrifft: Er ist überdacht, und er liegt höchstens 600 m von einer U-Bahn-Station entfernt. An einem Regentag zählt der Weg zur Tür ebenso wie das Dach darüber." },
       { q: "Wie wird die Entfernung gemessen?", a: "Luftlinie auf der Karte, der Fußweg ist also etwas länger. Bis 300 m sind es etwa 3 Minuten zu Fuß mit Schirm." },
       { q: "Warum fehlen Öffnungszeiten und Eintrittspreise?", a: "Weil wir sie nicht geprüft haben. Eine falsche Öffnungszeit stellt Sie vor eine verschlossene Tür — eine Lücke ist besser als das. Jeder Ort verlinkt auf seine offizielle Seite." },
     ],
+    rainyIndoorGroup: "Im Gebäude — man wird gar nicht nass",
+    rainyArcadeGroup: "Märkte mit überdachtem Hauptgang",
+    rainyArcadeNote: "Überdacht ist der Hauptgang, nicht der ganze Markt. Die Seitengassen können offen sein — nehmen Sie trotzdem einen Schirm mit.",
     byDistrictChips: "Nach Stadtteil",
   },
 
@@ -1453,20 +1486,23 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     rainyH1: "Сеул в дождливый день",
     rainyTitle: (n) => `Сеул в дождливый день — ${ru3(n, "место", "места", "мест")} под крышей рядом с метро | K-Street`,
     rainyLead: (n, gus) =>
-      `${ru3(n, "место", "места", "мест")} под крышей в Сеуле (районов: ${gus}), все не дальше 600 м от станции метро. ` +
-      `Расстояния по прямой, поэтому пешком получится чуть дольше.`,
+      `${n} мест в Сеуле (районов: ${gus}) — либо полностью под крышей, либо рынки с крытым центральным проходом. ` +
+      `Все не дальше 600 м от станции метро. Расстояния по прямой, поэтому пешком получится чуть дольше.`,
     rainyDesc: (n) =>
       `${ru3(n, "место", "места", "мест")} под крышей в Сеуле на дождливый день — по близости к метро. Бесплатно, без регистрации, 12 языков.`,
     rainyNear: "Не дальше 300 м от станции — около 3 минут пешком",
     rainyFar: "300–600 м от станции — около 5 минут",
     rainyMissing:
-      "Крытых рынков и подземных торговых галерей здесь пока нет. Мы ещё проверяем, какие рынки крытые — непроверенное мы не публикуем.",
+      "Подземных торговых галерей здесь пока нет. Корпорация городских объектов Сеула управляет 25; мы добавим их, проверив каждую, — непроверенное мы не публикуем.",
     rainyFaq: [
       { q: "Чем заняться в Сеуле в дождь?", a: "На этой странице только места под крышей не дальше 600 м от станции метро — по дороге почти не промокнешь. У каждого указаны ближайшая станция и расстояние до неё." },
       { q: "Как выбирались эти места?", a: "Место попадает сюда, только если верно и то и другое: оно под крышей и не дальше 600 м от станции метро. В дождь дорога до двери важна не меньше, чем крыша над ней." },
       { q: "Как измеряется расстояние?", a: "По прямой на карте, поэтому пешком получится чуть дольше. До 300 м — это около 3 минут пешком под зонтом." },
       { q: "Почему не указаны часы работы и стоимость входа?", a: "Потому что мы их не проверяли. Неверные часы работы оставят вас перед закрытой дверью — пустое место лучше этого. У каждого места есть ссылка на официальную страницу." },
     ],
+    rainyIndoorGroup: "В здании — совсем не намокнете",
+    rainyArcadeGroup: "Рынки с крытым центральным проходом",
+    rainyArcadeNote: "Крыша накрывает центральный проход, а не весь рынок. Боковые переулки могут быть под открытым небом — зонт всё-таки возьмите.",
     byDistrictChips: "По районам",
   },
 };
