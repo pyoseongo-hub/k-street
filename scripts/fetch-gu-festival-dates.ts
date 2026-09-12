@@ -119,13 +119,30 @@ interface Row {
 const ymd = (s: string | undefined): string | undefined =>
   /^\d{4}-\d{2}-\d{2}/.test(s ?? "") ? s!.slice(0, 10) : undefined;
 
+/**
+ * 🕵️ **브라우저처럼 보이게 UA 를 붙인다.**
+ *
+ * 처음엔 안 붙였다가 **80번을 전부 실패**했다 — 열린데이터광장이 `/json/` 으로
+ * 불러도 XML 오류를 돌려준다. 같은 주소를 fetch-page-text.mjs(UA 를 붙인다)로
+ * 열면 멀쩡히 JSON 이 왔다. 그 차이가 UA 하나였다.
+ */
+const UA =
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125 Safari/537.36";
+
 async function call(path: string): Promise<Row[]> {
   const url = `${API}/${AUTH}/json/culturalEventInfo/${path}`;
-  const res = await fetch(url, { signal: AbortSignal.timeout(30000) });
+  const res = await fetch(url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(30000) });
   if (!res.ok) throw new Error(`HTTP ${res.status} — ${url.replace(AUTH, "…")}`);
-  const data = (await res.json()) as {
-    culturalEventInfo?: { RESULT?: { CODE?: string; MESSAGE?: string }; row?: Row[] };
-  };
+  const text = await res.text();
+  let data: { culturalEventInfo?: { RESULT?: { CODE?: string; MESSAGE?: string }; row?: Row[] } };
+  try {
+    data = JSON.parse(text);
+  } catch {
+    // 🚨 **받은 글을 그대로 보여 준다.** 처음엔 "is not valid JSON" 만 찍혀서
+    //    80줄이 똑같은 말만 하고 원인을 하나도 안 알려 줬다. 오류는 다음 사람이
+    //    읽고 고칠 수 있어야 오류다.
+    throw new Error(`JSON 이 아니다 — 받은 글: ${text.slice(0, 160).replace(/\s+/g, " ")}`);
+  }
   const code = data.culturalEventInfo?.RESULT?.CODE;
   // INFO-200 = 해당하는 자료가 없다. 오류가 아니라 **없다는 답**이다.
   if (code === "INFO-200") return [];
