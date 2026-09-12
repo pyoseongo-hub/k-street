@@ -42,7 +42,7 @@ import { eatNearbyUrl } from "../src/lib/partnerLinks";
 import { pastEditionYear } from "../src/lib/pastEdition";
 // 🌧️ 「비 오는 날」 테마의 잣대 — 실내인가, 역에서 얼마나 먼가.
 //    왜 이 둘인지는 src/lib/indoor.ts 머리말에 적어 뒀다(글 6개를 읽고 나온 것이다).
-import { isIndoor, isArcade, isRainOk, RAIN_WALK_MAX_M } from "../src/lib/indoor";
+import { isIndoor, isArcade, isRainOk, rainWalkMax } from "../src/lib/indoor";
 // 🏪 「이 시장은 무엇을 파나」 — 관광공사 판매품목 + 12개 언어 낱말 사전.
 import { sellsFor } from "../src/lib/sells";
 // 🚇 역 이름을 손님 언어로 — 「종로5가역 1호선」 → 「Jongno 5(o)-ga Stn. Line 1 (종로5가역)」.
@@ -1263,7 +1263,10 @@ for (const [cat, meta] of Object.entries(CATEGORY_HUB)) {
 //
 // 잣대 둘 **다** 만족해야 들어온다. 잣대와 그 한계를 화면에 그대로 적는다:
 //   ① 실내다(isIndoor)          — 갈래로 알거나, 확인해서 seed 에 적어 둔 것
-//   ② 역에서 600m 안(직선거리)  — 「가는 길이 안 젖는가」가 이 테마의 핵심이다
+//   ② 역에서 가깝다(직선거리)   — 「가는 길이 안 젖는가」가 이 테마의 핵심이다
+//      🚨 잣대가 **둘**이다: 아케이드 시장 600m · 실내 목적지 1km.
+//         왜 다른지는 src/lib/indoor.ts 의 INDOOR_WALK_MAX_M 에 적어 뒀다 —
+//         시장은 **지나가며 들르는 곳**이고 박물관은 **작정하고 가는 곳**이다.
 //
 // 🚨 **역 자료가 없는 곳은 안 넣는다.** 「역이 먼지 모른다」와 「역이 가깝다」는
 //    다른 말이다. 모르는 것을 가까운 쪽으로 반올림하면 손님이 젖는다.
@@ -1274,7 +1277,7 @@ for (const [cat, meta] of Object.entries(CATEGORY_HUB)) {
   const picked = ALL.map((p) => ({ p, s: nearestStation(p.id, p) }))
     .filter(
       (x): x is { p: Place; s: { station: string; dist: number } } =>
-        isRainOk(x.p) && !!x.s?.station && x.s.dist != null && x.s.dist <= RAIN_WALK_MAX_M,
+        isRainOk(x.p) && !!x.s?.station && x.s.dist != null && x.s.dist <= rainWalkMax(x.p),
     )
     .sort((a, b) => a.s.dist - b.s.dist);
   // 🏢 건물 안 / 🏪 지붕 있는 시장 — **갈라서 보여 준다.**
