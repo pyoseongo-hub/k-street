@@ -25,6 +25,10 @@
   --hike: #A9EC6B;
   --museum: #C4AEFF;
   --street: #E8845C;
+  /* ☔ **비** — 「비 오는 날」 화면이 새로 들여온 단 하나의 색이다.
+     갈래 색(시장·박물관…)이 아니라 **상황** 색이라 따로 둔다.
+     어두운 바탕에서는 밝게, 밝은 바탕에서는 진하게 — 둘 다 글자로 읽혀야 한다. */
+  --rain: #7EA6D9;
 
   --shadow: rgba(0, 0, 0, 0.3);
   --shadow-elevated: none;
@@ -52,6 +56,7 @@
     --hike: #A9EC6B;
     --museum: #C4AEFF;
     --street: #E8845C;
+    --rain: #4A7FBF;
 
     --shadow: rgba(0, 0, 0, 0.06);
     --shadow-elevated: 0 6px 16px -6px rgba(0, 0, 0, 0.1);
@@ -79,6 +84,7 @@
   --hike: #A9EC6B;
   --museum: #C4AEFF;
   --street: #E8845C;
+  --rain: #4A7FBF;
 
   --shadow: rgba(0, 0, 0, 0.06);
   --shadow-elevated: 0 6px 16px -6px rgba(0, 0, 0, 0.1);
@@ -105,6 +111,7 @@
   --hike: #A9EC6B;
   --museum: #C4AEFF;
   --street: #E8845C;
+  --rain: #7EA6D9;
 
   --shadow: rgba(0, 0, 0, 0.3);
   --shadow-elevated: none;

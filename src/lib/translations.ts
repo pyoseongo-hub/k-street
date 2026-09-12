@@ -34,6 +34,9 @@ export interface Translations {
   viewSeason: string;
   /** 동네 화면 — 육각 지도로 구를 고르는 쪽 */
   viewDistrict: string;
+  /** 🌧️ 「계절 | 동네」 옆 세 번째 칸 (2026-09-12 사장님: "자리는 충분해, 첫 번째 칸 넣고").
+   *  ⚠️ **짧게 유지할 것** — 한 줄에 셋이 들어간다. 길면 태국어부터 잘린다. */
+  viewRainy: string;
 
   // District Explorer
   exploreNowLabel: string;
@@ -266,6 +269,22 @@ export interface Translations {
   // Weather
   feelsLike: string;
   weatherUpdatedAt: string;
+  /** 🌧️ 비 오는 날 (2026-09-12). 묶음 페이지와 **같은 말**을 쓴다 — scripts/lib/page-strings.ts 의 HUB_STRINGS.
+   *  갈리면 검색으로 들어온 손님과 앱을 쓰는 손님이 다른 말을 읽는다. */
+  rainyH1: string;
+  rainyIndoorGroup: string;
+  rainyArcadeGroup: string;
+  rainyArcadeNote: string;
+  rainyMissing: string;
+  /** 단추에 적히는 말. 곳 수가 늘면 저절로 바뀐다 — 손으로 적지 않는다. */
+  rainyCta: (n: number) => string;
+  /** 우리가 어떻게 골랐나 한 줄 — 안 적으면 손님은 기준을 모른다. */
+  rainySub: string;
+  /** 지금 비가 오고 있을 때 */
+  rainyNow: string;
+  /** 🚨 **「예보」라고 적는다.** 사장님: "날씨는 기상청도 못 맞춰" —
+   *  안 오면 우리가 틀린 말을 한 것이 되므로, 사실(비)과 예보를 갈라서 말한다. */
+  rainyForecast: string;
 }
 
 const translations: Record<Language, Translations> = {
@@ -298,6 +317,7 @@ const translations: Record<Language, Translations> = {
 
     viewSeason: '계절',
     viewDistrict: '동네',
+    viewRainy: '비 오는 날',
     exploreNowLabel: '지금 갈 수 있는 곳',
     exploreTitle: '동네마다 다른 서울',
     tapDistrictHint: '구를 눌러 보세요 — 그 동네의 장소가 나옵니다',
@@ -379,6 +399,15 @@ const translations: Record<Language, Translations> = {
 
     feelsLike: '체감',
     weatherUpdatedAt: '업데이트',
+    rainyH1: '비 와도 괜찮은 서울',
+    rainyIndoorGroup: '건물 안 — 비를 아예 안 맞습니다',
+    rainyArcadeGroup: '지붕 있는 시장 — 중앙 통로',
+    rainyArcadeNote: '중앙 통로에 지붕이 있습니다. 통로가 꽤 길어 비를 피해 둘러보기에 충분합니다. 다만 안쪽 골목은 하늘이 열려 있을 수 있으니 우산은 챙기세요.',
+    rainyMissing: '지하상가는 아직 없습니다. 서울시설공단이 25곳을 운영하는데, 한 곳씩 확인되는 대로 넣겠습니다 — 확인 못 한 것은 넣지 않습니다.',
+    rainyCta: (n) => `비 와도 갈 곳 ${n}곳`,
+    rainySub: '지붕 있고 역에서 가까운 곳만',
+    rainyNow: '지금 비',
+    rainyForecast: '오늘 비 예보',
   },
 
   en: {
@@ -410,6 +439,7 @@ const translations: Record<Language, Translations> = {
 
     viewSeason: 'Seasons',
     viewDistrict: 'Neighborhoods',
+    viewRainy: 'Rainy day',
     exploreNowLabel: 'Where you can go now',
     exploreTitle: 'A different Seoul in every neighborhood',
     tapDistrictHint: 'Tap a district to see its places',
@@ -491,6 +521,15 @@ const translations: Record<Language, Translations> = {
 
     feelsLike: 'Feels like',
     weatherUpdatedAt: 'Updated',
+    rainyH1: 'Seoul on a rainy day',
+    rainyIndoorGroup: 'Fully indoors — you stay dry',
+    rainyArcadeGroup: 'Markets with a covered main aisle',
+    rainyArcadeNote: 'The main aisle is covered — and it runs long enough for a proper look around without getting wet. Side lanes may still be open to the sky, so keep an umbrella with you.',
+    rainyMissing: 'Underground shopping arcades are not here yet. Seoul Facilities Corporation runs 25 of them; we will add each once verified — we do not list what we have not checked.',
+    rainyCta: (n) => `${n} places that work in the rain`,
+    rainySub: 'Covered, and close to a station',
+    rainyNow: 'Raining now',
+    rainyForecast: 'Rain forecast today',
   },
 
   ja: {
@@ -522,6 +561,7 @@ const translations: Record<Language, Translations> = {
 
     viewSeason: '季節',
     viewDistrict: '街めぐり',
+    viewRainy: '雨の日',
     exploreNowLabel: '今行ける場所',
     exploreTitle: '街ごとに違うソウル',
     tapDistrictHint: '区をタップすると、その街の場所が出てきます',
@@ -603,6 +643,15 @@ const translations: Record<Language, Translations> = {
 
     feelsLike: '体感温度',
     weatherUpdatedAt: '更新時刻',
+    rainyH1: '雨の日のソウル',
+    rainyIndoorGroup: '建物の中 — 雨に当たりません',
+    rainyArcadeGroup: '屋根のある市場 — 中央通路',
+    rainyArcadeNote: '中央通路に屋根があります。通路はかなり長く、雨に当たらずにひと通り見て回れます。ただし脇の路地は空が開いていることがあるので、傘はお持ちください。',
+    rainyMissing: '地下商店街はまだありません。ソウル施設公団が25か所を運営しています。一つずつ確認できしだい載せます — 確認できていないものは載せません。',
+    rainyCta: (n) => `雨でも行ける${n}件`,
+    rainySub: '屋根があって駅から近い所だけ',
+    rainyNow: '今、雨',
+    rainyForecast: '今日は雨の予報',
   },
 
   zh: {
@@ -634,6 +683,7 @@ const translations: Record<Language, Translations> = {
 
     viewSeason: '季节',
     viewDistrict: '街区',
+    viewRainy: '雨天',
     exploreNowLabel: '现在可以去的地方',
     exploreTitle: '每个街区都不一样的首尔',
     tapDistrictHint: '点击一个区，即可查看该区的地点',
@@ -715,6 +765,15 @@ const translations: Record<Language, Translations> = {
 
     feelsLike: '体感温度',
     weatherUpdatedAt: '更新时间',
+    rainyH1: '下雨天的首尔',
+    rainyIndoorGroup: '在建筑内 — 完全淋不到雨',
+    rainyArcadeGroup: '有顶棚的市场 — 中央通道',
+    rainyArcadeNote: '中央通道有顶棚，而且相当长，足够你淋不到雨地逛上一圈。不过旁边的小巷可能是露天的，还是带把伞吧。',
+    rainyMissing: '地下商街尚未收录。首尔设施公团运营着25处，我们会逐一核实后加入 — 没有核实过的不收录。',
+    rainyCta: (n) => `下雨也能去的${n}处`,
+    rainySub: '有屋顶、离地铁站近的地方',
+    rainyNow: '正在下雨',
+    rainyForecast: '今天有雨',
   },
 
   'zh-TW': {
@@ -746,6 +805,7 @@ const translations: Record<Language, Translations> = {
 
     viewSeason: '季節',
     viewDistrict: '街區',
+    viewRainy: '雨天',
     exploreNowLabel: '現在可以去的地方',
     exploreTitle: '每個街區都不一樣的首爾',
     tapDistrictHint: '點擊一個區，即可查看該區的地點',
@@ -827,6 +887,15 @@ const translations: Record<Language, Translations> = {
 
     feelsLike: '體感溫度',
     weatherUpdatedAt: '更新時間',
+    rainyH1: '下雨天的首爾',
+    rainyIndoorGroup: '在建築內 — 完全淋不到雨',
+    rainyArcadeGroup: '有頂棚的市場 — 中央通道',
+    rainyArcadeNote: '中央通道有頂棚，而且相當長，足夠你淋不到雨地逛上一圈。不過旁邊的小巷可能是露天的，還是帶把傘吧。',
+    rainyMissing: '地下商街尚未收錄。首爾設施公團經營著25處，我們會逐一確認後加入 — 沒有確認過的不收錄。',
+    rainyCta: (n) => `下雨也能去的${n}處`,
+    rainySub: '有屋頂、離地鐵站近的地方',
+    rainyNow: '正在下雨',
+    rainyForecast: '今天有雨',
   },
 
   vi: {
@@ -858,6 +927,7 @@ const translations: Record<Language, Translations> = {
 
     viewSeason: 'Mùa',
     viewDistrict: 'Khu phố',
+    viewRainy: 'Ngày mưa',
     exploreNowLabel: 'Các địa điểm bạn có thể đến ngay',
     exploreTitle: 'Mỗi khu phố một Seoul khác',
     tapDistrictHint: 'Chạm vào một quận để xem các địa điểm ở đó',
@@ -939,6 +1009,15 @@ const translations: Record<Language, Translations> = {
 
     feelsLike: 'Cảm thấy như',
     weatherUpdatedAt: 'Cập nhật',
+    rainyH1: 'Seoul ngày mưa',
+    rainyIndoorGroup: 'Trong nhà — không bị ướt',
+    rainyArcadeGroup: 'Chợ có mái che ở lối đi chính',
+    rainyArcadeNote: 'Lối đi chính có mái che, và đủ dài để bạn dạo một vòng mà không bị ướt. Tuy vậy các ngõ bên có thể lộ thiên, nên hãy mang theo ô.',
+    rainyMissing: 'Phố mua sắm ngầm chưa có ở đây. Seoul Facilities Corporation vận hành 25 khu; chúng tôi sẽ thêm sau khi kiểm chứng từng khu — chưa kiểm tra thì chưa đưa vào.',
+    rainyCta: (n) => `${n} chỗ vẫn đi được khi mưa`,
+    rainySub: 'Có mái che và gần ga tàu',
+    rainyNow: 'Đang mưa',
+    rainyForecast: 'Dự báo có mưa hôm nay',
   },
 
   es: {
@@ -970,6 +1049,7 @@ const translations: Record<Language, Translations> = {
 
     viewSeason: 'Temporadas',
     viewDistrict: 'Barrios',
+    viewRainy: 'Lluvia',
     exploreNowLabel: 'Lugares donde puedes ir ahora',
     exploreTitle: 'Un Seúl distinto en cada barrio',
     tapDistrictHint: 'Toca un distrito para ver sus lugares',
@@ -1051,6 +1131,15 @@ const translations: Record<Language, Translations> = {
 
     feelsLike: 'Sensación térmica',
     weatherUpdatedAt: 'Actualizado',
+    rainyH1: 'Seúl en un día de lluvia',
+    rainyIndoorGroup: 'Bajo techo — no te mojas nada',
+    rainyArcadeGroup: 'Mercados con el pasillo central cubierto',
+    rainyArcadeNote: 'El pasillo central está cubierto y es lo bastante largo para dar una vuelta completa sin mojarte. Aun así, los callejones laterales pueden estar al aire libre: lleva paraguas.',
+    rainyMissing: 'Las galerías comerciales subterráneas aún no están aquí. La Corporación de Instalaciones de Seúl gestiona 25; las añadiremos cuando hayamos comprobado cada una: no publicamos lo que no hemos comprobado.',
+    rainyCta: (n) => `${n} lugares que funcionan con lluvia`,
+    rainySub: 'Cubiertos y cerca del metro',
+    rainyNow: 'Está lloviendo',
+    rainyForecast: 'Lluvia prevista hoy',
   },
 
   fr: {
@@ -1082,6 +1171,7 @@ const translations: Record<Language, Translations> = {
 
     viewSeason: 'Saisons',
     viewDistrict: 'Quartiers',
+    viewRainy: 'Pluie',
     exploreNowLabel: 'Où vous pouvez aller maintenant',
     exploreTitle: 'Un Séoul différent dans chaque quartier',
     tapDistrictHint: 'Touchez un arrondissement pour voir ses lieux',
@@ -1163,6 +1253,15 @@ const translations: Record<Language, Translations> = {
 
     feelsLike: 'Ressenti',
     weatherUpdatedAt: 'Mis à jour',
+    rainyH1: 'Séoul un jour de pluie',
+    rainyIndoorGroup: 'À l\'intérieur — on ne se mouille pas du tout',
+    rainyArcadeGroup: 'Marchés à l\'allée centrale couverte',
+    rainyArcadeNote: 'L\'allée centrale est couverte, et assez longue pour faire le tour sans se mouiller. Les ruelles latérales peuvent toutefois être à ciel ouvert : gardez un parapluie.',
+    rainyMissing: 'Les galeries commerçantes souterraines n\'y figurent pas encore. La Seoul Facilities Corporation en gère 25 ; nous les ajouterons après avoir vérifié chacune — nous ne publions pas ce que nous n\'avons pas vérifié.',
+    rainyCta: (n) => `${n} lieux qui marchent sous la pluie`,
+    rainySub: 'Couverts et près du métro',
+    rainyNow: 'Il pleut',
+    rainyForecast: 'Pluie prévue aujourd’hui',
   },
 
   de: {
@@ -1194,6 +1293,7 @@ const translations: Record<Language, Translations> = {
 
     viewSeason: 'Jahreszeiten',
     viewDistrict: 'Stadtviertel',
+    viewRainy: 'Regen',
     exploreNowLabel: 'Orte, die Sie jetzt besuchen können',
     exploreTitle: 'In jedem Viertel ein anderes Seoul',
     tapDistrictHint: 'Tippen Sie auf einen Bezirk, um seine Orte zu sehen',
@@ -1275,6 +1375,15 @@ const translations: Record<Language, Translations> = {
 
     feelsLike: 'Gefühlte Temperatur',
     weatherUpdatedAt: 'Aktualisiert',
+    rainyH1: 'Seoul an einem Regentag',
+    rainyIndoorGroup: 'Im Gebäude — man wird gar nicht nass',
+    rainyArcadeGroup: 'Märkte mit überdachtem Hauptgang',
+    rainyArcadeNote: 'Der Hauptgang ist überdacht und lang genug, um sich in Ruhe trocken umzusehen. Die Seitengassen können aber offen sein — nehmen Sie einen Schirm mit.',
+    rainyMissing: 'Unterirdische Einkaufspassagen fehlen noch. Die Seoul Facilities Corporation betreibt 25 davon; wir nehmen sie auf, sobald wir jede geprüft haben — was wir nicht geprüft haben, nehmen wir nicht auf.',
+    rainyCta: (n) => `${n} Orte, die bei Regen funktionieren`,
+    rainySub: 'Überdacht und nahe an einer Station',
+    rainyNow: 'Es regnet',
+    rainyForecast: 'Heute Regen erwartet',
   },
 
   ru: {
@@ -1306,6 +1415,7 @@ const translations: Record<Language, Translations> = {
 
     viewSeason: 'Сезоны',
     viewDistrict: 'Районы',
+    viewRainy: 'Дождь',
     exploreNowLabel: 'Куда вы можете пойти сейчас',
     exploreTitle: 'В каждом районе — свой Сеул',
     tapDistrictHint: 'Нажмите на район, чтобы увидеть места',
@@ -1387,6 +1497,15 @@ const translations: Record<Language, Translations> = {
 
     feelsLike: 'Ощущается как',
     weatherUpdatedAt: 'Обновлено',
+    rainyH1: 'Сеул в дождливый день',
+    rainyIndoorGroup: 'В здании — совсем не намокнете',
+    rainyArcadeGroup: 'Рынки с крытым центральным проходом',
+    rainyArcadeNote: 'Центральный проход крытый и достаточно длинный, чтобы спокойно всё обойти, не намокнув. Боковые переулки всё же могут быть под открытым небом — зонт возьмите.',
+    rainyMissing: 'Подземных торговых галерей здесь пока нет. Корпорация городских объектов Сеула управляет 25; мы добавим их, проверив каждую, — непроверенное мы не публикуем.',
+    rainyCta: (n) => `${n} мест, куда можно и в дождь`,
+    rainySub: 'Под крышей и рядом со станцией',
+    rainyNow: 'Сейчас дождь',
+    rainyForecast: 'Сегодня обещают дождь',
   },
 
   id: {
@@ -1418,6 +1537,7 @@ const translations: Record<Language, Translations> = {
 
     viewSeason: 'Musim',
     viewDistrict: 'Lingkungan',
+    viewRainy: 'Hujan',
     exploreNowLabel: 'Tempat yang bisa Anda kunjungi sekarang',
     exploreTitle: 'Seoul yang berbeda di tiap lingkungan',
     tapDistrictHint: 'Ketuk sebuah distrik untuk melihat tempatnya',
@@ -1499,6 +1619,15 @@ const translations: Record<Language, Translations> = {
 
     feelsLike: 'Terasa seperti',
     weatherUpdatedAt: 'Diperbarui',
+    rainyH1: 'Seoul saat hujan',
+    rainyIndoorGroup: 'Di dalam ruangan — tidak kehujanan sama sekali',
+    rainyArcadeGroup: 'Pasar dengan lorong utama beratap',
+    rainyArcadeNote: 'Lorong utama beratap, dan cukup panjang untuk berkeliling tanpa kehujanan. Namun gang-gang di sampingnya bisa terbuka ke langit, jadi tetap bawa payung.',
+    rainyMissing: 'Pusat belanja bawah tanah belum ada di sini. Seoul Facilities Corporation mengelola 25 lokasi; kami akan menambahkannya setelah memverifikasi satu per satu — yang belum kami periksa tidak kami cantumkan.',
+    rainyCta: (n) => `${n} tempat yang tetap enak saat hujan`,
+    rainySub: 'Beratap dan dekat stasiun',
+    rainyNow: 'Sedang hujan',
+    rainyForecast: 'Hari ini diprakirakan hujan',
   },
 
   th: {
@@ -1530,6 +1659,7 @@ const translations: Record<Language, Translations> = {
 
     viewSeason: 'ฤดูกาล',
     viewDistrict: 'ย่าน',
+    viewRainy: 'วันฝนตก',
     exploreNowLabel: 'สถานที่ที่คุณสามารถไปได้ตอนนี้',
     exploreTitle: 'โซลที่แตกต่างในทุกย่าน',
     tapDistrictHint: 'แตะเขตเพื่อดูสถานที่ในย่านนั้น',
@@ -1611,6 +1741,15 @@ const translations: Record<Language, Translations> = {
 
     feelsLike: 'อุณหภูมิที่รู้สึก',
     weatherUpdatedAt: 'อัปเดต',
+    rainyH1: 'โซลในวันฝนตก',
+    rainyIndoorGroup: 'อยู่ในอาคาร — ไม่โดนฝนเลย',
+    rainyArcadeGroup: 'ตลาดที่มีหลังคาคลุมทางเดินกลาง',
+    rainyArcadeNote: 'ทางเดินกลางมีหลังคาคลุม และยาวพอให้เดินชมได้ทั่วโดยไม่เปียกฝน แต่ซอยด้านข้างอาจเปิดโล่ง จึงควรพกร่มติดตัวไว้',
+    rainyMissing: 'ย่านการค้าใต้ดินยังไม่มีที่นี่ Seoul Facilities Corporation ดูแลอยู่ 25 แห่ง เราจะเพิ่มเมื่อตรวจสอบทีละแห่ง — สิ่งที่ยังไม่ได้ตรวจสอบ เราจะไม่ลง',
+    rainyCta: (n) => `${n} ที่ที่ไปได้แม้ฝนตก`,
+    rainySub: 'มีหลังคาและใกล้สถานีรถไฟฟ้า',
+    rainyNow: 'ฝนตกอยู่',
+    rainyForecast: 'วันนี้มีพยากรณ์ฝน',
   },
 };
 

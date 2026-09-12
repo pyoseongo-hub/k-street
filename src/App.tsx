@@ -11,6 +11,7 @@ import CoverPicker from "./components/CoverPicker";
 import HomeSwitch from "./components/HomeSwitch";
 import ShareApp from "./components/ShareApp";
 import ArrivalGuide, { arrivalLabel } from "./components/ArrivalGuide";
+import RainyPanel from "./components/RainyPanel";
 
 function App() {
   const { toggleTheme, getIcon } = useTheme();
@@ -97,7 +98,11 @@ function App() {
           //    같은 방식을 쓴다.
           <>
             <div hidden={tab !== "home"}>
-              <HomeSwitch season={<MonthlyFestivalPanel />} district={<DistrictExplorer />} />
+              <HomeSwitch
+                season={<MonthlyFestivalPanel />}
+                district={<DistrictExplorer />}
+                rainy={<RainyPanel />}
+              />
             </div>
             <div hidden={tab !== "saved"}>
               <SavedPanel />

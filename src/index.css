@@ -2834,3 +2834,106 @@ html[lang^="zh"] * {
 .ag-link-icon { flex: none; font-size: 1.1rem; }
 .ag-link-text { flex: 1; min-width: 0; }
 .ag-link-go { flex: none; color: var(--text-muted); }
+
+/* ☔ 비 오는 날 — 「계절 | 동네」 옆 세 번째 칸 (2026-09-12)
+   설계 이유는 src/components/RainyPanel.tsx 머리말에. */
+
+/* 🚨 칸이 둘에서 **셋**이 되었다. 좁은 폰에서 글자가 잘리지 않게 두 가지를 둔다:
+   · min-width 로 **너무 좁아지면 둘째 줄로 내려가게** 한다
+     (사장님이 허락한 모양이다 — "둘째 줄에 넣든지")
+   · 글자는 한 줄로 유지하고 넘치면 … 로 — 반 잘린 글자가 제일 나쁘다 */
+.home-tabs { flex-wrap: wrap; }
+.home-tab {
+  flex: 1 1 auto;
+  min-width: 88px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── 비 예보가 있을 때만 뜨는 한 줄 ── */
+.rain-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin: 0 0 12px;
+  padding: 11px 13px;
+  border: 1px solid color-mix(in srgb, var(--rain) 40%, var(--border));
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--rain) 12%, transparent);
+  color: var(--text);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+.rain-hint > span:first-child { flex: none; font-size: 1.2rem; }
+.rain-hint-tx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.rain-hint-tx strong { font-size: .92rem; color: var(--rain); }
+.rain-hint-tx span { font-size: .82rem; color: var(--text-muted); }
+.rain-hint-go { flex: none; color: var(--rain); }
+
+/* ── 목록 ── */
+.rainy-panel { display: flex; flex-direction: column; gap: 4px; }
+.rp-lead { margin: 2px 0 14px; display: flex; flex-direction: column; gap: 3px; }
+.rp-lead strong { font-size: 1.06rem; }
+.rp-lead > span { font-size: .86rem; color: var(--text-muted); }
+
+.rp-grp { margin: 0 0 18px; }
+.rp-grp-h {
+  display: flex; align-items: center; gap: 7px;
+  margin: 0 0 9px; font-size: .94rem; font-weight: 600;
+}
+.rp-cnt {
+  margin-left: auto; font-size: .8rem; color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+/* 🏮 아케이드 안내문구 — **목록과 한 세트**다. 눈에 띄되 겁주지 않게
+   빨강이 아니라 시장 색(주황)을 쓴다. 사고가 아니라 「이만큼만 덮였다」는 사실이다. */
+.rp-warn {
+  margin: 0 0 10px;
+  padding: 8px 11px;
+  border-left: 3px solid var(--market);
+  border-radius: 0 8px 8px 0;
+  background: color-mix(in srgb, var(--market) 9%, transparent);
+  font-size: .83rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+.rp-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.rp-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 11px 12px;
+  border: 1px solid var(--border); border-radius: 13px;
+  background: var(--surface);
+}
+.rp-ic { flex: none; font-size: 1.15rem; line-height: 1.3; }
+.rp-tx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.rp-nm { font-size: .93rem; font-weight: 600; }
+.rp-mt { font-size: .79rem; color: var(--text-muted); line-height: 1.5; }
+.rp-dist {
+  flex: none; padding-top: 2px;
+  font-size: .79rem; color: var(--rain);
+  font-variant-numeric: tabular-nums;
+}
+.rp-missing {
+  margin: 4px 0 0; padding: 10px 12px;
+  border: 1px dashed var(--border); border-radius: 11px;
+  font-size: .82rem; line-height: 1.6; color: var(--text-muted);
+}
+
+/* 🐞 줄마다 길찾기 단추를 다 펼쳐 놨더니 한 줄이 180px, 118곳이면 2만 픽셀이었다
+   (2026-09-12에 화면을 보고 찾음). 접어 두고 누른 것만 펼친다 —
+   이 화면에서 손님이 먼저 하는 일은 **거리를 훑는 것**이다. */
+/* 🐞 `.rp-row` 는 위에서 **가로 배치(flex)** 로 잡혀 있었다. 그대로 두고 안에
+   머리줄·펼친 칸을 넣으니 **둘이 나란히 앉아** 이름이 두 줄로 쪼개졌다
+   (「고촌이종근기념 / 관」). 위아래로 쌓아야 한다. */
+.rp-row { display: block; padding: 0; overflow: hidden; }
+.rp-head {
+  display: flex; align-items: flex-start; gap: 10px;
+  width: 100%; padding: 11px 12px;
+  border: 0; background: none; color: var(--text);
+  text-align: left; font: inherit; cursor: pointer;
+}
+.rp-row.open { border-color: color-mix(in srgb, var(--rain) 45%, var(--border)); }
+.rp-open { padding: 0 12px 12px; }
