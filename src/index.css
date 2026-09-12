@@ -773,9 +773,12 @@ button {
   word-break: keep-all;
 }
 
+/* 🐞 처음에 `white-space: nowrap` 을 줬다가 **장소가 카드 밖으로 넘쳤다** —
+   「용마폭포공원(중랑구 용마산로 250-12」에서 그대로 잘렸다. 바로 위 주석에
+   「줄을 자르지 않는다」라고 적어 놓고 자르는 속성을 준 셈이다.
+   장소 이름은 길 수 있다(괄호 안에 지번이 통째로 들어오기도 한다). **줄바꿈을 허락한다.** */
 .fc-sure-at {
   color: var(--text-muted);
-  white-space: nowrap;
 }
 
 .fc-name {

@@ -10,17 +10,25 @@
 //    예전 상태(center)를 일부러 입히면 제목이 119px 잘린다고 잡아낸다.
 //
 //   npx http-server dist -p 8127 -s &
+//
+// 🐞 2026-09-12: 여기만 **주소가 박혀 있어서** 다른 포트로 띄우면 연결 거부로 죽었다.
+//    옆 검사들(check-phone-width·check-btn-clip·check-distance-view)은 전부
+//    `node scripts/… <포트>` 로 받는데 이것만 달랐다 — **잣대가 둘이면 반쪽만 돈다.**
+//    검사를 한 줄로 죽 돌릴 때 이것만 조용히 빠져 있었다.
 //   PLAYWRIGHT_MODULE=... node scripts/check-card-top.mjs
 
 const m = await import(process.env.PLAYWRIGHT_MODULE);
 const chromium = m.chromium ?? m.default?.chromium;
 const D = process.env.SHOT_DIR ?? "/tmp";
+const PORT = process.argv[2] ?? "8127";
+const BASE = `http://127.0.0.1:${PORT}`;
+
 const b = await chromium.launch();
 let bad = 0;
 for (const h of [640, 720, 850]) {
   const ctx = await b.newContext({ viewport: { width: 390, height: h } });
   const p = await ctx.newPage();
-  await p.goto("http://127.0.0.1:8127/", { waitUntil: "networkidle" });
+  await p.goto(BASE, { waitUntil: "networkidle" });
   await p.locator("select").first().selectOption("ko").catch(()=>{});
   await p.waitForTimeout(700);
   await p.locator(".home-tab").nth(1).click();

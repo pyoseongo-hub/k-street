@@ -322,7 +322,7 @@ const translations: Record<Language, Translations> = {
     festivalBloomVaries: '꽃이 피는 때에 따라 날짜가 바뀝니다 — 이름을 눌러 올해 일정을 확인하세요.',
     festivalCheckDates: '날짜 확인',
     festivalOfficialNotice: '공식 안내',
-    festivalConfirmedBy: (org) => `${org}이(가) 올린 확정 일정입니다`,
+    festivalConfirmedBy: (org) => `${org} 확정 일정입니다`,
     festivalNoPhoto: '사진은 사용 권한이 없어 싣지 못했습니다. 이름을 누르면 공식 안내로 갑니다.',
     showToDriver: '목적지 보여주기',
     shareLabel: '공유',
