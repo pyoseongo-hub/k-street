@@ -38,6 +38,23 @@ if (!KEY) {
 const APPLY = process.argv.includes("--apply");
 const ONLY = (process.env.ONLY ?? "").trim(); // 갈래 하나만 받고 싶을 때
 const LIMIT = Number(process.env.LIMIT || 0);
+/**
+ * ⏱️ **한 곳에 오래 매달리지 않는다** (2026-09-12에 배웠다).
+ *
+ * tour-fetch 의 기본은 **6번 재시도(최대 2분 15초)**다. 그건 「한 번 받아 오면
+ * 끝인 작업」에 맞는 값이다 — 20분짜리 수집이 첫 호출에서 날아가지 않게.
+ *
+ * 🚨 그런데 여기는 **128번 물어본다**(64곳 × 2). 곱하면 최악이 **몇 시간**이다.
+ *    실제로 한 판을 20분 넘게 돌리다 껐다. **같은 재시도 값이 작업 성격에 따라
+ *    약이 되기도 독이 되기도 한다** — 「잣대는 하나」가 여기서는 안 맞는다.
+ *
+ * ✅ 대신 **빨리 포기하고 다음으로 간다.** 이 스크립트는 **덮어쓰지 않고 합치니까**
+ *    나중에 다시 돌리면 빈 곳만 채워진다. 한 판에 다 받을 이유가 없다.
+ */
+const TRIES = Number(process.env.TRIES || 2);
+/** ⏳ 전체 시간 상한(분). 넘으면 **받은 것까지 저장하고** 끝낸다. */
+const MAX_MIN = Number(process.env.MAX_MIN || 12);
+const STARTED = Date.now();
 const OUT = "src/data/place-intro.json";
 
 const DUMP = "dist-ssr/dump-intro-targets.js";
@@ -69,7 +86,11 @@ const q = (o) => new URLSearchParams({ MobileOS: "ETC", MobileApp: "KStreet", _t
 async function ask(path, params) {
   let t;
   try {
-    const r = await fetchWithRetry(`${ROOT}/${path}?serviceKey=${KEY}&${q(params)}`);
+    const r = await fetchWithRetry(`${ROOT}/${path}?serviceKey=${KEY}&${q(params)}`, {
+      tries: TRIES,
+      // 짧게 두 번이면 「지금 열려 있나」를 보기에 충분하다. 더 기다릴 값은 다음 판에 쓴다.
+      waits: [4000, 8000],
+    });
     t = await r.text();
   } catch (e) {
     return { ok: false, why: e?.message ?? String(e) };
@@ -126,7 +147,15 @@ console.log(`🏪 ${targets.length}곳의 속사정을 받아 온다${ONLY ? ` (
 const out = {};
 const stat = { sells: 0, hours: 0, closed: 0, fee: 0, tel: 0, none: 0, failed: 0 };
 
+let stopped = 0;
 for (const t of targets) {
+  // ⏳ 시간이 다 되면 **받은 것까지 저장하고** 끝낸다. 끝까지 붙들고 있다가
+  //    워크플로가 잘리면 **그날 받은 것이 전부 날아간다.**
+  if ((Date.now() - STARTED) / 60000 > MAX_MIN) {
+    stopped = targets.length - targets.indexOf(t);
+    console.log(`\n⏳ ${MAX_MIN}분이 지났다 — 남은 ${stopped}곳은 다음 판에 받는다(합쳐진다).`);
+    break;
+  }
   const c = await ask("detailCommon2", { contentId: t.contentId });
   if (!c.ok || !c.row?.contenttypeid) {
     console.log(`❌ ${t.name} — 갈래를 못 물어봤다${c.why ? `: ${c.why}` : ""}`);
@@ -176,6 +205,7 @@ console.log(`\n─────────────────────�
 console.log(`받은 곳 ${n}/${targets.length}`);
 console.log(`  판매품목 ${stat.sells} · 영업시간 ${stat.hours} · 휴무 ${stat.closed} · 요금 ${stat.fee} · 전화 ${stat.tel}`);
 console.log(`  쓸 만한 칸이 없던 곳 ${stat.none} · 못 물어본 곳 ${stat.failed}`);
+if (stopped) console.log(`  시간이 다 되어 안 물어본 곳 ${stopped} — **다시 돌리면 채워진다**`);
 
 // 🚨 **다 실패했는데 조용히 끝나면 안 된다.** 「받은 곳 0」은 성공이 아니다.
 if (!n) {

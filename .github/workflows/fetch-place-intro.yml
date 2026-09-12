@@ -55,6 +55,10 @@ jobs:
           TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
           ONLY: ${{ inputs.only }}
           LIMIT: ${{ inputs.limit }}
+          # ⏱️ 한 곳에 오래 매달리지 않는다 — 128번 물어보는 작업이라 곱하면 몇 시간이다.
+          #    빨리 포기하고 다음으로 간다. 빈 곳은 **다시 돌리면 합쳐진다.**
+          TRIES: "2"
+          MAX_MIN: "12"
         run: |
           set -o pipefail
           node scripts/fetch-place-intro.mjs ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee intro-log.txt
