@@ -214,7 +214,7 @@ console.log(`🏛️ 받은 줄 ${rows.length}개 · 그중 축제이고 아직 
 // 손님이 다음에 갈 수 있는 날짜가 그것이다.
 const byKey = new Map<string, Row>();
 for (const r of live) {
-  const k = `${r.GUNAME} ${key(r.TITLE ?? "")}`;
+  const k = `${r.GUNAME}|${key(r.TITLE ?? "")}`;
   const cur = byKey.get(k);
   if (!cur || (ymd(r.STRTDATE) ?? "9999") < (ymd(cur.STRTDATE) ?? "9999")) byKey.set(k, r);
 }
@@ -238,7 +238,7 @@ const missed: Place[] = [];
 
 for (const f of festivals) {
   const k = key(f.name);
-  const exact = byKey.get(`${f.gu} ${k}`);
+  const exact = byKey.get(`${f.gu}|${k}`);
   if (exact) {
     const start = ymd(exact.STRTDATE);
     if (!start) continue;
@@ -259,7 +259,7 @@ for (const f of festivals) {
   // 🔎 **비슷한 것은 저장하지 않는다.** 사람이 볼 후보로만 낸다 —
   //    이름 대조는 이 저장소가 여러 번 틀린 자리다. 애매하면 비워 둔다.
   for (const [kk, r] of byKey) {
-    const [gu, name] = kk.split(" ");
+    const [gu, name] = kk.split("|");
     if (gu !== f.gu) continue;
     if (name.includes(k) || k.includes(name)) {
       near.push(`   ${f.gu} 「${f.name}」  ≈  「${r.TITLE}」  ${r.DATE}`);
@@ -285,6 +285,37 @@ if (near.length) {
 
 console.log(`\n⏳ 아직 확정 날짜가 없는 축제 ${missed.length}곳 — 정상이다.`);
 console.log("   구청이 아직 안 올렸다는 뜻이고, 올라오면 이 작업이 다음 날 잡는다.");
+
+// 🆕 **구청에는 올라왔는데 우리 화면에는 없는 축제** — 이 목록이 진짜 값나가는 자리다.
+//
+//    첫 실행(2026-09-12)에서 곧 열리는 축제 59개 중 우리 것과 맞은 건 2곳뿐이었다.
+//    그 숫자만 보면 「대조가 잘 안 된다」로 읽히는데, **둘 중 무엇인지 갈라 봐야 한다** —
+//      ① 이름 표기가 달라서 못 맞춘 것  → src/data/name-aliases.json 에 적으면 붙는다
+//      ② 애초에 우리 앱에 **없는 축제**  → 들일지 사람이 정한다
+//    이 목록을 안 찍으면 둘을 못 가른다. 그래서 **날짜순으로 전부** 내보낸다.
+//
+//    ⚠️ 여기 있는 것을 자동으로 앱에 넣지 않는다. 사진·좌표·번역이 따라와야 하고,
+//       우리 앱은 「서울 관광객이 갈 만한 곳」을 고르는 자리지 행사 목록이 아니다.
+const matchedKeys = new Set(
+  Object.values(hits).map((h) => `${h.gu}|${key(h.title)}`),
+);
+const notOurs = [...byKey.entries()]
+  .filter(([kk]) => !matchedKeys.has(kk))
+  .map(([, r]) => r)
+  .sort((a, b) => (ymd(a.STRTDATE) ?? "").localeCompare(ymd(b.STRTDATE) ?? ""));
+
+if (notOurs.length) {
+  console.log(`\n🆕 구청에는 있는데 우리 화면에 없는 축제 ${notOurs.length}곳:`);
+  for (const r of notOurs)
+    console.log(
+      `   ${(r.GUNAME ?? "").padEnd(5)} ${r.DATE ?? ""}  ${(r.TITLE ?? "").normalize("NFC")}` +
+        `${r.ORG_NAME ? `  · ${r.ORG_NAME}` : ""}`,
+    );
+  console.log(
+    "   ① 이름만 다른 것이면 src/data/name-aliases.json 에 적는다 → 다음 실행부터 붙는다",
+  );
+  console.log("   ② 정말 없는 축제면 들일지 사람이 정한다 (사진·좌표·번역이 따라와야 한다)");
+}
 
 if (!APPLY) {
   console.log(

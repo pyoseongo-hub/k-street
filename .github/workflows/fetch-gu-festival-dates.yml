@@ -86,6 +86,14 @@ jobs:
         id: commit
         if: steps.key.outputs.have == 'yes'
         run: |
+          # 🐞 맛보기로 돌린 날은 이 파일이 **아예 없다.** 그런데 `git add <없는 파일>` 은
+          #    fatal 로 죽는다 — 첫 실행이 그래서 빨갛게 끝났다. 받아 오는 일은 다 끝난
+          #    뒤였는데도 사장님 화면에는 ❌ 로 보였다. **없으면 그냥 지나간다.**
+          if [ ! -f src/data/gu-festival-dates.json ]; then
+            echo "committed=no" >> "$GITHUB_OUTPUT"
+            echo "⬜ 저장된 파일이 없다 (맛보기로 돌렸다는 뜻) — 커밋할 것이 없다"
+            exit 0
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A src/data/gu-festival-dates.json
