@@ -434,11 +434,19 @@ const notOurs = [...byKey.entries()]
 
 if (notOurs.length) {
   console.log(`\n🆕 구청에는 있는데 우리 화면에 없는 축제 ${notOurs.length}곳 (「축제」로 등록된 것만):`);
-  for (const r of notOurs)
+  // 📌 **장소와 공식 주소까지 찍는다** (2026-09-12).
+  //    사장님이 「들일까 말까」를 정하려면 이름·날짜만으로는 모자란다 —
+  //    어디서 열리는지, 근거를 어디서 보는지가 있어야 한 눈에 판단이 된다.
+  //    (사장님 지시: "항상 공식 페이지 링크 주고 직접 확인 가능하게")
+  for (const r of notOurs) {
     console.log(
       `   ${(r.GUNAME ?? "").padEnd(5)} ${r.DATE ?? ""}  ${(r.TITLE ?? "").normalize("NFC")}` +
         `${r.ORG_NAME ? `  · ${r.ORG_NAME}` : ""}`,
     );
+    const at = r.PLACE?.trim();
+    const link = r.ORG_LINK?.trim() || r.HMPG_ADDR?.trim();
+    if (at || link) console.log(`        📍 ${at ?? "(장소 없음)"}${link ? `   🔗 ${link}` : ""}`);
+  }
   console.log(
     "   ① 이름만 다른 것이면 src/data/name-aliases.json 에 적는다 → 다음 실행부터 붙는다",
   );
