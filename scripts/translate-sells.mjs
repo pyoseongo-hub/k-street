@@ -58,12 +58,17 @@ const TARGETS = [
  * 「원단·의류부자재 / 액세서리 부자재 / 혼수용품 및 홈인테리어 등」
  *   → 원단 · 의류부자재 · 액세서리 부자재 · 혼수용품 및 홈인테리어
  *
- * 🚨 **가운뎃점(·)으로도 쪼갠다** — 관광공사가 슬래시와 섞어 쓴다.
- * ⚠️ 「및」은 안 쪼갠다 — 「혼수용품 및 홈인테리어」는 한 덩어리로 읽는 편이 낫다.
+ * 🐞 **가운뎃점(·)으로는 쪼개지 않는다** (2026-09-12에 당했다).
+ *    처음엔 쪼갰다가 **「농·수·축산물」이 「농」·「수」·「축산물」 셋으로 갈라졌다.**
+ *    그래서 낱말 표에 `농 → Farm`, `수 → number` 가 들어갔다.
+ *    「원단·의류부자재」처럼 쪼개도 되는 것이 있어 헷갈리지만,
+ *    **통으로 두면 번역기가 알아서 「Fabric and clothing accessories」로 옮긴다.**
+ *    쪼개서 얻는 것보다 **잃는 것이 크다.**
+ * ⚠️ 「및」도 안 쪼갠다 — 「혼수용품 및 홈인테리어」는 한 덩어리로 읽는 편이 낫다.
  */
 export function splitSells(s) {
   return String(s ?? "")
-    .split(/[\/,·]/)
+    .split(/[\/,]/)
     .map((t) => t.trim().replace(/\s*등$/, "").trim())
     .filter(Boolean);
 }
@@ -73,6 +78,37 @@ if (!existsSync(IN)) {
   process.exit(1);
 }
 const 곳 = JSON.parse(readFileSync(IN, "utf-8"))["곳"] ?? {};
+
+/**
+ * 🗣️ **애매한 한국어를 또렷한 한국어로 바꿔서 번역시킨다.**
+ *
+ * 2026-09-12에 맛보기를 눈으로 보고 찾았다. 구글이 이렇게 옮겼다:
+ *   · 구제 → **salvation(구원)**       ← 광장시장에 붙는 말이다
+ *   · 지류 → **tributary(강 지류)**    ← 방산시장에 붙는 말이다
+ *   · 잡화 → **haberdashery(방물)** · 중국어는 **服装辅料(의류 부자재)**
+ *   · 분화 → **differentiation(분화)** ← 양재꽃시장에 붙는 말이다
+ *
+ * 🚨 **낱말이 틀린 게 아니라 한국어가 여러 뜻이라 그렇다.** 그러니 고칠 자리는
+ *    번역문이 아니라 **번역기에 넣는 말**이다. 여기서 또렷한 말로 바꿔 주면
+ *    **12개 언어가 한꺼번에 맞아진다.** 사람은 한국어 한 줄만 정하면 된다.
+ *    (번역문 12개를 손으로 고치면 다음 달에 또 고쳐야 한다.)
+ *
+ * 📌 화면에 보이는 한국어 원문은 **그대로 「구제」다.** 여기는 번역기에게만 하는 말이다.
+ */
+const CLARIFY = {
+  구제: "중고 의류",
+  지류: "종이 제품",
+  잡화: "생활 잡화",
+  신변잡화: "생활 잡화",
+  분화: "화분에 심은 꽃",
+  초화: "화초",
+  시계: "손목시계",
+  인쇄: "인쇄물",
+  나무: "화분에 심은 나무",
+  종합: "여러 가지",
+  청과: "과일과 채소",
+  전통품: "전통 공예품",
+};
 
 // 낱말 모으기 — 많이 나온 순으로 줄 세운다(사람이 볼 때 중요한 것이 위에 온다).
 const count = new Map();
@@ -88,7 +124,12 @@ const chars = todo.reduce((n, w) => n + w.length, 0);
 
 console.log(`🏪 판매품목 낱말 ${words.length}개 (새로 번역할 것 ${todo.length}개)`);
 console.log(`   이번에 쓸 글자 수: 약 ${chars * TARGETS.length}자 (구글 무료 한도 월 50만 자)\n`);
-console.log(`   많이 나온 것: ${words.slice(0, 12).map((w) => `${w}(${count.get(w)})`).join(" · ")}\n`);
+console.log(`   많이 나온 것: ${words.slice(0, 12).map((w) => `${w}(${count.get(w)})`).join(" · ")}`);
+const clarified = todo.filter((w) => CLARIFY[w]);
+if (clarified.length) {
+  console.log(`   🗣️ 또렷하게 바꿔서 보낼 말: ${clarified.map((w) => `${w}→${CLARIFY[w]}`).join(" · ")}`);
+}
+console.log("");
 
 if (!todo.length) {
   console.log("✅ 새로 번역할 낱말이 없다.");
@@ -97,7 +138,8 @@ if (!todo.length) {
 
 async function batch(texts, google) {
   const body = new URLSearchParams();
-  for (const t of texts) body.append("q", t);
+  // 🗣️ 번역기에는 **또렷하게 바꾼 말**을 보낸다. 표에 없으면 원문 그대로.
+  for (const t of texts) body.append("q", CLARIFY[t] ?? t);
   body.append("source", "ko");
   body.append("target", google);
   body.append("format", "text");

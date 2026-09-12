@@ -30,20 +30,6 @@
    "id": "produk ternak",
    "th": "ผลิตภัณฑ์ปศุสัตว์"
   },
-  "잡화": {
-   "나온횟수": 15,
-   "en": "haberdashery",
-   "ja": "雑貨",
-   "zh": "服装辅料",
-   "zh-TW": "服裝輔料",
-   "vi": "cửa hàng may mặc",
-   "es": "mercería",
-   "fr": "mercerie",
-   "de": "Kurzwaren",
-   "ru": "галантерея",
-   "id": "barang kelontong",
-   "th": "เครื่องใช้เย็บปักถักร้อย"
-  },
   "수산물": {
    "나온횟수": 14,
    "en": "Seafood",
@@ -324,20 +310,6 @@
    "id": "Hanbok",
    "th": "ฮันบก"
   },
-  "농": {
-   "나온횟수": 2,
-   "en": "Farm",
-   "ja": "農",
-   "zh": "农场",
-   "zh-TW": "農場",
-   "vi": "Nông trại",
-   "es": "Granja",
-   "fr": "Ferme",
-   "de": "Bauernhof",
-   "ru": "Ферма",
-   "id": "Peternakan",
-   "th": "ฟาร์ม"
-  },
   "생선": {
    "나온횟수": 2,
    "en": "fish",
@@ -492,34 +464,6 @@
    "id": "Aneka Daging Panggang",
    "th": "เนื้อย่างรวมนานาชนิด"
   },
-  "구제": {
-   "나온횟수": 1,
-   "en": "salvation",
-   "ja": "救済",
-   "zh": "救恩",
-   "zh-TW": "救恩",
-   "vi": "sự cứu rỗi",
-   "es": "salvación",
-   "fr": "salut",
-   "de": "Erlösung",
-   "ru": "спасение",
-   "id": "penyelamatan",
-   "th": "ความรอด"
-  },
-  "나무": {
-   "나온횟수": 1,
-   "en": "tree",
-   "ja": "木",
-   "zh": "树",
-   "zh-TW": "樹",
-   "vi": "cây",
-   "es": "árbol",
-   "fr": "arbre",
-   "de": "Baum",
-   "ru": "дерево",
-   "id": "pohon",
-   "th": "ต้นไม้"
-  },
   "농산물 등 도매유통시장": {
    "나온횟수": 1,
    "en": "Wholesale distribution market for agricultural products, etc.",
@@ -547,20 +491,6 @@
    "ru": "закуски",
    "id": "camilan",
    "th": "ขนมขบเคี้ยว"
-  },
-  "분화": {
-   "나온횟수": 1,
-   "en": "differentiation",
-   "ja": "噴火",
-   "zh": "差异化",
-   "zh-TW": "差異化",
-   "vi": "sự phân biệt",
-   "es": "diferenciación",
-   "fr": "différenciation",
-   "de": "Differenzierung",
-   "ru": "дифференциация",
-   "id": "diferensiasi",
-   "th": "ความแตกต่าง"
   },
   "비단원단": {
    "나온횟수": 1,
@@ -604,34 +534,6 @@
    "id": "Iga sapi",
    "th": "ซี่โครงเนื้อวัว"
   },
-  "수": {
-   "나온횟수": 1,
-   "en": "number",
-   "ja": "数",
-   "zh": "数字",
-   "zh-TW": "數位",
-   "vi": "con số",
-   "es": "número",
-   "fr": "nombre",
-   "de": "Nummer",
-   "ru": "число",
-   "id": "nomor",
-   "th": "ตัวเลข"
-  },
-  "시계": {
-   "나온횟수": 1,
-   "en": "clock",
-   "ja": "時計",
-   "zh": "钟",
-   "zh-TW": "鐘",
-   "vi": "cái đồng hồ",
-   "es": "reloj",
-   "fr": "horloge",
-   "de": "Uhr",
-   "ru": "часы",
-   "id": "jam",
-   "th": "นาฬิกา"
-  },
   "식료품": {
    "나온횟수": 1,
    "en": "foodstuffs",
@@ -659,20 +561,6 @@
    "ru": "обувь",
    "id": "sepatu",
    "th": "รองเท้า"
-  },
-  "신변잡화": {
-   "나온횟수": 1,
-   "en": "Personal miscellaneous items",
-   "ja": "新変雑貨",
-   "zh": "个人杂项",
-   "zh-TW": "個人雜項",
-   "vi": "Đồ dùng cá nhân linh tinh",
-   "es": "artículos personales varios",
-   "fr": "objets personnels divers",
-   "de": "Sonstige persönliche Gegenstände",
-   "ru": "Разные личные вещи",
-   "id": "Barang-barang pribadi lainnya",
-   "th": "ของใช้ส่วนตัวเบ็ดเตล็ด"
   },
   "야채": {
    "나온횟수": 1,
@@ -758,20 +646,6 @@
    "id": "ginseng",
    "th": "โสม"
   },
-  "인쇄": {
-   "나온횟수": 1,
-   "en": "print",
-   "ja": "印刷",
-   "zh": "打印",
-   "zh-TW": "列印",
-   "vi": "in",
-   "es": "imprimir",
-   "fr": "imprimer",
-   "de": "drucken",
-   "ru": "печать",
-   "id": "mencetak",
-   "th": "พิมพ์"
-  },
   "잡곡류": {
    "나온횟수": 1,
    "en": "grains",
@@ -799,34 +673,6 @@
    "ru": "электронные товары",
    "id": "produk elektronik",
    "th": "ผลิตภัณฑ์อิเล็กทรอนิกส์"
-  },
-  "전통품": {
-   "나온횟수": 1,
-   "en": "traditional goods",
-   "ja": "伝統品",
-   "zh": "传统商品",
-   "zh-TW": "傳統商品",
-   "vi": "hàng hóa truyền thống",
-   "es": "productos tradicionales",
-   "fr": "produits traditionnels",
-   "de": "traditionelle Waren",
-   "ru": "традиционные товары",
-   "id": "barang tradisional",
-   "th": "สินค้าแบบดั้งเดิม"
-  },
-  "종합": {
-   "나온횟수": 1,
-   "en": "synthesis",
-   "ja": "総合",
-   "zh": "合成",
-   "zh-TW": "合成",
-   "vi": "tổng hợp",
-   "es": "síntesis",
-   "fr": "synthèse",
-   "de": "Synthese",
-   "ru": "синтез",
-   "id": "sintesis",
-   "th": "สังเคราะห์"
   },
   "주방": {
    "나온횟수": 1,
@@ -856,20 +702,6 @@
    "id": "dompet",
    "th": "กระเป๋าสตางค์"
   },
-  "지류": {
-   "나온횟수": 1,
-   "en": "tributary",
-   "ja": "支流",
-   "zh": "支流",
-   "zh-TW": "支流",
-   "vi": "nhánh sông",
-   "es": "afluente",
-   "fr": "affluent",
-   "de": "Nebenfluss",
-   "ru": "приток",
-   "id": "anak sungai",
-   "th": "แคว"
-  },
   "직물": {
    "나온횟수": 1,
    "en": "textile",
@@ -884,20 +716,6 @@
    "id": "tekstil",
    "th": "สิ่งทอ"
   },
-  "청과": {
-   "나온횟수": 1,
-   "en": "Fruits and vegetables",
-   "ja": "果物",
-   "zh": "水果和蔬菜",
-   "zh-TW": "水果和蔬菜",
-   "vi": "Trái cây và rau quả",
-   "es": "Frutas y verduras",
-   "fr": "Fruits et légumes",
-   "de": "Obst und Gemüse",
-   "ru": "Фрукты и овощи",
-   "id": "Buah-buahan dan sayuran",
-   "th": "ผลไม้และผัก"
-  },
   "청과물": {
    "나온횟수": 1,
    "en": "greengrocery",
@@ -911,20 +729,6 @@
    "ru": "овощные продукты",
    "id": "toko sayur",
    "th": "ร้านขายผักผลไม้"
-  },
-  "초화": {
-   "나온횟수": 1,
-   "en": "Flowering flowers",
-   "ja": "草花",
-   "zh": "开花的花朵",
-   "zh-TW": "開花的花朵",
-   "vi": "Hoa nở",
-   "es": "Flores en floración",
-   "fr": "fleurs",
-   "de": "Blühende Blumen",
-   "ru": "Цветущие цветы",
-   "id": "Bunga-bunga yang mekar",
-   "th": "ดอกไม้บาน"
   },
   "침구": {
    "나온횟수": 1,
