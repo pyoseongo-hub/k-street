@@ -232,16 +232,51 @@ interface Hit {
   fetchedAt: string;
 }
 
+/**
+ * 🗺️ **구는 깨는 패가 아니라 참고다** (2026-09-12에 고침).
+ *
+ * 처음엔 「이름이 같고 **구도 같아야** 맞은 것」으로 했다. 첫 실행에서 걸렸다 —
+ *   우리    서울라이트 한강 빛섬축제 · **광진구** (뚝섬한강공원, 강변북로 2273)
+ *   문화포털 서울라이트 한강 빛섬축제 · **용산구**
+ * 같은 축제인데 구가 다르다. 한강 축제는 여러 한강공원에 걸쳐 열리고,
+ * 문화포털은 **대표 장소 한 곳**의 구만 적기 때문이다. 구를 못 박으면 이런 것을
+ * 영영 못 맞춘다 — 그리고 정작 손님이 가장 궁금해하는 게 이런 큰 축제다.
+ *
+ * 그래서 이렇게 가른다:
+ *   · 이름이 **꼭 맞는 게 하나뿐**이면  → 받는다. 구가 다르면 ⚠️ 로 적어 사람이 보게 한다
+ *   · 이름이 꼭 맞는 게 **여럿**이면    → 그중 구까지 같은 하나가 있을 때만 받는다
+ *   · 그것도 아니면                    → 안 받는다. 「사람이 볼 후보」로만 낸다
+ *
+ * 느슨해진 게 아니다 — **이름은 여전히 꼭 맞아야 한다.** 다만 구 하나가
+ * 어긋났다고 버리지 않을 뿐이다.
+ */
+const byName = new Map<string, Row[]>();
+for (const r of byKey.values()) {
+  const k = key(r.TITLE ?? "");
+  const arr = byName.get(k);
+  if (arr) arr.push(r);
+  else byName.set(k, [r]);
+}
+
 const hits: Record<string, Hit> = {};
 const near: string[] = [];
+const guDiff: string[] = [];
 const missed: Place[] = [];
 
 for (const f of festivals) {
   const k = key(f.name);
-  const exact = byKey.get(`${f.gu}|${k}`);
+  const cands = byName.get(k) ?? [];
+  const exact =
+    cands.length === 1
+      ? cands[0]
+      : cands.filter((c) => c.GUNAME === f.gu).length === 1
+        ? cands.find((c) => c.GUNAME === f.gu)
+        : undefined;
   if (exact) {
     const start = ymd(exact.STRTDATE);
     if (!start) continue;
+    if (exact.GUNAME !== f.gu)
+      guDiff.push(`   「${f.name}」 — 우리는 ${f.gu}, 문화포털은 ${exact.GUNAME}`);
     hits[f.id] = {
       start,
       ...(ymd(exact.END_DATE) && ymd(exact.END_DATE) !== start ? { end: ymd(exact.END_DATE)! } : {}),
@@ -258,11 +293,16 @@ for (const f of festivals) {
   }
   // 🔎 **비슷한 것은 저장하지 않는다.** 사람이 볼 후보로만 낸다 —
   //    이름 대조는 이 저장소가 여러 번 틀린 자리다. 애매하면 비워 둔다.
-  for (const [kk, r] of byKey) {
-    const [gu, name] = kk.split("|");
-    if (gu !== f.gu) continue;
+  //    ⚠️ 여기서는 구를 안 본다. 위에서 구를 깨는 패로 안 쓰기로 했으니
+  //       후보를 찾을 때도 같은 잣대여야 한다 — **잣대가 둘이면 반쪽 적용이 생긴다.**
+  for (const r of byKey.values()) {
+    const name = key(r.TITLE ?? "");
+    // 너무 짧은 이름은 아무 데나 들어간다(「축제」 두 글자가 56곳에 다 걸린다).
+    if (Math.min(name.length, k.length) < 5) continue;
     if (name.includes(k) || k.includes(name)) {
-      near.push(`   ${f.gu} 「${f.name}」  ≈  「${r.TITLE}」  ${r.DATE}`);
+      near.push(
+        `   「${f.name}」(${f.gu})  ≈  「${r.TITLE}」(${r.GUNAME})  ${r.DATE}`,
+      );
       break;
     }
   }
@@ -276,6 +316,12 @@ for (const [id, h] of Object.entries(hits).slice(0, 40))
     `   ${h.gu.padEnd(5)} ${h.start}${h.end ? `~${h.end}` : ""}  ${h.title}` +
       `${h.org ? `  · ${h.org}` : ""}${h.registered ? `  (등록 ${h.registered})` : ""}  [id ${id}]`,
   );
+
+if (guDiff.length) {
+  console.log(`\n⚠️ 이름은 같은데 **구가 다른** 것 ${guDiff.length}건 — 받긴 받았다:`);
+  for (const l of guDiff) console.log(l);
+  console.log("   한강 축제처럼 여러 구에 걸친 행사라 그렇다. 엉뚱한 축제면 여기서 보인다.");
+}
 
 if (near.length) {
   console.log(`\n🔎 **사람이 봐야 할 후보** ${near.length}건 — 저장하지 않았다:`);
