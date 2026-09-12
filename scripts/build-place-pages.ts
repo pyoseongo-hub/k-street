@@ -222,6 +222,7 @@ const CATEGORY_EN: Record<string, string> = {
   hike: "Hiking trail",
   museum: "Museum",
   street: "Street & alley",
+  shop: "Shopping",
 };
 
 const MONTHS = ["", "January", "February", "March", "April", "May", "June",
@@ -265,6 +266,14 @@ const CATEGORY_HUB: Record<string, { slug: string; plural: string }> = {
   hike: { slug: "hiking-trails", plural: "Hiking trails" },
   museum: { slug: "museums", plural: "Museums" },
   street: { slug: "streets-and-alleys", plural: "Streets & alleys" },
+  // 🏬 상가·몰·아울렛 (2026-09-12). 주소를 「shopping」으로 잡았다 —
+  //    영어권이 실제로 치는 말이 "shopping in Seoul" 이다.
+  //    🚨 한 번 내면 못 바꾼다(남이 건 링크가 깨진다).
+  //    🐞 이름은 **「Shopping」이 아니라 「Shopping spots」**다. 처음에 「Shopping」으로
+  //       뒀더니 묶음 첫 줄이 이렇게 나왔다 — "32 **shopping** across 9 districts".
+  //       이 칸은 **수 뒤에 그대로 붙는 자리**(kindCount)라 셀 수 있는 말이어야 한다.
+  //       한 곳일 때 쓰는 말은 page-strings.ts 의 EN_ONE(shop: "shopping spot")에 따로 있다.
+  shop: { slug: "shopping", plural: "Shopping spots" },
 };
 const hubPathCategory = (c: string) => `seoul/${CATEGORY_HUB[c]?.slug ?? "places"}`;
 

@@ -29,8 +29,11 @@ const OUT_JSON = join(__dirname, "..", "src", "data", "tour-places-raw.json");
 // market·walk·hike가 왜 0건인지 확인할 방법이 없었다.
 const OUT_POOL = join(__dirname, "..", "src", "data", "tour-pool-all.json");
 
+// 🗂️ --from-pool 이면 관광공사를 안 부르므로 **열쇠가 필요 없다.**
+//    없다고 멈추면 규칙 한 줄 고칠 때마다 시크릿을 챙겨야 한다.
+const FROM_POOL_ARG = process.argv.includes("--from-pool");
 const API_KEY = process.env.TOUR_API_KEY;
-if (!API_KEY) {
+if (!API_KEY && !FROM_POOL_ARG) {
   console.error("TOUR_API_KEY 환경변수가 없다. 예) TOUR_API_KEY=xxxx node scripts/fetch-tour-places.mjs");
   process.exit(1);
 }
@@ -168,6 +171,12 @@ const NOT_STREET = /(공원|마을|패션타운|나눔누리|체험관|기념비
 //       쌈지길·초대길처럼 근거가 약한 것이 딸려 들어오지 않는다(돌려서 확인했다).
 const ENDS_STREET = /(거리|골목|길)$/;
 
+// 🏬 상가·몰·아울렛. 「시장」은 앞 규칙(market)이 먼저 가져가므로 여기 안 온다.
+const SHOP = /(쇼핑몰|백화점|아울렛|면세점|상가|플라자|프라자|패션몰|패션타운)/;
+// 아파트 상가(길음역롯데캐슬…)·공공기관(새활용플라자·나눔누리타운·한강공원 멀티프라자)은
+// 관광객이 갈 곳이 아니다. 실제로 걸려 나온 것들을 보고 적었다.
+const NOT_SHOP = /(캐슬|아파트|나눔누리|새활용|한강공원|주민센터|복지관)/;
+
 // ⚠️ 순서가 규칙의 일부다 — 앞에 있는 것이 이긴다. 한 곳이 두 칸에 겹쳐 들어가면
 // 화면에 같은 곳이 두 번 뜬다. 예: "노룬산골목시장"은 골목이 아니라 시장이고,
 // "안양천제방벚꽃길"은 산책로가 아니라 꽃길이며, "북한산 자락길"은 산이 아니라 산책로다.
@@ -178,6 +187,20 @@ const RULES = [
   { key: "walk", re: /(둘레길|나들길|산책|숲길|자락길|하늘길|트레일|올레|계곡|생태공원|수변|돌담길|서울로 7017)/ },
   { key: "hike", re: MTN, not: NOT_MTN },
   { key: "street", re: STREET, not: NOT_STREET, ends: ENDS_STREET },
+  // 🏬 **상가·몰·아울렛** (2026-09-12, 사장님 지시: "실내식물원이나 전시장,
+  //    대형 쇼핑몰도 연결해. 그래야 다양성 확보").
+  //
+  //    🚨 **우리가 고르지 않는다.** 관광공사가 쇼핑(38)으로 등재한 것 중
+  //       이름이 상가·몰·아울렛인 것을 **전부** 넣는다. 몇 곳을 골라 넣는 순간
+  //       「왜 이 백화점만?」이 생기고, 그게 이 앱의 첫 원칙(돈 받고 노출을
+  //       올려주지 않는다)이 무너지는 자리다. **고를 일을 안 만든다.**
+  //
+  //    📌 그리고 이 갈래에 값어치가 있는 이유는 **특성화된 상가들** 때문이다:
+  //       낙원 악기상가 · 답십리 고미술상가 · 세운전자상가 · 청계 조명기구상가 ·
+  //       남대문 문구/액세서리 상가. 백화점은 어디나 비슷하지만 이런 곳은 서울에만 있다.
+  //
+  //    ⚠️ 아파트 상가·공공기관 건물은 뺀다 — 관광객이 갈 곳이 아니다.
+  { key: "shop", re: SHOP, not: NOT_SHOP },
 ];
 
 // 넓게 받아 두는 칸들. 여기서 키워드로 골라낸다.
@@ -191,13 +214,49 @@ const POOL_TYPES = [
   { id: "38", label: "쇼핑" },
 ];
 
+/**
+ * 🗂️ **이미 받아 둔 자료로 다시 분류한다 — API 를 안 부른다** (`--from-pool`).
+ *
+ * 왜 필요한가 (2026-09-12) — **분류 규칙을 고칠 때마다 858곳을 다시 받을 이유가 없다.**
+ * 게다가 관광공사는 되다 말다 해서(그날 64곳 수집이 0/64 로 죽었다) 규칙 한 줄
+ * 고치려다 **하루를 기다리게** 된다.
+ *
+ * tour-pool-all.json 은 애초에 이러라고 만든 파일이다 —
+ * 「받은 것을 하나도 버리지 않고 통째로 저장한다. 규칙은 그 실제 제목들을 보고 정한다」.
+ * 그 뜻을 이제 실제로 쓴다.
+ *
+ * ⚠️ 축제(15)는 풀에 따로 있으므로 그대로 가져온다. 새로 안 받으니 **끝난 축제가
+ *    그대로 남는다** — 축제를 갱신하려면 --from-pool 없이 돌려야 한다.
+ */
+function readPool() {
+  const pool = JSON.parse(readFileSync(OUT_POOL, "utf-8"));
+  const poolByType = {};
+  const flat = [];
+  for (const [k, list] of Object.entries(pool)) {
+    if (!Array.isArray(list)) continue;
+    poolByType[k] = list;
+    // 분류는 원본 모양(title)을 보므로 되돌려 준다.
+    if (k.startsWith("15_")) continue;
+    for (const p of list) flat.push({ ...p, title: p.name });
+  }
+  const festivals = (pool["15_축제"] ?? []).map((p) => ({ ...p, title: p.name }));
+  return { poolByType, flat, festivals };
+}
+
 async function main() {
+  const FROM_POOL = process.argv.includes("--from-pool");
+  let festivals, pool, poolByType;
+  if (FROM_POOL) {
+    console.log("🗂️ 이미 받아 둔 자료로 **다시 분류만** 한다 (관광공사를 안 부른다)\n");
+    ({ poolByType, flat: pool, festivals } = readPool());
+    console.log(`  풀에 담긴 곳 ${pool.length}건 · 축제 ${festivals.length}건`);
+  } else {
   console.log("서울 축제·공연·행사(15) 받는 중...");
-  const festivals = await fetchAllByContentType("15");
+  festivals = await fetchAllByContentType("15");
   console.log(`  → ${festivals.length}건`);
 
-  const pool = [];
-  const poolByType = {};
+  pool = [];
+  poolByType = {};
   for (const { id, label } of POOL_TYPES) {
     console.log(`서울 ${label}(${id}) 받는 중...`);
     const list = await fetchAllByContentType(id);
@@ -205,9 +264,12 @@ async function main() {
     poolByType[`${id}_${label}`] = list.map(toPlace);
     pool.push(...list);
   }
+  }
 
   // 한 곳은 한 칸에만 들어간다 — RULES 순서대로 먼저 맞는 칸이 가져간다.
-  const result = { festival: festivals.map(toPlace) };
+  // --from-pool 이면 이미 toPlace 를 거친 모양이라 다시 바꾸지 않는다.
+  const conv = (it) => (FROM_POOL ? { ...it, title: undefined, name: it.name ?? it.title } : toPlace(it));
+  const result = { festival: festivals.map(conv).map((p) => ({ ...p, title: undefined })) };
   for (const { key } of RULES) result[key] = [];
   for (const it of pool) {
     const name = it.title || "";
@@ -216,7 +278,7 @@ async function main() {
     const rule = RULES.find(
       (r) => r.re.test(name) && !(r.not && r.not.test(name) && !(r.ends && r.ends.test(name.trim())))
     );
-    if (rule) result[rule.key].push(toPlace(it));
+    if (rule) result[rule.key].push(conv(it));
   }
 
   console.log("\n카테고리별 결과:");

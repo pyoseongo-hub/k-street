@@ -2713,5 +2713,335 @@
       "lng": 126.9710825243,
       "lat": 37.576569614
     }
+  ],
+  "shop": [
+    {
+      "name": "동대문디자인플라자(DDP)",
+      "gu": "중구",
+      "addr": "서울특별시 중구 을지로 281 (을지로7가)",
+      "contentId": "2470006",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/06/3539606_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/06/3539606_image3_1.jpg",
+      "lng": 127.0095709797,
+      "lat": 37.566107632
+    },
+    {
+      "name": "세운상가",
+      "gu": "종로구",
+      "addr": "서울특별시 종로구 청계천로 159 (장사동)",
+      "contentId": "2553876",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/60/3569460_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/60/3569460_image3_1.jpg",
+      "lng": 126.9952555258,
+      "lat": 37.5693347773
+    },
+    {
+      "name": "강남고속터미널 혼수상가",
+      "gu": "서초구",
+      "addr": "서울특별시 서초구 신반포로 194 (반포동)",
+      "contentId": "132201",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/32/3527832_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/32/3527832_image3_1.jpg",
+      "lng": 127.0055841495,
+      "lat": 37.5062061855
+    },
+    {
+      "name": "갤러리아백화점 명품관",
+      "gu": "강남구",
+      "addr": "서울특별시 강남구 압구정로 343 (압구정동)",
+      "contentId": "273772",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/74/3495074_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/74/3495074_image3_1.jpg",
+      "lng": 127.0400692668,
+      "lat": 37.5285292127
+    },
+    {
+      "name": "낙원 악기상가",
+      "gu": "종로구",
+      "addr": "서울특별시 종로구 삼일대로 428 (낙원동)",
+      "contentId": "132226",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/19/923719_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/19/923719_image3_1.jpg",
+      "lng": 126.9880310857,
+      "lat": 37.5728259087
+    },
+    {
+      "name": "남대문 문구상가",
+      "gu": "중구",
+      "addr": "서울특별시 중구 남대문로 6-2 (남대문로4가)",
+      "contentId": "985961",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/37/3573137_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/37/3573137_image3_1.jpg",
+      "lng": 126.9765019308,
+      "lat": 37.5604465848
+    },
+    {
+      "name": "남대문 본동의류상가",
+      "gu": "중구",
+      "addr": "서울특별시 중구 남대문시장2길 3-2 (남창동)",
+      "contentId": "986011",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/76/3568376_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/76/3568376_image3_1.jpg",
+      "lng": 126.9766574889,
+      "lat": 37.559868877
+    },
+    {
+      "name": "남대문 액세사리상가",
+      "gu": "중구",
+      "addr": "서울특별시 중구 남대문시장4길 21",
+      "contentId": "132211",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/73/1984373_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/73/1984373_image3_1.jpg",
+      "lng": 126.9776157542,
+      "lat": 37.5591939725
+    },
+    {
+      "name": "남대문 종합상가",
+      "gu": "중구",
+      "addr": "서울특별시 중구 남대문시장4길 21",
+      "contentId": "1013076",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/04/1015004_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/04/1015004_image3_1.jpg",
+      "lng": 126.9776518607,
+      "lat": 37.5592134153
+    },
+    {
+      "name": "남대문 중앙상가",
+      "gu": "중구",
+      "addr": "서울특별시 중구 남대문시장4길 21",
+      "contentId": "986038",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/87/1009887_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/87/1009887_image3_1.jpg",
+      "lng": 126.9776157542,
+      "lat": 37.5591939725
+    },
+    {
+      "name": "남평화상가",
+      "gu": "중구",
+      "addr": "서울특별시 중구 장충단로 282-10 (신당동)",
+      "contentId": "2761466",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/64/3568464_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/64/3568464_image3_1.jpg",
+      "lng": 127.0108429971,
+      "lat": 37.5692239587
+    },
+    {
+      "name": "답십리 고미술상가",
+      "gu": "동대문구",
+      "addr": "서울특별시 동대문구 고미술로 39",
+      "contentId": "282011",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/98/3055898_image2_1.JPG",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/98/3055898_image3_1.JPG",
+      "lng": 127.0522448086,
+      "lat": 37.5682581489
+    },
+    {
+      "name": "대도종합상가",
+      "gu": "중구",
+      "addr": "서울특별시 중구 남대문시장4길 9 (남창동)",
+      "contentId": "985952",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/39/3570439_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/39/3570439_image3_1.jpg",
+      "lng": 126.9776907326,
+      "lat": 37.5597216902
+    },
+    {
+      "name": "동화상가",
+      "gu": "중구",
+      "addr": "서울특별시 중구 장충단로13길 34 (을지로6가)",
+      "contentId": "2762868",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/70/3570470_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/70/3570470_image3_1.jpg",
+      "lng": 127.0069017178,
+      "lat": 37.5682434466
+    },
+    {
+      "name": "롯데백화점 건대스타시티점",
+      "gu": "광진구",
+      "addr": "서울특별시 광진구 능동로 92 롯데백화점",
+      "contentId": "2979848",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/52/3007052_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/52/3007052_image3_1.jpg",
+      "lng": 127.0712300203,
+      "lat": 37.5390535504
+    },
+    {
+      "name": "롯데백화점 김포공항점",
+      "gu": "강서구",
+      "addr": "서울특별시 강서구 하늘길 38 (방화동)",
+      "contentId": "2997813",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/04/2997804_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/04/2997804_image3_1.jpg",
+      "lng": 117.9925662504,
+      "lat": 19.69442748
+    },
+    {
+      "name": "롯데백화점 본점 에비뉴엘",
+      "gu": "중구",
+      "addr": "서울특별시 중구 남대문로 81 (소공동)",
+      "contentId": "273806",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/09/3589509_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/09/3589509_image3_1.jpg",
+      "lng": 126.9817485525,
+      "lat": 37.5647822864
+    },
+    {
+      "name": "롯데월드 쇼핑몰",
+      "gu": "송파구",
+      "addr": "서울특별시 송파구 올림픽로 300 (신천동)",
+      "contentId": "132248",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/29/1920629_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/29/1920629_image3_1.jpg",
+      "lng": 127.1040749597,
+      "lat": 37.5141653654
+    },
+    {
+      "name": "마리오아울렛",
+      "gu": "금천구",
+      "addr": "서울특별시 금천구 디지털로9길 23 (가산동)",
+      "contentId": "132593",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/71/3538871_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/71/3538871_image3_1.jpg",
+      "lng": 126.8865152102,
+      "lat": 37.4787739084
+    },
+    {
+      "name": "삼익패션타운",
+      "gu": "중구",
+      "addr": "서울특별시 중구 남대문시장8길 7 (남창동)",
+      "contentId": "1019638",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/57/3064057_image2_1.JPG",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/57/3064057_image3_1.JPG",
+      "lng": 126.9788489464,
+      "lat": 37.5601966561
+    },
+    {
+      "name": "서울고속버스터미널 꽃도매상가",
+      "gu": "서초구",
+      "addr": "서울특별시 서초구 신반포로 194 (반포동)",
+      "contentId": "132230",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/24/3527824_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/24/3527824_image3_1.jpg",
+      "lng": 127.0055841495,
+      "lat": 37.5062061855
+    },
+    {
+      "name": "서울고속버스터미널 의류도매상가",
+      "gu": "서초구",
+      "addr": "서울특별시 서초구 신반포로 194 (반포동)",
+      "contentId": "132184",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/41/3527841_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/41/3527841_image3_1.jpg",
+      "lng": 127.0055841495,
+      "lat": 37.5062061855
+    },
+    {
+      "name": "세운전자상가",
+      "gu": "종로구",
+      "addr": "서울특별시 종로구 청계천로 159 (장사동)",
+      "contentId": "132231",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/21/3571821_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/21/3571821_image3_1.jpg",
+      "lng": 126.9952555258,
+      "lat": 37.5693347773
+    },
+    {
+      "name": "숭례문(남대문) 수입상가",
+      "gu": "중구",
+      "addr": "서울특별시 중구 남대문시장4길 21 (남창동)",
+      "contentId": "1013079",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/29/3083029_image2_1.JPG",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/29/3083029_image3_1.JPG",
+      "lng": 126.9776685255,
+      "lat": 37.5592411902
+    },
+    {
+      "name": "신사상가",
+      "gu": "강남구",
+      "addr": "서울특별시 강남구 압구정로29길 72-1",
+      "contentId": "2752555",
+      "lng": 127.0284174418,
+      "lat": 37.5323396711
+    },
+    {
+      "name": "신세계백화점 본점",
+      "gu": "중구",
+      "addr": "서울특별시 중구 소공로 63 (충무로1가)",
+      "contentId": "132642",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/99/3589499_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/99/3589499_image3_1.jpg",
+      "lng": 126.9810181709,
+      "lat": 37.5609966018
+    },
+    {
+      "name": "신평화패션타운",
+      "gu": "중구",
+      "addr": "서울특별시 중구 청계천로 298 (신당동)",
+      "contentId": "2762844",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/22/3569022_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/22/3569022_image3_1.jpg",
+      "lng": 127.0110679692,
+      "lat": 37.5694989313
+    },
+    {
+      "name": "장안 악세사리상가",
+      "gu": "중구",
+      "addr": "서울특별시 중구 남대문시장4길 42-2 (남창동)",
+      "contentId": "1013388",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/43/1015043_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/43/1015043_image3_1.jpg",
+      "lng": 126.9767630795,
+      "lat": 37.5583023944
+    },
+    {
+      "name": "청계 조명기구상가",
+      "gu": "종로구",
+      "addr": "서울특별시 종로구 청계천로 155",
+      "contentId": "132244",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/41/3064041_image2_1.JPG",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/41/3064041_image3_1.JPG",
+      "lng": 126.9954361275,
+      "lat": 37.5671405907
+    },
+    {
+      "name": "청오가방도매상가",
+      "gu": "종로구",
+      "addr": "서울특별시 종로구 청계천로 229",
+      "contentId": "132207",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/26/3109826_image2_1.JPG",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/26/3109826_image3_1.JPG",
+      "lng": 127.0029909094,
+      "lat": 37.5701348234
+    },
+    {
+      "name": "청자 수입상가",
+      "gu": "중구",
+      "addr": "서울특별시 중구 남대문시장4길 29",
+      "contentId": "1013394",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/53/1015053_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/53/1015053_image3_1.jpg",
+      "lng": 126.9773491223,
+      "lat": 37.5588356763
+    },
+    {
+      "name": "청평화패션몰",
+      "gu": "중구",
+      "addr": "서울특별시 중구 청계천로 334 (신당동)",
+      "contentId": "2761460",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/08/3568408_image2_1.jpg",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/08/3568408_image3_1.jpg",
+      "lng": 127.0149565033,
+      "lat": 37.5695212208
+    },
+    {
+      "name": "퇴계로 오토바이상가",
+      "gu": "중구",
+      "addr": "서울특별시 중구 충무로4가",
+      "contentId": "132198",
+      "image": "https://tong.visitkorea.or.kr/cms/resource/47/3077647_image2_1.JPG",
+      "thumb": "https://tong.visitkorea.or.kr/cms/resource/47/3077647_image3_1.JPG",
+      "lng": 126.9273224518,
+      "lat": 36.9844568739
+    }
   ]
 }

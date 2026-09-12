@@ -17,7 +17,7 @@ import { galleryShotsFor } from "../lib/photoGallery";
 // street(골목·거리)는 2026-09-01에 추가했다. 관광공사 자료에 경리단길·익선동 한옥거리·
 // 종로귀금속거리처럼 구·사진·좌표가 다 붙은 골목이 40곳 있는데, 앱 이름이 K-Street인데도
 // 정작 "거리" 칸이 없어서 전부 버려지고 있었다(사용자 지시).
-export type Category = "festival" | "market" | "flower" | "walk" | "hike" | "museum" | "street";
+export type Category = "festival" | "market" | "flower" | "walk" | "hike" | "museum" | "street" | "shop";
 
 export interface Place {
   id: string;
@@ -742,4 +742,8 @@ export const CATEGORY_META: Record<
   museum: { label: "박물관", icon: "🏛", iconImage: "icons/categories/museum.png", color: "var(--museum)" },
   // 전용 아이콘 이미지는 아직 없다 — 만들기 전까지 이모지로 둔다(icons/categories/ 참고).
   street: { label: "골목·거리", icon: "🍢", color: "var(--street)" },
+  // 🏬 상가·몰·아울렛 (2026-09-12). 색은 골목·거리와 같은 칸을 쓴다 —
+  //    새 색을 만들면 12개 언어 화면·지도·카드를 다 다시 봐야 한다.
+  //    ⚠️ 전용 아이콘 이미지는 아직 없다. 만들 때까지 이모지로 둔다.
+  shop: { label: "상가", icon: "🏬", color: "var(--street)" },
 };

@@ -31,6 +31,11 @@ const MAP_CHIPS: { key: Category; extra?: Category[]; label?: string }[] = [
   { key: "walk", extra: ["flower"], label: "walkFlower" },
   { key: "hike" },
   { key: "museum" },
+  // 🏬 상가·몰·아울렛 (2026-09-12, 사장님 지시: "실내식물원이나 전시장,
+  //    대형 쇼핑몰도 연결해. 그래야 다양성 확보").
+  //    32곳 — 낙원 악기상가·답십리 고미술상가·세운전자상가처럼 **서울에만 있는 곳**이
+  //    여기 들어온다. 백화점은 어디나 비슷하지만 이런 곳은 그렇지 않다.
+  { key: "shop" },
 ];
 
 /** 이 칩이 담는 칸들. */

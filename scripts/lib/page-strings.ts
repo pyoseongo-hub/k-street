@@ -542,22 +542,22 @@ const lc = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
 const EN_ONE: Record<string, string> = {
   market: "traditional market", flower: "flower walk", walk: "walking path",
   walkFlower: "walk & flower path", hike: "hiking trail",
-  museum: "museum", festival: "festival", street: "street & alley",
+  museum: "museum", festival: "festival", street: "street & alley", shop: "shopping spot",
 };
 const ES_ONE: Record<string, string> = {
   market: "mercado", flower: "camino floral", walk: "ruta a pie",
   walkFlower: "paseo entre flores", hike: "ruta de senderismo",
-  museum: "museo", festival: "festival", street: "callejón",
+  museum: "museo", festival: "festival", street: "callejón", shop: "zona comercial",
 };
 const FR_ONE: Record<string, string> = {
   market: "marché", flower: "chemin fleuri", walk: "sentier pédestre",
   walkFlower: "balade fleurie", hike: "sentier de randonnée",
-  museum: "musée", festival: "festival", street: "ruelle",
+  museum: "musée", festival: "festival", street: "ruelle", shop: "galerie marchande",
 };
 const DE_ONE: Record<string, string> = {
   market: "Markt", flower: "Blumenweg", walk: "Wanderweg",
   walkFlower: "Spazier- & Blütenweg", hike: "Wanderstrecke",
-  museum: "Museum", festival: "Festival", street: "Gasse",
+  museum: "Museum", festival: "Festival", street: "Gasse", shop: "Einkaufszentrum",
 };
 
 /**
@@ -600,6 +600,7 @@ const RU_KIND: Record<string, [string, string, string]> = {
   museum: ["музей", "музея", "музеев"],
   festival: ["фестиваль", "фестиваля", "фестивалей"],
   street: ["улочка", "улочки", "улочек"],
+  shop: ["торговый центр", "торговых центра", "торговых центров"],
   flower: ["цветочная дорожка", "цветочные дорожки", "цветочных дорожек"],
   walk: ["пешеходный маршрут", "пешеходных маршрута", "пешеходных маршрутов"],
   walkFlower: ["прогулочная дорожка", "прогулочные дорожки", "прогулочных дорожек"],
