@@ -1,0 +1,83 @@
+name: Shoot reel (릴스 스틸컷 찍기)
+
+# 🎬 **앱 설명 릴스용 스틸컷**을 러너가 찍는다 — 세로 1080×1920 · 다크모드 · 16컷.
+#    왜 러너가 찍나: scripts/shoot-reel.mjs 머리말에 적었다. 짧게 말하면
+#    **작업 환경에서는 관광공사 사진 서버가 막혀(403) 카드가 빈칸으로 찍힌다.**
+#    러너는 인터넷이 되므로 사진이 나온다.
+#
+# ⚠️ **라이브 사이트를 찍는다**(korea-street.com). 그러니 찍기 전에
+#    고치려던 것이 배포되어 있는지 먼저 볼 것 — 안 그러면 옛 화면을 찍는다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      langs:
+        description: "어느 언어로 찍을까 (쉼표로. en,ja,zh · 비우면 이 셋)"
+        required: false
+        default: "en,ja,zh"
+      base:
+        description: "어느 주소를 찍을까 (비우면 https://korea-street.com)"
+        required: false
+        default: "https://korea-street.com"
+      apply:
+        description: "찍은 것을 저장소에 커밋할까 (끄면 받아 보기만 — Artifacts 에 올라간다)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  shoot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # 🎭 playwright 는 이 저장소의 의존성이 아니다(앱에는 필요 없다).
+      #    찍을 때만 여기서 받는다 — 앱 꾸러미를 무겁게 하지 않는다.
+      - name: 브라우저 준비
+        run: |
+          npm i --no-save playwright
+          npx playwright install --with-deps chromium
+
+      - name: 찍기
+        env:
+          BASE: ${{ inputs.base }}
+          LANGS: ${{ inputs.langs }}
+        run: |
+          set -o pipefail
+          node scripts/shoot-reel.mjs 2>&1 | tee shoot-log.txt
+
+      # 📦 **커밋을 안 켜도 받아 볼 수 있게** Artifacts 에 올린다.
+      #    맛보기로 한 번 보고 마음에 들면 커밋을 켜고 다시 돌리면 된다.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kstreet-reel-stills
+          path: docs/홍보-사진/릴스/*.png
+          if-no-files-found: error
+
+      - name: 저장소에 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "docs/홍보-사진/릴스"
+          git diff --cached --quiet && { echo "바뀐 게 없다"; exit 0; }
+          git commit -m "🎬 릴스 스틸컷을 찍었다 (shoot-reel) [skip render]"
+          git push
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🎬 릴스 스틸컷"
+            echo ""
+            echo '```'
+            tail -c 40000 shoot-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
