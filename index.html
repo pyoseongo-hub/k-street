@@ -95,16 +95,37 @@
          구글이 "이 주소들이 한 사이트다"라고 묶을 근거가 그동안 없었다.
          🚨 화면에 실제로 있는 것만 적는다 — 없는 기능을 지어내지 않는다.
             SearchAction(검색창)은 **안 넣는다.** 이 앱에는 주소로 검색하는 화면이 없다. -->
+    <!-- 🏛️ **누가 만들었나**(Organization)를 2026-09-12에 더했다.
+         AI 검색(ChatGPT·Perplexity)은 답에 인용할 곳을 고를 때 **낸 사람이 누구인지**를
+         본다. WebSite 만 있으면 "글은 있는데 낸 사람이 없는 사이트"가 된다.
+         🚨 **지어내지 않는다** — 우리가 증명할 수 있는 것만 적었다:
+            이름 · 주소 · 로고 · 무엇을 하는 곳인가.
+            주소지·전화·창업자 이름·SNS 계정은 **안 적는다.** 확인해 줄 방법이 없거나
+            (SNS 는) 저장소에 남기면 안 되는 것이다.
+         🔗 publisher 로 WebSite 와 묶는다 — 안 묶으면 검색엔진에게 남남인 둘이다. -->
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "K-Street",
-        "url": "https://korea-street.com/",
-        "description": "Free guide to Seoul's neighbourhoods: festivals by month, traditional markets, flower walks, hiking trails and museums across all 25 districts. 12 languages, no sign-up.",
-        "inLanguage": ["en", "ko", "ja", "zh", "zh-TW", "vi", "th", "id", "es", "fr", "de", "ru"],
-        "isAccessibleForFree": true
-      }
+      [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://korea-street.com/#website",
+          "name": "K-Street",
+          "url": "https://korea-street.com/",
+          "description": "Free guide to Seoul's neighbourhoods: festivals by month, traditional markets, flower walks, hiking trails and museums across all 25 districts. 12 languages, no sign-up.",
+          "inLanguage": ["en", "ko", "ja", "zh", "zh-TW", "vi", "th", "id", "es", "fr", "de", "ru"],
+          "isAccessibleForFree": true,
+          "publisher": { "@id": "https://korea-street.com/#org" }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://korea-street.com/#org",
+          "name": "K-Street",
+          "url": "https://korea-street.com/",
+          "logo": "https://korea-street.com/icons/icon-512.png",
+          "description": "An independent, free guide to Seoul for visitors. No ads, no paid listings, no sign-up. Place and festival data comes from the Korea Tourism Organization and from Seoul district offices via the Seoul Open Data Plaza."
+        }
+      ]
     </script>
 
     <script>

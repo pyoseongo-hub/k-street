@@ -266,6 +266,19 @@ const hubPathCategory = (c: string) => `seoul/${CATEGORY_HUB[c]?.slug ?? "places
  * 🚨 **날짜는 절대 안 만든다.** 우리가 아는 것은 "어느 달쯤"까지다
  *    (Place.period 주석 참고 — 지난해 날짜를 올해 것처럼 적으면 손님이 헛걸음한다).
  */
+/**
+ * 「2026년 9월 12일」/「September 12, 2026」 — YYYY-MM-DD 를 그 언어로.
+ *
+ * formatRange 와 같은 수를 쓴다(Intl) — 12개 언어짜리 표를 또 만들지 않는다.
+ * 사람이 적어 둘 것이 없으니 **틀릴 자리도 없다.**
+ */
+function isoLabel(ymd: string, lang: Language): string {
+  const [y, m, d] = ymd.split("-").map(Number);
+  return new Intl.DateTimeFormat(lang, { year: "numeric", month: "long", day: "numeric" }).format(
+    new Date(y, m - 1, d),
+  );
+}
+
 /** 「October」/「10月」 — 달 이름 한 개. 앱이 가진 표를 쓴다(잣대를 둘로 만들지 않는다). */
 const monthLabel = (m: number, lang: Language): string =>
   lang === "en" ? MONTHS[m] : String((getTranslations(lang).months as Record<number, string>)[m]);
@@ -545,6 +558,25 @@ function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
         ...(note ? { description: note } : {}),
         ...(photo ? { image: photo } : {}),
         ...(p.officialUrl ? { sameAs: p.officialUrl } : {}),
+        // 🏛️ **주최 기관** (2026-09-12). 오늘 구청 자료에서 받아 왔다 —
+        //    「서울문화재단」·「종로구청」·「남산골한옥마을」.
+        //    AI 검색이 인용할 곳을 고를 때 **누가 여는 행사인지**가 근거가 된다.
+        //    🚨 화면 「언제」 줄에 **이미 같은 글자가 보인다** — 안 보이는 것을
+        //       구조화 자료에만 넣으면 규칙 위반이고, 구글이 벌점을 준다.
+        //    ⚠️ offers(입장료)는 **안 넣는다.** 우리는 입장료를 모른다.
+        //       「무료」라고 적었다가 유료면 손님이 문 앞에서 돌아선다.
+        ...(() => {
+          const sure = guFestivalDate(p.id);
+          if (!sure?.org) return {};
+          const link = guOfficialLink(sure);
+          return {
+            organizer: {
+              "@type": "Organization",
+              name: sure.org,
+              ...(link ? { url: link } : {}),
+            },
+          };
+        })(),
       }
     : {
         "@context": "https://schema.org",
@@ -636,7 +668,15 @@ ${
     const tail = link
       ? `${esc(who)} · <a href="${esc(link)}" rel="nofollow noopener">${esc(S.official)}</a>`
       : esc(who);
-    return `<dt>${esc(S.when)}</dt><dd><strong>${esc(when)}</strong> — ${tail}</dd>`;
+    // 🗓️ **언제 확인한 날짜인지 적는다** (2026-09-12).
+    //    AI 검색은 인용할 곳을 고를 때 **자료가 언제 것인지**를 본다. 날이 없으면
+    //    5년 전 블로그와 오늘 아침에 받은 구청 공지가 **같아 보인다.**
+    //    우리는 매일 아침 6시에 받아 오니 이 줄이 늘 어제·오늘이다 — 안 적을 이유가 없다.
+    //    🚨 화면에 **보이게** 적는다. 구조화 자료에만 넣는 것은 규칙 위반이다.
+    const checked = sure.fetchedAt
+      ? `<br><span class="note">${esc(S.checkedOn(isoLabel(sure.fetchedAt, lang)))}</span>`
+      : "";
+    return `<dt>${esc(S.when)}</dt><dd><strong>${esc(when)}</strong> — ${tail}${checked}</dd>`;
   })()
 }
 ${

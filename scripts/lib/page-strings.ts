@@ -36,6 +36,18 @@ export interface PageStrings {
    *    아는 것(그 해에 열렸다)과 모르는 것(올해도 열리는지)을 **갈라서** 말한다.
    */
   pastEdition: (year: number) => string;
+  /**
+   * 🗓️ **언제 확인한 날짜인가** (2026-09-12).
+   *    「2026년 9월 12일에 주최 측 공지에서 확인했습니다」
+   *
+   *    AI 검색이 답에 인용할 곳을 고를 때 **언제 확인한 자료인지**를 본다.
+   *    확인한 날이 없으면 5년 전에 적은 글과 어제 받은 글이 **같아 보인다.**
+   *
+   *    🚨 **확정 날짜를 구청에서 받아 온 축제에만 붙인다.** 그날 진짜로 확인한
+   *       곳만이다 — 아무 데나 붙이면 「매일 갱신」이 아니라 **거짓말**이 된다.
+   *    ⚠️ 날짜 글자는 부르는 쪽이 Intl 로 그 언어에 맞게 만들어 넘긴다.
+   */
+  checkedOn: (date: string) => string;
   /** 같은 구의 다른 곳 목록 제목 */
   moreIn: (gu: string) => string;
   /** 아래 딱지 줄 제목 */
@@ -79,6 +91,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     official: "공식 안내",
     datesShift: "확정 일정은 며칠 전에야 공지되기도 합니다. 가시기 전에 공식 안내를 확인하세요",
     pastEdition: (y) => `${y}년 회차 기록입니다 — 올해도 열리는지 공식 안내를 확인하세요`,
+    checkedOn: (d) => `${d}에 주최 측 공지에서 확인했습니다`,
     moreIn: (gu) => `${gu}의 다른 곳`,
     browse: "둘러보기",
     everythingIn: (gu) => `${gu} 전체 보기`,
@@ -100,6 +113,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     official: "Official",
     datesShift: "the exact schedule is sometimes announced only days beforehand, check the official notice before you go",
     pastEdition: (y) => `Record of the ${y} edition — check the official notice to see if it runs this year`,
+    checkedOn: (d) => `Checked against the organiser's notice on ${d}`,
     moreIn: (gu) => `More in ${gu}`,
     browse: "Browse",
     everythingIn: (gu) => `Everything in ${gu}`,
@@ -123,6 +137,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     official: "公式案内",
     datesShift: "確定日程は開催の数日前に発表されることもあります。おでかけ前に公式案内をご確認ください",
     pastEdition: (y) => `${y}年開催分の記録です — 今年も開催されるかは公式案内をご確認ください`,
+    checkedOn: (d) => `${d}に主催者の公式告知で確認しました`,
     moreIn: (gu) => `${gu}のほかの場所`,
     browse: "ほかを見る",
     everythingIn: (gu) => `${gu}をすべて見る`,
@@ -144,6 +159,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     official: "官方信息",
     datesShift: "确切日程有时在活动前几天才公布，出发前请查看官方公告",
     pastEdition: (y) => `这是${y}年那一届的记录 — 今年是否举办请查看官方公告`,
+    checkedOn: (d) => `已于${d}核对主办方公告`,
     moreIn: (gu) => `${gu}的其他地方`,
     browse: "浏览",
     everythingIn: (gu) => `查看${gu}全部`,
@@ -165,6 +181,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     official: "官方資訊",
     datesShift: "確切日程有時在活動前幾天才公布，出發前請查看官方公告",
     pastEdition: (y) => `這是${y}年那一屆的紀錄 — 今年是否舉辦請查看官方公告`,
+    checkedOn: (d) => `已於${d}核對主辦單位公告`,
     moreIn: (gu) => `${gu}的其他地方`,
     browse: "瀏覽",
     everythingIn: (gu) => `查看${gu}全部`,
@@ -186,6 +203,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     official: "Thông tin chính thức",
     datesShift: "lịch chính thức đôi khi chỉ được công bố vài ngày trước, hãy xem thông báo chính thức trước khi đi",
     pastEdition: (y) => `Ghi nhận của kỳ ${y} — hãy xem thông báo chính thức để biết năm nay có tổ chức không`,
+    checkedOn: (d) => `Đã đối chiếu với thông báo của ban tổ chức ngày ${d}`,
     moreIn: (gu) => `Địa điểm khác ở ${gu}`,
     browse: "Xem thêm",
     everythingIn: (gu) => `Tất cả ở ${gu}`,
@@ -209,6 +227,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     official: "Información oficial",
     datesShift: "el calendario definitivo a veces se anuncia solo unos días antes; consulta el aviso oficial antes de ir",
     pastEdition: (y) => `Registro de la edición de ${y} — consulta el aviso oficial para saber si se celebra este año`,
+    checkedOn: (d) => `Verificado con el aviso del organizador el ${d}`,
     moreIn: (gu) => `Más en ${gu}`,
     browse: "Explorar",
     everythingIn: (gu) => `Todo en ${gu}`,
@@ -232,6 +251,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     official: "Infos officielles",
     datesShift: "le programme définitif n'est parfois annoncé que quelques jours avant ; consultez l'avis officiel avant de partir",
     pastEdition: (y) => `Trace de l’édition ${y} — consultez l’avis officiel pour savoir si elle a lieu cette année`,
+    checkedOn: (d) => `Vérifié auprès de l’annonce de l’organisateur le ${d}`,
     moreIn: (gu) => `Autres lieux à ${gu}`,
     browse: "Parcourir",
     everythingIn: (gu) => `Tout à ${gu}`,
@@ -255,6 +275,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     official: "Offizielle Info",
     datesShift: "der genaue Zeitplan wird manchmal erst wenige Tage vorher bekannt gegeben; bitte vor dem Besuch die offizielle Ankündigung prüfen",
     pastEdition: (y) => `Aufzeichnung der Ausgabe ${y} — bitte die offizielle Ankündigung prüfen, ob sie dieses Jahr stattfindet`,
+    checkedOn: (d) => `Am ${d} mit der Ankündigung des Veranstalters abgeglichen`,
     moreIn: (gu) => `Mehr in ${gu}`,
     browse: "Entdecken",
     everythingIn: (gu) => `Alles in ${gu}`,
@@ -278,6 +299,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     official: "Официально",
     datesShift: "точное расписание иногда объявляют лишь за несколько дней; перед поездкой смотрите официальное объявление",
     pastEdition: (y) => `Запись о выпуске ${y} года — смотрите официальное объявление, проводится ли он в этом году`,
+    checkedOn: (d) => `Сверено с объявлением организатора ${d}`,
     moreIn: (gu) => `Ещё в ${gu}`,
     browse: "Смотреть",
     everythingIn: (gu) => `Всё в ${gu}`,
@@ -301,6 +323,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     official: "Info resmi",
     datesShift: "jadwal pastinya kadang baru diumumkan beberapa hari sebelumnya; cek pengumuman resmi sebelum berangkat",
     pastEdition: (y) => `Catatan edisi ${y} — cek pengumuman resmi apakah tahun ini digelar`,
+    checkedOn: (d) => `Dicek dengan pengumuman penyelenggara pada ${d}`,
     moreIn: (gu) => `Lainnya di ${gu}`,
     browse: "Jelajahi",
     everythingIn: (gu) => `Semua di ${gu}`,
@@ -324,6 +347,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     official: "ข้อมูลทางการ",
     datesShift: "กำหนดการที่แน่นอนบางครั้งประกาศก่อนงานเพียงไม่กี่วัน โปรดตรวจสอบประกาศทางการก่อนเดินทาง",
     pastEdition: (y) => `บันทึกของครั้งปี ${y} — โปรดตรวจสอบประกาศทางการว่าปีนี้จัดหรือไม่`,
+    checkedOn: (d) => `ตรวจสอบกับประกาศของผู้จัดเมื่อ ${d}`,
     moreIn: (gu) => `ที่อื่นใน ${gu}`,
     browse: "ดูเพิ่มเติม",
     everythingIn: (gu) => `ทั้งหมดใน ${gu}`,
