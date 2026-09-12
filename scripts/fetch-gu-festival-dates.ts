@@ -45,14 +45,17 @@
 // ─────────────────────────────────────────────────────────────────────────
 // 돌리는 법
 // ─────────────────────────────────────────────────────────────────────────
-//   맛보기(저장 안 함) — 열쇠 없이도 된다. 축제 이름으로 하나씩 물어본다:
-//     npm run gu-festival-dates
 //   진짜로 받기(저장) — 열린데이터광장 인증키가 있어야 한다:
 //     SEOUL_OPEN_API_KEY=xxxx npm run gu-festival-dates -- --apply
+//   맛보기(저장 안 함):
+//     npm run gu-festival-dates
 //
 //   열쇠는 공짜다: https://data.seoul.go.kr → 인증키 신청 (즉시 발급)
-//   ⚠️ 맛보기가 쓰는 'sample' 열쇠는 **한 번에 5줄까지만** 준다. 시험용이지
-//      매일 도는 자리에 쓸 것이 아니다.
+//
+//   🛑 **열쇠 없이는 사실상 못 돈다.** 시험용 'sample' 열쇠로도 되는 줄 알고
+//      그 길을 만들어 뒀는데(한 번에 5줄), **몇 번 부르고 나면 막힌다** —
+//      2026-09-12에 80곳을 돌렸더니 전부 INFO-100(인증키가 유효하지 않습니다)이었다.
+//      손으로 한두 번 눌러 「어떻게 생긴 자료인가」를 보는 데까지만 쓸 수 있다.
 import { writeFileSync, readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -173,7 +176,19 @@ async function fetchByTitles(festivals: Place[]): Promise<Row[]> {
     try {
       out.push(...(await call(`1/5/%20/${encodeURIComponent(q)}/`)));
     } catch (e) {
-      console.log(`   ⚠️ ${f.name} — ${(e as Error).message}`);
+      const msg = (e as Error).message;
+      // 🛑 **똑같은 오류를 80줄 찍지 않는다.** 시험용 'sample' 열쇠는 몇 번만 봐 주고
+      //    그 뒤로는 INFO-100(인증키가 유효하지 않습니다)을 돌려준다 — 실제로 한 번
+      //    80줄이 전부 같은 말이었고, 그 벽 때문에 진짜 원인을 늦게 찾았다.
+      //    한 번 나오면 거기서 멈추고 **무엇을 해야 하는지**를 한 줄로 말한다.
+      if (msg.includes("INFO-100")) {
+        console.log(
+          `\n🛑 시험용 'sample' 열쇠가 막혔다 (INFO-100). 몇 번까지만 봐 주는 열쇠라 여기까지다.\n` +
+            `   공짜 열쇠를 받으면 한 번에 1,000줄씩 받는다: https://data.seoul.go.kr → 인증키 신청\n`,
+        );
+        break;
+      }
+      console.log(`   ⚠️ ${f.name} — ${msg}`);
     }
   }
   return out;
