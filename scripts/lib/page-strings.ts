@@ -673,7 +673,8 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     ],
     rainyIndoorGroup: "Fully indoors — you stay dry",
     rainyArcadeGroup: "Markets with a covered main aisle",
-    rainyArcadeNote: "The roof covers the main aisle, not the whole market. Side lanes may be open to the sky, so bring an umbrella anyway.",
+    rainyArcadeNote:
+      "The main aisle is covered — and it runs long enough for a proper look around without getting wet. Side lanes may still be open to the sky, so keep an umbrella with you.",
     byDistrictChips: "By district",
   },
 
@@ -745,7 +746,8 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     ],
     rainyIndoorGroup: "建物の中 — 雨に当たりません",
     rainyArcadeGroup: "屋根のある市場 — 中央通路",
-    rainyArcadeNote: "屋根があるのは中央通路で、市場全体ではありません。脇の路地は空が開いていることがあるので、傘はお持ちください。",
+    rainyArcadeNote:
+      "中央通路に屋根があります。通路はかなり長く、雨に当たらずにひと通り見て回れます。ただし脇の路地は空が開いていることがあるので、傘はお持ちください。",
     byDistrictChips: "エリア別",
   },
 
@@ -817,7 +819,8 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     ],
     rainyIndoorGroup: "在建筑内 — 完全淋不到雨",
     rainyArcadeGroup: "有顶棚的市场 — 中央通道",
-    rainyArcadeNote: "有顶棚的是中央通道，不是整个市场。旁边的小巷可能是露天的，还是带把伞吧。",
+    rainyArcadeNote:
+      "中央通道有顶棚，而且相当长，足够你淋不到雨地逛上一圈。不过旁边的小巷可能是露天的，还是带把伞吧。",
     byDistrictChips: "按区域",
   },
 
@@ -889,7 +892,8 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     ],
     rainyIndoorGroup: "在建築內 — 完全淋不到雨",
     rainyArcadeGroup: "有頂棚的市場 — 中央通道",
-    rainyArcadeNote: "有頂棚的是中央通道，不是整個市場。旁邊的小巷可能是露天的，還是帶把傘吧。",
+    rainyArcadeNote:
+      "中央通道有頂棚，而且相當長，足夠你淋不到雨地逛上一圈。不過旁邊的小巷可能是露天的，還是帶把傘吧。",
     byDistrictChips: "按區域",
   },
 
@@ -963,7 +967,8 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     ],
     rainyIndoorGroup: "건물 안 — 비를 아예 안 맞습니다",
     rainyArcadeGroup: "지붕 있는 시장 — 중앙 통로",
-    rainyArcadeNote: "지붕이 있는 곳은 중앙 통로고, 시장 전체가 아닙니다. 안쪽 골목은 하늘이 열려 있을 수 있으니 우산은 챙기세요.",
+    rainyArcadeNote:
+      "중앙 통로에 지붕이 있습니다. 통로가 꽤 길어 비를 피해 둘러보기에 충분합니다. 다만 안쪽 골목은 하늘이 열려 있을 수 있으니 우산은 챙기세요.",
     byDistrictChips: "구별",
   },
 
@@ -1037,7 +1042,8 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     ],
     rainyIndoorGroup: "Trong nhà — không bị ướt",
     rainyArcadeGroup: "Chợ có mái che ở lối đi chính",
-    rainyArcadeNote: "Mái che nằm trên lối đi chính, không phải toàn bộ chợ. Các ngõ bên có thể lộ thiên, nên bạn vẫn nên mang ô.",
+    rainyArcadeNote:
+      "Lối đi chính có mái che, và đủ dài để bạn dạo một vòng mà không bị ướt. Tuy vậy các ngõ bên có thể lộ thiên, nên hãy mang theo ô.",
     byDistrictChips: "Theo quận",
   },
 
@@ -1112,7 +1118,8 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     ],
     rainyIndoorGroup: "อยู่ในอาคาร — ไม่โดนฝนเลย",
     rainyArcadeGroup: "ตลาดที่มีหลังคาคลุมทางเดินกลาง",
-    rainyArcadeNote: "หลังคาคลุมทางเดินกลาง ไม่ใช่ทั้งตลาด ซอยด้านข้างอาจเปิดโล่ง จึงควรพกร่มไปด้วย",
+    rainyArcadeNote:
+      "ทางเดินกลางมีหลังคาคลุม และยาวพอให้เดินชมได้ทั่วโดยไม่เปียกฝน แต่ซอยด้านข้างอาจเปิดโล่ง จึงควรพกร่มติดตัวไว้",
     byDistrictChips: "ตามเขต",
   },
 
@@ -1185,7 +1192,8 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     ],
     rainyIndoorGroup: "Di dalam ruangan — tidak kehujanan sama sekali",
     rainyArcadeGroup: "Pasar dengan lorong utama beratap",
-    rainyArcadeNote: "Yang beratap adalah lorong utama, bukan seluruh pasar. Gang di sampingnya bisa terbuka ke langit, jadi tetap bawa payung.",
+    rainyArcadeNote:
+      "Lorong utama beratap, dan cukup panjang untuk berkeliling tanpa kehujanan. Namun gang-gang di sampingnya bisa terbuka ke langit, jadi tetap bawa payung.",
     byDistrictChips: "Menurut distrik",
   },
 
@@ -1265,7 +1273,8 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     ],
     rainyIndoorGroup: "Bajo techo — no te mojas nada",
     rainyArcadeGroup: "Mercados con el pasillo central cubierto",
-    rainyArcadeNote: "El techo cubre el pasillo central, no todo el mercado. Los callejones laterales pueden estar al aire libre, así que lleva paraguas de todos modos.",
+    rainyArcadeNote:
+      "El pasillo central está cubierto y es lo bastante largo para dar una vuelta completa sin mojarte. Aun así, los callejones laterales pueden estar al aire libre: lleva paraguas.",
     byDistrictChips: "Por distrito",
   },
 
@@ -1338,7 +1347,8 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     ],
     rainyIndoorGroup: "À l'intérieur — on ne se mouille pas du tout",
     rainyArcadeGroup: "Marchés à l'allée centrale couverte",
-    rainyArcadeNote: "Le toit couvre l'allée centrale, pas tout le marché. Les ruelles latérales peuvent être à ciel ouvert : prenez tout de même un parapluie.",
+    rainyArcadeNote:
+      "L'allée centrale est couverte, et assez longue pour faire le tour sans se mouiller. Les ruelles latérales peuvent toutefois être à ciel ouvert : gardez un parapluie.",
     byDistrictChips: "Par quartier",
   },
 
@@ -1418,7 +1428,8 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     ],
     rainyIndoorGroup: "Im Gebäude — man wird gar nicht nass",
     rainyArcadeGroup: "Märkte mit überdachtem Hauptgang",
-    rainyArcadeNote: "Überdacht ist der Hauptgang, nicht der ganze Markt. Die Seitengassen können offen sein — nehmen Sie trotzdem einen Schirm mit.",
+    rainyArcadeNote:
+      "Der Hauptgang ist überdacht und lang genug, um sich in Ruhe trocken umzusehen. Die Seitengassen können aber offen sein — nehmen Sie einen Schirm mit.",
     byDistrictChips: "Nach Stadtteil",
   },
 
@@ -1502,7 +1513,8 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     ],
     rainyIndoorGroup: "В здании — совсем не намокнете",
     rainyArcadeGroup: "Рынки с крытым центральным проходом",
-    rainyArcadeNote: "Крыша накрывает центральный проход, а не весь рынок. Боковые переулки могут быть под открытым небом — зонт всё-таки возьмите.",
+    rainyArcadeNote:
+      "Центральный проход крытый и достаточно длинный, чтобы спокойно всё обойти, не намокнув. Боковые переулки всё же могут быть под открытым небом — зонт возьмите.",
     byDistrictChips: "По районам",
   },
 };
