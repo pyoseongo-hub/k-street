@@ -112,7 +112,13 @@ const old = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf-8"))["곳"] ?? {
 const out = { ...old };
 
 // 이미 아는 곳은 안 묻는다 — 곳이 움직이지 않는 한 역도 안 바뀐다(머리말 ③).
-const 남은곳 = ALL ? PLACES : PLACES.filter((p) => !old[p.id]);
+//
+// 🏷️ 다만 **`local: true` 는 다시 묻는다.** 그건 카카오가 한도에 걸린 날
+//    우리 자료로 대신 계산해 둔 것이다(find-nearest-station-local.mjs).
+//    카카오는 큰 환승역을 **노선별 출입구**로 갖고 있어 더 촘촘하다 —
+//    263곳을 맞춰 보니 91.3%는 같은 역인데, 다른 23곳은 우리가 더 멀게 나왔다.
+//    그러니 카카오가 열리면 그 곳들은 카카오 답으로 갈아 준다.
+const 남은곳 = ALL ? PLACES : PLACES.filter((p) => !old[p.id] || old[p.id].local);
 /**
  * ✂️ **한 판에 몇 곳까지만** (사장님 2026-09-12: "잘라서 해").
  *

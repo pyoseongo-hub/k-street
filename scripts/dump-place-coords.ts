@@ -10,10 +10,25 @@
 //   npx vite build --ssr scripts/dump-place-coords.ts --outDir dist-ssr
 //   node dist-ssr/dump-place-coords.js
 
+// 🚨 2026-09-12에 새는 자리를 찾았다 — **bad-coords.json 이 앱 화면만 지키고 있었다.**
+//
+//    관광공사가 준 좌표 중 「가리키는 곳 자체가 엉뚱한」 것은 bad-coords.json 에
+//    적어 두고 앱이 읽을 때 뺀다(src/data/tourPlaces.ts). 그런데 **이 파일은**
+//    tour-places-raw.json 에서 **좌표를 직접** 읽어서 그 필터를 **지나쳐 갔다.**
+//    그래서 이 파일을 쓰는 것들(가까운 역 찾기·짐보관)은 **믿지 않기로 한 좌표를
+//    그대로 쓰고 있었다.** 화면에는 안 보이니 티도 안 났다.
+//
+//    걸린 계기: 상가 두 곳이 「1.5km 안에 역이 없다」고 나왔다 —
+//    한 곳은 중구 한복판, 한 곳은 김포공항역 위다. 좌표를 열어 보니
+//    남중국해(19.69, 117.99)와 충남 아산(36.98, 126.93)이었다.
+//
+// 📌 **막는 자리는 한 곳이어야 한다.** 자료를 읽는 길이 둘이면 필터도 둘이 되고,
+//    한쪽만 고쳐 놓고 다른 쪽이 새는 것이 오늘 일어난 일이다.
 import { ALL_PLACES } from "../src/data/seed";
 import { getCoords } from "../src/lib/coords";
 import POOL from "../src/data/tour-pool-all.json";
 import RAW from "../src/data/tour-places-raw.json";
+import BAD from "../src/data/bad-coords.json";
 
 interface Row {
   contentId?: string | number;
@@ -31,6 +46,13 @@ function soak(o: unknown) {
 }
 soak(POOL);
 soak(RAW);
+
+/**
+ * 🚫 **믿지 않기로 한 좌표의 열쇠**(`tour_<contentId>`). `_…`로 시작하는 것은 설명이다.
+ *    tourPlaces.ts 의 BAD_COORDS 와 **같은 파일·같은 규칙**을 읽는다 — 갈리면 또 샌다.
+ */
+const DISTRUSTED = new Set(Object.keys(BAD as Record<string, unknown>).filter((k) => !k.startsWith("_")));
+for (const key of DISTRUSTED) byContentId.delete(key.replace(/^tour_/, ""));
 
 export interface PlaceCoord {
   id: string;
@@ -67,4 +89,5 @@ if (process.argv[1]?.includes("dump-place-coords")) {
   console.log(`  coords.json 에서 ${PLACES.filter((p) => p.from === "coords.json").length}`);
   console.log(`  관광공사에서    ${PLACES.filter((p) => p.from === "tour").length}`);
   if (missing.length) console.log(`⚠️ 좌표 없는 곳 ${missing.length}: ${missing.join(" · ")}`);
+  console.log(`🚫 믿지 않기로 한 좌표 ${DISTRUSTED.size}곳은 뺐다 (src/data/bad-coords.json)`);
 }
