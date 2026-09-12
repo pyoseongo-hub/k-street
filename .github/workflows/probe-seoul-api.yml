@@ -1,0 +1,41 @@
+name: Probe Seoul API (열린데이터광장 서비스 찾기)
+
+# 🔎 서울 열린데이터광장에 어떤 서비스가 있는지 **이름을 직접 두드려** 확인한다.
+#    데이터셋 안내 페이지가 자바스크립트로 그려져서 글로는 못 읽는다 —
+#    자세한 이유는 scripts/probe-seoul-api.mjs 머리말에.
+#
+# 🚨 **아무것도 커밋하지 않는다. 보기만 한다.**
+
+on:
+  workflow_dispatch:
+    inputs:
+      names:
+        description: "두드려 볼 이름 (쉼표로 나눈다). 비우면 스크립트에 적어 둔 목록을 쓴다"
+        required: false
+        default: ""
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 두드려 보기
+        env:
+          SEOUL_OPEN_API_KEY: ${{ secrets.SEOUL_OPEN_API_KEY }}
+          NAMES: ${{ inputs.names }}
+        run: |
+          set -o pipefail
+          node scripts/probe-seoul-api.mjs 2>&1 | tee probe-log.txt
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🔎 열린데이터광장 서비스 찾기"
+            echo ""
+            echo '```'
+            cat probe-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
