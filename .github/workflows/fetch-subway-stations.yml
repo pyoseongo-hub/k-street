@@ -1,0 +1,61 @@
+name: Fetch subway stations (지하철역 자료 받기)
+
+# 🚇 역 이름 · 노선 · 좌표 · **영어/중국어/일본어 이름**을 서울 열린데이터광장에서 받는다.
+#    왜 이 둘을 합치는지는 scripts/fetch-subway-stations.mjs 머리말에.
+#
+# ⚠️ **apply 를 끈 채 먼저 돌린다.** 숫자와 맛보기를 눈으로 보고 켠다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "받은 것을 파일로 저장하고 커밋할까 (끄면 맛보기만)"
+        type: boolean
+        default: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 열쇠가 있나 먼저 본다
+        env:
+          SEOUL_OPEN_API_KEY: ${{ secrets.SEOUL_OPEN_API_KEY }}
+        run: |
+          if [ -z "$SEOUL_OPEN_API_KEY" ]; then
+            echo "❌ SEOUL_OPEN_API_KEY 시크릿이 없다"; exit 1
+          fi
+          echo "✅ 열쇠 있음 (${#SEOUL_OPEN_API_KEY}자)"
+      - name: 받아 오기
+        env:
+          SEOUL_OPEN_API_KEY: ${{ secrets.SEOUL_OPEN_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/fetch-subway-stations.mjs ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee subway-log.txt
+      - name: 저장된 것이 있으면 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          if [ ! -f src/data/subway-stations.json ]; then
+            echo "저장된 파일이 없다 — 커밋할 것도 없다"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/subway-stations.json
+          git diff --cached --quiet && { echo "바뀐 게 없다"; exit 0; }
+          git commit -m "지하철역 자료를 받았다 (fetch-subway-stations) [skip render]"
+          git push
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🚇 지하철역 자료"
+            echo ""
+            echo '```'
+            cat subway-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
