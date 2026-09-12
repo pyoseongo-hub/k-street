@@ -55,9 +55,25 @@ if (LIMIT) targets = targets.slice(0, LIMIT);
 const ROOT = "https://apis.data.go.kr/B551011/KorService2";
 const q = (o) => new URLSearchParams({ MobileOS: "ETC", MobileApp: "KStreet", _type: "json", ...o });
 
+/**
+ * 🚨 **한 곳이 안 돼도 나머지는 계속 간다** (2026-09-12에 당했다).
+ *
+ * 처음엔 fetchWithRetry 를 그냥 불렀다. 그런데 그 함수는 6번 다 실패하면 **던진다.**
+ * 잡는 쪽이 없어서 **첫 곳에서 64곳짜리 수집이 통째로 죽었다** — 3분을 쓰고 0곳.
+ *
+ * 관광공사는 「닫혔다/열렸다」가 아니라 **되다 말다 한다**(tour-fetch.mjs 머리말:
+ * 호출 7번 중 4번이 ConnectTimeout 이었다). 그런 상대에게 **전부 아니면 전무**는
+ * 최악의 방식이다 — 한 곳이 안 되는 날 **아무것도 못 받는다.**
+ * 그래서 여기서 잡고, 실패한 곳은 세어서 끝에 보여 준다. **받은 만큼은 남긴다.**
+ */
 async function ask(path, params) {
-  const r = await fetchWithRetry(`${ROOT}/${path}?serviceKey=${KEY}&${q(params)}`);
-  const t = await r.text();
+  let t;
+  try {
+    const r = await fetchWithRetry(`${ROOT}/${path}?serviceKey=${KEY}&${q(params)}`);
+    t = await r.text();
+  } catch (e) {
+    return { ok: false, why: e?.message ?? String(e) };
+  }
   try {
     const item = JSON.parse(t)?.response?.body?.items?.item;
     return { ok: true, row: Array.isArray(item) ? item[0] : item };
@@ -160,6 +176,17 @@ console.log(`\n─────────────────────�
 console.log(`받은 곳 ${n}/${targets.length}`);
 console.log(`  판매품목 ${stat.sells} · 영업시간 ${stat.hours} · 휴무 ${stat.closed} · 요금 ${stat.fee} · 전화 ${stat.tel}`);
 console.log(`  쓸 만한 칸이 없던 곳 ${stat.none} · 못 물어본 곳 ${stat.failed}`);
+
+// 🚨 **다 실패했는데 조용히 끝나면 안 된다.** 「받은 곳 0」은 성공이 아니다.
+if (!n) {
+  console.log("\n🚨 **한 곳도 못 받았다.** 관광공사 서버가 닫혀 있을 때가 있다 —");
+  console.log("   조금 뒤에 다시 돌려 볼 것. (찔러보기 때는 6/6 다 됐다)");
+  process.exit(1);
+}
+if (stat.failed > targets.length / 2) {
+  console.log(`\n⚠️ **절반 넘게(${stat.failed}/${targets.length}) 못 받았다.** 서버가 되다 말다 하는 중이다.`);
+  console.log("   저장하더라도 나중에 다시 돌려 빈 곳을 채울 것 — 이 스크립트는 **덮어쓰지 않고 합친다.**");
+}
 
 if (!APPLY) {
   console.log("\n📋 맛보기다(apply 를 안 켰다). 위 숫자를 보고 켤 것.");
