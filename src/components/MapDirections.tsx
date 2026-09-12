@@ -7,7 +7,7 @@ import { slugFor } from "../lib/shareLink";
 // 🍚 밥집으로 가는 주소는 **표 한 장**에서만 온다(partnerLinks.ts).
 import { eatUrlForPlace } from "../lib/partnerLinks";
 import { useLanguage } from "../lib/useLanguage";
-import NEAREST_STATION from "../data/nearest-station.json";
+import { nearestStation } from "../lib/nearestStation";
 
 // SeoulMap.tsx(네이버 지도 InfoWindow)는 raw HTML 문자열이라 이 컴포넌트를 못 쓴다 —
 // 그쪽은 mapLinks.ts의 renderMapLinksHtml()이 같은 마크업을 문자열로 대신 만든다.
@@ -28,10 +28,10 @@ import NEAREST_STATION from "../data/nearest-station.json";
 // 대부분 거절하고, 한 번 거절하면 되돌리기 어렵다.
 // 위치를 못 받아도(거절·실내·미지원·4초 초과) 목적지만으로 그대로 연다 —
 // 길찾기가 통째로 막히는 것보다 낫다.
-/** 곳마다 미리 받아 둔 「가장 가까운 지하철역」 (카카오 지역검색 SW8). */
-const STATIONS = (NEAREST_STATION as {
-  곳: Record<string, { station?: string; dist?: number; none?: boolean }>;
-}).곳;
+/* 🚇 「가장 가까운 역」은 src/lib/nearestStation.ts 하나로 읽는다.
+   ⚠️ 예전에는 여기서 표를 직접 열었는데, **곳이 움직이면 그 값이 조용히 틀려진다**
+      (빛섬축제가 노들섬으로 옮겼는데 자양역이 그대로 떴다). 그래서 지금 좌표로
+      다시 재서 확인하는 함수를 거친다 — 자세한 이야기는 그 파일 맨 위에 있다. */
 
 export default function MapDirections({ place }: { place: MapLinkTarget }) {
   const { t, language } = useLanguage();
@@ -131,7 +131,7 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
           앞서 회색 글자 한 줄로 뒀다가 단추 둘 밑에 묻혔다(사장님이 화면에 동그라미). */}
       {luggage && (
         <LuggageCard
-          station={place.id ? STATIONS[place.id] : undefined}
+          station={place.id ? nearestStation(place.id, place) : undefined}
           gu={place.gu}
           onClose={() => setLuggage(false)}
         />

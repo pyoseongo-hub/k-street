@@ -9,7 +9,7 @@
 import { isInLaunchScope } from "../config/launchScope";
 import { sidoOf } from "./districts";
 import { getCoords } from "../lib/coords";
-import { guFestivalDate } from "../lib/guFestival";
+import { guFestivalDate, guOfficialLink } from "../lib/guFestival";
 import { TOUR_PLACES, findTourPlace, nameKey } from "./tourPlaces";
 import { getManualPhoto } from "../lib/manualPhotos";
 import { galleryShotsFor } from "../lib/photoGallery";
@@ -467,6 +467,13 @@ function withGuFestival(p: Place): Place {
   const moved = !!d.gu && d.gu !== p.gu;
   const addr = d.place ?? (moved ? undefined : p.addr);
   const hasNewCoord = d.lat != null && d.lng != null;
+  // 🔗 **공식 주소도 구청 것이 이긴다.**
+  //    🐞 안 그러면 손님이 **작년 축제 페이지**로 간다. 실제로 그랬다 —
+  //       관광공사가 등록해 둔 주소가 `bitseomfestival.com/2025/` 였다.
+  //       구청이 올린 것은 올해 것(`bitseomfestival.com`)이다.
+  //    여기서 한 번 고치면 카드 이름 링크·곳 페이지·기사 카드가 **다 같이** 따라온다 —
+  //    화면마다 따로 고치면 잣대가 둘이 되고, 그러면 반쪽 적용이 생긴다.
+  const official = guOfficialLink(d);
   return {
     ...p,
     gu: d.gu || p.gu,
@@ -474,6 +481,7 @@ function withGuFestival(p: Place): Place {
     addr,
     lat: hasNewCoord ? d.lat : moved ? undefined : p.lat,
     lng: hasNewCoord ? d.lng : moved ? undefined : p.lng,
+    officialUrl: official ?? p.officialUrl,
   };
 }
 

@@ -169,11 +169,31 @@ async function call(path: string): Promise<Row[]> {
   return data.culturalEventInfo?.row ?? [];
 }
 
-/** 열쇠가 있을 때 — 축제를 통째로 받아 온다(1,000줄씩). */
-async function fetchAllFestivals(): Promise<Row[]> {
+/**
+ * 열쇠가 있을 때 — **문화행사를 통째로** 받아 온다(1,000줄씩).
+ *
+ * 🚨 **「축제」 분류로 좁히지 않는다** (2026-09-12에 고침).
+ *
+ *   처음엔 CODENAME 이 「축제…」인 것만 받았다. 1,492건이 왔고 그럴듯해 보였다.
+ *   그런데 우리 축제 80곳 중 **3곳만** 맞았다. 사장님이 바로 짚었다 — *"겨우 세개야"*.
+ *
+ *   범인은 이 필터였다. 같은 축제가 **해마다 다른 분류로 등록된다**:
+ *     2024 서울라이트 광화문 → CODENAME **축제-자연/경관**
+ *     2025 서울라이트 광화문 → CODENAME **전시/미술**
+ *   구청 담당자가 그때그때 고르는 칸이라 일정하지 않다. 분류로 거르면
+ *   **멀쩡한 축제가 조용히 사라진다** — 그리고 로그에는 「0곳」이라고만 뜬다.
+ *
+ *   우리는 어차피 **우리 축제 이름과 대조**한다. 이름이 꼭 맞으면 그게 그 축제다.
+ *   분류는 볼 이유가 없다. 「축제」 분류는 아래 **「우리에게 없는 축제」 목록**에서만
+ *   쓴다 — 거기서는 콘서트·전시 수천 건이 섞이면 못 읽기 때문이다.
+ *
+ *   ⚠️ 19,525건을 받으므로 호출이 20번이다. 일반 인증키는 **호출 횟수 제한이 없다**
+ *      (인증키 관리 화면에서 확인). 하루 한 번 도는 작업이라 부담이 아니다.
+ */
+async function fetchAllEvents(): Promise<Row[]> {
   const out: Row[] = [];
-  for (let start = 1; start <= 4001; start += 1000) {
-    const rows = await call(`${start}/${start + 999}/${encodeURIComponent("축제")}/`);
+  for (let start = 1; start <= 30001; start += 1000) {
+    const rows = await call(`${start}/${start + 999}/`);
     out.push(...rows);
     if (rows.length < 1000) break;
   }
@@ -214,16 +234,17 @@ console.log(
   `🎪 우리 축제 ${festivals.length}곳 · 열쇠 ${USING_SAMPLE ? "없음(맛보기, 이름으로 하나씩)" : "있음(통째로)"}\n`,
 );
 
-const rows = USING_SAMPLE ? await fetchByTitles(festivals) : await fetchAllFestivals();
+const rows = USING_SAMPLE ? await fetchByTitles(festivals) : await fetchAllEvents();
 
-// 축제만, 서울 25구만, **아직 안 끝난 것만**.
+// 서울 25구만, **아직 안 끝난 것만**.
+// 🚨 **분류(CODENAME)로 거르지 않는다** — 위 fetchAllEvents 주석 참고.
+//    같은 축제가 해마다 다른 분류로 등록돼서, 거르면 멀쩡한 축제가 조용히 사라진다.
 const live = rows.filter((r) => {
-  if (!r.CODENAME?.startsWith("축제")) return false;
   if (!r.GUNAME) return false;
   const end = ymd(r.END_DATE) ?? ymd(r.STRTDATE);
   return !!end && end >= TODAY;
 });
-console.log(`🏛️ 받은 줄 ${rows.length}개 · 그중 축제이고 아직 안 끝난 것 ${live.length}개\n`);
+console.log(`🏛️ 받은 줄 ${rows.length}개 · 그중 서울이고 아직 안 끝난 것 ${live.length}개\n`);
 
 // 같은 축제가 여러 줄로 올 수 있다(회차별). **가장 빨리 시작하는 것**을 쓴다 —
 // 손님이 다음에 갈 수 있는 날짜가 그것이다.
@@ -387,10 +408,16 @@ const matchedKeys = new Set(
 const notOurs = [...byKey.entries()]
   .filter(([kk]) => !matchedKeys.has(kk))
   .map(([, r]) => r)
+  // 🎪 **여기서만 분류를 본다.** 대조할 때는 안 본다(위 주석) — 대조는 이름으로 하니까.
+  //    하지만 이 목록은 **사람이 읽는 것**이라, 콘서트·전시 수천 건이 섞이면
+  //    아무도 안 읽는다. 「축제」로 등록된 것만 남겨 눈에 들어오게 한다.
+  //    ⚠️ 그래서 이 목록은 **빠짐없는 목록이 아니다.** 분류가 다르게 달린 축제는
+  //       여기 안 보인다 — 있는 그대로 적어 두고, 그걸 알고 쓴다.
+  .filter((r) => r.CODENAME?.startsWith("축제"))
   .sort((a, b) => (ymd(a.STRTDATE) ?? "").localeCompare(ymd(b.STRTDATE) ?? ""));
 
 if (notOurs.length) {
-  console.log(`\n🆕 구청에는 있는데 우리 화면에 없는 축제 ${notOurs.length}곳:`);
+  console.log(`\n🆕 구청에는 있는데 우리 화면에 없는 축제 ${notOurs.length}곳 (「축제」로 등록된 것만):`);
   for (const r of notOurs)
     console.log(
       `   ${(r.GUNAME ?? "").padEnd(5)} ${r.DATE ?? ""}  ${(r.TITLE ?? "").normalize("NFC")}` +

@@ -67,7 +67,7 @@ import {
   LOCKER_APP_IPHONE,
 } from "./lib/luggage-official";
 import LUGGAGE_CANDIDATES from "../src/data/luggage-candidates.json";
-import NEAREST_STATION from "../src/data/nearest-station.json";
+import { nearestStation } from "../src/lib/nearestStation";
 import {
   officialLinks,
   AIRPORT_LINKS,
@@ -77,6 +77,7 @@ import {
 // 🌏 12개 언어. 곳 이름·메모는 place-translations.json 에서(translateText),
 //    틀에 박히는 낱말은 여기서 온다(scripts/lib/page-strings.ts).
 import { getTranslations, type Language } from "../src/lib/translations";
+import { guFestivalDate, guOfficialLink, formatRange } from "../src/lib/guFestival";
 import {
   PAGE_STRINGS,
   PAGE_LANGS,
@@ -134,6 +135,13 @@ function isoDate(s: string | undefined): string | undefined {
 }
 
 function upcomingEventDates(p: Place): { startDate: string; endDate?: string } | undefined {
+  // 🏛️ **구청이 올린 확정 일정이 있으면 그게 이긴다** (2026-09-12).
+  //    관광공사 자료는 대개 **지난 회차**고, 구청 것은 주최자가 직접 올린 올해 것이다.
+  //    guFestivalDate 가 「이미 끝난 회차」를 걸러 주므로 여기서 또 볼 것이 없다.
+  //    📌 사람이 손으로 적은 축제(`ks_…`)도 이쪽으로는 날짜가 들어온다 —
+  //       아래 관광공사 길은 `tour_` 만 보므로 그쪽은 영영 못 받던 것이다.
+  const sure = guFestivalDate(p.id);
+  if (sure) return { startDate: sure.start, ...(sure.end ? { endDate: sure.end } : {}) };
   if (!p.id.startsWith("tour_")) return undefined;
   const rec = FESTIVAL_DATES[p.id.slice("tour_".length)];
   const start = rec?.start;
@@ -263,6 +271,12 @@ const monthLabel = (m: number, lang: Language): string =>
   lang === "en" ? MONTHS[m] : String((getTranslations(lang).months as Record<number, string>)[m]);
 
 function whenLabel(p: Place, lang: Language = "en"): string {
+  // 🏛️ **구청이 올린 확정 일정이 있으면 달이 아니라 날짜를 적는다** (2026-09-12).
+  //    「10월」 → 「10월 2일 – 11일」. 위 🚨 주석의 「날짜는 절대 안 만든다」와
+  //    어긋나지 않는다 — **만든 날짜가 아니라 주최 측이 올린 날짜**다.
+  //    Intl 이 12개 언어를 다 알아서 여기서 표를 또 만들 것이 없다.
+  const sure = guFestivalDate(p.id);
+  if (sure) return formatRange(sure, lang);
   if (p.startMonth == null) return "";
   // 달 이름은 앱이 이미 12개 언어를 갖고 있다(T.months) — 여기서 또 만들지 않는다.
   const m = lang === "en" ? MONTHS : getTranslations(lang).months;
@@ -382,9 +396,11 @@ function hubHreflang(path: string): string {
  * ⚠️ 자료가 아직 없는 곳은 **조용히 아무것도 안 그린다** —
  *    「역이 없다」와 「우리가 아직 안 알아봤다」는 다른 말이다.
  */
-function stationHtml(id: string, lang: Language): string {
-  const rows = (NEAREST_STATION as { 곳: Record<string, { station?: string; dist?: number; none?: boolean }> }).곳;
-  const r = rows[id];
+function stationHtml(p: Place, lang: Language): string {
+  // 🚇 **지금 좌표로 다시 재서** 낡은 기록을 걸러 낸다 — src/lib/nearestStation.ts.
+  //    곳이 옮겨지면(구청 자료로 좌표가 바뀌면) 예전 역이 그대로 남아 「노들섬 ·
+  //    자양역 679m」 같은 줄이 찍힌다. 한 칸 안에서 서로 다른 말을 하는 셈이다.
+  const r = nearestStation(p.id, p);
   if (!r) return "";
   const S2 = PAGE_STRINGS[lang];
   if (r.none) return `<dt>${esc(S2.stationHeading)}</dt><dd>${esc(S2.stationNone)}</dd>`;
@@ -605,7 +621,24 @@ ${note ? `<p class="note">${esc(note)}</p>` : ""}
 <dt>${esc(S.what)}</dt><dd>${esc(kind)}</dd>
 <dt>${esc(S.district)}</dt><dd>${esc(guName)}${p.dong ? ` · ${esc(dongName(p.dong, lang))}` : ""}</dd>
 ${p.addr ? `<dt>${esc(S.address)}</dt><dd lang="ko">${esc(p.addr)}</dd>` : ""}
-${when ? `<dt>${esc(S.when)}</dt><dd>${esc(when)} — ${esc(S.datesShift)}</dd>` : ""}
+${
+  // 🏛️ **확정 일정이 있으면 「바뀔 수 있습니다」 대신 「누가 올렸나 + 공식 링크」**
+  //    (사장님 지시 2026-09-12: "항상 공식 페이지 링크 주고 직접 확인 가능하게").
+  //    「10월 2일 – 11일 — 확정 일정은 며칠 전에야 공지되기도 합니다」는 말이 안 된다.
+  //    이미 공지된 날짜이기 때문이다. 대신 근거를 댄다.
+  //    기관 이름은 한국어 그대로 둔다 — 현지에서 그대로 보여 줄 수 있어야 한다.
+  (() => {
+    if (!when) return "";
+    const sure = guFestivalDate(p.id);
+    if (!sure) return `<dt>${esc(S.when)}</dt><dd>${esc(when)} — ${esc(S.datesShift)}</dd>`;
+    const link = guOfficialLink(sure);
+    const who = sure.org ?? sure.gu;
+    const tail = link
+      ? `${esc(who)} · <a href="${esc(link)}" rel="nofollow noopener">${esc(S.official)}</a>`
+      : esc(who);
+    return `<dt>${esc(S.when)}</dt><dd><strong>${esc(when)}</strong> — ${tail}</dd>`;
+  })()
+}
 ${
   // 🗓️ 이름에 지난 연도가 박힌 행사 — **아는 것만 말한다.**
   //    「2025년에 열렸다」는 아는 사실이고, 「2026년에도 열린다」는 모르는 일이다.
@@ -614,7 +647,23 @@ ${
     ? `<dt>${esc(S.when)}</dt><dd><strong>${esc(S.pastEdition(pastYear))}</strong></dd>`
     : ""
 }
-${p.officialUrl ? `<dt>${esc(S.official)}</dt><dd><a href="${esc(p.officialUrl)}" rel="nofollow noopener">${esc(new URL(p.officialUrl).hostname)}</a></dd>` : ""}
+${
+  // 🏛️ **구청이 올린 주소가 이긴다** (2026-09-12).
+  //
+  //    🐞 안 그러면 한 페이지에 **서로 다른 두 링크**가 뜬다. 실제로 그랬다:
+  //        언제:      … — 서울시청 · 공식 안내 → bitseomfestival.com
+  //        공식 안내: bitseomfestival.com/**2025**/   ← 관광공사가 등록해 둔 작년 주소
+  //       손님이 아래쪽을 누르면 **작년 축제 페이지**로 간다.
+  //    확정 일정과 같은 잣대를 쓴다 — 주최 측이 올린 것이 더 앞선 사실이다.
+  //    바로 위 「언제」 줄에 같은 링크가 이미 붙으므로 이 줄은 **겹치면 뺀다.**
+  (() => {
+    const sure = guFestivalDate(p.id);
+    const sureLink = sure ? guOfficialLink(sure) : undefined;
+    if (sureLink) return ""; // 위 「언제」 줄이 이미 같은 곳으로 보낸다
+    if (!p.officialUrl) return "";
+    return `<dt>${esc(S.official)}</dt><dd><a href="${esc(p.officialUrl)}" rel="nofollow noopener">${esc(new URL(p.officialUrl).hostname)}</a></dd>`;
+  })()
+}
 ${
   // 🚇 **가장 가까운 지하철역** (2026-09-10, 사장님 지시).
   //    "가까운 지하철역 없으면 소비자가 알아야지 거긴 없구나 / 대부분 지하 타니 가까운 지하철"
@@ -625,7 +674,7 @@ ${
   //    🚨 **역이 멀면 그것도 적는다.** 빈칸으로 두면 손님은 "이 앱이 모르는구나"로
   //       읽지만, "여긴 역이 없습니다"라고 적으면 **미리 맡기고 오라는 답**이 된다.
   //    🚨 「보관함이 **있습니다**」라고 하지 않는다 — 273역 / 약 340역이다.
-  stationHtml(p.id, lang)
+  stationHtml(p, lang)
 }
 </dl>
 
