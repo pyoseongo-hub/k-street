@@ -1,0 +1,70 @@
+name: Find underground malls (지하도상가 찾기)
+
+# 🏬 서울시설공단이 운영하는 지하도상가 25곳의 주소·좌표를 카카오 지도에서 찾는다.
+#    왜 이 25곳인지, 왜 카카오에서 찾는지는 scripts/find-underground-malls.mjs 머리말에.
+#
+# ⚠️ **apply 를 끈 채 먼저 돌려 볼 것.** 이름이 안 맞는 결과를 걸러 내는 잣대가
+#    있긴 하지만, 어느 곳이 안 찾아졌는지는 사람이 눈으로 봐야 한다.
+# 🚨 자료 파일만 만든다. **seed 에 넣는 것은 사람이 한다** — 들일지 말지는 판단이다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "찾은 것을 파일로 저장하고 커밋할까 (끄면 맛보기만)"
+        type: boolean
+        default: false
+
+jobs:
+  find:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 열쇠가 있나 먼저 본다
+        env:
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
+        run: |
+          if [ -z "$KAKAO_REST_API_KEY" ]; then
+            echo "❌ KAKAO_REST_API_KEY 시크릿이 없다 — Settings → Secrets 에 넣을 것"
+            exit 1
+          fi
+          echo "✅ 열쇠 있음 (${#KAKAO_REST_API_KEY}자)"
+
+      - name: 찾기
+        env:
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/find-underground-malls.mjs ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee mall-log.txt
+
+      - name: 저장된 것이 있으면 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          # 🐞 파일이 없는데 git add 하면 워크플로가 통째로 빨개진다 — 찾기는 성공했는데도.
+          #    (2026-09-12에 구청 축제 쪽에서 똑같이 당했다.)
+          if [ ! -f src/data/underground-malls.json ]; then
+            echo "저장된 파일이 없다 — 커밋할 것도 없다"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/underground-malls.json
+          git diff --cached --quiet && { echo "바뀐 게 없다"; exit 0; }
+          git commit -m "지하도상가 주소·좌표를 받았다 (find-underground-malls) [skip render]"
+          git push
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🏬 지하도상가 찾기"
+            echo ""
+            echo '```'
+            cat mall-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
