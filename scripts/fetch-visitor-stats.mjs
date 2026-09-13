@@ -193,9 +193,19 @@ if (PROBE) {
   } catch { /* 디코딩이 안 되면 그대로만 쓴다 */ }
   console.log(`🔑 열쇠 모양 ${KEYS.length}가지로 시험한다 (길이 ${API_KEY.length}자)`);
 
+  // 🚨 **적게 두드린다** (2026-09-13에 데었다). 주소 3 × 이름 2 × 열쇠 2 = **12번**을
+  //    30분 사이에 여러 판 돌렸더니 **서버가 우리를 안 받아 줬다**(ConnectTimeout).
+  //    아까는 바로 답하던 주소까지 막혀서 **그 판은 아무것도 못 알아냈다.**
+  //    맞는 주소·이름은 이미 안다(위 주석) — 검사는 **두 번**이면 된다.
+  //    전부 훑고 싶으면 `--wide` 를 준다.
+  const WIDE = process.argv.includes("--wide");
+  const pBases = WIDE ? BASES : [BASES[0]];
+  const pOps = WIDE ? OPS : [OPS[0]];
+  console.log(`   (${pBases.length * pOps.length * KEYS.length}번만 부른다${WIDE ? "" : " — 전부 보려면 --wide"})`);
+
   let live = null;
-  for (const b of BASES) {
-    for (const op of OPS) {
+  for (const b of pBases) {
+    for (const op of pOps) {
       for (const [kname, key] of KEYS) {
       const params = new URLSearchParams({ MobileOS: "ETC", MobileApp: "KStreet", _type: "json", YM, numOfRows: "3", pageNo: "1" });
       // 디코딩한 열쇠는 **다시 인코딩해서** 보낸다 — 안 그러면 + 가 공백이 된다.
