@@ -1,0 +1,43 @@
+name: Lookup places (이름으로 관광공사에 물어본다)
+
+# 🔎 곳 **이름 몇 개**를 관광공사에 물어보고 답을 그대로 찍는다. 저장하지 않는다.
+#
+#    Fetch tour places 는 지역 전체를 쓸어 오는 것이라 호출 한도를 크게 쓴다.
+#    여기는 「경복궁·창덕궁·종묘」처럼 **빠진 곳 몇 개**를 채울 때 쓴다.
+#
+# 🚨 결과를 그대로 seed.ts 에 넣지 않는다. 같은 이름이 여럿이면 사람이 고른다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      names:
+        description: "찾을 이름 (빈칸으로 나눠 여럿 — 예: 경복궁 창덕궁 종묘)"
+        required: true
+        default: "경복궁 창덕궁 종묘 홍대 명동 가로수길"
+
+jobs:
+  lookup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 물어본다
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/lookup-places.mjs ${{ inputs.names }} 2>&1 | tee lookup-log.txt
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🔎 관광공사에 물어본 것 — ${{ inputs.names }}"
+            echo ""
+            echo '```'
+            tail -c 60000 lookup-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
