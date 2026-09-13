@@ -13,6 +13,7 @@ import ShareApp from "./components/ShareApp";
 import ArrivalGuide, { arrivalLabel } from "./components/ArrivalGuide";
 import RainyPanel from "./components/RainyPanel";
 import RainyBanner from "./components/RainyBanner";
+import VideoCard from "./components/VideoCard";
 import { useSeoulWeather } from "./lib/weather";
 
 function App() {
@@ -126,13 +127,25 @@ function App() {
       </header>
 
       <main className="app-main">
-        {/* ☔ **비 오는 날에만** 첫 화면 맨 위에 한 줄. 사장님(2026-09-13):
-            "비 오는 날 좀 더 눈에 띄게 하고 싶은데 작아서 지나칠까 봐."
-            왜 늘 두지 않는지는 RainyBanner.tsx 머리말에 적었다 —
-            날씨는 「있느냐」가 아니라 「얼마나 눈에 띄느냐」만 정한다. */}
-        {weather?.rainToday && (
-          <RainyBanner now={!!weather.rainingNow} onOpen={() => setRainyOpen(true)} />
-        )}
+        {/* 🗂️ **머리줄 아래 알림 칸** (2026-09-13 사장님: "언어 아래 한 칸 더 늘리고 /
+            비 안내도 한 칸 내리고 / 자리배치도 다시 하고 이쁘고 보기 좋게").
+
+            여기 들어가는 것은 **한 줄짜리 안내**뿐이다. 규칙 셋:
+            ① 위에서부터 **늘 있는 것 → 가끔 있는 것** 순서다.
+               ▶️ 영상은 주소가 있으면 늘 있고, ☔ 비는 어쩌다 있다.
+            ② 전부 **같은 모양**(.top-card)이다 — 높이·모서리·여백이 같아야
+               두 개가 같이 떠도 줄이 어그러지지 않는다.
+            ③ 없을 때는 **자리도 없다.** 빈 칸을 남겨 두면 첫 화면이 그만큼 내려간다.
+               (그래서 칸 자체를 안 그리고, 사이 간격은 gap 이 맡는다) */}
+        <div className="top-cards">
+          {/* ▶️ 유튜브 사용법 영상 — 그 언어의 주소가 있을 때만 뜬다(VideoCard.tsx) */}
+          <VideoCard />
+          {/* ☔ **비 오는 날에만.** 왜 늘 두지 않는지는 RainyBanner.tsx 머리말에 —
+              날씨는 「있느냐」가 아니라 「얼마나 눈에 띄느냐」만 정한다. */}
+          {weather?.rainToday && (
+            <RainyBanner now={!!weather.rainingNow} onOpen={() => setRainyOpen(true)} />
+          )}
+        </div>
         {/* 📲 홈 화면에 추가하면 앱처럼 열리고 인터넷 없이도 열린다 — 손님은
             그걸 모른다. 설치할 수 있는 브라우저에서만, 한 번만 뜬다. */}
         <InstallHint />

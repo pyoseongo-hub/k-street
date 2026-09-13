@@ -14,6 +14,8 @@ export interface Translations {
   savedEmptyBody: string;
   savedOnThisPhone: string;
   freeNoSignup: string;
+  /** ▶️ 유튜브 사용법 영상 카드에 적히는 말 (VideoCard.tsx) */
+  watchVideo: string;
   installTitle: string;
   installBody: string;
   installBodyIos: string;
@@ -311,6 +313,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyBody: '마음에 드는 곳의 🤍 를 누르면 여기에 모입니다.',
     savedOnThisPhone: '저장한 곳은 이 기기에만 남습니다.',
     freeNoSignup: '평생 무료 · 가입 없음',
+    watchVideo: '사용법 영상',
     installTitle: '앱처럼 쓰기',
     installBody: '홈 화면에 두면 인터넷이 없어도 열립니다.',
     installBodyIos: '공유 버튼 → "홈 화면에 추가"',
@@ -434,6 +437,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyBody: 'Tap 🤍 on any place and it shows up here.',
     savedOnThisPhone: 'Saved places stay on this device only.',
     freeNoSignup: 'Free forever · No sign-up',
+    watchVideo: 'How it works',
     installTitle: 'Use it like an app',
     installBody: 'Add it to your home screen — it opens even offline.',
     installBodyIos: 'Share button → "Add to Home Screen"',
@@ -557,6 +561,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyBody: '気になる場所の 🤍 を押すと、ここに集まります。',
     savedOnThisPhone: '保存した場所はこの端末にのみ残ります。',
     freeNoSignup: 'ずっと無料 · 登録不要',
+    watchVideo: '使い方の動画',
     installTitle: 'アプリのように使う',
     installBody: 'ホーム画面に追加すると、オフラインでも開けます。',
     installBodyIos: '共有ボタン →「ホーム画面に追加」',
@@ -680,6 +685,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyBody: '点一下喜欢的地方的 🤍，就会出现在这里。',
     savedOnThisPhone: '收藏内容仅保存在本设备上。',
     freeNoSignup: '永久免费 · 无需注册',
+    watchVideo: '使用方法视频',
     installTitle: '像应用一样使用',
     installBody: '添加到主屏幕后，没有网络也能打开。',
     installBodyIos: '分享按钮 →「添加到主屏幕」',
@@ -803,6 +809,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyBody: '點一下喜歡的地方的 🤍，就會出現在這裡。',
     savedOnThisPhone: '收藏內容僅保存在本裝置上。',
     freeNoSignup: '永久免費 · 無需註冊',
+    watchVideo: '使用方法影片',
     installTitle: '像應用程式一樣使用',
     installBody: '加到主畫面後，沒有網路也能開啟。',
     installBodyIos: '分享按鈕 →「加入主畫面」',
@@ -926,6 +933,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyBody: 'Nhấn 🤍 ở địa điểm bạn thích, nó sẽ hiện ở đây.',
     savedOnThisPhone: 'Địa điểm đã lưu chỉ nằm trên thiết bị này.',
     freeNoSignup: 'Miễn phí mãi mãi · Không cần đăng ký',
+    watchVideo: 'Video hướng dẫn',
     installTitle: 'Dùng như một ứng dụng',
     installBody: 'Thêm vào màn hình chính — mở được cả khi không có mạng.',
     installBodyIos: 'Nút chia sẻ → "Thêm vào MH chính"',
@@ -1049,6 +1057,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyBody: 'Toca 🤍 en cualquier lugar y aparecerá aquí.',
     savedOnThisPhone: 'Los lugares guardados solo quedan en este dispositivo.',
     freeNoSignup: 'Gratis para siempre · Sin registro',
+    watchVideo: 'Cómo funciona',
     installTitle: 'Úsala como una app',
     installBody: 'Añádela a tu pantalla de inicio: abre incluso sin conexión.',
     installBodyIos: 'Botón compartir → "Añadir a inicio"',
@@ -1172,6 +1181,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyBody: 'Touchez 🤍 sur un lieu et il apparaîtra ici.',
     savedOnThisPhone: 'Les lieux enregistrés restent sur cet appareil uniquement.',
     freeNoSignup: 'Gratuit à vie · Sans inscription',
+    watchVideo: 'Comment ça marche',
     installTitle: 'Utilisez-la comme une appli',
     installBody: 'Ajoutez-la à l\'écran d\'accueil : elle s\'ouvre même hors ligne.',
     installBodyIos: 'Bouton partager → "Sur l\'écran d\'accueil"',
@@ -1295,6 +1305,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyBody: 'Tippe bei einem Ort auf 🤍 – er erscheint dann hier.',
     savedOnThisPhone: 'Gespeicherte Orte bleiben nur auf diesem Gerät.',
     freeNoSignup: 'Für immer kostenlos · Ohne Anmeldung',
+    watchVideo: 'So funktioniert es',
     installTitle: 'Wie eine App nutzen',
     installBody: 'Zum Startbildschirm hinzufügen – öffnet auch offline.',
     installBodyIos: 'Teilen-Button → "Zum Home-Bildschirm"',
@@ -1418,6 +1429,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyBody: 'Нажмите 🤍 у любого места — оно появится здесь.',
     savedOnThisPhone: 'Сохранённые места остаются только на этом устройстве.',
     freeNoSignup: 'Навсегда бесплатно · Без регистрации',
+    watchVideo: 'Как это работает',
     installTitle: 'Пользуйтесь как приложением',
     installBody: 'Добавьте на главный экран — откроется даже без интернета.',
     installBodyIos: 'Кнопка «Поделиться» → «На экран «Домой»»',
@@ -1541,6 +1553,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyBody: 'Ketuk 🤍 pada tempat yang kamu suka, nanti muncul di sini.',
     savedOnThisPhone: 'Tempat yang disimpan hanya tersimpan di perangkat ini.',
     freeNoSignup: 'Gratis selamanya · Tanpa daftar',
+    watchVideo: 'Cara pakai',
     installTitle: 'Pakai seperti aplikasi',
     installBody: 'Tambahkan ke layar utama — bisa dibuka walau offline.',
     installBodyIos: 'Tombol bagikan → "Tambah ke Layar Utama"',
@@ -1664,6 +1677,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyBody: 'แตะ 🤍 ที่สถานที่ที่ชอบ แล้วจะมาอยู่ตรงนี้',
     savedOnThisPhone: 'ที่บันทึกไว้จะอยู่บนเครื่องนี้เท่านั้น',
     freeNoSignup: 'ฟรีตลอดไป · ไม่ต้องสมัคร',
+    watchVideo: 'วิธีใช้งาน',
     installTitle: 'ใช้เหมือนแอป',
     installBody: 'เพิ่มลงหน้าจอหลัก เปิดได้แม้ไม่มีเน็ต',
     installBodyIos: 'ปุ่มแชร์ → "เพิ่มไปยังหน้าจอโฮม"',

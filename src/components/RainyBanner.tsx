@@ -26,17 +26,17 @@ export default function RainyBanner({ now, onOpen }: { now: boolean; onOpen: () 
   const { t } = useLanguage();
   const { total } = rainyPlaces();
   return (
-    <button type="button" className="rain-banner" onClick={onOpen}>
-      <span className="rain-banner-ic" aria-hidden="true">
+    <button type="button" className="top-card rain-banner" onClick={onOpen}>
+      <span className="top-card-ic" aria-hidden="true">
         ☔
       </span>
-      <span className="rain-banner-tx">
+      <span className="top-card-tx">
         {/* 지금 오는 비와 예보를 가른다 — 「지금 비」는 당장 갈 곳을 찾는 손님이고,
             「오늘 비 예보」는 하루를 다시 짜는 손님이다. 급한 정도가 다르다. */}
         <strong>{now ? t.rainyNow : t.rainyForecast}</strong>
         <span>{t.rainyCta(total)}</span>
       </span>
-      <span className="rain-banner-go" aria-hidden="true">
+      <span className="top-card-go" aria-hidden="true">
         →
       </span>
     </button>

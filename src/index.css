@@ -2971,43 +2971,80 @@ html[lang^="zh"] * {
   .rainy-btn.blink { animation: none; }
 }
 
-/* ☔ **비 오는 날에만 뜨는 한 줄 띠** (RainyBanner.tsx).
-   왜 이것까지 필요한가 — 깜박임은 20초면 끝나고 그 뒤에는 34px 그림 하나로
-   돌아간다. 20초 뒤에 앱을 여는 손님에게는 아무 표시도 없는 것과 같다.
-   ⚠️ 첫 화면 맨 위(계절 사진보다 위)다. 비 오는 날 손님이 가장 먼저 정해야 하는 것이
-      「오늘 어디 가나」라서 그렇다 — 그날만큼은 계절 사진보다 급하다. */
-.rain-banner {
+/* ═══════════════════════════════════════════════════════════════════════
+   🗂️ 머리줄 아래 **한 줄짜리 알림 칸** (2026-09-13)
+   ═══════════════════════════════════════════════════════════════════════
+   사장님: "언어 아래 한 칸 더 늘리고 / 비 안내도 한 칸 내리고 /
+           자리배치도 다시 하고 **이쁘고 보기 좋게**"
+
+   여기 들어가는 둘 — ▶️ 유튜브 사용법 영상 · ☔ 비 오는 날.
+   🚨 **모양을 하나로 묶는다**(.top-card). 따로 만들면 높이도 여백도 어긋나서,
+      둘이 같이 뜨는 날 계단처럼 보인다. 색만 달리해서 무엇인지 구별한다.
+   📌 없는 칸은 **그리지 않는다**(빈 자리도 안 남긴다) — 사이 간격은 gap 이 맡으므로
+      하나만 떠도, 둘 다 없어도 첫 화면이 안 밀린다. */
+.top-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+/* 비어 있으면 위아래 여백까지 없앤다 — app-main 의 gap 이 두 번 먹지 않게. */
+.top-cards:empty { display: none; }
+
+.top-card {
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
   padding: 11px 12px 11px 14px;
   border-radius: 14px;
-  border: 1px solid color-mix(in srgb, var(--rain) 55%, var(--border));
-  background: color-mix(in srgb, var(--rain) 15%, var(--surface-2));
+  border: 1px solid var(--border);
+  background: var(--surface-2);
   color: var(--text);
   font: inherit;
   text-align: left;
+  text-decoration: none;
   cursor: pointer;
 }
+.top-card:active { opacity: 0.7; }
 
-.rain-banner:active { opacity: 0.7; }
+.top-card-ic { font-size: 20px; line-height: 1; flex-shrink: 0; }
 
-.rain-banner-ic { font-size: 20px; line-height: 1; flex-shrink: 0; }
-
-/* 글자는 두 줄이다 — 위: 지금 비인가 예보인가 · 아래: 몇 곳 있나.
+/* 글자는 두 줄까지 — 위: 무엇인가 · 아래: 곁들이는 말.
    ⚠️ 12개 언어라 길이가 제각각이다. nowrap 을 걸지 않는다(독일어·태국어가 잘린다). */
-.rain-banner-tx {
+.top-card-tx {
   display: flex;
   flex-direction: column;
   gap: 1px;
   min-width: 0;
   flex: 1;
 }
-.rain-banner-tx strong { font-size: 13px; font-weight: 700; }
-.rain-banner-tx span { font-size: 11.5px; color: var(--text-muted); }
+.top-card-tx strong { font-size: 13px; font-weight: 700; }
+.top-card-tx span { font-size: 11.5px; color: var(--text-muted); }
 
-.rain-banner-go { flex-shrink: 0; font-size: 16px; color: var(--rain); }
+.top-card-go { flex-shrink: 0; font-size: 16px; color: var(--text-muted); }
+
+/* ☔ 비 오는 날 — 파랗게. 왜 이 칸이 필요한지는 RainyBanner.tsx 머리말에 적었다.
+   짧게: 머리줄 ☂️ 의 깜박임은 20초면 끝나고, 그 뒤에 앱을 연 손님에게는
+   34px 그림 하나뿐이라 없는 것과 같다. */
+.rain-banner {
+  border-color: color-mix(in srgb, var(--rain) 55%, var(--border));
+  background: color-mix(in srgb, var(--rain) 15%, var(--surface-2));
+}
+.rain-banner .top-card-go { color: var(--rain); }
+
+/* ▶️ 사용법 영상 — 앱 색(accent)으로. 유튜브 빨강을 쓰지 않는다:
+   남의 상표색이고, 이 앱의 다른 화면과 따로 논다(저작권 규칙과 같은 결). */
+.video-card {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface-2));
+}
+.video-card .top-card-go { color: var(--accent-strong); }
+/* 「English」처럼 **자기 언어가 아닌 영상**임을 알리는 작은 딱지. */
+.video-card-sub {
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
 
 /* 🔤 **언어 칸을 지킨다** — ☂️ 를 넣으면 머리줄 단추가 셋이 되어 언어 고르는 칸이
    **정확히 40px** 줄어든다(재 봤다: 320px 에서 57 → 17px, 「한국어」가 사라졌다).
