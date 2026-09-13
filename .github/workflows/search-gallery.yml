@@ -31,6 +31,18 @@ on:
         description: "몇 장까지 넘겨 볼까 (100장씩 · 다 찾으면 거기서 멈춘다)"
         required: false
         default: "40"
+      survey:
+        description: "🗺️ 끝까지 훑고 장소별로 묶어 본다 (앞쪽에 쏠리지 않게)"
+        type: boolean
+        default: true
+      per_place:
+        description: "한 곳에서 몇 장씩 보여 줄까 (survey 일 때)"
+        required: false
+        default: "1"
+      measure:
+        description: "📐 사진을 실제로 받아 몇 픽셀인지 잰다 (느려진다)"
+        type: boolean
+        default: false
 
 jobs:
   search:
@@ -51,7 +63,10 @@ jobs:
             --area "${{ inputs.area }}" \
             --top "${{ inputs.top }}" \
             --fetch "${{ inputs.fetch }}" \
-            --pages "${{ inputs.pages }}" 2>&1 | tee gallery-log.txt
+            --pages "${{ inputs.pages }}" \
+            --per-place "${{ inputs.per_place }}" \
+            ${{ inputs.survey && '--survey' || '' }} \
+            ${{ inputs.measure && '--measure' || '' }} 2>&1 | tee gallery-log.txt
 
       - name: 결과 요약
         if: always()

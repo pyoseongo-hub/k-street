@@ -53,6 +53,8 @@ const MAX_PAGES = Number(argVal("--pages", "40"));
 const SURVEY = args.includes("--survey");
 /** 한 곳에서 몇 장까지 보여 줄까 (--survey 일 때). 같은 곳 사진이 20장씩 있다. */
 const PER_PLACE = Number(argVal("--per-place", "1"));
+/** 📐 사진을 실제로 받아 픽셀 크기를 잰다 (아래 measure 주석 참고). */
+const MEASURE = args.includes("--measure");
 
 const ROOT = "https://apis.data.go.kr/B551011/PhotoGalleryService1";
 
@@ -183,9 +185,53 @@ if (SURVEY) {
   show = places.flatMap(([, arr]) => arr.slice(0, PER_PLACE));
 }
 
+// ── 📐 **사진이 실제로 몇 픽셀인지 잰다** ────────────────────────────────
+// 사장님(2026-09-13): *"고해상 사진 있을텐데 관광공사에"*.
+// 맞는 물음인데 **주소만 보고는 알 수 없다.** galWebImageUrl 이라는 이름이
+// "웹용 작은 것"처럼 읽히지만 실제로 몇 픽셀인지는 받아 봐야 안다.
+// → 짐작하지 않고 **받아서 JPEG 머리글을 읽는다.** 이 저장소 규칙 그대로다.
+//
+// JPEG 은 0xFFD8 로 시작하고, SOF 표지(0xFFC0~0xFFCF, C4·C8·CC 제외) 뒤에
+// [길이 2][정밀도 1][높이 2][너비 2] 가 온다. 라이브러리 없이 그것만 읽는다.
+function jpegSize(buf) {
+  if (buf[0] !== 0xff || buf[1] !== 0xd8) return null;
+  let i = 2;
+  while (i < buf.length - 9) {
+    if (buf[i] !== 0xff) {
+      i++;
+      continue;
+    }
+    const m = buf[i + 1];
+    if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) {
+      return { h: buf.readUInt16BE(i + 5), w: buf.readUInt16BE(i + 7) };
+    }
+    if (m === 0xd8 || (m >= 0xd0 && m <= 0xd9)) {
+      i += 2;
+      continue;
+    }
+    i += 2 + buf.readUInt16BE(i + 2);
+  }
+  return null;
+}
+
+async function measure(url) {
+  if (!url) return "(주소 없음)";
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(25000) });
+    if (!res.ok) return `못 받았다 (HTTP ${res.status})`;
+    const buf = Buffer.from(await res.arrayBuffer());
+    const s = jpegSize(buf);
+    const mb = (buf.length / 1024 / 1024).toFixed(2);
+    return s ? `${s.w}×${s.h} · ${mb}MB` : `크기를 못 읽었다 · ${mb}MB`;
+  } catch (e) {
+    return `못 받았다 (${String(e?.cause?.code ?? e.name).slice(0, 40)})`;
+  }
+}
+
 for (const [i, it] of show.slice(0, TOP).entries()) {
   console.log(`${i + 1}. ${it.galTitle ?? "(제목 없음)"}`);
   console.log(`   사진   ${it.galWebImageUrl ?? "(없음)"}`);
+  if (MEASURE) console.log(`   크기   ${await measure(it.galWebImageUrl)}`);
   console.log(`   작은것 ${it.galThumbnailUrl ?? "(없음)"}`);
   console.log(`   촬영자 ${it.galPhotographer || "(빈칸)"}`);
   console.log(`   찍은곳 ${it.galPhotographyLocation || "(빈칸)"}`);
