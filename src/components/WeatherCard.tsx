@@ -45,13 +45,23 @@ export default function WeatherCard({ onOpen }: { onOpen: () => void }) {
         {rain ? "☔" : "🌤️"}
       </span>
       <span className="top-card-tx">
-        {/* 비 오는 날엔 **비 이야기가 위**로 온다 — 그날 먼저 알아야 하는 것이 그것이다. */}
-        <strong>{rain ? (weather.rainingNow ? t.rainyNow : t.rainyForecast) : temp}</strong>
+        {/* 🐞 **온도만 크게 적혀 있으면 무엇인지 모른다** (2026-09-13 사장님:
+            *"온도 적은데도 뭔지 모르겠어 — 「비 오는 날 안내」라는 표시"*).
+            맞는 지적이다. 이 칸은 날씨를 **알려 주는** 칸이 아니라 「비 와도 갈 곳」을
+            **여는** 칸인데, 「23°」만 크게 있으면 그냥 정보로 읽힌다 — 누를 것이 아니라.
+            → **윗줄은 무엇을 여는지**(비 오는 날), 아랫줄이 날씨다.
+            ⚠️ 비가 올 때는 순서가 뒤집힌다 — 그날은 「지금 비」가 먼저 알아야 할 것이다. */}
+        <strong>{rain ? (weather.rainingNow ? t.rainyNow : t.rainyForecast) : t.rainyDay}</strong>
         {/* 🐞 처음엔 `${t.feelsLike} 26°` 로 낱말을 다 썼는데, **독일어
             「Gefühlte Temperatur」가 두 줄이 되어** 320px 화면에서 칸이 81px 까지
             커졌다(재 봤다). 반반 칸에서는 낱말 하나가 줄 높이를 좌우한다.
             → `≈26°` 로 줄인다. 뜻은 **aria-label 이 말로** 전한다(위). */}
-        <span>{rain ? temp : `≈${Math.round(weather.feelsLikeC)}°`}</span>
+        <span>{rain ? temp : `${temp} ≈${Math.round(weather.feelsLikeC)}°`}</span>
+      </span>
+      {/* → 를 되살렸다. 「누를 수 있는 것」이라는 표시가 없으면 글자를 고쳐도
+          여전히 안내판으로 읽힌다. 옆 영상 칸의 ↗(바깥으로 나감)과 짝이 된다. */}
+      <span className="top-card-go" aria-hidden="true">
+        →
       </span>
     </button>
   );

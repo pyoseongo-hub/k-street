@@ -16,6 +16,8 @@ export interface Translations {
   freeNoSignup: string;
   /** ▶️ 유튜브 사용법 영상 카드에 적히는 말 (VideoCard.tsx) */
   watchVideo: string;
+  /** 🌤️ 날씨 칸에 적히는 짧은 말 — 누르면 「비 와도 갈 곳」이 열린다 (WeatherCard.tsx) */
+  rainyDay: string;
   installTitle: string;
   installBody: string;
   installBodyIos: string;
@@ -314,6 +316,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: '저장한 곳은 이 기기에만 남습니다.',
     freeNoSignup: '평생 무료 · 가입 없음',
     watchVideo: '사용법 영상',
+    rainyDay: '비 오는 날',
     installTitle: '앱처럼 쓰기',
     installBody: '홈 화면에 두면 인터넷이 없어도 열립니다.',
     installBodyIos: '공유 버튼 → "홈 화면에 추가"',
@@ -438,6 +441,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'Saved places stay on this device only.',
     freeNoSignup: 'Free forever · No sign-up',
     watchVideo: 'How to use',
+    rainyDay: 'Rainy day',
     installTitle: 'Use it like an app',
     installBody: 'Add it to your home screen — it opens even offline.',
     installBodyIos: 'Share button → "Add to Home Screen"',
@@ -562,6 +566,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: '保存した場所はこの端末にのみ残ります。',
     freeNoSignup: 'ずっと無料 · 登録不要',
     watchVideo: '使い方',
+    rainyDay: '雨の日',
     installTitle: 'アプリのように使う',
     installBody: 'ホーム画面に追加すると、オフラインでも開けます。',
     installBodyIos: '共有ボタン →「ホーム画面に追加」',
@@ -686,6 +691,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: '收藏内容仅保存在本设备上。',
     freeNoSignup: '永久免费 · 无需注册',
     watchVideo: '使用方法',
+    rainyDay: '下雨天',
     installTitle: '像应用一样使用',
     installBody: '添加到主屏幕后，没有网络也能打开。',
     installBodyIos: '分享按钮 →「添加到主屏幕」',
@@ -810,6 +816,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: '收藏內容僅保存在本裝置上。',
     freeNoSignup: '永久免費 · 無需註冊',
     watchVideo: '使用方法',
+    rainyDay: '下雨天',
     installTitle: '像應用程式一樣使用',
     installBody: '加到主畫面後，沒有網路也能開啟。',
     installBodyIos: '分享按鈕 →「加入主畫面」',
@@ -934,6 +941,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'Địa điểm đã lưu chỉ nằm trên thiết bị này.',
     freeNoSignup: 'Miễn phí mãi mãi · Không cần đăng ký',
     watchVideo: 'Hướng dẫn',
+    rainyDay: 'Ngày mưa',
     installTitle: 'Dùng như một ứng dụng',
     installBody: 'Thêm vào màn hình chính — mở được cả khi không có mạng.',
     installBodyIos: 'Nút chia sẻ → "Thêm vào MH chính"',
@@ -1058,6 +1066,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'Los lugares guardados solo quedan en este dispositivo.',
     freeNoSignup: 'Gratis para siempre · Sin registro',
     watchVideo: 'Cómo funciona',
+    rainyDay: 'Día de lluvia',
     installTitle: 'Úsala como una app',
     installBody: 'Añádela a tu pantalla de inicio: abre incluso sin conexión.',
     installBodyIos: 'Botón compartir → "Añadir a inicio"',
@@ -1182,6 +1191,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'Les lieux enregistrés restent sur cet appareil uniquement.',
     freeNoSignup: 'Gratuit à vie · Sans inscription',
     watchVideo: "Mode d'emploi",
+    rainyDay: 'Jour de pluie',
     installTitle: 'Utilisez-la comme une appli',
     installBody: 'Ajoutez-la à l\'écran d\'accueil : elle s\'ouvre même hors ligne.',
     installBodyIos: 'Bouton partager → "Sur l\'écran d\'accueil"',
@@ -1306,6 +1316,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'Gespeicherte Orte bleiben nur auf diesem Gerät.',
     freeNoSignup: 'Für immer kostenlos · Ohne Anmeldung',
     watchVideo: "So geht's",
+    rainyDay: 'Regentag',
     installTitle: 'Wie eine App nutzen',
     installBody: 'Zum Startbildschirm hinzufügen – öffnet auch offline.',
     installBodyIos: 'Teilen-Button → "Zum Home-Bildschirm"',
@@ -1430,6 +1441,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'Сохранённые места остаются только на этом устройстве.',
     freeNoSignup: 'Навсегда бесплатно · Без регистрации',
     watchVideo: 'Видеогид',
+    rainyDay: 'Дождь',
     installTitle: 'Пользуйтесь как приложением',
     installBody: 'Добавьте на главный экран — откроется даже без интернета.',
     installBodyIos: 'Кнопка «Поделиться» → «На экран «Домой»»',
@@ -1554,6 +1566,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'Tempat yang disimpan hanya tersimpan di perangkat ini.',
     freeNoSignup: 'Gratis selamanya · Tanpa daftar',
     watchVideo: 'Cara pakai',
+    rainyDay: 'Hari hujan',
     installTitle: 'Pakai seperti aplikasi',
     installBody: 'Tambahkan ke layar utama — bisa dibuka walau offline.',
     installBodyIos: 'Tombol bagikan → "Tambah ke Layar Utama"',
@@ -1678,6 +1691,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'ที่บันทึกไว้จะอยู่บนเครื่องนี้เท่านั้น',
     freeNoSignup: 'ฟรีตลอดไป · ไม่ต้องสมัคร',
     watchVideo: 'วิธีใช้งาน',
+    rainyDay: 'วันฝนตก',
     installTitle: 'ใช้เหมือนแอป',
     installBody: 'เพิ่มลงหน้าจอหลัก เปิดได้แม้ไม่มีเน็ต',
     installBodyIos: 'ปุ่มแชร์ → "เพิ่มไปยังหน้าจอโฮม"',
