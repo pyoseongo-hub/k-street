@@ -12,6 +12,7 @@ import HomeSwitch from "./components/HomeSwitch";
 import ShareApp from "./components/ShareApp";
 import ArrivalGuide, { arrivalLabel } from "./components/ArrivalGuide";
 import RainyPanel from "./components/RainyPanel";
+import RainyBanner from "./components/RainyBanner";
 import { useSeoulWeather } from "./lib/weather";
 
 function App() {
@@ -125,6 +126,13 @@ function App() {
       </header>
 
       <main className="app-main">
+        {/* ☔ **비 오는 날에만** 첫 화면 맨 위에 한 줄. 사장님(2026-09-13):
+            "비 오는 날 좀 더 눈에 띄게 하고 싶은데 작아서 지나칠까 봐."
+            왜 늘 두지 않는지는 RainyBanner.tsx 머리말에 적었다 —
+            날씨는 「있느냐」가 아니라 「얼마나 눈에 띄느냐」만 정한다. */}
+        {weather?.rainToday && (
+          <RainyBanner now={!!weather.rainingNow} onOpen={() => setRainyOpen(true)} />
+        )}
         {/* 📲 홈 화면에 추가하면 앱처럼 열리고 인터넷 없이도 열린다 — 손님은
             그걸 모른다. 설치할 수 있는 브라우저에서만, 한 번만 뜬다. */}
         <InstallHint />
