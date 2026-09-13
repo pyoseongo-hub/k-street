@@ -21,6 +21,10 @@ on:
         description: "몇 곳을 보여 줄까 (기본 40)"
         required: false
         default: "40"
+      probe:
+        description: "🔎 검사 모드 — 조건을 바꿔 가며 두드려 보고 응답 원문을 찍는다 (0줄일 때 원인을 찾는 용도)"
+        type: boolean
+        default: false
       apply:
         description: "받은 것을 저장소에 커밋할까 (끄면 로그로만 봅니다)"
         type: boolean
@@ -45,7 +49,11 @@ jobs:
           TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
         run: |
           set -o pipefail
-          node scripts/fetch-visitor-stats.mjs --months "${{ inputs.months }}" --top "${{ inputs.top }}" 2>&1 | tee stats-log.txt
+          if [ "${{ inputs.probe }}" = "true" ]; then
+            node scripts/fetch-visitor-stats.mjs --probe 2>&1 | tee stats-log.txt
+          else
+            node scripts/fetch-visitor-stats.mjs --months "${{ inputs.months }}" --top "${{ inputs.top }}" 2>&1 | tee stats-log.txt
+          fi
 
       - name: 저장소에 커밋
         if: ${{ inputs.apply }}

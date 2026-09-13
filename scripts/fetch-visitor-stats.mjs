@@ -55,6 +55,13 @@ const arg = (name, dflt) => {
 };
 const MONTHS = Number(arg("months", 24));
 const TOP = Number(arg("top", 40));
+/**
+ * 🔎 **응답 원문을 보는 모드.** 2026-09-13에 첫 실행이 「주소는 되는데 0줄」로 끝나서
+ *    넣었다. 조건을 바꿔 가며 물어보고 **돌아온 것을 그대로 찍는다** —
+ *    0줄이 「자료가 없다」인지 「조건이 틀렸다」인지는 원문을 봐야 갈린다.
+ *    추측으로 고치면 또 한 판을 버린다(러너 왕복은 3분이다).
+ */
+const PROBE = process.argv.includes("--probe");
 
 // 🚪 주소 후보. data.go.kr 은 같은 서비스를 두 주소로 열어 둔 적이 있어
 //    (옛 openapi.tour.go.kr / 지금 apis.data.go.kr) 둘 다 두드려 본다.
@@ -125,6 +132,41 @@ const DIV_KEYS = ["csDivNm", "CS_DIV_NM", "csdivnm", "csDivCd"];
 const GU_KEYS = ["gungu", "GUNGU", "sgg", "addr1"];
 
 const isForeign = (v) => /외국|foreign/i.test(String(v ?? ""));
+
+// ── 🔎 검사 모드 ────────────────────────────────────────────────────────
+if (PROBE) {
+  // 자료가 확실히 있을 만한 달(두세 달 지연을 감안해 작년 6월)로 두드린다.
+  const YM = arg("ym", "202506");
+  // 무엇이 문제인지 **한 번에 하나씩** 바꾼다 — 여러 개를 같이 바꾸면
+  // 되더라도 무엇 때문에 됐는지 모른다.
+  const TRIES = [
+    ["조건 없음 (전국)", {}],
+    ["SIDO=서울특별시", { SIDO: "서울특별시" }],
+    ["SIDO=서울", { SIDO: "서울" }],
+    ["SIDO=서울특별시 · GUNGU=종로구", { SIDO: "서울특별시", GUNGU: "종로구" }],
+    ["RES_NM=경복궁", { RES_NM: "경복궁" }],
+  ];
+  for (const b of BASES) {
+    for (const [label, extra] of TRIES) {
+      const params = new URLSearchParams({ MobileOS: "ETC", MobileApp: "KStreet", _type: "json", YM, numOfRows: "5", pageNo: "1", ...extra });
+      const url = `${b}/${OP}?serviceKey=${API_KEY}&${params}`;
+      process.stdout.write(`\n── ${label}  (${b.replace(/^https?:\/\//, "").slice(0, 28)}…)\n`);
+      try {
+        const res = await fetchWithRetry(url, { tries: 2, waits: [3000] });
+        const text = await res.text();
+        // 열쇠가 통째로 로그에 찍히지 않게 가린다 — 로그는 누구나 본다.
+        console.log(`   HTTP ${res.status} · ${text.length}바이트`);
+        console.log("   " + text.slice(0, 700).replace(/\s+/g, " "));
+      } catch (e) {
+        console.log(`   실패: ${String(e).slice(0, 120)}`);
+      }
+    }
+    // 첫 주소에서 뭔가 돌아오면 나머지 주소는 안 두드린다(호출을 아낀다).
+    break;
+  }
+  console.log("\n📌 위 원문에서 볼 것: totalCount 가 0 인가 · resultMsg 가 뭐라고 하나 · items 안의 칸 이름");
+  process.exit(0);
+}
 
 // ── 돌린다 ──────────────────────────────────────────────────────────────
 let base = null;
