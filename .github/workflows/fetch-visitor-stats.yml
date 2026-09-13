@@ -5,7 +5,12 @@ name: Fetch visitor stats (관광지에 사람이 얼마나 갔나)
 #    **「유명한 곳」을 우리가 판정하지 않기 위해서**다. 정부가 센 숫자로 정한다.
 #
 # ⚠️ 이 창구는 data.go.kr 에서 **따로 활용신청**을 해야 열린다
-#    (한국문화관광연구원_관광자원통계서비스 · 2026-09-13 신청). 열쇠는 TOUR_API_KEY 그대로다.
+#    (한국문화관광연구원_관광자원통계서비스 · 2026-09-13 신청).
+#
+# 🔑 **열쇠는 TOUR_API_KEY 가 아니라 KCTI_API_KEY 다.** data.go.kr 은 계정마다
+#    열쇠가 따로인데, 이 서비스를 신청한 계정과 TOUR_API_KEY 를 발급받은 계정이
+#    **다르다**(마이페이지 「활용 중 1개」로 확인). TOUR_API_KEY 를 바꿔 쓰면
+#    관광공사 API 를 쓰는 워크플로 12개가 한꺼번에 죽는다 — 그래서 따로 둔다.
 #
 # 🚨 **처음 돌릴 때는 apply 를 끄고 로그만 본다.** 이 저장소 규칙이다 —
 #    무엇이 올지 보고 납득한 뒤에 저장한다.
@@ -46,7 +51,7 @@ jobs:
 
       - name: 받는다
         env:
-          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+          KCTI_API_KEY: ${{ secrets.KCTI_API_KEY }}
         run: |
           set -o pipefail
           if [ "${{ inputs.probe }}" = "true" ]; then

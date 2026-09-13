@@ -29,7 +29,8 @@
 //     · 첫 항목의 **원문을 통째로 찍는다** — 다음 사람이 추측할 필요가 없게
 //   되는 주소·칸 이름을 확인한 뒤 이 머리말에 적어 둘 것.
 //
-//   TOUR_API_KEY=데이터포털_일반_인증키 node scripts/fetch-visitor-stats.mjs
+//   KCTI_API_KEY=데이터포털_일반_인증키 node scripts/fetch-visitor-stats.mjs
+//   ⚠️ TOUR_API_KEY 가 **아니다** — 왜 갈랐는지는 아래 API_KEY 주석에.
 //     --months 24     몇 달치를 받을까 (기본 24 — 통계는 두세 달 늦게 올라온다)
 //     --top 40        몇 곳을 보여 줄까 (기본 40)
 //
@@ -43,9 +44,27 @@ import { fetchWithRetry } from "./lib/tour-fetch.mjs";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dirname, "..", "src", "data", "visitor-stats.json");
 
-const API_KEY = process.env.TOUR_API_KEY;
+// 🔑 **TOUR_API_KEY 가 아니라 KCTI_API_KEY 다** (2026-09-13에 원인을 찾고 갈랐다).
+//
+// 🚨 **열쇠 하나로 다 되는 게 아니다 — data.go.kr 은 계정마다 열쇠가 따로다.**
+//    반나절을 「승인은 났는데 왜 안 되나」로 보냈는데, 사장님 마이페이지 화면이
+//    답을 줬다: 그 계정의 **「활용 중」이 1개**였다. 오늘 신청한 관광자원통계 하나뿐.
+//    그런데 이 저장소는 `TOUR_API_KEY` 로 **관광공사 API 를 몇 달째** 쓰고 있다
+//    (워크플로 12개). 같은 계정이면 활용 중이 2개 이상이어야 한다.
+//    → **GitHub 에 든 TOUR_API_KEY 는 다른 계정의 열쇠다.**
+//      승인은 이 계정에 났는데 요청은 저 계정 열쇠로 갔으니, 영원히
+//      「SERVICE KEY IS NOT REGISTERED」였다.
+//
+// ⚠️ **TOUR_API_KEY 를 이 값으로 바꾸면 안 된다.** 그 계정에는 관광공사 API 가
+//    없어서 **워크플로 12개가 한꺼번에 죽는다.** 그래서 새 이름으로 따로 둔다.
+//
+// 📌 겉보기가 같은 실패는 원인도 같다고 믿게 만든다. 「열쇠가 등록 안 됨」은
+//    ① 승인 안 남 ② 전파 지연 ③ **계정이 다름** 셋이 똑같이 그렇게 보인다.
+//    셋째를 마지막에 의심한 것이 반나절을 쓴 이유다.
+const API_KEY = process.env.KCTI_API_KEY;
 if (!API_KEY) {
-  console.error("TOUR_API_KEY 환경변수가 없다.");
+  console.error("KCTI_API_KEY 환경변수가 없다 (한국문화관광연구원 쪽 열쇠).");
+  console.error("⚠️ TOUR_API_KEY 로 바꿔 쓰지 말 것 — 그건 다른 계정 열쇠고, 이 서비스에 등록돼 있지 않다.");
   process.exit(1);
 }
 
@@ -84,6 +103,8 @@ const BASES = [
 ];
 const OPS = ["getPchrgTrrsrtVisitorList", "getPchrgTrrsrdVisitorList"];
 let OP = OPS[0];
+/** 실제로 보낼 열쇠 문자열. 아래에서 되는 모양을 찾아 여기에 담는다. */
+let SERVICE_KEY = process.env.KCTI_API_KEY ?? "";
 
 /** 최근 N개월의 YYYYMM. 이번 달부터 거꾸로 — 최근 달은 아직 비어 있을 수 있다. */
 function recentMonths(n) {
@@ -111,7 +132,7 @@ async function fetchMonth(base, ym) {
     numOfRows: "1000",
     pageNo: "1",
   });
-  const url = `${base}/${OP}?serviceKey=${API_KEY}&${params}`;
+  const url = `${base}/${OP}?serviceKey=${SERVICE_KEY}&${params}`;
   const res = await fetchWithRetry(url, { tries: 3, waits: [3000, 8000] });
   const text = await res.text();
   // ⚠️ 데이터포털은 오류를 **XML 로** 돌려준다 — _type=json 을 줘도 그렇다.
@@ -269,22 +290,35 @@ const months = recentMonths(MONTHS);
 // 1) 되는 주소를 찾는다. 첫 달로 두드려 보고, 되면 그 주소로 나머지를 돈다.
 // ⚠️ **주소와 이름을 같이 두드린다.** 2026-09-13에 둘 다 틀렸는데 돌아오는 말이
 //    같아서, 주소만 바꿔 봤다가 원인을 못 찾았다.
+// 🔑 **열쇠 모양도 같이 두드린다.** 데이터포털 인증키는 Encoding(%2B…)과
+//    Decoding(+…) 두 모양이 있고 창구마다 원하는 쪽이 다르다. 어느 쪽을 넣어
+//    주시든 알아서 맞추게 한다 — 사장님께 「어느 쪽이냐」를 묻지 않아도 되게.
+const KEY_FORMS = [["그대로", API_KEY]];
+try {
+  const dec = decodeURIComponent(API_KEY);
+  if (dec !== API_KEY) KEY_FORMS.push(["디코딩", dec]);
+} catch { /* 디코딩이 안 되면 그대로만 쓴다 */ }
+if (!/%[0-9A-Fa-f]{2}/.test(API_KEY)) KEY_FORMS.push(["인코딩", encodeURIComponent(API_KEY)]);
+
 outer: for (const b of BASES) {
   for (const op of OPS) {
-    OP = op;
-    process.stdout.write(`🚪 ${b.replace(/^https?:\/\//, "")}/${op} … `);
-    try {
-      const r = await fetchMonth(b, months[0]);
-      if (r.error) {
-        console.log(`안 됨 (${r.error})`);
-        continue;
+    for (const [kname, key] of KEY_FORMS) {
+      OP = op;
+      SERVICE_KEY = key;
+      process.stdout.write(`🚪 ${b.replace(/^https?:\/\//, "")}/${op} · 열쇠 ${kname} … `);
+      try {
+        const r = await fetchMonth(b, months[0]);
+        if (r.error) {
+          console.log(`안 됨 (${r.error})`);
+          continue;
+        }
+        console.log(`된다 (${months[0]}: ${r.list.length}줄)`);
+        base = b;
+        if (r.list.length) firstRaw = r.list[0];
+        break outer;
+      } catch (e) {
+        console.log(`안 됨 (${String(e).slice(0, 80)})`);
       }
-      console.log(`된다 (${months[0]}: ${r.list.length}줄)`);
-      base = b;
-      if (r.list.length) firstRaw = r.list[0];
-      break outer;
-    } catch (e) {
-      console.log(`안 됨 (${String(e).slice(0, 80)})`);
     }
   }
 }
