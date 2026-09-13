@@ -178,12 +178,30 @@ if (PROBE) {
   //    **시험도 안 됐다.** 검사 모드가 검사를 안 한 셈이다.
   //    ⚠️ 먼저 **주소 × 이름**을 가려낸 뒤에 조건을 바꿔 본다 — 주소가 틀린 상태에서
   //       조건을 다섯 가지 바꿔 봐야 다섯 번 똑같이 틀린다(그게 첫 판이었다).
+  // 🔑 **열쇠를 두 가지 모양으로 보내 본다** (2026-09-13에 세 번째 판에서 넣었다).
+  //    공공데이터포털 인증키는 **Encoding**(%2B·%2F·%3D 가 든 것)과 **Decoding**
+  //    (+·/·= 원본) 두 가지로 나온다. **창구마다 원하는 쪽이 다르다** —
+  //    apis.data.go.kr 은 Encoding 을 그대로 받는데, 기관 자체 창구(openapi.tour.go.kr)는
+  //    한 번 더 디코딩해 버려 **Encoding 을 주면 깨진 열쇠가 된다.**
+  //    깨진 열쇠는 「없는 열쇠」와 **똑같은 답**을 준다(SERVICE KEY IS NOT REGISTERED).
+  //    → 그래서 「승인은 났는데 안 된다」가 **승인 문제로 보이지만 열쇠 모양 문제**일 수 있다.
+  //    ⚠️ Kfood CLAUDE.md 에도 같은 함정이 적혀 있다 — 「% 가 든 값」은 늘 의심한다.
+  const KEYS = [["그대로(Encoding 으로 보임)", API_KEY]];
+  try {
+    const dec = decodeURIComponent(API_KEY);
+    if (dec !== API_KEY) KEYS.push(["한 번 디코딩(Decoding)", dec]);
+  } catch { /* 디코딩이 안 되면 그대로만 쓴다 */ }
+  console.log(`🔑 열쇠 모양 ${KEYS.length}가지로 시험한다 (길이 ${API_KEY.length}자)`);
+
   let live = null;
   for (const b of BASES) {
     for (const op of OPS) {
+      for (const [kname, key] of KEYS) {
       const params = new URLSearchParams({ MobileOS: "ETC", MobileApp: "KStreet", _type: "json", YM, numOfRows: "3", pageNo: "1" });
-      const url = `${b}/${op}?serviceKey=${API_KEY}&${params}`;
-      process.stdout.write(`\n🚪 ${b.replace(/^https?:\/\//, "")}/${op}\n`);
+      // 디코딩한 열쇠는 **다시 인코딩해서** 보낸다 — 안 그러면 + 가 공백이 된다.
+      const sk = key === API_KEY ? key : encodeURIComponent(key);
+      const url = `${b}/${op}?serviceKey=${sk}&${params}`;
+      process.stdout.write(`\n🚪 ${b.replace(/^https?:\/\//, "")}/${op} · 열쇠 ${kname}\n`);
       try {
         const res = await fetchWithRetry(url, { tries: 2, waits: [3000] });
         const text = await res.text();
@@ -193,15 +211,13 @@ if (PROBE) {
         //    승인 문제라, 다른 주소를 더 두드려 봐야 답이 안 바뀐다.
         //    2026-09-13에 계속 두드리다 **서버가 연결을 끊어서**(ConnectTimeout)
         //    로그가 「전부 실패」로 끝났다 — 정작 첫 줄에 답이 있었는데 묻혔다.
-        if (/NOT.REGISTERED|resultCode"?:\s*"?30/i.test(text)) {
-          console.log("\n🛑 **주소와 이름은 맞다.** 열쇠가 이 서비스에 아직 등록되지 않았다.");
-          console.log("   data.go.kr 마이페이지 → 개발계정에서 이 서비스가 「승인」인지 보고,");
-          console.log("   방금 신청했다면 **한두 시간 뒤** 다시 돌릴 것. 더 두드려도 답은 같다.");
-          process.exit(0);
-        }
-        if (res.ok && !/NO_OPENAPI_SERVICE|SERVICE_KEY|ERROR/i.test(text)) live = { b, op };
+        // 🛑 **열쇠 모양을 다 써 본 뒤에야** 멈춘다. 전에는 첫 답에서 바로 나갔는데,
+        //    그러면 「다른 모양이면 됐을 것」을 영영 못 본다.
+        if (res.ok && !/NO_OPENAPI_SERVICE|NOT.REGISTERED|SERVICE_KEY|ERROR/i.test(text)) live = { b, op, kname, key };
       } catch (e) {
         console.log(`   실패: ${String(e).slice(0, 120)}`);
+      }
+      if (live) break;
       }
       if (live) break;
     }
@@ -209,14 +225,18 @@ if (PROBE) {
   }
 
   if (!live) {
-    console.log("\n🚨 어느 주소·이름으로도 안 열렸다. 위 원문의 errMsg 를 볼 것.");
+    console.log("\n🛑 **주소와 이름은 맞다**(그래야 「열쇠가 없다」는 답이 온다).");
+    console.log("   어느 열쇠 모양으로도 안 열린다. 남은 가능성은 둘이다 —");
+    console.log("   ① 승인이 API 서버까지 아직 안 퍼졌다(보통 한두 시간, 길면 하루)");
+    console.log("   ② GitHub 시크릿의 TOUR_API_KEY 가 활용신청한 계정의 열쇠가 아니다");
     process.exit(0);
   }
-  console.log(`\n✅ 열리는 창구: ${live.b}/${live.op}\n   이제 조건을 바꿔 본다.`);
+  console.log(`\n✅ 열리는 창구: ${live.b}/${live.op} · 열쇠 ${live.kname}\n   이제 조건을 바꿔 본다.`);
 
+  const LIVE_SK = live.key === API_KEY ? live.key : encodeURIComponent(live.key);
   for (const [label, extra] of TRIES) {
     const params = new URLSearchParams({ MobileOS: "ETC", MobileApp: "KStreet", _type: "json", YM, numOfRows: "5", pageNo: "1", ...extra });
-    const url = `${live.b}/${live.op}?serviceKey=${API_KEY}&${params}`;
+    const url = `${live.b}/${live.op}?serviceKey=${LIVE_SK}&${params}`;
     process.stdout.write(`\n── ${label}\n`);
     try {
       const res = await fetchWithRetry(url, { tries: 2, waits: [3000] });
