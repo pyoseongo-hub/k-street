@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTheme } from "./lib/useTheme";
 import { useLanguage } from "./lib/useLanguage";
 import SavedPanel from "./components/SavedPanel";
@@ -14,7 +14,6 @@ import ArrivalGuide, { arrivalLabel } from "./components/ArrivalGuide";
 import RainyPanel from "./components/RainyPanel";
 import WeatherCard from "./components/WeatherCard";
 import VideoCard from "./components/VideoCard";
-import { useSeoulWeather } from "./lib/weather";
 
 function App() {
   const { toggleTheme, getIcon } = useTheme();
@@ -22,29 +21,21 @@ function App() {
   const [tab, setTab] = useState<"home" | "saved">("home");
   // ✈️ 도착 안내 (2026-09-12 사장님: "여기도 푸드에 있는 가이드가 필요할거같아").
   const [guideOpen, setGuideOpen] = useState(false);
-  // ☔ 비 오는 날 (2026-09-12). 단추는 **늘** 있고, 예보가 있으면 **깜박인다** —
-  //    사장님: "비는 어쩌다 오는데 두 번째 줄은 너무 과하고 / 예보 뜨면 깜박거리게"
+  // ☔ 「비 와도 갈 곳」을 여는 문.
+  //
+  // 🚪 **문은 하나다** (2026-09-13 사장님이 머리줄의 ☂️ 를 동그라미 치고: *"아직도 있어"*).
+  //    머리줄 ☂️ 단추와 날씨 칸이 **똑같이 이 창을 열고 있었다.** 문이 둘이면 손님은
+  //    둘이 다른 것인 줄 알고 양쪽을 다 눌러 본다 — 눌러 보면 같은 화면이 나온다.
+  //    ☂️ 는 오늘 아침 것이고 날씨 칸이 그 일을 물려받았는데, 옛것을 안 치웠다.
+  //    → ☂️ 를 뺀다. 이제 여는 곳은 **날씨 칸 하나**뿐이다(WeatherCard.tsx).
+  //
+  // 🗑️ 같이 지운 것 — 예보가 있을 때 ☂️ 를 깜박이게 하던 장치(blinkRun ·
+  //    visibilitychange · index.css 의 .rainy-btn/.blink). 깜박일 단추가 없으니
+  //    남겨 두면 다음 세션이 "왜 안 깜박이지" 하고 없는 것을 찾는다.
+  //    비가 온다는 표시는 이제 날씨 칸이 **글자와 색으로** 한다 — 「지금 비」 · 파란 칸.
+  //    그게 깜박임보다 낫다: 색과 움직임만으로 뜻을 전하면 화면을 읽어 주는 손님은
+  //    아무것도 못 받지만, 글자는 읽어 준다.
   const [rainyOpen, setRainyOpen] = useState(false);
-  const { weather } = useSeoulWeather();
-  /**
-   * ☔ **화면을 켤 때마다 다시 깜박이게 하는 셈** (2026-09-12 사장님: "화면 키면 이십초 점멸").
-   *
-   * 🚨 CSS 애니메이션은 **붙을 때 한 번만** 돈다. 그래서 그전에는 앱을 처음 열 때만
-   *    깜박이고, 폰을 잠갔다 다시 켜거나 다른 앱 갔다 돌아오면 **다시 안 돌았다** —
-   *    손님이 앱을 열어 둔 채 지하철을 타고 나오면 그때는 아무 표시가 없었다.
-   *    이 숫자를 올려 단추를 다시 그리게 하면 애니메이션이 처음부터 돈다.
-   *
-   * ⚠️ `focus` 가 아니라 `visibilitychange` 를 듣는다. focus 는 화면 안에서
-   *    여기저기 누를 때도 튀어서 **깜박임이 멈추지 않는다.**
-   */
-  const [blinkRun, setBlinkRun] = useState(0);
-  useEffect(() => {
-    const onShow = () => {
-      if (document.visibilityState === "visible") setBlinkRun((n) => n + 1);
-    };
-    document.addEventListener("visibilitychange", onShow);
-    return () => document.removeEventListener("visibilitychange", onShow);
-  }, []);
   const savedCount = useSavedEntries().length;
 
   return (
@@ -80,21 +71,9 @@ function App() {
                 ⚠️ **라벨을 한 단어로 유지할 것.** 머리줄 한 줄에 이름·언어·이 단추·
                    테마가 같이 들어가는데, 길어지면 줄이 갈라져 이름만 위에 남는다
                    (Kfood 에서 실제로 그랬다). 「안내」라는 뜻은 ✈️ 가 이미 전한다. */}
-            {/* ☔ **늘 있다.** 날씨는 「있느냐」를 정하지 않고 「눈에 띄느냐」만 정한다.
-                예보가 있으면 `blink` 가 붙어 잠깐 깜박이고, 그 뒤에도 테두리가 남는다
-                (index.css — 계속 깜박이면 아무도 안 본다).
-                🚨 깜박임은 **눈에 보이는 것뿐**이다. 무엇인지는 aria-label 이 말해 준다 —
-                   색·움직임만으로 뜻을 전하면 화면을 읽어 주는 손님은 못 받는다. */}
-            <button
-              /* 🔁 이 열쇠가 바뀌면 단추를 다시 그린다 → 깜박임이 처음부터 돈다.
-                 화면을 켤 때마다 20초 깜박이는 것이 이 한 줄로 된다. */
-              key={`rainy-${blinkRun}`}
-              className={"icon-btn rainy-btn" + (weather?.rainToday ? " blink" : "")}
-              onClick={() => setRainyOpen(true)}
-              aria-label={`${t.rainyH1}${weather?.rainToday ? ` — ${weather.rainingNow ? t.rainyNow : t.rainyForecast}` : ""}`}
-            >
-              ☂️
-            </button>
+            {/* ☂️ **여기 있던 「비 오는 날」 단추를 뺐다** (2026-09-13). 이유는 위
+                rainyOpen 주석에 적었다 — 한 줄로: 날씨 칸과 **같은 창을 여는 문**이
+                둘이었다. 머리줄 그림도 넷에서 셋으로 줄어 좁은 폰이 편해졌다. */}
             <button
               className="icon-btn arrival-btn"
               onClick={() => setGuideOpen(true)}
@@ -109,8 +88,11 @@ function App() {
                 (2026-09-12 사장님: "통 공유 다크모드 옆 맨 위 오른쪽 공유 아이콘
                 만들어서 옮겨 줘"). 왜 아래가 아니라 여기인지, 낱말을 잃는 대가를
                 무엇으로 받쳤는지는 ShareApp.tsx 머리말에 적었다.
-                ⚠️ 이 단추로 머리줄 그림이 **넷**이 됐다. 좁은 폰에서 줄이 갈라지지
-                   않는지는 **재서 확인했다**(index.css 의 .app-header-actions 주석). */}
+                ⚠️ 이 단추로 머리줄 그림이 한때 **넷**이 됐다가, 2026-09-13 에 ☂️ 를
+                   빼면서 **셋**이 됐다(✈️ · 테마 · 🔗). 좁은 폰에서 줄이 갈라지지
+                   않는지는 **재서 확인했다**(index.css 의 .app-header-actions 주석).
+                   넷일 때도 재서 맞췄으니 셋은 더 여유가 있다 — 다시 넷으로 늘릴 때는
+                   그때처럼 320px 에서 다시 잴 것. */}
             <ShareApp />
             {/* 🔍 검색 · 🔔 알림은 **감췄다** (2026-09-05 사장님 결정: "죽은 단추만
                 감추기"). 홍보를 시작하면 처음 오는 손님이 늘어나는데, 눌리지 않는
