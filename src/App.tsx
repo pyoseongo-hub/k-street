@@ -12,7 +12,7 @@ import HomeSwitch from "./components/HomeSwitch";
 import ShareApp from "./components/ShareApp";
 import ArrivalGuide, { arrivalLabel } from "./components/ArrivalGuide";
 import RainyPanel from "./components/RainyPanel";
-import RainyBanner from "./components/RainyBanner";
+import WeatherCard from "./components/WeatherCard";
 import VideoCard from "./components/VideoCard";
 import { useSeoulWeather } from "./lib/weather";
 
@@ -127,24 +127,25 @@ function App() {
       </header>
 
       <main className="app-main">
-        {/* 🗂️ **머리줄 아래 알림 칸** (2026-09-13 사장님: "언어 아래 한 칸 더 늘리고 /
-            비 안내도 한 칸 내리고 / 자리배치도 다시 하고 이쁘고 보기 좋게").
+        {/* 🗂️ **머리줄 아래 한 줄 — 왼쪽 영상 · 오른쪽 날씨, 반반.**
+            사장님 (2026-09-13): *"복잡하게 하지 말고 체크 지우고 **날씨 설명이랑
+            반반 써서 항시 배치**로"*
 
-            여기 들어가는 것은 **한 줄짜리 안내**뿐이다. 규칙 셋:
-            ① 위에서부터 **늘 있는 것 → 가끔 있는 것** 순서다.
-               ▶️ 영상은 주소가 있으면 늘 있고, ☔ 비는 어쩌다 있다.
-            ② 전부 **같은 모양**(.top-card)이다 — 높이·모서리·여백이 같아야
-               두 개가 같이 떠도 줄이 어그러지지 않는다.
-            ③ 없을 때는 **자리도 없다.** 빈 칸을 남겨 두면 첫 화면이 그만큼 내려간다.
-               (그래서 칸 자체를 안 그리고, 사이 간격은 gap 이 맡는다) */}
+            ⏪ 오늘 이 자리가 **세 번** 바뀌었다. 되돌리지 않게 다 적는다:
+              ① 비 오는 날에만 뜨는 한 줄 띠 → 비 안 오는 날 칸이 비어 화면이 들썩였다
+              ② 영상·날씨를 **위아래 두 줄**로 → 자리를 두 줄이나 먹었다
+              ③ **지금: 한 줄에 반반, 늘 있다** — 자리는 고정이고 안에 드는 말만 바뀐다
+
+            🔑 **자리가 고정이면 손님이 다시 안 찾는다.** 있다 없다 하는 칸은
+               볼 때마다 화면이 다르게 생겨서, 아래 것들이 위아래로 밀린다.
+            📌 한쪽이 없으면(영상 주소가 없는 언어, 날씨를 못 받은 때)
+               **남은 하나가 줄 전체를 쓴다** — index.css 의 flex: 1 이 맡는다. */}
         <div className="top-cards">
           {/* ▶️ 유튜브 사용법 영상 — 그 언어의 주소가 있을 때만 뜬다(VideoCard.tsx) */}
           <VideoCard />
-          {/* ☔ **비 오는 날에만.** 왜 늘 두지 않는지는 RainyBanner.tsx 머리말에 —
-              날씨는 「있느냐」가 아니라 「얼마나 눈에 띄느냐」만 정한다. */}
-          {weather?.rainToday && (
-            <RainyBanner now={!!weather.rainingNow} onOpen={() => setRainyOpen(true)} />
-          )}
+          {/* 🌤️ 날씨 — **늘 있다.** 비 오는 날엔 안에 드는 말과 색이 바뀐다.
+              누르면 「비 와도 갈 곳」이 열린다(WeatherCard.tsx 머리말). */}
+          <WeatherCard onOpen={() => setRainyOpen(true)} />
         </div>
         {/* 📲 홈 화면에 추가하면 앱처럼 열리고 인터넷 없이도 열린다 — 손님은
             그걸 모른다. 설치할 수 있는 브라우저에서만, 한 번만 뜬다. */}
