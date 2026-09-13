@@ -72,8 +72,13 @@ const PROBE = process.argv.includes("--probe");
 //   둘 다 같은 답이 돌아온다: 「해당 오픈API 서비스가 없거나 폐기됨」(errMsg
 //   NO_OPENAPI_SERVICE_ERROR). **주소가 틀려도 열쇠가 틀려도 비슷해 보인다** —
 //   그래서 원문을 안 찍었으면 「활용신청이 안 됐나」로 엉뚱한 데를 팠을 것이다.
+// ✅ **맞는 창구를 2026-09-13에 확인했다** — 첫 줄이 이렇게 답했다:
+//      HTTP 200 {"response":{"header":{"resultCode":30,
+//                "resultMsg":"SERVICE KEY IS NOT REGISTERED ERROR."}}}
+//    「열쇠가 없다」는 답을 **주소가 맞아야** 받을 수 있다. 주소가 틀리면
+//    NO_OPENAPI_SERVICE_ERROR 가 온다. 그래서 이 답은 **주소가 맞다는 증거**다.
 const BASES = [
-  "http://openapi.tour.go.kr/openapi/service/TourismResourceStatsService",
+  "http://openapi.tour.go.kr/openapi/service/TourismResourceStatsService", // ← 이것이 맞다
   "https://openapi.tour.go.kr/openapi/service/TourismResourceStatsService",
   "https://apis.data.go.kr/B551011/TourismResourceStatsService",
 ];
@@ -129,6 +134,14 @@ async function fetchMonth(base, ym) {
   //    했는데 실은 주소가 틀린 것이었다. **조용히 틀리는 쪽이 가장 나쁘다.**
   const cmm = json?.OpenAPI_ServiceResponse?.cmmMsgHeader;
   if (cmm) return { error: `${cmm.errMsg ?? ""} — ${cmm.returnAuthMsg ?? ""}`.trim(), raw: text };
+  // 🚨 **HTTP 200 인데 오류인 경우가 있다** (2026-09-13). 이 창구는 열쇠가 없어도
+  //    200 을 주고 머리말에만 사정을 적는다 — 상태 코드만 보면 성공으로 읽힌다.
+  const head = json?.response?.header;
+  const code = String(head?.resultCode ?? "");
+  if (code && !/^0+$/.test(code)) {
+    const why = code === "30" ? "열쇠가 이 서비스에 아직 등록되지 않았다 (활용신청 반영에 한두 시간 걸린다)" : head?.resultMsg;
+    return { error: `resultCode ${code} — ${why}`, code, raw: text };
+  }
   const body = json?.response?.body;
   const item = body?.items?.item;
   const list = Array.isArray(item) ? item : item ? [item] : [];
@@ -176,6 +189,16 @@ if (PROBE) {
         const text = await res.text();
         console.log(`   HTTP ${res.status} · ${text.length}바이트`);
         console.log("   " + text.slice(0, 600).replace(/\s+/g, " "));
+        // 🛑 **「열쇠가 등록 안 됐다」가 오면 거기서 멈춘다.** 이건 주소 문제가 아니라
+        //    승인 문제라, 다른 주소를 더 두드려 봐야 답이 안 바뀐다.
+        //    2026-09-13에 계속 두드리다 **서버가 연결을 끊어서**(ConnectTimeout)
+        //    로그가 「전부 실패」로 끝났다 — 정작 첫 줄에 답이 있었는데 묻혔다.
+        if (/NOT.REGISTERED|resultCode"?:\s*"?30/i.test(text)) {
+          console.log("\n🛑 **주소와 이름은 맞다.** 열쇠가 이 서비스에 아직 등록되지 않았다.");
+          console.log("   data.go.kr 마이페이지 → 개발계정에서 이 서비스가 「승인」인지 보고,");
+          console.log("   방금 신청했다면 **한두 시간 뒤** 다시 돌릴 것. 더 두드려도 답은 같다.");
+          process.exit(0);
+        }
         if (res.ok && !/NO_OPENAPI_SERVICE|SERVICE_KEY|ERROR/i.test(text)) live = { b, op };
       } catch (e) {
         console.log(`   실패: ${String(e).slice(0, 120)}`);
