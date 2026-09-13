@@ -34,11 +34,17 @@ const argVal = (n, d) => {
   return i >= 0 && args[i + 1] ? args[i + 1] : d;
 };
 const KEYWORD = argVal("--keyword", "단풍");
-/** 제목·검색어에 이 말이 있어야 통과. 빈 값이면 거르지 않는다. */
+/** 제목·검색어·촬영지에 이 말이 있어야 통과. 빈 값이면 거르지 않는다. */
 const AREA = argVal("--area", "");
 const TOP = Number(argVal("--top", "5"));
-/** 몇 장까지 받아 볼까. 걸러 내고 나면 줄어드니 넉넉히 받는다. */
+/** 한 번에 몇 장씩 받을까 (창구 한도 100). */
 const FETCH = Number(argVal("--fetch", "100"));
+/** 🐞 **첫 판이 여기서 틀렸다** (2026-09-13). 「단풍」 사진이 3,518장 있는데
+ *     앞 100장만 받아 보고 "서울 0장"이라고 적었다. 제목 가나다순이라 앞쪽은
+ *     전부 지방 산이었다 — **없는 게 아니라 안 넘겨 본 것**이다.
+ *     ⚠️ 이 프로젝트가 되뇌는 그 잘못이다: **없음과 못 물어봄을 뭉개지 않는다.**
+ *     그래서 필요한 만큼 장을 넘긴다. 다 찾으면 거기서 멈춘다. */
+const MAX_PAGES = Number(argVal("--pages", "40"));
 
 const ROOT = "https://apis.data.go.kr/B551011/PhotoGalleryService1";
 
@@ -88,45 +94,60 @@ function why(r) {
 //    보이는 게 같다고 같은 문자열이 아니다 (Kfood 에서 유튜브 제목으로 데인 곳).
 const norm = (s) => (s ?? "").normalize("NFC").replace(/\s+/g, "");
 
-console.log(`🔎 「${KEYWORD}」로 찾는다${AREA ? ` · 「${AREA}」가 들어간 것만` : ""} · ${FETCH}장까지 받아 본다\n`);
+console.log(
+  `🔎 「${KEYWORD}」로 찾는다${AREA ? ` · 「${AREA}」가 들어간 것만` : ""} · 한 장에 ${FETCH}장씩 최대 ${MAX_PAGES}장까지 넘겨 본다\n`
+);
 
-const r = await call("gallerySearchList1", {
-  numOfRows: String(FETCH),
-  pageNo: "1",
-  arrange: "A",
-  keyword: KEYWORD,
-});
+const matches = (it) =>
+  !AREA ||
+  norm(it.galTitle).includes(norm(AREA)) ||
+  norm(it.galSearchKeyword).includes(norm(AREA)) ||
+  norm(it.galPhotographyLocation).includes(norm(AREA));
 
-const items = r.json ? itemsOf(r.json) : [];
-if (!items.length) {
-  console.log(`❌ 한 장도 못 받았다 — ${why(r)}`);
-  console.log(`
+const picked = [];
+let seen = 0;
+let total = null;
+let firstItem = null;
+
+for (let page = 1; page <= MAX_PAGES; page++) {
+  const r = await call("gallerySearchList1", {
+    numOfRows: String(FETCH),
+    pageNo: String(page),
+    arrange: "A",
+    keyword: KEYWORD,
+  });
+  const items = r.json ? itemsOf(r.json) : [];
+  if (page === 1) {
+    total = r.json?.response?.body?.totalCount ?? null;
+    if (!items.length) {
+      console.log(`❌ 한 장도 못 받았다 — ${why(r)}`);
+      console.log(`
 ⚠️ 이건 **"사진이 없다"는 뜻이 아니다.** "우리가 못 물어봤다"는 뜻일 수 있다.
    둘을 뭉개면 있는 사진을 영영 안 찾게 된다 (probe-photo-gallery.mjs 주석 참고).`);
-  process.exit(0);
+      process.exit(0);
+    }
+    firstItem = items[0];
+    console.log(`총 ${total ?? "?"}장이 있다고 한다.\n`);
+    // ── 어떤 칸이 오는지 **먼저 통째로 보여 준다** ─────────────────────────
+    // 공공누리 유형이 어느 칸에 오는지(오기는 하는지) 모른 채 골라 찍으면,
+    // 정작 저작권을 판단할 칸을 놓친다. 첫 장은 원문 그대로 둔다.
+    console.log("── 첫 장 원문 (어떤 칸이 오는지 보려고 그대로 찍는다) " + "─".repeat(12));
+    console.log(JSON.stringify(firstItem, null, 2));
+    console.log("─".repeat(62) + "\n");
+  }
+  if (!items.length) break;
+  seen += items.length;
+  for (const it of items) if (matches(it)) picked.push(it);
+  process.stdout.write(`   ${page}장째 — 본 것 ${seen}장 · 맞는 것 ${picked.length}장\n`);
+  if (picked.length >= TOP) break;
+  if (total != null && seen >= Number(total)) break;
+  // 연달아 부르면 막는다. 천천히.
+  await new Promise((s) => setTimeout(s, 300));
 }
-
-console.log(`받은 사진 ${items.length}장 (총 ${r.json?.response?.body?.totalCount ?? "?"}장 중)\n`);
-
-// ── 어떤 칸이 오는지 **먼저 통째로 보여 준다** ───────────────────────────
-// 공공누리 유형이 어느 칸에 오는지(오기는 하는지) 모른 채 골라 찍으면,
-// 정작 저작권을 판단할 칸을 놓친다. 첫 장은 원문 그대로 둔다.
-console.log("── 첫 장 원문 (어떤 칸이 오는지 보려고 그대로 찍는다) " + "─".repeat(12));
-console.log(JSON.stringify(items[0], null, 2));
-console.log("─".repeat(62) + "\n");
-
-const picked = AREA
-  ? items.filter(
-      (it) =>
-        norm(it.galTitle).includes(norm(AREA)) ||
-        norm(it.galSearchKeyword).includes(norm(AREA)) ||
-        norm(it.galPhotographyLocation).includes(norm(AREA))
-    )
-  : items;
 
 console.log(
   AREA
-    ? `「${AREA}」가 들어간 것 ${picked.length}장 / 받은 ${items.length}장\n`
+    ? `\n「${AREA}」가 들어간 것 ${picked.length}장 / 넘겨 본 ${seen}장\n`
     : `\n`
 );
 
@@ -143,7 +164,14 @@ for (const [i, it] of picked.slice(0, TOP).entries()) {
 
 if (picked.length < TOP) {
   console.log(`⚠️ ${TOP}장을 달라고 했는데 ${picked.length}장밖에 못 찾았다.`);
-  console.log(`   --fetch 를 늘리거나 --area 를 빼고 다시 볼 것. **없는 것을 채워 넣지 않는다.**`);
+  console.log(
+    `   넘겨 본 ${seen}장 / 전체 ${total ?? "?"}장. ${
+      total != null && seen < Number(total)
+        ? "**아직 다 안 넘겨 봤다** — --pages 를 늘릴 것."
+        : "끝까지 넘겨 봤다. 정말 없는 것이다."
+    }`
+  );
+  console.log(`   **없는 것을 채워 넣지 않는다.**`);
 }
 
 console.log(`

@@ -24,9 +24,13 @@ on:
         required: false
         default: "5"
       fetch:
-        description: "몇 장까지 받아 볼까 (걸러 내면 줄어드니 넉넉히)"
+        description: "한 번에 몇 장씩 받을까 (창구 한도 100)"
         required: false
         default: "100"
+      pages:
+        description: "몇 장까지 넘겨 볼까 (100장씩 · 다 찾으면 거기서 멈춘다)"
+        required: false
+        default: "40"
 
 jobs:
   search:
@@ -46,7 +50,8 @@ jobs:
             --keyword "${{ inputs.keyword }}" \
             --area "${{ inputs.area }}" \
             --top "${{ inputs.top }}" \
-            --fetch "${{ inputs.fetch }}" 2>&1 | tee gallery-log.txt
+            --fetch "${{ inputs.fetch }}" \
+            --pages "${{ inputs.pages }}" 2>&1 | tee gallery-log.txt
 
       - name: 결과 요약
         if: always()
