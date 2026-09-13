@@ -65,12 +65,20 @@ const PROBE = process.argv.includes("--probe");
 
 // 🚪 주소 후보. data.go.kr 은 같은 서비스를 두 주소로 열어 둔 적이 있어
 //    (옛 openapi.tour.go.kr / 지금 apis.data.go.kr) 둘 다 두드려 본다.
+// 🐞 **2026-09-13에 두 번 틀렸다. 둘 다 적어 둔다.**
+//   ① 주소 — apis.data.go.kr/B551011/… 로 찍었는데 **B551011은 한국관광공사**다.
+//      이 자료의 주인은 **한국문화관광연구원**이라 창구가 다르다(openapi.tour.go.kr).
+//   ② 이름 — `getPchrgTrrs**r**tVisitorList` 인데 `Trrs**r**d` 로 썼다. **글자 하나.**
+//   둘 다 같은 답이 돌아온다: 「해당 오픈API 서비스가 없거나 폐기됨」(errMsg
+//   NO_OPENAPI_SERVICE_ERROR). **주소가 틀려도 열쇠가 틀려도 비슷해 보인다** —
+//   그래서 원문을 안 찍었으면 「활용신청이 안 됐나」로 엉뚱한 데를 팠을 것이다.
 const BASES = [
-  "https://apis.data.go.kr/B551011/TourismResourceStatsService",
-  "http://apis.data.go.kr/B551011/TourismResourceStatsService",
+  "http://openapi.tour.go.kr/openapi/service/TourismResourceStatsService",
   "https://openapi.tour.go.kr/openapi/service/TourismResourceStatsService",
+  "https://apis.data.go.kr/B551011/TourismResourceStatsService",
 ];
-const OP = "getPchrgTrrsrdVisitorList";
+const OPS = ["getPchrgTrrsrtVisitorList", "getPchrgTrrsrdVisitorList"];
+let OP = OPS[0];
 
 /** 최근 N개월의 YYYYMM. 이번 달부터 거꾸로 — 최근 달은 아직 비어 있을 수 있다. */
 function recentMonths(n) {
@@ -115,6 +123,12 @@ async function fetchMonth(base, ym) {
   } catch {
     return { error: `JSON 이 아니다: ${text.slice(0, 160)}`, raw: text };
   }
+  // 🐞 **오류도 JSON 으로 온다** (2026-09-13에 여기서 데었다).
+  //    XML 만 오류로 보게 짜 놨더니, 「해당 오픈API 서비스가 없거나 폐기됨」이
+  //    **「자료 0줄」로 읽혔다.** 24개월을 0줄로 받아 놓고 「통계가 아직 없나 보다」
+  //    했는데 실은 주소가 틀린 것이었다. **조용히 틀리는 쪽이 가장 나쁘다.**
+  const cmm = json?.OpenAPI_ServiceResponse?.cmmMsgHeader;
+  if (cmm) return { error: `${cmm.errMsg ?? ""} — ${cmm.returnAuthMsg ?? ""}`.trim(), raw: text };
   const body = json?.response?.body;
   const item = body?.items?.item;
   const list = Array.isArray(item) ? item : item ? [item] : [];
@@ -146,23 +160,49 @@ if (PROBE) {
     ["SIDO=서울특별시 · GUNGU=종로구", { SIDO: "서울특별시", GUNGU: "종로구" }],
     ["RES_NM=경복궁", { RES_NM: "경복궁" }],
   ];
+  // 🐞 **첫 판에는 여기 `break` 가 있었다** — 주소 셋을 두드리겠다고 해 놓고
+  //    첫 주소만 보고 나갔다. 그래서 정작 맞는 주소(openapi.tour.go.kr)가
+  //    **시험도 안 됐다.** 검사 모드가 검사를 안 한 셈이다.
+  //    ⚠️ 먼저 **주소 × 이름**을 가려낸 뒤에 조건을 바꿔 본다 — 주소가 틀린 상태에서
+  //       조건을 다섯 가지 바꿔 봐야 다섯 번 똑같이 틀린다(그게 첫 판이었다).
+  let live = null;
   for (const b of BASES) {
-    for (const [label, extra] of TRIES) {
-      const params = new URLSearchParams({ MobileOS: "ETC", MobileApp: "KStreet", _type: "json", YM, numOfRows: "5", pageNo: "1", ...extra });
-      const url = `${b}/${OP}?serviceKey=${API_KEY}&${params}`;
-      process.stdout.write(`\n── ${label}  (${b.replace(/^https?:\/\//, "").slice(0, 28)}…)\n`);
+    for (const op of OPS) {
+      const params = new URLSearchParams({ MobileOS: "ETC", MobileApp: "KStreet", _type: "json", YM, numOfRows: "3", pageNo: "1" });
+      const url = `${b}/${op}?serviceKey=${API_KEY}&${params}`;
+      process.stdout.write(`\n🚪 ${b.replace(/^https?:\/\//, "")}/${op}\n`);
       try {
         const res = await fetchWithRetry(url, { tries: 2, waits: [3000] });
         const text = await res.text();
-        // 열쇠가 통째로 로그에 찍히지 않게 가린다 — 로그는 누구나 본다.
         console.log(`   HTTP ${res.status} · ${text.length}바이트`);
-        console.log("   " + text.slice(0, 700).replace(/\s+/g, " "));
+        console.log("   " + text.slice(0, 600).replace(/\s+/g, " "));
+        if (res.ok && !/NO_OPENAPI_SERVICE|SERVICE_KEY|ERROR/i.test(text)) live = { b, op };
       } catch (e) {
         console.log(`   실패: ${String(e).slice(0, 120)}`);
       }
+      if (live) break;
     }
-    // 첫 주소에서 뭔가 돌아오면 나머지 주소는 안 두드린다(호출을 아낀다).
-    break;
+    if (live) break;
+  }
+
+  if (!live) {
+    console.log("\n🚨 어느 주소·이름으로도 안 열렸다. 위 원문의 errMsg 를 볼 것.");
+    process.exit(0);
+  }
+  console.log(`\n✅ 열리는 창구: ${live.b}/${live.op}\n   이제 조건을 바꿔 본다.`);
+
+  for (const [label, extra] of TRIES) {
+    const params = new URLSearchParams({ MobileOS: "ETC", MobileApp: "KStreet", _type: "json", YM, numOfRows: "5", pageNo: "1", ...extra });
+    const url = `${live.b}/${live.op}?serviceKey=${API_KEY}&${params}`;
+    process.stdout.write(`\n── ${label}\n`);
+    try {
+      const res = await fetchWithRetry(url, { tries: 2, waits: [3000] });
+      const text = await res.text();
+      console.log(`   HTTP ${res.status} · ${text.length}바이트`);
+      console.log("   " + text.slice(0, 900).replace(/\s+/g, " "));
+    } catch (e) {
+      console.log(`   실패: ${String(e).slice(0, 120)}`);
+    }
   }
   console.log("\n📌 위 원문에서 볼 것: totalCount 가 0 인가 · resultMsg 가 뭐라고 하나 · items 안의 칸 이름");
   process.exit(0);
@@ -174,20 +214,25 @@ let firstRaw = null;
 const months = recentMonths(MONTHS);
 
 // 1) 되는 주소를 찾는다. 첫 달로 두드려 보고, 되면 그 주소로 나머지를 돈다.
-for (const b of BASES) {
-  process.stdout.write(`🚪 ${b} … `);
-  try {
-    const r = await fetchMonth(b, months[0]);
-    if (r.error) {
-      console.log(`안 됨 (${r.error})`);
-      continue;
+// ⚠️ **주소와 이름을 같이 두드린다.** 2026-09-13에 둘 다 틀렸는데 돌아오는 말이
+//    같아서, 주소만 바꿔 봤다가 원인을 못 찾았다.
+outer: for (const b of BASES) {
+  for (const op of OPS) {
+    OP = op;
+    process.stdout.write(`🚪 ${b.replace(/^https?:\/\//, "")}/${op} … `);
+    try {
+      const r = await fetchMonth(b, months[0]);
+      if (r.error) {
+        console.log(`안 됨 (${r.error})`);
+        continue;
+      }
+      console.log(`된다 (${months[0]}: ${r.list.length}줄)`);
+      base = b;
+      if (r.list.length) firstRaw = r.list[0];
+      break outer;
+    } catch (e) {
+      console.log(`안 됨 (${String(e).slice(0, 80)})`);
     }
-    console.log(`된다 (${months[0]}: ${r.list.length}줄)`);
-    base = b;
-    if (r.list.length) firstRaw = r.list[0];
-    break;
-  } catch (e) {
-    console.log(`안 됨 (${String(e).slice(0, 80)})`);
   }
 }
 if (!base) {
