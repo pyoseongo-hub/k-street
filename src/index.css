@@ -96,20 +96,16 @@ button {
 /* 인장(도장) 느낌의 모노그램 — 래스터 로고 대신 텍스트로 렌더링해서
    테마 색(--accent)을 그대로 따라간다. 예전 PNG는 잉크색이 고정이라
    다크/라이트 모드 배경과 안 맞는 경우가 있었다. */
+/* 🅺 마크 — 이제 **그림(SVG)** 이다. 그전에는 여기서 테마색 네모에 글자 K 를
+   그렸는데, 홈 화면 아이콘은 🌸 벚꽃이라 **얼굴이 둘**이었다
+   (2026-09-13 사장님: "벚꽃도 바꾸고 앱 안 K 로고도 바꿔").
+   모양은 BrandMark.tsx 가, 홈 화면·탭 PNG 는 scripts/make-icons.mjs 가 맡는다.
+   여기서는 **자리와 크기만** 잡는다 — 색을 여기서 덧칠하지 않는다. */
 .app-mark {
   flex-shrink: 0;
   width: 32px;
   height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9px;
-  background: var(--accent);
-  color: #0F2E2A;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 17px;
-  line-height: 1;
+  display: block;
 }
 
 .app-wordmark-text {

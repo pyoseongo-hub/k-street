@@ -14,6 +14,7 @@ import ArrivalGuide, { arrivalLabel } from "./components/ArrivalGuide";
 import RainyPanel from "./components/RainyPanel";
 import WeatherCard from "./components/WeatherCard";
 import VideoCard from "./components/VideoCard";
+import BrandMark from "./components/BrandMark";
 
 function App() {
   const { toggleTheme, getIcon } = useTheme();
@@ -44,7 +45,10 @@ function App() {
         <h1 className="sr-only">서울 동네 축제 · 시장 · 꽃길 — 외국인 관광객을 위한 서울 동네 안내</h1>
         <div className="app-header-row">
           <div className="app-wordmark">
-            <span className="app-mark" aria-hidden="true">K</span>
+            {/* 🅺 마크는 **한 곳에서만** 그린다(BrandMark.tsx). 홈 화면·탭에 뜨는
+                PNG 도 같은 그림에서 구워 낸다 — scripts/make-icons.mjs.
+                그전에는 여기 글자 K 하나였고 홈 화면은 🌸 벚꽃이라 얼굴이 둘이었다. */}
+            <BrandMark />
             <span className="app-wordmark-text">
               <span className="app-name">K-STREET</span>
               <span className="app-tagline">서울의 길을 걷다</span>
