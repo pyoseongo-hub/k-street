@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       keyword:
-        description: "무슨 낱말로 찾을까 (예: 단풍)"
+        description: "무슨 낱말로 찾을까 (여럿이면 쉼표로 — 예: 단풍,벚꽃,설경)"
         required: true
         default: "단풍"
       area:
@@ -53,20 +53,32 @@ jobs:
         with:
           node-version: 22
 
+      # 🐞 2026-09-13 — 낱말 세 개를 **워크플로 세 개로 동시에** 돌렸더니
+      #    설경·하경 둘 다 UND_ERR_CONNECT_TIMEOUT 으로 죽었다. 창구가 끊은 것이다.
+      #    (Kfood·방문객통계에서도 같은 데 데였다 — 연달아 두드리면 막는다.)
+      #    → 낱말이 여럿이면 **한 판 안에서 차례로**, 사이를 20초 띄워 돌린다.
       - name: 찾는다
         env:
           TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
         run: |
           set -o pipefail
-          node scripts/search-gallery.mjs \
-            --keyword "${{ inputs.keyword }}" \
-            --area "${{ inputs.area }}" \
-            --top "${{ inputs.top }}" \
-            --fetch "${{ inputs.fetch }}" \
-            --pages "${{ inputs.pages }}" \
-            --per-place "${{ inputs.per_place }}" \
-            ${{ inputs.survey && '--survey' || '' }} \
-            ${{ inputs.measure && '--measure' || '' }} 2>&1 | tee gallery-log.txt
+          : > gallery-log.txt
+          IFS=',' read -ra WORDS <<< "${{ inputs.keyword }}"
+          for i in "${!WORDS[@]}"; do
+            W="$(echo "${WORDS[$i]}" | xargs)"
+            [ -z "$W" ] && continue
+            [ "$i" -gt 0 ] && { echo "…20초 쉬었다 간다 (연달아 두드리면 창구가 막는다)" | tee -a gallery-log.txt; sleep 20; }
+            { echo ""; echo "════════ 「$W」 ════════"; } | tee -a gallery-log.txt
+            node scripts/search-gallery.mjs \
+              --keyword "$W" \
+              --area "${{ inputs.area }}" \
+              --top "${{ inputs.top }}" \
+              --fetch "${{ inputs.fetch }}" \
+              --pages "${{ inputs.pages }}" \
+              --per-place "${{ inputs.per_place }}" \
+              ${{ inputs.survey && '--survey' || '' }} \
+              ${{ inputs.measure && '--measure' || '' }} 2>&1 | tee -a gallery-log.txt
+          done
 
       - name: 결과 요약
         if: always()
