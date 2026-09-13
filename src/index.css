@@ -2912,7 +2912,19 @@ html[lang^="zh"] * {
   text-align: left; font: inherit; cursor: pointer;
 }
 .rp-row.open { border-color: color-mix(in srgb, var(--rain) 45%, var(--border)); }
-.rp-open { padding: 0 12px 12px; }
+/* 펼친 안. **세로로 쌓는다** — 안내문구 · 길찾기 · 공유가 차례로 온다.
+   flex 로 두어야 공유 단추를 오른쪽 끝으로 밀 수 있다(.meta-share 는 margin-left:auto
+   인데, 그건 flex 안에서만 듣는다). */
+.rp-open {
+  padding: 0 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 🔗 공유는 **오른쪽 끝**에. 길찾기(목적지 보여주기·지도)가 이 칸의 주인공이고
+   공유는 그다음이라, 왼쪽 줄을 맞춰 나란히 두면 셋이 같은 무게로 보인다. */
+.rp-share { align-self: flex-end; }
 
 /* ☂️ 예보가 있을 때 머리줄 단추가 깜박인다 (2026-09-12 사장님: "예보 뜨면 깜박거리게").
    ⏱️ **화면을 켤 때마다 20초** (사장님: "화면 키면 이십초 점멸") —

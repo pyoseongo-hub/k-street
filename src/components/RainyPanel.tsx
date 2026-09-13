@@ -35,6 +35,7 @@ import { CATEGORY_META } from "../data/seed";
 import { placeName } from "../lib/placeText";
 import { lineLabel, stationLabel, stationShort } from "../lib/stationName";
 import MapDirections from "./MapDirections";
+import ShareButton from "./ShareButton";
 import { isArcade, isIndoor } from "../lib/indoor";
 
 /**
@@ -90,6 +91,15 @@ function Row({ row }: { row: RainyRow }) {
               손님이 그 시장을 고른 바로 그 순간이다. 접힌 줄에는 🏮 표가 있다. */}
           {arcadeOnly && <p className="rp-warn">{t.rainyArcadeNote}</p>}
           <MapDirections place={row.place} />
+          {/* 🔗 **이 화면에만 공유가 빠져 있었다** (2026-09-13에 찾았다).
+              계절·동네·저장한 곳 세 카드에는 전부 있는데 비 오는 날만 없었다 —
+              나중에 만든 화면이라 빠뜨린 것이다. 비 오는 날은 **여럿이 같이 정하는**
+              날이라(「비 오는데 여기 어때」) 오히려 더 필요한 자리다.
+              ⚠️ 다른 카드는 맨 윗줄에 두는데 여기는 **펼친 안**이다 — 접힌 줄
+                 전체가 이미 단추라, 그 안에 단추를 또 넣을 수 없다(HTML 규칙).
+              ⚠️ 곳 페이지가 아직 없는 곳에는 **아무것도 안 그린다**(ShareButton 안에서
+                 막는다). 없는 주소를 지어내지 않는다. */}
+          <ShareButton place={row.place} className="rp-share" />
         </div>
       )}
     </li>
