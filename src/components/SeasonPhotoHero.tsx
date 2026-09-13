@@ -43,7 +43,7 @@ function seasonOfPlace(p: Place): SeasonKey | undefined {
   return undefined;
 }
 
-// 🖼️ 사람이 직접 고른 표지 사진(cover-photos.json). 적혀 있는 계절은 이 한 장만 쓴다.
+// 🖼️ 사람이 직접 고른 표지 사진(cover-photos.json). 적혀 있는 계절은 이것만 쓴다.
 //
 // 왜 (2026-09-02) — 표지가 그 계절 사진 중 아무거나 돌다 보니 **축제 포스터**가
 // 표지로 떴다(사용자 캡처: 글씨가 잔뜩 박힌 노란 그림). 어느 사진이 표지로
@@ -52,13 +52,32 @@ function seasonOfPlace(p: Place): SeasonKey | undefined {
 //
 // 안 고른 계절은 예전처럼 그 계절 사진이 돌아간다 — 빈 화면이 되지 않게.
 interface CoverPhoto { url: string; place?: string; gu?: string; credit?: string }
-const COVERS = coverPhotos as Record<string, CoverPhoto | unknown>;
+const COVERS = coverPhotos as Record<string, CoverPhoto | CoverPhoto[] | unknown>;
 
-function pickedCover(season: SeasonKey): CoverPhoto | undefined {
+const isCover = (c: unknown): c is CoverPhoto =>
+  !!c && typeof c === "object" && typeof (c as CoverPhoto).url === "string";
+
+// 🔁 **한 계절에 여러 장을 적으면 보름씩 번갈아 쓴다.**
+//
+// 사장님 지시 (2026-09-13): *"4 5 번갈아서 15일 4 15일 5"* — 봄 표지로 창덕궁
+// 홍매화와 덕수궁 벚꽃을 둘 다 고르시고 반달씩 나눠 달라고 하셨다.
+//
+// 왜 3.5초마다 돌리지 않나 — 이 화면에는 이미 그렇게 도는 길이 있다(아래
+// seasonalPhotos). 그런데 **표지가 깜빡이면 손님이 읽던 글자에서 눈을 뗀다.**
+// 보름씩 바꾸면 한 번 온 손님에게는 한 장으로 보이고, **다시 온 손님에게만**
+// 새 사진이 된다. 그게 지시한 뜻이다.
+//
+// 🗓️ 나누는 법 — 날짜(1~31)를 15로 끊는다. 1~15일 첫 장, 16일부터 두 번째.
+//    31일이 한 칸 넘치는데 **min 으로 마지막 장에 붙인다** — 안 그러면 31일에만
+//    첫 장으로 되돌아가 하루 깜빡인다.
+function pickedCover(season: SeasonKey, today = new Date()): CoverPhoto | undefined {
   const c = COVERS[season];
-  return c && typeof c === "object" && typeof (c as CoverPhoto).url === "string"
-    ? (c as CoverPhoto)
-    : undefined;
+  if (Array.isArray(c)) {
+    const list = c.filter(isCover);
+    if (list.length === 0) return undefined;
+    return list[Math.min(Math.floor((today.getDate() - 1) / 15), list.length - 1)];
+  }
+  return isCover(c) ? c : undefined;
 }
 
 function seasonalPhotos(season: SeasonKey): string[] {
