@@ -1,0 +1,60 @@
+name: Search gallery (관광사진 갤러리를 낱말로 찾는다)
+
+# 🔎 관광공사 「관광사진 갤러리」에서 **낱말로** 사진을 찾아 로그로 보여 준다.
+#    아무것도 저장하지 않는다 — 무엇이 있는지 먼저 보는 자리다.
+#
+#    곳 이름으로 찾는 건 fetch-photo-gallery / probe-photo-gallery 가 한다.
+#    여기는 「단풍」처럼 **주제 낱말**로 찾는 자리다.
+#
+# 🚨 찾은 사진을 바로 쓰지 않는다. 공공누리 유형이 사진마다 다르다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      keyword:
+        description: "무슨 낱말로 찾을까 (예: 단풍)"
+        required: true
+        default: "단풍"
+      area:
+        description: "제목·검색어·촬영지에 이 말이 있는 것만 (예: 서울 · 비우면 안 거름)"
+        required: false
+        default: "서울"
+      top:
+        description: "몇 장을 보여 줄까"
+        required: false
+        default: "5"
+      fetch:
+        description: "몇 장까지 받아 볼까 (걸러 내면 줄어드니 넉넉히)"
+        required: false
+        default: "100"
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 찾는다
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/search-gallery.mjs \
+            --keyword "${{ inputs.keyword }}" \
+            --area "${{ inputs.area }}" \
+            --top "${{ inputs.top }}" \
+            --fetch "${{ inputs.fetch }}" 2>&1 | tee gallery-log.txt
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🔎 관광사진 갤러리 — 「${{ inputs.keyword }}」"
+            echo ""
+            echo '```'
+            tail -c 40000 gallery-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
