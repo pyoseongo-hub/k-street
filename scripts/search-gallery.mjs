@@ -45,6 +45,14 @@ const FETCH = Number(argVal("--fetch", "100"));
  *     ⚠️ 이 프로젝트가 되뇌는 그 잘못이다: **없음과 못 물어봄을 뭉개지 않는다.**
  *     그래서 필요한 만큼 장을 넘긴다. 다 찾으면 거기서 멈춘다. */
 const MAX_PAGES = Number(argVal("--pages", "40"));
+/** 🗺️ **끝까지 훑고 장소별로 묶어 보여 준다.**
+ *     원하는 장수를 채우는 순간 멈추면 **제목 가나다순 앞쪽에만 쏠린다** —
+ *     실제로 그랬다: 12장을 달라니 전부 영등포구 두 곳(양화한강공원·선유도공원)이었다.
+ *     서울에 단풍 사진이 있는 곳이 어디어디인지를 봐야 고를 수 있다.
+ *     (Kfood 의 coverage-map 과 같은 생각 — **볼 자리를 만들어야 빈 곳이 보인다.**) */
+const SURVEY = args.includes("--survey");
+/** 한 곳에서 몇 장까지 보여 줄까 (--survey 일 때). 같은 곳 사진이 20장씩 있다. */
+const PER_PLACE = Number(argVal("--per-place", "1"));
 
 const ROOT = "https://apis.data.go.kr/B551011/PhotoGalleryService1";
 
@@ -138,8 +146,10 @@ for (let page = 1; page <= MAX_PAGES; page++) {
   if (!items.length) break;
   seen += items.length;
   for (const it of items) if (matches(it)) picked.push(it);
-  process.stdout.write(`   ${page}장째 — 본 것 ${seen}장 · 맞는 것 ${picked.length}장\n`);
-  if (picked.length >= TOP) break;
+  if (page % 5 === 0 || page === 1)
+    process.stdout.write(`   ${page}장째 — 본 것 ${seen}장 · 맞는 것 ${picked.length}장\n`);
+  // 🚨 --survey 일 때는 **채웠다고 멈추지 않는다.** 멈추면 가나다순 앞쪽에만 쏠린다.
+  if (!SURVEY && picked.length >= TOP) break;
   if (total != null && seen >= Number(total)) break;
   // 연달아 부르면 막는다. 천천히.
   await new Promise((s) => setTimeout(s, 300));
@@ -151,7 +161,29 @@ console.log(
     : `\n`
 );
 
-for (const [i, it] of picked.slice(0, TOP).entries()) {
+// ── 🗺️ 장소별로 묶어서 **어디에 있는지 먼저 보여 준다** ──────────────────
+let show = picked;
+if (SURVEY) {
+  const byPlace = new Map();
+  for (const it of picked) {
+    const key = `${norm(it.galTitle)}|${(it.galPhotographyLocation ?? "").split(" ")[1] ?? ""}`;
+    if (!byPlace.has(key)) byPlace.set(key, []);
+    byPlace.get(key).push(it);
+  }
+  const places = [...byPlace.entries()].sort((a, b) => b[1].length - a[1].length);
+  console.log(`── 장소 ${places.length}곳 ` + "─".repeat(40));
+  for (const [, arr] of places) {
+    const f = arr[0];
+    console.log(
+      `   ${String(arr.length).padStart(3)}장  ${f.galTitle} — ${f.galPhotographyLocation ?? "?"}`
+    );
+  }
+  console.log("─".repeat(62) + "\n");
+  // 한 곳에서 PER_PLACE 장씩만 골라 **여러 곳이 골고루** 나오게 한다.
+  show = places.flatMap(([, arr]) => arr.slice(0, PER_PLACE));
+}
+
+for (const [i, it] of show.slice(0, TOP).entries()) {
   console.log(`${i + 1}. ${it.galTitle ?? "(제목 없음)"}`);
   console.log(`   사진   ${it.galWebImageUrl ?? "(없음)"}`);
   console.log(`   작은것 ${it.galThumbnailUrl ?? "(없음)"}`);
@@ -162,8 +194,8 @@ for (const [i, it] of picked.slice(0, TOP).entries()) {
   console.log("");
 }
 
-if (picked.length < TOP) {
-  console.log(`⚠️ ${TOP}장을 달라고 했는데 ${picked.length}장밖에 못 찾았다.`);
+if (show.length < TOP) {
+  console.log(`⚠️ ${TOP}장을 달라고 했는데 ${show.length}장밖에 못 찾았다.`);
   console.log(
     `   넘겨 본 ${seen}장 / 전체 ${total ?? "?"}장. ${
       total != null && seen < Number(total)
