@@ -1,0 +1,225 @@
+#!/usr/bin/env node
+// 📊 **서울 관광지에 사람이 얼마나 갔나** — 한국문화관광연구원 관광자원통계서비스.
+//
+// 사장님 (2026-09-13): *"제일 많이 가는 데 모아 놓는 거지"*
+//
+// ─────────────────────────────────────────────────────────────────────────
+// 왜 이 자료인가 — **「유명하다」를 우리가 판정하지 않기 위해서**
+// ─────────────────────────────────────────────────────────────────────────
+//   새 갈래(명소)에 무엇을 넣을지 정해야 하는데, 「유명한 곳」이라는 잣대는
+//   **우리 판단**이라 근거를 못 댄다. 이 저장소가 가장 피하는 종류의 값이다.
+//   이 통계는 **기초지자체가 세어 문체부에 보고한 숫자**다. 우리가 정할 것이 없다.
+//
+//   🔑 게다가 이 창구는 **외국인과 내국인을 갈라서** 준다.
+//      우리 손님은 외국인이므로 **외국인 방문객 수**로 줄을 세운다 —
+//      「한국 사람이 많이 가는 곳」과 「외국인이 많이 가는 곳」은 다르다.
+//
+// ⚠️ **한계를 알고 쓴다.** 이 통계는 **입장객을 세는 곳**만 잡는다(유료 관광지·
+//    고궁·박물관·타워). 홍대·성수·익선동처럼 **문이 없는 동네는 안 나온다** —
+//    그건 원래 「골목·거리」 갈래로 갈 것들이라 이 목록에 없어도 맞다.
+//    이 목록에 없다고 「사람이 안 간다」로 읽지 말 것.
+//
+// ─────────────────────────────────────────────────────────────────────────
+// 🚨 이 스크립트는 **주소와 칸 이름을 모른 채** 짰다
+// ─────────────────────────────────────────────────────────────────────────
+//   작업 환경에서는 data.go.kr 에 접속이 안 되고 열쇠도 GitHub 시크릿에만 있어서,
+//   내가 응답을 한 번도 못 봤다. 그래서 **지어내지 않고 두드려 본다**:
+//     · 주소 후보를 순서대로 시도하고 **되는 것을 로그에 적는다**
+//     · 칸 이름도 후보를 여러 개 두고 **실제로 있는 것을 골라 쓴다**
+//     · 첫 항목의 **원문을 통째로 찍는다** — 다음 사람이 추측할 필요가 없게
+//   되는 주소·칸 이름을 확인한 뒤 이 머리말에 적어 둘 것.
+//
+//   TOUR_API_KEY=데이터포털_일반_인증키 node scripts/fetch-visitor-stats.mjs
+//     --months 24     몇 달치를 받을까 (기본 24 — 통계는 두세 달 늦게 올라온다)
+//     --top 40        몇 곳을 보여 줄까 (기본 40)
+//
+// 결과: src/data/visitor-stats.json (공공누리, 비밀값 아님)
+
+import { writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+import { fetchWithRetry } from "./lib/tour-fetch.mjs";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const OUT = join(__dirname, "..", "src", "data", "visitor-stats.json");
+
+const API_KEY = process.env.TOUR_API_KEY;
+if (!API_KEY) {
+  console.error("TOUR_API_KEY 환경변수가 없다.");
+  process.exit(1);
+}
+
+const arg = (name, dflt) => {
+  const i = process.argv.indexOf(`--${name}`);
+  return i >= 0 && process.argv[i + 1] ? process.argv[i + 1] : dflt;
+};
+const MONTHS = Number(arg("months", 24));
+const TOP = Number(arg("top", 40));
+
+// 🚪 주소 후보. data.go.kr 은 같은 서비스를 두 주소로 열어 둔 적이 있어
+//    (옛 openapi.tour.go.kr / 지금 apis.data.go.kr) 둘 다 두드려 본다.
+const BASES = [
+  "https://apis.data.go.kr/B551011/TourismResourceStatsService",
+  "http://apis.data.go.kr/B551011/TourismResourceStatsService",
+  "https://openapi.tour.go.kr/openapi/service/TourismResourceStatsService",
+];
+const OP = "getPchrgTrrsrdVisitorList";
+
+/** 최근 N개월의 YYYYMM. 이번 달부터 거꾸로 — 최근 달은 아직 비어 있을 수 있다. */
+function recentMonths(n) {
+  const out = [];
+  const d = new Date();
+  for (let i = 0; i < n; i++) {
+    out.push(`${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, "0")}`);
+    d.setMonth(d.getMonth() - 1);
+  }
+  return out;
+}
+
+/**
+ * 한 달치를 받는다.
+ * 🚨 serviceKey 를 URLSearchParams 에 안 넣는다 — 데이터포털 「일반 인증키」는
+ *    이미 URL 인코딩된 값이라 한 번 더 인코딩하면 깨진다(fetch-festival-dates 와 같은 이유).
+ */
+async function fetchMonth(base, ym) {
+  const params = new URLSearchParams({
+    MobileOS: "ETC",
+    MobileApp: "KStreet",
+    _type: "json",
+    YM: ym,
+    SIDO: "서울특별시",
+    numOfRows: "1000",
+    pageNo: "1",
+  });
+  const url = `${base}/${OP}?serviceKey=${API_KEY}&${params}`;
+  const res = await fetchWithRetry(url, { tries: 3, waits: [3000, 8000] });
+  const text = await res.text();
+  // ⚠️ 데이터포털은 오류를 **XML 로** 돌려준다 — _type=json 을 줘도 그렇다.
+  //    그대로 JSON.parse 하면 「Unexpected token <」만 보이고 진짜 이유를 못 본다.
+  if (text.trimStart().startsWith("<")) {
+    const why = /<returnAuthMsg>([^<]*)</.exec(text)?.[1]
+      || /<errMsg>([^<]*)</.exec(text)?.[1]
+      || text.slice(0, 200).replace(/\s+/g, " ");
+    return { error: why, raw: text };
+  }
+  let json;
+  try {
+    json = JSON.parse(text);
+  } catch {
+    return { error: `JSON 이 아니다: ${text.slice(0, 160)}`, raw: text };
+  }
+  const body = json?.response?.body;
+  const item = body?.items?.item;
+  const list = Array.isArray(item) ? item : item ? [item] : [];
+  return { list, total: Number(body?.totalCount ?? list.length), json };
+}
+
+/** 있을 법한 칸 이름 중 **실제로 있는 것**을 고른다 — 이름을 지어내지 않는다. */
+const pick = (o, names) => {
+  for (const n of names) if (o[n] != null && o[n] !== "") return o[n];
+  return undefined;
+};
+const NAME_KEYS = ["resNm", "RES_NM", "resnm", "trrsrdNm"];
+const CNT_KEYS = ["csCnt", "CS_CNT", "cscnt", "visitorCnt"];
+const DIV_KEYS = ["csDivNm", "CS_DIV_NM", "csdivnm", "csDivCd"];
+const GU_KEYS = ["gungu", "GUNGU", "sgg", "addr1"];
+
+const isForeign = (v) => /외국|foreign/i.test(String(v ?? ""));
+
+// ── 돌린다 ──────────────────────────────────────────────────────────────
+let base = null;
+let firstRaw = null;
+const months = recentMonths(MONTHS);
+
+// 1) 되는 주소를 찾는다. 첫 달로 두드려 보고, 되면 그 주소로 나머지를 돈다.
+for (const b of BASES) {
+  process.stdout.write(`🚪 ${b} … `);
+  try {
+    const r = await fetchMonth(b, months[0]);
+    if (r.error) {
+      console.log(`안 됨 (${r.error})`);
+      continue;
+    }
+    console.log(`된다 (${months[0]}: ${r.list.length}줄)`);
+    base = b;
+    if (r.list.length) firstRaw = r.list[0];
+    break;
+  } catch (e) {
+    console.log(`안 됨 (${String(e).slice(0, 80)})`);
+  }
+}
+if (!base) {
+  console.error("\n🚨 세 주소 모두 실패했다. 활용신청이 승인됐는지, 열쇠가 「일반 인증키(Encoding)」인지 볼 것.");
+  process.exit(1);
+}
+
+// 2) 달마다 받아 합친다.
+/** @type {Map<string, {name: string, gu?: string, foreign: number, local: number, months: number}>} */
+const byPlace = new Map();
+const monthsWithData = [];
+
+for (const ym of months) {
+  let r;
+  try {
+    r = await fetchMonth(base, ym);
+  } catch (e) {
+    console.log(`  ${ym} — 실패 (${String(e).slice(0, 60)})`);
+    continue;
+  }
+  if (r.error) {
+    console.log(`  ${ym} — ${r.error}`);
+    continue;
+  }
+  if (!r.list.length) {
+    console.log(`  ${ym} — 0줄 (아직 안 올라왔을 수 있다)`);
+    continue;
+  }
+  if (!firstRaw) firstRaw = r.list[0];
+  monthsWithData.push(ym);
+  for (const it of r.list) {
+    const name = String(pick(it, NAME_KEYS) ?? "").trim().normalize("NFC");
+    if (!name) continue;
+    const cnt = Number(String(pick(it, CNT_KEYS) ?? "0").replace(/[^0-9.-]/g, "")) || 0;
+    const div = pick(it, DIV_KEYS);
+    const gu = pick(it, GU_KEYS);
+    if (!byPlace.has(name)) byPlace.set(name, { name, gu: gu ? String(gu) : undefined, foreign: 0, local: 0, months: 0 });
+    const rec = byPlace.get(name);
+    if (isForeign(div)) rec.foreign += cnt;
+    else rec.local += cnt;
+    rec.months++;
+  }
+  console.log(`  ${ym} — ${r.list.length}줄`);
+}
+
+if (!monthsWithData.length) {
+  console.error("\n🚨 어느 달에도 자료가 없다. YM 형식이나 SIDO 값이 다를 수 있다.");
+  process.exit(1);
+}
+
+// 3) 외국인 순으로 줄 세운다.
+const rows = [...byPlace.values()].sort((a, b) => b.foreign - a.foreign);
+
+// 🔎 **첫 항목의 원문을 통째로 찍는다.** 칸 이름을 다음 사람이 추측하지 않게.
+console.log("\n📄 응답 한 줄의 원문 (칸 이름 확인용):");
+console.log(JSON.stringify(firstRaw, null, 2));
+
+console.log(`\n📊 받은 달: ${monthsWithData.length}개 (${monthsWithData.at(-1)} ~ ${monthsWithData[0]})`);
+console.log(`   지점 ${rows.length}곳\n`);
+console.log("순위  외국인       내국인       이름");
+for (const [i, r] of rows.slice(0, TOP).entries()) {
+  console.log(
+    `${String(i + 1).padStart(3)}. ${String(r.foreign.toLocaleString()).padStart(11)} ${String(r.local.toLocaleString()).padStart(11)}  ${r.name}`,
+  );
+}
+
+// ⚠️ 외국인이 0인 곳이 많으면 **구분 칸을 잘못 읽고 있다는 뜻**일 수 있다.
+const zero = rows.filter((r) => r.foreign === 0).length;
+if (zero > rows.length * 0.8) {
+  console.log(`\n⚠️ ${rows.length}곳 중 ${zero}곳이 외국인 0이다. 구분 칸(${DIV_KEYS.join("/")})을 못 읽고 있을 수 있다 — 위 원문을 볼 것.`);
+}
+
+writeFileSync(
+  OUT,
+  JSON.stringify({ 기준: "한국문화관광연구원 관광자원통계서비스 · 유료관광지방문객수", 받은달: monthsWithData, 지점: rows }, null, 2) + "\n",
+);
+console.log(`\n💾 ${OUT}`);

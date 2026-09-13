@@ -1,0 +1,69 @@
+name: Fetch visitor stats (관광지에 사람이 얼마나 갔나)
+
+# 📊 서울 관광지의 **외국인·내국인 방문객 수**를 받아 순위를 낸다.
+#    왜 이 자료를 쓰는지는 scripts/fetch-visitor-stats.mjs 머리말에 적었다. 짧게 —
+#    **「유명한 곳」을 우리가 판정하지 않기 위해서**다. 정부가 센 숫자로 정한다.
+#
+# ⚠️ 이 창구는 data.go.kr 에서 **따로 활용신청**을 해야 열린다
+#    (한국문화관광연구원_관광자원통계서비스 · 2026-09-13 신청). 열쇠는 TOUR_API_KEY 그대로다.
+#
+# 🚨 **처음 돌릴 때는 apply 를 끄고 로그만 본다.** 이 저장소 규칙이다 —
+#    무엇이 올지 보고 납득한 뒤에 저장한다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      months:
+        description: "몇 달치를 받을까 (기본 24 — 통계는 두세 달 늦게 올라온다)"
+        required: false
+        default: "24"
+      top:
+        description: "몇 곳을 보여 줄까 (기본 40)"
+        required: false
+        default: "40"
+      apply:
+        description: "받은 것을 저장소에 커밋할까 (끄면 로그로만 봅니다)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: 받는다
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/fetch-visitor-stats.mjs --months "${{ inputs.months }}" --top "${{ inputs.top }}" 2>&1 | tee stats-log.txt
+
+      - name: 저장소에 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/visitor-stats.json
+          git diff --cached --quiet && { echo "바뀐 게 없다"; exit 0; }
+          git commit -m "📊 관광지 방문객 수를 받았다 (fetch-visitor-stats) [skip render]"
+          git push
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 📊 관광지 방문객 수"
+            echo ""
+            echo '```'
+            tail -c 40000 stats-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
