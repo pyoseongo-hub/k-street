@@ -1,0 +1,118 @@
+name: Fetch autumn photos (릴스용 단풍 사진 20장)
+
+# 🍁 인스타 「서울 가을길」 릴스에 쓸 단풍 사진 20장을 받아 **작게 줄여** 저장한다.
+#
+#    왜 저장소에 담나 — 작업 세션(샌드박스)은 tong.visitkorea.or.kr 이 막혀 있어
+#    사진을 만질 수가 없다. 아티팩트 화면도 바깥 사이트 이미지를 막으므로
+#    **주소만으로는 사진이 안 보인다.** 저장소에 담아야 화면에 심을 수 있다.
+#
+#    덤으로 쓸모가 있다 — 단풍길 110곳 중 109곳이 사진이 없다.
+#    여기 20장은 나중에 앱 쪽에서도 쓸 수 있다.
+#
+# 🖼️ 원본은 크다(장당 수 MB). **가로 720px · 품질 72** 로 줄여 담는다.
+#    보고 고르는 용도라 그 정도면 충분하고, 저장소가 무거워지지 않는다.
+#    ⚠️ 영상에 실제로 쓰실 때는 **원본 주소**로 받으시는 게 맞다 —
+#       줄인 것을 영상에 넣으면 화질이 떨어진다.
+#
+# 저작권: 한국관광공사 관광사진 갤러리 · 공공누리 제1유형(출처표시).
+#         받은 곳 주소를 photos.json 에 함께 적어 둔다 — 출처를 잃지 않기 위해서.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "받은 것을 저장소에 커밋할까 (끄면 크기만 재 봅니다)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 받아서 줄인다
+        run: |
+          set -euo pipefail
+          OUT=docs/가을길-사진
+          mkdir -p "$OUT"
+
+          # 번호|곳 이름  — 번호가 곧 갤러리 사진 번호다(출처를 잃지 않는다).
+          LIST=$(cat <<'EOF'
+2519444|덕수궁돌담길
+2519442|덕수궁돌담길
+1856329|덕수궁돌담길
+1856334|덕수궁돌담길
+2643910|덕수궁
+4063072|종묘
+4063074|종묘
+1428656|종묘
+1428626|종묘
+1857039|북촌감고당길
+1857037|북촌감고당길
+3100576|문묘성균관
+3100580|문묘성균관
+1676200|성균관대학교
+4063082|선유도공원
+4063083|선유도공원
+4063104|양화한강공원
+4063105|양화한강공원
+1432177|여의도공원
+1131485|고려대학교
+EOF
+          )
+
+          echo "[" > "$OUT/photos.json"
+          FIRST=1
+          OKC=0
+          while IFS='|' read -r NO NAME; do
+            [ -z "$NO" ] && continue
+            TAIL="${NO: -2}"
+            URL="https://tong.visitkorea.or.kr/cms2/website/${TAIL}/${NO}.jpg"
+            RAW="/tmp/${NO}.raw"
+            DEST="$OUT/${NO}.jpg"
+
+            # 🚨 못 받은 것을 "없는 것"으로 뭉개지 않는다 — 실패하면 그렇게 적고 넘어간다.
+            if ! curl -fsS --max-time 40 -A "Mozilla/5.0" -o "$RAW" "$URL"; then
+              echo "⬜ ${NO} (${NAME}) — 못 받았다"
+              continue
+            fi
+            BEFORE=$(stat -c%s "$RAW")
+            magick "$RAW" -resize 720x -quality 72 "$DEST"
+            AFTER=$(stat -c%s "$DEST")
+            DIM=$(magick identify -format "%wx%h" "$DEST")
+            printf "✅ %s (%s)  %sKB → %sKB  %s\n" "$NO" "$NAME" \
+              "$((BEFORE/1024))" "$((AFTER/1024))" "$DIM"
+
+            [ $FIRST -eq 0 ] && echo "," >> "$OUT/photos.json"
+            FIRST=0
+            printf '  {"번호":"%s","곳":"%s","파일":"%s.jpg","원본":"%s"}' \
+              "$NO" "$NAME" "$NO" "$URL" >> "$OUT/photos.json"
+            OKC=$((OKC+1))
+            sleep 0.4
+          done <<< "$LIST"
+          printf "\n]\n" >> "$OUT/photos.json"
+
+          echo ""
+          echo "받은 것 ${OKC} / 20장"
+          du -sh "$OUT"
+
+          # 🧨 한 장도 못 받았으면 빈 채로 커밋하지 않는다(2026-09-14에 봄꽃길에서 당했다).
+          if [ "$OKC" -eq 0 ]; then
+            echo "❌ 한 장도 못 받았다 — 저장하지 않는다."
+            echo "   ⚠️ '사진이 없다'가 아니라 '못 물어봤다'일 수 있다."
+            exit 1
+          fi
+
+      - name: 저장소에 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "docs/가을길-사진"
+          git diff --cached --quiet && { echo "바뀐 게 없다"; exit 0; }
+          git commit -m "🍁 릴스용 단풍 사진 20장을 받아 줄여 담았다 [skip render]"
+          git push
