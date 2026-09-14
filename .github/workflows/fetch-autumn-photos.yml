@@ -36,6 +36,9 @@ permissions:
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    # ⏱️ 1판은 20분 넘게 같은 단계에 머물렀다. 기본 한도는 6시간이라
+    #    걸리면 그만큼 붙들려 있는다. **뚜껑을 씌운다.**
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
 
@@ -72,14 +75,23 @@ jobs:
             RAW="/tmp/${NO}.raw"
             DEST="$OUT/${NO}.jpg"
 
+            # 🕐 **어디까지 갔는지 시각과 함께 남긴다.** 1판은 20분을 돌다 멈췄는데
+            #    로그에 아무것도 안 찍혀서 **어느 장에서 걸렸는지도 몰랐다.**
+            #    걸릴 수 있는 일은 걸린 자리가 보이게 해 둔다.
+            echo "[$(date +%H:%M:%S)] ▶ ${NO} (${NAME}) 받는다"
+
             # 🚨 못 받은 것을 "없는 것"으로 뭉개지 않는다 — 그 줄만 ⬜ 로 남기고 넘어간다.
-            if ! curl -fsS --max-time 40 -A "Mozilla/5.0" -o "$RAW" "$URL"; then
+            if ! curl -fsS --max-time 20 --connect-timeout 8 -A "Mozilla/5.0" -o "$RAW" "$URL"; then
               echo "⬜ ${NO} (${NAME}) — 못 받았다"
               continue
             fi
             BEFORE=$(stat -c%s "$RAW")
-            if ! $IM "$RAW" -resize 720x -quality 72 "$DEST"; then
-              echo "⬜ ${NO} (${NAME}) — 줄이지 못했다"
+
+            # ⏱️ 줄이는 데도 뚜껑을 씌운다. 원본이 아주 크면 ImageMagick 이
+            #    한참을 붙들고 있을 수 있는데, 거기엔 시간 제한이 없다.
+            if ! timeout 45 $IM "$RAW" -resize 720x -quality 72 "$DEST"; then
+              echo "⬜ ${NO} (${NAME}) — 줄이지 못했다 (${BEFORE} bytes)"
+              rm -f "$DEST"
               continue
             fi
             AFTER=$(stat -c%s "$DEST")
