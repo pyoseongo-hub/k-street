@@ -28,20 +28,56 @@
 // ⚠️ **사진은 가져오지 않는다.** 개별 사진의 이용 조건을 확인하지 못했다 —
 //    확인 못 한 것은 안 쓴다(이 저장소 규칙).
 //
+// ── 🌸 봄꽃길도 같은 틀이다 (2026-09-14) ───────────────────────────────
+// 처음엔 `storyw/spring/list.do` 를 두드렸다가 404 를 맞았다. 그런데 앱의 꽃길
+// 항목 설명에 *"봄꽃길 175선 공식 예시"* 라고 적혀 있었다 — **앱이 이미 알고
+// 있었다.** 주소는 `storyw/springflowerway/` 였다(175곳 · 총 248km · 4개 테마).
+//
+// 그래서 **파서를 하나로 합쳤다.** 둘로 두면 한쪽만 고쳐지는 일이 생긴다
+// (Kfood 에서 배운 것 — 잣대가 둘이면 반쪽 적용이 생긴다).
+//
 // ── 돌리는 법 ───────────────────────────────────────────────────────────
-//   node scripts/fetch-autumn-roads.mjs          # 맛보기 (아무것도 저장 안 함)
-//   node scripts/fetch-autumn-roads.mjs --apply  # src/data/autumn-roads.json 에 저장
+//   node scripts/fetch-season-roads.mjs --season autumn           # 맛보기
+//   node scripts/fetch-season-roads.mjs --season spring --apply   # 저장
 //
 // ⚠️ 작업 세션(샌드박스)은 seoul.go.kr 이 막혀 있다.
-//    .github/workflows/fetch-autumn-roads.yml 로 Actions 에서 돌린다.
+//    .github/workflows/fetch-season-roads.yml 로 Actions 에서 돌린다.
 
 import { writeFileSync } from "node:fs";
 
 const APPLY = process.argv.includes("--apply");
-const OUT = "src/data/autumn-roads.json";
+const SEASON = (process.argv[process.argv.indexOf("--season") + 1] ?? "autumn").toLowerCase();
+
+const SEASONS = {
+  autumn: {
+    이름: "서울 단풍길",
+    urls: ["https://www.seoul.go.kr/storyw/autumn/list.do"],
+    out: "src/data/autumn-roads.json",
+    발표곳수: 110,
+    출처: "서울특별시 「서울 단풍길」 (www.seoul.go.kr/storyw/autumn/list.do)",
+  },
+  spring: {
+    이름: "서울 봄꽃길 175선",
+    // 검색에서 실제로 본 주소는 listm.do(모바일)였다. 둘 다 적어 두고 되는 쪽을 쓴다 —
+    // 하나가 404 여도 "자료가 없다"고 단정하지 않기 위해서다.
+    urls: [
+      "https://www.seoul.go.kr/storyw/springflowerway/list.do",
+      "https://www.seoul.go.kr/storyw/springflowerway/listm.do",
+    ],
+    out: "src/data/spring-roads.json",
+    발표곳수: 175,
+    출처: "서울특별시 「서울 봄꽃길 175선」 (www.seoul.go.kr/storyw/springflowerway)",
+  },
+};
+
+const CFG = SEASONS[SEASON];
+if (!CFG) {
+  console.error(`❌ --season 은 ${Object.keys(SEASONS).join(" 또는 ")} 다. 받은 값: ${SEASON}`);
+  process.exit(1);
+}
+const OUT = CFG.out;
 const UA =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125 Safari/537.36";
-const URL_LIST = "https://www.seoul.go.kr/storyw/autumn/list.do";
 
 /** 태그를 털고 실체참조를 되돌린다. */
 const clean = (s) =>
@@ -161,9 +197,24 @@ async function grab(url) {
   return { html: await res.text() };
 }
 
-const first = await grab(URL_LIST);
-if (first.why) {
-  console.error(`❌ 못 받았다 — ${first.why}`);
+console.log(`🌿 ${CFG.이름} — ${CFG.발표곳수}곳을 기대한다.\n`);
+
+// 주소 후보를 하나씩 두드린다. 하나가 404 여도 "자료가 없다"고 단정하지 않는다.
+let first = null;
+let URL_LIST = "";
+for (const u of CFG.urls) {
+  const r = await grab(u);
+  if (r.why) {
+    console.log(`   ⬜ ${u} — ${r.why}`);
+    continue;
+  }
+  console.log(`   ✅ ${u}`);
+  first = r;
+  URL_LIST = u;
+  break;
+}
+if (!first) {
+  console.error(`❌ 후보 주소를 다 두드렸는데 하나도 못 받았다.`);
   console.error(`   ⚠️ 이건 "자료가 없다"는 뜻이 아니다. 둘을 뭉개지 않는다.`);
   process.exit(1);
 }
@@ -171,10 +222,10 @@ if (first.why) {
 let rows = parse(first.html);
 console.log(`한 판에서 ${rows.length}곳을 읽었다.`);
 
-// 110곳이 한 판에 다 안 왔으면 다음 장을 찾아본다.
-if (rows.length < 110) {
+// 다 안 왔으면 다음 장을 찾아본다.
+if (rows.length < CFG.발표곳수) {
   for (const key of ["pageIndex", "page", "cPage", "curPage"]) {
-    for (let p = 2; p <= 4; p++) {
+    for (let p = 2; p <= 6; p++) {
       const r = await grab(`${URL_LIST}?${key}=${p}`);
       if (r.why) break;
       const more = parse(r.html).filter((x) => !rows.some((y) => y.번호 === x.번호));
@@ -183,7 +234,7 @@ if (rows.length < 110) {
       console.log(`   ${key}=${p} 에서 ${more.length}곳 더 (누적 ${rows.length})`);
       await new Promise((x) => setTimeout(x, 400));
     }
-    if (rows.length >= 110) break;
+    if (rows.length >= CFG.발표곳수) break;
   }
 }
 
@@ -220,9 +271,15 @@ console.log(
 // 갈래를 **머리글 위치**로 갈랐다. 맞는지는 서울시가 발표한 갈래별 곳 수로 판가름한다.
 // 하나라도 어긋나면 내가 모르는 것이다 — 그때는 **갈래를 통째로 비운다.**
 // 짐작을 사실로 저장하지 않는다. 빈 칸이 틀린 것보다 낫다.
+//
+// ⚠️ 아래 THEMES 는 **단풍길 갈래**다. 봄꽃길도 네 테마로 나뉘지만 갈래별 곳 수를
+//    아직 모른다 — 대조할 숫자가 없으면 검산이 아니다. 그래서 봄은 **아예 비운다.**
 console.log(`\n── 갈래 검산 ${"─".repeat(46)}`);
-let themeOk = true;
-for (const info of THEMES) {
+let themeOk = SEASON === "autumn";
+if (SEASON !== "autumn") {
+  console.log(`   ⬜ ${CFG.이름} 은 갈래별 발표 수를 모른다 — 대조할 수가 없어 갈래를 비운다.`);
+}
+for (const info of themeOk ? THEMES : []) {
   const got = rows.filter((r) => r.갈래 === info.이름).length;
   const ok = got === info.발표곳수;
   if (!ok) themeOk = false;
@@ -231,7 +288,7 @@ for (const info of THEMES) {
   );
 }
 const stray = rows.filter((r) => !r.갈래).length;
-if (stray) {
+if (themeOk && stray) {
   themeOk = false;
   console.log(`   ⚠️ 어느 갈래에도 안 붙은 것 ${stray}곳`);
 }
@@ -254,8 +311,8 @@ if (themeOk) {
   for (const r of rows) r.갈래 = null;
 }
 
-if (rows.length !== 110) {
-  console.log(`\n⚠️ 110곳이 아니라 ${rows.length}곳이다. 서울시가 해마다 수를 바꾸므로
+if (rows.length !== CFG.발표곳수) {
+  console.log(`\n⚠️ ${CFG.발표곳수}곳이 아니라 ${rows.length}곳이다. 서울시가 해마다 수를 바꾸므로
    그 자체로 틀렸다는 뜻은 아니다. 다만 **왜 다른지 알기 전에는 넣지 않는다.**`);
 }
 
@@ -265,7 +322,7 @@ if (APPLY) {
     JSON.stringify(
       {
         받은날: new Date().toISOString().slice(0, 10),
-        출처: "서울특별시 「서울 단풍길」 (www.seoul.go.kr/storyw/autumn/list.do)",
+        출처: CFG.출처,
         저작권: "서울특별시 공공저작물 — 출처표시. 사진은 가져오지 않았다(이용 조건 미확인).",
         곳수: rows.length,
         길: rows,

@@ -1,0 +1,68 @@
+name: Fetch season roads (서울 단풍길 · 봄꽃길)
+
+# 🌸🍁 서울시가 해마다 뽑는 계절 길 목록을 받는다.
+#      · 가을 — 「서울 단풍길」 110곳 (storyw/autumn)
+#      · 봄  — 「서울 봄꽃길 175선」 (storyw/springflowerway)
+#
+#      한 줄에 구 · 이름 · 수종 · 길이 · 설명 · 스마트서울맵 열쇠가 들어 있다.
+#
+# 왜 필요한가 — 앱의 산책로 칸이 25개 구에 하나씩 26곳뿐이고, 계절에 어디를
+# 걸으면 좋은지는 한 줄도 없었다. 사장님 지시(2026-09-14): "테마로 빼서 강추".
+#
+# 🚨 **처음에는 apply 를 끄고 로그만 본다.** 이 저장소 규칙이다.
+# ⚠️ 작업 세션(샌드박스)은 seoul.go.kr 이 막혀 있어 여기서만 돌아간다.
+#
+# 저작권: 서울특별시 공공저작물 — 출처표시. 사진은 가져오지 않는다(이용 조건 미확인).
+
+on:
+  workflow_dispatch:
+    inputs:
+      season:
+        description: "어느 계절을 받을까"
+        type: choice
+        options: [autumn, spring]
+        default: autumn
+      apply:
+        description: "받은 것을 저장소에 커밋할까 (끄면 로그로만 봅니다)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 받는다
+        run: |
+          set -o pipefail
+          node scripts/fetch-season-roads.mjs \
+            --season "${{ inputs.season }}" \
+            ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee roads-log.txt
+
+      - name: 저장소에 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A src/data/autumn-roads.json src/data/spring-roads.json
+          git diff --cached --quiet && { echo "바뀐 게 없다"; exit 0; }
+          git commit -m "🌿 서울 계절 길 목록을 받았다 (${{ inputs.season }}) [skip render]"
+          git push
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🌿 서울 계절 길 — ${{ inputs.season }}"
+            echo ""
+            echo '```'
+            tail -c 400000 roads-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

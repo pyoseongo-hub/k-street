@@ -267,6 +267,25 @@ export interface Translations {
   categoryLabels: Record<string, string>;
 
   /**
+   * 🌸🍁 **이 계절의 길** — 봄 꽃길 · 가을 단풍길 (사장님 지시 2026-09-14:
+   * "테마로 빼서 강추 — 봄 꽃길, 가을 단풍길 추천. 이게 있으면 좋겠는데").
+   *
+   * 왜 테마로 빼는가 — 장소 칸에 넣으면 **안 보인다.** ALL_PLACES 끝에
+   * `.filter(hasPhoto)` 가 걸려 있어서 사진 없는 곳은 화면에 아예 안 나오는데,
+   * 단풍길 110곳 중 109곳이 사진이 없다. 테마 띠는 축제 카드처럼 사진 없이도
+   * 그려지므로, **빼는 것이 곧 푸는 것이다.**
+   */
+  seasonRoadsSpring: string;
+  seasonRoadsAutumn: string;
+  /** "110곳" 처럼 곳 수를 세는 말 */
+  seasonRoadsCount: (n: number) => string;
+  seasonRoadsShowAll: string;
+  seasonRoadsShowLess: string;
+  /** 단풍길 자료에만 있는 두 칸. 꽃길에는 없으니 있을 때만 보여준다. */
+  seasonRoadsSpecies: string;
+  seasonRoadsLength: string;
+
+  /**
    * 🗓️ 이름에 지난 연도가 박힌 행사 (2026-09-10).
    *    badge = 카드에 붙는 짧은 딱지, note = 눌렀을 때 보이는 설명.
    *    아는 것(그 해에 열렸다)과 모르는 것(올해도 열리는지)을 갈라서 말한다.
@@ -394,6 +413,15 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: '지도 서비스에 문제가 있어요. 곧 고치겠습니다.',
     mapLocating: '위치 확인 중…',
 
+    // 🌸🍁 이 계절의 길 (ko)
+    seasonRoadsSpring: '봄 꽃길',
+    seasonRoadsAutumn: '가을 단풍길',
+    seasonRoadsCount: (n) => `${n}곳`,
+    seasonRoadsShowAll: '전체 보기',
+    seasonRoadsShowLess: '접기',
+    seasonRoadsSpecies: '수종',
+    seasonRoadsLength: '길이',
+
     categoryLabels: {
       market: '시장',
       flower: '꽃길',
@@ -518,6 +546,15 @@ const translations: Record<Language, Translations> = {
     myLocationNoPermission: 'Location access is off. Allow location in your browser, then tap again.',
     myLocationMapProblem: 'Our map service is having trouble. We’re fixing it.',
     mapLocating: 'Locating…',
+
+    // 🌸🍁 이 계절의 길 (en)
+    seasonRoadsSpring: 'Spring blossom walks',
+    seasonRoadsAutumn: 'Autumn foliage walks',
+    seasonRoadsCount: (n) => `${n} places`,
+    seasonRoadsShowAll: 'Show all',
+    seasonRoadsShowLess: 'Show less',
+    seasonRoadsSpecies: 'Trees',
+    seasonRoadsLength: 'Length',
 
     categoryLabels: {
       market: 'Markets',
@@ -644,6 +681,15 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: '地図サービスに問題が発生しています。まもなく修正します。',
     mapLocating: '現在地を確認中…',
 
+    // 🌸🍁 이 계절의 길 (ja)
+    seasonRoadsSpring: '春の花の道',
+    seasonRoadsAutumn: '秋の紅葉の道',
+    seasonRoadsCount: (n) => `${n}か所`,
+    seasonRoadsShowAll: 'すべて見る',
+    seasonRoadsShowLess: '閉じる',
+    seasonRoadsSpecies: '樹種',
+    seasonRoadsLength: '距離',
+
     categoryLabels: {
       market: '市場',
       flower: '花の小道',
@@ -768,6 +814,15 @@ const translations: Record<Language, Translations> = {
     myLocationNoPermission: '定位权限已关闭。请在浏览器中允许定位后再次点击。',
     myLocationMapProblem: '地图服务出现问题，我们会尽快修复。',
     mapLocating: '正在定位…',
+
+    // 🌸🍁 이 계절의 길 (zh)
+    seasonRoadsSpring: '春季赏花步道',
+    seasonRoadsAutumn: '秋季赏枫步道',
+    seasonRoadsCount: (n) => `${n}处`,
+    seasonRoadsShowAll: '查看全部',
+    seasonRoadsShowLess: '收起',
+    seasonRoadsSpecies: '树种',
+    seasonRoadsLength: '长度',
 
     categoryLabels: {
       market: '市场',
@@ -894,6 +949,15 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: '地圖服務發生問題，我們會盡快修復。',
     mapLocating: '正在定位…',
 
+    // 🌸🍁 이 계절의 길 (zh-TW)
+    seasonRoadsSpring: '春季賞花步道',
+    seasonRoadsAutumn: '秋季賞楓步道',
+    seasonRoadsCount: (n) => `${n}處`,
+    seasonRoadsShowAll: '查看全部',
+    seasonRoadsShowLess: '收合',
+    seasonRoadsSpecies: '樹種',
+    seasonRoadsLength: '長度',
+
     categoryLabels: {
       market: '市場',
       flower: '花路',
@@ -1018,6 +1082,15 @@ const translations: Record<Language, Translations> = {
     myLocationNoPermission: 'Quyền truy cập vị trí đang tắt. Hãy bật trong trình duyệt rồi nhấn lại.',
     myLocationMapProblem: 'Dịch vụ bản đồ đang gặp sự cố. Chúng tôi sẽ khắc phục sớm.',
     mapLocating: 'Đang định vị…',
+
+    // 🌸🍁 이 계절의 길 (vi)
+    seasonRoadsSpring: 'Đường hoa mùa xuân',
+    seasonRoadsAutumn: 'Đường lá vàng mùa thu',
+    seasonRoadsCount: (n) => `${n} địa điểm`,
+    seasonRoadsShowAll: 'Xem tất cả',
+    seasonRoadsShowLess: 'Thu gọn',
+    seasonRoadsSpecies: 'Loại cây',
+    seasonRoadsLength: 'Chiều dài',
 
     categoryLabels: {
       market: 'Chợ',
@@ -1144,6 +1217,15 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: 'Nuestro servicio de mapas tiene problemas. Lo estamos solucionando.',
     mapLocating: 'Ubicando…',
 
+    // 🌸🍁 이 계절의 길 (es)
+    seasonRoadsSpring: 'Paseos de flores de primavera',
+    seasonRoadsAutumn: 'Paseos de hojas de otoño',
+    seasonRoadsCount: (n) => `${n} lugares`,
+    seasonRoadsShowAll: 'Ver todo',
+    seasonRoadsShowLess: 'Ver menos',
+    seasonRoadsSpecies: 'Árboles',
+    seasonRoadsLength: 'Longitud',
+
     categoryLabels: {
       market: 'Mercados',
       flower: 'Caminos florales',
@@ -1268,6 +1350,15 @@ const translations: Record<Language, Translations> = {
     myLocationNoPermission: 'L’accès à la position est désactivé. Autorisez-le dans votre navigateur, puis appuyez à nouveau.',
     myLocationMapProblem: 'Notre service de cartes rencontre un problème. Nous le corrigeons.',
     mapLocating: 'Localisation…',
+
+    // 🌸🍁 이 계절의 길 (fr)
+    seasonRoadsSpring: 'Balades fleuries du printemps',
+    seasonRoadsAutumn: 'Balades d\'automne',
+    seasonRoadsCount: (n) => `${n} lieux`,
+    seasonRoadsShowAll: 'Tout afficher',
+    seasonRoadsShowLess: 'Réduire',
+    seasonRoadsSpecies: 'Arbres',
+    seasonRoadsLength: 'Longueur',
 
     categoryLabels: {
       market: 'Marchés',
@@ -1394,6 +1485,15 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: 'Unser Kartendienst hat gerade ein Problem. Wir beheben es.',
     mapLocating: 'Standort…',
 
+    // 🌸🍁 이 계절의 길 (de)
+    seasonRoadsSpring: 'Frühlingsblüten-Wege',
+    seasonRoadsAutumn: 'Herbstlaub-Wege',
+    seasonRoadsCount: (n) => `${n} Orte`,
+    seasonRoadsShowAll: 'Alle anzeigen',
+    seasonRoadsShowLess: 'Weniger anzeigen',
+    seasonRoadsSpecies: 'Bäume',
+    seasonRoadsLength: 'Länge',
+
     categoryLabels: {
       market: 'Märkte',
       flower: 'Blumenwege',
@@ -1518,6 +1618,15 @@ const translations: Record<Language, Translations> = {
     myLocationNoPermission: 'Доступ к геолокации выключен. Разрешите его в браузере и нажмите ещё раз.',
     myLocationMapProblem: 'Сервис карт временно не работает. Мы это исправляем.',
     mapLocating: 'Определение…',
+
+    // 🌸🍁 이 계절의 길 (ru)
+    seasonRoadsSpring: 'Весенние цветущие маршруты',
+    seasonRoadsAutumn: 'Осенние маршруты листопада',
+    seasonRoadsCount: (n) => `${n} мест`,
+    seasonRoadsShowAll: 'Показать все',
+    seasonRoadsShowLess: 'Свернуть',
+    seasonRoadsSpecies: 'Деревья',
+    seasonRoadsLength: 'Длина',
 
     categoryLabels: {
       market: 'Рынки',
@@ -1644,6 +1753,15 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: 'Layanan peta sedang bermasalah. Kami sedang memperbaikinya.',
     mapLocating: 'Mencari lokasi…',
 
+    // 🌸🍁 이 계절의 길 (id)
+    seasonRoadsSpring: 'Jalur bunga musim semi',
+    seasonRoadsAutumn: 'Jalur daun musim gugur',
+    seasonRoadsCount: (n) => `${n} tempat`,
+    seasonRoadsShowAll: 'Lihat semua',
+    seasonRoadsShowLess: 'Tutup',
+    seasonRoadsSpecies: 'Jenis pohon',
+    seasonRoadsLength: 'Panjang',
+
     categoryLabels: {
       market: 'Pasar',
       flower: 'Jalur bunga',
@@ -1768,6 +1886,15 @@ const translations: Record<Language, Translations> = {
     myLocationNoPermission: 'สิทธิ์เข้าถึงตำแหน่งถูกปิดอยู่ กรุณาอนุญาตในเบราว์เซอร์แล้วแตะอีกครั้ง',
     myLocationMapProblem: 'บริการแผนที่ขัดข้อง เรากำลังแก้ไขอยู่',
     mapLocating: 'กำลังหาตำแหน่ง…',
+
+    // 🌸🍁 이 계절의 길 (th)
+    seasonRoadsSpring: 'เส้นทางชมดอกไม้ฤดูใบไม้ผลิ',
+    seasonRoadsAutumn: 'เส้นทางชมใบไม้เปลี่ยนสี',
+    seasonRoadsCount: (n) => `${n} แห่ง`,
+    seasonRoadsShowAll: 'ดูทั้งหมด',
+    seasonRoadsShowLess: 'ย่อ',
+    seasonRoadsSpecies: 'ชนิดต้นไม้',
+    seasonRoadsLength: 'ความยาว',
 
     categoryLabels: {
       market: 'ตลาด',
