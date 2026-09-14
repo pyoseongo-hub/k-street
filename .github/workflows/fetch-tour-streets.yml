@@ -17,6 +17,10 @@ name: Fetch tour streets (서울시 관광거리 — 홍대·명동·가로수�
 on:
   workflow_dispatch:
     inputs:
+      list:
+        description: "전체 목록을 구별로 다 찍을까 (사장님이 넣을 곳을 고르실 때)"
+        type: boolean
+        default: true
       apply:
         description: "받은 것을 저장소에 커밋할까 (끄면 로그로만 봅니다)"
         type: boolean
@@ -48,7 +52,7 @@ jobs:
           SEOUL_OPEN_API_KEY: ${{ secrets.SEOUL_OPEN_API_KEY }}
         run: |
           set -o pipefail
-          node scripts/fetch-tour-streets.mjs ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee streets-log.txt
+          node scripts/fetch-tour-streets.mjs ${{ inputs.list && '--list' || '' }} ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee streets-log.txt
 
       - name: 저장소에 커밋
         if: ${{ inputs.apply }}
@@ -67,6 +71,6 @@ jobs:
             echo "## 🛣️ 서울시 관광거리"
             echo ""
             echo '```'
-            tail -c 50000 streets-log.txt 2>/dev/null || echo "(로그 없음)"
+            tail -c 400000 streets-log.txt 2>/dev/null || echo "(로그 없음)"
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"

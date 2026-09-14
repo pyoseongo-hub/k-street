@@ -27,6 +27,7 @@
 //
 // ── 돌리는 법 ───────────────────────────────────────────────────────────
 //   SEOUL_OPEN_API_KEY=키 node scripts/fetch-tour-streets.mjs          # 맛보기
+//   SEOUL_OPEN_API_KEY=키 node scripts/fetch-tour-streets.mjs --list   # 전체 목록을 구별로
 //   SEOUL_OPEN_API_KEY=키 node scripts/fetch-tour-streets.mjs --apply  # 저장
 //
 // ⚠️ 작업 세션(샌드박스)은 data.seoul.go.kr 이 막혀 있어 직접 못 돌린다.
@@ -40,6 +41,7 @@ if (!KEY) {
   process.exit(1);
 }
 const APPLY = process.argv.includes("--apply");
+const LIST = process.argv.includes("--list");
 const OUT = "src/data/tour-streets.json";
 
 // 🕵️ UA 를 안 보내면 /json/ 을 달라고 해도 **XML 이 온다**
@@ -130,14 +132,67 @@ for (const svc of SERVICES) {
   console.log(`   받은 것 ${rows.length}줄 / ${head.total}줄`);
   out[svc.name] = rows;
 
-  // 이름만 훑어본다 — 우리가 찾던 것이 실제로 들어 있나
-  const names = rows
-    .map((r) => r.TITLE ?? r.NAME ?? r.FNAME ?? Object.values(r)[3])
-    .filter(Boolean);
-  console.log(`\n   이름 30개만: ${names.slice(0, 30).join(" · ")}`);
+  // ── 🔎 어느 칸이 「이름」인가 ────────────────────────────────────────────
+  // ⚠️ 예전엔 `TITLE ?? NAME ?? Object.values(r)[3]` 로 **찍었다.** 그래서
+  //    영어판에서 구 이름("Gwanak-gu")이 거리 이름인 척 134줄 찍혔다.
+  //    찍지 말고 **세어서 고른다** — 거리 이름은 줄마다 다르니 서로 다른 값이
+  //    가장 많다. 구(25개)·동(수십 개)·시(1개)는 자연히 걸러진다.
+  const keys = [...new Set(rows.flatMap((r) => Object.keys(r)))];
+  const stats = keys
+    .map((k) => {
+      const vals = rows.map((r) => String(r[k] ?? "").normalize("NFC").trim()).filter(Boolean);
+      const uniq = new Set(vals);
+      const avg = vals.length ? vals.reduce((a, v) => a + v.length, 0) / vals.length : 0;
+      const numeric = vals.length > 0 && vals.every((v) => /^-?\d+(\.\d+)?$/.test(v));
+      return { k, n: vals.length, uniq: uniq.size, avg: Math.round(avg), numeric, sample: vals[0] ?? "" };
+    })
+    .sort((a, b) => b.uniq - a.uniq);
+
+  console.log("\n   ── 칸별 「서로 다른 값」 수 " + "─".repeat(30));
+  for (const s of stats) {
+    console.log(
+      `   ${s.k.padEnd(14)} 서로다른 ${String(s.uniq).padStart(4)} / 채워진 ${String(s.n).padStart(4)}` +
+        `  평균 ${String(s.avg).padStart(3)}자${s.numeric ? " (숫자)" : ""}  예: ${s.sample.slice(0, 34)}`
+    );
+  }
+  console.log("   " + "─".repeat(58));
+
+  // 이름 후보 — 숫자가 아니고, 너무 길지 않고(설명문 제외), 서로 다른 값이 가장 많은 칸
+  const nameKey = stats.find((s) => !s.numeric && s.avg <= 40 && s.uniq > rows.length * 0.5)?.k;
+  if (!nameKey) {
+    console.log("   ⬜ 이름 칸을 못 골랐다 — 위 표를 보고 사람이 정할 것.");
+    continue;
+  }
+  console.log(`   ▶ 이름 칸으로 «${nameKey}» 를 골랐다 (서로 다른 값이 가장 많다).`);
+
+  const names = rows.map((r) => String(r[nameKey] ?? "").normalize("NFC").trim()).filter(Boolean);
   const want = ["홍대", "명동", "가로수길", "이태원", "인사동", "북촌", "성수", "익선"];
-  const hit = want.filter((w) => names.some((n) => String(n).normalize("NFC").includes(w)));
+  const hit = want.filter((w) => names.some((n) => n.includes(w)));
   console.log(`   찾던 이름 중 들어 있는 것: ${hit.length ? hit.join(" · ") : "(없음)"}`);
+
+  // ── 📜 전체 목록 (사장님이 «넣자/빼자» 를 표시하실 자리) ────────────────
+  if (LIST) {
+    const guKey = rows[0]?.LAW_SGG !== undefined ? "LAW_SGG" : "H_KOR_GU";
+    const dongKey = rows[0]?.LAW_HEMD !== undefined ? "LAW_HEMD" : "H_KOR_DONG";
+    const byGu = new Map();
+    rows.forEach((r, i) => {
+      const gu = String(r[guKey] ?? "(구 없음)").normalize("NFC").trim() || "(구 없음)";
+      if (!byGu.has(gu)) byGu.set(gu, []);
+      byGu.get(gu).push({
+        no: i + 1,
+        name: String(r[nameKey] ?? "").normalize("NFC").trim(),
+        dong: String(r[dongKey] ?? "").normalize("NFC").trim(),
+      });
+    });
+    console.log(`\n   ══ 전체 ${rows.length}곳 · ${byGu.size}개 구 ══`);
+    for (const gu of [...byGu.keys()].sort((a, b) => a.localeCompare(b, "ko"))) {
+      const list = byGu.get(gu);
+      console.log(`\n   【${gu}】 ${list.length}곳`);
+      for (const it of list) {
+        console.log(`     ${String(it.no).padStart(3)}. ${it.name}${it.dong ? `  (${it.dong})` : ""}`);
+      }
+    }
+  }
 }
 
 if (APPLY) {
