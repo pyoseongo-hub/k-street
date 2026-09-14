@@ -1,0 +1,36 @@
+name: Fetch spring roads (서울 봄꽃길 — 단풍길의 짝)
+
+# 🌸 사장님 (2026-09-14): "테마로 빼서 강추 — 봄 꽃길 · 가을 단풍길 추천."
+#    단풍길(storyw/autumn/list.do)의 짝이 될 봄꽃길 목록이 있는지 두드려 본다.
+#
+# 🚨 엿보기다. 아무것도 저장하지 않는다.
+# ⚠️ 작업 세션(샌드박스)은 seoul.go.kr 이 막혀 있어 여기서만 돌아간다.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  peek:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 엿본다
+        run: |
+          set -o pipefail
+          node scripts/fetch-spring-roads.mjs 2>&1 | tee spring-log.txt
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🌸 서울 봄꽃길 — 엿보기"
+            echo ""
+            echo '```'
+            tail -c 200000 spring-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
