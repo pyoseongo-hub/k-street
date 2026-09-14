@@ -16,7 +16,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icons/apple-touch-icon.png'],
+      includeAssets: ['icons/apple-touch-icon-v2.png'],
       manifest: {
         name: 'K-Street',
         short_name: 'K-Street',
@@ -37,9 +37,9 @@ export default defineConfig({
         // 브라우저에게 알려 주는 칸이다. 영어로 적었으니 en 이다.
         lang: 'en',
         icons: [
-          { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
-          { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
-          { src: 'icons/icon-512-maskable.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+          { src: 'icons/icon-192-v2.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: 'icons/icon-512-v2.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+          { src: 'icons/icon-512-maskable-v2.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
         // 📸 설치 창에서 미리 보여 주는 화면. 이게 있으면 안드로이드 크롬이
         //    설치 창을 **더 크게, 사진과 함께** 띄운다 — 그냥 "설치하시겠습니까?"보다

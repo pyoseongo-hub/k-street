@@ -660,7 +660,7 @@ ${hreflang(`place/${slug}/`)}
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="${esc(photo ?? `${SITE}/share-card.png`)}">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="/icons/icon-192.png">
+<link rel="icon" href="/icons/icon-192-v2.png">
 <script type="application/ld+json">${JSON.stringify([jsonLd, crumbs])}</script>
 <style>${CSS}</style>
 </head>
@@ -1015,7 +1015,7 @@ ${hubHreflang(o.path)}
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="${SITE}/share-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="/icons/icon-192.png">
+<link rel="icon" href="/icons/icon-192-v2.png">
 <script type="application/ld+json">${JSON.stringify(ld.length === 1 ? ld[0] : ld)}</script>
 <style>${CSS}</style>
 </head>

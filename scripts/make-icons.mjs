@@ -92,14 +92,29 @@ function markSvg({ pad = 6, bg = null } = {}) {
 //
 // ⚠️ **투명 배경으로 굽지 않는다.** iOS 홈 화면은 투명한 자리를 **검게** 칠해서,
 //    라이트 모드 손님 화면에서만 아이콘이 시커멓게 뜬다.
+// 🔢 **파일 이름에 판 번호를 붙인다.** 이게 없으면 이미 깔린 폰이 안 바뀐다.
+//
+// 🐞 2026-09-14 에 사장님이 잡아 주셨다 — 앱을 열면 새 마크가 나오는데
+//    **홈 화면 아이콘은 벚꽃 그대로**였다.
+//    이유: 안드로이드는 「홈 화면에 추가」할 때 아이콘을 **복사해 둔다**(WebAPK).
+//    크롬이 가끔 manifest 를 다시 읽어 보는데, **manifest 글자가 그대로면**
+//    "바뀐 게 없네" 하고 넘어간다. 우리는 파일 **이름은 그대로 두고 그림만** 바꿨으니
+//    manifest 는 한 글자도 안 달라졌다 → 폰은 영원히 옛 아이콘을 쓴다.
+//    → 이름에 번호를 붙이면 manifest 가 달라지고, 크롬이 스스로 새로 받아 간다.
+//
+// ⚠️ **그림을 바꿀 때마다 이 번호를 올린다.** v2 → v3 → v4 …
+//    올린 뒤 vite.config.ts(manifest) 와 index.html 의 주소도 같이 고칠 것.
+//    안 고치면 404 가 나서 아이콘이 **아예** 안 뜬다 — 옛것이 남는 것보다 나쁘다.
+const V = "v2";
+
 const JOBS = [
-  { file: "favicon-64.png", px: 64, svg: markSvg({ pad: 4, bg: "#131316" }) },
-  { file: "icon-192.png", px: 192, svg: markSvg({ pad: 6, bg: "#131316" }) },
-  { file: "icon-512.png", px: 512, svg: markSvg({ pad: 6, bg: "#131316" }) },
+  { file: `favicon-64-${V}.png`, px: 64, svg: markSvg({ pad: 4, bg: "#131316" }) },
+  { file: `icon-192-${V}.png`, px: 192, svg: markSvg({ pad: 6, bg: "#131316" }) },
+  { file: `icon-512-${V}.png`, px: 512, svg: markSvg({ pad: 6, bg: "#131316" }) },
   // 애플은 둥근 모서리를 **자기가** 깎는다. 우리가 또 깎으면 모서리가 두 번 잘린다 →
   // 거의 정사각(rx 가 작아지도록 pad 를 줄이고) 뒤를 꽉 채운다.
-  { file: "apple-touch-icon.png", px: 180, svg: markSvg({ pad: 10, bg: "#131316" }) },
-  { file: "icon-512-maskable.png", px: 512, svg: markSvg({ pad: 20, bg: "#131316" }) },
+  { file: `apple-touch-icon-${V}.png`, px: 180, svg: markSvg({ pad: 10, bg: "#131316" }) },
+  { file: `icon-512-maskable-${V}.png`, px: 512, svg: markSvg({ pad: 20, bg: "#131316" }) },
 ];
 
 mkdirSync(OUT, { recursive: true });
