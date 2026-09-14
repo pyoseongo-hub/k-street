@@ -13,9 +13,14 @@ name: Fetch autumn roads (서울 단풍길 110선)
 
 on:
   workflow_dispatch:
+    inputs:
+      apply:
+        description: "받은 것을 저장소에 커밋할까 (끄면 로그로만 봅니다)"
+        type: boolean
+        default: false
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   peek:
@@ -26,10 +31,20 @@ jobs:
         with:
           node-version: 22
 
-      - name: 엿본다
+      - name: 받는다
         run: |
           set -o pipefail
-          node scripts/fetch-autumn-roads.mjs 2>&1 | tee autumn-log.txt
+          node scripts/fetch-autumn-roads.mjs ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee autumn-log.txt
+
+      - name: 저장소에 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/autumn-roads.json
+          git diff --cached --quiet && { echo "바뀐 게 없다"; exit 0; }
+          git commit -m "🍁 서울 단풍길 목록을 받았다 (fetch-autumn-roads) [skip render]"
+          git push
 
       - name: 결과 요약
         if: always()
