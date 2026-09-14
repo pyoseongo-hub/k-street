@@ -72,7 +72,56 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setIsClient(true);
-    // 손님이 직접 고른 것이 먼저, 없으면 브라우저 언어(detectLanguage 주석 참고).
+
+    // 🔗 ① **주소에 ?lang= 이 붙어 있으면 그것이 먼저다.**
+    //
+    // 사장님 (2026-09-14): 인스타 프로필에 korea-street.com 을 걸면서
+    // *"링크로 연결함 · 언어 영어로"*.
+    //
+    // 왜 필요한가 — 아래 ②③ 만으로도 **외국 손님은 제 말로 본다**(그게 기본이고
+    // 그대로 둔다). 빠져 있던 것은 **올리는 쪽에서 언어를 못 박는 길**이다:
+    //   · 영어로 쓴 인스타 글 → korea-street.com/?lang=en
+    //   · 일본어로 쓴 글      → korea-street.com/?lang=ja
+    // 폰이 무슨 말로 맞춰져 있든 **그 글을 읽고 누른 사람은 그 말로** 본다.
+    // 일본어 글을 보고 들어온 손님의 폰이 영어로 설정돼 있는 일은 흔하다.
+    //
+    // 🚨 **고른 값(localStorage)보다 앞에 둔다.** 링크에 말이 적혀 있다는 건 보내는
+    //    쪽이 일부러 정한 것이라, 뒤로 밀리면 파라미터가 있으나 마나가 된다.
+    //    손님이 되돌리는 건 머리줄 드롭다운 한 번이다.
+    //
+    // 🧹 읽은 뒤 **주소에서 지운다.** 남겨 두면 손님이 그 주소를 친구에게 보낼 때
+    //    남의 언어가 따라간다.
+    let fromUrl: Language | null = null;
+    try {
+      const raw = new URLSearchParams(window.location.search).get('lang');
+      if (raw) {
+        const tag = raw.toLowerCase();
+        // 'en-US' · 'zh-tw' 처럼 적어 보내도 알아듣는다.
+        // ⚠️ detectLanguage 는 **못 알아들으면 'en'** 을 준다. 오타가 조용히 영어가
+        //    되지 않게, 실제로 아는 말을 가리켰을 때만 받는다.
+        if (tag in LANGUAGES || tag.split('-')[0] in LANGUAGES || tag.startsWith('zh')) {
+          fromUrl = tag in LANGUAGES ? (tag as Language) : detectLanguage([tag]);
+        }
+        if (fromUrl) {
+          const url = new URL(window.location.href);
+          url.searchParams.delete('lang');
+          window.history.replaceState({}, '', url.toString());
+        }
+      }
+    } catch {
+      // 아주 옛 브라우저. 그냥 아래로 내려간다.
+    }
+    if (fromUrl) {
+      setLanguageState(fromUrl);
+      try {
+        localStorage.setItem('k-street-language', fromUrl);
+      } catch {
+        /* 저장을 막아 둔 브라우저 — 이번 방문 동안은 맞게 보인다 */
+      }
+      return;
+    }
+
+    // ② 손님이 직접 고른 것, ③ 없으면 브라우저 언어(detectLanguage 주석 참고).
     let stored: Language | null = null;
     try {
       stored = localStorage.getItem('k-street-language') as Language | null;
