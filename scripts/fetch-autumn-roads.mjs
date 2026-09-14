@@ -5,20 +5,19 @@
 //
 // ── 왜 이 자료인가 ──────────────────────────────────────────────────────
 // 앱의 산책로 칸은 지금 **25개 구에 하나씩, 26곳**뿐이다. 가을에 어디를 걸으면
-// 좋은지는 한 줄도 없다. 그런데 서울시가 매년 **「서울 단풍길 110선」**을 뽑아
-// 발표한다(2025년 기준 110곳 — 작년 103곳에서 7곳 추가). 갈래까지 이미 나뉘어 있다:
+// 좋은지는 한 줄도 없다. 그런데 서울시가 해마다 **「서울 단풍길 110선」**을 뽑아
+// 발표한다(2025년 110곳 — 작년 103곳에서 7곳 추가, 총 167km, 나무 약 72,000주).
+// 갈래까지 이미 나뉘어 있다:
 //   · 산책길에서 만나는 단풍길 43  · 공원과 함께 만나는 단풍길 28
 //   · 도심 속 걷기 좋은 단풍길 20   · 물을 따라 걷는 단풍길 19
 // 우리가 만들 「가을 단풍」 테마와 모양이 그대로 맞는다.
 //
 // 🚨 **손으로 옮겨 적지 않는다.** 110줄을 눈으로 베끼면 반드시 틀린다.
-//    (2026-07 Kfood 에서 메뉴판 6장 중 5장이 웹 자료와 달랐던 것과 같은 이유 —
-//     사람이 옮기는 단계가 곧 틀리는 단계다.)
 //
-// ── 이 판은 '엿보기'다 ──────────────────────────────────────────────────
-// 어느 주소에서 어떤 모양으로 오는지 **먼저 보고** 나서 파싱을 짠다.
-// 골라 찍으면 정작 필요한 칸을 놓친다(관광거리에서 이름 칸을 찍었다가 영어판에서
-// 구 이름이 거리 이름인 척 134줄 나온 적이 있다 — 2026-09-14).
+// ── 1판에서 배운 것 (2026-09-14) ────────────────────────────────────────
+// mediahub 기사 두 개는 **예시만** 든다("삼청동길·정동길·위례성길 등 20개소").
+// 전체 110줄은 없다. 그래서 2판은 **특집 페이지와 스마트서울맵**을 본다.
+// 로그가 길면 정작 볼 것을 못 보니, **목록처럼 생긴 줄만** 골라 찍는다.
 //
 // ⚠️ 작업 세션(샌드박스)은 seoul.go.kr 이 막혀 있다.
 //    .github/workflows/fetch-autumn-roads.yml 로 Actions 에서 돌린다.
@@ -26,39 +25,39 @@
 const UA =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125 Safari/537.36";
 
-/** 후보 주소. 하나가 막혀도 나머지를 본다 — "못 물어봤다"와 "없다"를 가른다. */
 const TARGETS = [
   { why: "서울시 단풍길 특집 (PC)", url: "https://www.seoul.go.kr/story/autumn/pc.html" },
+  { why: "서울시 단풍길 특집 (모바일)", url: "https://www.seoul.go.kr/story/autumn/m.html" },
   { why: "서울시 단풍길 특집 (목록)", url: "https://www.seoul.go.kr/storyw/autumn/list.do" },
-  { why: "내 손안에 서울 — 테마별 110선", url: "https://mediahub.seoul.go.kr/archives/2016017" },
-  { why: "내 손안에 서울 — 새로 오른 단풍길", url: "https://mediahub.seoul.go.kr/archives/2016109" },
+  { why: "스마트서울맵 단풍길 주제도", url: "https://map.seoul.go.kr/smgis2/short/tmap/danpung" },
 ];
 
-/** 태그를 털어 읽을 수 있는 글로 만든다. */
 function toText(html) {
   return html
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/<\/(p|div|li|tr|h\d)>/gi, "\n")
+    .replace(/<\/(p|div|li|tr|td|h\d|span)>/gi, "\n")
     .replace(/<[^>]+>/g, " ")
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/[ \t]+/g, " ")
-    .replace(/\n\s*\n+/g, "\n")
-    .trim();
+    .replace(/&lsquo;|&rsquo;/g, "'")
+    .replace(/&ldquo;|&rdquo;/g, '"')
+    .replace(/&middot;/g, "·")
+    .replace(/&#39;/g, "'")
+    .replace(/[ \t]+/g, " ");
 }
 
 const GU =
-  /(종로구|중구|용산구|성동구|광진구|동대문구|중랑구|성북구|강북구|도봉구|노원구|은평구|서대문구|마포구|양천구|강서구|구로구|금천구|영등포구|동작구|관악구|서초구|강남구|송파구|강동구)/;
+  "종로구|중구|용산구|성동구|광진구|동대문구|중랑구|성북구|강북구|도봉구|노원구|은평구|서대문구|마포구|양천구|강서구|구로구|금천구|영등포구|동작구|관악구|서초구|강남구|송파구|강동구";
+
+/** 목록 한 줄처럼 생겼나 — 구 이름 + 길/로/공원/천 이 함께 있는 짧은 줄. */
+const looksLikeRow = (l) =>
+  new RegExp(`(${GU})`).test(l) && /(길|로|공원|천|둘레|산책|숲)/.test(l) && l.length < 90;
 
 for (const t of TARGETS) {
   console.log("\n" + "═".repeat(70));
-  console.log(`🍁 ${t.why}`);
-  console.log(`   ${t.url}`);
+  console.log(`🍁 ${t.why}\n   ${t.url}`);
   console.log("═".repeat(70));
 
   let res;
@@ -66,47 +65,45 @@ for (const t of TARGETS) {
     res = await fetch(t.url, {
       headers: { "User-Agent": UA, "Accept-Language": "ko-KR,ko;q=0.9" },
       signal: AbortSignal.timeout(30000),
+      redirect: "follow",
     });
   } catch (e) {
     console.log(`   ⬜ 못 물어봤다 — ${e.name}: ${e.message}`);
     console.log(`   ⚠️ 이건 "자료가 없다"는 뜻이 아니다. 둘을 뭉개지 않는다.`);
     continue;
   }
-
-  console.log(`   HTTP ${res.status} · ${res.headers.get("content-type") ?? "?"}`);
-  if (!res.ok) {
-    console.log(`   ⬜ 200 이 아니다 — 여기서 멈춘다.`);
-    continue;
-  }
+  console.log(`   HTTP ${res.status} · ${res.headers.get("content-type") ?? "?"} · 최종 ${res.url}`);
+  if (!res.ok) continue;
 
   const html = await res.text();
-  const text = toText(html);
-  console.log(`   원문 ${html.length}자 → 글 ${text.length}자`);
+  console.log(`   원문 ${html.length}자`);
 
-  const hits = (text.match(/단풍/g) ?? []).length;
-  const guHits = [...new Set((text.match(new RegExp(GU.source, "g")) ?? []))];
-  console.log(`   '단풍' ${hits}번 · 구 이름 ${guHits.length}종 ${guHits.slice(0, 8).join(" ")}`);
-
-  // 목록을 품고 있을 법한 덩어리 — JSON 이 박혀 있으면 그게 제일 깨끗하다.
-  const json = html.match(/\{[^{}]*"[^"]*(?:단풍|name|title)[^"]*"[^{}]*\}/g);
-  if (json) {
-    console.log(`\n   ── 박혀 있는 JSON 조각 ${json.length}개 중 앞 3개 ──`);
-    json.slice(0, 3).forEach((j) => console.log("   " + j.slice(0, 300)));
+  // 🔎 목록을 진짜로 들고 있는 곳은 대개 따로 있는 데이터 파일이다. 그 주소를 찾는다.
+  const feeds = [
+    ...new Set(
+      (html.match(/["'`]([^"'`\s]+\.(?:json|geojson|js|xlsx|csv)(?:\?[^"'`\s]*)?)["'`]/gi) ?? [])
+        .map((m) => m.slice(1, -1))
+        .filter((u) => !/jquery|bootstrap|swiper|slick|common|analytics|polyfill/i.test(u))
+    ),
+  ];
+  if (feeds.length) {
+    console.log(`\n   ── 안에서 가리키는 데이터 파일 ${feeds.length}개 (앞 12개)`);
+    feeds.slice(0, 12).forEach((f) => console.log("     · " + f));
   }
 
-  console.log(`\n   ── 글 앞 2,500자 ${"─".repeat(36)}`);
-  console.log(
-    text
-      .slice(0, 2500)
-      .split("\n")
-      .map((l) => "   | " + l)
-      .join("\n")
-  );
-  console.log("   " + "─".repeat(60));
+  const lines = toText(html)
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean);
+  const rows = [...new Set(lines.filter(looksLikeRow))];
+  console.log(`\n   ── 목록처럼 생긴 줄 ${rows.length}개`);
+  rows.slice(0, 130).forEach((r, i) => console.log(`     ${String(i + 1).padStart(3)}. ${r}`));
+  if (!rows.length) {
+    console.log("     (없다 — 목록이 화면에서 그려지는 자료일 수 있다. 위 데이터 파일을 볼 것)");
+  }
 }
 
 console.log(`
 
 👀 **엿보기다 — 아무것도 저장하지 않았다.**
-   어디서 어떤 모양으로 오는지 보고 나서 파싱을 짠다.
    ⚠️ 110줄을 눈으로 베끼지 않는다. 사람이 옮기는 단계가 곧 틀리는 단계다.`);
