@@ -68,12 +68,29 @@ const clean = (s) =>
  *   <dt><span>길이</span></dt><dd class="last">0.3km</dd>
  *   <p>덕수궁 옛 돌담과 … <br /><br />문의 : 02-3396-5862 (중구청 공원녹지과)</p>
  */
+/**
+ * 🍁 네 갈래. 서울시가 발표한 갈래별 곳 수가 **검산 열쇠**다 —
+ * 항목을 싸고 있는 `<div class="box t1">` 의 t1~t4 가 갈래일 것이라고 짐작했는데,
+ * 짐작이 맞으면 아래 수와 딱 맞아떨어진다. **안 맞으면 갈래를 비워 둔다.**
+ * (짐작을 사실처럼 저장하지 않는다 — 빈 칸이 틀린 것보다 낫다.)
+ */
+const THEMES = {
+  1: { 이름: "도심 속 걷기 좋은 단풍길", 발표곳수: 20 },
+  2: { 이름: "물을 따라 걷는 단풍길", 발표곳수: 19 },
+  3: { 이름: "공원과 함께 만나는 단풍길", 발표곳수: 28 },
+  4: { 이름: "산책길에서 만나는 단풍길", 발표곳수: 43 },
+};
+
 function parse(html) {
-  // 'num' 을 경계로 자른다 — 항목마다 반드시 하나씩 있다.
-  const chunks = html.split(/<span class="num">/).slice(1);
+  // 항목은 `<div class="box t«갈래»">` 로 싸여 있다. 갈래를 붙들고 자른다.
+  const parts = html.split(/<div class="box t(\d)"[^>]*>/);
+  const chunks = [];
+  for (let i = 1; i + 1 < parts.length; i += 2) {
+    chunks.push({ t: Number(parts[i]), html: parts[i + 1] });
+  }
   const out = [];
-  for (const c of chunks) {
-    const num = Number(clean(c.slice(0, c.indexOf("<"))));
+  for (const { t, html: c } of chunks) {
+    const num = Number(clean((c.match(/<span class="num">([\s\S]*?)<\/span>/) ?? [])[1]));
     const gu = clean((c.match(/<p class="local">([\s\S]*?)<\/p>/) ?? [])[1]);
     const h3 = (c.match(/<h3>([\s\S]*?)<\/h3>/) ?? [])[1] ?? "";
     // h3 는 「이름<br><span class=rlocation>정식표기</span>」 — 둘을 갈라 담는다.
@@ -86,6 +103,7 @@ function parse(html) {
     if (!name || !gu) continue;
     out.push({
       번호: num,
+      갈래번호: t,
       구: gu,
       이름: name,
       정식표기: rlocation || null,
@@ -165,6 +183,35 @@ const missing = (k) => rows.filter((r) => !r[k]).length;
 console.log(
   `빈 칸: 수종 ${missing("수종")} · 길이 ${missing("길이")} · 설명 ${missing("설명")} · 지도열쇠 ${missing("지도열쇠")}`
 );
+
+// ── 🍁 갈래 검산 ────────────────────────────────────────────────────────
+// `box t1~t4` 가 서울시의 네 갈래일 것이라는 **짐작**을 여기서 판가름한다.
+// 서울시가 발표한 곳 수와 하나도 안 틀리면 맞는 것이고, 하나라도 어긋나면
+// 내가 모르는 것이다 — 그때는 **갈래를 통째로 비운다.** 짐작을 사실로 저장하지 않는다.
+console.log(`\n── 갈래 검산 ${"─".repeat(46)}`);
+let themeOk = true;
+for (const [t, info] of Object.entries(THEMES)) {
+  const got = rows.filter((r) => r.갈래번호 === Number(t)).length;
+  const ok = got === info.발표곳수;
+  if (!ok) themeOk = false;
+  console.log(
+    `   t${t} ${info.이름.padEnd(22)} 받은 ${String(got).padStart(3)} / 발표 ${info.발표곳수}  ${ok ? "✅" : "❌"}`
+  );
+}
+const stray = rows.filter((r) => !THEMES[r.갈래번호]).length;
+if (stray) {
+  themeOk = false;
+  console.log(`   ⚠️ t1~t4 가 아닌 것 ${stray}곳`);
+}
+
+if (themeOk) {
+  console.log(`   ✅ **네 갈래가 발표 수와 하나도 안 틀린다.** t1~t4 = 서울시 갈래가 맞다.`);
+  for (const r of rows) r.갈래 = THEMES[r.갈래번호].이름;
+} else {
+  console.log(`   ❌ 어긋난다. **갈래를 비운다** — 짐작을 사실로 저장하지 않는다.
+      (곳 수는 서울시가 해마다 바꾸므로, 올해 발표 수를 확인하고 THEMES 를 고칠 것)`);
+  for (const r of rows) r.갈래 = null;
+}
 
 if (rows.length !== 110) {
   console.log(`\n⚠️ 110곳이 아니라 ${rows.length}곳이다. 서울시가 해마다 수를 바꾸므로
