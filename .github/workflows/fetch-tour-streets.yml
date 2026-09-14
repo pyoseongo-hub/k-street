@@ -1,0 +1,72 @@
+name: Fetch tour streets (서울시 관광거리 — 홍대·명동·가로수길)
+
+# 🛣️ 서울시 「관광거리」 자료를 받는다 (서울 열린데이터광장 OA-12929/12931).
+#
+#    왜 필요한가 — 앱에 **홍대·명동·가로수길이 통째로 없다.** 관광공사 자료로는
+#    못 채운다(그건 개별 업소 목록이라 「홍대」라는 동네가 없다. 2026-09-14 확인).
+#    이 자료에는 공식 표기명 · 지번 주소 · **법정동** · 중심 좌표가 들어 있다.
+#
+# 🚨 **처음에는 apply 를 끄고 로그만 본다.** 이 저장소 규칙이다 —
+#    무엇이 올지 보고 납득한 뒤에 저장한다.
+#
+# ⚠️ 2015년 자료다(갱신 1회성). 이름·법정동·좌표는 쓸 만하지만
+#    바뀌는 정보는 확인 없이 넣지 않는다.
+#
+# 저작권: 공공누리 제1유형 · 저작권자 서울특별시 — 출처만 밝히면 상업적 이용도 된다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "받은 것을 저장소에 커밋할까 (끄면 로그로만 봅니다)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 열쇠 있나
+        env:
+          SEOUL_OPEN_API_KEY: ${{ secrets.SEOUL_OPEN_API_KEY }}
+        run: |
+          if [ -z "$SEOUL_OPEN_API_KEY" ]; then
+            echo "❌ SEOUL_OPEN_API_KEY 시크릿이 없다"; exit 1
+          fi
+          echo "✅ 열쇠 있음 (${#SEOUL_OPEN_API_KEY}자)"
+
+      - name: 받는다
+        env:
+          SEOUL_OPEN_API_KEY: ${{ secrets.SEOUL_OPEN_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/fetch-tour-streets.mjs ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee streets-log.txt
+
+      - name: 저장소에 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/tour-streets.json
+          git diff --cached --quiet && { echo "바뀐 게 없다"; exit 0; }
+          git commit -m "🛣️ 서울시 관광거리 자료를 받았다 (fetch-tour-streets) [skip render]"
+          git push
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🛣️ 서울시 관광거리"
+            echo ""
+            echo '```'
+            tail -c 50000 streets-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
