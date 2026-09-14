@@ -277,6 +277,15 @@ export interface Translations {
    */
   seasonRoadsSpring: string;
   seasonRoadsAutumn: string;
+  /**
+   * 🍁 계절 화면 **맨 윗칸(광고 자리)**에 걸리는 한 줄.
+   * 사장님 (2026-09-14): *"예를 들어 가을이니 「걸어서 가을 속으로 — 서울의 단풍」
+   * 이런 식으로. 사진 걸고 … 클릭하면 동네 섹션 가을단풍으로 넘어가게."*
+   */
+  seasonThemeAutumnLine: string;
+  seasonThemeSpringLine: string;
+  /** 그 칸 아래 줄 — 누르면 어디로 가는지 미리 알려 준다. */
+  seasonThemeGo: string;
   /** "110곳" 처럼 곳 수를 세는 말 */
   seasonRoadsCount: (n: number) => string;
   seasonRoadsShowAll: string;
@@ -413,6 +422,9 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: '지도 서비스에 문제가 있어요. 곧 고치겠습니다.',
     mapLocating: '위치 확인 중…',
 
+    seasonThemeAutumnLine: '걸어서 가을 속으로 · 서울의 단풍',
+    seasonThemeSpringLine: '걸어서 봄 속으로 · 서울의 꽃길',
+    seasonThemeGo: '구별로 보기',
     // 🌸🍁 이 계절의 길 (ko)
     seasonRoadsSpring: '봄 꽃길',
     seasonRoadsAutumn: '가을 단풍길',
@@ -547,6 +559,9 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: 'Our map service is having trouble. We’re fixing it.',
     mapLocating: 'Locating…',
 
+    seasonThemeAutumnLine: 'Walk into autumn · Seoul in colour',
+    seasonThemeSpringLine: 'Walk into spring · Seoul in bloom',
+    seasonThemeGo: 'See by district',
     // 🌸🍁 이 계절의 길 (en)
     seasonRoadsSpring: 'Spring blossom walks',
     seasonRoadsAutumn: 'Autumn foliage walks',
@@ -681,6 +696,9 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: '地図サービスに問題が発生しています。まもなく修正します。',
     mapLocating: '現在地を確認中…',
 
+    seasonThemeAutumnLine: '歩いて秋の中へ · ソウルの紅葉',
+    seasonThemeSpringLine: '歩いて春の中へ · ソウルの花の道',
+    seasonThemeGo: '区ごとに見る',
     // 🌸🍁 이 계절의 길 (ja)
     seasonRoadsSpring: '春の花の道',
     seasonRoadsAutumn: '秋の紅葉の道',
@@ -815,6 +833,9 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: '地图服务出现问题，我们会尽快修复。',
     mapLocating: '正在定位…',
 
+    seasonThemeAutumnLine: '走进秋天 · 首尔的枫叶',
+    seasonThemeSpringLine: '走进春天 · 首尔的花路',
+    seasonThemeGo: '按区查看',
     // 🌸🍁 이 계절의 길 (zh)
     seasonRoadsSpring: '春季赏花步道',
     seasonRoadsAutumn: '秋季赏枫步道',
@@ -949,6 +970,9 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: '地圖服務發生問題，我們會盡快修復。',
     mapLocating: '正在定位…',
 
+    seasonThemeAutumnLine: '走進秋天 · 首爾的楓葉',
+    seasonThemeSpringLine: '走進春天 · 首爾的花路',
+    seasonThemeGo: '按區查看',
     // 🌸🍁 이 계절의 길 (zh-TW)
     seasonRoadsSpring: '春季賞花步道',
     seasonRoadsAutumn: '秋季賞楓步道',
@@ -1083,6 +1107,9 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: 'Dịch vụ bản đồ đang gặp sự cố. Chúng tôi sẽ khắc phục sớm.',
     mapLocating: 'Đang định vị…',
 
+    seasonThemeAutumnLine: 'Bước vào mùa thu · Seoul rực lá',
+    seasonThemeSpringLine: 'Bước vào mùa xuân · Seoul nở hoa',
+    seasonThemeGo: 'Xem theo quận',
     // 🌸🍁 이 계절의 길 (vi)
     seasonRoadsSpring: 'Đường hoa mùa xuân',
     seasonRoadsAutumn: 'Đường lá vàng mùa thu',
@@ -1217,6 +1244,9 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: 'Nuestro servicio de mapas tiene problemas. Lo estamos solucionando.',
     mapLocating: 'Ubicando…',
 
+    seasonThemeAutumnLine: 'Caminar hacia el otoño · Seúl en color',
+    seasonThemeSpringLine: 'Caminar hacia la primavera · Seúl en flor',
+    seasonThemeGo: 'Ver por distrito',
     // 🌸🍁 이 계절의 길 (es)
     seasonRoadsSpring: 'Paseos de flores de primavera',
     seasonRoadsAutumn: 'Paseos de hojas de otoño',
@@ -1351,6 +1381,9 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: 'Notre service de cartes rencontre un problème. Nous le corrigeons.',
     mapLocating: 'Localisation…',
 
+    seasonThemeAutumnLine: 'Entrer dans l\'automne · Séoul en couleurs',
+    seasonThemeSpringLine: 'Entrer dans le printemps · Séoul en fleurs',
+    seasonThemeGo: 'Voir par arrondissement',
     // 🌸🍁 이 계절의 길 (fr)
     seasonRoadsSpring: 'Balades fleuries du printemps',
     seasonRoadsAutumn: 'Balades d\'automne',
@@ -1485,6 +1518,9 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: 'Unser Kartendienst hat gerade ein Problem. Wir beheben es.',
     mapLocating: 'Standort…',
 
+    seasonThemeAutumnLine: 'Hinein in den Herbst · Seoul in Farbe',
+    seasonThemeSpringLine: 'Hinein in den Frühling · Seoul in Blüte',
+    seasonThemeGo: 'Nach Bezirk ansehen',
     // 🌸🍁 이 계절의 길 (de)
     seasonRoadsSpring: 'Frühlingsblüten-Wege',
     seasonRoadsAutumn: 'Herbstlaub-Wege',
@@ -1619,6 +1655,9 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: 'Сервис карт временно не работает. Мы это исправляем.',
     mapLocating: 'Определение…',
 
+    seasonThemeAutumnLine: 'Войти в осень · Сеул в красках',
+    seasonThemeSpringLine: 'Войти в весну · Сеул в цвету',
+    seasonThemeGo: 'Смотреть по районам',
     // 🌸🍁 이 계절의 길 (ru)
     seasonRoadsSpring: 'Весенние цветущие маршруты',
     seasonRoadsAutumn: 'Осенние маршруты листопада',
@@ -1753,6 +1792,9 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: 'Layanan peta sedang bermasalah. Kami sedang memperbaikinya.',
     mapLocating: 'Mencari lokasi…',
 
+    seasonThemeAutumnLine: 'Melangkah ke musim gugur · Seoul berwarna',
+    seasonThemeSpringLine: 'Melangkah ke musim semi · Seoul berbunga',
+    seasonThemeGo: 'Lihat per distrik',
     // 🌸🍁 이 계절의 길 (id)
     seasonRoadsSpring: 'Jalur bunga musim semi',
     seasonRoadsAutumn: 'Jalur daun musim gugur',
@@ -1887,6 +1929,9 @@ const translations: Record<Language, Translations> = {
     myLocationMapProblem: 'บริการแผนที่ขัดข้อง เรากำลังแก้ไขอยู่',
     mapLocating: 'กำลังหาตำแหน่ง…',
 
+    seasonThemeAutumnLine: 'เดินเข้าสู่ฤดูใบไม้ร่วง · โซลเปลี่ยนสี',
+    seasonThemeSpringLine: 'เดินเข้าสู่ฤดูใบไม้ผลิ · โซลผลิบาน',
+    seasonThemeGo: 'ดูตามเขต',
     // 🌸🍁 이 계절의 길 (th)
     seasonRoadsSpring: 'เส้นทางชมดอกไม้ฤดูใบไม้ผลิ',
     seasonRoadsAutumn: 'เส้นทางชมใบไม้เปลี่ยนสี',

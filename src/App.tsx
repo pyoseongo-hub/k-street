@@ -20,6 +20,9 @@ function App() {
   const { toggleTheme, getIcon } = useTheme();
   const { t, language } = useLanguage();
   const [tab, setTab] = useState<"home" | "saved">("home");
+  // 🍁 계절 화면 맨 윗칸을 누른 횟수. 올라갈 때마다 동네 화면의 단풍길로 보낸다.
+  //    0 은 "아직 안 눌렀다" — 그래서 앱을 열자마자 튀지 않는다.
+  const [roadJump, setRoadJump] = useState(0);
   // ✈️ 도착 안내 (2026-09-12 사장님: "여기도 푸드에 있는 가이드가 필요할거같아").
   const [guideOpen, setGuideOpen] = useState(false);
   // ☔ 「비 와도 갈 곳」을 여는 문.
@@ -152,7 +155,15 @@ function App() {
           //    같은 방식을 쓴다.
           <>
             <div hidden={tab !== "home"}>
-              <HomeSwitch season={<MonthlyFestivalPanel />} district={<DistrictExplorer />} />
+              {/* 🍁 계절 화면 맨 위 「걸어서 가을 속으로」 칸 → **동네 화면 단풍길**.
+                  숫자를 하나 올려서 두 화면에 같이 알린다 —
+                  HomeSwitch 는 화면을 바꾸고, DistrictExplorer 는 칩을 누른다.
+                  참/거짓이 아니라 숫자인 이유는 두 곳 주석에 적어 뒀다. */}
+              <HomeSwitch
+                showDistrict={roadJump}
+                season={<MonthlyFestivalPanel onGoRoads={() => setRoadJump((n) => n + 1)} />}
+                district={<DistrictExplorer forceCategory="autumn" jump={roadJump} />}
+              />
             </div>
             <div hidden={tab !== "saved"}>
               <SavedPanel />

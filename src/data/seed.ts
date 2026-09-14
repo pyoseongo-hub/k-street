@@ -13,11 +13,21 @@ import { guFestivalDate, guOfficialLink } from "../lib/guFestival";
 import { TOUR_PLACES, findTourPlace, nameKey } from "./tourPlaces";
 import { getManualPhoto } from "../lib/manualPhotos";
 import { galleryShotsFor } from "../lib/photoGallery";
+import autumnRoads from "./autumn-roads.json";
 
 // street(골목·거리)는 2026-09-01에 추가했다. 관광공사 자료에 경리단길·익선동 한옥거리·
 // 종로귀금속거리처럼 구·사진·좌표가 다 붙은 골목이 40곳 있는데, 앱 이름이 K-Street인데도
 // 정작 "거리" 칸이 없어서 전부 버려지고 있었다(사용자 지시).
-export type Category = "festival" | "market" | "flower" | "walk" | "hike" | "museum" | "street" | "shop";
+//
+// 🍁 autumn(단풍길)은 2026-09-14에 추가했다. 사장님 지시:
+//    *"동네 섹션으로 구마다 맞는 자리에 넣고 지도 안내까지 해야지.
+//      저렇게 텍스트로 놔두면 어떻게 찾아가."*
+//
+//    처음엔 계절 화면에 **글 목록**으로만 얹었다. 그게 반쪽이었다 —
+//    "여기 있다"까지만 말하고 "어떻게 가나"를 안 풀어 준다. 장소 칸에 들어와야
+//    구별 목록·길찾기·저장·공유가 전부 따라온다. 그래서 갈래를 하나 만들었다.
+export type Category =
+  | "festival" | "market" | "flower" | "walk" | "hike" | "museum" | "street" | "shop" | "autumn";
 
 export interface Place {
   id: string;
@@ -484,6 +494,49 @@ export const FESTIVALS_ADDED: Place[] = [
   { id: id(), gu: "마포구", category: "festival", name: "서울 바비큐 페스티벌", startMonth: 10, endMonth: 10, addr: "난지캠핑장", officialUrl: "https://www.seoulbbqfesta.com", monthSource: "서울시 문화포털·서울시청 등록 (2026 10.24–25)", confirmed: true },
 ];
 
+/**
+ * 🍁 **서울 단풍길** — 서울시가 해마다 뽑는 「서울 단풍길」(2025년 110곳).
+ *    scripts/fetch-season-roads.mjs 가 받아 autumn-roads.json 에 담는다.
+ *    구 · 이름 · 수종 · 길이 · 한 줄 설명이 곳마다 다 들어 있다.
+ *
+ * 🔀 **id 를 `autumn_번호` 로 따로 매긴다.** 여기서 `id()` 를 부르면 안 된다 —
+ *    저 함수는 부를 때마다 번호가 올라가는데, 107곳을 중간에 끼우면 그 뒤 항목의
+ *    id 가 통째로 밀린다. id 는 좌표·사진을 찾는 열쇠라, 밀리는 순간 **남의
+ *    좌표와 남의 사진이 붙는다**(2026-09-02에 7곳이 그렇게 어긋났다).
+ *    번호는 서울시가 매긴 그 번호라 자료를 다시 받아도 안 흔들린다.
+ *
+ * ⚠️ **과천 3곳은 뺀다.** 서울대공원(낙엽의거리·동물원 둘레길·호숫가 둘레길)은
+ *    서울시가 운영하지만 자리는 경기도 과천이다. 이 앱은 서울 25개 구가 뼈대라
+ *    구 이름이 '과천'인 채로 들어오면 구별 화면에 갈 곳이 없다.
+ *    자료(autumn-roads.json)에는 그대로 남아 있으니 나중에 살릴 수 있다.
+ */
+interface AutumnRow {
+  번호: number;
+  구: string;
+  이름: string;
+  수종: string | null;
+  길이: string | null;
+  설명: string | null;
+}
+
+export const AUTUMN_ROADS: Place[] = (autumnRoads.길 as AutumnRow[])
+  .filter((r) => r.구.endsWith("구"))
+  .map((r) => ({
+    id: `autumn_${r.번호}`,
+    gu: r.구,
+    category: "autumn" as const,
+    name: r.이름,
+    // 수종·길이를 앞에 둔다 — "갈까 말까"를 가르는 건 그 두 가지다.
+    // 없는 칸은 지어내지 않고 그냥 빠진다.
+    note: [
+      [r.수종, r.길이].filter(Boolean).join(" · ") || null,
+      r.설명,
+    ]
+      .filter(Boolean)
+      .join(" — ") || undefined,
+    confirmed: true,
+  }));
+
 const ALL_PLACES_RAW: Place[] = [
   ...FESTIVALS,
   ...MARKETS,
@@ -493,6 +546,8 @@ const ALL_PLACES_RAW: Place[] = [
   ...MUSEUMS,
   // 🆕 맨 뒤에 붙인다 — 위 주석 참고. 순서를 바꾸면 id 가 밀린다.
   ...FESTIVALS_ADDED,
+  // 🍁 단풍길은 id 를 따로 매기므로 순서에 영향을 주지 않는다.
+  ...AUTUMN_ROADS,
 ];
 
 // scripts/fetch-coords.mjs가 채운 좌표를 덧씌운다 — seed.ts에 이미 직접 박아 둔
@@ -633,6 +688,26 @@ function hasPhoto(p: Place): boolean {
   return Boolean(p.image ?? p.thumb);
 }
 
+/**
+ * 🍁 **단풍길은 사진 게이트를 면제한다** (2026-09-14).
+ *
+ * 게이트를 건 이유는 "사진이 없으면 빈 상자가 남는다"였다. 그런데 단풍길은
+ * 그 경우가 아니다 —
+ *   · PlacePhoto 는 사진이 없으면 **아무것도 안 그리고 비켜선다**(null 반환).
+ *     빈 상자가 남지 않는다.
+ *   · 카드에 **수종 · 길이 · 서울시 한 줄 설명**이 들어간다.
+ *     「은행나무 · 1.2km」는 흐릿한 사진 한 장보다 "갈까 말까"에 더 도움이 된다.
+ *
+ * 면제하지 않으면 107곳 중 **106곳이 사라진다.** 꽃길이 32곳 → 2곳으로 죽어
+ * 칩까지 합쳐야 했던 그 일이 그대로 되풀이된다(위 주석 참고).
+ *
+ * ⚠️ 이건 "사진을 안 채운다"는 뜻이 아니다. 채우면 그대로 뜬다 —
+ *    다만 사진이 붙을 때까지 **107곳을 숨기지는 않는다.**
+ */
+function showsWithoutPhoto(p: Place): boolean {
+  return p.category === "autumn";
+}
+
 // 출시 범위 게이트(launchScope.ts) — 서울 외 지역이 seed.ts에 섞여 들어와도
 // LAUNCH_REGIONS를 넓히기 전까지는 화면에 노출되지 않는다.
 /**
@@ -659,7 +734,8 @@ export const ALL_PLACES: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .map(withGuFestival)
   .map(withManualPhoto)
   .map(withGalleryPhoto)
-  .filter(hasPhoto);
+  // 🍁 단풍길은 사진이 없어도 내보낸다 — showsWithoutPhoto 주석 참고.
+  .filter((p) => hasPhoto(p) || showsWithoutPhoto(p));
 
 /** 사진이 없어 지금 가려져 있는 곳. 하루 3곳 채우기 작업의 대상 목록이다. */
 export const HIDDEN_NO_PHOTO: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
@@ -670,7 +746,9 @@ export const HIDDEN_NO_PHOTO: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .filter((p) => isInLaunchScope(sidoOf(p.gu)))
   .map(withManualPhoto)
   .map(withGalleryPhoto)
-  .filter((p) => !hasPhoto(p));
+  // 🍁 단풍길은 "사진 없어 가려진 곳"이 아니다(이미 화면에 나온다).
+  //    여기 섞이면 '하루 3곳 채우기' 목록이 107곳으로 불어나 쓸모가 없어진다.
+  .filter((p) => !hasPhoto(p) && !showsWithoutPhoto(p));
 
 /**
  * 계절 화면(「봄 여름 가을 겨울 그리고 서울」)이 쓰는 축제 전체.
@@ -762,4 +840,8 @@ export const CATEGORY_META: Record<
   //    새 색을 만들면 12개 언어 화면·지도·카드를 다 다시 봐야 한다.
   //    ⚠️ 전용 아이콘 이미지는 아직 없다. 만들 때까지 이모지로 둔다.
   shop: { label: "상가", icon: "🏬", color: "var(--street)" },
+  // 🍁 단풍길 (2026-09-14). 서울시 「서울 단풍길」 107곳.
+  //    전용 색 --autumn 을 네 테마 블록 모두에 넣어 뒀다(tokens.css).
+  //    ⚠️ 전용 아이콘 이미지는 아직 없다. 만들 때까지 이모지로 둔다.
+  autumn: { label: "단풍길", icon: "🍁", color: "var(--autumn)" },
 };

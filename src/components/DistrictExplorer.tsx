@@ -29,6 +29,10 @@ const MAP_CHIPS: { key: Category; extra?: Category[]; label?: string }[] = [
   { key: "market" },
   { key: "street" },
   { key: "walk", extra: ["flower"], label: "walkFlower" },
+  // 🍁 단풍길 — 산책길 **바로 옆**에 둔다. 걷는 일끼리 붙어 있어야 고르기 쉽다.
+  //    (2026-09-14 사장님 지시: "동네 섹션으로 구마다 맞는 자리에 넣고
+  //     지도 안내까지 해야지. 저렇게 텍스트로 놔두면 어떻게 찾아가.")
+  { key: "autumn" },
   { key: "hike" },
   { key: "museum" },
   // 🏬 상가·몰·아울렛 (2026-09-12, 사장님 지시: "실내식물원이나 전시장,
@@ -44,13 +48,39 @@ function catsOf(key: Category): Category[] {
   return chip ? [chip.key, ...(chip.extra ?? [])] : [key];
 }
 
-export default function DistrictExplorer() {
+/**
+ * 🔗 **밖에서 갈래를 눌러 줄 수 있다** (2026-09-14).
+ *
+ * 계절 화면의 「걸어서 가을 속으로」 띠를 누르면 이 화면으로 넘어오면서
+ * 단풍길 칩이 눌린 상태여야 한다. 그냥 화면만 바꾸면 손님이 칩을 다시 찾아야 하고,
+ * 그러면 띠를 누른 뜻이 없어진다.
+ *
+ * 숫자(jump)를 같이 받는 이유 — 같은 갈래를 두 번 눌렀을 때도 반응해야 한다.
+ * 값만 보면 "단풍길 → 단풍길"은 안 바뀐 것으로 보여 아무 일도 안 일어난다.
+ */
+interface Props {
+  /** 밖에서 고른 갈래. 없으면 손님이 고른 대로 둔다. */
+  forceCategory?: Category | null;
+  /** 누를 때마다 1씩 올라가는 번호. 같은 갈래를 다시 눌러도 먹히게 한다. */
+  jump?: number;
+}
+
+export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Props = {}) {
   const { t, language } = useLanguage();
   const [category, setCategory] = useState<Category>("market");
   const [gu, setGu] = useState<string | null>(null);
   // 내 위치의 구. null = 아직 안 눌러 봤다, "loading" = 찾는 중.
   const [myGu, setMyGu] = useState<MyDistrict | "loading" | null>(null);
   const map = useMapOffScreen();
+
+  // 밖에서 갈래를 눌러 주면 그대로 따른다. 고른 구는 지운다 —
+  // 시장 보다가 단풍길로 건너오면 그 구에 단풍길이 없을 수 있고,
+  // 그러면 빈 화면이 남아 "눌렀더니 아무것도 없네"가 된다.
+  useEffect(() => {
+    if (!jump || !forceCategory) return;
+    setCategory(forceCategory);
+    setGu(null);
+  }, [jump, forceCategory]);
 
   const inCategory = useMemo(() => {
     const cats = catsOf(category);

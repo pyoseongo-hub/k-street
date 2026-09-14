@@ -1,7 +1,7 @@
 import { useMemo, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
 import SeasonPhotoHero from "./SeasonPhotoHero";
-import SeasonRoadBand from "./SeasonRoadBand";
+import SeasonThemeBanner from "./SeasonThemeBanner";
 import { ALL_FESTIVALS } from "../data/seed";
 import { seasonOf, type SeasonKey } from "../lib/season";
 import { useRotatingSeed } from "../lib/useRotatingSeed";
@@ -87,7 +87,7 @@ function monthsLabel(
   return out.join(" · ");
 }
 
-export default function MonthlyFestivalPanel() {
+export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => void } = {}) {
   const { t, language } = useLanguage();
   const [month, setMonth] = useState(nowMonth);
   const [theme, setTheme] = useState<FestivalTheme | null>(null);
@@ -161,6 +161,15 @@ export default function MonthlyFestivalPanel() {
       </div>
 
       <div className="panel-inner">
+        {/* 🍁 **맨 윗칸 — 광고 자리** (사장님 지시 2026-09-14:
+            "테마 페이지에는 광고처럼 맨 윗칸에 계절에 맞춰서 … 사진 걸고
+             클릭하면 동네 섹션 가을단풍으로 넘어가게").
+
+            계절 칩보다도 위다. 손님이 이 화면에서 맨 처음 보는 것이 이 칸이고,
+            누르면 **길찾기가 붙은 동네 화면**으로 바로 넘어간다.
+            여름·겨울에는 자료가 없어 칸이 통째로 안 그려진다. */}
+        <SeasonThemeBanner season={season} onGo={() => onGoRoads?.()} />
+
         <div className="season-row">
           {SEASONS.map((s) => (
             <button
@@ -186,12 +195,6 @@ export default function MonthlyFestivalPanel() {
             </button>
           ))}
         </div>
-
-        {/* 🌸🍁 이 계절의 길 — 축제 목록보다 **위**에 둔다.
-            축제는 날짜를 맞춰 가야 하지만 계절 길은 그 계절 내내 열려 있다.
-            "지금 서울에서 뭘 하지"에 먼저 답하는 쪽이 위에 있어야 한다.
-            여름·겨울에는 자료가 없어 이 띠가 통째로 안 그려진다. */}
-        <SeasonRoadBand season={season} />
 
         {themesHere.length > 0 && (
           <div className="theme-row">

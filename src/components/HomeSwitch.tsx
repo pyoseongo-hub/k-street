@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useLanguage } from "../lib/useLanguage";
 
 // 🔀 화면 두 개를 **위아래로 쌓지 않고 좌우로 나눈다** (사용자 지시 2026-09-02:
@@ -33,6 +33,17 @@ export type HomeView = "season" | "district";
 interface Props {
   season: ReactNode;
   district: ReactNode;
+  /**
+   * 🔗 이 숫자가 올라가면 **동네 화면으로 넘어간다** (2026-09-14).
+   *
+   * 계절 화면 맨 위의 「걸어서 가을 속으로」 칸을 누르면 동네 화면의 단풍길로
+   * 가야 한다. 어느 화면을 보여 줄지 쥐고 있는 건 여기라, 밖에서 신호를 받을
+   * 구멍이 하나 필요했다.
+   *
+   * ⚠️ 참/거짓이 아니라 **숫자**인 이유 — 이미 동네 화면에 있을 때 다시 눌러도
+   *    먹혀야 한다. 참/거짓이면 "참 → 참"은 안 바뀐 것으로 보여 아무 일도 안 난다.
+   */
+  showDistrict?: number;
 }
 
 /** 손가락을 이만큼 옆으로 끌어야 화면이 바뀐다. */
@@ -40,10 +51,16 @@ const SWIPE_MIN = 60;
 /** 옆으로 끈 거리가 위아래보다 이만큼 더 커야 '옆으로 민 것'으로 본다. */
 const SWIPE_RATIO = 1.5;
 
-export default function HomeSwitch({ season, district }: Props) {
+export default function HomeSwitch({ season, district, showDistrict = 0 }: Props) {
   const { t } = useLanguage();
   const [view, setView] = useState<HomeView>("season");
   const start = useRef<{ x: number; y: number; ok: boolean } | null>(null);
+
+  // 밖에서 부르면 동네 화면으로. 0 은 "아직 안 눌렀다"라 무시한다 —
+  // 안 그러면 앱을 열자마자 동네 화면으로 튄다.
+  useEffect(() => {
+    if (showDistrict > 0) setView("district");
+  }, [showDistrict]);
 
   function onTouchStart(e: React.TouchEvent) {
     // 옆으로 스스로 굴러가는 줄(갈래 칩·달 띠·육각 지도) 위에서는 밀기를 잡지 않는다.
