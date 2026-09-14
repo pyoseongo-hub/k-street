@@ -1,6 +1,7 @@
 import { useMemo, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
 import SeasonPhotoHero from "./SeasonPhotoHero";
+import SeasonRoadBand from "./SeasonRoadBand";
 import { ALL_FESTIVALS } from "../data/seed";
 import { seasonOf, type SeasonKey } from "../lib/season";
 import { useRotatingSeed } from "../lib/useRotatingSeed";
@@ -185,6 +186,12 @@ export default function MonthlyFestivalPanel() {
             </button>
           ))}
         </div>
+
+        {/* 🌸🍁 이 계절의 길 — 축제 목록보다 **위**에 둔다.
+            축제는 날짜를 맞춰 가야 하지만 계절 길은 그 계절 내내 열려 있다.
+            "지금 서울에서 뭘 하지"에 먼저 답하는 쪽이 위에 있어야 한다.
+            여름·겨울에는 자료가 없어 이 띠가 통째로 안 그려진다. */}
+        <SeasonRoadBand season={season} />
 
         {themesHere.length > 0 && (
           <div className="theme-row">

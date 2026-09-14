@@ -238,6 +238,33 @@ if (rows.length < CFG.발표곳수) {
   }
 }
 
+// ── 🧨 한 곳도 못 읽었으면 **저장하지 않고 멈춘다** (2026-09-14에 당했다) ──
+// 봄꽃길을 처음 받을 때 파서가 0곳을 읽었는데 그대로 `곳수: 0` 짜리 파일을
+// 저장하고 커밋까지 했다. 빈 파일은 오류처럼 안 보인다 — 문법도 멀쩡하고
+// 워크플로도 초록불이다. **없는 것과 못 읽은 것을 뭉갠 것이다.**
+//
+// 그래서 0곳이면 저장을 막고, 대신 **왜 못 읽었는지 볼 거리**를 찍는다.
+// 무늬가 다르면 여기 숫자가 그걸 바로 말해 준다.
+if (rows.length === 0) {
+  console.error(`\n❌ 한 곳도 못 읽었다. **저장하지 않는다.**`);
+  console.error(`   ⚠️ "자료가 없다"가 아니라 "내 파서가 이 무늬를 모른다"는 뜻일 수 있다.\n`);
+  const n = (re) => (first.html.match(re) ?? []).length;
+  console.error(`── 이 페이지의 무늬 ${"─".repeat(40)}`);
+  console.error(`   box t…      ${n(/<div class="box t\d"/g)}   (단풍길은 110)`);
+  console.error(`   span.num    ${n(/<span class="num">/g)}`);
+  console.error(`   p.local     ${n(/<p class="local">/g)}`);
+  console.error(`   rlocation   ${n(/class=['"]rlocation['"]/g)}`);
+  console.error(`   <h3>        ${n(/<h3[\s>]/g)}`);
+  console.error(`   <li>        ${n(/<li[\s>]/g)}`);
+  console.error(`   원문        ${first.html.length}자`);
+  const h3 = first.html.search(/<h3[\s>]/);
+  if (h3 > 0) {
+    console.error(`\n── 첫 <h3> 앞뒤 원문 그대로 ${"─".repeat(30)}`);
+    console.error(first.html.slice(Math.max(0, h3 - 1200), h3 + 900));
+  }
+  process.exit(1);
+}
+
 rows.sort((a, b) => a.번호 - b.번호);
 
 // ── 받은 것을 눈으로 확인할 수 있게 찍는다 ──────────────────────────────
