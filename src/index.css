@@ -3181,7 +3181,16 @@ html[lang^="zh"] * {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.25) 55%, rgba(0, 0, 0, 0.1) 100%);
+  /* 🔆 밝은 사진 위에서도 글자가 읽혀야 한다. 처음엔 아래만 어둡게 깔았는데,
+     해가 든 사진에서 **위쪽 작은 글자(눈썹 줄)가 묻혀 버렸다**(2026-09-14).
+     위쪽까지 한 단계 더 깔고, 글자에도 그림자를 준다. */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.86) 0%,
+    rgba(0, 0, 0, 0.62) 38%,
+    rgba(0, 0, 0, 0.34) 70%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
 }
 .season-theme-body {
   position: relative;
@@ -3194,15 +3203,17 @@ html[lang^="zh"] * {
 .season-theme-eyebrow {
   font-size: 0.78rem;
   letter-spacing: 0.04em;
-  color: var(--autumn);
-  font-weight: 600;
+  color: #FFD9A8;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
 }
-.season-theme-spring .season-theme-eyebrow { color: var(--flower); }
+.season-theme-spring .season-theme-eyebrow { color: #FFD3E4; }
 .season-theme-title {
   font-size: 1.24rem;
   line-height: 1.35;
   font-weight: 700;
   text-wrap: balance;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 .season-theme-meta {
   font-size: 0.86rem;
