@@ -34,16 +34,13 @@ import type { SeasonKey } from "../lib/season";
  *    다만 **우리 사진에는 그 출처를 붙이면 안 된다.** 틀린 출처를 붙이는 건
  *    출처를 안 붙이는 것보다 나쁘다.
  */
-const ART: Record<
-  "spring" | "autumn",
-  { photo: string; credit?: string; ai?: boolean }
-> = {
+const ART: Record<"spring" | "autumn", { photo: string; credit?: string }> = {
   autumn: {
     // 🍁 사장님이 직접 만드신 그림 (2026-09-14, "에이아이 제작이야").
     //    세로 사진이라 배너 비율(2.2:1)로 미리 잘라 뒀다 — 브라우저에 맡기면
     //    한가운데를 집어서 해가 잘려 나간다.
     photo: `${import.meta.env.BASE_URL}images/theme-autumn.jpg`,
-    ai: true,
+    // credit 없음 — 우리 그림이라 밝힐 출처가 없다.
   },
   spring: {
     // 덕수궁 벚꽃 — 봄 표지로 이미 쓰고 있는 사진. 확장자가 **대문자 .JPG** 다.
@@ -86,14 +83,12 @@ export default function SeasonThemeBanner({ season, onGo }: Props) {
           {t.seasonRoadsCount(roads.length)} · {t.seasonThemeGo}
         </span>
       </span>
-      {/* 🏛️ 관광공사 사진이면 출처를 띄운다 — 공공누리는 그게 쓰는 조건이다.
-          🤖 우리가 만든 그림이면 대신 **AI 로 만든 그림임을 밝힌다.**
-             이 앱이 파는 것은 "진짜"다. 진짜 장소를 모아 놓고 첫 화면 그림만
-             AI 인 채로 말을 안 하면, 나중에 알려졌을 때 나머지까지 의심받는다.
-             딱지 하나가 그걸 막는다. */}
-      {(art.credit || art.ai) && (
-        <span className="season-theme-credit">{art.credit ?? "AI"}</span>
-      )}
+      {/* 🏛️ 관광공사 사진이면 출처를 띄운다 — 공공누리는 그게 **쓰는 조건**이라
+             지우면 안 된다.
+          🤖 우리 그림에는 아무것도 안 붙인다. 한때 「AI」 딱지를 달았다가
+             **사장님이 빼라고 하셨다**(2026-09-14). 사장님 그림이고 남의 자료가
+             아니니 밝힐 의무가 없다 — 다시 달지 말 것. */}
+      {art.credit && <span className="season-theme-credit">{art.credit}</span>}
     </button>
   );
 }
