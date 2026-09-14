@@ -2,20 +2,25 @@ name: Fetch autumn photos (릴스용 단풍 사진 20장)
 
 # 🍁 인스타 「서울 가을길」 릴스에 쓸 단풍 사진 20장을 받아 **작게 줄여** 저장한다.
 #
-#    왜 저장소에 담나 — 작업 세션(샌드박스)은 tong.visitkorea.or.kr 이 막혀 있어
-#    사진을 만질 수가 없다. 아티팩트 화면도 바깥 사이트 이미지를 막으므로
+#    왜 저장소에 담나 — 작업 세션(샌드박스)은 tong.visitkorea.or.kr 이 막혀 있고
+#    (connect_rejected), 아티팩트 화면도 바깥 사이트 이미지를 막는다.
 #    **주소만으로는 사진이 안 보인다.** 저장소에 담아야 화면에 심을 수 있다.
 #
 #    덤으로 쓸모가 있다 — 단풍길 110곳 중 109곳이 사진이 없다.
 #    여기 20장은 나중에 앱 쪽에서도 쓸 수 있다.
 #
 # 🖼️ 원본은 크다(장당 수 MB). **가로 720px · 품질 72** 로 줄여 담는다.
-#    보고 고르는 용도라 그 정도면 충분하고, 저장소가 무거워지지 않는다.
+#    보고 고르는 용도라 그 정도면 충분하고 저장소가 무거워지지 않는다.
 #    ⚠️ 영상에 실제로 쓰실 때는 **원본 주소**로 받으시는 게 맞다 —
 #       줄인 것을 영상에 넣으면 화질이 떨어진다.
 #
+# 🧨 heredoc 을 쓰지 않는다. 처음에 `LIST=$(cat <<'EOF' …)` 로 썼다가
+#    목록 줄이 YAML 블록 들여쓰기 밖으로 나가 **파일 전체가 안 읽혔다**
+#    (워크플로 이름이 파일 경로로 뜨고 workflow_dispatch 가 없다고 나왔다).
+#    run: | 안에서는 모든 줄이 들여쓰기 안에 있어야 한다.
+#
 # 저작권: 한국관광공사 관광사진 갤러리 · 공공누리 제1유형(출처표시).
-#         받은 곳 주소를 photos.json 에 함께 적어 둔다 — 출처를 잃지 않기 위해서.
+#         원본 주소를 photos.json 에 함께 적어 둔다 — 출처를 잃으면 쓸 근거가 사라진다.
 
 on:
   workflow_dispatch:
@@ -36,71 +41,67 @@ jobs:
 
       - name: 받아서 줄인다
         run: |
-          set -euo pipefail
-          OUT=docs/가을길-사진
+          set -uo pipefail
+          OUT="docs/가을길-사진"
           mkdir -p "$OUT"
 
-          # 번호|곳 이름  — 번호가 곧 갤러리 사진 번호다(출처를 잃지 않는다).
-          LIST=$(cat <<'EOF'
-2519444|덕수궁돌담길
-2519442|덕수궁돌담길
-1856329|덕수궁돌담길
-1856334|덕수궁돌담길
-2643910|덕수궁
-4063072|종묘
-4063074|종묘
-1428656|종묘
-1428626|종묘
-1857039|북촌감고당길
-1857037|북촌감고당길
-3100576|문묘성균관
-3100580|문묘성균관
-1676200|성균관대학교
-4063082|선유도공원
-4063083|선유도공원
-4063104|양화한강공원
-4063105|양화한강공원
-1432177|여의도공원
-1131485|고려대학교
-EOF
-          )
+          # 번호:곳이름 — 번호가 곧 갤러리 사진 번호다(출처를 잃지 않는다).
+          LIST="2519444:덕수궁돌담길 2519442:덕수궁돌담길 1856329:덕수궁돌담길"
+          LIST="$LIST 1856334:덕수궁돌담길 2643910:덕수궁"
+          LIST="$LIST 4063072:종묘 4063074:종묘 1428656:종묘 1428626:종묘"
+          LIST="$LIST 1857039:북촌감고당길 1857037:북촌감고당길"
+          LIST="$LIST 3100576:문묘성균관 3100580:문묘성균관 1676200:성균관대학교"
+          LIST="$LIST 4063082:선유도공원 4063083:선유도공원"
+          LIST="$LIST 4063104:양화한강공원 4063105:양화한강공원"
+          LIST="$LIST 1432177:여의도공원 1131485:고려대학교"
 
-          echo "[" > "$OUT/photos.json"
+          # 줄이는 도구가 7판이면 magick, 6판이면 convert 다. 있는 쪽을 쓴다.
+          if command -v magick >/dev/null; then IM="magick"; else IM="convert"; fi
+          echo "줄이는 도구: $IM"
+          echo ""
+
+          JSON="$OUT/photos.json"
+          echo "[" > "$JSON"
           FIRST=1
           OKC=0
-          while IFS='|' read -r NO NAME; do
-            [ -z "$NO" ] && continue
+          for ITEM in $LIST; do
+            NO="${ITEM%%:*}"
+            NAME="${ITEM##*:}"
             TAIL="${NO: -2}"
             URL="https://tong.visitkorea.or.kr/cms2/website/${TAIL}/${NO}.jpg"
             RAW="/tmp/${NO}.raw"
             DEST="$OUT/${NO}.jpg"
 
-            # 🚨 못 받은 것을 "없는 것"으로 뭉개지 않는다 — 실패하면 그렇게 적고 넘어간다.
+            # 🚨 못 받은 것을 "없는 것"으로 뭉개지 않는다 — 그 줄만 ⬜ 로 남기고 넘어간다.
             if ! curl -fsS --max-time 40 -A "Mozilla/5.0" -o "$RAW" "$URL"; then
               echo "⬜ ${NO} (${NAME}) — 못 받았다"
               continue
             fi
             BEFORE=$(stat -c%s "$RAW")
-            magick "$RAW" -resize 720x -quality 72 "$DEST"
+            if ! $IM "$RAW" -resize 720x -quality 72 "$DEST"; then
+              echo "⬜ ${NO} (${NAME}) — 줄이지 못했다"
+              continue
+            fi
             AFTER=$(stat -c%s "$DEST")
-            DIM=$(magick identify -format "%wx%h" "$DEST")
+            DIM=$($IM identify -format "%wx%h" "$DEST" 2>/dev/null || echo "?")
             printf "✅ %s (%s)  %sKB → %sKB  %s\n" "$NO" "$NAME" \
               "$((BEFORE/1024))" "$((AFTER/1024))" "$DIM"
 
-            [ $FIRST -eq 0 ] && echo "," >> "$OUT/photos.json"
+            if [ $FIRST -eq 0 ]; then printf ",\n" >> "$JSON"; fi
             FIRST=0
             printf '  {"번호":"%s","곳":"%s","파일":"%s.jpg","원본":"%s"}' \
-              "$NO" "$NAME" "$NO" "$URL" >> "$OUT/photos.json"
+              "$NO" "$NAME" "$NO" "$URL" >> "$JSON"
             OKC=$((OKC+1))
             sleep 0.4
-          done <<< "$LIST"
-          printf "\n]\n" >> "$OUT/photos.json"
+          done
+          printf "\n]\n" >> "$JSON"
 
           echo ""
           echo "받은 것 ${OKC} / 20장"
           du -sh "$OUT"
 
-          # 🧨 한 장도 못 받았으면 빈 채로 커밋하지 않는다(2026-09-14에 봄꽃길에서 당했다).
+          # 🧨 한 장도 못 받았으면 빈 채로 커밋하지 않는다.
+          #    오늘 봄꽃길에서 0곳짜리 파일을 커밋하고 초록불을 받았다.
           if [ "$OKC" -eq 0 ]; then
             echo "❌ 한 장도 못 받았다 — 저장하지 않는다."
             echo "   ⚠️ '사진이 없다'가 아니라 '못 물어봤다'일 수 있다."
