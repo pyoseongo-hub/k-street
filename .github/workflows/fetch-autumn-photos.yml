@@ -42,6 +42,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # 🧨 **러너에 ImageMagick 이 없다** (2026-09-14에 알았다).
+      #    2판이 20장 전부 "줄이지 못했다"로 끝났는데, 로그를 보니
+      #    `convert: No such file or directory` 였다. 있겠거니 하고 쓴 것이다.
+      #    ⚠️ 다행히 **사진은 다 받아졌었다**(300KB~1.2MB). 버린 건 줄이기뿐이었다.
+      - name: 줄이는 도구를 깐다
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq imagemagick
+          magick -version | head -1 || convert -version | head -1
+
       - name: 받아서 줄인다
         run: |
           set -uo pipefail
