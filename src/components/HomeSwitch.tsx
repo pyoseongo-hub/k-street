@@ -56,11 +56,61 @@ export default function HomeSwitch({ season, district, showDistrict = 0 }: Props
   const [view, setView] = useState<HomeView>("season");
   const start = useRef<{ x: number; y: number; ok: boolean } | null>(null);
 
-  // 밖에서 부르면 동네 화면으로. 0 은 "아직 안 눌렀다"라 무시한다 —
-  // 안 그러면 앱을 열자마자 동네 화면으로 튄다.
+  // 🔙 **띠를 눌러 건너왔을 때 폰 뒤로가기로 돌아오게 한다** (2026-09-14).
+  //
+  // 사장님: *"광고 링크 가서 뒤로가기 누르면 꺼져."*
+  //
+  // 왜 꺼졌나 — 띠를 눌러도 **주소가 안 바뀐다.** 화면만 갈아 끼우니 안드로이드가
+  // 보기에 뒤로 갈 곳은 **앱에 들어오기 전 페이지**뿐이다. 손님은 「방금 그 화면으로」
+  // 를 눌렀는데 앱이 통째로 꺼진다. 손님이 잘못 누른 게 아니다.
+  //
+  // ⚠️ **이 사고는 두 번째다.** 2026-09-12에 전체화면(도착 안내·짐보관)에서 똑같이
+  //    겪고 lib/useOverlay.ts 로 고쳤다. 거기 주석에 밟으면 안 되는 자리 셋이
+  //    적혀 있다 — 같은 방식을 그대로 쓴다.
+  //
+  //  ① 효과가 다시 돌면 기록이 쌓인다 → 건너올 때 **한 번만** 남긴다(jumped).
+  //  ② 단추·밀기로 돌아가면 우리가 남긴 칸을 **도로 빼야** 한다.
+  //     안 빼면 다음 뒤로가기가 아무 일도 안 하는 헛발이 된다.
+  //  ③ 뒤로가기로 돌아왔을 때는 back() 을 또 부르면 안 된다 — 한 칸 더 나간다.
+  //     그래서 ②에서 jumped 를 먼저 내리고 부른다. 그 back() 이 부른 popstate 는
+  //     jumped 가 이미 false 라 아래에서 그냥 지나간다.
+  const jumped = useRef(false);
+
   useEffect(() => {
-    if (showDistrict > 0) setView("district");
+    // 0 은 "아직 안 눌렀다" — 앱을 열자마자 동네로 튀지 않게 한다.
+    if (showDistrict <= 0) return;
+    setView("district");
+    if (jumped.current) return; // 이미 한 칸 남겨 뒀다 (①)
+    try {
+      window.history.pushState({ ksHomeView: true }, "");
+      jumped.current = true;
+    } catch {
+      // 아주 드물게 막힌 브라우저. 뒤로가기가 예전처럼 굴 뿐 화면은 안 깨진다.
+    }
   }, [showDistrict]);
+
+  useEffect(() => {
+    const onPop = () => {
+      if (!jumped.current) return; // 우리가 남긴 칸이 아니다 — 건드리지 않는다
+      jumped.current = false;
+      setView("season");
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
+  /** 화면을 바꾼다. 띠로 건너온 상태였다면 남겨 둔 기록을 도로 뺀다 (②③). */
+  const goView = (next: HomeView) => {
+    if (next !== "district" && jumped.current) {
+      jumped.current = false;
+      try {
+        window.history.back();
+      } catch {
+        /* 막힌 브라우저 — 화면은 그대로 바뀐다 */
+      }
+    }
+    setView(next);
+  };
 
   function onTouchStart(e: React.TouchEvent) {
     // 옆으로 스스로 굴러가는 줄(갈래 칩·달 띠·육각 지도) 위에서는 밀기를 잡지 않는다.
@@ -81,7 +131,8 @@ export default function HomeSwitch({ season, district, showDistrict = 0 }: Props
     const dy = p.clientY - s.y;
     if (Math.abs(dx) < SWIPE_MIN) return;
     if (Math.abs(dx) < Math.abs(dy) * SWIPE_RATIO) return; // 위아래로 읽던 중이다
-    setView(dx < 0 ? "district" : "season");
+    // 🔙 goView 를 탄다 — 밀어서 돌아올 때도 남겨 둔 기록을 빼야 한다.
+    goView(dx < 0 ? "district" : "season");
   }
 
   // 🚫 **그림 딱지를 뺐다** (2026-09-05 사장님: "아이콘 몬지 모르겠어 /
@@ -103,7 +154,7 @@ export default function HomeSwitch({ season, district, showDistrict = 0 }: Props
       type="button"
       className={"home-tab" + (view === key ? " active" : "")}
       aria-current={view === key ? "page" : undefined}
-      onClick={() => setView(key)}
+      onClick={() => goView(key)}
     >
       {label}
     </button>

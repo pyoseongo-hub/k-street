@@ -18,17 +18,24 @@ import type { SeasonKey } from "../lib/season";
 //
 // 그래서 이 칸은 한 장이다 — 사진 · 한 줄 · 곳 수. 누르면 넘어간다.
 
+/**
+ * 📷 관광공사 관광사진 갤러리(공공누리 제1유형).
+ *    출처 표시가 **쓰는 조건**이라 카드 안에 항상 함께 띄운다 — 지우지 말 것.
+ *
+ * 🧨 **주소를 손으로 조립하지 않는다.** 봄 사진을 `…/2976749.jpg` 로 적었다가
+ *    실제로는 **`.JPG` 대문자**인 걸 뒤늦게 봤다(2026-09-14). 틀려도 회색 상자만
+ *    남아서 **눈으로는 못 잡는다** — cover-photos.json 과 대조해서야 알았다.
+ *    그래서 아래 둘은 **이미 앱이 쓰고 있어 뜨는 게 확인된 주소**를 그대로 옮겼다.
+ */
 const ART: Record<"spring" | "autumn", { photo: string; credit: string }> = {
-  // 📷 관광공사 관광사진 갤러리(공공누리 제1유형). 출처 표시가 쓰는 조건이라
-  //    카드 안에 항상 함께 띄운다 — 지우지 말 것.
   autumn: {
-    // 덕수궁 돌담길 — 검색어에 「단풍」이 붙은 것으로 골랐다.
-    photo: "https://tong.visitkorea.or.kr/cms2/website/44/2519444.jpg",
+    // 덕수궁 단풍 — 가을 표지로 이미 쓰고 있는 사진(cover-photos.json).
+    photo: "https://tong.visitkorea.or.kr/cms2/website/11/2643911.jpg",
     credit: "한국관광공사",
   },
   spring: {
-    // 여의서로(윤중로) 벚꽃길.
-    photo: "https://tong.visitkorea.or.kr/cms2/website/49/2976749.jpg",
+    // 덕수궁 벚꽃 — 봄 표지로 이미 쓰고 있는 사진. 확장자가 **대문자 .JPG** 다.
+    photo: "https://tong.visitkorea.or.kr/cms2/website/49/2976749.JPG",
     credit: "한국관광공사",
   },
 };
