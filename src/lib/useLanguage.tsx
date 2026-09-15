@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useMemo, type ReactNode } from 'react';
 import { getTranslations, type Language } from './translations';
+import { ensureLangFont } from './langFont';
 
 export type { Language };
 
@@ -144,6 +145,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   //        (keep-all 은 띄어쓰기가 있는 한국어 전용 — 아래 index.css 주석 참고)
   useEffect(() => {
     document.documentElement.lang = language;
+    // 🌏 그 말의 글꼴도 여기서 세운다 — **고른 순간에 그 하나만** 받는다.
+    //    DM Sans 에는 가나·한자·타이 문자·키릴 문자가 한 자도 없어서, 그전에는
+    //    그 글자들이 폰에 깔린 아무 글꼴로 떨어졌다(두께가 제각각이었다).
+    //    자세한 이야기는 src/lib/langFont.ts 머리말에.
+    ensureLangFont(language);
   }, [language]);
 
   const setLanguage = (lang: Language) => {

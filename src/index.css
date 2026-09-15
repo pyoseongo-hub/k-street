@@ -16,9 +16,31 @@
 
 :root {
   /* 제목용 서체 — 한 곳만 고치면 여섯 군데가 같이 바뀐다.
-     맨 뒤를 serif로 두지 않는다: 한글이 명조로 떨어지던 게 문제였다. */
-  --font-display: "Cormorant Garamond", "IBM Plex Sans KR", "Pretendard",
-    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+     맨 뒤를 serif로 두지 않는다: 한글이 명조로 떨어지던 게 문제였다.
+     🈺 var(--font-lang) 을 앞쪽에 끼워 둔다 — 일본어·중국어·태국어·러시아어도
+        제목에서 제 글꼴을 쓰게 하려는 것이다. 아래 --font-lang 설명 참고. */
+  --font-display: "Cormorant Garamond", "IBM Plex Sans KR", var(--font-lang),
+    "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+
+  /**
+   * 🌏 **손님이 고른 말의 글꼴** (2026-09-15 사장님: *"전체적으로 텍스트 잘 보이게
+   *    두꺼운 글씨체, 외국어 포함 교체"*).
+   *
+   * 왜 필요한가 — 본문 글꼴이 "DM Sans" 뿐이었는데, **DM Sans 에는 한글도
+   * 일본어도 중국어도 태국어도 키릴 문자도 한 자가 없다.** 그래서 그 글자들은
+   * **폰에 깔린 아무 글꼴**로 그려졌다. 폰마다 다르고, 대개 얇다.
+   * 「두껍게 해 달라」는 말의 절반은 여기서 나온 것이다 — 우리가 두께를 정한 적이
+   * 없는 글자가 12개 언어 중 5개였다.
+   *
+   * 🚨 기본값을 **반드시 둔다.** `var(--font-lang)` 에 값이 없으면 font-family
+   *    선언 **전체가 무효**가 되어 글꼴이 통째로 날아간다. 대체값을 쓰는 방법도
+   *    있지만 `var(--font-lang, sans-serif)` 는 더 나쁘다 — 목록 한가운데 들어간
+   *    generic 은 **언제나 맞아 버려서** 뒤에 세워 둔 한글 글꼴을 가린다.
+   *
+   * 🔁 실제 값은 src/lib/langFont.ts 가 **그 언어를 고른 순간에만** 바꿔 끼우고,
+   *    그때 구글 글꼴도 그때 받는다. 한국어·영어 손님은 한 바이트도 더 안 받는다.
+   */
+  --font-lang: "IBM Plex Sans KR";
 }
 
 * {
@@ -35,9 +57,23 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* 🌏 **한글과 외국어를 여기서 정한다** (2026-09-15).
+     앞판은 `"DM Sans", -apple-system, …` 이 전부였다 — DM Sans 에는 한글·가나·한자·
+     타이 문자·키릴 문자가 **한 자도 없어서** 그 글자들은 폰에 깔린 아무 글꼴로
+     떨어졌다. 그래서 언어마다 두께가 제각각이었다.
+     DM Sans 를 맨 앞에 두는 것은 그대로다 — 라틴 문자는 지금 모습을 지키고,
+     DM Sans 에 없는 글자만 뒤로 흘러가 제 글꼴을 만난다. */
+  font-family: "DM Sans", "IBM Plex Sans KR", var(--font-lang), "Pretendard",
+    "Apple SD Gothic Neo", "Malgun Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  /* 🖊️ **기본 두께를 400 → 500 으로 올린다** (사장님: "텍스트 잘 보이게 두껍게").
+     한 줄이지만 화면 전체에 먹는다 — 이미 500·600·700 으로 굵게 잡아 둔 곳은
+     그대로고, **아무것도 안 정해 둬서 가장 얇던 글자들**만 한 단계 올라간다. */
+  font-weight: 500;
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+  /* 🚫 **antialiased 를 뺐다.** 이게 아이폰·맥에서 글씨를 **한 단계 얇게** 그린다.
+     보기 좋으라고 넣는 값이지만, 햇빛 아래 폰을 보는 관광객에게는 반대로 작용한다.
+     기본값(auto=subpixel)이 더 두껍고 또렷하다. 다시 넣지 말 것. */
 }
 
 button {
@@ -1621,8 +1657,8 @@ button {
      (2026-09-11에 찾음). 자세한 설명은 위 .map-btn 의 주석에 있다. */
   min-width: max-content;
   background: var(--sunk, #eceae4);
-  color: var(--ink, #16150f);
-  border: 1px solid var(--line, #ddd9d0);
+  color: var(--text);
+  border: 1px solid var(--border);
 }
 
 /* 🔗 공유는 **카드 맨 윗줄(구·날짜 옆)로 옮겼다** — 아래 .meta-share.
@@ -1641,8 +1677,8 @@ button {
   min-width: max-content;
   gap: 5px;
   background: var(--sunk, #eceae4);
-  color: var(--ink, #16150f);
-  border: 1px solid var(--line, #ddd9d0);
+  color: var(--text);
+  border: 1px solid var(--border);
   text-decoration: none;
 }
 
@@ -1681,7 +1717,7 @@ button {
   gap: 14px;
   padding: 20px 20px 40px;
   background: var(--bg, #faf9f7);
-  color: var(--ink, #16150f);
+  color: var(--text);
   overflow-y: auto;
   /* 폰에서 손가락 스크롤이 끊기지 않게 */
   -webkit-overflow-scrolling: touch;
@@ -1691,7 +1727,7 @@ button {
   width: 100%;
   max-width: 460px;
   background: var(--card, #fff);
-  border: 1px solid var(--line, #ddd9d0);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 20px 18px;
 }
@@ -1746,7 +1782,7 @@ button {
 }
 
 .lg-dist {
-  color: var(--muted, #6b6559);
+  color: var(--text-muted);
 }
 
 /* 🚇 역 시설 보기 — 역 이름 바로 밑에 붙는 한 줄. 단추 둘보다 가볍게 둔다
@@ -1757,7 +1793,7 @@ button {
   line-height: 1.5;
 }
 .lg-station-info a {
-  color: var(--muted, #6b6559);
+  color: var(--text-muted);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -1767,14 +1803,14 @@ button {
       다만 **말은 다르다.** LuggageCard 의 2026-09-15 주석 참고 —
       「없다」와 「모른다」를 같은 문장으로 쓰면 손님이 헛걸음한다. */
 .lg-station--unknown {
-  color: var(--muted, #6b6559);
+  color: var(--text-muted);
 }
 
 .lg-note {
   margin: 12px 0 0;
   font-size: 13px;
   line-height: 1.6;
-  color: var(--muted, #6b6559);
+  color: var(--text-muted);
 }
 
 .lg-official {
@@ -1783,7 +1819,7 @@ button {
 }
 
 .lg-official a {
-  color: var(--muted, #6b6559);
+  color: var(--text-muted);
 }
 
 /* 🧳 또타러기지 지점 여섯 개 (2026-09-11 사장님: "6군데 버튼 만들어").
@@ -1802,9 +1838,9 @@ button {
   gap: 2px;
   padding: 9px 10px;
   border-radius: 9px;
-  border: 1px solid var(--line, #ddd9d0);
+  border: 1px solid var(--border);
   background: var(--card, #fff);
-  color: var(--ink, #16150f);
+  color: var(--text);
   text-align: left;
 }
 
@@ -1822,7 +1858,7 @@ button {
 .lg-branch-where {
   font-size: 11.5px;
   line-height: 1.4;
-  color: var(--muted, #6b6559);
+  color: var(--text-muted);
 }
 
 .lg-branch-maps {
@@ -1849,12 +1885,12 @@ button {
 .lg-prices th,
 .lg-prices td {
   padding: 5px 4px;
-  border-bottom: 1px solid var(--line, #ddd9d0);
+  border-bottom: 1px solid var(--border);
   text-align: right;
 }
 
 .lg-prices thead th {
-  color: var(--muted, #6b6559);
+  color: var(--text-muted);
   font-weight: 600;
 }
 
@@ -1866,9 +1902,9 @@ button {
 .lg-close {
   padding: 12px 30px;
   border-radius: 999px;
-  border: 1px solid var(--line, #ddd9d0);
+  border: 1px solid var(--border);
   background: var(--card, #fff);
-  color: var(--ink, #16150f);
+  color: var(--text);
   font-size: 15px;
   font-weight: 700;
 }

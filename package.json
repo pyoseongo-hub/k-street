@@ -18,7 +18,8 @@
     "check-hub-strings": "vite build --ssr scripts/check-hub-strings.ts --outDir dist-ssr && node dist-ssr/check-hub-strings.js",
     "festival-freshness": "vite build --ssr scripts/audit-festival-freshness.ts --outDir dist-ssr && node dist-ssr/audit-festival-freshness.js",
     "gu-festival-dates": "vite build --ssr scripts/fetch-gu-festival-dates.ts --outDir dist-ssr && node dist-ssr/fetch-gu-festival-dates.js",
-    "check-station-chain": "vite build --ssr scripts/check-station-chain.ts --outDir dist-ssr && node dist-ssr/check-station-chain.js"
+    "check-station-chain": "vite build --ssr scripts/check-station-chain.ts --outDir dist-ssr && node dist-ssr/check-station-chain.js",
+    "check-css-vars": "node scripts/check-css-vars.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

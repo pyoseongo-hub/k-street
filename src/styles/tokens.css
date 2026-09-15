@@ -32,6 +32,16 @@
      갈래 색(시장·박물관…)이 아니라 **상황** 색이라 따로 둔다.
      어두운 바탕에서는 밝게, 밝은 바탕에서는 진하게 — 둘 다 글자로 읽혀야 한다. */
   --rain: #7EA6D9;
+  /* 🎨 아래 넷은 **이름만 있고 값이 없던 것들**이다 (2026-09-15에 검사로 찾음).
+     index.css 가 `var(--card, #fff)` 처럼 예비값을 달고 불렀는데, 그 이름을
+     아무도 정해 주지 않아서 **밝은 화면이든 어두운 화면이든 언제나 예비값**이
+     나왔다. 어두운 화면에서 흰 카드·검정 위 검정 글씨가 되던 원인이다.
+     밝은 쪽은 그 예비값을 그대로 옮겨 적어 **보이는 것이 안 바뀌게** 했고,
+     어두운 쪽만 새로 정했다. 🚨 npm run check-css-vars 가 이걸 지킨다. */
+  --card: #1A1A1E;
+  --sunk: #26262B;
+  --luggage: #5C8FC7;
+  --text-tertiary: #83838E;
 
   --shadow: rgba(0, 0, 0, 0.3);
   --shadow-elevated: none;
@@ -63,6 +73,18 @@
      네 블록 모두에 같은 값을 둔다(--market·--flower 와 같은 방식). */
   --autumn: #E2713C;
     --rain: #4A7FBF;
+  /* 🎨 값이 없던 넷 — 위 :root 블록 주석 참고. 여기 값은 index.css 가 쓰던
+     예비값 그대로다(보이는 것이 안 바뀌게). */
+  --card: #FFFFFF;
+  --sunk: #ECEAE4;
+  --luggage: #37628F;
+  --text-tertiary: #8C93A0;
+    /* 🎨 값이 없던 넷 — 위 :root 블록 주석 참고. 여기 값은 index.css 가 쓰던
+       예비값 그대로다(보이는 것이 안 바뀌게). */
+    --card: #FFFFFF;
+    --sunk: #ECEAE4;
+    --luggage: #37628F;
+    --text-tertiary: #8C93A0;
 
     --shadow: rgba(0, 0, 0, 0.06);
     --shadow-elevated: 0 6px 16px -6px rgba(0, 0, 0, 0.1);
@@ -124,6 +146,16 @@
      네 블록 모두에 같은 값을 둔다(--market·--flower 와 같은 방식). */
   --autumn: #E2713C;
   --rain: #7EA6D9;
+  /* 🎨 아래 넷은 **이름만 있고 값이 없던 것들**이다 (2026-09-15에 검사로 찾음).
+     index.css 가 `var(--card, #fff)` 처럼 예비값을 달고 불렀는데, 그 이름을
+     아무도 정해 주지 않아서 **밝은 화면이든 어두운 화면이든 언제나 예비값**이
+     나왔다. 어두운 화면에서 흰 카드·검정 위 검정 글씨가 되던 원인이다.
+     밝은 쪽은 그 예비값을 그대로 옮겨 적어 **보이는 것이 안 바뀌게** 했고,
+     어두운 쪽만 새로 정했다. 🚨 npm run check-css-vars 가 이걸 지킨다. */
+  --card: #1A1A1E;
+  --sunk: #26262B;
+  --luggage: #5C8FC7;
+  --text-tertiary: #83838E;
 
   --shadow: rgba(0, 0, 0, 0.3);
   --shadow-elevated: none;
