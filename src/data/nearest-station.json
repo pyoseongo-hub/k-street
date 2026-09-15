@@ -2262,6 +2262,111 @@
     },
     "autumn_45": {
       "none": true
+    },
+    "autumn_42": {
+      "station": "금천구청역 1호선",
+      "dist": 268,
+      "lat": 37.4561943743749,
+      "lng": 126.893608614581,
+      "url": "http://place.map.kakao.com/21160614"
+    },
+    "autumn_44": {
+      "station": "서울대입구역 2호선",
+      "dist": 236,
+      "lat": 37.4812845080678,
+      "lng": 126.952713197762,
+      "url": "http://place.map.kakao.com/21160541"
+    },
+    "autumn_46": {
+      "station": "숭실대입구역 7호선",
+      "dist": 577,
+      "lat": 37.4963172817574,
+      "lng": 126.953621963422,
+      "url": "http://place.map.kakao.com/21160725"
+    },
+    "autumn_47": {
+      "station": "양재시민의숲역 신분당선",
+      "dist": 737,
+      "lat": 37.4701332061395,
+      "lng": 127.038471341381,
+      "url": "http://place.map.kakao.com/18382446"
+    },
+    "autumn_49": {
+      "station": "매봉역 3호선",
+      "dist": 570,
+      "lat": 37.4869394661317,
+      "lng": 127.046711448388,
+      "url": "http://place.map.kakao.com/21160816"
+    },
+    "autumn_50": {
+      "station": "매봉역 3호선",
+      "dist": 586,
+      "lat": 37.4869394661317,
+      "lng": 127.046711448388,
+      "url": "http://place.map.kakao.com/21160816"
+    },
+    "autumn_51": {
+      "station": "신사역 3호선",
+      "dist": 531,
+      "lat": 37.51643597531432,
+      "lng": 127.02030856272764,
+      "url": "http://place.map.kakao.com/21160633"
+    },
+    "autumn_52": {
+      "station": "한성백제역 9호선",
+      "dist": 167,
+      "lat": 37.5165379932802,
+      "lng": 127.116449169971,
+      "url": "http://place.map.kakao.com/585546584"
+    },
+    "autumn_54": {
+      "station": "고덕역 5호선",
+      "dist": 44,
+      "lat": 37.55504766830918,
+      "lng": 127.15416500963447,
+      "url": "http://place.map.kakao.com/21160681"
+    },
+    "autumn_56": {
+      "station": "둔촌오륜역 9호선",
+      "dist": 562,
+      "lat": 37.51940803726135,
+      "lng": 127.13865206962898,
+      "url": "http://place.map.kakao.com/1674992873"
+    },
+    "autumn_57": {
+      "station": "굽은다리역 5호선",
+      "dist": 1060,
+      "lat": 37.54551759022203,
+      "lng": 127.14288387331297,
+      "url": "http://place.map.kakao.com/21160844"
+    },
+    "autumn_60": {
+      "station": "한강진역 6호선",
+      "dist": 764,
+      "lat": 37.5397907743775,
+      "lng": 127.001765135176,
+      "url": "http://place.map.kakao.com/21160852"
+    },
+    "autumn_66": {
+      "station": "종로5가역 1호선",
+      "dist": 202,
+      "lat": 37.57097610838373,
+      "lng": 127.00153834521934,
+      "url": "http://place.map.kakao.com/21160791"
+    },
+    "autumn_67": {
+      "station": "경복궁역 3호선",
+      "dist": 582,
+      "lat": 37.5758061234865,
+      "lng": 126.973691352767,
+      "url": "http://place.map.kakao.com/21160823"
+    },
+    "autumn_68": {
+      "station": "아차산역 5호선",
+      "dist": 847,
+      "lat": 37.55224917071854,
+      "lng": 127.08956495447913,
+      "url": "http://place.map.kakao.com/21160654"
     }
   }
 }
