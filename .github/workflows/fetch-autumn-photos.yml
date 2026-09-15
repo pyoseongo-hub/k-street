@@ -1,4 +1,4 @@
-name: Fetch autumn photos (릴스용 단풍 사진 20장)
+name: Fetch photos (갤러리 사진을 받아 줄여 담는다)
 
 # 🍁 인스타 「서울 가을길」 릴스에 쓸 단풍 사진 20장을 받아 **작게 줄여** 저장한다.
 #
@@ -29,6 +29,18 @@ on:
         description: "받은 것을 저장소에 커밋할까 (끄면 크기만 재 봅니다)"
         type: boolean
         default: false
+      list:
+        description: "받을 목록 — `번호:이름` 을 빈칸으로 나눠서. 비우면 아래 서울 20장(기본값)"
+        required: false
+        default: ""
+      out:
+        description: "어느 폴더에 담을까 (저장소 안 경로)"
+        required: false
+        default: "docs/가을길-사진"
+      width:
+        description: "가로 몇 px 로 줄일까"
+        required: false
+        default: "720"
 
 permissions:
   contents: write
@@ -53,12 +65,20 @@ jobs:
           magick -version | head -1 || convert -version | head -1
 
       - name: 받아서 줄인다
+        env:
+          IN_LIST: ${{ inputs.list }}
+          IN_OUT: ${{ inputs.out }}
+          IN_WIDTH: ${{ inputs.width }}
         run: |
           set -uo pipefail
-          OUT="docs/가을길-사진"
+          OUT="${IN_OUT:-docs/가을길-사진}"
+          WIDTH="${IN_WIDTH:-720}"
           mkdir -p "$OUT"
 
           # 번호:곳이름 — 번호가 곧 갤러리 사진 번호다(출처를 잃지 않는다).
+          # 🔁 **목록을 밖에서 넣을 수 있다** (2026-09-15 사장님: "가을 등산 사진,
+          #    서울 아니어도, 30장"). 비워 두면 아래 서울 20장이 그대로 쓰인다 —
+          #    앞판이 받아 둔 것이라 **지우지 않고 기본값으로 남긴다.**
           LIST="2519444:덕수궁돌담길 2519442:덕수궁돌담길 1856329:덕수궁돌담길"
           LIST="$LIST 1856334:덕수궁돌담길 2643910:덕수궁"
           LIST="$LIST 4063072:종묘 4063074:종묘 1428656:종묘 1428626:종묘"
@@ -67,6 +87,12 @@ jobs:
           LIST="$LIST 4063082:선유도공원 4063083:선유도공원"
           LIST="$LIST 4063104:양화한강공원 4063105:양화한강공원"
           LIST="$LIST 1432177:여의도공원 1131485:고려대학교"
+
+          # 밖에서 준 목록이 있으면 그것만 쓴다.
+          if [ -n "${IN_LIST:-}" ]; then LIST="$IN_LIST"; fi
+          TOTAL=$(echo $LIST | wc -w)
+          echo "📥 ${TOTAL}장을 ${OUT} 에 담는다 (가로 ${WIDTH}px)"
+          echo ""
 
           # 줄이는 도구가 7판이면 magick, 6판이면 convert 다. 있는 쪽을 쓴다.
           if command -v magick >/dev/null; then IM="magick"; else IM="convert"; fi
@@ -99,7 +125,7 @@ jobs:
 
             # ⏱️ 줄이는 데도 뚜껑을 씌운다. 원본이 아주 크면 ImageMagick 이
             #    한참을 붙들고 있을 수 있는데, 거기엔 시간 제한이 없다.
-            if ! timeout 45 $IM "$RAW" -resize 720x -quality 72 "$DEST"; then
+            if ! timeout 45 $IM "$RAW" -resize "${WIDTH}x" -quality 78 "$DEST"; then
               echo "⬜ ${NO} (${NAME}) — 줄이지 못했다 (${BEFORE} bytes)"
               rm -f "$DEST"
               continue
@@ -119,7 +145,7 @@ jobs:
           printf "\n]\n" >> "$JSON"
 
           echo ""
-          echo "받은 것 ${OKC} / 20장"
+          echo "받은 것 ${OKC} / ${TOTAL}장"
           du -sh "$OUT"
 
           # 🧨 한 장도 못 받았으면 빈 채로 커밋하지 않는다.
@@ -132,10 +158,12 @@ jobs:
 
       - name: 저장소에 커밋
         if: ${{ inputs.apply }}
+        env:
+          IN_OUT: ${{ inputs.out }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "docs/가을길-사진"
+          git add "${IN_OUT:-docs/가을길-사진}"
           git diff --cached --quiet && { echo "바뀐 게 없다"; exit 0; }
-          git commit -m "🍁 릴스용 단풍 사진 20장을 받아 줄여 담았다 [skip render]"
+          git commit -m "🍁 사진을 받아 줄여 담았다 (${IN_OUT:-docs/가을길-사진}) [skip render]"
           git push
