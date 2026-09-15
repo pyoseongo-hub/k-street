@@ -108,7 +108,15 @@ jobs:
             NAME="${ITEM##*:}"
             TAIL="${NO: -2}"
             URL="https://tong.visitkorea.or.kr/cms2/website/${TAIL}/${NO}.jpg"
-            RAW="/tmp/${NO}.raw"
+            # 🧨 **`.raw` 라는 이름으로 저장하면 안 된다** (2026-09-15에 19장을 통째로 날렸다).
+            #    ImageMagick 은 **확장자를 보고 읽는 방법을 고른다.** `.raw` 는 카메라
+            #    RAW(DNG) 파일이라, 멀쩡한 JPEG 를 주고도 이렇게 죽는다:
+            #        convert-im6.q16: Unsupported file format or not RAW file `/tmp/4063814.raw`
+            #    사진은 다 받아졌는데(261KB~408KB) 줄이는 데서 전부 실패했다.
+            #    ⚠️ 앞판에서는 안 보였다 — 그때는 ImageMagick 이 아예 안 깔려 있어서
+            #       「없는 명령」으로 죽었고, 그걸 고치고 나서야 이게 드러났다.
+            #    → 갤러리 주소는 전부 jpg 다. **받는 파일도 .jpg 로 둔다.**
+            RAW="/tmp/${NO}-원본.jpg"
             DEST="$OUT/${NO}.jpg"
 
             # 🕐 **어디까지 갔는지 시각과 함께 남긴다.** 1판은 20분을 돌다 멈췄는데
@@ -125,6 +133,13 @@ jobs:
 
             # ⏱️ 줄이는 데도 뚜껑을 씌운다. 원본이 아주 크면 ImageMagick 이
             #    한참을 붙들고 있을 수 있는데, 거기엔 시간 제한이 없다.
+            # 👀 **줄이기 전에 진짜 그림인지 본다.** 404 페이지(HTML)를 받아 놓고
+            #    「사진」이라고 세는 일이 없게 한다.
+            if ! $IM identify "$RAW" >/dev/null 2>&1; then
+              echo "⬜ ${NO} (${NAME}) — 그림이 아니다 (${BEFORE} bytes · $(file -b "$RAW" | head -c 60))"
+              rm -f "$RAW"
+              continue
+            fi
             if ! timeout 45 $IM "$RAW" -resize "${WIDTH}x" -quality 78 "$DEST"; then
               echo "⬜ ${NO} (${NAME}) — 줄이지 못했다 (${BEFORE} bytes)"
               rm -f "$DEST"
