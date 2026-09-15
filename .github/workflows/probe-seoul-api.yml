@@ -13,6 +13,11 @@ on:
         description: "두드려 볼 이름 (쉼표로 나눈다). 비우면 스크립트에 적어 둔 목록을 쓴다"
         required: false
         default: ""
+      dump:
+        description: "첫 줄을 통째로 찍는다 (칸 이름만으로는 뜻이 안 갈릴 때)"
+        type: boolean
+        required: false
+        default: false
 
 jobs:
   probe:
@@ -26,6 +31,7 @@ jobs:
         env:
           SEOUL_OPEN_API_KEY: ${{ secrets.SEOUL_OPEN_API_KEY }}
           NAMES: ${{ inputs.names }}
+          DUMP: ${{ inputs.dump }}
         run: |
           set -o pipefail
           node scripts/probe-seoul-api.mjs 2>&1 | tee probe-log.txt

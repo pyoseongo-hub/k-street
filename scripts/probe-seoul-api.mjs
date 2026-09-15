@@ -65,6 +65,19 @@ const EXTRA = (process.env.NAMES ?? "")
   .filter(Boolean);
 const NAMES = EXTRA.length ? EXTRA : CANDIDATES;
 
+/**
+ * 🔬 **칸 이름만 봐서는 모자랄 때가 있다** (2026-09-15).
+ *
+ * 엘리베이터(tbTraficElvtr)를 두드렸더니 「있다, 552줄」까지는 나왔는데,
+ * 정작 알고 싶은 것 — **「○○역 3번 출구」의 출구 번호가 들어 있나** — 는
+ * 칸 이름 줄만 봐서는 알 수 없었다. 이름이 애매하면 **값을 봐야 안다.**
+ *
+ * 그래서 DUMP=1 이면 첫 줄을 **통째로** 찍는다. 칸 이름 + 실제 값이라
+ * 「NODE_WKT 가 좌표구나」 같은 것이 한 번에 갈린다.
+ * 🚨 여전히 **보기만 한다** — 아무것도 저장하지 않는다.
+ */
+const DUMP = /^(1|true|yes|on)$/i.test(process.env.DUMP ?? "");
+
 async function probe(name) {
   const url = `http://openapi.seoul.go.kr:8088/${KEY}/json/${name}/1/3/`;
   try {
@@ -82,7 +95,7 @@ async function probe(name) {
     const msg = box?.RESULT?.MESSAGE ?? data?.RESULT?.MESSAGE ?? "";
     const total = box?.list_total_count;
     const cols = box?.row?.[0] ? Object.keys(box.row[0]) : [];
-    return { ok: true, code, msg, total, cols };
+    return { ok: true, code, msg, total, cols, rows: box?.row ?? [] };
   } catch (e) {
     return { ok: false, why: e?.cause?.code || e?.name || e?.message };
   }
@@ -100,7 +113,21 @@ for (const name of NAMES) {
   if (r.code === "INFO-000") {
     found.push({ name, total: r.total, cols: r.cols });
     console.log(`✅ ${name.padEnd(30)} 있다! 모두 ${r.total ?? "?"}줄`);
-    if (r.cols.length) console.log(`   칸: ${r.cols.join(" · ")}`);
+    if (r.cols.length) console.log(`   칸 ${r.cols.length}개: ${r.cols.join(" · ")}`);
+    if (DUMP && r.rows.length) {
+      // 첫 줄을 **통째로** — 칸 이름 옆에 실제 값을 붙여 놓아야 뜻이 갈린다.
+      console.log(`   ── 첫 줄 전체 ──`);
+      for (const [k, v] of Object.entries(r.rows[0])) {
+        console.log(`   ${String(k).padEnd(18)} = ${JSON.stringify(v)}`);
+      }
+      // 값이 한 줄만 보면 헷갈리는 칸(코드·분류)이 있어서 두 줄째까지 곁들인다.
+      if (r.rows[1]) {
+        console.log(`   ── 둘째 줄 (견줘 볼 것) ──`);
+        for (const [k, v] of Object.entries(r.rows[1])) {
+          console.log(`   ${String(k).padEnd(18)} = ${JSON.stringify(v)}`);
+        }
+      }
+    }
   } else {
     console.log(`·  ${name.padEnd(30)} ${r.code} ${r.msg}`);
   }
