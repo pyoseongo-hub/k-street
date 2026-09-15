@@ -1749,6 +1749,19 @@ button {
   color: var(--muted, #6b6559);
 }
 
+/* 🚇 역 시설 보기 — 역 이름 바로 밑에 붙는 한 줄. 단추 둘보다 가볍게 둔다
+      (이건 「가는 것」이 아니라 「알아보는 것」이라 무게가 달라야 한다). */
+.lg-station-info {
+  margin: -6px 0 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.lg-station-info a {
+  color: var(--muted, #6b6559);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .lg-station--none,
 /* 🚇 「아직 못 재 봤다」도 같은 회색으로 둔다 — 둘 다 **역 이름이 아니라 상태**다.
       다만 **말은 다르다.** LuggageCard 의 2026-09-15 주석 참고 —

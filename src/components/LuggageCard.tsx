@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { useOverlay } from "../lib/useOverlay";
 import { useLanguage } from "../lib/useLanguage";
-import { getMapLinks, openMapLink, type MapLinkTarget } from "../lib/mapLinks";
+import { getMapLinks, openMapLink, naverSearchUrl, type MapLinkTarget } from "../lib/mapLinks";
 import { getPositionOrNull } from "../lib/userPosition";
 import {
   LOCKER_PAGE,
@@ -133,6 +133,37 @@ export default function LuggageCard({
               <br />
               <strong lang="ko">{station!.station}</strong>
               <span className="lg-dist"> · {station!.dist}m</span>
+            </p>
+            {/* 🚇 **그 역이 무엇을 갖췄는지는 우리가 안 적는다 — 네이버가 이미 갖고 있다.**
+             *
+             *  사장님이 캡처 여섯 장으로 짚어 주셨다 (2026-09-15). 네이버에서 「건대역」
+             *  한 번 치면 이만큼이 한 화면에 나온다:
+             *    · 편의시설   **물품보관소** · 자전거보관소 · 유실물센터
+             *    · 교통약자   엘리베이터 · 장애인화장실 · 휠체어 리프트 · 수유실
+             *    · 시설정보   플랫폼 양쪽 · 화장실 안쪽 · 내리는 문 오른쪽
+             *    · 출구정보 · 실시간 도착 · 주소 · 유실물센터 전화
+             *  게다가 **없는 것은 회색으로** 보여 준다(한성대입구역은 장애인화장실이 회색).
+             *
+             *  ⚠️ 이건 우리가 못 하는 일이다. 서울 열린데이터광장의 엘리베이터 자료를
+             *     받아 봤더니 552곳뿐이고 271개 역만 덮었다 — 100개 역이 비었는데
+             *     「없다」인지 「자료에 없다」인지 가를 수가 없었다. 그래서 접었다.
+             *     우리가 옮겨 적으면 낡고 틀린다. **링크 한 줄이 정답이다.**
+             *
+             *  🚨 **자료를 긁어 오지 않는다.** 화면만 빌린다 — 네이버가 고치면 같이 고쳐진다.
+             *  🌏 다만 그 화면은 **한국어**다. 말에 그 사실을 담아 뒀다(stationInfoLabel) —
+             *     눌렀더니 못 읽는 글이 뜨는 것보다 미리 아는 편이 낫다. 그림표는 만국 공통이다.
+             *  🧳 **짐 보관 카드에 이 링크가 있는 이유** — 「물품보관소」가 바로 이 칸의 주제다.
+             *     우리는 「대부분의 역에 있습니다」까지만 말할 수 있는데(lockerNote),
+             *     네이버는 **이 역에 있나 없나**를 말해 준다. 그게 손님이 알고 싶은 것이다. */}
+            <p className="lg-station-info">
+              <a
+                href={naverSearchUrl(station!.station!)}
+                target="_blank"
+                rel="nofollow noopener"
+              >
+                {t.stationInfoLabel}
+                <span aria-hidden="true"> ↗</span>
+              </a>
             </p>
             <div className="map-directions-row">
               <button

@@ -62,6 +62,11 @@ import { dirname, join } from "node:path";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROADS = join(__dirname, "..", "src", "data", "autumn-roads.json");
 const COORDS = join(__dirname, "..", "src", "data", "coords.json");
+/**
+ * 🚫 **눈으로 보고 물린 것들.** 지우기만 하면 다음 판이 똑같은 걸 또 찾아 넣는다
+ *    (삼청동길이 그랬다 — 2026-09-15). 그래서 「묻지도 말 것」 목록을 따로 둔다.
+ */
+const REJECTED = join(__dirname, "..", "src", "data", "coords-rejected.json");
 
 const KEY = process.env.KAKAO_REST_API_KEY ?? "";
 const APPLY = process.argv.includes("--apply");
@@ -165,7 +170,13 @@ const 자료 = JSON.parse(readFileSync(ROADS, "utf8"));
 const 길 = 자료.길.filter((r) => r.구.endsWith("구"));
 
 const coords = existsSync(COORDS) ? JSON.parse(readFileSync(COORDS, "utf8")) : {};
-const 모르는곳 = ALL ? 길 : 길.filter((r) => !coords[`autumn_${r.번호}`]);
+// 🚫 물린 것은 `--all` 이라도 다시 묻지 않는다. 물린 이유가 사라지지 않았기 때문이다.
+const 물린것 = existsSync(REJECTED)
+  ? new Set(Object.keys(JSON.parse(readFileSync(REJECTED, "utf8"))).filter((k) => !k.startsWith("_")))
+  : new Set();
+const 후보 = 길.filter((r) => !물린것.has(`autumn_${r.번호}`));
+if (물린것.size) console.log(`🚫 눈으로 보고 물린 ${물린것.size}곳은 묻지 않는다 (coords-rejected.json)\n`);
+const 모르는곳 = ALL ? 후보 : 후보.filter((r) => !coords[`autumn_${r.번호}`]);
 const 남은곳 = LIMIT > 0 ? 모르는곳.slice(0, LIMIT) : 모르는곳;
 
 console.log(

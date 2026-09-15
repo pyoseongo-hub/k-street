@@ -194,6 +194,8 @@ export interface Translations {
   eatNearbyLabel: string;
   /** 🚇 카드 한 줄 — 「가까운 역」. 자세한 것(요금·칸 크기·앱)은 짐 보관 안내 화면에 있다. */
   nearestStationLabel: string;
+  /** 🚇 그 역의 네이버 검색으로 보내는 링크의 말. **한국어 화면**이라 그 사실을 담는다. */
+  stationInfoLabel: string;
   viewByDistance: string;
   viewByTheme: string;
   /** 「광화문역 5호선 기준 · 직선거리」 — 걸어가는 거리가 아니라는 것을 밝힌다 */
@@ -396,6 +398,7 @@ const translations: Record<Language, Translations> = {
     shareAppLabel: '친구에게 이 앱 보내기',
     eatNearbyLabel: '주변 먹거리',
     nearestStationLabel: '가까운 역',
+    stationInfoLabel: '역 시설 보기 (보관함·엘리베이터·출구)',
     viewByDistance: '가까운 순',
     viewByTheme: '갈래별',
     fromStationNote: (station: string) => `${station} 기준 · 직선거리`,
@@ -535,6 +538,7 @@ const translations: Record<Language, Translations> = {
     shareAppLabel: 'Send this app to a friend',
     eatNearbyLabel: 'Food nearby',
     nearestStationLabel: 'Nearest station',
+    stationInfoLabel: 'Station facilities (Korean) — lockers, lifts, exits',
     viewByDistance: 'By distance',
     viewByTheme: 'By theme',
     fromStationNote: (station: string) => `Straight-line distance from ${station}`,
@@ -674,6 +678,7 @@ const translations: Record<Language, Translations> = {
     shareAppLabel: 'このアプリを友だちに送る',
     eatNearbyLabel: '周辺のグルメ',
     nearestStationLabel: '最寄り駅',
+    stationInfoLabel: '駅の設備（韓国語）— コインロッカー・エレベーター・出口',
     viewByDistance: '近い順',
     viewByTheme: 'テーマ別',
     fromStationNote: (station: string) => `${station} からの直線距離`,
@@ -813,6 +818,7 @@ const translations: Record<Language, Translations> = {
     shareAppLabel: '把这个应用发给朋友',
     eatNearbyLabel: '附近美食',
     nearestStationLabel: '最近车站',
+    stationInfoLabel: '车站设施（韩语）— 储物柜、电梯、出口',
     viewByDistance: '按距离',
     viewByTheme: '按主题',
     fromStationNote: (station: string) => `从${station}的直线距离`,
@@ -952,6 +958,7 @@ const translations: Record<Language, Translations> = {
     shareAppLabel: '把這個應用程式傳給朋友',
     eatNearbyLabel: '附近美食',
     nearestStationLabel: '最近車站',
+    stationInfoLabel: '車站設施（韓語）— 置物櫃、電梯、出口',
     viewByDistance: '按距離',
     viewByTheme: '按主題',
     fromStationNote: (station: string) => `從${station}的直線距離`,
@@ -1091,6 +1098,7 @@ const translations: Record<Language, Translations> = {
     shareAppLabel: 'Gửi ứng dụng này cho bạn bè',
     eatNearbyLabel: 'Ăn gần đây',
     nearestStationLabel: 'Ga gần nhất',
+    stationInfoLabel: 'Tiện ích tại ga (tiếng Hàn) — tủ khoá, thang máy, lối ra',
     viewByDistance: 'Theo khoảng cách',
     viewByTheme: 'Theo chủ đề',
     fromStationNote: (station: string) => `Khoảng cách đường thẳng từ ${station}`,
@@ -1230,6 +1238,7 @@ const translations: Record<Language, Translations> = {
     shareAppLabel: 'Enviar esta app a un amigo',
     eatNearbyLabel: 'Comer cerca',
     nearestStationLabel: 'Estación más cercana',
+    stationInfoLabel: 'Instalaciones de la estación (en coreano): taquillas, ascensores, salidas',
     viewByDistance: 'Por distancia',
     viewByTheme: 'Por tema',
     fromStationNote: (station: string) => `Distancia en línea recta desde ${station}`,
@@ -1369,6 +1378,7 @@ const translations: Record<Language, Translations> = {
     shareAppLabel: 'Envoyer cette appli à un ami',
     eatNearbyLabel: 'Où manger',
     nearestStationLabel: 'Station la plus proche',
+    stationInfoLabel: 'Équipements de la station (en coréen) : casiers, ascenseurs, sorties',
     viewByDistance: 'Par distance',
     viewByTheme: 'Par thème',
     fromStationNote: (station: string) => `Distance à vol d\'oiseau depuis ${station}`,
@@ -1508,6 +1518,7 @@ const translations: Record<Language, Translations> = {
     shareAppLabel: 'Diese App an Freunde senden',
     eatNearbyLabel: 'Essen in der Nähe',
     nearestStationLabel: 'Nächste Station',
+    stationInfoLabel: 'Ausstattung der Station (Koreanisch): Schließfächer, Aufzüge, Ausgänge',
     viewByDistance: 'Nach Entfernung',
     viewByTheme: 'Nach Thema',
     fromStationNote: (station: string) => `Luftlinie ab ${station}`,
@@ -1647,6 +1658,7 @@ const translations: Record<Language, Translations> = {
     shareAppLabel: 'Отправить приложение другу',
     eatNearbyLabel: 'Еда рядом',
     nearestStationLabel: 'Ближайшая станция',
+    stationInfoLabel: 'Оснащение станции (на корейском): камеры хранения, лифты, выходы',
     viewByDistance: 'По расстоянию',
     viewByTheme: 'По темам',
     fromStationNote: (station: string) => `По прямой от ${station}`,
@@ -1786,6 +1798,7 @@ const translations: Record<Language, Translations> = {
     shareAppLabel: 'Kirim aplikasi ini ke teman',
     eatNearbyLabel: 'Makan dekat',
     nearestStationLabel: 'Stasiun terdekat',
+    stationInfoLabel: 'Fasilitas stasiun (bahasa Korea): loker, lift, pintu keluar',
     viewByDistance: 'Menurut jarak',
     viewByTheme: 'Menurut tema',
     fromStationNote: (station: string) => `Jarak garis lurus dari ${station}`,
@@ -1925,6 +1938,7 @@ const translations: Record<Language, Translations> = {
     shareAppLabel: 'ส่งแอปนี้ให้เพื่อน',
     eatNearbyLabel: 'ร้านอาหารใกล้ๆ',
     nearestStationLabel: 'สถานีใกล้สุด',
+    stationInfoLabel: 'สิ่งอำนวยความสะดวกในสถานี (ภาษาเกาหลี) — ล็อกเกอร์ ลิฟต์ ทางออก',
     viewByDistance: 'ตามระยะทาง',
     viewByTheme: 'ตามหมวด',
     fromStationNote: (station: string) => `ระยะเส้นตรงจาก ${station}`,
