@@ -16,7 +16,7 @@ on:
         required: true
         default: "단풍"
       area:
-        description: "제목·검색어·촬영지에 이 말이 있는 것만 (예: 서울 · 비우면 안 거름)"
+        description: "이 말이 든 것만 (예: 서울). 🌏 전국을 보려면 **전국** 이라고 적을 것 — 빈칸은 안 된다(기본값으로 되돌아간다)"
         required: false
         default: "서울"
       top:
@@ -60,6 +60,7 @@ jobs:
       - name: 찾는다
         env:
           TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+          AREA_IN: ${{ inputs.area }}
         run: |
           set -o pipefail
           : > gallery-log.txt
@@ -69,15 +70,33 @@ jobs:
             [ -z "$W" ] && continue
             [ "$i" -gt 0 ] && { echo "…20초 쉬었다 간다 (연달아 두드리면 창구가 막는다)" | tee -a gallery-log.txt; sleep 20; }
             { echo ""; echo "════════ 「$W」 ════════"; } | tee -a gallery-log.txt
-            node scripts/search-gallery.mjs \
-              --keyword "$W" \
-              --area "${{ inputs.area }}" \
-              --top "${{ inputs.top }}" \
-              --fetch "${{ inputs.fetch }}" \
-              --pages "${{ inputs.pages }}" \
-              --per-place "${{ inputs.per_place }}" \
-              ${{ inputs.survey && '--survey' || '' }} \
-              ${{ inputs.measure && '--measure' || '' }} 2>&1 | tee -a gallery-log.txt
+            # 🌏 **빈칸으로는 「전국」을 못 시킨다** (2026-09-15에 당했다).
+            #    입력칸을 비워 보냈더니 깃허브가 **기본값 「서울」로 되돌려** 넣었고,
+            #    로그에 `--area "서울"` 이 찍혔다. 전국을 봤다고 착각할 뻔했다.
+            #    → 「전국」·「전체」·「-」 를 적으면 거르지 않는다.
+            case "$AREA_IN" in 전국|전체|-|all|ALL) AREA="";; *) AREA="$AREA_IN";; esac
+            [ -z "$AREA" ] && echo "🌏 전국 (지역으로 거르지 않는다)" | tee -a gallery-log.txt
+
+            # 🔁 **창구가 안 열리면 다시 물어본다.** apis.data.go.kr 은 곧잘 말이 없다
+            #    (UND_ERR_CONNECT_TIMEOUT). 한 번 실패를 "사진이 없다"로 뭉개면 안 된다 —
+            #    이 스크립트가 머리말에 적어 둔 바로 그 잘못이다.
+            for TRY in 1 2 3; do
+              node scripts/search-gallery.mjs \
+                --keyword "$W" \
+                --area "$AREA" \
+                --top "${{ inputs.top }}" \
+                --fetch "${{ inputs.fetch }}" \
+                --pages "${{ inputs.pages }}" \
+                --per-place "${{ inputs.per_place }}" \
+                ${{ inputs.survey && '--survey' || '' }} \
+                ${{ inputs.measure && '--measure' || '' }} 2>&1 | tee -a gallery-log.txt
+              if ! grep -q "한 장도 못 받았다" gallery-log.txt; then break; fi
+              if [ "$TRY" -lt 3 ]; then
+                echo "…창구가 안 열렸다. ${TRY}번째 — 30초 쉬었다 다시 묻는다" | tee -a gallery-log.txt
+                sleep 30
+                : > gallery-log.txt
+              fi
+            done
           done
 
       - name: 결과 요약
