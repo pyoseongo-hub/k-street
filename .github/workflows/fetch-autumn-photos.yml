@@ -95,8 +95,16 @@ jobs:
           echo ""
 
           # 줄이는 도구가 7판이면 magick, 6판이면 convert 다. 있는 쪽을 쓴다.
-          if command -v magick >/dev/null; then IM="magick"; else IM="convert"; fi
-          echo "줄이는 도구: $IM"
+          # 🧨 **재는 명령은 따로다** (2026-09-15에 또 19장을 날렸다).
+          #    7판은 `magick identify x.jpg` 가 되지만, **6판은 `convert identify` 가 안 된다** —
+          #    convert 는 "identify" 를 **입력 파일 이름**으로 알아듣고 실패한다.
+          #    6판에서 재는 명령은 `identify` 라는 별도 명령이다.
+          #    그래서 「멀쩡한 JPEG 인데 그림이 아니다」라는 말이 안 되는 로그가 나왔다.
+          #    ⚠️ 그걸 알아챈 건 `file -b` 를 같이 찍어 뒀기 때문이다 —
+          #       「JPEG image data」라고 적혀 있는데 우리가 아니라고 하고 있었다.
+          #       **판정이 이상하면 판정하는 쪽을 의심한다.**
+          if command -v magick >/dev/null; then IM="magick"; ID="magick identify"; else IM="convert"; ID="identify"; fi
+          echo "줄이는 도구: $IM · 재는 도구: $ID"
           echo ""
 
           JSON="$OUT/photos.json"
@@ -135,7 +143,7 @@ jobs:
             #    한참을 붙들고 있을 수 있는데, 거기엔 시간 제한이 없다.
             # 👀 **줄이기 전에 진짜 그림인지 본다.** 404 페이지(HTML)를 받아 놓고
             #    「사진」이라고 세는 일이 없게 한다.
-            if ! $IM identify "$RAW" >/dev/null 2>&1; then
+            if ! $ID "$RAW" >/dev/null 2>&1; then
               echo "⬜ ${NO} (${NAME}) — 그림이 아니다 (${BEFORE} bytes · $(file -b "$RAW" | head -c 60))"
               rm -f "$RAW"
               continue
@@ -146,7 +154,7 @@ jobs:
               continue
             fi
             AFTER=$(stat -c%s "$DEST")
-            DIM=$($IM identify -format "%wx%h" "$DEST" 2>/dev/null || echo "?")
+            DIM=$($ID -format "%wx%h" "$DEST" 2>/dev/null || echo "?")
             printf "✅ %s (%s)  %sKB → %sKB  %s\n" "$NO" "$NAME" \
               "$((BEFORE/1024))" "$((AFTER/1024))" "$DIM"
 
