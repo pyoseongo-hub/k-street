@@ -1,6 +1,6 @@
 {
-  "받은날": "2026-09-12",
-  "출처": "서울 열린데이터광장 지하철역 좌표로 직접 계산 (옛 기록은 카카오 지역검색)",
+  "받은날": "2026-09-15",
+  "출처": "카카오 지역검색 (SW8 지하철역)",
   "곳": {
     "ks_4": {
       "station": "가양역 9호선",
@@ -1898,227 +1898,373 @@
     },
     "tour_2946075": {
       "station": "안국역 3호선",
-      "dist": 313,
-      "lat": 37.576477,
-      "lng": 126.985443,
-      "local": true
+      "dist": 310,
+      "lat": 37.57650192060523,
+      "lng": 126.98542143228659,
+      "url": "http://place.map.kakao.com/21160552"
     },
     "tour_2992822": {
       "station": "경복궁역 3호선",
-      "dist": 234,
-      "lat": 37.575762,
-      "lng": 126.97353,
-      "local": true
+      "dist": 245,
+      "lat": 37.5758061234865,
+      "lng": 126.973691352767,
+      "url": "http://place.map.kakao.com/21160823"
     },
     "tour_2470006": {
       "station": "동대문역사문화공원역 2호선",
-      "dist": 71,
-      "lat": 37.565613,
-      "lng": 127.009054,
-      "local": true
+      "dist": 70,
+      "lat": 37.56566440553802,
+      "lng": 127.00900417014896,
+      "url": "http://place.map.kakao.com/21160617"
     },
     "tour_2553876": {
       "station": "종로3가역 1호선",
-      "dist": 323,
-      "lat": 37.570406,
-      "lng": 126.991847,
-      "local": true
+      "dist": 299,
+      "lat": 37.570420844523,
+      "lng": 126.992153252476,
+      "url": "http://place.map.kakao.com/21160784"
     },
     "tour_132201": {
-      "station": "고속터미널역 3호선",
-      "dist": 158,
-      "lat": 37.504891,
-      "lng": 127.004916,
-      "local": true
+      "station": "고속터미널역 9호선",
+      "dist": 123,
+      "lat": 37.5059814899483,
+      "lng": 127.004211793489,
+      "url": "http://place.map.kakao.com/21160718"
     },
     "tour_273772": {
-      "station": "압구정로데오역 분당선",
-      "dist": 134,
-      "lat": 37.527381,
-      "lng": 127.040534,
-      "local": true
+      "station": "압구정로데오역 수인분당선",
+      "dist": 121,
+      "lat": 37.5275184818021,
+      "lng": 127.0406027693898,
+      "url": "http://place.map.kakao.com/18234115"
     },
     "tour_132226": {
-      "station": "종로3가역 1호선",
-      "dist": 431,
-      "lat": 37.570406,
-      "lng": 126.991847,
-      "local": true
+      "station": "종로3가역 5호선",
+      "dist": 212,
+      "lat": 37.57258941181964,
+      "lng": 126.9904176797898,
+      "url": "http://place.map.kakao.com/21160680"
     },
     "tour_985961": {
       "station": "회현역 4호선",
-      "dist": 264,
-      "lat": 37.558514,
-      "lng": 126.978246,
-      "local": true
+      "dist": 253,
+      "lat": 37.55876114587941,
+      "lng": 126.9784372569283,
+      "url": "http://place.map.kakao.com/21160642"
     },
     "tour_986011": {
       "station": "회현역 4호선",
-      "dist": 206,
-      "lat": 37.558514,
-      "lng": 126.978246,
-      "local": true
+      "dist": 199,
+      "lat": 37.55876114587941,
+      "lng": 126.9784372569283,
+      "url": "http://place.map.kakao.com/21160642"
     },
     "tour_132211": {
       "station": "회현역 4호선",
-      "dist": 94,
-      "lat": 37.558514,
-      "lng": 126.978246,
-      "local": true
+      "dist": 86,
+      "lat": 37.55876114587941,
+      "lng": 126.9784372569283,
+      "url": "http://place.map.kakao.com/21160642"
     },
     "tour_1013076": {
       "station": "회현역 4호선",
-      "dist": 94,
-      "lat": 37.558514,
-      "lng": 126.978246,
-      "local": true
+      "dist": 85,
+      "lat": 37.55876114587941,
+      "lng": 126.9784372569283,
+      "url": "http://place.map.kakao.com/21160642"
     },
     "tour_986038": {
       "station": "회현역 4호선",
-      "dist": 94,
-      "lat": 37.558514,
-      "lng": 126.978246,
-      "local": true
+      "dist": 86,
+      "lat": 37.55876114587941,
+      "lng": 126.9784372569283,
+      "url": "http://place.map.kakao.com/21160642"
     },
     "tour_2761466": {
-      "station": "동대문역 1호선",
-      "dist": 274,
-      "lat": 37.571687,
-      "lng": 127.01093,
-      "local": true
+      "station": "동대문역 4호선",
+      "dist": 230,
+      "lat": 37.5709072753658,
+      "lng": 127.009313828405,
+      "url": "http://place.map.kakao.com/21160553"
     },
     "tour_282011": {
       "station": "답십리역 5호선",
-      "dist": 173,
-      "lat": 37.566747,
-      "lng": 127.052704,
-      "local": true
+      "dist": 145,
+      "lat": 37.56697480965114,
+      "lng": 127.05256127651293,
+      "url": "http://place.map.kakao.com/21160753"
     },
     "tour_985952": {
       "station": "회현역 4호선",
-      "dist": 143,
-      "lat": 37.558514,
-      "lng": 126.978246,
-      "local": true
+      "dist": 125,
+      "lat": 37.55876114587941,
+      "lng": 126.9784372569283,
+      "url": "http://place.map.kakao.com/21160642"
     },
     "tour_2762868": {
       "station": "동대문역사문화공원역 2호선",
-      "dist": 349,
-      "lat": 37.565613,
-      "lng": 127.009054,
-      "local": true
+      "dist": 341,
+      "lat": 37.56566440553802,
+      "lng": 127.00900417014896,
+      "url": "http://place.map.kakao.com/21160617"
     },
     "tour_2979848": {
-      "station": "건대입구역 2호선",
-      "dist": 232,
-      "lat": 37.540373,
-      "lng": 127.069191,
-      "local": true
+      "station": "건대입구역 7호선",
+      "dist": 201,
+      "lat": 37.5408686005702,
+      "lng": 127.071104284458,
+      "url": "http://place.map.kakao.com/21160772"
     },
     "tour_273806": {
       "station": "을지로입구역 2호선",
-      "dist": 157,
-      "lat": 37.566014,
-      "lng": 126.982618,
-      "local": true
+      "dist": 144,
+      "lat": 37.566035517712955,
+      "lng": 126.9821953112953,
+      "url": "http://place.map.kakao.com/21160622"
     },
     "tour_132248": {
-      "station": "잠실역 2호선",
-      "dist": 360,
-      "lat": 37.513262,
-      "lng": 127.100159,
-      "local": true
+      "station": "잠실역 8호선",
+      "dist": 73,
+      "lat": 37.5143121584933,
+      "lng": 127.103270523629,
+      "url": "http://place.map.kakao.com/21160730"
     },
     "tour_132593": {
       "station": "가산디지털단지역 7호선",
-      "dist": 467,
-      "lat": 37.481581,
-      "lng": 126.882581,
-      "local": true
+      "dist": 385,
+      "lat": 37.4803959660982,
+      "lng": 126.882661758356,
+      "url": "http://place.map.kakao.com/21160721"
     },
     "tour_1019638": {
       "station": "회현역 4호선",
-      "dist": 195,
-      "lat": 37.558514,
-      "lng": 126.978246,
-      "local": true
+      "dist": 163,
+      "lat": 37.55876114587941,
+      "lng": 126.9784372569283,
+      "url": "http://place.map.kakao.com/21160642"
     },
     "tour_132230": {
-      "station": "고속터미널역 3호선",
-      "dist": 158,
-      "lat": 37.504891,
-      "lng": 127.004916,
-      "local": true
+      "station": "고속터미널역 9호선",
+      "dist": 123,
+      "lat": 37.5059814899483,
+      "lng": 127.004211793489,
+      "url": "http://place.map.kakao.com/21160718"
     },
     "tour_132184": {
-      "station": "고속터미널역 3호선",
-      "dist": 158,
-      "lat": 37.504891,
-      "lng": 127.004916,
-      "local": true
+      "station": "고속터미널역 9호선",
+      "dist": 123,
+      "lat": 37.5059814899483,
+      "lng": 127.004211793489,
+      "url": "http://place.map.kakao.com/21160718"
     },
     "tour_132231": {
       "station": "종로3가역 1호선",
-      "dist": 323,
-      "lat": 37.570406,
-      "lng": 126.991847,
-      "local": true
+      "dist": 299,
+      "lat": 37.570420844523,
+      "lng": 126.992153252476,
+      "url": "http://place.map.kakao.com/21160784"
     },
     "tour_1013079": {
       "station": "회현역 4호선",
-      "dist": 96,
-      "lat": 37.558514,
-      "lng": 126.978246,
-      "local": true
+      "dist": 86,
+      "lat": 37.55876114587941,
+      "lng": 126.9784372569283,
+      "url": "http://place.map.kakao.com/21160642"
     },
     "tour_132642": {
       "station": "회현역 4호선",
-      "dist": 369,
-      "lat": 37.558514,
-      "lng": 126.978246,
-      "local": true
+      "dist": 336,
+      "lat": 37.55876114587941,
+      "lng": 126.9784372569283,
+      "url": "http://place.map.kakao.com/21160642"
     },
     "tour_2762844": {
-      "station": "동대문역 1호선",
-      "dist": 244,
-      "lat": 37.571687,
-      "lng": 127.01093,
-      "local": true
+      "station": "동대문역 4호선",
+      "dist": 220,
+      "lat": 37.5709072753658,
+      "lng": 127.009313828405,
+      "url": "http://place.map.kakao.com/21160553"
     },
     "tour_1013388": {
       "station": "회현역 4호선",
-      "dist": 133,
-      "lat": 37.558514,
-      "lng": 126.978246,
-      "local": true
+      "dist": 156,
+      "lat": 37.55876114587941,
+      "lng": 126.9784372569283,
+      "url": "http://place.map.kakao.com/21160642"
     },
     "tour_132244": {
       "station": "을지로4가역 2호선",
-      "dist": 218,
-      "lat": 37.566595,
-      "lng": 126.997817,
-      "local": true
+      "dist": 201,
+      "lat": 37.5666405038268,
+      "lng": 126.997632059113,
+      "url": "http://place.map.kakao.com/21160578"
     },
     "tour_132207": {
       "station": "종로5가역 1호선",
-      "dist": 134,
-      "lat": 37.570926,
-      "lng": 127.001849,
-      "local": true
+      "dist": 158,
+      "lat": 37.57097610838373,
+      "lng": 127.00153834521934,
+      "url": "http://place.map.kakao.com/21160791"
     },
     "tour_1013394": {
       "station": "회현역 4호선",
-      "dist": 87,
-      "lat": 37.558514,
-      "lng": 126.978246,
-      "local": true
+      "dist": 96,
+      "lat": 37.55876114587941,
+      "lng": 126.9784372569283,
+      "url": "http://place.map.kakao.com/21160642"
     },
     "tour_2761460": {
-      "station": "동대문역 1호선",
-      "dist": 429,
-      "lat": 37.571687,
-      "lng": 127.01093,
-      "local": true
+      "station": "동묘앞역 6호선",
+      "dist": 301,
+      "lat": 37.5721715926337,
+      "lng": 127.015725557994,
+      "url": "http://place.map.kakao.com/21160848"
+    },
+    "autumn_1": {
+      "none": true
+    },
+    "autumn_2": {
+      "station": "시청역 2호선",
+      "dist": 298,
+      "lat": 37.56368183746611,
+      "lng": 126.97559827045151,
+      "url": "http://place.map.kakao.com/21160536"
+    },
+    "autumn_3": {
+      "station": "동대입구역 3호선",
+      "dist": 74,
+      "lat": 37.55905581925076,
+      "lng": 127.00531600900922,
+      "url": "http://place.map.kakao.com/21160629"
+    },
+    "autumn_4": {
+      "station": "녹사평역 6호선",
+      "dist": 1288,
+      "lat": 37.5347227952064,
+      "lng": 126.9865496751,
+      "url": "http://place.map.kakao.com/21160673"
+    },
+    "autumn_5": {
+      "station": "이태원역 6호선",
+      "dist": 290,
+      "lat": 37.5345252050511,
+      "lng": 126.994333861918,
+      "url": "http://place.map.kakao.com/21160762"
+    },
+    "autumn_6": {
+      "station": "뚝섬역 2호선",
+      "dist": 528,
+      "lat": 37.547241554679,
+      "lng": 127.04738727881,
+      "url": "http://place.map.kakao.com/21160627"
+    },
+    "autumn_7": {
+      "station": "어린이대공원역 7호선",
+      "dist": 297,
+      "lat": 37.54796087622509,
+      "lng": 127.07465525507352,
+      "url": "http://place.map.kakao.com/21160702"
+    },
+    "autumn_8": {
+      "station": "광나루역 5호선",
+      "dist": 596,
+      "lat": 37.5452991715677,
+      "lng": 127.103521464507,
+      "url": "http://place.map.kakao.com/21160687"
+    },
+    "autumn_9": {
+      "station": "회기역 경의중앙선",
+      "dist": 918,
+      "lat": 37.5895296349726,
+      "lng": 127.05782624137,
+      "url": "http://place.map.kakao.com/21160926"
+    },
+    "autumn_11": {
+      "station": "망우역 경춘선",
+      "dist": 823,
+      "lat": 37.600017312378,
+      "lng": 127.091738656282,
+      "url": "http://place.map.kakao.com/12706589"
+    },
+    "autumn_16": {
+      "station": "화계역 우이신설선",
+      "dist": 359,
+      "lat": 37.6340873974011,
+      "lng": 127.017510491529,
+      "url": "http://place.map.kakao.com/209235362"
+    },
+    "autumn_17": {
+      "station": "4.19민주묘지역 우이신설선",
+      "dist": 713,
+      "lat": 37.6495307746374,
+      "lng": 127.01369763482,
+      "url": "http://place.map.kakao.com/1644708031"
+    },
+    "autumn_18": {
+      "station": "쌍문역 4호선",
+      "dist": 1058,
+      "lat": 37.6485426057036,
+      "lng": 127.03465609756,
+      "url": "http://place.map.kakao.com/21160598"
+    },
+    "autumn_21": {
+      "station": "쌍문역 4호선",
+      "dist": 461,
+      "lat": 37.6485426057036,
+      "lng": 127.03465609756,
+      "url": "http://place.map.kakao.com/21160598"
+    },
+    "autumn_22": {
+      "station": "방학역 1호선",
+      "dist": 276,
+      "lat": 37.6674383662755,
+      "lng": 127.044321721307,
+      "url": "http://place.map.kakao.com/21160795"
+    },
+    "autumn_24": {
+      "station": "노원역 7호선",
+      "dist": 185,
+      "lat": 37.6545110763411,
+      "lng": 127.06055556456411,
+      "url": "http://place.map.kakao.com/21160704"
+    },
+    "autumn_26": {
+      "station": "불광역 3호선",
+      "dist": 188,
+      "lat": 37.6100477979795,
+      "lng": 126.930315826401,
+      "url": "http://place.map.kakao.com/21160630"
+    },
+    "autumn_29": {
+      "station": "가좌역 경의중앙선",
+      "dist": 1184,
+      "lat": 37.5687433529646,
+      "lng": 126.914815128053,
+      "url": "http://place.map.kakao.com/26352438"
+    },
+    "autumn_31": {
+      "station": "월드컵경기장역 6호선",
+      "dist": 393,
+      "lat": 37.5696355653344,
+      "lng": 126.899098148061,
+      "url": "http://place.map.kakao.com/21160672"
+    },
+    "autumn_38": {
+      "station": "가양역 9호선",
+      "dist": 696,
+      "lat": 37.56143311719883,
+      "lng": 126.85442142615852,
+      "url": "http://place.map.kakao.com/8115681"
+    },
+    "autumn_41": {
+      "station": "독산역 1호선",
+      "dist": 554,
+      "lat": 37.46597376787178,
+      "lng": 126.88947790336374,
+      "url": "http://place.map.kakao.com/21160605"
+    },
+    "autumn_45": {
+      "none": true
     }
   }
 }
