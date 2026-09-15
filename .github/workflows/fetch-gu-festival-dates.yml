@@ -209,7 +209,9 @@ jobs:
             echo "<details open><summary>🗺️ <b>구별로 본 것</b> — 🈳 는 우리 앱에 축제가 하나도 없는 구</summary>"
             echo ""
             echo '```'
-            sed -n '/^🗺️ 구별 축제/,/^   빈 구는/p' gu-log.txt | head -40
+            # ⚠️ 끝 표시는 **늘 찍히는 줄**이어야 한다. 조건부 줄을 끝으로 삼았다가
+            #    빈 구가 0개인 날 sed 가 끝을 못 만나 목록이 통째로 두 번 올라갔다.
+            sed -n '/^🗺️ 구별 축제/,/^🗺️ (구별 표 끝)/p' gu-log.txt | head -40
             echo '```'
             echo ""
             echo "</details>"
