@@ -492,6 +492,18 @@ export const FESTIVALS_ADDED: Place[] = [
   { id: id(), gu: "종로구", category: "festival", name: "인사동 엔틱&아트페어", startMonth: 10, endMonth: 10, addr: "인사아트프라자, 안녕인사동 및 인사동 문화지구 전 지역", officialUrl: "http://www.hiinsa.com", monthSource: "서울시 문화포털·종로구청 등록 (2026 10.1–4)", confirmed: true },
   // 🍖 난지캠핑장. ⚠️ 요금은 적지 않는다 — 구청 자료에 「홈페이지 참고」로만 돼 있다.
   { id: id(), gu: "마포구", category: "festival", name: "서울 바비큐 페스티벌", startMonth: 10, endMonth: 10, addr: "난지캠핑장", officialUrl: "https://www.seoulbbqfesta.com", monthSource: "서울시 문화포털·서울시청 등록 (2026 10.24–25)", confirmed: true },
+  // 🌉 **다리에서 차를 빼고 사람에게 준다.** 9·10월 내내 **매주 일요일**이라
+  //    "언제 가지"를 고민할 필요가 없는, 손님에게 가장 말하기 쉬운 축제다.
+  //    누적 647만 명. 주최 서울시 미래한강본부.
+  //
+  //    ⏰ **「매주 일요일」은 반드시 적는다.** 토요일에 가면 아무것도 없다 —
+  //       날짜를 안 적는 것과 요일을 안 적는 것은 다르다. 요일이 빠지면 헛걸음이다.
+  //
+  //    🚫 시작 시각(14:00)은 적지 않는다. 회차마다 바뀌어 왔고(올가을에 두 시간
+  //       늦췄다), 공식 누리집이 늘 최신이다. ⚠️ 인스타에 도는 「12:00~24:00」은
+  //       **차량 통제** 시간이지 행사 시간이 아니다 — 그걸 보고 낮 12시에 가면
+  //       두 시간을 기다린다. 우리는 아예 안 적어서 안 틀린다.
+  { id: id(), gu: "서초구", category: "festival", name: "차 없는 잠수교 뚜벅뚜벅 축제", startMonth: 9, endMonth: 10, dateLabel: "9~10월 매주 일요일", addr: "잠수교 및 반포한강공원 일원", officialUrl: "https://www.festa-ddooddoo.com/", note: "매주 일요일 잠수교에서 차를 뺀다. 푸드트럭·공연·미디어아트, 해 지면 달빛무지개분수. 입장 무료(음식은 유료)", monthSource: "서울시 미래한강본부·서울 축제 일정 등록 (2026 9.6–10.25, 매주 일요일) + 서울신문 보도", confirmed: true },
 ];
 
 /**
