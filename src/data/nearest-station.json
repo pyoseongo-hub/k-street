@@ -2367,6 +2367,48 @@
       "lat": 37.55224917071854,
       "lng": 127.08956495447913,
       "url": "http://place.map.kakao.com/21160654"
+    },
+    "autumn_74": {
+      "station": "동작역 9호선",
+      "dist": 935,
+      "lat": 37.50294134516106,
+      "lng": 126.97810272869033,
+      "url": "http://place.map.kakao.com/21161049"
+    },
+    "autumn_77": {
+      "station": "용답역 2호선",
+      "dist": 216,
+      "lat": 37.562122776762756,
+      "lng": 127.05088954367504,
+      "url": "http://place.map.kakao.com/21160624"
+    },
+    "autumn_79": {
+      "station": "봉화산역 6호선",
+      "dist": 704,
+      "lat": 37.617350836302734,
+      "lng": 127.09136011564394,
+      "url": "http://place.map.kakao.com/21160696"
+    },
+    "autumn_84": {
+      "station": "국회의사당역 9호선",
+      "dist": 369,
+      "lat": 37.5281465047706,
+      "lng": 126.91783895106,
+      "url": "http://place.map.kakao.com/8690986"
+    },
+    "autumn_85": {
+      "station": "여의도역 5호선",
+      "dist": 247,
+      "lat": 37.5217753947299,
+      "lng": 126.924397990207,
+      "url": "http://place.map.kakao.com/21160843"
+    },
+    "autumn_88": {
+      "station": "응봉역 경의중앙선",
+      "dist": 693,
+      "lat": 37.5499526279456,
+      "lng": 127.034483653629,
+      "url": "http://place.map.kakao.com/17493449"
     }
   }
 }
