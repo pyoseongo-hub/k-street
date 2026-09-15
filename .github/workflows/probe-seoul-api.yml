@@ -18,6 +18,10 @@ on:
         type: boolean
         required: false
         default: false
+      rows:
+        description: "몇 줄을 받아 볼까 (기본 3). 4 이상이면 칸마다 값이 몇 가지인지 세어 준다"
+        required: false
+        default: "3"
 
 jobs:
   probe:
@@ -32,6 +36,7 @@ jobs:
           SEOUL_OPEN_API_KEY: ${{ secrets.SEOUL_OPEN_API_KEY }}
           NAMES: ${{ inputs.names }}
           DUMP: ${{ inputs.dump }}
+          ROWS: ${{ inputs.rows }}
         run: |
           set -o pipefail
           node scripts/probe-seoul-api.mjs 2>&1 | tee probe-log.txt

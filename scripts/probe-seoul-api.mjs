@@ -78,8 +78,20 @@ const NAMES = EXTRA.length ? EXTRA : CANDIDATES;
  */
 const DUMP = /^(1|true|yes|on)$/i.test(process.env.DUMP ?? "");
 
+/**
+ * 📏 **몇 줄을 받아 볼까** (기본 3줄, 최대 1000 — 열린데이터광장이 한 번에 주는 한도).
+ *
+ * 첫 줄만 봐서는 못 푸는 물음이 하나 더 있었다 (2026-09-15):
+ *   엘리베이터 552줄이 **역 580개를 다 덮나, 반만 덮나.**
+ *   반만 덮는데 「엘리베이터 2곳」이라고 써 붙이면, 실제로 5곳인 역에서
+ *   휠체어 손님이 **없는 길을 찾아 헤맨다.** 빈 칸이 틀린 정보보다 낫다.
+ * 그래서 ROWS 를 크게 주면 **칸마다 서로 다른 값이 몇 개인지**를 세어 준다.
+ * 줄을 다 찍으면 로그가 넘치니, 이때는 요약만 낸다.
+ */
+const ROWS = Math.min(Math.max(Number(process.env.ROWS ?? 3) || 3, 1), 1000);
+
 async function probe(name) {
-  const url = `http://openapi.seoul.go.kr:8088/${KEY}/json/${name}/1/3/`;
+  const url = `http://openapi.seoul.go.kr:8088/${KEY}/json/${name}/1/${ROWS}/`;
   try {
     const r = await fetch(url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(20000) });
     const text = await r.text();
@@ -126,6 +138,17 @@ for (const name of NAMES) {
         for (const [k, v] of Object.entries(r.rows[1])) {
           console.log(`   ${String(k).padEnd(18)} = ${JSON.stringify(v)}`);
         }
+      }
+    }
+    // 📏 많이 받아 왔으면 **칸마다 다른 값이 몇 개인지**를 센다.
+    //    「역이 몇 개나 덮이나」·「이 코드 칸은 값이 몇 가지냐」가 여기서 갈린다.
+    if (r.rows.length > 3) {
+      console.log(`   ── 받은 ${r.rows.length}줄 요약 (칸마다 서로 다른 값) ──`);
+      for (const col of r.cols) {
+        const vals = new Set(r.rows.map((row) => String(row[col] ?? "")));
+        const head = [...vals].slice(0, 6).map((v) => (v.length > 24 ? v.slice(0, 24) + "…" : v));
+        const tail = vals.size > 6 ? ` … 외 ${vals.size - 6}가지` : "";
+        console.log(`   ${col.padEnd(18)} ${String(vals.size).padStart(5)}가지 : ${head.join(" · ")}${tail}`);
       }
     }
   } else {
