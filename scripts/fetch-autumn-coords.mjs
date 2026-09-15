@@ -124,19 +124,38 @@ async function kakao(path, params) {
   }
 }
 
-/** 이 결과를 그 길의 자료로 저장해도 되나 — ①주소 ②이름, 둘 다 봐야 한다. */
-function accepts(doc, 구, 이름) {
-  const addr = `${doc.address_name ?? ""} ${doc.road_address_name ?? ""}`;
-  const a = norm(addr);
+/**
+ * 이 결과가 **그 길 자체**인가, 그냥 **그 길 위에 있는 남의 가게**인가.
+ *
+ * 🚨 2026-09-15 맛보기에서 이걸 안 갈라서 이렇게 나왔다:
+ *      이태원로 → **다이소 이태원점**
+ *      소월로   → **그랜드 하얏트 서울**
+ *      능동로   → **롯데백화점 건대스타시티점**
+ *    셋 다 그 길 위에 있긴 하다. 그래서 「도로명이 맞다」는 검사를 통과했다.
+ *    하지만 **다이소는 단풍길이 아니다.** 검색 결과를 그대로 그 곳의 자료로
+ *    저장하면 남의 것이 들어온다 — Kfood 에서 사진·영상으로 겪은 그 사고다.
+ *
+ * 그래서 **첫 번째로 맞는 것을 집지 않고, 점수를 매겨 가장 좋은 것을 집는다.**
+ *   3 길이다   장소 이름 자체가 그 길이다 (삼청동길 → "삼청동길")
+ *   2 도로다   주소 검색이 돌려준 **도로 그 자체** (도로명이 이름과 똑같다)
+ *   1 약하다   그 길 위의 **남의 가게**. 길 위인 건 맞지만 그 길은 아니다
+ * 1점은 **더 나은 것이 없을 때만** 쓰고, 자료에 `weak: true` 를 남긴다 —
+ * 나중에 누가 보고 고칠 수 있게. 몰래 섞여 들어가는 것이 제일 나쁘다.
+ */
+function score(doc, 구, 이름) {
+  const a = norm(`${doc.address_name ?? ""} ${doc.road_address_name ?? ""}`);
   // ① 서울 + 그 구. 카카오는 "서울 종로구 …" 또는 "서울특별시 종로구 …" 로 준다.
   if (!a.startsWith("서울")) return null;
   if (!a.includes(norm(구))) return null;
-  // ② 이름. 장소 이름이든 도로명이든 **찾는 길 이름을 담고** 있어야 한다.
+  // ② 이름
   const 이름N = norm(이름);
   const place = norm(doc.place_name);
-  const roadN = norm(doc.road_address?.road_name ?? doc.road_address_name ?? "");
-  if (place.includes(이름N)) return "이름";
-  if (roadN.includes(이름N)) return "도로명";
+  const roadN = norm(doc.road_address?.road_name ?? "");
+  if (place && place.includes(이름N)) return { 점수: 3, 왜: "길이름" };
+  // 주소 검색 결과에는 place_name 이 없다. 도로명이 **똑같아야** 그 길이다 —
+  // "담고 있다"로 두면 「동로」가 「동로1길」에 걸린다.
+  if (roadN && roadN === 이름N) return { 점수: 2, 왜: "도로자체" };
+  if (roadN && roadN.includes(이름N)) return { 점수: 1, 왜: "길위의가게" };
   return null;
 }
 
@@ -156,6 +175,8 @@ console.log(
 
 let 찾음 = 0;
 const 못찾음 = [];
+/** 길 위의 남의 가게에 붙은 것들 — 쓰긴 하지만 **눈에 보이게** 세어 둔다. */
+const 약함 = [];
 const 새로 = {};
 
 for (const r of 남은곳) {
@@ -170,6 +191,9 @@ for (const r of 남은곳) {
     ["search/address.json", { query: `서울 ${r.구} ${r.이름}`, size: 5 }, "주소"],
   ];
 
+  // 🚨 **첫 번째로 맞는 것에서 멈추지 않는다.** 세 가지를 다 물어보고 **가장 좋은
+  //    것**을 고른다. 멈춰 버리면 「구+이름」이 먼저 물어본 다이소에 걸려서,
+  //    바로 다음에 나올 도로 그 자체를 영영 못 본다 (2026-09-15 맛보기에서 실제로 그랬다).
   let 붙음 = null;
   for (const [path, params, 어떻게] of 시도) {
     const res = await kakao(path, params);
@@ -184,27 +208,40 @@ for (const r of 남은곳) {
       continue;
     }
     for (const doc of res.docs) {
-      const 왜 = accepts(doc, r.구, r.이름);
-      if (!왜) continue;
+      const s = score(doc, r.구, r.이름);
+      if (!s) continue;
+      if (붙음 && 붙음.점수 >= s.점수) continue;
       붙음 = {
+        점수: s.점수,
         lat: Number(doc.y),
         lng: Number(doc.x),
         source: "kakao",
         matchedName: doc.place_name || doc.address_name,
         // 🚨 `for` 를 반드시 적는다 — 번호가 밀려도 남의 좌표를 안 쓰게 하는 장치다.
         for: r.이름,
-        via: `${어떻게}/${왜}`,
+        via: `${어떻게}/${s.왜}`,
+        // 🚕 주소도 같이 적어 둔다. 지금은 안 쓰지만 **「목적지 보여주기」 카드**가
+        //    주소가 없으면 상호와 구까지만 적는다(DriverCard 주석). 나중에 그
+        //    카드를 채울 때 **이것 때문에 다시 부르지 않아도** 되게 지금 받아 둔다.
+        //    ⚠️ 받아 둘 뿐 화면에 쓰지 않는다 — 쓰려면 그때 눈으로 한 번 훑을 것.
+        matchedAddr: doc.road_address_name || doc.address_name || undefined,
       };
-      break;
     }
-    if (붙음) break;
+    // 3점(길 그 자체)을 찾았으면 더 물어볼 이유가 없다 — 호출을 아낀다.
+    if (붙음?.점수 === 3) break;
+  }
+  // 1점짜리(길 위의 남의 가게)는 **표를 남긴다.** 몰래 섞이는 게 제일 나쁘다.
+  if (붙음) {
+    if (붙음.점수 === 1) 붙음.weak = true;
+    delete 붙음.점수;
   }
 
   if (붙음) {
     찾음++;
     새로[id] = 붙음;
+    if (붙음.weak) 약함.push(`${r.구}/${r.이름} → ${붙음.matchedName}`);
     console.log(
-      `✅ ${r.구.padEnd(5)} ${r.이름.padEnd(14)} → ${붙음.matchedName}  ` +
+      `${붙음.weak ? "🟡" : "✅"} ${r.구.padEnd(5)} ${r.이름.padEnd(14)} → ${붙음.matchedName}  ` +
         `(${붙음.lat.toFixed(5)}, ${붙음.lng.toFixed(5)})  [${붙음.via}]`,
     );
   } else {
@@ -213,8 +250,16 @@ for (const r of 남은곳) {
   }
 }
 
-console.log(`\n찾음 ${찾음}곳 · 못 찾음 ${못찾음.length}곳 · 아직 안 물어본 곳 ${모르는곳.length - 남은곳.length}곳`);
+console.log(
+  `\n찾음 ${찾음}곳 (그중 🟡 길 위의 가게에 붙은 것 ${약함.length}곳) · ` +
+    `못 찾음 ${못찾음.length}곳 · 아직 안 물어본 곳 ${모르는곳.length - 남은곳.length}곳`,
+);
 if (못찾음.length) console.log(`   비워 둔 곳: ${못찾음.join(" · ")}`);
+if (약함.length) {
+  console.log(`\n🟡 **길 자체를 못 찾아 그 길 위의 곳에 붙인 것** — 자료에 weak: true 로 적어 둔다.`);
+  console.log(`   길 위인 건 맞지만 그 길은 아니다. 나중에 눈으로 보고 고칠 수 있게 남긴다.`);
+  for (const w of 약함) console.log(`   · ${w}`);
+}
 
 if (!APPLY) {
   console.log("\n🔎 맛보기다 — 아무것도 저장하지 않았다. 눈으로 보고 나서 --apply 를 붙일 것.");
