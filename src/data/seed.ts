@@ -504,6 +504,37 @@ export const FESTIVALS_ADDED: Place[] = [
   //       **차량 통제** 시간이지 행사 시간이 아니다 — 그걸 보고 낮 12시에 가면
   //       두 시간을 기다린다. 우리는 아예 안 적어서 안 틀린다.
   { id: id(), gu: "서초구", category: "festival", name: "차 없는 잠수교 뚜벅뚜벅 축제", startMonth: 9, endMonth: 10, dateLabel: "9~10월 매주 일요일", addr: "잠수교 및 반포한강공원 일원", officialUrl: "https://www.festa-ddooddoo.com/", note: "매주 일요일 잠수교에서 차를 뺀다. 푸드트럭·공연·미디어아트, 해 지면 달빛무지개분수. 입장 무료(음식은 유료)", monthSource: "서울시 미래한강본부·서울 축제 일정 등록 (2026 9.6–10.25, 매주 일요일) + 서울신문 보도", confirmed: true },
+
+  // ──────────────────────────────────────────────────────────────────────
+  // 🎪 **이슈 #2 에 쌓여 있던 것을 들였다** (2026-09-15, 사장님: "축제를 찾았으면
+  //    넣어야지. 내용 계속 업로드해")
+  //
+  //    매일 도는 `fetch-gu-festival-dates` 가 **「구청에는 있는데 우리 화면에 없는
+  //    축제 43곳」**을 찾아 이슈 #2 에 올려 두고 있었다. 기계는 제 일을 다 했는데
+  //    **읽는 사람이 없어서 석 달치가 그대로 쌓여 있었다.**
+  //
+  //    43곳 중 **외국인 관광객이 갈 만한 것**만 골랐다. 나머지는 위령제·박람회·
+  //    도서관 행사·공연장 내부 프로그램이라 이 앱이 내밀 것이 아니다.
+  //
+  //    🙅 **「2026 서울어텀페스타」는 일부러 뺐다.** 장소가 「서울 전역」이라
+  //       구를 하나로 정할 수 없다. 억지로 한 구에 넣으면 손님이 엉뚱한 구 목록에서
+  //       찾게 된다 — 구 단위로 돌아가는 이 앱의 구조에 안 맞는다.
+  // ──────────────────────────────────────────────────────────────────────
+
+  // 🌳 서울숲 일대를 통째로 쓴다. 반년을 여는 큰 행사라 아무 때 와도 걸린다.
+  { id: id(), gu: "성동구", dong: "성수동1가", category: "festival", name: "서울국제정원박람회", startMonth: 5, endMonth: 10, addr: "서울숲 일대", officialUrl: "https://www.seoul.go.kr/festa/garden/", note: "서울숲 전체가 정원이 된다. 무료", monthSource: "서울시 문화포털 등록 (2026 5.1–10.27, 주최 서울시청)", confirmed: true },
+  // 🏝️ 한강 위 섬 하나가 통째로 무대다. 지하철(노들역)에서 바로다.
+  { id: id(), gu: "용산구", category: "festival", name: "오픈노들", startMonth: 8, endMonth: 10, addr: "노들섬", officialUrl: "https://nodeul.org/program/%ec%98%a4%ed%94%88%eb%85%b8%eb%93%a4/", note: "한강 노들섬의 공연·전시·마켓", monthSource: "서울시 문화포털 등록 (2026 8.4–10.31, 주최 노들섬)", confirmed: true },
+  // 🗿 경복궁 옆 열린송현녹지광장. **야외 조각전이라 말이 안 통해도 볼 수 있다** —
+  //    외국인 손님에게 특히 잘 맞는 갈래다.
+  { id: id(), gu: "종로구", category: "festival", name: "서울조각페스티벌", startMonth: 8, endMonth: 11, addr: "열린송현녹지광장, 뚝섬한강공원", officialUrl: "https://artinseoul.kr/", note: "야외 조각 전시, 무료. 경복궁 바로 옆 열린송현녹지광장", monthSource: "서울시 문화포털 등록 (2026 8.29–11.30, 주최 서울시청)", confirmed: true },
+  // 🥋 **외국인 손님이 가장 보고 싶어 하는 것 중 하나다.** 남산골한옥마을·DDP 에서 한다.
+  //    ⚠️ 공식 주소를 비워 뒀다 — 구청이 올린 것이 인스타그램이라 officialSite.ts 가 거른다.
+  { id: id(), gu: "중구", category: "festival", name: "서울시 태권도 공연", startMonth: 5, endMonth: 10, addr: "남산골한옥마을, DDP(동대문디자인플라자) 등", note: "야외 태권도 시범 공연, 무료", monthSource: "서울시 문화포털 등록 (2026 5.9–10.18, 주최 서울시청)", confirmed: true },
+  // 📚 서울광장 잔디에 눕는 야외 도서관. 돈 안 들고 도심 한가운데라 들르기 쉽다.
+  { id: id(), gu: "중구", category: "festival", name: "서울야외도서관", startMonth: 4, endMonth: 11, addr: "서울광장, 광화문광장, 청계천 일대", officialUrl: "https://seouloutdoorlibrary.kr/", note: "「책읽는 서울광장」·「광화문 책마당」·「책읽는 맑은 냇가」. 무료", monthSource: "서울시 문화포털 등록 (2026 4.23–11.1, 주최 서울도서관)", confirmed: true },
+  // 🎤 판소리는 유네스코 인류무형문화유산이다. 한옥마을에서 들을 수 있는 자리.
+  { id: id(), gu: "중구", category: "festival", name: "월드판소리페스티벌", startMonth: 9, endMonth: 9, addr: "남산골한옥마을, 서울남산국악당", officialUrl: "http://worldpansori.com/", note: "판소리 — 유네스코 인류무형문화유산", monthSource: "서울시 문화포털 등록 (2026 9.25–26, 주최 남산골한옥마을)", confirmed: true },
 ];
 
 /**
