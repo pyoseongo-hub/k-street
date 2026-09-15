@@ -64,7 +64,11 @@ const LANGS = ["ko", "en", "ja", "zh", "zh-TW", "vi", "es", "fr", "de", "ru", "i
 // 글씨가 든 단추·딱지들. 늘어나면 여기에 더한다.
 const SELECTORS = [".map-btn", ".meta-share", ".tab-btn", ".chip", ".season-btn"];
 
-const b = await chromium.launch();
+const b = await chromium.launch(
+  // 🖥️ 이 상자에는 크로미움이 정해진 자리에 이미 깔려 있다. PW_EXEC 로 알려 주면
+  //    playwright 가 새로 내려받지 않는다 — 없으면 예전처럼 알아서 찾는다.
+  process.env.PW_EXEC ? { executablePath: process.env.PW_EXEC } : {},
+);
 let bad = 0;
 
 for (const lang of LANGS) {

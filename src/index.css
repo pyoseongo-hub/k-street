@@ -1592,6 +1592,17 @@ button {
   line-height: 1;
 }
 
+/* 🚻♿🛗 역 편의시설 단추의 그림표 셋. 글자보다 **한 단계 작게** 두어
+   자리를 덜 먹게 한다 — 이 줄에는 단추가 셋이라 좁은 언어에서 줄이 내려간다.
+   ⚠️ 그림 사이를 벌리지 않는다(letter-spacing 0). 셋이 **한 덩어리**로 보여야
+      「이런 것들이 안에 있다」로 읽히고, 벌리면 낱낱의 단추처럼 보인다. */
+.map-btn-pictos {
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
 .map-btn-badge {
   display: inline-flex;
   align-items: center;

@@ -144,3 +144,23 @@ export function stationShort(korName: string, lang: string): string {
   // 「Seoul Station」처럼 이미 Station 이 붙어 온 것은 뗀다 — 여기서는 이름만 쓴다.
   return foreign.replace(/\s*Station$/i, "").trim();
 }
+
+/**
+ * 🔎 **검색에 넣을 역 이름** — 「여의나루역 5호선」 → 「여의나루역」.
+ *
+ * 왜 호선을 떼나 (2026-09-15) — 네이버 검색으로 그 역 화면을 여는데, 호선까지
+ * 붙이면 검색어가 흐려진다. 사장님이 캡처로 보여 주신 것도 「건대역」 한 낱말이었다.
+ *
+ * ⚠️ 우리 자료는 **호선이 섞여 있어야 한다** — 환승역은 호선마다 출구도 시설도
+ *    다르고, 손님이 안내판과 대조할 때도 호선이 필요하다(이 파일 머리말).
+ *    그래서 **자료는 그대로 두고 검색어만 줄인다.**
+ *
+ * 🚨 자르는 자리는 **첫 빈칸**이다. 180개를 세어 보니 전부 빈칸이 하나뿐이었고,
+ *    「서울역 GTX-A」·「서울역 공항철도」처럼 뒤가 「…선」이 아닌 것도 둘 있어서
+ *    「…선으로 끝나면 뗀다」는 규칙으로는 안 떨어진다.
+ */
+export function stationBareName(korName: string): string {
+  const head = korName.normalize("NFC").trim().split(/\s+/)[0];
+  // 첫 토막이 역 이름이 아닌 이상한 자료가 오면 원래 것을 그대로 쓴다 — 빈 검색보다 낫다.
+  return head.endsWith("역") ? head : korName;
+}

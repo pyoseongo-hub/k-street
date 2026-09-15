@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { useOverlay } from "../lib/useOverlay";
 import { useLanguage } from "../lib/useLanguage";
 import { getMapLinks, openMapLink, naverSearchUrl, type MapLinkTarget } from "../lib/mapLinks";
+import { stationBareName } from "../lib/stationName";
 import { getPositionOrNull } from "../lib/userPosition";
 import {
   LOCKER_PAGE,
@@ -157,7 +158,10 @@ export default function LuggageCard({
              *     네이버는 **이 역에 있나 없나**를 말해 준다. 그게 손님이 알고 싶은 것이다. */}
             <p className="lg-station-info">
               <a
-                href={naverSearchUrl(station!.station!)}
+                /* 🔎 검색어에서는 **호선을 뗀다** — 「여의나루역 5호선」이 아니라 「여의나루역」.
+                   자료는 호선까지 갖고 있어야 하지만(환승역은 호선마다 출구가 다르다),
+                   검색어에 붙이면 흐려진다. stationName.ts 의 stationBareName 주석 참고. */
+                href={naverSearchUrl(stationBareName(station!.station!))}
                 target="_blank"
                 rel="nofollow noopener"
               >
