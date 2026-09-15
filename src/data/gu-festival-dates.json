@@ -1,6 +1,6 @@
 {
  "설명": "구청·구 문화재단이 서울시 문화포털에 직접 올린 축제 확정 날짜. scripts/fetch-gu-festival-dates.ts 가 받는다. 손으로 고치지 말 것.",
- "받은날": "2026-09-14",
+ "받은날": "2026-09-15",
  "곳": {
   "ks_7": {
    "start": "2026-09-19",
@@ -16,7 +16,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159254&menuNo=200010",
    "registered": "2026-08-27",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-09-14"
+   "fetchedAt": "2026-09-15"
   },
   "ks_54": {
    "start": "2026-09-19",
@@ -32,7 +32,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159119&menuNo=200010",
    "registered": "2026-08-19",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-09-14"
+   "fetchedAt": "2026-09-15"
   },
   "ks_55": {
    "start": "2026-09-25",
@@ -48,7 +48,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159263&menuNo=200010",
    "registered": "2026-08-27",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-09-14"
+   "fetchedAt": "2026-09-15"
   },
   "ks_56": {
    "start": "2026-10-01",
@@ -64,7 +64,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159036&menuNo=200010",
    "registered": "2026-08-12",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-09-14"
+   "fetchedAt": "2026-09-15"
   },
   "ks_57": {
    "start": "2026-10-24",
@@ -80,7 +80,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159406&menuNo=200010",
    "registered": "2026-09-08",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-09-14"
+   "fetchedAt": "2026-09-15"
   },
   "tour_3012095": {
    "start": "2026-10-02",
@@ -96,7 +96,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159242&menuNo=200010",
    "registered": "2026-08-27",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-09-14"
+   "fetchedAt": "2026-09-15"
   },
   "tour_2621558": {
    "start": "2026-10-10",
@@ -111,7 +111,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159251&menuNo=200010",
    "registered": "2026-08-27",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-09-14"
+   "fetchedAt": "2026-09-15"
   },
   "ks_b": {
    "start": "2026-10-03",
@@ -126,7 +126,87 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159057&menuNo=200010",
    "registered": "2026-08-14",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-09-14"
+   "fetchedAt": "2026-09-15"
+  },
+  "ks_59": {
+   "start": "2026-05-01",
+   "end": "2026-10-27",
+   "title": "2026 서울국제정원박람회",
+   "gu": "성동구",
+   "place": "서울숲 일대",
+   "lat": 37.5430701468405,
+   "lng": 127.041799099222,
+   "time": "12:00 ~ 19:00",
+   "org": "서울시청",
+   "orgLink": "https://www.seoul.go.kr/festa/garden/",
+   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=156916&menuNo=200010",
+   "registered": "2026-03-04",
+   "source": "seoul-culture-portal",
+   "fetchedAt": "2026-09-15"
+  },
+  "ks_5a": {
+   "start": "2026-08-04",
+   "end": "2026-10-31",
+   "title": "[노들섬] 오픈노들",
+   "gu": "용산구",
+   "place": "노들섬",
+   "lat": 37.5176638307111,
+   "lng": 126.958036465507,
+   "time": "추후 공지",
+   "org": "노들섬",
+   "orgLink": "https://nodeul.org/program/%ec%98%a4%ed%94%88%eb%85%b8%eb%93%a4/",
+   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158941&menuNo=200010",
+   "registered": "2026-08-03",
+   "source": "seoul-culture-portal",
+   "fetchedAt": "2026-09-15"
+  },
+  "ks_5b": {
+   "start": "2026-08-29",
+   "end": "2026-11-30",
+   "title": "[서울시청] 제3회 서울조각페스티벌",
+   "gu": "종로구",
+   "place": "열린송현녹지광장, 뚝섬한강공원",
+   "lat": 37.57651039211841,
+   "lng": 126.98157018878199,
+   "time": "[전시] 상시운영 [프로그램] 토 16:00~21:00, 일 14:00~21:00, 월-금 17:00~21:00",
+   "org": "서울시청",
+   "orgLink": "https://artinseoul.kr/",
+   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158899&menuNo=200010",
+   "registered": "2026-07-30",
+   "source": "seoul-culture-portal",
+   "fetchedAt": "2026-09-15"
+  },
+  "ks_5c": {
+   "start": "2026-05-09",
+   "end": "2026-10-18",
+   "title": "2026 서울시 태권도 공연",
+   "gu": "중구",
+   "place": "남산골한옥마을, DDP(동대문디자인플라자) 등",
+   "lat": 37.559304933707146,
+   "lng": 126.994440072131,
+   "time": "토 - 일요일 / 14:00, 16:00",
+   "org": "서울시청",
+   "orgLink": "https://www.instagram.com/p/DXJHEnTii_j/",
+   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=157783&menuNo=200010",
+   "registered": "2026-05-08",
+   "source": "seoul-culture-portal",
+   "fetchedAt": "2026-09-15"
+  },
+  "ks_5e": {
+   "start": "2026-09-25",
+   "end": "2026-09-26",
+   "title": "제4회 월드판소리페스티벌",
+   "gu": "중구",
+   "place": "남산골한옥마을, 서울남산국악당",
+   "lat": 37.559304933707146,
+   "lng": 126.994440072131,
+   "time": "13:00~18:00",
+   "org": "남산골한옥마을",
+   "orgLink": "http://worldpansori.com/",
+   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159356&menuNo=200010",
+   "registered": "2026-09-03",
+   "source": "seoul-culture-portal",
+   "fetchedAt": "2026-09-15"
   }
  }
 }
