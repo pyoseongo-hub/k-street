@@ -2409,6 +2409,34 @@
       "lat": 37.5499526279456,
       "lng": 127.034483653629,
       "url": "http://place.map.kakao.com/17493449"
+    },
+    "autumn_91": {
+      "station": "대방역 신림선",
+      "dist": 470,
+      "lat": 37.5128137623052,
+      "lng": 126.925415962213,
+      "url": "http://place.map.kakao.com/606899227"
+    },
+    "autumn_92": {
+      "station": "응암역 6호선",
+      "dist": 829,
+      "lat": 37.5984928632876,
+      "lng": 126.9155399209037,
+      "url": "http://place.map.kakao.com/25039996"
+    },
+    "autumn_114": {
+      "station": "남영역 1호선",
+      "dist": 305,
+      "lat": 37.540566672483216,
+      "lng": 126.97133096608212,
+      "url": "http://place.map.kakao.com/10182341"
+    },
+    "autumn_117": {
+      "station": "새절역 6호선",
+      "dist": 282,
+      "lat": 37.5908600479967,
+      "lng": 126.913580663181,
+      "url": "http://place.map.kakao.com/21160695"
     }
   }
 }
