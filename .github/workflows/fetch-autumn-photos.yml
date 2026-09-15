@@ -154,7 +154,12 @@ jobs:
             #    크기만 비슷하고 화질은 한 번 더 깎인다. 그래서 **그대로 복사**한다.
             if [ "$WIDTH" = "0" ]; then
               cp "$RAW" "$DEST"
-            elif ! timeout 45 $IM "$RAW" -resize "${WIDTH}x" -quality 78 "$DEST"; then
+            # 🧨 **`>` 를 빼면 작은 사진을 「늘린다」** (2026-09-15에 세 장을 그렇게 망쳤다).
+            #    `-resize 1080x` 는 원본이 960px 이어도 **1080px 로 키운다** — 없는 화소를
+            #    지어내는 것이라 오히려 흐려진다. 세로 사진 셋이 실제로 그렇게 됐다:
+            #        가리왕산  원본 960x1280  → 1080x1440 로 늘어남
+            #    `>` 를 붙이면 **큰 것만 줄이고 작은 것은 건드리지 않는다.**
+            elif ! timeout 45 $IM "$RAW" -resize "${WIDTH}x>" -quality 78 "$DEST"; then
               echo "⬜ ${NO} (${NAME}) — 줄이지 못했다 (${BEFORE} bytes)"
               rm -f "$DEST"
               continue
