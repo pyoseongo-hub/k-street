@@ -2437,6 +2437,27 @@
       "lat": 37.5908600479967,
       "lng": 126.913580663181,
       "url": "http://place.map.kakao.com/21160695"
+    },
+    "autumn_118": {
+      "station": "월드컵경기장역 6호선",
+      "dist": 149,
+      "lat": 37.5696355653344,
+      "lng": 126.899098148061,
+      "url": "http://place.map.kakao.com/21160672"
+    },
+    "autumn_122": {
+      "station": "광화문역 5호선",
+      "dist": 96,
+      "lat": 37.57164860977568,
+      "lng": 126.97642427981408,
+      "url": "http://place.map.kakao.com/21160840"
+    },
+    "autumn_123": {
+      "station": "금호역 3호선",
+      "dist": 264,
+      "lat": 37.548260922874086,
+      "lng": 127.01582916945283,
+      "url": "http://place.map.kakao.com/21160591"
     }
   }
 }
