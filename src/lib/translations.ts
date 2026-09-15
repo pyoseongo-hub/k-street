@@ -202,6 +202,8 @@ export interface Translations {
   luggageLinkLabel: string;
   /** 🚨 1.5km 안에 역이 없을 때. **빈칸으로 두지 않는다** — 이것도 답이다 */
   stationNoneShort: string;
+  /** 🚨 「없다」가 아니라 **「모른다」**. 둘을 같은 말로 쓰면 손님이 헛걸음한다. */
+  stationUnknownShort: string;
   /** 🔒 짐 보관 카드 한 줄. 「있습니다」로 단정하지 않는다 — 273역 / 약 340역이다 */
   lockerNote: string;
   /** 공식 페이지로 나가는 링크 이름. 자세한 것은 우리가 안 적고 여기로 보낸다 */
@@ -399,6 +401,7 @@ const translations: Record<Language, Translations> = {
     fromStationNote: (station: string) => `${station} 기준 · 직선거리`,
     luggageLinkLabel: '짐 보관',
     stationNoneShort: '가까운 지하철역 없음',
+    stationUnknownShort: '가까운 역을 아직 확인 못 했어요 — 지도에서 찾아보세요',
     lockerNote: '대부분의 역에 물품보관함(또타라커)이 있습니다.',
     lockerOfficialLabel: '서울교통공사 안내',
     luggageOfficialTitle: '또타러기지 (서울교통공사)',
@@ -537,6 +540,7 @@ const translations: Record<Language, Translations> = {
     fromStationNote: (station: string) => `Straight-line distance from ${station}`,
     luggageLinkLabel: 'Luggage',
     stationNoneShort: 'No station within 1.5 km',
+    stationUnknownShort: 'Nearest station not checked yet — look it up on the map',
     lockerNote: 'Most stations have coin lockers (T-Locker).',
     lockerOfficialLabel: 'Official page — Seoul Metro',
     luggageOfficialTitle: 'T-Luggage (Seoul Metro)',
@@ -675,6 +679,7 @@ const translations: Record<Language, Translations> = {
     fromStationNote: (station: string) => `${station} からの直線距離`,
     luggageLinkLabel: '荷物預け',
     stationNoneShort: '近くに駅がありません',
+    stationUnknownShort: '最寄り駅は未確認です — 地図でお確かめください',
     lockerNote: '多くの駅にコインロッカー（T-Locker）があります。',
     lockerOfficialLabel: 'ソウル交通公社の公式ページ',
     luggageOfficialTitle: 'T-Luggage（ソウル交通公社）',
@@ -813,6 +818,7 @@ const translations: Record<Language, Translations> = {
     fromStationNote: (station: string) => `从${station}的直线距离`,
     luggageLinkLabel: '寄存行李',
     stationNoneShort: '附近没有地铁站',
+    stationUnknownShort: '最近的地铁站尚未确认 — 请在地图上查看',
     lockerNote: '多数车站设有自助储物柜（T-Locker）。',
     lockerOfficialLabel: '首尔交通公社官方页面',
     luggageOfficialTitle: 'T-Luggage（首尔交通公社）',
@@ -951,6 +957,7 @@ const translations: Record<Language, Translations> = {
     fromStationNote: (station: string) => `從${station}的直線距離`,
     luggageLinkLabel: '寄放行李',
     stationNoneShort: '附近沒有地鐵站',
+    stationUnknownShort: '最近的地鐵站尚未確認 — 請在地圖上查看',
     lockerNote: '多數車站設有自助置物櫃（T-Locker）。',
     lockerOfficialLabel: '首爾交通公社官方頁面',
     luggageOfficialTitle: 'T-Luggage（首爾交通公社）',
@@ -1089,6 +1096,7 @@ const translations: Record<Language, Translations> = {
     fromStationNote: (station: string) => `Khoảng cách đường thẳng từ ${station}`,
     luggageLinkLabel: 'Gửi hành lý',
     stationNoneShort: 'Không có ga gần đây',
+    stationUnknownShort: 'Chưa xác định ga gần nhất — hãy xem trên bản đồ',
     lockerNote: 'Phần lớn các ga có tủ khoá tự động (T-Locker).',
     lockerOfficialLabel: 'Trang chính thức của Seoul Metro',
     luggageOfficialTitle: 'T-Luggage (Seoul Metro)',
@@ -1227,6 +1235,7 @@ const translations: Record<Language, Translations> = {
     fromStationNote: (station: string) => `Distancia en línea recta desde ${station}`,
     luggageLinkLabel: 'Equipaje',
     stationNoneShort: 'Sin estación cerca',
+    stationUnknownShort: 'Estación más cercana sin verificar — búscala en el mapa',
     lockerNote: 'La mayoría de las estaciones tienen taquillas (T-Locker).',
     lockerOfficialLabel: 'Página oficial del metro de Seúl',
     luggageOfficialTitle: 'T-Luggage (metro de Seúl)',
@@ -1365,6 +1374,7 @@ const translations: Record<Language, Translations> = {
     fromStationNote: (station: string) => `Distance à vol d\'oiseau depuis ${station}`,
     luggageLinkLabel: 'Bagages',
     stationNoneShort: 'Pas de station à proximité',
+    stationUnknownShort: 'Station la plus proche non vérifiée — cherchez sur la carte',
     lockerNote: 'La plupart des stations ont des casiers (T-Locker).',
     lockerOfficialLabel: 'Page officielle du métro de Séoul',
     luggageOfficialTitle: 'T-Luggage (métro de Séoul)',
@@ -1503,6 +1513,7 @@ const translations: Record<Language, Translations> = {
     fromStationNote: (station: string) => `Luftlinie ab ${station}`,
     luggageLinkLabel: 'Gepäck',
     stationNoneShort: 'Keine Station in der Nähe',
+    stationUnknownShort: 'Nächste Station noch nicht geprüft — auf der Karte suchen',
     lockerNote: 'Die meisten Stationen haben Schließfächer (T-Locker).',
     lockerOfficialLabel: 'Offizielle Seite der Seouler U-Bahn',
     luggageOfficialTitle: 'T-Luggage (Seouler U-Bahn)',
@@ -1641,6 +1652,7 @@ const translations: Record<Language, Translations> = {
     fromStationNote: (station: string) => `По прямой от ${station}`,
     luggageLinkLabel: 'Багаж',
     stationNoneShort: 'Рядом нет станции',
+    stationUnknownShort: 'Ближайшая станция не проверена — посмотрите на карте',
     lockerNote: 'На большинстве станций есть камеры хранения (T-Locker).',
     lockerOfficialLabel: 'Официальная страница метро Сеула',
     luggageOfficialTitle: 'T-Luggage (метро Сеула)',
@@ -1779,6 +1791,7 @@ const translations: Record<Language, Translations> = {
     fromStationNote: (station: string) => `Jarak garis lurus dari ${station}`,
     luggageLinkLabel: 'Titip barang',
     stationNoneShort: 'Tidak ada stasiun di dekat sini',
+    stationUnknownShort: 'Stasiun terdekat belum dicek — cari di peta',
     lockerNote: 'Sebagian besar stasiun punya loker (T-Locker).',
     lockerOfficialLabel: 'Halaman resmi Seoul Metro',
     luggageOfficialTitle: 'T-Luggage (Seoul Metro)',
@@ -1917,6 +1930,7 @@ const translations: Record<Language, Translations> = {
     fromStationNote: (station: string) => `ระยะเส้นตรงจาก ${station}`,
     luggageLinkLabel: 'ฝากกระเป๋า',
     stationNoneShort: 'ไม่มีสถานีใกล้เคียง',
+    stationUnknownShort: 'ยังไม่ได้ตรวจสอบสถานีที่ใกล้ที่สุด — ดูในแผนที่',
     lockerNote: 'สถานีส่วนใหญ่มีตู้ล็อกเกอร์ (T-Locker)',
     lockerOfficialLabel: 'หน้าทางการของ Seoul Metro',
     luggageOfficialTitle: 'T-Luggage (Seoul Metro)',

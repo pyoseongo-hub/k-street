@@ -30,6 +30,10 @@ on:
         description: "✂️ 한 판에 몇 곳까지만 (0 이면 전부). **받은 것은 합쳐지니 끊어서 여러 번 돌려도 된다**"
         required: false
         default: "10"
+      autumn_limit:
+        description: "🍁 단풍길 좌표를 한 판에 몇 곳까지 받을까 (0 이면 전부). 한 곳에 최대 3번 묻는다"
+        required: false
+        default: "30"
 
 permissions:
   contents: write
@@ -44,6 +48,28 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+
+      # 🍁 **사슬의 첫 칸 — 좌표.** (2026-09-15에 여기가 비어 있어서 뒤가 다 끊겼다)
+      #
+      #    사장님: *"역까지 안내를 해야 다음 있는데 그게 없어. 항상 만들고 검사 좀 해.
+      #             어떻게 이렇게 많이 없을 수 있어"*
+      #
+      #    단풍길 110곳을 넣으면서 좌표를 안 넣었다. 좌표가 없으니 아래
+      #    「좌표 모으기」가 그 곳들을 아예 안 싣고, 그러니 역도 안 붙고,
+      #    짐보관 화면은 **모르는 것을 「없음」이라고** 말하고 있었다.
+      #
+      #    그래서 같은 판 안에서 **좌표부터 채우고** 역을 찾는다.
+      #    사슬을 두 판으로 나누면 한쪽만 돌린 날 또 조용히 끊긴다.
+      #    이미 좌표가 있는 곳은 안 묻는다 — 채울 게 없으면 그냥 지나간다.
+      - name: 🍁 단풍길 좌표 받기
+        env:
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
+          GAP_MS: ${{ inputs.gap_ms }}
+          LIMIT: ${{ inputs.autumn_limit }}
+        run: |
+          set -o pipefail
+          node scripts/fetch-autumn-coords.mjs ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee autumn-log.txt
+
       - name: 좌표 모으기
         run: |
           npx vite build --ssr scripts/dump-place-coords.ts --outDir dist-ssr
@@ -74,15 +100,21 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/nearest-station.json src/data/luggage-branches.json
+          git add src/data/coords.json src/data/nearest-station.json src/data/luggage-branches.json
           git diff --cached --quiet && echo "바뀐 게 없다" || {
-            git commit -m "가까운 역·또타러기지 좌표를 새로 받는다 (카카오)"
+            git commit -m "단풍길 좌표·가까운 역·또타러기지 좌표를 새로 받는다 (카카오)"
             git push
           }
       - name: 결과 요약
         if: always()
         run: |
           {
+            echo "## 🍁 단풍길 좌표 (사슬의 첫 칸)"
+            echo ""
+            echo '```'
+            tail -25 autumn-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+            echo ""
             echo "## 🚇 가까운 지하철역"
             echo ""
             echo '```'

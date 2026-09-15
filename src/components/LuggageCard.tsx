@@ -156,11 +156,32 @@ export default function LuggageCard({
             </div>
             <p className="lg-note">{t.lockerNote}</p>
           </>
-        ) : (
+        ) : station?.none ? (
           /* 🚨 역이 없어도 **빈 화면을 보이지 않는다.** "여긴 없구나"가 답이다 —
              미리 맡기고 오라는 뜻이니까 (사장님 말씀). */
           <p className="lg-station lg-station--none">
             <span aria-hidden="true">🚇</span> {t.stationNoneShort}
+          </p>
+        ) : (
+          /* 🚨 **「모른다」를 「없다」라고 말하지 않는다** (2026-09-15 사장님이 화면으로 잡으심).
+           *
+           *  삼청동길(단풍길)에서 「짐 보관」을 눌렀더니 **「가까운 지하철역 없음」**이
+           *  떴다. 안국역이 걸어서 갈 거리인데도. 사장님: *"가까운역 안떠"*
+           *
+           *  왜 그랬나 — 여기는 원래 **두 갈래**였다: 역이 있다 / 그 밖의 전부.
+           *  그런데 "그 밖"에는 **서로 다른 두 가지**가 섞여 있었다:
+           *    · `none: true`  = 1.5km 안에 역이 **없다** — 재 봤고, 이건 **답**이다
+           *    · `undefined`   = 우리가 **아직 안 재 봤다** — 이건 **모른다**는 뜻이다
+           *  단풍길 107곳은 좌표가 없어 아예 못 재 봤는데, 화면은 그걸 전부
+           *  「없음」이라고 단정했다. **모르는 것을 없다고 말하면 손님이 헛걸음한다.**
+           *
+           *  이 저장소의 원칙 그대로다 — 빈 칸이 틀린 정보보다 낫다.
+           *  🔁 진짜 해결은 좌표를 채우는 것이다: scripts/fetch-autumn-coords.mjs
+           *     → 그 다음 find-nearest-station. 둘 다 nearest-station.yml 한 판에 있다.
+           *  🚨 이 갈래를 도로 합치지 말 것. 합치는 순간 같은 거짓말이 돌아온다.
+           */
+          <p className="lg-station lg-station--unknown">
+            <span aria-hidden="true">🚇</span> {t.stationUnknownShort}
           </p>
         )}
 

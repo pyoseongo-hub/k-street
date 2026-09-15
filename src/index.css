@@ -1749,7 +1749,11 @@ button {
   color: var(--muted, #6b6559);
 }
 
-.lg-station--none {
+.lg-station--none,
+/* 🚇 「아직 못 재 봤다」도 같은 회색으로 둔다 — 둘 다 **역 이름이 아니라 상태**다.
+      다만 **말은 다르다.** LuggageCard 의 2026-09-15 주석 참고 —
+      「없다」와 「모른다」를 같은 문장으로 쓰면 손님이 헛걸음한다. */
+.lg-station--unknown {
   color: var(--muted, #6b6559);
 }
 
