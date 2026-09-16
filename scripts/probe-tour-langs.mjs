@@ -14,6 +14,7 @@
 //    ⚠️ 그래서 이 스크립트는 **확인만 한다.** 아무것도 저장하지 않는다.
 //
 //   TOUR_API_KEY=... node scripts/probe-tour-langs.mjs
+import { readFileSync } from "node:fs";
 import { fetchWithRetry } from "./lib/tour-fetch.mjs";
 
 const KEY = process.env.TOUR_API_KEY;
@@ -67,7 +68,45 @@ if (!alive.length) {
   process.exit(0);
 }
 
-console.log("\n② 같은 곳의 이름이 언어마다 어떻게 오나 (공식 표기인지 보는 자리)\n");
+// ── ② 일문 서비스가 **부산 자료를 실제로 갖고 있나** ──────────────────────
+//
+// 🚨 1차 확인(2026-09-17)에서 일문이 열렸는데도 **이름이 한 건도 안 왔다.**
+//    국문에서는 같은 contentId 로 「가덕도 등대」가 오는데 일문은 빈 값이었다.
+//    그래서 물어볼 것이 바뀌었다 — 「이름이 뭐냐」가 아니라
+//    **「일문 쪽에 그 곳이 아예 있느냐, contentId 가 같으냐」**다.
+//    여기서 갈린다:
+//      · id 가 같다  → 우리 자료에 일본어 이름을 **그대로 붙일 수 있다**
+//      · id 가 다르다 → 이름으로 맞춰야 하는데, 그건 예전에 실패했던 그 방식이다
+//        (서울 사진 맞추기 185곳 중 1곳만 맞았다). 그러면 안 쓰는 게 낫다.
+for (const [svc, label] of alive) {
+  if (svc === "KorService2") continue;
+  console.log(`\n② ${label}(${svc}) 이 **부산(지역 6)** 자료를 갖고 있나\n`);
+  try {
+    const list = await call(svc, "areaBasedList2", {
+      areaCode: "6", contentTypeId: "12", numOfRows: "15", pageNo: "1", arrange: "A",
+    });
+    if (!list.length) { console.log("   ⬜ 한 건도 안 온다 — 이 지역 자료가 없는 것이다."); continue; }
+    console.log(`   ${list.length}곳 왔다:`);
+    for (const it of list) console.log(`      ${String(it.contentid).padEnd(10)} ${it.title}`);
+
+    // 🧾 우리 부산 자료와 **id 가 겹치나** — 이게 진짜 알고 싶은 것이다.
+    const mine = JSON.parse(readFileSync("src/data/busan-places.json", "utf8"));
+    const ids = new Set(mine.map((p) => String(p.id)));
+    const 겹침 = list.filter((it) => ids.has(String(it.contentid)));
+    console.log(`\n   🧾 우리 부산 202곳과 id 가 겹치는 것 — ${겹침.length} / ${list.length}`);
+    for (const it of 겹침.slice(0, 5)) {
+      const k = mine.find((p) => String(p.id) === String(it.contentid));
+      console.log(`      ${it.contentid}  한국어 「${k.name}」  →  ${label} 「${it.title}」`);
+    }
+    if (!겹침.length)
+      console.log("      ❌ 하나도 안 겹친다 — 언어별로 **자료가 따로**라는 뜻이다. 이름으로 맞춰야 한다.");
+  } catch (e) {
+    console.log(`   ⚠️ 못 받았다 — ${String(e.message).slice(0, 110)}`);
+  }
+  await new Promise((r) => setTimeout(r, 250));
+}
+
+console.log("\n③ 같은 contentId 로 물으면 언어마다 뭐가 오나\n");
 for (const [id, why] of SAMPLES) {
   console.log(`   ── contentId ${id}  (${why})`);
   for (const [svc, label] of alive) {
