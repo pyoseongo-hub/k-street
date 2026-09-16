@@ -42,10 +42,10 @@ spec = importlib.util.spec_from_file_location("make_reel", ROOT / "scripts" / "m
 make_reel = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(make_reel)
 
-# 🗣️ **읽을 말** — 화면 자막과 거의 같지만 **똑같지는 않다.**
-#    자막은 눈으로 읽고 나레이션은 귀로 듣는다. 「·」 같은 기호는 소리가 안 난다.
+# 🗣️ **읽을 말 ①「그대로」** — 화면 자막을 거의 그대로 읽는다.
+#    「·」 같은 기호만 소리 나게 고쳤다:
 #    · 「Jamsugyo Bridge · Sunday nights」 → 점을 찍어 **쉬게** 만든다
-#    · 「korea-street.com」 → 「Korea Street dot com」 이라고 **소리 나는 대로** 적는다
+#    · 「korea-street.com」 → 「Korea Street dot com」 이라고 **소리 나는 대로**
 SPEECH = [
     "An autumn night.",
     "Han River Park, and a beautiful bridge.",
@@ -56,13 +56,49 @@ SPEECH = [
     "Romance in the heart of the city.",
     "Jamsugyo Bridge. Sunday nights.",
 ]
+
+# 🗣️ **읽을 말 ②「말하듯」** — 사장님 (2026-09-16): *"너무 딱딱한데 말하듯이 안 되나"*
+#
+# 🚨 **딱딱한 진짜 원인은 목소리가 아니라 문장이다.**
+#    위 `SPEECH` 는 **자막으로 쓰려고 쓴 글**이다. 토막말이라 눈으로 읽을 땐 괜찮은데,
+#    소리 내어 읽으면 **슬라이드 제목을 하나씩 호명하는 것**처럼 들린다.
+#    「An autumn night.」 「Endless food trucks.」 — 사람은 이렇게 말하지 않는다.
+#
+# ⚠️ **자막과 읽는 말이 갈라져도 된다 — 이제는.**
+#    사장님이 전에 *"자막이 대본하고 같은 거 아냐"* 하셨을 때는 **목소리가 없었으니**
+#    맞는 말이었다. 자막이 곧 대본이었다. 이제는 둘이 따로 있다:
+#      · 자막 — **눈**으로 읽는다. 짧아야 한다. **사장님이 쓰신 것 그대로 둔다.**
+#      · 읽는 말 — **귀**로 듣는다. 말이 되게 이어져야 한다.
+#
+# ✅ **뜻은 한 줄도 안 바꿨다.** 이어 주는 말(and · then)과 쉼(…)만 넣었다.
+#    새 사실도, 사진 설명도 넣지 않았다 — 그건 앱이 한다.
+SPOKEN = [
+    "An autumn night in Seoul.",
+    "The Han River... and that bridge.",
+    "And food trucks. Everywhere.",
+    "Good food, cold beer.",
+    "An autumn night on the river.",
+    "And then... the fountain starts.",
+    "Romance, right in the middle of the city.",
+    "Jamsugyo Bridge. Every Sunday night.",
+]
+
 CREDIT_SPEECH = "Korea Street dot com."
 
-# 🎚️ 목소리 두 가지를 만들어 **사장님이 고르시게** 한다.
-#    글로 설명해서는 목소리를 못 고른다 — 들어 봐야 안다.
-VOICES = {
-    "aria": ("en-US-AriaNeural", "미국 여성 · 따뜻하고 부드럽다"),
-    "sonia": ("en-GB-SoniaNeural", "영국 여성 · 차분하고 또렷하다"),
+# 🎚️ **판 두 가지를 만들어 사장님이 고르시게 한다.**
+#    목소리는 **둘 다 같은 것**을 쓴다 — 그래야 **문장 차이만** 귀에 들어온다.
+#    한 번에 두 가지를 바꾸면 무엇 때문에 나아졌는지 알 수 없다.
+#
+# 🗣️ 왜 Ava 인가 — Aria·Sonia 는 **뉴스 읽는 계열**이라 문장마다 또박또박 끊는다.
+#    Ava 는 대화체로 만들어진 새 목소리다. 같은 글을 줘도 한결 풀어져서 읽는다.
+#    남성 목소리가 필요하면 `en-US-AndrewMultilingualNeural` 로 바꾸면 된다.
+VOICE = "en-US-AvaMultilingualNeural"
+#: 조금 느리게. 광고 나레이션은 급하면 싸구려로 들린다.
+BASE_RATE = -6
+
+TAKES = {
+    "ava-그대로": (VOICE, SPEECH, "자막을 그대로 읽는다 (문장은 안 고침)"),
+    "ava-말하듯": (VOICE, SPOKEN, "말하듯 이어 준다 (자막은 그대로, 읽는 말만 고침)"),
 }
 
 #: 사진이 바뀐 **직후**에 말이 시작되게 조금 늦춘다. 동시에 시작하면 급해 보인다.
@@ -112,24 +148,26 @@ async def say_fitting(text, voice, path, slot, label):
     앞 문장이 끝난다** — 보는 사람은 어긋난 걸 바로 느낀다.
     """
     room = slot - TAIL
-    for rate in (0, 8, 16, 24):
+    # BASE_RATE 에서 시작해 자리에 들어갈 때까지 조금씩 빠르게 한다.
+    for step in (0, 8, 16, 24):
+        rate = BASE_RATE + step
         await say(text, voice, path, rate)
         d = sec(path)
         if d <= room:
-            mark = "  " if rate == 0 else f" ⏩+{rate}%"
+            mark = "  " if step == 0 else f" ⏩{rate:+d}%"
             print(f"   {label}  {d:4.1f}s / {slot:4.1f}s{mark}")
             return d
     print(f"   {label}  {d:4.1f}s / {slot:4.1f}s  ⚠️ **넘친다 — 문장을 줄여야 한다**")
     return d
 
 
-async def build(name, voice, desc):
+async def build(name, voice, lines, desc):
     print(f"\n🎙️ {name} ({voice}) — {desc}")
     TMP.mkdir(exist_ok=True)
 
     # 컷이 시작하는 시각을 make-reel.py 의 길이에서 그대로 계산한다.
     cues, t = [], 0.0
-    for i, ((_, dur, _), line) in enumerate(zip(make_reel.SHOTS, SPEECH)):
+    for i, ((_, dur, _), line) in enumerate(zip(make_reel.SHOTS, lines)):
         lead = FIRST_IN if i == 0 else LEAD_IN
         cues.append((t + lead, dur - lead, line))
         t += dur
@@ -167,24 +205,41 @@ async def build(name, voice, desc):
     return {"file": m4a.name, "voice": voice, "desc": desc, "sec": total}
 
 
+async def check_voice(voice):
+    """🚨 **목소리 이름이 진짜 있는지 먼저 본다.**
+
+    이름을 하나 잘못 적으면 Actions 를 한 판 헛돌린다. 작업 환경에서는 목록을
+    받아 볼 수가 없어서(프록시가 막는다) **여기서 확인하는 수밖에 없다.**
+    없으면 비슷한 이름을 같이 찍어 준다 — 그래야 다음 판에서 바로 고친다.
+    """
+    names = [v["ShortName"] for v in await edge_tts.list_voices()]
+    if voice in names:
+        return
+    like = [n for n in names if n.startswith("en-US")][:12]
+    sys.exit(f"❌ 그런 목소리가 없다: {voice}\n   en-US 중에 있는 것: {', '.join(like)}")
+
+
 async def main():
-    made = [await build(n, v, d) for n, (v, d) in VOICES.items()]
+    await check_voice(VOICE)
+    made = [await build(n, v, lines, d) for n, (v, lines, d) in TAKES.items()]
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "읽어보세요.md").write_text(
         "# 🎙️ 잠수교 릴스 나레이션\n\n"
         "`scripts/make-narration.py` 가 GitHub Actions 에서 만든 것입니다.\n"
         "**작업 환경에서는 못 만듭니다** — 프록시가 웹소켓을 막습니다.\n\n"
-        "| 파일 | 목소리 | 어떤 느낌 |\n|---|---|---|\n"
+        "| 파일 | 목소리 | 무엇이 다른가 |\n|---|---|---|\n"
         + "".join(f"| `{m['file']}` | {m['voice']} | {m['desc']} |\n" for m in made)
-        + "\n읽는 말은 `scripts/make-narration.py` 의 `SPEECH` 에 있습니다.\n"
-          "**화면 자막과 조금 다릅니다** — 「·」 같은 기호는 소리가 안 나서,\n"
-          "귀로 들을 수 있게 고쳐 적었습니다.\n\n"
+        + "\n**목소리는 둘 다 같습니다.** 다른 것은 *읽는 말*뿐입니다 —\n"
+          "한 번에 두 가지를 바꾸면 무엇 때문에 나아졌는지 알 수 없기 때문입니다.\n\n"
+          "읽는 말은 `scripts/make-narration.py` 의 `SPEECH`(그대로)와\n"
+          "`SPOKEN`(말하듯)에 있습니다. **화면 자막은 둘 다 똑같습니다** —\n"
+          "사장님이 쓰신 것 그대로입니다.\n\n"
           "⚠️ 영상에 얹는 것은 `make-reel.py --voice` 가 합니다.\n",
         encoding="utf-8")
     (OUT / "narration.json").write_text(
         json.dumps(made, ensure_ascii=False, indent=2), encoding="utf-8")
     shutil.rmtree(TMP, ignore_errors=True)
-    print(f"\n✅ 목소리 {len(made)}가지를 만들었다 → {OUT.relative_to(ROOT)}/")
+    print(f"\n✅ {len(made)}판을 만들었다 → {OUT.relative_to(ROOT)}/")
 
 
 if __name__ == "__main__":
