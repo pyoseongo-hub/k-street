@@ -184,16 +184,23 @@ function registryUnits(cityKo) {
 // 🚨 **여기가 이번 조사의 핵심이다.** 서울은 이 목록이 「○○구」 25개인데,
 //    제주는 무엇으로 나오는지 봐야 우리 코드의 `gu` 칸에 무엇을 넣을지 정할 수 있다.
 console.log(`🔍 지역 ${areaCode} 를 조사한다\n`);
-console.log("① 이 지역은 무엇으로 나뉘나 (관광공사 기준)");
-const sigungu = await tryOr("시군구 목록", [], async () => {
-  // 🚨 pageNo 를 안 보내서 **HTTP 400** 이 나고 있었다(제주·부산 조사 모두 실패).
-  //    스크립트가 "부르는 쪽이 틀렸다"고 이미 짚어 줬는데 그걸 안 고치고 있었다 —
-  //    다시 돌린다고 낫는 게 아니다. data.go.kr 은 필수 칸이 비면 400 을 준다.
-  const { list } = await call("sigunguCode2", { areaCode, numOfRows: "60", pageNo: "1" });
-  return list;
-});
-for (const s of sigungu) console.log(`   ${String(s.code).padStart(2)}  ${s.name}`);
-console.log(`   → ${sigungu.length}개\n`);
+// ── ① 이 지역은 무엇으로 나뉘나 ────────────────────────────────────────
+//
+// 🚨 **예전에는 관광공사 sigunguCode2 를 불렀다. 뺐다.**
+//    그 호출은 제주(9/10)·부산(9/16) 조사에서 **한 번도 성공한 적이 없다** — 늘 HTTP 400.
+//    pageNo 를 빠뜨린 줄 알고 넣어 봤는데 **그대로 400 이었다.** 원인을 못 찾았다.
+//
+//    그런데 답은 이미 우리가 갖고 있다 — cities.ts 의 units 는 **행정표준코드관리시스템**
+//    법정동 자료에서 뽑은 것이라 관광공사 API 보다 근거가 세다. 부산 16곳이
+//    실제 주소에서 나온 16곳과 **한 글자도 안 틀리고 맞는 것**도 확인했다(③단계).
+//
+//    ⚠️ 그래서 **고칠 수 없는 호출을 남겨 두지 않는다.** 늘 빨간 경고를 내는 단계가
+//       있으면 사람이 경고 자체를 안 읽게 된다 — 진짜 경고가 왔을 때 같이 묻힌다.
+console.log(`① 이 지역은 무엇으로 나뉘나 (우리 명부 cities.ts 기준)`);
+const REG = registryUnits(areaName);
+if (!REG.ok) console.log(`   ⚠️ 못 읽었다 — ${REG.why}`);
+else console.log(`   ${areaName} — ${REG.units.length}곳: ${REG.units.join(" · ")}`);
+console.log("");
 
 // ── 곳을 통째로 받는다 (거르지 않는다) ─────────────────────────────────
 //
@@ -259,7 +266,7 @@ for (const [k, n] of [...second].sort((a, b) => b[1] - a[1]).slice(0, 20))
   console.log(`   ${String(n).padStart(5)}곳  ${k}`);
 
 // 🧾 **우리 명부와 맞춰 본다.** 여기가 「칸을 만들어 뒀나」를 실제로 확인하는 자리다.
-const reg = registryUnits(areaName);
+const reg = REG;
 if (!reg.ok) {
   console.log(`\n   ⚠️ 우리 명부와 대조하지 **못했다** — ${reg.why}`);
   console.log("      「이상 없음」이 아니라 「확인을 못 했다」는 뜻이다. 둘을 갈라서 읽을 것.");
@@ -345,6 +352,7 @@ console.log("⑤ 서울 규칙을 그대로 대 보면");
 const hit = new Map();
 let miss = 0;
 const missTitles = [];
+const missPlaces = [];
 for (const it of pool) {
   const title = String(it.title ?? "");
   if (it.__type === "축제공연행사") {
@@ -356,6 +364,7 @@ for (const it of pool) {
   else {
     miss++;
     missTitles.push(title);
+    missPlaces.push(it);
   }
 }
 for (const [k, n] of [...hit].sort((a, b) => b[1] - a[1]))
@@ -375,12 +384,13 @@ console.log("⑥ 안 걸린 제목에 자주 나오는 낱말 (새 칸의 후보
 //    그래서 부산 1차 조사에서 나온 답이 「부산광역(← 부산광역시)」·「국가지질(← 국가지질공원)」
 //    같은 **잘린 조각**뿐이었다. 정작 알고 싶었던 「해수욕장」은 한 번도 안 나왔다.
 //    이 단계는 **새 갈래를 무엇으로 만들지 정하는 자리**라, 여기가 틀리면 그 위가 다 틀린다.
-//    → 자르지 말고 **겹쳐 가며** 센다(2~5글자 모든 토막). 「해수욕장」이 제대로 걸린다.
+//    → 자르지 말고 **겹쳐 가며** 센다(2~8글자 모든 토막).
+//      처음엔 5글자까지만 셌는데 「국가지질공원」(6글자)이 또 잘렸다 — 8까지 늘렸다.
 const words = new Map();
 for (const t of missTitles) {
   const seen = new Set(); // 한 제목 안에서 같은 토막을 두 번 세지 않는다
   for (const run of t.match(/[가-힣]+/g) ?? []) {
-    for (let len = 2; len <= 5; len++)
+    for (let len = 2; len <= 8; len++)
       for (let i = 0; i + len <= run.length; i++) seen.add(run.slice(i, i + len));
   }
   for (const w of seen) words.set(w, (words.get(w) ?? 0) + 1);
@@ -394,8 +404,29 @@ const kept = [...words].filter(([w, n]) => {
     if (w2 !== w && w2.includes(w) && n2 === n) return false;
   return true;
 });
-const top = kept.sort((a, b) => b[1] - a[1] || b[0].length - a[0].length).slice(0, 40);
+const top = kept.sort((a, b) => b[1] - a[1] || b[0].length - a[0].length).slice(0, 30);
 for (const [w, n] of top) console.log(`   ${String(n).padStart(4)}회  ${w}`);
+
+// 🚨 **낱말 세기만으로는 갈래를 못 정한다** (2026-09-16에 부산에서 확인했다).
+//    토막을 겹쳐 세도 「부산광」·「운대」·「가지질공원」 같은 조각이 섞여 나오고,
+//    정작 세 번 미만인 낱말은 아예 안 보인다 — 새 갈래의 씨앗은 대개 거기 있다.
+//
+//    안 걸린 제목은 부산 기준 181개다. **그냥 다 보여 주는 게 낫다.**
+//    사람이 훑으면 30초면 「아, 해변·전망대·온천이구나」가 보인다.
+//    갈래별로 묶어 두면 더 빨리 보인다 — 쇼핑에 몰린 것과 관광지에 몰린 것은 다른 이야기다.
+console.log(`\n⑦ 안 걸린 제목 ${missTitles.length}개 — **그대로 본다** (여기서 새 갈래가 나온다)`);
+const missByType = new Map();
+for (const it of missPlaces) {
+  const k = it.__type ?? "(모름)";
+  if (!missByType.has(k)) missByType.set(k, []);
+  missByType.get(k).push(String(it.title ?? ""));
+}
+for (const [type, titles] of [...missByType].sort((a, b) => b[1].length - a[1].length)) {
+  console.log(`\n   ── ${type} ${titles.length}곳 ──`);
+  titles.sort((a, b) => a.localeCompare(b, "ko"));
+  for (let i = 0; i < titles.length; i += 3)
+    console.log("   " + titles.slice(i, i + 3).map((t) => t.padEnd(24)).join(""));
+}
 
 // ⚠️ **못 받은 것과 없는 것을 갈라서 적는다.**
 //    「시장 0곳」이 「이 도시엔 시장이 없다」인지 「서버가 안 열려 못 물어봤다」인지
