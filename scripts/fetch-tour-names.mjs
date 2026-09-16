@@ -25,7 +25,7 @@
 //
 //   TOUR_API_KEY=… node scripts/fetch-tour-names.mjs            ← 맛보기
 //   TOUR_API_KEY=… node scripts/fetch-tour-names.mjs --apply    ← 저장
-import { readFileSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fetchWithRetry } from "./lib/tour-fetch.mjs";
 
 const KEY = process.env.TOUR_API_KEY;
@@ -93,7 +93,13 @@ for (const line of seed.split("\n")) {
 }
 for (const v of Object.values(JSON.parse(readFileSync("src/data/tour-places-raw.json", "utf8"))))
   for (const p of v) if (p?.name) ours.add(p.name);
-for (const p of JSON.parse(readFileSync("src/data/busan-places.json", "utf8"))) ours.add(p.name);
+// 🚨 **도시 파일을 하나씩 적지 않는다** (2026-09-17에 여기서 놓쳤다).
+//    전에는 `busan-places.json` 만 적혀 있었다. 서울 341곳이 새로 들어왔는데
+//    이 줄이 안 읽어서, 관광공사 이름을 다시 받아도 **맞은 것이 230개 그대로**였다.
+//    성공(exit 0)이라 로그를 안 봤으면 그냥 지나갔을 것이다.
+//    새 도시를 열 때마다 여기를 고치게 두면 또 잊는다 — **있는 대로 다 읽는다.**
+for (const f of readdirSync("src/data").filter((f) => /-places\.json$/.test(f)))
+  for (const p of JSON.parse(readFileSync(`src/data/${f}`, "utf8"))) if (p?.name) ours.add(p.name);
 console.log(`🧾 우리가 들고 있는 한국어 이름 ${ours.size}개\n`);
 
 const store = {};
