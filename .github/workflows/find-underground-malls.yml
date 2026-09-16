@@ -56,7 +56,23 @@ jobs:
           git add src/data/underground-malls.json
           git diff --cached --quiet && { echo "바뀐 게 없다"; exit 0; }
           git commit -m "지하도상가 주소·좌표를 받았다 (find-underground-malls) [skip render]"
-          git push
+          # 🚨 **밀렸을 때 다시 해 본다** (2026-09-17에 당했다).
+          # 워크플로 두 개가 겹치면 뒤에 끝난 쪽의 push 가 막힌다. 그냥 두면
+          # **받아 온 자료가 통째로 버려진다** — 사진 받기가 API 를 543번 부르고
+          # 3분 30초를 쓴 뒤 여기서 떨어져 전부 날아갔다.
+          # 그래서 원격을 당겨 내 커밋을 그 위에 얹고(rebase) 다시 민다.
+          # ⚠️ 세 번 다 밀리면 **초록불을 주지 않는다** — 조용히 넘어가면 모르고 지나간다.
+          pushed=no
+          for i in 1 2 3; do
+            if git push; then pushed=yes; break; fi
+            echo "   밀렸다 — 원격을 당겨 다시 얹는다 ($i/3)"
+            git pull --rebase origin "$(git rev-parse --abbrev-ref HEAD)" || exit 1
+            sleep $((i * 3))
+          done
+          if [ "$pushed" != yes ]; then
+            echo "❌ 세 번 다 밀렸다. 받아 둔 자료가 올라가지 못했다 — 다시 돌릴 것."
+            exit 1
+          fi
 
       - name: 결과 요약
         if: always()
