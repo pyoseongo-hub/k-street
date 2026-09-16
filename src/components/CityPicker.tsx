@@ -100,7 +100,7 @@ export default function CityPicker({ onPick }: { onPick?: (key: string) => void 
   // 🔢 지금 열려 있는 도시 수. 이 숫자 하나가 두 가지를 정한다(머리말 참고).
   const open = CITIES.filter((c) => c.status === "공개").length;
 
-  // 🙈 하나뿐이면 **아무것도 그리지 않는다.** 부산이 열리는 날 저절로 나타난다.
+  // 🙈 하나뿐이면 **아무것도 그리지 않는다.** 2026-09-17에 부산이 열려 나타났다.
   if (open < 2) return null;
 
   const pick = onPick;

@@ -53,7 +53,7 @@ function App() {
   const isSeoul = useIsSeoul();
   const savedCount = useSavedEntries().length;
   // 🏙️ 도시 카드가 고른 도시를 앱 전체에 알린다(useCity.tsx).
-  //    지금은 열린 도시가 서울뿐이라 카드 자체가 안 나오고, 이 값도 안 바뀐다.
+  //    2026-09-17에 부산이 열리면서 카드가 나타났고, 이 값도 실제로 바뀐다.
   const { setCity } = useCity();
 
   return (
@@ -181,10 +181,9 @@ function App() {
                 district={<DistrictExplorer forceCategory="autumn" jump={roadJump} />}
               />
               {/* 🗺️ 「한국, 어디로 가세요?」 — 도시 고르는 칸 (2026-09-16 사장님 지시).
-                  🙈 **지금은 아무것도 안 그린다.** 열린 도시가 서울 하나뿐이라
-                     스스로 숨는다(CityPicker.tsx 머리말 — 사장님: *"지금 아무것도
-                     없는데 부산 열릴 때까지 가릴 수 있나"*).
-                     cities.ts 에서 부산을 「공개」로 바꾸면 저절로 나타난다.
+                  ✅ **2026-09-17에 나타났다** — 부산이 열려 도시가 둘이 됐다.
+                     그전에는 스스로 숨어 있었다(사장님: *"지금 아무것도 없는데
+                     부산 열릴 때까지 가릴 수 있나"*). 다시 하나가 되면 또 숨는다.
                   📍 자리는 **맨 아래**다. 나타나는 날 위로 올릴지는 그때 본다.
                   저장한 곳 탭에는 안 띄운다 — 거기는 손님이 담아 둔 것만 보는 자리다. */}
               <CityPicker onPick={setCity} />

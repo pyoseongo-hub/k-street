@@ -13,7 +13,7 @@ watchForNewVersion()
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <LanguageProvider>
-      {/* 🏙️ 「지금 보고 있는 도시」. 지금은 서울뿐이라 값이 안 바뀐다 —
+      {/* 🏙️ 「지금 보고 있는 도시」. 2026-09-17부터 서울·부산 둘이다 —
           미리 둔 이유는 useCity.tsx 머리말에 있다. */}
       <CityProvider>
         <App />
