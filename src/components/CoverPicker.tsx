@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import gallery from "../data/tour-gallery.json";
+import { ALL_PLACES } from "../data/seed";
 
 // 🖼️ 표지 사진 고르는 화면 (2026-09-02 사용자 지시: "여기 자동 사진들 너무 별로라
 // 서울 야경 사진 몇 개 줘봐 거기서 고를게").
@@ -17,9 +18,18 @@ import gallery from "../data/tour-gallery.json";
 //
 // ⚠️ 임시 화면이다. 고르고 나면 지워도 된다 — 지울 때 App.tsx의 분기도 같이 지운다.
 
-interface GalleryPhoto { url: string; thumb?: string }
-interface GalleryEntry { name?: string; gu?: string; photos?: GalleryPhoto[] }
-const GALLERY = gallery as Record<string, GalleryEntry>;
+// 📦 사진 목록은 **주소만** 적혀 있다(2026-09-17). 곳 이름·구는 앱이 이미
+//    들고 있어서 거기서 찾는다 — 같은 말을 두 번 적어 두지 않는다.
+//    자세한 모양은 scripts/lib/gallery-shape.mjs 머리말에.
+type PackedPhoto = string | [string] | [string, string];
+// ⚠️ JSON 을 그대로 읽으면 타입스크립트가 배열 길이를 모른다 — unknown 을 거쳐 받는다.
+const GALLERY = gallery as unknown as Record<string, PackedPhoto[]>;
+const urlOf = (x: PackedPhoto) => (typeof x === "string" ? x : x[0]);
+
+/** 관광공사 번호 → 그 곳의 이름·구. */
+const BY_CONTENT_ID = new Map(
+  ALL_PLACES.filter((p) => p.tourContentId).map((p) => [p.tourContentId as string, p])
+);
 
 /** 야경·전망이 있을 만한 곳. 이름으로만 거른다 — 사진 내용은 사람이 보고 정한다. */
 const NIGHT = /(야경|남산|서울타워|한강|반포|달빛|청계천|서울로|낙산|북악|스카이|전망|타워|불꽃|빛|라이트|노을|야행|월드타워)/;
@@ -33,10 +43,11 @@ export default function CoverPicker() {
   const all = useMemo(() => {
     const out: { n: number; url: string; place: string; gu: string }[] = [];
     let n = 0;
-    for (const entry of Object.values(GALLERY)) {
-      for (const p of entry.photos ?? []) {
+    for (const [contentId, photos] of Object.entries(GALLERY)) {
+      const place = BY_CONTENT_ID.get(contentId);
+      for (const p of photos) {
         n += 1;
-        out.push({ n, url: p.url, place: entry.name ?? "", gu: entry.gu ?? "" });
+        out.push({ n, url: urlOf(p), place: place?.name ?? "", gu: place?.gu ?? "" });
       }
     }
     return out;

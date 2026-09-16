@@ -15,16 +15,19 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // 🌐 **말 조각에는 이름표를 붙인다** (2026-09-17).
+        // 📦 **늦게 받는 자료에는 이름표를 붙인다** (2026-09-17).
         //
-        //    곳 이름 번역을 말마다 따로 받게 나눠 뒀는데(src/lib/placeText.ts),
-        //    파일 이름이 `ja-a1b2c3.js` 라 **서비스워커가 앱 조각과 구별을 못 한다.**
+        //    첫 화면에 필요 없어서 나중에 받는 조각이 둘 있다 —
+        //      · 곳 이름 번역, 말마다 한 장 (src/lib/placeText.ts)
+        //      · 넘겨 볼 사진 목록 tour-gallery, 848KB (src/lib/tourGallery.ts)
+        //    그런데 파일 이름이 `ja-a1b2c3.js` 면 **서비스워커가 앱 조각과 구별을 못 한다.**
         //    구별을 못 하면 미리 받는 목록(globPatterns 의 `assets/**`)에 다 들어가
-        //    **첫 방문에 열한 개를 통째로 받는다** — 나눈 뜻이 사라진다.
-        //    `i18n-` 을 앞에 붙여 두면 아래 workbox 쪽에서 골라낼 수 있다.
+        //    **첫 방문에 통째로 받는다** — 늦게 받게 만든 뜻이 사라진다.
+        //    `late-` 를 앞에 붙여 두면 아래 workbox 쪽에서 골라낼 수 있다.
         chunkFileNames: (info) =>
-          info.name && /^(en|ja|zh|zh-TW|vi|es|fr|de|ru|id|th)$/.test(info.name)
-            ? 'assets/i18n-[name]-[hash].js'
+          info.name &&
+          /^(en|ja|zh|zh-TW|vi|es|fr|de|ru|id|th|tour-gallery)$/.test(info.name)
+            ? 'assets/late-[name]-[hash].js'
             : 'assets/[name]-[hash].js',
       },
     },
@@ -77,27 +80,30 @@ export default defineConfig({
         //    들어온 손님이 **한 장만** 보는 자리다.
         globPatterns: ['*.{js,css,html,svg,png,ico}', 'assets/**', 'icons/**'],
 
-        // 🌐 **말 조각 열한 개를 미리 받지 않는다** (2026-09-17).
+        // 📦 **늦게 받는 조각은 미리 받지 않는다** (2026-09-17).
         //
-        //    곳 이름 번역은 말마다 파일이 따로다. 손님이 쓰는 말은 **하나**인데,
-        //    미리 받는 목록에 그냥 두면 **설치할 때 열한 개를 다 내려받는다**(약 820KB).
-        //    그러면 파일을 나눈 뜻이 없어진다 — 받는 양이 그대로다.
+        //    · 곳 이름 번역 — 말마다 파일이 따로다. 손님이 쓰는 말은 **하나**인데
+        //      미리 받는 목록에 두면 설치할 때 **열한 개를 다 내려받는다**(약 820KB).
+        //    · 넘겨 볼 사진 목록 — 848KB. 카드의 **첫 사진에는 안 쓰인다**
+        //      (세 번째 자리부터다 — src/lib/tourGallery.ts 머리말).
+        //    둘 다 미리 받으면 나눈 뜻이 없어진다 — 받는 양이 그대로다.
         //
         //    대신 아래 runtimeCaching 이 **손님이 실제로 받은 것만** 저장한다.
-        //    한 번 받으면 다음부터 오프라인에서도 그 말로 보인다.
-        //    ⚠️ 못 받으면 곳 이름이 한국어로 떨어질 뿐, 화면은 멀쩡히 뜬다.
-        globIgnores: ['**/assets/i18n-*.js'],
+        //    한 번 받으면 다음부터 오프라인에서도 쓸 수 있다.
+        //    ⚠️ 못 받아도 화면은 멀쩡히 뜬다 — 이름이 한국어로 떨어지고,
+        //       넘겨 볼 사진이 없을 뿐이다.
+        globIgnores: ['**/assets/late-*.js'],
 
         runtimeCaching: [
           {
-            // 파일 이름에 내용 해시가 박혀 있어(i18n-ja-**a1b2c3**.js) 내용이 바뀌면
+            // 파일 이름에 내용 해시가 박혀 있어(late-ja-**a1b2c3**.js) 내용이 바뀌면
             // 이름이 바뀐다 — 그래서 **CacheFirst 가 안전하다.** 헌 것이 남을 수 없다.
-            urlPattern: /\/assets\/i18n-[\w-]+\.js$/,
+            urlPattern: /\/assets\/late-[\w-]+\.js$/,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'kstreet-place-names',
+              cacheName: 'kstreet-late-data',
               // 말을 여러 번 바꿔 본 손님도 조각이 무한정 쌓이지 않게 한다.
-              expiration: { maxEntries: 12, maxAgeSeconds: 60 * 60 * 24 * 90 },
+              expiration: { maxEntries: 14, maxAgeSeconds: 60 * 60 * 24 * 90 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },

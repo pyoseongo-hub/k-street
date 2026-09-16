@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import { useTheme } from "./lib/useTheme";
 import { useLanguage } from "./lib/useLanguage";
 import SavedPanel from "./components/SavedPanel";
@@ -7,7 +7,12 @@ import { useSavedEntries } from "./lib/savedPlaces";
 import MonthlyFestivalPanel from "./components/MonthlyFestivalPanel";
 import DistrictExplorer from "./components/DistrictExplorer";
 import LanguageSelector from "./components/LanguageSelector";
-import CoverPicker from "./components/CoverPicker";
+// 🖼️ 표지 고르는 **임시 관리 화면**. 주소에 ?pick=cover 를 붙였을 때만 열린다.
+//
+// 🚨 **늦게 받는다**(lazy). 이 화면은 사진 목록(tour-gallery.json, 1MB)을 통째로
+//    읽는데, 그냥 import 하면 **손님 전원이 그 1MB 를 받는다** — 아무도 안 여는
+//    화면 때문에. 늦게 받게 두면 ?pick=cover 를 붙인 사람만 받는다.
+const CoverPicker = lazy(() => import("./components/CoverPicker"));
 import HomeSwitch from "./components/HomeSwitch";
 import ShareApp from "./components/ShareApp";
 import ArrivalGuide, { arrivalLabel } from "./components/ArrivalGuide";
@@ -149,7 +154,9 @@ function App() {
             폰에서는 보이므로 여기서 번호로 골라 알려 주는 쪽이 빠르다.
             다 고르고 나면 이 분기와 CoverPicker.tsx를 같이 지운다. */}
         {new URLSearchParams(window.location.search).get("pick") === "cover" ? (
-          <CoverPicker />
+          <Suspense fallback={null}>
+            <CoverPicker />
+          </Suspense>
         ) : (
           // 🔀 두 화면을 위아래로 잇지 않고 맨 위 단추로 오간다 — 자료가 늘수록
           //    아래 화면이 멀어지던 문제(HomeSwitch.tsx 주석 참고).

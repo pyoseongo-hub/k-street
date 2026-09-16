@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Place } from "../data/seed";
-import { galleryOf } from "../lib/tourGallery";
+import { galleryOf, ensureTourGallery, useTourGallery } from "../lib/tourGallery";
 import { useLanguage } from "../lib/useLanguage";
 
 // 📷 카드 위의 사진 한 자리. 사진이 여러 장이면 **넘겨 볼 수 있게** 한다
@@ -20,6 +20,13 @@ export default function PlacePhoto({ place, className = "fc-art fc-art-photo" }:
   className?: string;
 }) {
   const { t } = useLanguage();
+  // 📦 넘겨 볼 사진은 **늦게 받는다**(tourGallery.ts 머리말 참고). 도착하면
+  //    useTourGallery 가 이 카드를 다시 그린다 — 그때 「더 있음」 표시가 생긴다.
+  //    첫 사진은 이 자료를 안 쓰므로 기다릴 것이 없다.
+  useTourGallery();
+  useEffect(() => {
+    void ensureTourGallery();
+  }, []);
   const photos = galleryOf(place);
   const [idx, setIdx] = useState(0);
 

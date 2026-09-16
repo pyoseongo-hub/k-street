@@ -1,4 +1,4 @@
-import gallery from "../data/tour-gallery.json";
+import { useSyncExternalStore } from "react";
 import type { Place } from "../data/seed";
 import { galleryShotsFor } from "./photoGallery";
 
@@ -29,14 +29,85 @@ export interface GalleryPhoto {
   credit?: string;
 }
 
-interface GalleryEntry {
-  name?: string;
-  gu?: string;
-  category?: string;
-  photos?: GalleryPhoto[];
+/**
+ * 저장된 모양 — **한 곳당 사진 배열**이다.
+ *
+ * 사진 한 장은 세 가지 중 하나로 적혀 있다(scripts/lib/gallery-shape.mjs) —
+ *   · `"주소"`            썸네일이 규칙대로(image2 → image3)
+ *   · `["주소"]`          썸네일이 원본과 같다
+ *   · `["주소","썸네일"]` 그 밖
+ * 이렇게 적어 859KB → 288KB 가 됐고, **버린 정보는 없다**(4,174장 전수 대조).
+ */
+type PackedPhoto = string | [string] | [string, string];
+type GalleryEntry = PackedPhoto[];
+
+/** 원본 주소에서 썸네일 주소를 만든다. 규칙이 안 맞으면 null. */
+function thumbFromUrl(url: string): string | null {
+  return url.includes("image2") ? url.replace("image2", "image3") : null;
 }
 
-const GALLERY: Record<string, GalleryEntry> = gallery as Record<string, GalleryEntry>;
+/** 저장된 모양 → 화면이 쓰는 모양. 옛 모양({url,thumb})도 그대로 읽는다. */
+function unpack(x: PackedPhoto | { url?: string; thumb?: string }): GalleryPhoto | null {
+  if (typeof x === "string") return { url: x, thumb: thumbFromUrl(x) ?? x };
+  if (Array.isArray(x)) return x[0] ? { url: x[0], thumb: x[1] ?? x[0] } : null;
+  return x?.url ? { url: x.url, thumb: x.thumb ?? x.url } : null;
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// 📦 **이 자료는 첫 화면에 필요하지 않다 — 늦게 받는다** (2026-09-17)
+// ─────────────────────────────────────────────────────────────────────────
+//   서울 341곳·부산 202곳에도 사진을 받아 오면서 이 파일이 **439KB → 1,058KB**
+//   가 됐다. 그대로 두면 본체 js 가 1,458 → 2,100KB 로 도로 커진다 —
+//   곳 이름 번역을 말마다 갈라 아낀 것을 그대로 뱉어 내는 셈이다.
+//
+//   🚨 **늦게 와도 카드에 보이는 첫 사진은 안 바뀐다.** 아래 galleryOf 의 순서를
+//      보면 이 자료는 **③번째**다 — ①포토코리아 ②그 곳의 대표 사진 다음이다.
+//      즉 이 파일이 주는 것은 「넘겨 볼 사진 몇 장 더」뿐이고, 그건 손님이
+//      실제로 넘길 때나 필요하다. 첫 그림이 늦어질 일이 없다.
+//
+//   못 받아도 화면은 멀쩡하다 — 넘겨 볼 사진이 없을 뿐이다.
+const GALLERY: Record<string, GalleryEntry> = {};
+
+/** 자료가 도착하면 이 번호가 올라간다. 화면은 이걸 보고 다시 그린다. */
+let 판 = 0;
+const 듣는이 = new Set<() => void>();
+
+let 받는중: Promise<void> | null = null;
+
+/** 한 번만 받는다. 여러 카드가 동시에 불러도 같은 약속을 기다린다. */
+export function ensureTourGallery(): Promise<void> {
+  if (!받는중) {
+    받는중 = import("../data/tour-gallery.json")
+      .then((mod) => {
+        const data = ((mod as { default?: unknown }).default ?? mod) as Record<string, GalleryEntry>;
+        Object.assign(GALLERY, data);
+        판++;
+        for (const 알린다 of 듣는이) 알린다();
+      })
+      .catch(() => {
+        // 못 받았다(네트워크). 다음에 다시 해 볼 수 있게 비운다.
+        받는중 = null;
+      });
+  }
+  return 받는중;
+}
+
+/**
+ * 자료가 도착하면 다시 그리게 한다.
+ *
+ * 🚨 리액트 바깥에 있는 값이라, 채워져도 리액트가 **혼자서는 모른다.**
+ *    곳 이름 번역에서도 같은 자리에서 한 번 당했다(placeText.ts 머리말).
+ */
+export function useTourGallery(): void {
+  useSyncExternalStore(
+    (알린다) => {
+      듣는이.add(알린다);
+      return () => 듣는이.delete(알린다);
+    },
+    () => 판,
+    () => 판
+  );
+}
 
 /**
  * 그 곳의 사진을 **보여줄 순서대로** 돌려준다. 첫 장이 카드에 뜨고,
@@ -61,7 +132,7 @@ const GALLERY: Record<string, GalleryEntry> = gallery as Record<string, GalleryE
  */
 export function galleryOf(place: Place): GalleryPhoto[] {
   const entry = place.tourContentId ? GALLERY[place.tourContentId] : undefined;
-  const photos = entry?.photos ?? [];
+  const photos = (entry ?? []).map(unpack).filter((p): p is GalleryPhoto => p !== null);
   const out: GalleryPhoto[] = [];
   const seen = new Set<string>();
   const push = (p: GalleryPhoto | undefined) => {

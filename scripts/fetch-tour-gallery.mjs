@@ -22,6 +22,8 @@
 
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
 import { httpsPhoto } from "./lib/https-photo.mjs";
+// 📦 사진을 작게 적는 법 — 읽는 쪽(src/lib/tourGallery.ts)과 **같은 파일**을 쓴다.
+import { packPhoto } from "./lib/gallery-shape.mjs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -188,9 +190,13 @@ for (const t of todo) {
         // 📷 https로 올려 받는다(scripts/lib/https-photo.mjs 주석 참고).
         url: httpsPhoto(it.originimgurl || it.smallimageurl),
         thumb: httpsPhoto(it.smallimageurl || it.originimgurl),
-        name: it.imgname || undefined,
       }))
-      .filter((p) => p.url);
+      .filter((p) => p.url)
+      // 📦 **작게 적는다** — 썸네일 주소는 대개 원본에서 규칙으로 만들 수 있고,
+      //    사진마다 붙은 이름은 화면 어디에도 안 쓴다.
+      //    859KB → 288KB. 버리는 정보는 없다(scripts/lib/gallery-shape.mjs 참고).
+      .map(packPhoto)
+      .filter(Boolean);
 
     if (!photos.length) {
       withNone++;
@@ -198,7 +204,9 @@ for (const t of todo) {
     } else {
       if (photos.length > 1) withMany++;
       total += photos.length;
-      result[t.contentId] = { name: t.name, gu: t.gu, category: t.category, photos };
+      // 🚨 **곳 이름·구·갈래를 여기 적지 않는다.** 앱이 이미 들고 있는 값이라
+      //    한 벌 더 두면 자료만 커지고, 이름이 바뀌면 두 곳이 어긋난다.
+      result[t.contentId] = photos;
       console.log(`✅ ${t.gu.padEnd(5)} ${t.name} — ${photos.length}장`);
     }
   } catch (err) {
