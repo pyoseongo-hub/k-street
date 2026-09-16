@@ -21,7 +21,9 @@
     "check-station-chain": "vite build --ssr scripts/check-station-chain.ts --outDir dist-ssr && node dist-ssr/check-station-chain.js",
     "check-css-vars": "node scripts/check-css-vars.mjs",
     "check-workflows": "node scripts/check-workflows.mjs",
-    "check-tour-categories": "node scripts/check-tour-categories.mjs"
+    "check-tour-categories": "node scripts/check-tour-categories.mjs",
+    "check-city-places": "node scripts/check-city-places.mjs",
+    "build-city-places": "node scripts/build-city-places.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

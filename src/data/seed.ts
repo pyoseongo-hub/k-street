@@ -14,6 +14,9 @@ import { TOUR_PLACES, findTourPlace, nameKey } from "./tourPlaces";
 import { getManualPhoto } from "../lib/manualPhotos";
 import { galleryShotsFor } from "../lib/photoGallery";
 import autumnRoads from "./autumn-roads.json";
+// 🌊 부산. 지금은 launchScope 가 전부 걸러 내므로 화면에 한 곳도 안 나온다 —
+//    그래도 여기서 합쳐 두는 이유는 busanPlaces.ts 머리말에 적어 뒀다.
+import { BUSAN_PLACES } from "./busanPlaces";
 
 // street(골목·거리)는 2026-09-01에 추가했다. 관광공사 자료에 경리단길·익선동 한옥거리·
 // 종로귀금속거리처럼 구·사진·좌표가 다 붙은 골목이 40곳 있는데, 앱 이름이 K-Street인데도
@@ -609,6 +612,11 @@ const ALL_PLACES_RAW: Place[] = [
   ...FESTIVALS_ADDED,
   // 🍁 단풍길은 id 를 따로 매기므로 순서에 영향을 주지 않는다.
   ...AUTUMN_ROADS,
+  // 🌊 부산 202곳. id 가 관광공사 contentId 라 **순서에 영향을 주지 않는다**
+  //    (서울 id 304개와 하나도 안 겹치는 것을 확인했다).
+  //    지금은 아래 launchScope 게이트가 **전부 걸러 낸다** — 화면에 한 곳도 안 나온다.
+  //    일부러 그렇게 뒀다. 이유와 여는 법은 busanPlaces.ts 머리말에 있다.
+  ...BUSAN_PLACES,
 ];
 
 // scripts/fetch-coords.mjs가 채운 좌표를 덧씌운다 — seed.ts에 이미 직접 박아 둔
