@@ -51,6 +51,34 @@
     "lng": 127.0029878163,
     "homepage": "https://sdf1979.koreadanceassociation.org/v2/"
   },
+  "1080734": {
+    "name": "영도다리축제",
+    "city": "busan",
+    "gu": "영도구",
+    "addr": "부산광역시 영도구 해양로301번길 45 (동삼동)",
+    "start": "20251107",
+    "end": "20251109",
+    "startMonth": 11,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/90/3561790_image2_1.jpg",
+    "lat": 35.0786013237,
+    "lng": 129.0802726164,
+    "homepage": "https://www.yeongdo.go.kr/ydfestival.web"
+  },
+  "1399532": {
+    "name": "부산고등어축제",
+    "city": "busan",
+    "gu": "서구",
+    "addr": "부산광역시 서구 송도해변로 100 (암남동)",
+    "start": "20251031",
+    "end": "20251102",
+    "startMonth": 10,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/36/3547136_image2_1.jpg",
+    "lat": 35.0768587065,
+    "lng": 129.0180752934,
+    "homepage": "https://www.busangde.co.kr/"
+  },
   "1806376": {
     "name": "강동북페스티벌",
     "gu": "강동구",
@@ -76,6 +104,20 @@
     "lat": 37.5692236076,
     "lng": 126.8360144928,
     "homepage": "http://www.허준축제.com"
+  },
+  "2048902": {
+    "name": "해운대 빛축제",
+    "city": "busan",
+    "gu": "해운대구",
+    "addr": "부산광역시 해운대구 해운대해변로 280 (중동)",
+    "start": "20251129",
+    "end": "20260118",
+    "startMonth": 11,
+    "endMonth": 1,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/12/3576412_image2_1.jpg",
+    "lat": 35.1595354549,
+    "lng": 129.1626049105,
+    "homepage": "https://www.haeundae.go.kr/tour/index.do?menuCd=DOM_000000309006000000&utm_source=ig&utm_medium=social&utm_content=link_in_bio&utm_id=1344207247310791_v2_s02_e1002&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4CGNhbGxzaXRlAjE1AAGnXyK7aX8cyXm0u5KX16jwl_ZRy3DWyhX8ta671R_fWV5zhx3_yKNZoGKMjPM_aem_HbTLaOkJ8RfrBv17__xb-g"
   },
   "2384776": {
     "name": "2025 한강명산트레킹(2차)",
@@ -167,6 +209,20 @@
     "lat": 37.5655015943,
     "lng": 126.9787960237,
     "homepage": null
+  },
+  "2702333": {
+    "name": "카운트다운 부산",
+    "city": "busan",
+    "gu": "수영구",
+    "addr": "부산광역시 수영구 광안해변로 219 (광안동)",
+    "start": "20251231",
+    "end": "20260101",
+    "startMonth": 12,
+    "endMonth": 1,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/64/3579164_image2_1.png",
+    "lat": 35.1538130576,
+    "lng": 129.1185477876,
+    "homepage": "http://countdownbusan.co.kr/"
   },
   "2733405": {
     "name": "서대문 국가유산 야행",
@@ -285,6 +341,20 @@
     "lng": 127.0095709797,
     "homepage": "https://kto.visitkorea.or.kr/kor/souvenir/main.kto"
   },
+  "2860868": {
+    "name": "기장붕장어축제in칠암",
+    "city": "busan",
+    "gu": "기장군",
+    "addr": "부산광역시 기장군 일광읍 칠암리",
+    "start": "20251024",
+    "end": "20251026",
+    "startMonth": 10,
+    "endMonth": 10,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/29/3553829_image2_1.JPG",
+    "lat": 35.2983189421,
+    "lng": 129.2599953837,
+    "homepage": "https://www.gijang.go.kr/tour/index.gijang?menuCd=DOM_000000302003001000&cpath="
+  },
   "2862358": {
     "name": "공공미술 빛조각축제 <노원 달빛산책>",
     "gu": "노원구",
@@ -310,6 +380,20 @@
     "lat": 37.6320954567,
     "lng": 127.0679693368,
     "homepage": "https://www.nowonlib.kr/NoticeInfoDetail/15101"
+  },
+  "2868776": {
+    "name": "2025 영호남 전통시장 박람회",
+    "city": "busan",
+    "gu": "부산진구",
+    "addr": "부산광역시 부산진구 시민공원로 73 (범전동)",
+    "start": "20251031",
+    "end": "20251102",
+    "startMonth": 10,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/71/3553771_image2_1.jpg",
+    "lat": 35.1652745207,
+    "lng": 129.0567056306,
+    "homepage": "https://www.bsma.co.kr/"
   },
   "3000221": {
     "name": "은평청년축제",
@@ -349,6 +433,20 @@
     "lat": 37.5294186076,
     "lng": 127.0739939307,
     "homepage": "https://bitseomfestival.com/2025/"
+  },
+  "3018117": {
+    "name": "전포커피축제",
+    "city": "busan",
+    "gu": "부산진구",
+    "addr": "부산광역시 부산진구 전포동",
+    "start": "20251017",
+    "end": "20251019",
+    "startMonth": 10,
+    "endMonth": 10,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/54/3549654_image2_1.png",
+    "lat": 35.155470189,
+    "lng": 129.0635525258,
+    "homepage": "https://www.busanjin.go.kr/board/view.busanjin?boardId=BBS_0000009&menuCd=DOM_000000110001001000&dataSid=3941255"
   },
   "3018924": {
     "name": "도곡 메타세쿼이아 로드 페스타",
@@ -453,6 +551,20 @@
     "lat": 37.5177178854,
     "lng": 126.9580520415,
     "homepage": "https://www.sfac.or.kr/opensquare/notice/notice_list.do?cbIdx=955&bcIdx=137044&type="
+  },
+  "3345610": {
+    "name": "부산국제아동도서전",
+    "city": "busan",
+    "gu": "해운대구",
+    "addr": "부산광역시 해운대구 APEC로 55 (우동)",
+    "start": "20251211",
+    "end": "20251214",
+    "startMonth": 12,
+    "endMonth": 12,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/25/3536625_image2_1.jpg",
+    "lat": 35.1687450332,
+    "lng": 129.1355209016,
+    "homepage": "https://bicbf.or.kr/"
   },
   "3348362": {
     "name": "성북거리문화축제 <다다페스타>",
@@ -584,6 +696,48 @@
     "lng": 126.902442527,
     "homepage": "https://www.ydpcf.or.kr/festival/seonyudo.do"
   },
+  "3422647": {
+    "name": "게임 체험 팝업 전시 ‘Game-Playground’",
+    "city": "busan",
+    "gu": "수영구",
+    "addr": "부산광역시 수영구 광남로 96 (광안동, 광안 포디움프레스티지 1)",
+    "start": "20251129",
+    "end": "20251214",
+    "startMonth": 11,
+    "endMonth": 12,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/58/3579258_image2_1.jpg",
+    "lat": 35.1504883662,
+    "lng": 129.1151037338,
+    "homepage": null
+  },
+  "3434800": {
+    "name": "온천천 빛 축제",
+    "city": "busan",
+    "gu": "동래구",
+    "addr": "부산광역시 동래구 중앙대로 1324 (온천동)",
+    "start": "20251219",
+    "end": "20260201",
+    "startMonth": 12,
+    "endMonth": 2,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/72/3574272_image2_1.jpg",
+    "lat": 35.2056537329,
+    "lng": 129.0785081817,
+    "homepage": "https://www.dongnae.go.kr/index.dongnae?menuCd=DOM_000000403007000000"
+  },
+  "3437916": {
+    "name": "크리스마스 빌리지 부산 2025",
+    "city": "busan",
+    "gu": "해운대구",
+    "addr": "부산광역시 해운대구 수영강변대로 120 (우동)",
+    "start": "20251127",
+    "end": "20251225",
+    "startMonth": 11,
+    "endMonth": 12,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/78/3569778_image2_1.jpg",
+    "lat": 35.1710029572,
+    "lng": 129.1270687971,
+    "homepage": "https://www.marketchango.com/"
+  },
   "3439947": {
     "name": "강남 미디어 윈터페스타",
     "gu": "강남구",
@@ -714,6 +868,34 @@
     "lng": 127.0407514903,
     "homepage": "https://kimjang-festa.com/default/"
   },
+  "3555363": {
+    "name": "옥토버페스타 인 광안리",
+    "city": "busan",
+    "gu": "수영구",
+    "addr": "부산광역시 수영구 민락로6번길 29 (민락동)",
+    "start": "20251017",
+    "end": "20251019",
+    "startMonth": 10,
+    "endMonth": 10,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/52/3555352_image2_1.png",
+    "lat": 35.1568628164,
+    "lng": 129.1239638996,
+    "homepage": null
+  },
+  "3559571": {
+    "name": "부산중구반려동물축제",
+    "city": "busan",
+    "gu": "중구",
+    "addr": "부산광역시 중구 용두산길 37-30 (광복동2가)",
+    "start": "20251101",
+    "end": "20251101",
+    "startMonth": 11,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/63/3559563_image2_1.jpg",
+    "lat": 35.1011951345,
+    "lng": 129.0323594995,
+    "homepage": "https://www.bsjunggu.go.kr/board/view.junggu?boardId=BBS_0000001&menuCd=DOM_000000103001001000&dataSid=250114"
+  },
   "3563444": {
     "name": "방배카페 골목페스타",
     "gu": "서초구",
@@ -739,5 +921,19 @@
     "lat": 37.5789336838,
     "lng": 126.9964634775,
     "homepage": "https://www.kh.or.kr/cont/view/fest/month/menu/210?thisPage=1&idx=110321&searchCategory1=600&searchCategory2=&searchCategory3=&searchField=all&searchDate=202511&weekSel=undefined&searchType=&searchText="
+  },
+  "3576410": {
+    "name": "광복로 겨울빛 트리축제",
+    "city": "busan",
+    "gu": "중구",
+    "addr": "부산광역시 중구 광복로 72-1 (광복동2가)",
+    "start": "20251205",
+    "end": "20260222",
+    "startMonth": 12,
+    "endMonth": 2,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/05/3576405_image2_1.JPG",
+    "lat": 35.0986398717,
+    "lng": 129.0327400915,
+    "homepage": "https://litt.ly/gwangbok_treefestival"
   }
 }
