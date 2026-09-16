@@ -1,0 +1,33 @@
+name: Probe tour langs (관광공사 다국어 이름이 있나)
+
+# 🔎 구글 번역이 일본어·중국어에서 고유명사를 망가뜨린다(국청사 → 国庁舎).
+#    관광공사가 **공식 다국어 이름**을 준다면 지어낼 필요가 없다. 그걸 확인한다.
+# ⚠️ 아무것도 커밋하지 않는다. 확인만 한다.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 확인
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/probe-tour-langs.mjs 2>&1 | tee probe-log.txt
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🔎 관광공사 다국어 이름"
+            echo ""
+            echo '```'
+            cat probe-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
