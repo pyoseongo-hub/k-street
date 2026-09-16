@@ -29,6 +29,24 @@ const bad = [];
 for (const [k, v] of Object.entries(JSON.parse(readFileSync("src/data/tour-places-raw.json", "utf8"))))
   for (const p of v) seen.set(String(p.contentId), `서울 ${k}`);
 
+// ── 🔂 ⑤ **같은 도시 안에 같은 이름이 두 번 있나** (2026-09-17에 더했다) ────
+//
+//   번호는 다른데 **같은 곳**인 경우가 있다. 서울 341곳을 넣을 때 실제로 5곳이 그랬다 —
+//   사가정공원 · 백인제가옥 · 딜쿠샤 · 북서울꿈의숲 · 대안공간 루프. seed.ts 에 사람이
+//   적어 둔 것과 관광공사 번호가 달라서, 번호 검사로는 하나도 안 걸렸다.
+//   결과는 **12개 언어마다 같은 제목의 페이지 두 장**이었다(…/dilkusha 와 …/dilkusha-2).
+//   화면을 열어 봐도 모른다 — 둘 다 멀쩡해 보이기 때문이다.
+//
+//   🚨 이름은 **같은 도시 안에서만** 본다. 「중앙시장」처럼 서울에도 부산에도 있는
+//      이름이 있어서, 도시를 넘어 보면 멀쩡한 곳을 사고라고 부르게 된다.
+const nfc = (t) => String(t ?? "").normalize("NFC").trim();
+const seoulNames = new Map();
+for (const [k, v] of Object.entries(JSON.parse(readFileSync("src/data/tour-places-raw.json", "utf8"))))
+  for (const p of v) seoulNames.set(nfc(p.name), `서울 관광공사 ${k}`);
+for (const m of readFileSync("src/data/seed.ts", "utf8").matchAll(/\bname: "([^"]+)"/g))
+  if (!seoulNames.has(nfc(m[1]))) seoulNames.set(nfc(m[1]), "서울 seed.ts");
+const namesByCity = new Map([["seoul", seoulNames]]);
+
 const files = readdirSync("src/data").filter((f) => /-places\.json$/.test(f));
 for (const f of files) {
   const key = f.replace("-places.json", "");
@@ -40,6 +58,11 @@ for (const f of files) {
     if (seen.has(p.id)) bad.push(`${f} — id ${p.id} 가 이미 있다 (${seen.get(p.id)} · ${p.name})`);
     else seen.set(p.id, `${key} ${p.name}`);
     if (!C.units.includes(p.gu)) bad.push(`${f} — ${p.name}: 「${p.gu}」는 ${C.ko} 명부에 없다`);
+    // 🔂 같은 도시 안에 같은 이름 (위 주석 참고)
+    const names = namesByCity.get(key) ?? namesByCity.set(key, new Map()).get(key);
+    const where = names.get(nfc(p.name));
+    if (where) bad.push(`${f} — ${p.name}: 같은 이름이 이미 있다 (${where}) · 번호만 다르고 같은 곳일 수 있다`);
+    else names.set(nfc(p.name), `${key} ${p.id}`);
     if (/^http:/.test(p.image ?? "") || /^http:/.test(p.thumb ?? ""))
       bad.push(`${f} — ${p.name}: 사진 주소가 http 다 (https 화면에서 안 보인다)`);
     // 좌표가 **없는 것**은 문제가 아니다 — 만드는 쪽이 일부러 버린 것일 수 있다

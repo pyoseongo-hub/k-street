@@ -62,6 +62,45 @@ if (typeof city.coast !== "boolean") {
 }
 
 const pool = JSON.parse(readFileSync(SRC, "utf8"));
+
+// ── 🚫 이미 앱에 있는 곳은 두 번 넣지 않는다 ──────────────────────────────
+//
+//   서울은 **이 빌더가 생기기 전에** 자료가 들어왔다 —
+//     · src/data/tour-places-raw.json — 관광공사에서 받은 304곳 (id 가 `tour_…`)
+//     · src/data/seed.ts             — 사람이 25개 구를 직접 조사해 적은 것
+//   여기서 같은 곳을 또 만들면 **화면에 같은 곳이 두 번 뜬다.** id 앞에 붙는 말이
+//   달라서(`tour_1234` vs `1234`) 겹치는 줄도 모른다.
+//
+//   🚨 **번호는 도시와 상관없이 막고, 이름은 같은 도시 안에서만 막는다.**
+//      「중앙시장」처럼 서울에도 부산에도 있는 이름이 있어서다 —
+//      이름으로 도시를 넘어 막으면 **부산 중앙시장이 조용히 사라진다.**
+//      위 두 파일은 지금 전부 서울 것이라, 이름 쪽은 서울일 때만 쓴다.
+const nfc = (t) => String(t ?? "").normalize("NFC").trim();
+const takenIds = new Set();
+const takenNames = new Set();
+{
+  const tourRaw = JSON.parse(readFileSync("src/data/tour-places-raw.json", "utf8"));
+  for (const list of Object.values(tourRaw))
+    for (const p of list) {
+      takenIds.add(String(p.contentId));
+      if (CITY === "seoul") takenNames.add(nfc(p.name));
+    }
+  if (CITY === "seoul") {
+    // seed.ts 는 사람이 적은 것이라 기계가 읽을 모양이 아니다 — 이름만 훑는다.
+    //
+    // 🚨 **줄 첫머리로 찾으면 안 된다** (2026-09-17에 당했다).
+    //    처음엔 `^ {2,4}name:` 으로 찾았는데, seed.ts 에는 한 줄짜리 항목이 섞여 있다:
+    //      { id: id(), gu: "중랑구", category: "flower", name: "사가정공원", … },
+    //    이 모양은 `name:` 이 줄 첫머리가 아니라 **통째로 안 걸렸다.** 그래서
+    //    사가정공원 · 백인제가옥 · 딜쿠샤 · 북서울꿈의숲 · 대안공간 루프 **5곳이
+    //    두 번 들어갔고**, 12개 언어에서 같은 제목의 페이지가 두 장씩 났다
+    //    (…/baek-in-je-house 와 …/baek-in-je-house-2). 감사가 잡아 줬다.
+    //    seed.ts 의 `name: "` 194개는 **전부 곳 이름**이라(다른 뜻으로 쓰인 게 없다)
+    //    줄 위치를 따지지 않고 다 담는 것이 맞다.
+    const seed = readFileSync("src/data/seed.ts", "utf8");
+    for (const m of seed.matchAll(/\bname: "([^"]+)"/g)) takenNames.add(nfc(m[1]));
+  }
+}
 const out = [];
 const dropped = new Map();
 const drop = (why, title) => dropped.set(why, [...(dropped.get(why) ?? []), title]);
@@ -75,6 +114,10 @@ for (const it of pool) {
   //    명부에 없는 이름이면 버린다 — 화면에 그 칸이 없어서 어차피 안 보인다.
   const gu = String(it.addr1 ?? "").split(/\s+/)[1] ?? "";
   if (!UNITS.includes(gu)) { drop(gu ? `명부에 없는 동네(${gu})` : "주소 없음", name); continue; }
+
+  // 🚫 이미 있는 곳 (위 주석 참고). 번호가 같으면 확실히 같은 곳이다.
+  if (takenIds.has(String(it.contentid))) { drop("이미 앱에 있다(번호가 같다)", name); continue; }
+  if (takenNames.has(nfc(name))) { drop("이미 앱에 있다(이름이 같다)", name); continue; }
 
   // 📷 사진이 없으면 앱이 걸러 낸다(ALL_PLACES). 여기서 미리 갈라 세어 둔다.
   const image = httpsPhoto(it.firstimage);
@@ -104,6 +147,12 @@ for (const it of pool) {
     lng: Number.isFinite(lng) && lng ? lng : undefined,
     tourContentId: String(it.contentid),
     source: "tour",
+    // ✅ **관광공사가 직접 등록·관리하는 자료**라 「확인된 값」으로 둔다.
+    //    seed.ts 의 confirmed:false 는 「아직 못 찾은 빈 칸」이라 뜻이 다르다
+    //    (tourPlaces.ts 에 같은 이유를 적어 뒀다 — 잣대를 둘로 두지 않는다).
+    //    🚨 이걸 빼면 감사 ❌B5 가 **346곳 전부**를 「값처럼 보이는데 확인 안 됐다」로
+    //       잡고 푸시를 막는다. 실제로 2026-09-17에 그렇게 막혔다.
+    confirmed: true,
   });
 }
 

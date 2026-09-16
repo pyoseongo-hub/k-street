@@ -11,7 +11,8 @@
     "lat": 35.0006471157,
     "lng": 128.8295937487,
     "tourContentId": "129156",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2726843",
@@ -23,7 +24,8 @@
     "lat": 35.0317518247,
     "lng": 128.8216713782,
     "tourContentId": "2726843",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2867934",
@@ -37,7 +39,8 @@
     "lat": 35.154317052,
     "lng": 128.8860013488,
     "tourContentId": "2867934",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "128564",
@@ -51,7 +54,8 @@
     "lat": 35.0117208424,
     "lng": 128.8276908389,
     "tourContentId": "128564",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2456224",
@@ -65,7 +69,8 @@
     "lat": 35.1546447184,
     "lng": 128.8819239173,
     "tourContentId": "2456224",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "250424",
@@ -79,7 +84,8 @@
     "lat": 35.0967250919,
     "lng": 128.8209252451,
     "tourContentId": "250424",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2742601",
@@ -91,7 +97,8 @@
     "lat": 35.1129197501,
     "lng": 128.9317096042,
     "tourContentId": "2742601",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2605602",
@@ -105,7 +112,8 @@
     "lat": 35.0056381443,
     "lng": 128.8251995524,
     "tourContentId": "2605602",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "482123",
@@ -119,7 +127,8 @@
     "lat": 35.117757865,
     "lng": 128.9190855715,
     "tourContentId": "482123",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1935608",
@@ -133,7 +142,8 @@
     "lat": 35.2434553947,
     "lng": 129.097038863,
     "tourContentId": "1935608",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1303759",
@@ -147,7 +157,8 @@
     "lat": 35.2473742654,
     "lng": 129.0898032743,
     "tourContentId": "1303759",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "298099",
@@ -161,7 +172,8 @@
     "lat": 35.2538895578,
     "lng": 129.0549922383,
     "tourContentId": "298099",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "128830",
@@ -175,7 +187,8 @@
     "lat": 35.2264763727,
     "lng": 129.077063292,
     "tourContentId": "128830",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "126028",
@@ -189,7 +202,8 @@
     "lat": 35.268448978,
     "lng": 129.0518587773,
     "tourContentId": "126028",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3027098",
@@ -203,7 +217,8 @@
     "lat": 35.2453406867,
     "lng": 129.0642277794,
     "tourContentId": "3027098",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2643873",
@@ -217,7 +232,8 @@
     "lat": 35.2513870387,
     "lng": 129.0538229642,
     "tourContentId": "2643873",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2788830",
@@ -231,7 +247,8 @@
     "lat": 35.2698995092,
     "lng": 129.08932214,
     "tourContentId": "2788830",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2782699",
@@ -245,7 +262,8 @@
     "lat": 35.290811206,
     "lng": 129.0975791779,
     "tourContentId": "2782699",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2675011",
@@ -259,7 +277,8 @@
     "lat": 35.2472747896,
     "lng": 129.1174425369,
     "tourContentId": "2675011",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "309293",
@@ -273,7 +292,8 @@
     "lat": 35.274006634,
     "lng": 129.0489255467,
     "tourContentId": "309293",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2554111",
@@ -287,7 +307,8 @@
     "lat": 35.2839753157,
     "lng": 129.0681152667,
     "tourContentId": "2554111",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2763881",
@@ -301,7 +322,8 @@
     "lat": 35.2255211909,
     "lng": 129.0914815074,
     "tourContentId": "2763881",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1607138",
@@ -315,7 +337,8 @@
     "lat": 35.2333923163,
     "lng": 129.0798600805,
     "tourContentId": "1607138",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2643387",
@@ -329,7 +352,8 @@
     "lat": 35.2369919623,
     "lng": 129.0825597462,
     "tourContentId": "2643387",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2763981",
@@ -343,7 +367,8 @@
     "lat": 35.215908583,
     "lng": 129.1024697033,
     "tourContentId": "2763981",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "128108",
@@ -357,7 +382,8 @@
     "lat": 35.289161567,
     "lng": 129.1070700628,
     "tourContentId": "128108",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "128886",
@@ -371,7 +397,8 @@
     "lat": 35.3040405268,
     "lng": 129.111010976,
     "tourContentId": "128886",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2782765",
@@ -385,7 +412,8 @@
     "lat": 35.2954092493,
     "lng": 129.1695450043,
     "tourContentId": "2782765",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "128610",
@@ -399,7 +427,8 @@
     "lat": 35.1844585662,
     "lng": 129.2111944455,
     "tourContentId": "128610",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2860868",
@@ -413,7 +442,8 @@
     "lat": 35.2983189421,
     "lng": 129.2599953837,
     "tourContentId": "2860868",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1953936",
@@ -427,7 +457,8 @@
     "lat": 35.2578421006,
     "lng": 129.2158836772,
     "tourContentId": "1953936",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2796940",
@@ -441,7 +472,8 @@
     "lat": 35.2241267082,
     "lng": 129.2306472139,
     "tourContentId": "2796940",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2823059",
@@ -455,7 +487,8 @@
     "lat": 35.3169141022,
     "lng": 129.2612503134,
     "tourContentId": "2823059",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2758469",
@@ -469,7 +502,8 @@
     "lat": 35.3291390743,
     "lng": 129.1843288936,
     "tourContentId": "2758469",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1117817",
@@ -483,7 +517,8 @@
     "lat": 35.3047987868,
     "lng": 129.1116442329,
     "tourContentId": "1117817",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2532877",
@@ -497,7 +532,8 @@
     "lat": 35.3238517233,
     "lng": 129.2349940728,
     "tourContentId": "2532877",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2385686",
@@ -511,7 +547,8 @@
     "lat": 35.2871407693,
     "lng": 129.1715589466,
     "tourContentId": "2385686",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "337415",
@@ -525,7 +562,8 @@
     "lat": 35.2142766822,
     "lng": 129.169888882,
     "tourContentId": "337415",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2776276",
@@ -539,7 +577,8 @@
     "lat": 35.3112806782,
     "lng": 129.2225232855,
     "tourContentId": "2776276",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "347229",
@@ -553,7 +592,8 @@
     "lat": 35.269243617,
     "lng": 129.2167499529,
     "tourContentId": "347229",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2758498",
@@ -567,7 +607,8 @@
     "lat": 35.3360483529,
     "lng": 129.2765262292,
     "tourContentId": "2758498",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2758489",
@@ -581,7 +622,8 @@
     "lat": 35.3744348966,
     "lng": 129.2328150778,
     "tourContentId": "2758489",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2556598",
@@ -595,7 +637,8 @@
     "lat": 35.3269448875,
     "lng": 129.1849372349,
     "tourContentId": "2556598",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2776286",
@@ -609,7 +652,8 @@
     "lat": 35.3205232079,
     "lng": 129.1753910217,
     "tourContentId": "2776286",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2775565",
@@ -623,7 +667,8 @@
     "lat": 35.2599730111,
     "lng": 129.2477530679,
     "tourContentId": "2775565",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2775559",
@@ -637,7 +682,8 @@
     "lat": 35.2055759171,
     "lng": 129.22576204,
     "tourContentId": "2775559",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2775495",
@@ -651,7 +697,8 @@
     "lat": 35.338625818,
     "lng": 129.2752373809,
     "tourContentId": "2775495",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2783380",
@@ -665,7 +712,8 @@
     "lat": 35.1251964498,
     "lng": 129.0986919647,
     "tourContentId": "2783380",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "126147",
@@ -679,7 +727,8 @@
     "lat": 35.1189694636,
     "lng": 129.1038166893,
     "tourContentId": "126147",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "319563",
@@ -693,7 +742,8 @@
     "lat": 35.1456799238,
     "lng": 129.0800957995,
     "tourContentId": "319563",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "131087",
@@ -707,7 +757,8 @@
     "lat": 35.1335291572,
     "lng": 129.1153208463,
     "tourContentId": "131087",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2822240",
@@ -721,7 +772,8 @@
     "lat": 35.1322571676,
     "lng": 129.1201732372,
     "tourContentId": "2822240",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "128055",
@@ -735,7 +787,8 @@
     "lat": 35.1253214518,
     "lng": 129.0995779953,
     "tourContentId": "128055",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3451794",
@@ -749,7 +802,8 @@
     "lat": 35.1327486901,
     "lng": 129.1153458655,
     "tourContentId": "3451794",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "128290",
@@ -763,7 +817,8 @@
     "lat": 35.1579341561,
     "lng": 129.0827285679,
     "tourContentId": "128290",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2733472",
@@ -775,7 +830,8 @@
     "lat": 35.1579341561,
     "lng": 129.0827285679,
     "tourContentId": "2733472",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2945389",
@@ -787,7 +843,8 @@
     "lat": 35.1297375886,
     "lng": 129.0976280442,
     "tourContentId": "2945389",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "298111",
@@ -801,7 +858,8 @@
     "lat": 35.1204207111,
     "lng": 129.029678653,
     "tourContentId": "298111",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1942299",
@@ -815,7 +873,8 @@
     "lat": 35.1167962983,
     "lng": 129.0395112298,
     "tourContentId": "1942299",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "304811",
@@ -829,7 +888,8 @@
     "lat": 35.126761849,
     "lng": 129.0395054026,
     "tourContentId": "304811",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2708108",
@@ -843,7 +903,8 @@
     "lat": 35.1403327856,
     "lng": 129.0521955945,
     "tourContentId": "2708108",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1607242",
@@ -857,7 +918,8 @@
     "lat": 35.1408826262,
     "lng": 129.0468821528,
     "tourContentId": "1607242",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "132499",
@@ -871,7 +933,8 @@
     "lat": 35.1410439821,
     "lng": 129.0611336867,
     "tourContentId": "132499",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "132189",
@@ -885,7 +948,8 @@
     "lat": 35.1361805951,
     "lng": 129.0587979118,
     "tourContentId": "132189",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1607335",
@@ -899,7 +963,8 @@
     "lat": 35.1177378193,
     "lng": 129.0373336157,
     "tourContentId": "1607335",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1942314",
@@ -913,7 +978,8 @@
     "lat": 35.1171267121,
     "lng": 129.0338450468,
     "tourContentId": "1942314",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1945293",
@@ -927,7 +993,8 @@
     "lat": 35.1185793062,
     "lng": 129.0327117725,
     "tourContentId": "1945293",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1304515",
@@ -941,7 +1008,8 @@
     "lat": 35.1351167823,
     "lng": 129.0564925856,
     "tourContentId": "1304515",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2869135",
@@ -955,7 +1023,8 @@
     "lat": 35.1186849857,
     "lng": 129.0400611298,
     "tourContentId": "2869135",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2656194",
@@ -969,7 +1038,8 @@
     "lat": 35.1213095185,
     "lng": 129.0306535435,
     "tourContentId": "2656194",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1607440",
@@ -983,7 +1053,8 @@
     "lat": 35.2250098725,
     "lng": 129.0771855435,
     "tourContentId": "1607440",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2822334",
@@ -997,7 +1068,8 @@
     "lat": 35.1916279693,
     "lng": 129.1024592605,
     "tourContentId": "2822334",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3017112",
@@ -1011,7 +1083,8 @@
     "lat": 35.2018764786,
     "lng": 129.0839244809,
     "tourContentId": "3017112",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1607360",
@@ -1025,7 +1098,8 @@
     "lat": 35.2077202717,
     "lng": 129.0841215255,
     "tourContentId": "1607360",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "309338",
@@ -1039,7 +1113,8 @@
     "lat": 35.2036235793,
     "lng": 129.0879435276,
     "tourContentId": "309338",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "231945",
@@ -1053,7 +1128,8 @@
     "lat": 35.2068732659,
     "lng": 129.0906820891,
     "tourContentId": "231945",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3434800",
@@ -1067,7 +1143,8 @@
     "lat": 35.2056537329,
     "lng": 129.0785081817,
     "tourContentId": "3434800",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2550799",
@@ -1081,7 +1158,8 @@
     "lat": 35.2012570842,
     "lng": 129.0828690343,
     "tourContentId": "2550799",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2868776",
@@ -1095,7 +1173,8 @@
     "lat": 35.1652745207,
     "lng": 129.0567056306,
     "tourContentId": "2868776",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "132572",
@@ -1109,7 +1188,8 @@
     "lat": 35.1434103837,
     "lng": 129.0611197346,
     "tourContentId": "132572",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3093625",
@@ -1123,7 +1203,8 @@
     "lat": 35.1640385095,
     "lng": 129.0546280676,
     "tourContentId": "3093625",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "132188",
@@ -1137,7 +1218,8 @@
     "lat": 35.1624610334,
     "lng": 129.0614025211,
     "tourContentId": "132188",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "128053",
@@ -1151,7 +1233,8 @@
     "lat": 35.1768587956,
     "lng": 129.0275328529,
     "tourContentId": "128053",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2944033",
@@ -1165,7 +1248,8 @@
     "lat": 35.1536149962,
     "lng": 129.071940736,
     "tourContentId": "2944033",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3018117",
@@ -1179,7 +1263,8 @@
     "lat": 35.155470189,
     "lng": 129.0635525258,
     "tourContentId": "3018117",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2755696",
@@ -1193,7 +1278,8 @@
     "lat": 35.197780951,
     "lng": 129.0004318626,
     "tourContentId": "2755696",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1250885",
@@ -1207,7 +1293,8 @@
     "lat": 35.2087575605,
     "lng": 129.0037896031,
     "tourContentId": "1250885",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3414171",
@@ -1221,7 +1308,8 @@
     "lat": 35.2505392944,
     "lng": 129.0204258972,
     "tourContentId": "3414171",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "127891",
@@ -1235,7 +1323,8 @@
     "lat": 35.2422290925,
     "lng": 129.019201232,
     "tourContentId": "127891",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3442423",
@@ -1249,7 +1338,8 @@
     "lat": 35.2329549282,
     "lng": 129.0081635592,
     "tourContentId": "3442423",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2756696",
@@ -1263,7 +1353,8 @@
     "lat": 35.2510535364,
     "lng": 129.0426767218,
     "tourContentId": "2756696",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2785611",
@@ -1277,7 +1368,8 @@
     "lat": 35.170800304,
     "lng": 128.9821175281,
     "tourContentId": "2785611",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2677748",
@@ -1291,7 +1383,8 @@
     "lat": 35.1849381103,
     "lng": 129.0093258839,
     "tourContentId": "2677748",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1303697",
@@ -1305,7 +1398,8 @@
     "lat": 35.1638537784,
     "lng": 128.9776597721,
     "tourContentId": "1303697",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "132524",
@@ -1319,7 +1413,8 @@
     "lat": 35.1287185796,
     "lng": 128.9643091143,
     "tourContentId": "132524",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2787128",
@@ -1333,7 +1428,8 @@
     "lat": 35.1537799975,
     "lng": 128.9826012838,
     "tourContentId": "2787128",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2756707",
@@ -1347,7 +1443,8 @@
     "lat": 35.1728970354,
     "lng": 128.9682186811,
     "tourContentId": "2756707",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "337435",
@@ -1361,7 +1458,8 @@
     "lat": 35.1782275148,
     "lng": 128.9965271813,
     "tourContentId": "337435",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "346661",
@@ -1375,7 +1473,8 @@
     "lat": 35.183582782,
     "lng": 129.0134338969,
     "tourContentId": "346661",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2785265",
@@ -1389,7 +1488,8 @@
     "lat": 35.1088376838,
     "lng": 128.9758364301,
     "tourContentId": "2785265",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2554141",
@@ -1403,7 +1503,8 @@
     "lat": 35.1082872241,
     "lng": 128.9474416939,
     "tourContentId": "2554141",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2614714",
@@ -1417,7 +1518,8 @@
     "lat": 35.104551505,
     "lng": 128.9460085869,
     "tourContentId": "2614714",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2784351",
@@ -1431,7 +1533,8 @@
     "lat": 35.0551547329,
     "lng": 128.9719937791,
     "tourContentId": "2784351",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "769761",
@@ -1445,7 +1548,8 @@
     "lat": 35.0463945293,
     "lng": 128.9680471374,
     "tourContentId": "769761",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2674974",
@@ -1459,7 +1563,8 @@
     "lat": 35.1310381466,
     "lng": 128.9851266839,
     "tourContentId": "2674974",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2867542",
@@ -1473,7 +1578,8 @@
     "lat": 35.0919423443,
     "lng": 128.9753647093,
     "tourContentId": "2867542",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2788451",
@@ -1487,7 +1593,8 @@
     "lat": 35.0809712112,
     "lng": 128.9677684454,
     "tourContentId": "2788451",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2708164",
@@ -1501,7 +1608,8 @@
     "lat": 35.0498384676,
     "lng": 128.9614309528,
     "tourContentId": "2708164",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2744597",
@@ -1515,7 +1623,8 @@
     "lat": 35.1264334874,
     "lng": 129.0058166756,
     "tourContentId": "2744597",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "130200",
@@ -1529,7 +1638,8 @@
     "lat": 35.1239756631,
     "lng": 129.0185100829,
     "tourContentId": "130200",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2614716",
@@ -1543,7 +1653,8 @@
     "lat": 35.0490923097,
     "lng": 129.0148985467,
     "tourContentId": "2614716",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "126122",
@@ -1557,7 +1668,8 @@
     "lat": 35.0739256715,
     "lng": 129.016458847,
     "tourContentId": "126122",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "126856",
@@ -1571,7 +1683,8 @@
     "lat": 35.1121438284,
     "lng": 129.027954028,
     "tourContentId": "126856",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1399532",
@@ -1585,7 +1698,8 @@
     "lat": 35.0768587065,
     "lng": 129.0180752934,
     "tourContentId": "1399532",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2557807",
@@ -1599,7 +1713,8 @@
     "lat": 35.0753645109,
     "lng": 129.0224999494,
     "tourContentId": "2557807",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2614725",
@@ -1613,7 +1728,8 @@
     "lat": 35.0659655069,
     "lng": 129.019511576,
     "tourContentId": "2614725",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2721158",
@@ -1625,7 +1741,8 @@
     "lat": 35.093648481,
     "lng": 129.0173415667,
     "tourContentId": "2721158",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2744582",
@@ -1639,7 +1756,8 @@
     "lat": 35.0932847737,
     "lng": 129.0250186863,
     "tourContentId": "2744582",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "126814",
@@ -1651,7 +1769,8 @@
     "lat": 35.1719498296,
     "lng": 129.1138921398,
     "tourContentId": "126814",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3422647",
@@ -1665,7 +1784,8 @@
     "lat": 35.1504883662,
     "lng": 129.1151037338,
     "tourContentId": "3422647",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "129631",
@@ -1679,7 +1799,8 @@
     "lat": 35.1743106361,
     "lng": 129.1117117085,
     "tourContentId": "129631",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2708019",
@@ -1691,7 +1812,8 @@
     "lat": 35.1477386656,
     "lng": 129.114673291,
     "tourContentId": "2708019",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "127925",
@@ -1705,7 +1827,8 @@
     "lat": 35.1551657503,
     "lng": 129.1221363273,
     "tourContentId": "127925",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "129140",
@@ -1719,7 +1842,8 @@
     "lat": 35.1602230601,
     "lng": 129.0974161159,
     "tourContentId": "129140",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1303784",
@@ -1733,7 +1857,8 @@
     "lat": 35.1392728438,
     "lng": 129.1090851202,
     "tourContentId": "1303784",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2782747",
@@ -1747,7 +1872,8 @@
     "lat": 35.1554211893,
     "lng": 129.1173728455,
     "tourContentId": "2782747",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2782626",
@@ -1761,7 +1887,8 @@
     "lat": 35.1462388759,
     "lng": 129.1169286916,
     "tourContentId": "2782626",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2869279",
@@ -1775,7 +1902,8 @@
     "lat": 35.1702389751,
     "lng": 129.117408547,
     "tourContentId": "2869279",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "337532",
@@ -1789,7 +1917,8 @@
     "lat": 35.1766545764,
     "lng": 129.0986683346,
     "tourContentId": "337532",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "128134",
@@ -1803,7 +1932,8 @@
     "lat": 35.161379026,
     "lng": 129.1266024351,
     "tourContentId": "128134",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3555363",
@@ -1817,7 +1947,8 @@
     "lat": 35.1568628164,
     "lng": 129.1239638996,
     "tourContentId": "3555363",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2782757",
@@ -1831,7 +1962,8 @@
     "lat": 35.1604483075,
     "lng": 129.1121398296,
     "tourContentId": "2782757",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2702333",
@@ -1845,7 +1977,8 @@
     "lat": 35.1538130576,
     "lng": 129.1185477876,
     "tourContentId": "2702333",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "294452",
@@ -1859,7 +1992,8 @@
     "lat": 35.1833036953,
     "lng": 129.0912632411,
     "tourContentId": "294452",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "298112",
@@ -1873,7 +2007,8 @@
     "lat": 35.1916075512,
     "lng": 129.049663856,
     "tourContentId": "298112",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "304695",
@@ -1887,7 +2022,8 @@
     "lat": 35.1639058017,
     "lng": 129.0876863061,
     "tourContentId": "304695",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "130774",
@@ -1901,7 +2037,8 @@
     "lat": 35.0712160269,
     "lng": 129.079642317,
     "tourContentId": "130774",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "252562",
@@ -1915,7 +2052,8 @@
     "lat": 35.0945765502,
     "lng": 129.0388146742,
     "tourContentId": "252562",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2470024",
@@ -1929,7 +2067,8 @@
     "lat": 35.0928101531,
     "lng": 129.0427254928,
     "tourContentId": "2470024",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1942253",
@@ -1943,7 +2082,8 @@
     "lat": 35.0923794753,
     "lng": 129.033490197,
     "tourContentId": "1942253",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2606221",
@@ -1955,7 +2095,8 @@
     "lat": 35.0779590845,
     "lng": 129.0453201165,
     "tourContentId": "2606221",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1080734",
@@ -1969,7 +2110,8 @@
     "lat": 35.0786013237,
     "lng": 129.0802726164,
     "tourContentId": "1080734",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1942316",
@@ -1983,7 +2125,8 @@
     "lat": 35.0927462941,
     "lng": 129.0439559432,
     "tourContentId": "1942316",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "252561",
@@ -1995,7 +2138,8 @@
     "lat": 35.0812475294,
     "lng": 129.0411870536,
     "tourContentId": "252561",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3017435",
@@ -2009,7 +2153,8 @@
     "lat": 35.0692381886,
     "lng": 129.0643270354,
     "tourContentId": "3017435",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2736392",
@@ -2023,7 +2168,8 @@
     "lat": 35.0977293865,
     "lng": 129.0611626448,
     "tourContentId": "2736392",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2790483",
@@ -2037,7 +2183,8 @@
     "lat": 35.0966433823,
     "lng": 129.060371077,
     "tourContentId": "2790483",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1608751",
@@ -2051,7 +2198,8 @@
     "lat": 35.0560095813,
     "lng": 129.0897751849,
     "tourContentId": "1608751",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3017347",
@@ -2063,7 +2211,8 @@
     "lat": 35.0891108108,
     "lng": 129.0559688873,
     "tourContentId": "3017347",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1942348",
@@ -2077,7 +2226,8 @@
     "lat": 35.1005396593,
     "lng": 129.0327483723,
     "tourContentId": "1942348",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "132574",
@@ -2091,7 +2241,8 @@
     "lat": 35.0997620313,
     "lng": 129.0361453203,
     "tourContentId": "132574",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3576410",
@@ -2105,7 +2256,8 @@
     "lat": 35.0986398717,
     "lng": 129.0327400915,
     "tourContentId": "3576410",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "126857",
@@ -2119,7 +2271,8 @@
     "lat": 35.0986398717,
     "lng": 129.0327400915,
     "tourContentId": "126857",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "132191",
@@ -2131,7 +2284,8 @@
     "lat": 35.1016422372,
     "lng": 129.0285792599,
     "tourContentId": "132191",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1018702",
@@ -2145,7 +2299,8 @@
     "lat": 35.1011311741,
     "lng": 129.0280793175,
     "tourContentId": "1018702",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "132187",
@@ -2159,7 +2314,8 @@
     "lat": 35.0980149031,
     "lng": 129.0306458464,
     "tourContentId": "132187",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "986063",
@@ -2173,7 +2329,8 @@
     "lat": 35.097345605,
     "lng": 129.034523305,
     "tourContentId": "986063",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1942233",
@@ -2187,7 +2344,8 @@
     "lat": 35.1010840062,
     "lng": 129.0307152012,
     "tourContentId": "1942233",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1013694",
@@ -2201,7 +2359,8 @@
     "lat": 35.0996507962,
     "lng": 129.0286987483,
     "tourContentId": "1013694",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "985921",
@@ -2215,7 +2374,8 @@
     "lat": 35.1006395595,
     "lng": 129.0279265666,
     "tourContentId": "985921",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "127149",
@@ -2229,7 +2389,8 @@
     "lat": 35.1093802515,
     "lng": 129.0281096457,
     "tourContentId": "127149",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1960620",
@@ -2243,7 +2404,8 @@
     "lat": 35.0973677005,
     "lng": 129.0277461155,
     "tourContentId": "1960620",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "132190",
@@ -2257,7 +2419,8 @@
     "lat": 35.0966511661,
     "lng": 129.0306042201,
     "tourContentId": "132190",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3083767",
@@ -2271,7 +2434,8 @@
     "lat": 35.1027616225,
     "lng": 129.032190027,
     "tourContentId": "3083767",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2554068",
@@ -2285,7 +2449,8 @@
     "lat": 35.1017589855,
     "lng": 129.0336899238,
     "tourContentId": "2554068",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3559571",
@@ -2299,7 +2464,8 @@
     "lat": 35.1011951345,
     "lng": 129.0323594995,
     "tourContentId": "3559571",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "132550",
@@ -2313,7 +2479,8 @@
     "lat": 35.1014505558,
     "lng": 129.0265905492,
     "tourContentId": "132550",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "132576",
@@ -2327,7 +2494,8 @@
     "lat": 35.096851116,
     "lng": 129.0290793478,
     "tourContentId": "132576",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1013709",
@@ -2341,7 +2509,8 @@
     "lat": 35.100281283,
     "lng": 129.0287931674,
     "tourContentId": "1013709",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1013461",
@@ -2355,7 +2524,8 @@
     "lat": 35.1024004807,
     "lng": 129.028312596,
     "tourContentId": "1013461",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1957694",
@@ -2369,7 +2539,8 @@
     "lat": 35.0966650543,
     "lng": 129.0306014426,
     "tourContentId": "1957694",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3064821",
@@ -2383,7 +2554,8 @@
     "lat": 35.0967261783,
     "lng": 129.0317124553,
     "tourContentId": "3064821",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1013721",
@@ -2397,7 +2569,8 @@
     "lat": 35.0996591215,
     "lng": 129.0283348915,
     "tourContentId": "1013721",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1878262",
@@ -2411,7 +2584,8 @@
     "lat": 35.1618263079,
     "lng": 129.13252413,
     "tourContentId": "1878262",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2704645",
@@ -2425,7 +2599,8 @@
     "lat": 35.1584551702,
     "lng": 129.1706820162,
     "tourContentId": "2704645",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3336600",
@@ -2437,7 +2612,8 @@
     "lat": 35.1657319056,
     "lng": 129.1583856629,
     "tourContentId": "3336600",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2875837",
@@ -2451,7 +2627,8 @@
     "lat": 35.1571305311,
     "lng": 129.1821532774,
     "tourContentId": "2875837",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2875849",
@@ -2465,7 +2642,8 @@
     "lat": 35.1813775511,
     "lng": 129.1678566312,
     "tourContentId": "2875849",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "128810",
@@ -2479,7 +2657,8 @@
     "lat": 35.1536609221,
     "lng": 129.1523226328,
     "tourContentId": "128810",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2381567",
@@ -2493,7 +2672,8 @@
     "lat": 35.1574970351,
     "lng": 129.1756010591,
     "tourContentId": "2381567",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2789488",
@@ -2507,7 +2687,8 @@
     "lat": 35.1581969059,
     "lng": 129.172851279,
     "tourContentId": "2789488",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2875862",
@@ -2521,7 +2702,8 @@
     "lat": 35.2240446703,
     "lng": 129.1503819766,
     "tourContentId": "2875862",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2907087",
@@ -2533,7 +2715,8 @@
     "image": "https://tong.visitkorea.or.kr/cms/resource/82/2907082_image2_1.JPG",
     "thumb": "https://tong.visitkorea.or.kr/cms/resource/82/2907082_image3_1.JPG",
     "tourContentId": "2907087",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2946508",
@@ -2547,7 +2730,8 @@
     "lat": 35.1549495207,
     "lng": 129.1444371716,
     "tourContentId": "2946508",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2456837",
@@ -2561,7 +2745,8 @@
     "lat": 35.170794647,
     "lng": 129.1270576924,
     "tourContentId": "2456837",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "128164",
@@ -2575,7 +2760,8 @@
     "lat": 35.1449947568,
     "lng": 129.1270084045,
     "tourContentId": "128164",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3345610",
@@ -2589,7 +2775,8 @@
     "lat": 35.1687450332,
     "lng": 129.1355209016,
     "tourContentId": "3345610",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "130166",
@@ -2603,7 +2790,8 @@
     "lat": 35.1666980687,
     "lng": 129.1370458254,
     "tourContentId": "130166",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2381553",
@@ -2617,7 +2805,8 @@
     "lat": 35.1625180008,
     "lng": 129.1380958485,
     "tourContentId": "2381553",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2784112",
@@ -2631,7 +2820,8 @@
     "lat": 35.1810226785,
     "lng": 129.2024952959,
     "tourContentId": "2784112",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "767084",
@@ -2645,7 +2835,8 @@
     "lat": 35.1687865886,
     "lng": 129.1297408475,
     "tourContentId": "767084",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2614727",
@@ -2659,7 +2850,8 @@
     "lat": 35.1811053657,
     "lng": 129.168189943,
     "tourContentId": "2614727",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2875886",
@@ -2673,7 +2865,8 @@
     "lat": 35.1731091558,
     "lng": 129.1744979476,
     "tourContentId": "2875886",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "129597",
@@ -2687,7 +2880,8 @@
     "lat": 35.1799561988,
     "lng": 129.206133898,
     "tourContentId": "129597",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2782714",
@@ -2701,7 +2895,8 @@
     "lat": 35.1673652425,
     "lng": 129.1684791847,
     "tourContentId": "2782714",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3027700",
@@ -2715,7 +2910,8 @@
     "lat": 35.1581969059,
     "lng": 129.172851279,
     "tourContentId": "3027700",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "3437916",
@@ -2729,7 +2925,8 @@
     "lat": 35.1710029572,
     "lng": 129.1270687971,
     "tourContentId": "3437916",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "127004",
@@ -2743,7 +2940,8 @@
     "lat": 35.1584383046,
     "lng": 129.1598690678,
     "tourContentId": "127004",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2822343",
@@ -2757,7 +2955,8 @@
     "lat": 35.1612857933,
     "lng": 129.1914273569,
     "tourContentId": "2822343",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "1304431",
@@ -2771,7 +2970,8 @@
     "lat": 35.1634129289,
     "lng": 129.1696430809,
     "tourContentId": "1304431",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2048902",
@@ -2785,7 +2985,8 @@
     "lat": 35.1595354549,
     "lng": 129.1626049105,
     "tourContentId": "2048902",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   },
   {
     "id": "2705325",
@@ -2799,6 +3000,7 @@
     "lat": 35.1679171964,
     "lng": 129.1273244146,
     "tourContentId": "2705325",
-    "source": "tour"
+    "source": "tour",
+    "confirmed": true
   }
 ]

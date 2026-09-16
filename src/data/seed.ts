@@ -17,6 +17,9 @@ import autumnRoads from "./autumn-roads.json";
 // 🌊 부산. 지금은 launchScope 가 전부 걸러 내므로 화면에 한 곳도 안 나온다 —
 //    그래도 여기서 합쳐 두는 이유는 busanPlaces.ts 머리말에 적어 뒀다.
 import { BUSAN_PLACES } from "./busanPlaces";
+// 🏙️ 분류 코드로 다시 갈라 보고 **그동안 빠져 있던 것**을 찾아낸 서울 346곳.
+//    왜 tourPlaces.ts 와 따로 두는지는 그 파일 머리말에 있다.
+import { SEOUL_TOUR_PLACES } from "./seoulPlaces";
 
 // street(골목·거리)는 2026-09-01에 추가했다. 관광공사 자료에 경리단길·익선동 한옥거리·
 // 종로귀금속거리처럼 구·사진·좌표가 다 붙은 골목이 40곳 있는데, 앱 이름이 K-Street인데도
@@ -617,6 +620,12 @@ const ALL_PLACES_RAW: Place[] = [
   //    지금은 아래 launchScope 게이트가 **전부 걸러 낸다** — 화면에 한 곳도 안 나온다.
   //    일부러 그렇게 뒀다. 이유와 여는 법은 busanPlaces.ts 머리말에 있다.
   ...BUSAN_PLACES,
+  // 🏙️ 서울 346곳 — 관광공사 자료를 **분류 코드**로 다시 갈라 찾아낸 것들이다.
+  //    옛 이름 규칙으로는 어느 칸에도 못 들어가 그동안 통째로 빠져 있었다
+  //    (절 36곳 · 성문과 옛 가옥 147곳 · 공원과 산책로 106곳).
+  //    id 는 관광공사 contentId 라 순서에 영향을 주지 않고, 이미 있는 304곳과는
+  //    **번호와 이름 둘 다로** 걸러 놨다(seoulPlaces.ts 머리말 참고).
+  ...SEOUL_TOUR_PLACES,
 ];
 
 // scripts/fetch-coords.mjs가 채운 좌표를 덧씌운다 — seed.ts에 이미 직접 박아 둔
