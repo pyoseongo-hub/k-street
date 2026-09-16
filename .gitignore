@@ -37,3 +37,6 @@ reel-out/
 # 🐍 파이썬이 import 할 때 만드는 찌꺼기 (make-narration.py 가 make-reel.py 를 읽는다)
 __pycache__/
 narration-tmp/
+
+# 🃏 축제 카드 (make-festival-cards.py 결과)
+cards-out/
