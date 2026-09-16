@@ -152,7 +152,14 @@ def credit_frame():
     draw_text(d, CREDIT, H // 2 - 80, fit(LATIN, CREDIT, 86))
     sub = "Free · 12 languages · no sign-up"
     draw_text(d, sub, H // 2 + 40, fit(LATIN, sub, 44), fill=(170, 180, 195))
-    draw_text(d, CREDIT_SMALL, H - 360, fit(HANGUL, CREDIT_SMALL, 34), fill=(150, 158, 172))
+    # 🚨 **출처를 맨 아래 구석에 두지 않는다** (2026-09-16, 사장님: *"없는데"* → *"아래있네"*).
+    #    처음엔 `H - 360` 에 34px 회색으로 뒀다. 있긴 했는데 **찾아봐야 보였다.**
+    #    두 가지가 겹쳐 있었다:
+    #      ① 작고 흐리다 — 34px 에 어두운 회색, 게다가 끝 0.8초는 페이드아웃 중이다
+    #      ② **인스타가 릴스 아래쪽을 덮는다** — 계정 이름·글·버튼이 그 자리에 온다
+    #    ②가 진짜 문제다. **출처가 가려지면 공공누리 제1유형으로 쓸 근거가 없어진다.**
+    #    → 주소 바로 아래(화면 가운데 쪽)로 올리고, 키우고, 밝게 했다.
+    draw_text(d, CREDIT_SMALL, H // 2 + 250, fit(HANGUL, CREDIT_SMALL, 38), fill=(178, 187, 201))
     return canvas
 
 
