@@ -30,14 +30,25 @@ jobs:
         with:
           python-version: "3.12"
 
-      # 🧰 edge-tts — 말을 소리로 바꾼다. pillow — make-reel.py 를 읽어 오는 데 필요하다
-      #    (컷 길이를 거기서 가져오므로 그 파일이 import 돼야 한다).
-      #    ffmpeg 은 러너에 처음부터 있다.
+      # 🧰 무엇이 왜 필요한가
+      #    · edge-tts        — 말을 소리로 바꾼다
+      #    · pillow          — make-reel.py 를 import 하는 데 필요하다(컷 길이를 거기서 가져온다)
+      #    · imageio-ffmpeg  — 소리 조각을 이어 붙인다
+      #
+      # 🚨 **러너에 ffmpeg 이 없다** (2026-09-16, 첫 판이 여기서 죽었다).
+      #    있는 줄 알고 안 깔았다가 10초 만에 실패했다. pip 로 따라오는 static
+      #    바이너리를 쓴다 — apt 보다 빠르고, 작업 환경에서 쓰는 것과 같은 것이라
+      #    **여기서 통과하면 저기서도 통과한다.**
+      #
+      # ⚠️ 그리고 **확인하는 줄이 확인을 안 하고 있었다.** `ffmpeg -version | head -1`
+      #    로 적었는데, 파이프를 쓰면 **앞이 실패해도 뒤(head)가 성공해서 0이 된다.**
+      #    그래서 ffmpeg 이 없는데도 「준비」가 초록색으로 지나갔다.
+      #    → 파이프를 떼고, 파이썬이 실제로 찾아낸 경로를 찍게 했다.
       - name: 준비
         run: |
           python -m pip install --quiet --upgrade pip
-          python -m pip install --quiet edge-tts pillow
-          ffmpeg -version | head -1
+          python -m pip install --quiet edge-tts pillow imageio-ffmpeg
+          python -c "import imageio_ffmpeg; print('ffmpeg:', imageio_ffmpeg.get_ffmpeg_exe())"
 
       - name: 읽히기
         run: |
