@@ -74,10 +74,9 @@ jobs:
           if git diff --cached --quiet; then
             echo "바뀐 것이 없다 — 커밋하지 않는다."
           else
-            git commit -m "🔍 도시 조사 자료 (${{ inputs.city || inputs.area }}) [skip render]
-
-Survey city 워크플로가 관광공사에서 받아 저장한 원본이다.
-앱 자료(seed.ts)가 아니라 **조사 자료**다 — 갈래 규칙을 정할 때 대 보는 표본이다."
+            git commit \
+              -m "🔍 도시 조사 자료 (${{ inputs.city || inputs.area }}) [skip render]" \
+              -m "Survey city 워크플로가 관광공사에서 받아 저장한 원본이다. 앱 자료(seed.ts)가 아니라 조사 자료다 — 갈래 규칙을 정할 때 대 보는 표본이다."
             git push
           fi
 
