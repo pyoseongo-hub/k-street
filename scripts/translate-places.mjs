@@ -46,6 +46,8 @@ const TOUR = join(__dirname, "..", "src", "data", "tour-places-raw.json");
 const DATA_DIR = join(__dirname, "..", "src", "data");
 const NAMES_TS = join(__dirname, "..", "src", "data", "districtNamesEn.ts");
 const OUT = join(__dirname, "..", "src", "data", "place-translations.json");
+// 🪪 손으로 확인한 이름 — **기계 번역을 이긴다.** 그 파일 머리말에 기준을 적어 뒀다.
+const OVERRIDES = join(__dirname, "..", "src", "data", "name-overrides.json");
 
 const args = process.argv.slice(2);
 const APPLY = args.includes("--apply");
@@ -264,8 +266,33 @@ try {
   /* 첫 실행 */
 }
 
+// 🪪 **손으로 확인한 이름을 덮어쓴다.**
+//    구글은 한국 고유명사를 뜻으로 푼다 — 「국제시장」을 "International Market" 으로,
+//    「흰여울」을 "White Yeoul" 로 옮겼다. 부산에서 202곳 중 네 곳이 그랬다.
+//    🚨 **저장할 때마다 덮어쓴다.** 번역을 다시 돌려도 손으로 고친 값이 살아남는다 —
+//       그러지 않으면 다음 실행이 조용히 기계 번역으로 되돌려 놓는다.
+let overrides = {};
+try {
+  overrides = JSON.parse(readFileSync(OVERRIDES, "utf-8"));
+} catch {
+  /* 없으면 그냥 안 쓴다 */
+}
+function applyOverrides(store) {
+  let n = 0;
+  for (const [code, map] of Object.entries(overrides)) {
+    if (code.startsWith("_")) continue;          // 「_읽어보세요」 같은 설명 칸
+    if (!store[code]) store[code] = {};
+    for (const [ko, en] of Object.entries(map)) {
+      if (store[code][ko] !== en) { store[code][ko] = en; n++; }
+    }
+  }
+  if (n) console.log(`🪪 손으로 확인한 이름 ${n}개를 덮어썼다 (name-overrides.json)`);
+  return store;
+}
+
 // 언어별로 열쇠를 정렬해 두면 다음 실행의 diff가 읽기 쉽다.
 function save() {
+  applyOverrides(store);
   const sorted = {};
   for (const code of Object.keys(store).sort()) {
     sorted[code] = Object.fromEntries(
