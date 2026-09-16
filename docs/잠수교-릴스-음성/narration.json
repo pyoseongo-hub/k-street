@@ -1,14 +1,14 @@
 [
   {
-    "file": "aria.m4a",
-    "voice": "en-US-AriaNeural",
-    "desc": "미국 여성 · 따뜻하고 부드럽다",
+    "file": "ava-그대로.m4a",
+    "voice": "en-US-AvaMultilingualNeural",
+    "desc": "자막을 그대로 읽는다 (문장은 안 고침)",
     "sec": 30.0
   },
   {
-    "file": "sonia.m4a",
-    "voice": "en-GB-SoniaNeural",
-    "desc": "영국 여성 · 차분하고 또렷하다",
+    "file": "ava-말하듯.m4a",
+    "voice": "en-US-AvaMultilingualNeural",
+    "desc": "말하듯 이어 준다 (자막은 그대로, 읽는 말만 고침)",
     "sec": 30.0
   }
 ]
