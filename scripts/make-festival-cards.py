@@ -137,6 +137,48 @@ POSTS = {
             },
         ],
     },
+
+    # ── 🏯 한 곳을 깊게 (사장님 2026-09-16: *"디테일 살려 한개씩 가자 중요한 관광지인데"*)
+    #
+    # 위 묶음은 「여러 곳 맛보기」다. 이건 **한 곳을 여러 장으로** 보여 준다.
+    # 남산골한옥마을은 갤러리에 **40장**이 있다 — 한 장으로 보여 주기 아깝다.
+    # 계정에도 이쪽이 낫다: 한 곳씩 쌓이면 나중에 **서울 관광지 도감**이 된다.
+    # 맛보기 묶음은 지나가면 남는 게 없다.
+    #
+    # ⚠️ 카드마다 날짜를 되풀이하지 않는다 — `when` 을 비우면 그 줄을 건너뛴다.
+    #    한 곳짜리 묶음에서는 **표지에만** 적는 게 읽힌다.
+    "2026-10-남산골한옥마을": {
+        "title": ["OLD SEOUL", "STILL STANDING"],
+        "sub": "Right behind the shopping streets.",
+        # 🖼️ 표지는 **이 묶음의 주장**이다 — 한옥 마을 뒤로 도심 스카이라인이 통째로 들어온다.
+        #    「서울 한복판에 옛 마을이 있다」를 한 장으로 말한다.
+        "cover": "남산골한옥마을-사진/1004301.jpg",
+        "credit": ("출처 : ⓒ한국관광콘텐츠랩\n"
+                   "촬영 : 한국관광공사 김지호 · 최린"),
+        "items": [
+            {
+                "place": "NAMSANGOL HANOK VILLAGE",
+                "line": ["Still water.", "The tower watching over it."],
+                "when": "Jung-gu, Seoul · year-round",
+                "photo": "남산골한옥마을-사진/3037862.jpg",
+                "note": "정자·연못 뒤로 남산서울타워 (최린, 2023)",
+            },
+            {
+                "place": "THE ALLEYS",
+                "line": ["Lanterns over the wall.", "The city hums behind it."],
+                "when": "",
+                "photo": "남산골한옥마을-사진/1807986.jpg",
+                "note": "기와지붕·돌담·청사초롱, 뒤로 현대 건물 (김지호)",
+            },
+            {
+                "place": "THE COURTYARD",
+                "line": ["Where the city", "stops for a moment."],
+                "when": "",
+                "photo": "남산골한옥마을-사진/3037861.jpg",
+                "note": "너른 마당과 정자 (최린, 2023)",
+            },
+        ],
+    },
 }
 
 LINK = "korea-street.com"
@@ -308,8 +350,11 @@ def item_card(it, n, total):
         y += int(f.size * 1.16)
 
     # 📅 날짜 한 줄. **작게.** 없으면 그냥 사진첩이고, 크면 안내문이 된다.
-    y += 26
-    d.text((80, y), it["when"], font=fit(LATIN_THIN, it["when"], 38, W - 160), fill=MUTED)
+    #    ⚠️ **한 곳을 여러 장으로 보여 주는 묶음**에서는 카드마다 같은 날짜를 되풀이하게 된다.
+    #       그러면 읽는 사람이 날짜를 안 읽는다 — `when` 을 비우면 그 줄을 건너뛴다.
+    if it.get("when"):
+        y += 26
+        d.text((80, y), it["when"], font=fit(LATIN_THIN, it["when"], 38, W - 160), fill=MUTED)
 
     d.text((80, H - SAFE_BOTTOM - 50), LINK, font=font(LATIN, 34), fill=(120, 128, 142))
     return canvas
