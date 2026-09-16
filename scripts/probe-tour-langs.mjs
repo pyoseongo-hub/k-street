@@ -82,12 +82,22 @@ for (const [svc, label] of alive) {
   if (svc === "KorService2") continue;
   console.log(`\n② ${label}(${svc}) 이 **부산(지역 6)** 자료를 갖고 있나\n`);
   try {
+    // 🚨 **콘텐츠 종류 번호를 안 보낸다** (2026-09-17에 여기서 헛짚었다).
+    //    국문 번호(12=관광지)를 그대로 보냈더니 **0건**이 왔다. 외국어 서비스는
+    //    번호 체계가 다를 수 있는데, 그걸 모르는 채로 번호를 박아 보낸 것이다.
+    //    「자료가 없다」와 「내가 잘못 물었다」는 전혀 다른 말이다 —
+    //    종류를 안 정하고 물으면 그 구분이 된다.
     const list = await call(svc, "areaBasedList2", {
-      areaCode: "6", contentTypeId: "12", numOfRows: "15", pageNo: "1", arrange: "A",
+      areaCode: "6", numOfRows: "15", pageNo: "1", arrange: "A",
     });
     if (!list.length) { console.log("   ⬜ 한 건도 안 온다 — 이 지역 자료가 없는 것이다."); continue; }
     console.log(`   ${list.length}곳 왔다:`);
-    for (const it of list) console.log(`      ${String(it.contentid).padEnd(10)} ${it.title}`);
+    for (const it of list)
+      console.log(`      ${String(it.contentid).padEnd(10)} [종류 ${String(it.contenttypeid).padEnd(3)}] ${it.title}`);
+    // 이 서비스가 쓰는 **콘텐츠 종류 번호**를 세어 둔다 — 국문(12·14·15·25·28·38)과 다르면
+    // 우리 갈래 표(tour-categories.mjs)를 그대로 못 쓴다는 뜻이다.
+    const types = [...new Set(list.map((it) => String(it.contenttypeid)))].sort();
+    console.log(`      → 이 서비스의 콘텐츠 종류 번호: ${types.join(" · ")}`);
 
     // 🧾 우리 부산 자료와 **id 가 겹치나** — 이게 진짜 알고 싶은 것이다.
     const mine = JSON.parse(readFileSync("src/data/busan-places.json", "utf8"));
