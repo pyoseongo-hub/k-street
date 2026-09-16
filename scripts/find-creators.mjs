@@ -108,13 +108,26 @@ const rows = items.map((c) => ({
   숨김: c.statistics.hiddenSubscriberCount === true,
 }));
 
+// 🚨 **한국을 찍는 채널만 남긴다** (2026-09-16에 첫 판을 돌려 보고 넣었다).
+//    첫 판에서 「福岡グルメ」(후쿠오카 음식) · 「旅するイタリア食堂」(이탈리아) ·
+//    Stray Kids 까지 걸렸다. 검색어가 「Seoul food tour」인데도 그렇다 —
+//    유튜브 검색은 말이 안 맞아도 **사람들이 많이 본 것**을 먼저 준다.
+//    그런 채널에 서울 앱을 보내면 그게 스팸이다. 한 번 스팸으로 찍히면 끝이다.
+//    → 채널 **이름이나 소개글**에 한국이 들어간 것만 남긴다. 언어마다 다르게 쓴다.
+const 한국 = /한국|서울|韓国|韓國|ソウル|首爾|首尔|korea|seoul|corea|corée|kordd|hàn quốc|เกาหลี|โซล/i;
+function 한국채널인가(c) {
+  return 한국.test(`${c.snippet.title} ${c.snippet.description ?? ""}`);
+}
+const 한국것 = new Set(items.filter(한국채널인가).map((c) => c.snippet.title));
+
 const 작은곳 = rows
   .filter((r) => !r.숨김 && r.구독자 >= MIN_SUBS && r.구독자 <= MAX_SUBS)
+  .filter((r) => 한국것.has(r.이름))
   .sort((a, b) => a.구독자 - b.구독자);
 
 console.log(`\n${"═".repeat(74)}`);
-console.log(`📋 채널 ${rows.length}곳을 봤다 · 구독자 ${MIN_SUBS.toLocaleString()}~`
-  + `${MAX_SUBS.toLocaleString()}명은 **${작은곳.length}곳**\n`);
+console.log(`📋 채널 ${rows.length}곳을 봤다 · 그중 한국을 찍는 곳 ${한국것.size}곳 ·`
+  + ` 구독자 ${MIN_SUBS.toLocaleString()}~${MAX_SUBS.toLocaleString()}명은 **${작은곳.length}곳**\n`);
 console.log("  구독자   영상   채널".padEnd(46) + "핸들");
 console.log("─".repeat(74));
 for (const r of 작은곳) {
@@ -129,7 +142,7 @@ if (숨긴곳.length) {
   for (const r of 숨긴곳) console.log(`   ${r.이름}  ${r.핸들}`);
 }
 
-const 큰곳 = rows.filter((r) => !r.숨김 && r.구독자 > MAX_SUBS)
+const 큰곳 = rows.filter((r) => !r.숨김 && r.구독자 > MAX_SUBS && 한국것.has(r.이름))
   .sort((a, b) => b.구독자 - a.구독자);
 console.log(`\n📈 ${MAX_SUBS.toLocaleString()}명을 넘는 채널 ${큰곳.length}곳 — `
   + `메일을 안 읽을 가능성이 크다(참고용 위 5곳):`);
