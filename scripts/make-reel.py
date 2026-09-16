@@ -183,12 +183,28 @@ def main():
         print("컷만 그렸다 (--frames-only). 이어 붙이려면 ffmpeg 이 있는 데서 다시 돌린다.")
         return
 
+    # 🎙️ `--voice docs/잠수교-릴스-음성/aria.m4a` — 나레이션을 얹는다.
+    #    소리는 `scripts/make-narration.py` 가 **러너에서** 만든다.
+    #    ⚠️ **나레이션을 넣어도 자막은 뺄 게 아니다** (사장님 지시 2026-09-16: *"자막 포함"*).
+    #       릴스는 85%가 소리를 끄고 본다 — 말만 넣으면 열에 여덟은 아무것도 못 듣는다.
+    voice = None
+    if "--voice" in sys.argv:
+        voice = Path(sys.argv[sys.argv.index("--voice") + 1])
+        if not voice.is_absolute():
+            voice = ROOT / voice
+        if not voice.exists():
+            sys.exit(f"나레이션 파일이 없다: {voice}\n"
+                     "Actions 의 「Make narration」 을 먼저 돌리고 `git pull` 할 것.")
+
     # 🎬 컷 사이를 0.4초씩 겹쳐 넘긴다. 뚝뚝 끊기면 싸구려로 보인다.
     #    xfade 는 입력이 많으면 꼬이기 쉬워서, **concat 으로 붙이고 시작·끝만 페이드**한다.
     lst = OUT / "list.txt"
     lst.write_text("".join(f"file '{p.name}'\nduration {s}\n" for p, s in plan)
                    + f"file '{plan[-1][0].name}'\n", encoding="utf-8")
-    mp4 = OUT / ("잠수교-릴스-자막없음.mp4" if quiet else "잠수교-릴스.mp4")
+    name = "잠수교-릴스" + ("-자막없음" if quiet else "")
+    if voice:
+        name += f"-{voice.stem}"
+    mp4 = OUT / f"{name}.mp4"
     # 🧰 **ffmpeg 을 찾는 순서** — 시스템에 있으면 그것, 없으면 pip 로 딸려 오는 것.
     #    작업 환경(샌드박스)에는 ffmpeg 이 없다. `pip install imageio-ffmpeg` 하면
     #    static 바이너리가 딸려 와서 여기서도 영상까지 만들 수 있다.
@@ -200,13 +216,19 @@ def main():
             exe = imageio_ffmpeg.get_ffmpeg_exe()
         except ImportError:
             sys.exit("ffmpeg 이 없다. `pip install imageio-ffmpeg` 하거나 ffmpeg 을 깔 것.")
-    cmd = [
-        exe, "-y", "-f", "concat", "-safe", "0", "-i", str(lst),
+    cmd = [exe, "-y", "-f", "concat", "-safe", "0", "-i", str(lst)]
+    if voice:
+        cmd += ["-i", str(voice)]
+    cmd += [
         "-vf", f"fps=30,format=yuv420p,fade=t=in:st=0:d=0.6,"
                f"fade=t=out:st={total - 0.8:.2f}:d=0.8",
         "-c:v", "libx264", "-preset", "medium", "-crf", "20",
-        "-movflags", "+faststart", str(mp4),
     ]
+    if voice:
+        # 🔊 소리는 다시 안 주무른다 — make-narration.py 가 이미 영상 길이에 맞춰 놨다.
+        #    `-shortest` 로 둘 중 짧은 쪽에서 끊어 **끝에 소리만 남는 일**을 막는다.
+        cmd += ["-c:a", "aac", "-b:a", "128k", "-shortest"]
+    cmd += ["-movflags", "+faststart", str(mp4)]
     print("\n$ " + " ".join(cmd))
     subprocess.run(cmd, check=True, cwd=OUT)
     print(f"\n✅ {mp4}  ({mp4.stat().st_size // 1024}KB)")

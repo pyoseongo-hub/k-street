@@ -1,0 +1,76 @@
+name: Make narration (릴스 나레이션 만들기)
+
+# 🎙️ **릴스에 얹을 영어 나레이션을 만든다.**
+#
+# ⚠️ **작업 환경(Claude)에서는 못 만든다.** 음성 서비스가 웹소켓으로 붙는데
+#    프록시가 그걸 막는다(`WSServerHandshakeError: 403`). 인증서를 고쳐도 안 풀린다.
+#    러너는 인터넷이 뚫려 있으므로 **여기서 만들어 저장소에 커밋**한다.
+#    사진을 받아 올 때와 같은 방식이다.
+#
+# 읽는 말은 `scripts/make-narration.py` 의 `SPEECH` 에 있다.
+# 컷 길이는 `scripts/make-reel.py` 에서 **그대로 가져다 쓴다** — 따로 안 적는다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "만든 소리를 저장소에 커밋할까 (끄면 Artifacts 로 받아만 본다)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  narrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 🧰 edge-tts — 말을 소리로 바꾼다. pillow — make-reel.py 를 읽어 오는 데 필요하다
+      #    (컷 길이를 거기서 가져오므로 그 파일이 import 돼야 한다).
+      #    ffmpeg 은 러너에 처음부터 있다.
+      - name: 준비
+        run: |
+          python -m pip install --quiet --upgrade pip
+          python -m pip install --quiet edge-tts pillow
+          ffmpeg -version | head -1
+
+      - name: 읽히기
+        run: |
+          set -o pipefail
+          python scripts/make-narration.py 2>&1 | tee narration-log.txt
+
+      # 📦 커밋을 안 켜도 들어 볼 수 있게 Artifacts 에 올린다.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kstreet-narration
+          path: docs/잠수교-릴스-음성/*
+          if-no-files-found: error
+
+      - name: 저장소에 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "docs/잠수교-릴스-음성"
+          git diff --cached --quiet && { echo "바뀐 게 없다"; exit 0; }
+          git commit -m "🎙️ 잠수교 릴스 나레이션을 만들었다 (make-narration) [skip render]"
+          git push
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🎙️ 잠수교 릴스 나레이션"
+            echo ""
+            echo '```'
+            tail -c 40000 narration-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+            echo ""
+            echo "⚠️ **⚠️ 넘친다** 가 보이면 그 문장이 컷보다 길다는 뜻이다 —"
+            echo "   \`scripts/make-narration.py\` 의 \`SPEECH\` 에서 그 줄을 줄여야 한다."
+          } >> "$GITHUB_STEP_SUMMARY"
