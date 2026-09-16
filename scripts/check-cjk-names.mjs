@@ -23,6 +23,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 // 🀄 이름인지 낱말인지 가리는 잣대. **저장하는 쪽과 같은 파일을 쓴다.**
 import { brokenCjkNames, loadPlaces } from "./lib/cjk-name-rules.mjs";
+import { readTranslations } from "./lib/place-translations.mjs";
 
 /** 한국 곳 이름에 들어가면 **틀린 것이 확실한** 말. [찾을 말, 왜 틀렸나] */
 const WRONG = [
@@ -42,7 +43,7 @@ const WRONG = [
   ["北悪", "북악은 北岳이다"],
 ];
 
-const T = JSON.parse(readFileSync("src/data/place-translations.json", "utf8"));
+const T = readTranslations();
 const CJK = ["ja", "zh", "zh-TW"];
 
 const hits = [];

@@ -27,7 +27,7 @@ import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ALL_PLACES, ALL_FESTIVALS, type Place } from "../src/data/seed";
-import { translateText } from "../src/lib/placeText";
+import { translateText, loadAllPlaceTranslations } from "../src/lib/placeText";
 import { getMapLinks } from "../src/lib/mapLinks";
 import { galleryShotsFor } from "../src/lib/photoGallery";
 // 🚨 구·동 이름은 **여기서 온다.** place-translations.json 에는 장소 이름만 있고
@@ -95,6 +95,14 @@ import {
   hubLang,
   type HubStrings,
 } from "./lib/page-strings";
+
+// 🌐 **곳 이름 번역 11개 언어를 통째로 받아 둔다.**
+//
+//    앱에서는 손님이 고른 말 하나만 받는다(src/lib/placeText.ts 머리말 참고).
+//    여기는 반대다 — **12개 언어 페이지를 한 번에 만들기 때문에** 다 있어야 한다.
+//    🚨 첫 translateText() 보다 **먼저** 와야 한다. 늦으면 이름이 한국어로 박힌
+//       페이지가 조용히 만들어진다(오류가 안 난다).
+await loadAllPlaceTranslations();
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");

@@ -37,6 +37,8 @@
 import { readFileSync, writeFileSync, readdirSync } from "node:fs";
 // 🀄 이름인지 낱말인지 가리는 잣대. **감사와 같은 파일을 쓴다** — 그 파일 머리말 참고.
 import { brokenCjkNames, loadPlaces } from "./lib/cjk-name-rules.mjs";
+// 🌐 언어별로 나눠 둔 번역을 읽고 쓴다 — 그 파일 머리말에 왜 나눴는지 적어 뒀다.
+import { readTranslations, writeTranslations } from "./lib/place-translations.mjs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -47,7 +49,10 @@ const TOUR = join(__dirname, "..", "src", "data", "tour-places-raw.json");
 //    이 파일을 고치지 않게(부산 다음은 대구·인천… 파일만 놓이면 된다).
 const DATA_DIR = join(__dirname, "..", "src", "data");
 const NAMES_TS = join(__dirname, "..", "src", "data", "districtNamesEn.ts");
-const OUT = join(__dirname, "..", "src", "data", "place-translations.json");
+// 🌐 번역은 **언어별 파일**로 나눠 저장한다(src/data/place-translations/).
+//    왜 나눴는지는 scripts/lib/place-translations.mjs 머리말에 있다 —
+//    한마디로, 손님 한 사람이 쓰는 말은 하나인데 열한 개를 다 받고 있었다.
+const OUT = join(__dirname, "..", "src", "data", "place-translations");
 // 🪪 손으로 확인한 이름 — **기계 번역을 이긴다.** 그 파일 머리말에 기준을 적어 뒀다.
 const OVERRIDES = join(__dirname, "..", "src", "data", "name-overrides.json");
 // 🏛️ 관광공사가 **언어별로 직접 내는 공식 이름**. 기계 번역보다 세고, 사람이 확인한 것보다 약하다.
@@ -270,7 +275,7 @@ console.log("");
 
 let store = {};
 try {
-  store = JSON.parse(readFileSync(OUT, "utf-8"));
+  store = readTranslations(OUT);
 } catch {
   /* 첫 실행 */
 }
@@ -372,7 +377,7 @@ function save() {
       Object.entries(store[code]).sort(([a], [b]) => a.localeCompare(b, "ko"))
     );
   }
-  writeFileSync(OUT, JSON.stringify(sorted, null, 1) + "\n");
+  writeTranslations(sorted, OUT);
   return sorted;
 }
 

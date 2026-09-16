@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useEffect, useMemo, type ReactNode } from 'react';
 import { getTranslations, type Language } from './translations';
 import { ensureLangFont } from './langFont';
+// 📦 곳 이름 번역도 **고른 말 하나만** 받는다 — 왜 그런지는 placeText.ts 머리말에.
+import { ensurePlaceTranslations } from './placeText';
 
 export type { Language };
 
@@ -70,6 +72,9 @@ export function detectLanguage(prefs: readonly string[]): Language {
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>('ko');
   const [isClient, setIsClient] = useState(false);
+  // 📦 곳 이름 번역 조각이 도착하면 이 값을 올려 **화면을 다시 그린다.**
+  //    안 올리면 조각은 받아 놨는데 화면은 계속 한국어 이름을 보여 준다.
+  const [번역받음, set번역받음] = useState(0);
 
   useEffect(() => {
     setIsClient(true);
@@ -150,6 +155,15 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     //    그 글자들이 폰에 깔린 아무 글꼴로 떨어졌다(두께가 제각각이었다).
     //    자세한 이야기는 src/lib/langFont.ts 머리말에.
     ensureLangFont(language);
+    // 📦 그 말의 **곳 이름 번역**도 여기서 받는다. 글꼴과 같은 자리에 두는 이유는,
+    //    둘 다 「말이 정해진 순간에 그 하나만」이기 때문이다.
+    //    🚨 받아 온 뒤 화면을 다시 그려야 한다 — placeText 는 리액트 바깥에 있어서
+    //       값이 채워져도 리액트가 모른다.
+    let 살아있나 = true;
+    ensurePlaceTranslations(language).then((바뀜) => {
+      if (살아있나 && 바뀜) set번역받음((n) => n + 1);
+    });
+    return () => { 살아있나 = false; };
   }, [language]);
 
   const setLanguage = (lang: Language) => {
@@ -164,6 +178,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const getLanguageName = (lang: Language) => LANGUAGES[lang];
   const getCurrentLanguageName = () => LANGUAGES[language];
   const t = useMemo(() => getTranslations(language), [language]);
+  // 번역 조각이 도착했다는 사실을 값에 실어 보낸다 — 이것 때문에 아래 Provider 가
+  // 새 값을 내려 주고, 곳 이름을 쓰는 화면들이 다시 그려진다.
+  void 번역받음;
 
   const value: LanguageContextValue = {
     language,

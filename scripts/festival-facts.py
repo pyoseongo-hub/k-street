@@ -15,7 +15,7 @@
   · gu-festival-dates.json   구청이 서울시 문화포털에 올린 **확정 날짜**와 장소
   · festival-venues.json     구청 보도자료로 확인해 둔 **자리**
   · place-slugs.json         앱 주소 (미끼 뒤에 방이 있는지 여기서 본다)
-  · place-translations.json  영문 이름 (카드에 쓸 것)
+  · place-translations/en.json  영문 이름 (카드에 쓸 것)
   · photo-gallery.json + docs/*-사진/   **사진이 있나**
 
 ── 🚨 이 표는 「고르는 자리」지 「그대로 쓰는 자리」가 아니다 ────────────
@@ -110,7 +110,11 @@ def main():
     gu_dates = load("gu-festival-dates.json")["곳"]
     venues = load("festival-venues.json")
     slugs = load("place-slugs.json")
-    en = load("place-translations.json").get("en", {})
+    # 🌐 번역은 2026-09-17부터 **언어별 파일**로 나뉘어 있다
+    #    (src/data/place-translations/en.json …). 왜 나눴는지는
+    #    scripts/lib/place-translations.mjs 머리말에 있다 —
+    #    한마디로, 손님 한 사람이 쓰는 말은 하나인데 열한 개를 다 받고 있었다.
+    en = load("place-translations/en.json")
     gal, local = photo_index()
 
     rows = []

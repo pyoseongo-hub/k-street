@@ -12,6 +12,23 @@ import { VitePWA } from 'vite-plugin-pwa'
 //    **화면이 통째로 빈다.** 도메인을 떼면 다시 '/k-street/' 로 되돌려야 한다.
 export default defineConfig({
   base: '/',
+  build: {
+    rollupOptions: {
+      output: {
+        // 🌐 **말 조각에는 이름표를 붙인다** (2026-09-17).
+        //
+        //    곳 이름 번역을 말마다 따로 받게 나눠 뒀는데(src/lib/placeText.ts),
+        //    파일 이름이 `ja-a1b2c3.js` 라 **서비스워커가 앱 조각과 구별을 못 한다.**
+        //    구별을 못 하면 미리 받는 목록(globPatterns 의 `assets/**`)에 다 들어가
+        //    **첫 방문에 열한 개를 통째로 받는다** — 나눈 뜻이 사라진다.
+        //    `i18n-` 을 앞에 붙여 두면 아래 workbox 쪽에서 골라낼 수 있다.
+        chunkFileNames: (info) =>
+          info.name && /^(en|ja|zh|zh-TW|vi|es|fr|de|ru|id|th)$/.test(info.name)
+            ? 'assets/i18n-[name]-[hash].js'
+            : 'assets/[name]-[hash].js',
+      },
+    },
+  },
   plugins: [
     react(),
     VitePWA({
@@ -60,6 +77,32 @@ export default defineConfig({
         //    들어온 손님이 **한 장만** 보는 자리다.
         globPatterns: ['*.{js,css,html,svg,png,ico}', 'assets/**', 'icons/**'],
 
+        // 🌐 **말 조각 열한 개를 미리 받지 않는다** (2026-09-17).
+        //
+        //    곳 이름 번역은 말마다 파일이 따로다. 손님이 쓰는 말은 **하나**인데,
+        //    미리 받는 목록에 그냥 두면 **설치할 때 열한 개를 다 내려받는다**(약 820KB).
+        //    그러면 파일을 나눈 뜻이 없어진다 — 받는 양이 그대로다.
+        //
+        //    대신 아래 runtimeCaching 이 **손님이 실제로 받은 것만** 저장한다.
+        //    한 번 받으면 다음부터 오프라인에서도 그 말로 보인다.
+        //    ⚠️ 못 받으면 곳 이름이 한국어로 떨어질 뿐, 화면은 멀쩡히 뜬다.
+        globIgnores: ['**/assets/i18n-*.js'],
+
+        runtimeCaching: [
+          {
+            // 파일 이름에 내용 해시가 박혀 있어(i18n-ja-**a1b2c3**.js) 내용이 바뀌면
+            // 이름이 바뀐다 — 그래서 **CacheFirst 가 안전하다.** 헌 것이 남을 수 없다.
+            urlPattern: /\/assets\/i18n-[\w-]+\.js$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'kstreet-place-names',
+              // 말을 여러 번 바꿔 본 손님도 조각이 무한정 쌓이지 않게 한다.
+              expiration: { maxEntries: 12, maxAgeSeconds: 60 * 60 * 24 * 90 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+        ],
+
         // 📦 **미리 받아 둘 파일 하나의 크기 한도** (기본 2 MiB).
         //
         //    2026-09-17에 서울 346곳이 들어오면서 본체 js 가 2.11 MB 가 됐고,
@@ -69,9 +112,11 @@ export default defineConfig({
         //    여기 한도는 「그걸 **미리 저장해 둘지**」만 정한다. 넘으면 저장을 안 할 뿐인데,
         //    그러면 **오프라인에서 앱이 아예 안 열린다.** 그래서 올린다.
         //
-        //    ⏳ 다만 이건 **미룬 것이지 고친 게 아니다.** 진짜 문제는 자료가 전부 본체 js 에
-        //       들어 있다는 것이다(place-translations 644KB · tour-gallery 440KB).
-        //       도시를 더 열면 또 넘는다 — 그때는 한도가 아니라 **자료를 갈라내야** 한다.
+        //    ✅ **그날 안에 진짜로 갈라냈다** — 곳 이름 번역 11개 언어(869KB)를
+        //       말마다 따로 받게 나눴다(src/lib/placeText.ts). 본체 js 가
+        //       **2,276KB → 1,458KB**, 미리 받는 양이 **2,701KB → 1,715KB** 로 줄었다.
+        //       그래서 이 한도는 지금 여유가 많다 — 도시를 몇 개 더 열어도 괜찮다.
+        //       ⏳ 다음으로 큰 것은 tour-gallery.json(440KB)이다. 또 넘으면 거기를 본다.
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
 
         // 🐞 **여기가 곳 페이지 307장을 통째로 죽일 뻔한 자리다** (2026-09-05에 찾음).
