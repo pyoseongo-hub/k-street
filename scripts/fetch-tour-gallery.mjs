@@ -20,7 +20,7 @@
 // ⚠️ 이 세션(샌드박스)은 apis.data.go.kr에 접속이 막혀 있어 직접 못 돌린다.
 //    .github/workflows/fetch-tour-gallery.yml 로 GitHub Actions에서 돌린다.
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
 import { httpsPhoto } from "./lib/https-photo.mjs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
@@ -128,16 +128,29 @@ async function smokeTest(sampleContentId) {
 }
 
 // ── 사진을 받을 대상: contentId가 있는 곳 전부 ──────────────────
-const raw = JSON.parse(readFileSync(D("tour-places-raw.json"), "utf-8"));
+//
+// 🚨 **도시 파일을 하나씩 적지 않는다** (2026-09-17에 고쳤다).
+//    여기는 `tour-places-raw.json`(예전에 받은 서울 304곳)만 읽고 있었다.
+//    그 뒤에 들어온 **서울 341곳 · 부산 202곳은 쳐다보지도 않았다** —
+//    화면에는 대표 사진 한 장만 뜨고, 넘겨 볼 사진이 영영 안 붙는다.
+//    오류가 안 나서 티가 안 난다. 같은 구멍이 fetch-tour-names.mjs 에도 있었다.
+//    → `src/data/*-places.json` 을 **있는 대로 다 읽는다.** 새 도시를 열 때 고칠 자리가 없다.
 const targets = [];
 const seen = new Set();
-for (const [category, arr] of Object.entries(raw)) {
-  for (const p of arr) {
-    if (!p.contentId || seen.has(p.contentId)) continue;
-    seen.add(p.contentId);
-    targets.push({ contentId: String(p.contentId), name: p.name, gu: p.gu ?? "", category });
-  }
-}
+const add = (contentId, name, gu, category) => {
+  const id = String(contentId ?? "");
+  if (!id || seen.has(id)) return;
+  seen.add(id);
+  targets.push({ contentId: id, name, gu: gu ?? "", category });
+};
+
+const raw = JSON.parse(readFileSync(D("tour-places-raw.json"), "utf-8"));
+for (const [category, arr] of Object.entries(raw))
+  for (const p of arr) add(p.contentId, p.name, p.gu, category);
+
+for (const f of readdirSync(join(__dirname, "..", "src", "data")).filter((f) => /-places\.json$/.test(f)))
+  for (const p of JSON.parse(readFileSync(D(f), "utf-8")))
+    add(p.tourContentId ?? p.id, p.name, p.gu, p.category);
 
 const prev = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf-8")) : {};
 // 이미 받아 둔 곳은 건너뛴다 — 다시 돌려도 호출을 낭비하지 않는다.
