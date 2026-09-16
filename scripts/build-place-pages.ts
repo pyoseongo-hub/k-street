@@ -331,7 +331,7 @@ function whenLabel(p: Place, lang: Language = "en"): string {
 
 // 🎨 곳 페이지와 묶음 페이지가 **같은 스타일을 쓴다.** 두 벌로 나누면 한쪽만
 //    고쳐 놓고 다른 쪽이 옛날 모양으로 남는다 — 이 저장소가 여러 번 데인 자리다.
-const CSS = `
+const CSS_SOURCE = `
 :root{--bg:#faf9f7;--card:#fff;--ink:#17150f;--muted:#6b6559;--line:#e4dfd4;--accent:#c1502e}
 @media(prefers-color-scheme:dark){:root{--bg:#111311;--card:#1a1c1a;--ink:#eceae4;--muted:#9b968c;--line:#2c2f2c;--accent:#e8815c}}
 *{box-sizing:border-box}
@@ -391,6 +391,28 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
 .chips li{margin:0}
 .chips a{display:inline-block;padding:7px 12px;background:var(--card);border:1px solid var(--line);border-radius:100px;text-decoration:none;color:var(--ink);font-size:13.5px;font-weight:600}
 `;
+
+/**
+ * 🧹 **주석은 소스에만 두고, 내보낼 때 뗀다** (2026-09-16).
+ *
+ * 위 CSS 의 한국어 주석이 **만들어진 페이지마다 통째로 실려 나가고 있었다.**
+ * 한 장에 1,839바이트 — 페이지 전체의 **13.9%** 다. 5,496장이면 약 9.6MB 를
+ * 손님 데이터로 보내면서 아무 쓸모가 없다(손님은 우리 주석을 읽지 않는다).
+ * 폰으로 보는 앱이라 이건 그냥 낭비다.
+ *
+ * 🚨 **소스에서 주석을 지우지는 않는다.** 저 주석들은 「왜 이렇게 했나」를
+ *    적어 둔 것이라 다음 사람에게 필요하다. 지우는 것은 **내보내는 쪽**뿐이다.
+ *
+ * ⚠️ 통짜 최소화(minify)는 하지 않는다 — 공백만 지워도 얻는 것이 적고,
+ *    CSS 문자열 안의 따옴표·content 값을 잘못 건드리면 화면이 깨진다.
+ *    **주석만** 뗀다. 그것만으로 13.9% 가 빠진다.
+ */
+const CSS = CSS_SOURCE
+  // `/* … */` 를 뗀다. CSS 에는 `//` 주석이 없으므로 이 한 줄이면 된다.
+  .replace(/\/\*[\s\S]*?\*\//g, "")
+  // 주석이 있던 자리에 남는 빈 줄을 줄인다.
+  .replace(/\n{2,}/g, "\n")
+  .trim();
 
 /**
  * 🌏 **hreflang** — "같은 내용의 다른 언어판"이라고 구글에게 알려 준다.
