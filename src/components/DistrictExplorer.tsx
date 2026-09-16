@@ -40,6 +40,13 @@ const MAP_CHIPS: { key: Category; extra?: Category[]; label?: string }[] = [
   //    32곳 — 낙원 악기상가·답십리 고미술상가·세운전자상가처럼 **서울에만 있는 곳**이
   //    여기 들어온다. 백화점은 어디나 비슷하지만 이런 곳은 그렇지 않다.
   { key: "shop" },
+  // 🌊🛕🌃 부산을 열면서 들어온 셋 (2026-09-16).
+  //    지금 서울에는 이 갈래에 든 곳이 **하나도 없다.** 그래도 표에 적어 두는 이유는
+  //    부산 자료가 들어오는 날 **저절로 나타나게** 하기 위해서다 —
+  //    아래에서 **곳이 없는 칩은 안 그린다**(빈 칸 칩 = 죽은 단추).
+  { key: "temple" },
+  { key: "beach" },
+  { key: "view" },
 ];
 
 /** 이 칩이 담는 칸들. */
@@ -81,6 +88,17 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
     setCategory(forceCategory);
     setGu(null);
   }, [jump, forceCategory]);
+
+  // 🚨 **곳이 하나도 없는 갈래는 칩을 안 그린다.** 눌러도 빈 화면이 나오는 단추는
+  //    손님 눈에 「고장 난 앱」이다. 덕분에 MAP_CHIPS 에 새 갈래를 **미리** 적어 둘 수 있다 —
+  //    자료가 없으면 안 보이고, 들어오는 날 저절로 나타난다(부산 temple·beach·view).
+  const shownChips = useMemo(
+    () => MAP_CHIPS.filter((c) => {
+      const cats = [c.key, ...(c.extra ?? [])];
+      return ALL_PLACES.some((p) => cats.includes(p.category));
+    }),
+    [],
+  );
 
   const inCategory = useMemo(() => {
     const cats = catsOf(category);
@@ -164,7 +182,12 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
           동네를 바꾸려고 손으로 끝까지 올릴 필요가 없다. */}
       <div ref={map.ref} className="de-picker">
         <div className="category-chip-row">
-          {MAP_CHIPS.map(({ key: c, label }) => (
+          {/* 🚨 **곳이 없는 갈래는 칩을 안 그린다** (2026-09-16).
+              눌러도 빈 화면이 나오는 단추는 손님 눈에 「고장 난 앱」이다 —
+              아래 탭에서 이미 겪은 일이고(App.tsx), 도시 카드에서도 같은 판단을 했다.
+              이 한 줄 덕분에 새 갈래를 표에 미리 적어 둘 수 있다:
+              자료가 없으면 안 보이고, 들어오는 날 저절로 나타난다. */}
+          {shownChips.map(({ key: c, label }) => (
             <button
               key={c}
               className={"cat-chip" + (c === category ? " active" : "")}

@@ -26,8 +26,18 @@ import autumnRoads from "./autumn-roads.json";
 //    처음엔 계절 화면에 **글 목록**으로만 얹었다. 그게 반쪽이었다 —
 //    "여기 있다"까지만 말하고 "어떻게 가나"를 안 풀어 준다. 장소 칸에 들어와야
 //    구별 목록·길찾기·저장·공유가 전부 따라온다. 그래서 갈래를 하나 만들었다.
+//
+// 🌊🛕🌃 temple · beach · view 는 **부산을 열면서** 들어왔다 (2026-09-16).
+//    관광공사 분류 코드를 세어 보고 만든 칸이지 짐작이 아니다 —
+//    부산 자료에서 절 29곳 · 바다 16곳 · 전망 8곳이 실제로 걸린다.
+//    · temple — 절·암자·향교 (관광공사 A02010800)
+//    · beach  — 해수욕장·해안·포구·등대·유람선·서핑 (A010112xx · A02020800 …)
+//    · view   — 전망대·다리·분수 (A02050600 · A02050100 · A02050300)
+//    서울에도 절이 40곳쯤 있지만 **아직 안 넣는다** — 저장해 둔 서울 자료에
+//    분류 코드가 없어서 다시 받아야 한다(scripts/lib/tour-categories.mjs 머리말).
 export type Category =
-  | "festival" | "market" | "flower" | "walk" | "hike" | "museum" | "street" | "shop" | "autumn";
+  | "festival" | "market" | "flower" | "walk" | "hike" | "museum" | "street" | "shop" | "autumn"
+  | "temple" | "beach" | "view";
 
 export interface Place {
   id: string;
@@ -895,4 +905,11 @@ export const CATEGORY_META: Record<
   //    전용 색 --autumn 을 네 테마 블록 모두에 넣어 뒀다(tokens.css).
   //    ⚠️ 전용 아이콘 이미지는 아직 없다. 만들 때까지 이모지로 둔다.
   autumn: { label: "단풍길", icon: "🍁", color: "var(--autumn)" },
+  // 🌊🛕🌃 부산을 열면서 들어온 셋 (2026-09-16).
+  //    색은 tokens.css 에 **비어 있던 색상각**을 재서 새로 넣었다 —
+  //    작은 칩에서 색이 비슷하면 손님은 둘을 같은 것으로 본다.
+  //    ⚠️ 전용 아이콘 이미지는 아직 없다. 만들 때까지 이모지로 둔다.
+  temple: { label: "절·사찰", icon: "🛕", color: "var(--temple)" },
+  beach: { label: "바다·해변", icon: "🌊", color: "var(--beach)" },
+  view: { label: "전망·야경", icon: "🌃", color: "var(--view)" },
 };
