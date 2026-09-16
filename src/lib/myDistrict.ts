@@ -19,7 +19,8 @@
 
 import { loadNaverMaps } from "./naverMaps";
 import { getPositionOrNull } from "./userPosition";
-import { SEOUL_HEX_ROWS } from "../data/seoulHexMap";
+// 🏙️ 「내가 있는 동네가 **지금 보고 있는 도시**의 동네인가」를 본다.
+import { hexRowsOf } from "../data/cityHexMaps";
 
 export type MyDistrict =
   /** 서울 안이고 구 이름까지 확인됐다. */
@@ -71,13 +72,23 @@ export type FailWhy =
   | "threw";
 
 /** 앱이 아는 서울 25개 구. 네이버가 준 이름이 이 안에 있어야만 쓴다. */
-const SEOUL_GUS = new Set(SEOUL_HEX_ROWS.flatMap((row) => row.gus));
+/**
+ * 🚨 **도시를 받아서 그 도시의 구만 본다.**
+ *
+ * 예전에는 서울 25개 구를 한 번에 담은 상수였다. 도시가 늘면 그대로는 못 쓴다 —
+ * 「중구」·「서구」·「동구」·「남구」·「북구」·「강서구」는 **서울에도 부산에도 있다.**
+ * 두 도시 것을 한 자루에 담으면, 부산 중구에 서 있는 손님에게 **서울 중구 목록**을
+ * 보여 주게 된다. 화면은 멀쩡하고 이름도 맞아서 손님은 한참 뒤에야 안다.
+ */
+const gusOf = (cityKey: string) => new Set(hexRowsOf(cityKey).flatMap((row) => row.gus));
 
 let cached: MyDistrict | null = null;
 
 /** 한 번 알아내면 다시 묻지 않는다. 걸어서 구를 넘는 데는 한참 걸린다. */
 const MAX_AGE_MS = 10 * 60 * 1000;
 let cachedAt = 0;
+/** 어느 도시에서 잰 값인가. 도시가 바뀌면 다시 잰다. */
+let cachedCity: string | null = null;
 
 /** 네이버 조회가 늘어져 버튼이 멈춘 것처럼 보이지 않게 하는 한도. */
 const LOOKUP_TIMEOUT_MS = 5000;
@@ -141,8 +152,10 @@ function reverseGeocode(lat: number, lng: number): Promise<GeoResult> {
  * 앱을 켜자마자 위치를 물으면 대부분 거절하고, 한 번 거절하면 되돌리기 어렵다
  * (userPosition.ts의 같은 판단).
  */
-export async function getMyDistrict(): Promise<MyDistrict> {
-  if (cached && Date.now() - cachedAt < MAX_AGE_MS) return cached;
+export async function getMyDistrict(cityKey: string): Promise<MyDistrict> {
+  // 🔑 캐시는 **도시별로** 둔다. 안 그러면 도시를 바꿔도 앞 도시의 동네가 남는다.
+  if (cached && cachedCity === cityKey && Date.now() - cachedAt < MAX_AGE_MS) return cached;
+  const KNOWN = gusOf(cityKey);
 
   const pos = await getPositionOrNull();
   if (!pos) return { kind: "noPosition" };
@@ -153,8 +166,8 @@ export async function getMyDistrict(): Promise<MyDistrict> {
     const r = await reverseGeocode(pos.lat, pos.lng);
     if (!r.ok) result = { kind: "failed", why: r.why };
     else if (r.gu === "") result = { kind: "outside" };
-    else if (SEOUL_GUS.has(r.gu)) result = { kind: "gu", gu: r.gu };
-    // 서울인데 우리 목록에 없는 이름이 왔다 — 지어내지 않고 실패로 둔다.
+    else if (KNOWN.has(r.gu)) result = { kind: "gu", gu: r.gu };
+    // 이 도시 목록에 없는 이름이 왔다 — 지어내지 않고 실패로 둔다.
     else result = { kind: "failed", why: "unknown-gu" };
   } catch {
     // loadNaverMaps 가 터진 경우도 여기로 온다 — 스크립트 자체를 못 불러온 것이다.
@@ -164,6 +177,7 @@ export async function getMyDistrict(): Promise<MyDistrict> {
   // 실패는 캐시하지 않는다 — 잠깐 안 되던 것일 수 있으니 다시 눌러 보게 한다.
   if (result.kind === "gu" || result.kind === "outside") {
     cached = result;
+    cachedCity = cityKey;
     cachedAt = Date.now();
   }
   return result;

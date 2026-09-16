@@ -3,7 +3,9 @@ import { useLanguage } from "../lib/useLanguage";
 import { CATEGORY_META, type Category, type Place } from "../data/seed";
 // 🏙️ **이 화면은 한 도시만 본다** — 부산을 열면 ALL_PLACES 에 두 도시가 섞인다.
 import { usePlacesHere } from "../lib/usePlaces";
-import { SEOUL_HEX_ROWS } from "../data/seoulHexMap";
+// 🗺️ 벌집 배치는 **도시마다 다르다**(서울 25칸 · 부산 16칸).
+import { hexRowsOf } from "../data/cityHexMaps";
+import { useCity } from "../lib/useCity";
 import { districtShortName, districtFullName, dongName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
 import PlacePhoto from "./PlacePhoto";
@@ -78,6 +80,9 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
   const { t, language } = useLanguage();
   // 🏙️ 지금 보고 있는 도시의 곳만. 도시가 하나일 때는 ALL_PLACES 와 같다.
   const PLACES = usePlacesHere();
+  const { cityKey } = useCity();
+  // 🚨 배치가 없는 도시는 **빈 배열**이 온다 — 남의 도시 지도를 대신 보여 주지 않는다.
+  const hexRows = hexRowsOf(cityKey);
   const [category, setCategory] = useState<Category>("market");
   const [gu, setGu] = useState<string | null>(null);
   // 내 위치의 구. null = 아직 안 눌러 봤다, "loading" = 찾는 중.
@@ -222,7 +227,7 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
             대부분 거절하고, 한 번 거절하면 되돌리기 어렵다(userPosition.ts와 같은 판단). */}
         <MyLocationChip state={myGu} onFind={async () => {
           setMyGu("loading");
-          setMyGu(await getMyDistrict());
+          setMyGu(await getMyDistrict(cityKey));
         }} t={t} />
 
         {/* 👆 **지도 바로 위** 한 줄 (2026-09-05 사장님: "동네지도 사용 은 어떤건지
@@ -245,7 +250,7 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
 
         <div className="district-hexgrid">
           <div className="hex-rows">
-            {SEOUL_HEX_ROWS.map((row, i) => (
+            {hexRows.map((row, i) => (
               <div
                 className="hex-row"
                 key={i}
