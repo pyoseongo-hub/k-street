@@ -54,6 +54,29 @@ for (const f of files) {
   console.log(`📋 ${f} — ${list.length}곳 · 사진 ${list.length - noPic} · 좌표 ${list.length - noXY} · 도시 밖 좌표 ${far}`);
 }
 
+// 🌐 **그 동네 이름이 네 언어 표에 다 있나** (2026-09-16).
+//    빠지면 그 구만 화면에 **한국어로 남는다** — 일본어 페이지 한가운데
+//    「기장군」이 박혀 있어도 화면은 안 깨지므로 아무도 안 알려 준다.
+//    서울에서 이미 같은 일을 겪었다(2026-08-28: "일본어 선택해도 여긴 영어인데 맞나").
+const names = readFileSync("src/data/districtNamesEn.ts", "utf8");
+const table = (name) => {
+  const i = names.indexOf(`export const ${name}`);
+  if (i < 0) return null;
+  const body = names.slice(i, names.indexOf("\n};", i));
+  return new Set([...body.matchAll(/"([^"]+)": "[^"]+"/g)].map((m) => m[1]));
+};
+for (const f of files) {
+  const key = f.replace("-places.json", "");
+  const C = city(key);
+  if (!C) continue;
+  for (const t of ["DISTRICT_NAME_EN", "DISTRICT_NAME_JA", "DISTRICT_NAME_ZH_TW", "DISTRICT_NAME_ZH"]) {
+    const set = table(t);
+    if (!set) { bad.push(`districtNamesEn.ts 에 ${t} 가 없다`); continue; }
+    const miss = C.units.filter((u) => !set.has(u));
+    if (miss.length) bad.push(`${t} 에 ${C.ko} ${miss.length}곳이 없다 — ${miss.join(" · ")}`);
+  }
+}
+
 if (bad.length) {
   console.error(`\n❌ 문제 ${bad.length}가지`);
   for (const b of bad.slice(0, 30)) console.error("   " + b);

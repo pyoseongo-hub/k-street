@@ -34,13 +34,16 @@
 //   실제 반영: GOOGLE_TRANSLATE_API_KEY=... node scripts/translate-places.mjs --apply
 //   한 언어만: node scripts/translate-places.mjs --apply --lang ja
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SEED = join(__dirname, "..", "src", "data", "seed.ts");
 const TOUR = join(__dirname, "..", "src", "data", "tour-places-raw.json");
+// 🌊 새 도시들. `<도시>-places.json` 을 전부 읽는다 — 도시가 늘 때마다
+//    이 파일을 고치지 않게(부산 다음은 대구·인천… 파일만 놓이면 된다).
+const DATA_DIR = join(__dirname, "..", "src", "data");
 const NAMES_TS = join(__dirname, "..", "src", "data", "districtNamesEn.ts");
 const OUT = join(__dirname, "..", "src", "data", "place-translations.json");
 
@@ -236,6 +239,16 @@ for (const line of seedSrc.split("\n")) {
 }
 for (const p of Object.values(tour).flat()) {
   if (p?.name && /[가-힣]/.test(p.name)) source.add(p.name);
+}
+// 🌊 새 도시 곳 목록도 함께 번역한다(부산 202곳 등).
+//    🚨 **주소는 안 넣는다** — 주소는 뜻을 아는 게 아니라 택시 기사에게 보여 주는
+//       것이다(위 머리말과 같은 규칙). 이름만 넣는다.
+const cityFiles = readdirSync(DATA_DIR).filter((f) => /-places\.json$/.test(f));
+for (const f of cityFiles) {
+  const list = JSON.parse(readFileSync(join(DATA_DIR, f), "utf-8"));
+  let n = 0;
+  for (const p of list) if (p?.name && /[가-힣]/.test(p.name)) { source.add(p.name); n++; }
+  console.log(`   ${f} — 이름 ${n}개`);
 }
 
 const all = [...source].sort();
