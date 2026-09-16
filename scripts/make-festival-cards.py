@@ -87,8 +87,11 @@ POSTS = {
                 #           *"날짜 장소 정도만 남겨. 그 정도는 있어야 신뢰감 있으니."*
                 #           🚨 넓게 적는다. 「10월 4일 오후 2시」로 적으면 틀릴 수 있고,
                 #              틀리면 손님이 헛걸음한다. 정확한 날짜는 앱이 맡는다.
+                # 사장님이 직접 고치셨다 (2026-09-16): *"환상적인 조명과 분수"*
+                # 내가 쓴 「The bridge empties.」(다리가 비워집니다)는 버렸다 —
+                # **비워지는 것**을 말하고 있었다. 사장님은 **채워지는 것**을 말한다.
                 "place": "JAMSUGYO BRIDGE",
-                "line": ["The bridge empties.", "The river lights up."],
+                "line": ["Magical lights and fountains.", "The river lights up."],
                 "when": "Every Sunday · through October",
                 "photo": "잠수교-사진/달빛-야경/3537888.jpg",
                 "note": "잠수교 축제 사진은 갤러리에 없다 — 같은 자리 실사",
