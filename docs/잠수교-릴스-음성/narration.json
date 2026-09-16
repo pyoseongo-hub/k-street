@@ -1,0 +1,14 @@
+[
+  {
+    "file": "aria.m4a",
+    "voice": "en-US-AriaNeural",
+    "desc": "미국 여성 · 따뜻하고 부드럽다",
+    "sec": 30.0
+  },
+  {
+    "file": "sonia.m4a",
+    "voice": "en-GB-SoniaNeural",
+    "desc": "영국 여성 · 차분하고 또렷하다",
+    "sec": 30.0
+  }
+]
