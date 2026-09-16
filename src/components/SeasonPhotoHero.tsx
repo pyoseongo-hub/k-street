@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import SeasonArt from "./SeasonArt";
 import { ALL_PLACES, type Place } from "../data/seed";
+// 🏙️ 표지 사진도 **지금 도시 것만** 쓴다 — 서울 화면에 부산 바다가 뜨면 안 된다.
+import { placesInCity } from "../lib/usePlaces";
+import { useCity } from "../lib/useCity";
 import { getTourImage } from "../lib/tourImages";
 import { seasonOf, type SeasonKey } from "../lib/season";
 import { useLanguage } from "../lib/useLanguage";
@@ -80,9 +83,9 @@ function pickedCover(season: SeasonKey, today = new Date()): CoverPhoto | undefi
   return isCover(c) ? c : undefined;
 }
 
-function seasonalPhotos(season: SeasonKey): string[] {
+function seasonalPhotos(season: SeasonKey, cityKey: string): string[] {
   const urls: string[] = [];
-  for (const p of ALL_PLACES) {
+  for (const p of placesInCity(cityKey, ALL_PLACES)) {
     if (seasonOfPlace(p) !== season) continue;
     const legacy = getTourImage(p.id);
     // 화면 폭을 꽉 채우는 배너라 썸네일(_image3_)을 쓰면 특히 심하게 뭉개진다 —
@@ -103,11 +106,12 @@ interface Props {
 
 export default function SeasonPhotoHero({ season, seed = 0, dense = false, className }: Props) {
   const { t } = useLanguage();
+  const { cityKey } = useCity();
   const picked = pickedCover(season);
   // 사람이 고른 게 있으면 그 한 장만. 없으면 예전처럼 여러 장이 돌아간다.
   const photos = useMemo(
-    () => (picked ? [picked.url] : seasonalPhotos(season)),
-    [season, picked]
+    () => (picked ? [picked.url] : seasonalPhotos(season, cityKey)),
+    [season, picked, cityKey]
   );
   const [idx, setIdx] = useState(0);
 

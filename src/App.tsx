@@ -16,6 +16,7 @@ import WeatherCard from "./components/WeatherCard";
 import VideoCard from "./components/VideoCard";
 import BrandMark from "./components/BrandMark";
 import CityPicker from "./components/CityPicker";
+import { useCity } from "./lib/useCity";
 
 function App() {
   const { toggleTheme, getIcon } = useTheme();
@@ -42,6 +43,9 @@ function App() {
   //    아무것도 못 받지만, 글자는 읽어 준다.
   const [rainyOpen, setRainyOpen] = useState(false);
   const savedCount = useSavedEntries().length;
+  // 🏙️ 도시 카드가 고른 도시를 앱 전체에 알린다(useCity.tsx).
+  //    지금은 열린 도시가 서울뿐이라 카드 자체가 안 나오고, 이 값도 안 바뀐다.
+  const { setCity } = useCity();
 
   return (
     <div className="app-shell">
@@ -172,7 +176,7 @@ function App() {
                      cities.ts 에서 부산을 「공개」로 바꾸면 저절로 나타난다.
                   📍 자리는 **맨 아래**다. 나타나는 날 위로 올릴지는 그때 본다.
                   저장한 곳 탭에는 안 띄운다 — 거기는 손님이 담아 둔 것만 보는 자리다. */}
-              <CityPicker />
+              <CityPicker onPick={setCity} />
             </div>
             <div hidden={tab !== "saved"}>
               <SavedPanel />

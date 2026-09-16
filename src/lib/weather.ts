@@ -4,8 +4,13 @@
 // 여기서는 실제 관측값(기온·체감온도·시각)만 보여준다.
 
 import { useEffect, useState } from "react";
+import { useCity } from "./useCity";
 
-const SEOUL = { lat: 37.5665, lng: 126.978 };
+// 🏙️ **좌표를 여기 박아 두지 않는다** (2026-09-16).
+//    예전에는 `const SEOUL = { lat: 37.5665, lng: 126.978 }` 이 상수로 있었다.
+//    도시가 둘이 되는 순간 **부산 손님에게 서울 기온**을 보여 주게 된다 —
+//    화면은 멀쩡해 보이고 숫자도 그럴듯해서 아무도 못 알아챈다. 그게 제일 나쁘다.
+//    이제 「지금 보고 있는 도시」에게 물어본다(useCity → cities.ts 의 시청 좌표).
 
 export interface SeoulWeather {
   tempC: number;
@@ -41,7 +46,8 @@ const RAIN_CODES = (c: number) =>
  */
 const RAIN_CHANCE_MIN = 50;
 
-export function useSeoulWeather(): { weather: SeoulWeather | null; error: boolean } {
+export function useCityWeather(): { weather: SeoulWeather | null; error: boolean } {
+  const { city } = useCity();
   const [weather, setWeather] = useState<SeoulWeather | null>(null);
   const [error, setError] = useState(false);
 
@@ -50,7 +56,7 @@ export function useSeoulWeather(): { weather: SeoulWeather | null; error: boolea
     // 🆓 비·예보는 **같은 요청에 덧붙이면 끝이다** — 호출도 한 번, 값도 공짜다.
     //    (2026-09-12에 기온만 받고 있던 것을 늘렸다. 열쇠도 돈도 안 든다.)
     const url =
-      `https://api.open-meteo.com/v1/forecast?latitude=${SEOUL.lat}&longitude=${SEOUL.lng}` +
+      `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lng}` +
       `&current=temperature_2m,apparent_temperature,precipitation,weather_code` +
       `&daily=precipitation_probability_max&forecast_days=1&timezone=Asia%2FSeoul`;
 
@@ -84,7 +90,9 @@ export function useSeoulWeather(): { weather: SeoulWeather | null; error: boolea
     return () => {
       cancelled = true;
     };
-  }, []);
+  // 🔁 도시가 바뀌면 **다시 받는다.** 빼먹으면 부산으로 옮겨도 서울 기온이
+  //    그대로 남아 있는데, 숫자가 그럴듯해서 아무도 못 알아챈다.
+  }, [city.lat, city.lng]);
 
   return { weather, error };
 }

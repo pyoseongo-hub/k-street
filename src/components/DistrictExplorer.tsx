@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
-import { ALL_PLACES, CATEGORY_META, type Category, type Place } from "../data/seed";
+import { CATEGORY_META, type Category, type Place } from "../data/seed";
+// 🏙️ **이 화면은 한 도시만 본다** — 부산을 열면 ALL_PLACES 에 두 도시가 섞인다.
+import { usePlacesHere } from "../lib/usePlaces";
 import { SEOUL_HEX_ROWS } from "../data/seoulHexMap";
 import { districtShortName, districtFullName, dongName } from "../data/districtNamesEn";
 import MapDirections from "./MapDirections";
@@ -74,6 +76,8 @@ interface Props {
 
 export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Props = {}) {
   const { t, language } = useLanguage();
+  // 🏙️ 지금 보고 있는 도시의 곳만. 도시가 하나일 때는 ALL_PLACES 와 같다.
+  const PLACES = usePlacesHere();
   const [category, setCategory] = useState<Category>("market");
   const [gu, setGu] = useState<string | null>(null);
   // 내 위치의 구. null = 아직 안 눌러 봤다, "loading" = 찾는 중.
@@ -95,14 +99,14 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
   const shownChips = useMemo(
     () => MAP_CHIPS.filter((c) => {
       const cats = [c.key, ...(c.extra ?? [])];
-      return ALL_PLACES.some((p) => cats.includes(p.category));
+      return PLACES.some((p) => cats.includes(p.category));
     }),
     [],
   );
 
   const inCategory = useMemo(() => {
     const cats = catsOf(category);
-    return ALL_PLACES.filter((p) => cats.includes(p.category));
+    return PLACES.filter((p) => cats.includes(p.category));
   }, [category]);
   const guWithData = useMemo(
     () => new Set(inCategory.filter((p) => p.confirmed).map((p) => p.gu)),
@@ -134,7 +138,7 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
 
   const distanceFrom = useMemo(() => {
     if (!gu) return null;
-    return districtOrigin(ALL_PLACES.filter((p) => p.gu === gu));
+    return districtOrigin(PLACES.filter((p) => p.gu === gu));
   }, [gu]);
 
   const rows: Row[] = useMemo(() => {
@@ -143,7 +147,7 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
     if (view === "theme" || !distanceFrom)
       return selected.map((p) => ({ kind: "place", key: p.id, place: p }));
     // 가까운 순 — 그 구의 곳 **전부**를 거리 띠로 끊는다
-    const here = ALL_PLACES.filter((p) => p.gu === gu);
+    const here = PLACES.filter((p) => p.gu === gu);
     const out: Row[] = [];
     for (const b of toBands(rankByDistance(here, distanceFrom))) {
       // 띠 제목은 **숫자만** — 어느 언어에서도 그대로 읽힌다(번역할 것이 없다)

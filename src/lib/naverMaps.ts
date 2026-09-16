@@ -1,3 +1,4 @@
+import { CITIES } from "../data/cities";
 // 네이버 지도 JS SDK(v3) 로더.
 // 스크립트 태그를 동적으로 추가하고, 한 번만 로드되도록 프라미스를 캐싱한다.
 // 쿼리 파라미터명은 ncpKeyId다(예전 문서의 ncpClientId는 구버전 이름 — 지금은 이 이름이 맞다).
@@ -118,7 +119,15 @@ export function loadNaverMaps(): Promise<void> {
   return loadPromise;
 }
 
-// 서울시청 — 지도 초기 중심점. 축제·시장 등 개별 장소 좌표는 아직 없다(지어내지 않음).
-// 실제 위경도를 지도 위에 찍으려면 구별 좌표를 공식 출처(서울 열린데이터광장 등)로
-// 확인한 뒤 별도 데이터 파일로 추가할 것 — CLAUDE.md 정확도 원칙 참고.
-export const SEOUL_CENTER = { lat: 37.5665, lng: 126.978 };
+// 🏙️ **지도 가운데는 도시마다 다르다** (2026-09-16).
+//    예전에는 서울시청 좌표가 여기 박혀 있었다(SEOUL_CENTER). 그대로 두면
+//    부산 화면을 열었을 때 **지도가 서울을 비춘다** — 손님은 곳 목록과 지도가
+//    따로 노는 것을 보게 된다.
+//    시청·도청 좌표는 명부(cities.ts)가 들고 있으므로 거기서 꺼내 쓴다.
+export { CITY_BY_KEY } from "../data/cities";
+
+/** 그 도시의 지도 초기 중심점. 못 찾으면 서울로 간다(지금 열린 도시가 서울뿐이다). */
+export function cityCenter(cityKey: string): { lat: number; lng: number } {
+  const c = CITIES.find((x) => x.key === cityKey) ?? CITIES.find((x) => x.key === "seoul")!;
+  return { lat: c.lat, lng: c.lng };
+}

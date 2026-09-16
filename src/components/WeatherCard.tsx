@@ -1,4 +1,4 @@
-import { useSeoulWeather } from "../lib/weather";
+import { useCityWeather } from "../lib/weather";
 import { useLanguage } from "../lib/useLanguage";
 
 // 🌤️ **날씨 칸** — 머리줄 아래 오른쪽 반. 누르면 「비 와도 갈 곳」이 열린다.
@@ -22,7 +22,7 @@ import { useLanguage } from "../lib/useLanguage";
 // 🚨 날씨를 못 받아오면 **아무것도 안 그린다.** 지어내지 않는다(weather.ts 머리말과 같은 규칙).
 //    그때는 왼쪽 영상 칸이 줄 전체를 쓴다(index.css 의 flex: 1).
 export default function WeatherCard({ onOpen }: { onOpen: () => void }) {
-  const { weather, error } = useSeoulWeather();
+  const { weather, error } = useCityWeather();
   const { t } = useLanguage();
   if (error || !weather) return null;
 

@@ -1,12 +1,21 @@
 import { useEffect, useRef, useState } from "react";
-import { loadNaverMaps, SEOUL_CENTER } from "../lib/naverMaps";
-import { ALL_PLACES, CATEGORY_META } from "../data/seed";
+import { loadNaverMaps, cityCenter } from "../lib/naverMaps";
+import { useCity } from "../lib/useCity";
+import { CATEGORY_META } from "../data/seed";
+import { usePlacesHere } from "../lib/usePlaces";
 import { getUserLocation, calculateDistance, type UserLocation } from "../lib/geolocation";
 import { renderMapLinksHtml } from "../lib/mapLinks";
 import DriverCard, { type DriverTarget } from "./DriverCard";
 import { useLanguage } from "../lib/useLanguage";
 
 export default function SeoulMap() {
+  // 🏙️ 지도 가운데는 **지금 보고 있는 도시**의 시청 좌표다(2026-09-16).
+  //    예전에는 서울시청이 박혀 있어서, 부산을 열면 지도만 서울을 비추게 돼 있었다.
+  const { cityKey } = useCity();
+  // 🏙️ 마커도 지금 도시 것만 찍는다 — 지도 가운데만 옮기고 마커를 그대로 두면
+  //    부산 지도 위에 서울 곳이 떠 있게 된다.
+  const PLACES = usePlacesHere();
+  const center = cityCenter(cityKey);
   const ref = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
   const userMarkerRef = useRef<any>(null);
@@ -50,7 +59,7 @@ export default function SeoulMap() {
       .then(() => {
         if (cancelled || !ref.current) return;
         const map = new window.naver!.maps.Map(ref.current, {
-          center: new window.naver!.maps.LatLng(SEOUL_CENTER.lat, SEOUL_CENTER.lng),
+          center: new window.naver!.maps.LatLng(center.lat, center.lng),
           zoom: 11,
           minZoom: 10,
           maxZoom: 16,
@@ -60,7 +69,7 @@ export default function SeoulMap() {
         mapRef.current = map;
 
         // 좌표가 있는 모든 장소에 마커 추가
-        const placesWithCoords = ALL_PLACES.filter((p) => p.lat && p.lng);
+        const placesWithCoords = PLACES.filter((p) => p.lat && p.lng);
         placesWithCoords.forEach((place) => {
           const marker = new window.naver!.maps.Marker({
             position: new window.naver!.maps.LatLng(place.lat!, place.lng!),
@@ -130,7 +139,11 @@ export default function SeoulMap() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  // 🏙️ **도시가 바뀌면 지도를 다시 그린다** (2026-09-16).
+  //    빼먹으면 가운데만 옮겨 가고 **마커는 앞 도시 것이 그대로 남는다** —
+  //    부산 지도 위에 서울 곳이 떠 있게 되는데, 화면이 안 깨져서 티가 안 난다.
+  //    도시가 하나뿐인 지금은 이 값이 안 바뀌므로 동작은 예전과 똑같다.
+  }, [cityKey]);
 
   const handleLocateUser = () => {
     if (userLocation && mapRef.current) {
@@ -142,7 +155,7 @@ export default function SeoulMap() {
   };
 
   const nearbyPlaces = userLocation
-    ? ALL_PLACES.filter((p) => p.lat && p.lng)
+    ? PLACES.filter((p) => p.lat && p.lng)
         .map((p) => ({
           ...p,
           distance: calculateDistance(
@@ -172,7 +185,7 @@ export default function SeoulMap() {
             📍
           </button>
           <div className="map-info-chip">
-            마커 {ALL_PLACES.filter((p) => p.lat && p.lng).length}곳
+            마커 {PLACES.filter((p) => p.lat && p.lng).length}곳
             {userLocation && ` · 근처 ${nearbyPlaces.length}곳`}
           </div>
           {locationError && <div className="map-location-error">📍 {locationError}</div>}
