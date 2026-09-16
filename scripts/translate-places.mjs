@@ -56,8 +56,13 @@ const ONLY = args.includes("--lang") ? args[args.indexOf("--lang") + 1] : null;
 // ⚠️ **반드시 trim한다.** 시크릿에 붙여 넣을 때 줄바꿈이 한 칸 따라 들어오면
 //    구글이 400 "API key not valid"를 주는데, 키 자체는 멀쩡해 보여서 원인이 안 보인다.
 //    (Kfood에서 겪은 일이다.)
+// 🪪 **이름만 고칠 때는 구글 열쇠가 필요 없다** (2026-09-16에 넣었다).
+//    「국제시장 → Gukje Market」처럼 손으로 고친 값을 반영하는 데 번역 호출이
+//    필요할 이유가 없다. 열쇠를 챙겨야 한다면 사람이 고치기를 미루게 된다.
+const OVERRIDES_ONLY = args.includes("--overrides-only");
+
 const KEY = (process.env.GOOGLE_TRANSLATE_API_KEY || "").trim();
-if (!KEY) {
+if (!KEY && !OVERRIDES_ONLY) {
   console.error("❌ GOOGLE_TRANSLATE_API_KEY가 없습니다.");
   console.error("   Google Cloud Console → Cloud Translation API 사용 설정 → API 키 만들기");
   console.error("   무료 한도는 매달 50만 자입니다.");
@@ -283,6 +288,13 @@ function applyOverrides(store) {
     if (code.startsWith("_")) continue;          // 「_읽어보세요」 같은 설명 칸
     if (!store[code]) store[code] = {};
     for (const [ko, en] of Object.entries(map)) {
+      // 🚨 **null 은 「지운다」는 뜻이다.** 기계가 틀린 건 아는데 맞는 말을 모를 때 쓴다 —
+      //    앱은 번역이 없으면 영어로 대신 보여 준다(「틀린 이름보다 영어가 낫다」).
+      //    없는 한자를 지어내느니 지우는 쪽이 맞다.
+      if (en === null) {
+        if (ko in store[code]) { delete store[code][ko]; n++; }
+        continue;
+      }
       if (store[code][ko] !== en) { store[code][ko] = en; n++; }
     }
   }
@@ -301,6 +313,16 @@ function save() {
   }
   writeFileSync(OUT, JSON.stringify(sorted, null, 1) + "\n");
   return sorted;
+}
+
+// 🪪 이름만 고치는 길. 구글을 한 번도 안 부르고 끝난다.
+if (OVERRIDES_ONLY) {
+  const before = JSON.stringify(store);
+  save();
+  console.log(JSON.stringify(store) === before
+    ? "⬜ 바뀐 것이 없다 — 이미 다 반영돼 있다."
+    : "✅ name-overrides.json 을 반영해 저장했다.");
+  process.exit(0);
 }
 
 let spent = 0;
