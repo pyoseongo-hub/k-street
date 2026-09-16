@@ -17,6 +17,8 @@ import HomeSwitch from "./components/HomeSwitch";
 import ShareApp from "./components/ShareApp";
 import ArrivalGuide, { arrivalLabel } from "./components/ArrivalGuide";
 import RainyPanel from "./components/RainyPanel";
+// 🚧 서울 자료로만 만든 기능은 다른 도시에서 숨긴다 — 그 파일 머리말 참고.
+import { useIsSeoul } from "./lib/seoulOnly";
 import WeatherCard from "./components/WeatherCard";
 import VideoCard from "./components/VideoCard";
 import BrandMark from "./components/BrandMark";
@@ -47,6 +49,8 @@ function App() {
   //    그게 깜박임보다 낫다: 색과 움직임만으로 뜻을 전하면 화면을 읽어 주는 손님은
   //    아무것도 못 받지만, 글자는 읽어 준다.
   const [rainyOpen, setRainyOpen] = useState(false);
+  // ☔ 비 오는 날 지하상가는 **서울시설공단 자료**다. 부산에는 같은 자료가 없다.
+  const isSeoul = useIsSeoul();
   const savedCount = useSavedEntries().length;
   // 🏙️ 도시 카드가 고른 도시를 앱 전체에 알린다(useCity.tsx).
   //    지금은 열린 도시가 서울뿐이라 카드 자체가 안 나오고, 이 값도 안 바뀐다.
@@ -144,7 +148,7 @@ function App() {
           <VideoCard />
           {/* 🌤️ 날씨 — **늘 있다.** 비 오는 날엔 안에 드는 말과 색이 바뀐다.
               누르면 「비 와도 갈 곳」이 열린다(WeatherCard.tsx 머리말). */}
-          <WeatherCard onOpen={() => setRainyOpen(true)} />
+          <WeatherCard onOpen={isSeoul ? () => setRainyOpen(true) : undefined} />
         </div>
         {/* 📲 홈 화면에 추가하면 앱처럼 열리고 인터넷 없이도 열린다 — 손님은
             그걸 모른다. 설치할 수 있는 브라우저에서만, 한 번만 뜬다. */}
@@ -230,7 +234,7 @@ function App() {
       {/* ✈️ 전체화면. 열렸을 때만 그린다 — 12개 언어 × 9칸짜리 자료라
           안 열어 보는 손님에게까지 그려 둘 이유가 없다. */}
       {guideOpen && <ArrivalGuide onClose={() => setGuideOpen(false)} />}
-      {rainyOpen && <RainyPanel onClose={() => setRainyOpen(false)} />}
+      {isSeoul && rainyOpen && <RainyPanel onClose={() => setRainyOpen(false)} />}
     </div>
   );
 }

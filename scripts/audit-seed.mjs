@@ -9,6 +9,8 @@
 
 import { execSync } from "node:child_process";
 import { writeFileSync, rmSync, readFileSync } from "node:fs";
+// 🏙️ 도시마다 어떤 동네가 있는지는 명부 한 곳에서 읽는다.
+import { readCities } from "./lib/city-registry.mjs";
 
 // 좌표·사진은 id를 열쇠로 쓰는 별도 파일이다. B1-2가 이 둘을 seed와 대조한다.
 const dataFile = (f) =>
@@ -25,13 +27,18 @@ execSync(
 const { ALL_PLACES, CATEGORY_META } = await import(tmp.href);
 rmSync(tmp, { force: true });
 
-const DISTRICTS = [
-  "종로구", "중구", "용산구", "성동구", "광진구",
-  "동대문구", "중랑구", "성북구", "강북구", "도봉구",
-  "노원구", "은평구", "서대문구", "마포구", "양천구",
-  "강서구", "구로구", "금천구", "영등포구", "동작구",
-  "관악구", "서초구", "강남구", "송파구", "강동구",
-];
+// 🏙️ **동네 목록은 명부(cities.ts)에서 가져온다** (2026-09-17, 부산을 열면서).
+//
+//    그전에는 서울 25개 구가 여기 손으로 박혀 있었다. 부산을 여는 순간
+//    금정구·해운대구가 전부 「없는 구」로 잡혀 **160건이 막혔다.**
+//
+// 🚨 **도시를 가려서 본다.** 두 도시 목록을 한 통에 부어 놓고 보면
+//    「부산 곳에 서울 강남구」 같은 진짜 사고를 놓친다 —
+//    「중구」는 서울에도 부산에도 있어서 그냥은 못 가른다.
+const CITIES_ON_DISK = readCities();
+const UNITS_BY_CITY = new Map(CITIES_ON_DISK.map((c) => [c.key, c.units]));
+/** 서울 25개 구 — 아래 커버리지 표(W1·W3)는 여전히 서울 기준으로 센다. */
+const DISTRICTS = UNITS_BY_CITY.get("seoul") ?? [];
 
 const blocking = [];
 const warning = [];
@@ -142,12 +149,28 @@ add(
   ALL_PLACES.filter((p) => !CATEGORY_META[p.category]).map((p) => `${p.id} ${p.category}`)
 );
 
-// ❌ B3 — 25개 구에 없는 자치구 이름 오타
+// ❌ B3 — 그 **도시의** 명부에 없는 동네 이름 (오타)
+//
+// 🚨 **도시가 섞인 것은 여기서 안 잡힌다** — 2026-09-17에 일부러 부산 곳에 「강남구」를
+//    넣어 보고 알았다. 그 곳은 여기 오기 전에 **이미 사라진다**: seed.ts 의 게이트가
+//    `sidoOf(gu, city)` 로 「그 구가 그 도시 것인가」를 보고 아니면 걸러 내기 때문이다.
+//    그래서 이 검사는 조용히 통과한다.
+//
+//    잡는 것은 **check-city-places.mjs** 다 —
+//      「busan-places.json — 가덕도 등대: 「강남구」는 부산 명부에 없다」
+//    거기서 푸시가 막힌다. 둘 다 있어야 한다:
+//      · check-city-places — **자료가 틀렸다**고 알려 준다(푸시를 막는다)
+//      · seed.ts 의 게이트 — 틀린 것이 **손님 화면에 못 간다**(안전판)
+//    여기 B3 는 남은 몫을 본다: 자료 파일이 아니라 seed.ts 에 손으로 적은 곳의 오타.
 add(
   blocking,
   "B3",
-  "DISTRICTS 목록에 없는 자치구",
-  ALL_PLACES.filter((p) => !DISTRICTS.includes(p.gu)).map((p) => `${p.id} "${p.gu}"`)
+  "그 도시 명부에 없는 동네",
+  ALL_PLACES.filter((p) => {
+    const units = UNITS_BY_CITY.get(p.city ?? "seoul");
+    // 명부에 없는 도시면 그것부터 문제다 — 아래 메시지에 그대로 드러난다.
+    return !units || !units.includes(p.gu);
+  }).map((p) => `${p.id} [${p.city ?? "seoul"}] "${p.gu}"`)
 );
 
 // ❌ B4 — confirmed:true인데 이름이 "확인 필요"류 자리표시자

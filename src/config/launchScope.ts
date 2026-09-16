@@ -9,7 +9,11 @@
 // 지금은 seed.ts 자체가 서울 25개 구만 갖고 있어서 이 상수가 없어도 결과는 같다.
 // 다만 나중에 다른 도시 데이터를 seed.ts에 추가하더라도, **이 상수를 지역·서울 이외로
 // 넓히기 전까지는 화면에 노출되지 않아야 한다** — 그래서 지금부터 명시적인 게이트로 둔다.
-export const LAUNCH_REGIONS: readonly string[] = ["서울"];
+// 🌊 **부산을 열었다** (2026-09-17, 사장님 결정: *"90퍼 이상이면 열자고"*).
+//    사진이 붙은 곳이 202곳 중 184곳(91%)이 된 것을 보고 정하셨다.
+//    ⏳ 축제는 아직 14곳뿐이다(관광공사에 그것밖에 없다 — 직접 물어서 확인했다).
+//       부산시 자료가 열리면 채운다. 그때까지 부산 화면에 축제는 적게 뜬다.
+export const LAUNCH_REGIONS: readonly string[] = ["서울", "부산"];
 
 export function isInLaunchScope(sido: string): boolean {
   return LAUNCH_REGIONS.includes(sido);

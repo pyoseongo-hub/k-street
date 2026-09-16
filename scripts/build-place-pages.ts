@@ -171,10 +171,28 @@ function upcomingEventDates(p: Place): { startDate: string; endDate?: string } |
   return { startDate, ...(endDate ? { endDate } : {}) };
 }
 
+/**
+ * 🏙️ **지금은 서울만 페이지로 낸다** (2026-09-17, 사장님 결정: *"앱 먼저, 페이지는 나중"*).
+ *
+ * 왜 — 부산을 열면서 확인해 보니 이 페이지들의 문구에 **「서울」이 304군데 박혀 있다.**
+ *      12개 언어의 제목·소개·설명이 전부 그렇다. 그대로 부산까지 만들면 이렇게 나간다:
+ *        · 「가덕도 등대 — Gangseo-gu, **Seoul**」   ← 부산이다
+ *        · `/seoul/haeundae-gu`                      ← 해운대가 서울 밑에
+ *        · `/seoul/jung-gu` 안에 **자갈치·국제시장**  ← 중구가 양쪽에 있어 섞인다
+ *      **화면엔 오류가 안 뜬다.** 검색에서 들어온 손님만 틀린 걸 본다.
+ *
+ * 그래서 문구에서 도시 이름을 빼내는 일이 끝날 때까지 **서울만 낸다.**
+ * 앱에서는 부산이 이미 열려 있다(launchScope.ts) — 여기는 검색용 페이지 이야기다.
+ *
+ * ⏳ 여는 법: 아래 한 줄을 지우고, page-strings.ts 의 도시 이름을 칸으로 바꾸면 된다.
+ *    cities.ts 의 `names`(12개 언어)와 `cityName()` 은 **그날을 위해 이미 만들어 뒀다.**
+ */
+const PAGE_CITY = "seoul";
+
 /** 두 목록은 겹친다(축제가 양쪽에 있다) — id 로 한 번만 센다. */
 const ALL: Place[] = [
   ...new Map([...ALL_PLACES, ...ALL_FESTIVALS].map((p) => [p.id, p])).values(),
-];
+].filter((p) => (p.city ?? "seoul") === PAGE_CITY);
 
 // ── 주소(slug) ────────────────────────────────────────────────────────────
 //

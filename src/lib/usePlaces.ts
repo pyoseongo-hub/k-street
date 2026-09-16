@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { ALL_PLACES, type Place } from "../data/seed";
+import { ALL_PLACES, ALL_FESTIVALS, type Place } from "../data/seed";
 import { useCity } from "./useCity";
 
 // 🏙️ **지금 보고 있는 도시의 곳만 고른다.**
@@ -24,4 +24,21 @@ export function placesInCity(cityKey: string, list: readonly Place[] = ALL_PLACE
 export function usePlacesHere(): Place[] {
   const { cityKey } = useCity();
   return useMemo(() => placesInCity(cityKey), [cityKey]);
+}
+
+/**
+ * 🎪 **축제도 도시로 가른다.**
+ *
+ * 🐞 2026-09-17에 여기서 걸렸다 — 부산을 열고 도시 카드에서 부산을 눌러도
+ *    **첫 화면(계절)이 그대로 서울 축제**를 보여 줬다. 도시는 제대로 바뀌었는데,
+ *    그 화면만 `ALL_FESTIVALS` 를 곧바로 읽고 있었던 것이다.
+ *    곳 목록·지도·계절 사진은 이미 도시를 보는데 **축제만 빠져 있었다.**
+ *    화면은 멀쩡해 보이고 오류도 없다 — 브라우저로 눌러 보지 않았으면 못 찾았다.
+ *
+ * ⚠️ 축제 목록은 곳 목록과 **다르다**(사진 게이트가 없어 더 많다 — seed.ts 참고).
+ *    그래서 `placesInCity` 를 그냥 쓰지 않고 이 함수를 따로 둔다.
+ */
+export function useFestivalsHere(): Place[] {
+  const { cityKey } = useCity();
+  return useMemo(() => placesInCity(cityKey, ALL_FESTIVALS), [cityKey]);
 }

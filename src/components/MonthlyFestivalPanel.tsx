@@ -1,7 +1,11 @@
 import { useMemo, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
+import { useCityText } from "../lib/cityText";
+import { useFestivalsHere } from "../lib/usePlaces";
 import SeasonPhotoHero from "./SeasonPhotoHero";
 import SeasonThemeBanner from "./SeasonThemeBanner";
+// 🚧 이 배너가 가리키는 단풍길·꽃길 107곳은 **서울시 자료**다 — 그 파일 머리말 참고.
+import { useIsSeoul } from "../lib/seoulOnly";
 import { ALL_FESTIVALS } from "../data/seed";
 import { seasonOf, type SeasonKey } from "../lib/season";
 import { useRotatingSeed } from "../lib/useRotatingSeed";
@@ -89,6 +93,8 @@ function monthsLabel(
 
 export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => void } = {}) {
   const { t, language } = useLanguage();
+  const withCity = useCityText();
+  const isSeoul = useIsSeoul();
   const [month, setMonth] = useState(nowMonth);
   const [theme, setTheme] = useState<FestivalTheme | null>(null);
   const rotatingSeed = useRotatingSeed();
@@ -97,7 +103,13 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
   const seasonMonths = SEASONS.find((s) => s.key === season)!.months;
 
   // 이 달에 열리는 축제 — 테마를 거르기 **전**. 테마 칩을 몇 개 띄울지 정하는 데 쓴다.
-  const inMonth = useMemo(() => ALL_FESTIVALS.filter((f) => opensIn(f, month)), [month]);
+  // 🏙️ **지금 보는 도시의 축제만.** 도시가 하나일 때는 예전과 같다.
+  //    (이 줄이 없어서 부산을 골라도 서울 축제가 떴다 — usePlaces.ts 머리말 참고.)
+  const festivalsHere = useFestivalsHere();
+  const inMonth = useMemo(
+    () => festivalsHere.filter((f) => opensIn(f, month)),
+    [festivalsHere, month]
+  );
 
   // 이 달에 실제로 있는 테마만 칩으로 띄운다. 눌러도 0곳인 칩을 보여주면
   // "고장 났나" 싶어진다(앱 안의 죽은 버튼 문제와 같은 이야기).
@@ -154,7 +166,7 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
                 </span>
               ))}
             </span>
-            <span className="mfp-and">{t.seasonTitleAnd}</span>
+            <span className="mfp-and">{withCity(t.seasonTitleAnd)}</span>
           </h2>
           <p>{t.seasonSubtitle(t.seasonNames[season], t.months[month], inMonth.length)}</p>
         </div>
@@ -168,7 +180,9 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
             계절 칩보다도 위다. 손님이 이 화면에서 맨 처음 보는 것이 이 칸이고,
             누르면 **길찾기가 붙은 동네 화면**으로 바로 넘어간다.
             여름·겨울에는 자료가 없어 칸이 통째로 안 그려진다. */}
-        <SeasonThemeBanner season={season} onGo={() => onGoRoads?.()} />
+        {/* 🚧 서울에서만 — 부산에는 같은 자료가 없다. 빈 칸을 보여 주는 것보다
+            아예 안 그리는 쪽이 낫다(src/lib/seoulOnly.ts). */}
+        {isSeoul && <SeasonThemeBanner season={season} onGo={() => onGoRoads?.()} />}
 
         <div className="season-row">
           {SEASONS.map((s) => (

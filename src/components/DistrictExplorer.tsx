@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
+// 🏙️ 문구 안의 도시 이름을 지금 보는 도시로 바꾼다 — 그 파일 머리말 참고.
+import { useCityText } from "../lib/cityText";
 import { CATEGORY_META, type Category, type Place } from "../data/seed";
 // 🏙️ **이 화면은 한 도시만 본다** — 부산을 열면 ALL_PLACES 에 두 도시가 섞인다.
 import { usePlacesHere } from "../lib/usePlaces";
@@ -78,6 +80,7 @@ interface Props {
 
 export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Props = {}) {
   const { t, language } = useLanguage();
+  const withCity = useCityText();
   // 🏙️ 지금 보고 있는 도시의 곳만. 도시가 하나일 때는 ALL_PLACES 와 같다.
   const PLACES = usePlacesHere();
   const { cityKey } = useCity();
@@ -101,12 +104,19 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
   // 🚨 **곳이 하나도 없는 갈래는 칩을 안 그린다.** 눌러도 빈 화면이 나오는 단추는
   //    손님 눈에 「고장 난 앱」이다. 덕분에 MAP_CHIPS 에 새 갈래를 **미리** 적어 둘 수 있다 —
   //    자료가 없으면 안 보이고, 들어오는 날 저절로 나타난다(부산 temple·beach·view).
+  //
+  // 🐞 **여기서 한 번 당했다** (2026-09-17). 딸린 값 자리가 `[]` 라 **처음 한 번만**
+  //    셌다. 그때는 아직 서울이라, 부산으로 바꿔도 **서울 갈래가 그대로 굳어** 있었다:
+  //      · 「단풍길」 칩이 부산에 떴다 — 서울시 자료라 부산엔 한 곳도 없다
+  //      · 「바다·해변」 칩이 안 떴다 — 부산에 9곳이나 있는데도
+  //    부산의 알맹이가 바다인데 그 칩이 없었다. 화면은 멀쩡해 보이고 오류도 없다 —
+  //    **브라우저로 눌러 보지 않았으면 못 찾았다.**
   const shownChips = useMemo(
     () => MAP_CHIPS.filter((c) => {
       const cats = [c.key, ...(c.extra ?? [])];
       return PLACES.some((p) => cats.includes(p.category));
     }),
-    [],
+    [PLACES],
   );
 
   const inCategory = useMemo(() => {
@@ -180,7 +190,7 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
           바탕의 삼각 격자는 아래 육각 지도와 같은 결이다(3% 밝기라 글씨를 안 가린다). */}
       <div className="de-head" style={{ "--cc": CATEGORY_META[category].color } as CSSProperties}>
         <span className="de-eyebrow">{t.exploreNowLabel}</span>
-        <h2>{t.exploreTitle}</h2>
+        <h2>{withCity(t.exploreTitle)}</h2>
       </div>
 
       {/* 🗺️ 고르는 것(갈래 칩 · 내 위치 · 육각 지도)을 맨 위에 모아 둔다.
@@ -534,6 +544,8 @@ function MyLocationChip({
   onFind: () => void;
   t: ReturnType<typeof useLanguage>["t"];
 }) {
+  // 🏙️ 「{city} 밖에 계세요」의 도시 이름 — 지금 보는 도시로 채운다.
+  const withCity = useCityText();
   if (state === null) {
     return (
       <button type="button" className="myloc myloc-btn" onClick={onFind}>
@@ -553,7 +565,7 @@ function MyLocationChip({
     );
   }
   if (state.kind === "outside") {
-    return <span className="myloc myloc-note">{t.myLocationOutside}</span>;
+    return <span className="myloc myloc-note">{withCity(t.myLocationOutside)}</span>;
   }
   // 🚨 **위치를 못 받은 것과 지도 조회가 실패한 것을 가른다** (2026-09-04에 당했다).
   //

@@ -68,6 +68,29 @@ export interface City {
    * 그래서 **명부 한 칸으로 막는다** — scripts/lib/tour-categories.mjs 가 읽는다.
    */
   coast: boolean;
+  /**
+   * 🌐 **화면과 페이지에 쓰는 도시 이름** (2026-09-17).
+   *
+   * 왜 필요한가 — 부산을 열려고 보니 앱 문구와 곳 페이지에 **「서울」이 304군데
+   * 박혀 있었다.** 그대로 열면 「가덕도 등대 — Gangseo-gu, **Seoul**」처럼
+   * 손님에게 거짓말을 한다. 그래서 도시 이름을 문구에서 빼내 여기로 옮긴다.
+   *
+   * 🚨 **지어내지 않았다.** 이미 번역해 둔 곳 이름(place-translations/)에서
+   *    실제로 쓰인 표기를 세어 뽑았다 — 예: 「부산…」으로 시작하는 26곳 중
+   *    일본어 26곳 전부가 **釜山**, 중국어도 26곳 전부가 **釜山**이었다.
+   *
+   * ⚠️ 러시아어는 **격에 따라 꼴이 바뀐다**(в Сеул**е**). 단순 치환하면 문법이
+   *    깨져서 형태를 따로 적는다 — 이것도 번역 자료에 실제로 나온 꼴이다
+   *    (Пусан 5곳 · Пусане 6곳 · Пусана 8곳).
+   *    다른 언어는 꼴이 하나뿐이라(태국어 24군데 전부 โซล) 나누지 않았다.
+   *
+   * 🚧 **아직 안 연 도시는 비워 둔다.** 근거가 없는데 지어내지 않는다 —
+   *    비면 `cityName()` 이 영어 이름(`en`)으로 대신한다. 그 도시를 열 때,
+   *    곳 이름을 번역하고 나면 위와 같은 방법으로 세어서 채우면 된다.
+   */
+  names?: Readonly<Record<string, string>>;
+  /** 러시아어 격 — `in`은 「…에서」(전치격), `of`는 「…의」(생격). */
+  ruForms?: Readonly<{ in: string; of: string }>;
   /** 시청·도청 좌표(날씨용) */
   lat: number;
   lng: number;
@@ -89,6 +112,8 @@ export const CITIES: readonly City[] = [
   {
     key: "seoul", ko: "서울", koFull: "서울특별시",
     en: "Seoul", enFull: "Seoul",
+        names: { ko: "서울", en: "Seoul", ja: "ソウル", zh: "首尔", "zh-TW": "首爾", vi: "Seoul", es: "Seúl", fr: "Séoul", de: "Seoul", ru: "Сеул", id: "Seoul", th: "โซล" },
+    ruForms: { in: "Сеуле", of: "Сеула" },
     kind: "대도시", status: "공개",
     areaCode: "1", coast: false,
     lat: 37.5665, lng: 126.978, row: 0, col: 1,
@@ -272,7 +297,9 @@ export const CITIES: readonly City[] = [
   {
     key: "busan", ko: "부산", koFull: "부산광역시",
     en: "Busan", enFull: "Busan",
-    kind: "대도시", status: "준비중",
+        names: { ko: "부산", en: "Busan", ja: "釜山", zh: "釜山", "zh-TW": "釜山", vi: "Busan", es: "Busan", fr: "Busan", de: "Busan", ru: "Пусан", id: "Busan", th: "ปูซาน" },
+    ruForms: { in: "Пусане", of: "Пусана" },
+    kind: "대도시", status: "공개",
     areaCode: "6", coast: true,
     lat: 35.1796, lng: 129.0756, row: 4, col: 4,
     units: [ // 16곳
@@ -293,6 +320,25 @@ export const CITIES: readonly City[] = [
     ],
   },
 ];
+
+/**
+ * 그 말로 부르는 도시 이름. 없으면 영어 이름으로 대신한다.
+ *
+ * 🚨 **한 군데서만 고른다.** 화면(translations.ts)과 곳 페이지(page-strings.ts)가
+ *    각자 고르면 언젠가 한쪽만 고치게 된다 — 이 저장소에서 여러 번 겪은 일이다.
+ *
+ * @param lang 손님이 보는 말. 'ru' 는 격에 따라 꼴이 바뀌므로 `form` 을 준다.
+ * @param form 'base' 기본꼴 · 'in' 「…에서」 · 'of' 「…의」
+ */
+export function cityName(
+  city: City | undefined,
+  lang: string,
+  form: "base" | "in" | "of" = "base"
+): string {
+  if (!city) return "";
+  if (lang === "ru" && form !== "base" && city.ruForms) return city.ruForms[form];
+  return city.names?.[lang] ?? city.names?.en ?? city.en;
+}
 
 export const CITY_BY_KEY: ReadonlyMap<string, City> =
   new Map(CITIES.map((c) => [c.key, c]));

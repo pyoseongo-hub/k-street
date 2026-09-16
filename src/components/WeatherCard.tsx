@@ -21,25 +21,32 @@ import { useLanguage } from "../lib/useLanguage";
 //
 // 🚨 날씨를 못 받아오면 **아무것도 안 그린다.** 지어내지 않는다(weather.ts 머리말과 같은 규칙).
 //    그때는 왼쪽 영상 칸이 줄 전체를 쓴다(index.css 의 flex: 1).
-export default function WeatherCard({ onOpen }: { onOpen: () => void }) {
+/**
+ * @param onOpen 누르면 「비 오는 날」 창을 연다.
+ *
+ * 🚧 **서울이 아니면 안 준다**(2026-09-17). 그 창은 서울시설공단 지하상가 자료라
+ *    부산에는 같은 자료가 없다(src/lib/seoulOnly.ts 머리말 참고).
+ *    그때는 **날씨만 보여 주고 눌리지 않는다** — 눌러도 아무 일 없는 단추는
+ *    고장난 것처럼 보인다. 읽어 주는 말도 「비 오는 날 서울」을 빼고 날씨만 전한다.
+ */
+export default function WeatherCard({ onOpen }: { onOpen?: () => void }) {
   const { weather, error } = useCityWeather();
   const { t } = useLanguage();
   if (error || !weather) return null;
 
   const rain = weather.rainToday;
   const temp = `${Math.round(weather.tempC)}°`;
+  const 날씨말 =
+    (rain ? `${weather.rainingNow ? t.rainyNow : t.rainyForecast}, ` : "") +
+    `${temp}, ${t.feelsLike} ${Math.round(weather.feelsLikeC)}°`;
+  const Tag = onOpen ? "button" : "div";
   return (
-    <button
-      type="button"
+    <Tag
+      {...(onOpen ? { type: "button" as const, onClick: onOpen } : {})}
       className={"top-card weather-card" + (rain ? " rainy" : "")}
-      onClick={onOpen}
       /* 🗣️ 화면에는 `≈26°` 로 짧게 쓰지만, 읽어 주는 손님에게는 **말로** 전한다 —
          「체감 26도」. 짧게 쓰느라 뜻을 잃지 않게. */
-      aria-label={
-        `${t.rainyH1} — ` +
-        (rain ? `${weather.rainingNow ? t.rainyNow : t.rainyForecast}, ` : "") +
-        `${temp}, ${t.feelsLike} ${Math.round(weather.feelsLikeC)}°`
-      }
+      aria-label={onOpen ? `${t.rainyH1} — ${날씨말}` : 날씨말}
     >
       <span className="top-card-ic" aria-hidden="true">
         {rain ? "☔" : "🌤️"}
@@ -63,6 +70,6 @@ export default function WeatherCard({ onOpen }: { onOpen: () => void }) {
       <span className="top-card-go" aria-hidden="true">
         →
       </span>
-    </button>
+    </Tag>
   );
 }

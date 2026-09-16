@@ -1,6 +1,8 @@
 import { useState } from "react";
 import DriverCard from "./DriverCard";
 import LuggageCard from "./LuggageCard";
+// 🚧 T-Luggage 는 **서울메트로** 역에만 있다 — 그 파일 머리말 참고.
+import { useIsSeoul } from "../lib/seoulOnly";
 import { getMapLinks, openMapLink, type MapLinkTarget } from "../lib/mapLinks";
 import { getPositionOrNull } from "../lib/userPosition";
 import { slugFor } from "../lib/shareLink";
@@ -43,6 +45,7 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
   const [driver, setDriver] = useState(false);
   // 🧳 짐 보관 카드 — 목적지 보여주기와 같은 방식(화면을 덮는 창)이다.
   const [luggage, setLuggage] = useState(false);
+  const isSeoul = useIsSeoul();
 
   // 🔗 공유는 **카드 맨 윗줄로 옮겼다**(2026-09-09 사장님 지시) — ShareButton.tsx.
   //    이 줄에 셋을 두면 자리가 298px 뿐이라 셋 다 좁아져 아무것도 안 읽힌다.
@@ -142,14 +145,23 @@ export default function MapDirections({ place }: { place: MapLinkTarget }) {
          *     셋 다 좁아져 아무것도 안 읽히는 것보다 낫다 — 2026-09-09에 배운 것이다.
          *  🚨 역이 아예 없는 곳에서도 **단추를 없애지 않는다.** 눌러서
          *     「여긴 역이 없습니다」를 읽는 것도 답이다(사장님 말씀). */}
-        <button type="button" className="map-btn map-btn--luggage" onClick={() => setLuggage(true)}>
-          {t.luggageLinkLabel}
-        </button>
+        {/* 🚧 **서울에서만 그린다** (2026-09-17, 부산을 열면서).
+            바로 윗줄에 「역이 없는 곳에서도 단추를 없애지 않는다」고 적어 뒀는데,
+            그건 **서울 안에서** 역이 없는 동네 이야기다. 부산은 다르다 —
+            T-Luggage 자체가 **서울메트로 역에만** 있어서, 눌러 봐야 안내할 것이
+            아무것도 없다. 「여긴 역이 없습니다」도 틀린 말이 된다(서비스가 없는 것이지
+            역이 없는 게 아니다). 그래서 부산에서는 단추째 뺀다. */}
+        {isSeoul && (
+          <button type="button" className="map-btn map-btn--luggage" onClick={() => setLuggage(true)}>
+            {t.luggageLinkLabel}
+          </button>
+        )}
       </div>
       {driver && <DriverCard place={place} onClose={() => setDriver(false)} />}
       {/* 🧳 짐 보관 — **가까운 역까지만** 안내한다. 자세한 것은 공식 페이지로 보낸다.
           앞서 회색 글자 한 줄로 뒀다가 단추 둘 밑에 묻혔다(사장님이 화면에 동그라미). */}
-      {luggage && (
+      {/* 🚧 서울에서만 — 부산 역에는 이 서비스가 없다(src/lib/seoulOnly.ts). */}
+      {isSeoul && luggage && (
         <LuggageCard
           station={place.id ? nearestStation(place.id, place) : undefined}
           gu={place.gu}
