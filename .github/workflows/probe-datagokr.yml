@@ -1,0 +1,32 @@
+name: Probe data.go.kr (우리 키로 어디까지 열리나)
+
+# 🔑 **사장님께 신청을 부탁드리기 전에 먼저 재 본다.**
+#
+#    공공데이터포털은 계정마다 인증키가 하나고, 그 키로 열리는 창구는 「활용신청」을
+#    해서 승인받은 것뿐이다. 이미 열려 있으면 부탁드릴 일이 없다.
+#    아무것도 저장하지 않는다 — 재 보고 알려 주기만 한다.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 재 본다
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: node scripts/probe-datagokr.mjs 2>&1 | tee probe-log.txt
+      - name: 결과 요약
+        run: |
+          {
+            echo "## 🔑 우리 인증키로 어디까지 열리나"
+            echo ""
+            echo '```'
+            cat probe-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
