@@ -14,7 +14,11 @@
 // 🚨 샌드박스에서는 apis.data.go.kr 이 막혀 있다. Actions 에서 돌린다.
 //
 //   TOUR_API_KEY=키 node scripts/probe-datagokr.mjs
-import { TOUR_TIMEOUT_MS } from "./lib/tour-fetch.mjs";
+// 🔁 **재시도를 쓴다.** 이 서버는 연결이 되다 말다 한다 — 실측으로 7번 중 4번이
+//    ConnectTimeout 이었다(scripts/lib/tour-fetch.mjs 머리말). 한 번 물어보고
+//    「안 된다」고 적으면 **멀쩡한 창구를 막혔다고 보고하게 된다.**
+//    실제로 그렇게 나왔다: 잘 쓰고 있는 국문 창구가 ❌ 로 찍혔다.
+import { fetchWithRetry } from "./lib/tour-fetch.mjs";
 
 const KEY = process.env.TOUR_API_KEY;
 if (!KEY) {
@@ -47,7 +51,8 @@ for (const [기관, 이름, base, extra] of TARGETS) {
 
   let 결과;
   try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(TOUR_TIMEOUT_MS) });
+    // 세 번이면 충분하다 — 재 보는 것이지 자료를 받는 게 아니다.
+    const res = await fetchWithRetry(url, { tries: 3, waits: [3000, 6000], log: () => {} });
     const text = await res.text();
     if (/SERVICE_KEY_IS_NOT_REGISTERED/.test(text)) 결과 = "❌ 활용신청이 안 돼 있다 (키 문제가 아니다)";
     else if (!res.ok) 결과 = `❌ HTTP ${res.status}`;
@@ -60,7 +65,8 @@ for (const [기관, 이름, base, extra] of TARGETS) {
       결과 = `✅ 열린다 (총 ${n}건)`;
     }
   } catch (e) {
-    결과 = `❌ ${e.name === "TimeoutError" ? "30초 안에 답이 없다" : e.message}`;
+    // 🚨 「fetch failed」 한 줄만 적으면 원인을 못 찾는다 — 진짜 이유는 cause 에 있다.
+    결과 = `❌ ${e?.cause?.code ?? e?.cause?.message ?? e.message}`;
   }
   console.log(`${기관.padEnd(8)} ${이름.padEnd(24)} ${결과}`);
 }
