@@ -129,14 +129,20 @@ def draw_text(d, text, cy, f, fill=(255, 255, 255)):
 
 
 def shot_frame(path, caption):
+    """caption 이 빈 값이면 **글자 없이** 사진만 얹는다 (`--no-text`).
+
+    사장님 (2026-09-16): *"자막 없이 해"*
+    글자가 없으면 자리를 비워 둘 이유도 없다 — 사진을 더 크게 얹는다.
+    """
     im = Image.open(PHOTOS / path).convert("RGB")
     canvas = fill_blur(im)
     # 원본을 통째로 얹는다 — 한 점도 안 버린다.
-    r = min(W / im.width, (H - 640) / im.height)
+    room = H - (640 if caption else 240)
+    r = min(W / im.width, room / im.height)
     fg = im.resize((int(im.width * r), int(im.height * r)), Image.LANCZOS)
-    canvas.paste(fg, ((W - fg.width) // 2, (H - fg.height) // 2 - 60))
-    d = ImageDraw.Draw(canvas)
-    draw_text(d, caption, H - 430, fit(LATIN, caption, 74))
+    canvas.paste(fg, ((W - fg.width) // 2, (H - fg.height) // 2 - (60 if caption else 0)))
+    if caption:
+        draw_text(ImageDraw.Draw(canvas), caption, H - 430, fit(LATIN, caption, 74))
     return canvas
 
 
@@ -152,12 +158,16 @@ def credit_frame():
 
 def main():
     OUT.mkdir(exist_ok=True)
+    # 🔇 `--no-text` — 자막을 빼고 사진만. **출처 카드는 뺄 수 없다** (공공누리 조건).
+    quiet = "--no-text" in sys.argv
     plan = []
     for i, (p, sec, cap) in enumerate(SHOTS):
+        if quiet:
+            cap = ""
         f = OUT / f"{i:02d}.png"
         shot_frame(p, cap).save(f)
         plan.append((f, sec))
-        print(f"🖼️  {f.name}  {sec}s  {cap.replace(chr(10), ' / ')}")
+        print(f"🖼️  {f.name}  {sec}s  {cap.replace(chr(10), ' / ') or '(자막 없음)'}")
     f = OUT / f"{len(SHOTS):02d}.png"
     credit_frame().save(f)
     plan.append((f, CREDIT_SEC))
@@ -178,7 +188,7 @@ def main():
     lst = OUT / "list.txt"
     lst.write_text("".join(f"file '{p.name}'\nduration {s}\n" for p, s in plan)
                    + f"file '{plan[-1][0].name}'\n", encoding="utf-8")
-    mp4 = OUT / "잠수교-릴스.mp4"
+    mp4 = OUT / ("잠수교-릴스-자막없음.mp4" if quiet else "잠수교-릴스.mp4")
     # 🧰 **ffmpeg 을 찾는 순서** — 시스템에 있으면 그것, 없으면 pip 로 딸려 오는 것.
     #    작업 환경(샌드박스)에는 ffmpeg 이 없다. `pip install imageio-ffmpeg` 하면
     #    static 바이너리가 딸려 와서 여기서도 영상까지 만들 수 있다.
