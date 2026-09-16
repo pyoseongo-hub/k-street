@@ -21,6 +21,8 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 import { fetchWithRetry } from "./lib/tour-fetch.mjs";
+// 🏙️ 어느 도시를 훑을지는 명부가 정한다 — 도시 이름을 손으로 적지 않는다.
+import { readCities } from "./lib/city-registry.mjs";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dirname, "..", "src", "data", "festival-dates.json");
 const RAW = join(__dirname, "..", "src", "data", "tour-places-raw.json");
@@ -65,19 +67,29 @@ async function callTourApi(path, extraParams) {
 const YEAR = new Date().getFullYear();
 const FROM = `${YEAR - 1}0101`;
 
-async function fetchAllFestivals() {
+// 🏙️ **어느 도시를 훑나 — 명부(cities.ts)가 정한다** (2026-09-17에 고쳤다).
+//
+//    여기는 `areaCode: "1"` 로 **서울이 박혀 있었다.** 그래서 부산 202곳을 들여놓고도
+//    **부산 축제 날짜는 한 번도 받은 적이 없었다** — 축제가 14곳뿐인 것이
+//    「부산에 축제가 없어서」가 아니라 **안 물어봤기 때문**이었다.
+//    도시 이름을 손으로 적는 자리를 없앤다. 새 도시를 열면 저절로 따라온다.
+//
+//    🚨 「빈칸」 도시는 건너뛴다 — 자료가 없어 화면에 자리도 없다. 호출만 버린다.
+const CITIES = readCities().filter((c) => c.status === "공개" || c.status === "준비중");
+
+async function fetchFestivalsOf(city) {
   const items = [];
   let pageNo = 1;
   const numOfRows = 500;
   for (;;) {
     const { list, totalCount } = await callTourApi("searchFestival2", {
-      areaCode: "1", // 서울
+      areaCode: city.areaCode,
       eventStartDate: FROM,
       numOfRows: String(numOfRows),
       pageNo: String(pageNo),
       arrange: "A",
     });
-    items.push(...list);
+    items.push(...list.map((it) => ({ ...it, __city: city })));
     if (items.length >= totalCount || list.length < numOfRows) break;
     pageNo++;
     if (pageNo > 20) break; // 안전장치
@@ -86,14 +98,23 @@ async function fetchAllFestivals() {
   return items;
 }
 
-const SEOUL_DISTRICTS = [
-  "종로구", "중구", "용산구", "성동구", "광진구", "동대문구", "중랑구", "성북구",
-  "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구", "양천구", "강서구",
-  "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구", "강동구",
-];
+async function fetchAllFestivals() {
+  const all = [];
+  for (const city of CITIES) {
+    const got = await fetchFestivalsOf(city);
+    console.log(`   ${city.ko.padEnd(4)} (지역 ${city.areaCode}) — ${got.length}건`);
+    all.push(...got);
+  }
+  return all;
+}
 
-function guOf(addr) {
-  return SEOUL_DISTRICTS.find((g) => (addr || "").includes(g)) ?? null;
+/**
+ * 주소에서 동네를 뽑는다. **그 도시의 명부 안에서만 찾는다.**
+ *
+ * 🚨 도시를 안 가리고 찾으면 「중구」가 서울에도 부산에도 있어서 뒤섞인다.
+ */
+function guOf(addr, city) {
+  return city.units.find((g) => (addr || "").includes(g)) ?? null;
 }
 
 /** "20260919" → 9. 형식이 다르면 null — 지어내지 않는다. */
@@ -151,7 +172,9 @@ for (const it of raw) {
   if (!prev || start > prev.start) {
     byId.set(id, {
       name: String(it.title ?? "").trim(),
-      gu: guOf(it.addr1),
+      // 🏙️ 어느 도시 것인가 — 「중구」처럼 이름이 겹치는 동네가 있어 반드시 적는다.
+      city: it.__city.key,
+      gu: guOf(it.addr1, it.__city),
       addr: String(it.addr1 ?? "").trim() || null,
       start,
       end: String(it.eventenddate ?? ""),
