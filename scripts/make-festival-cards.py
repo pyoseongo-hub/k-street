@@ -12,10 +12,24 @@
   · 그대로 PNG 여러 장으로 올리면 → 포토 모드
   · `--video` 를 주면 같은 카드를 이어 붙여 mp4 로도 만든다
 
-── 🚨 여기 적는 사실은 **셋뿐이다** ────────────────────────────────────
-  **언제 · 어디서 · 값.** 이 셋은 틀리면 손님이 헛걸음한다.
-  나머지(몇 시 시작·프로그램·규모)는 **한 줄도 안 적는다** — 앱이 맡는다.
-  릴스 대본에서 정한 것과 같은 선이다(`docs/잠수교-릴스-대본.md`).
+── 🎣 **이건 미끼다. 정보판이 아니다** (사장님 2026-09-16) ──────────────
+  > *"틱톡은 정보보다 감성, 예쁜 사진 등으로 미끼. 사실에 너무 얽매이지 말고
+  >   책임지지 않는 추상적 표현으로 사람들을 홀린다. 책임 없게."*
+
+  🚨 첫 판은 **표**였다 — WHEN / WHERE / PRICE 를 줄줄이 박아 놨다.
+     사장님은 처음부터 *"이쁘게만 보여 주고 링크는 스트릿으로"* 라고 하셨는데
+     내가 정보 카드를 만들었다. 릴스에서 네 번 반려된 것과 **똑같은 실수**다 —
+     「무엇이 있는지」를 예쁘게 다듬는 것. 광고는 그걸 하는 자리가 아니다.
+
+  → 사진이 화면의 주인이다. 글은 **홀리는 한 줄**만.
+  → 남기는 사실은 **장소 이름과 날짜, 딱 둘.** 사장님 (2026-09-16):
+    *"날짜 장소 정도만 남겨. 그 정도는 있어야 신뢰감 있으니."*
+    · 장소 — 사진이 어디인지 말해 준다. 빼면 남의 곳 사진처럼 보인다.
+    · 날짜 — 이게 없으면 홍보물이 아니라 그냥 사진첩이다.
+    · 시각·프로그램·규모는 **한 자도 안 적는다.** 앱이 맡는다.
+
+  📌 **날짜는 넓게 적는다.** 「Through October」는 하루가 밀려도 안 틀린다.
+     손님을 헛걸음시키는 건 「낭만」이 아니라 「10월 4일 오후 2시」다.
 
 ── 🚨 사진은 **그 축제가 열리는 자리**의 것만 쓴다 ─────────────────────
   이 저장소가 여러 번 데인 자리다 — 비슷한 지역 남의 사진을 채워 넣으면
@@ -59,30 +73,30 @@ SAFE_TOP, SAFE_BOTTOM = 190, 300
 # `photo` 는 `docs/` 아래 실제 파일이다. 없는 사진을 적으면 바로 멈춘다.
 POSTS = {
     "2026-10-서울-무료축제": {
+        # 표지 — 크게 한 마디. 이게 손가락을 멈추게 하는 자리다.
         "title": ["OCTOBER", "IN SEOUL"],
-        "sub": "Two festivals. Both free.",
+        "sub": "Nobody tells you about these.",
         "cover": "잠수교-사진/한강-전경/4062103.jpg",
         "credit": ("출처 : ⓒ한국관광콘텐츠랩\n"
                    "촬영 : 정규진 · 서문교 · 임태원 · 두드림"),
         "items": [
             {
-                "gu": "SEOCHO-GU",
-                "en": ["Car-Free Jamsugyo", "Bridge Festival"],
-                "ko": "차 없는 잠수교 뚜벅뚜벅 축제",
-                "when": "Every Sunday, through October",
-                "where": "Jamsugyo Bridge, Banpo Han River Park",
-                "price": "Free (food sold separately)",
+                # `place` — 어디인지. 이건 사진이 남의 곳처럼 보이지 않게 하는 닻이다.
+                # `line`  — 홀리는 말. 분위기다. 사실을 말하는 자리가 아니다.
+                # `when`  — **작게** 한 줄. 사장님 (2026-09-16):
+                #           *"날짜 장소 정도만 남겨. 그 정도는 있어야 신뢰감 있으니."*
+                #           🚨 넓게 적는다. 「10월 4일 오후 2시」로 적으면 틀릴 수 있고,
+                #              틀리면 손님이 헛걸음한다. 정확한 날짜는 앱이 맡는다.
+                "place": "JAMSUGYO BRIDGE",
+                "line": ["The bridge empties.", "The river lights up."],
+                "when": "Every Sunday · through October",
                 "photo": "잠수교-사진/달빛-야경/3537888.jpg",
-                # 축제 사진이 갤러리에 없다. **같은 자리**(반포대교 달빛무지개분수)다.
                 "note": "잠수교 축제 사진은 갤러리에 없다 — 같은 자리 실사",
             },
             {
-                "gu": "SEONGDONG-GU",
-                "en": ["Seoul International", "Garden Show"],
-                "ko": "서울국제정원박람회",
+                "place": "SEOUL FOREST",
+                "line": ["A whole park", "turning gold."],
                 "when": "Through October",
-                "where": "Seoul Forest",
-                "price": "Free",
                 "photo": "서울숲-사진/가을/3098337.jpg",
                 "note": "박람회 사진은 갤러리에 없다 — 같은 자리(서울숲) 실사",
             },
@@ -149,6 +163,19 @@ def draw_lines(d, text, x, y, f, fill, gap_ratio=1.22, center_w=None):
     return y
 
 
+def fill_blur(im):
+    """흐린 배경 — 사진을 화면에 꽉 채우도록 키운 뒤 뭉개고 어둡게 깐다.
+
+    ⚠️ 우리 사진은 대부분 가로(3:2)다. 세로 9:16 으로 **자르면 70%가 날아간다.**
+    릴스에서 쓴 방법을 그대로 가져왔다 — **한 점도 안 버리고** 화면은 꽉 찬다.
+    """
+    r = max(W / im.width, H / im.height)
+    bg = im.resize((round(im.width * r) + 2, round(im.height * r) + 2), Image.LANCZOS)
+    x, y = (bg.width - W) // 2, (bg.height - H) // 2
+    bg = bg.crop((x, y, x + W, y + H)).filter(ImageFilter.GaussianBlur(44))
+    return Image.blend(bg, Image.new("RGB", (W, H), INK), 0.58)
+
+
 def photo_band(path, height):
     """사진을 `W × height` 로 꽉 채워 자른다.
 
@@ -204,44 +231,52 @@ def cover_card(post):
     return canvas
 
 
+def shadowed(d, text, x, y, f, fill):
+    """밝은 사진 위에서도 읽히게 그림자를 깐다.
+
+    ⚠️ **어두운 사진만 보고 괜찮다고 넘기면 안 된다.** 잠수교(밤)에서는 멀쩡했는데
+    서울숲(낮, 흰 하늘)을 넣자마자 글자가 사라졌다. 사진은 밝을 수도 있다.
+    """
+    for dx, dy in ((0, 4), (0, -4), (4, 0), (-4, 0), (3, 3), (-3, 3), (3, -3), (-3, -3)):
+        d.text((x + dx, y + dy), text, font=f, fill=(0, 0, 0))
+    d.text((x, y), text, font=f, fill=fill)
+
+
 def item_card(it, n, total):
-    # 🚨 **글은 한 자도 사진 위에 안 올린다** (2026-09-16에 고쳤다).
-    #    처음엔 사진을 1000px 로 깔고 글을 880 부터 얹었다. 잠수교 사진이 어두워서
-    #    읽히기는 했는데, **밝은 사진을 넣는 순간 안 보인다.** 서울숲 낮 사진이 그렇다.
-    #    사진 아래 녹임(fade)은 **모양**을 위한 것이지 **읽히게 하는 장치가 아니다** —
-    #    사진이 밝으면 녹여도 밝다. 글은 전부 판 위로 내렸다.
-    band_h = 840
+    """🎣 **사진이 주인, 글은 한 줄.**
+
+    사장님 (2026-09-16): *"정보보다 감성, 예쁜 사진으로 미끼."*
+    첫 판은 WHEN/WHERE/PRICE 표였다 — 소개가 아니라 **안내문**이 됐다.
+    여기 남는 글은 **장소 이름 하나 + 홀리는 한 줄**뿐이다.
+    """
+    # 🚨 **흐린 배경 + 떠 있는 사진은 안 된다** (2026-09-16에 해 보고 버렸다).
+    #    릴스에서는 그 방법이 맞다 — 움직이니까 배경이 안 거슬린다.
+    #    멈춰 있는 카드에서는 **사진이 띠처럼 떠 보이고** 위아래 경계가 선으로 남는다.
+    #    밝은 사진이면 흐린 배경까지 밝아져서 더 지저분하다.
+    #    → 사진은 위에 꽉 채우고, 아래는 **한 색 판**으로 간다. 경계가 선이 아니라 면이 된다.
+    band_h = 1080
     canvas = Image.new("RGB", (W, H), PANEL)
     canvas.paste(photo_band(it["photo"], band_h), (0, 0))
-    fade_into_panel(canvas, band_h, 200)
+    fade_into_panel(canvas, band_h, 190)
     d = ImageDraw.Draw(canvas)
 
-    # 몇 번째인지 — 넘겨 볼 때 어디쯤인지 알 수 있어야 한다.
-    # ⚠️ 이 한 줄만은 사진 위에 놓을 수밖에 없다(맨 위라야 뜻이 있다).
-    #    서울숲 낮 사진의 **흰 하늘**에 회색 글씨가 묻혔다 — 그림자를 깔아 둔다.
-    cnt, f = f"{n} / {total}", font(LATIN, 34)
-    for dx, dy in ((0, 3), (0, -3), (3, 0), (-3, 0), (2, 2), (-2, 2)):
-        d.text((80 + dx, SAFE_TOP - 90 + dy), cnt, font=f, fill=(0, 0, 0))
-    d.text((80, SAFE_TOP - 90), cnt, font=f, fill=(245, 245, 245))
+    # 이 한 줄만 사진 위에 놓는다(맨 위라야 뜻이 있다) — 흰 하늘에 묻히지 않게 그림자.
+    shadowed(d, f"{n} / {total}", 80, SAFE_TOP - 90, font(LATIN, 34), (245, 245, 245))
 
-    y = band_h + 34
-    y = draw_lines(d, it["gu"], 80, y, font(LATIN, 32), ACCENT)
-    y += 18
-    en = "\n".join(it["en"])
-    y = draw_lines(d, en, 80, y, fit(LATIN, en, 82, W - 160), TEXT, gap_ratio=1.12)
-    y += 10
-    y = draw_lines(d, it["ko"], 80, y, fit(HANGUL, it["ko"], 40, W - 160), MUTED)
-    y += 46
-    rule(d, y)
-    y += 44
+    y = band_h + 60
+    d.text((80, y), it["place"], font=font(LATIN, 34), fill=ACCENT)
+    y += 68
+    line = "\n".join(it["line"])
+    f = fit(LATIN, line, 86, W - 160)
+    for ln in line.split("\n"):
+        d.text((80, y), ln, font=f, fill=TEXT)
+        y += int(f.size * 1.16)
 
-    # 🚨 **적는 사실은 이 셋뿐이다.** 시작 시각·프로그램은 앱이 맡는다.
-    for label, value in (("WHEN", it["when"]), ("WHERE", it["where"]), ("PRICE", it["price"])):
-        d.text((80, y), label, font=font(LATIN, 28), fill=ACCENT)
-        draw_lines(d, value, 260, y - 6, fit(LATIN_THIN, value, 38, W - 340), TEXT)
-        y += 84
+    # 📅 날짜 한 줄. **작게.** 없으면 그냥 사진첩이고, 크면 안내문이 된다.
+    y += 26
+    d.text((80, y), it["when"], font=fit(LATIN_THIN, it["when"], 38, W - 160), fill=MUTED)
 
-    d.text((80, H - SAFE_BOTTOM - 40), LINK, font=font(LATIN, 34), fill=MUTED)
+    d.text((80, H - SAFE_BOTTOM - 50), LINK, font=font(LATIN, 34), fill=(120, 128, 142))
     return canvas
 
 
@@ -282,7 +317,8 @@ def build(post_id):
     cards = [("01-cover", cover_card(post))]
     total = len(post["items"])
     for i, it in enumerate(post["items"], 1):
-        cards.append((f"{i + 1:02d}-{it['en'][0].lower().replace(' ', '-')}",
+        slug = it["place"].lower().replace(" ", "-")
+        cards.append((f"{i + 1:02d}-{slug}",
                       item_card(it, i, total)))
     cards.append((f"{len(cards) + 1:02d}-link", closing_card(post)))
 
