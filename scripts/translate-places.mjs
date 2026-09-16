@@ -336,11 +336,61 @@ function applyOverrides(store) {
 }
 
 // 언어별로 열쇠를 정렬해 두면 다음 실행의 diff가 읽기 쉽다.
+/**
+ * 🛕 **절 이름에서 「절」이 사라진 것을 걷어낸다.**
+ *
+ * 구글은 절 이름을 **뜻으로 옮긴다.** 소리가 비슷한 낱말이 있으면 그쪽을 고른다:
+ *     운수사(부산)  → 運輸会社     (운수 회사)
+ *     구강사        → 口腔護理     (입 안 관리)
+ *     법안정사      → 法律與秩序   (드라마 「법과 질서」)
+ *     삼천사        → 三天使       (천사 셋)
+ *     금용암(부산)  → 屍速列車     (영화 「부산행」!)
+ *     학도암        → 学徒がん     (「암」을 병으로 읽었다)
+ * 화면은 멀쩡해 보인다. 한자를 읽는 손님만 이상하게 여긴다.
+ *
+ * ── 왜 낱말 목록이 아니라 규칙인가 ────────────────────────────────────────
+ *   틀린 말을 하나씩 적어 막으면 **다음 도시에서 새로운 것이 또 나온다**(오늘 65곳
+ *   중 50개가 걸렸다. 손으로 적기엔 너무 많고, 적어도 다음 도시에 안 맞는다).
+ *   대신 **절 이름에는 寺·庵·菴·院 중 하나가 반드시 있다**는 사실을 쓴다.
+ *   한자가 있는데 그 글자가 하나도 없으면, 그건 절 이름이 아니다.
+ *
+ * ── 지우기만 한다. 지어내지 않는다 ────────────────────────────────────────
+ *   맞는 한자를 우리가 만들어 낼 수는 없다. 지우면 앱이 **영어(로마자)로 대신
+ *   보여 준다** — 「Unsu Temple (Busan)」. 틀린 한자보다 낫다.
+ *
+ * 🪪 관광공사 공식 이름은 이 그물에 안 걸린다(寺가 들어 있다). 그래서 이 검사는
+ *    공식 이름을 **밀어내지 않는다** — 손으로 적은 null 과 달리 저절로 물러난다.
+ */
+function dropBrokenTempleNames(store) {
+  const HAN = /[\u4E00-\u9FFF]/;
+  const TEMPLE_WORD = /[寺庵菴院]/;
+  const temples = new Set(
+    readdirSync("src/data")
+      .filter((f) => /-places\.json$/.test(f))
+      .flatMap((f) => JSON.parse(readFileSync(`src/data/${f}`, "utf8")))
+      .filter((p) => p?.category === "temple")
+      .map((p) => String(p.name))
+  );
+  let n = 0;
+  for (const code of ["ja", "zh", "zh-TW"]) {
+    for (const [ko, v] of Object.entries(store[code] ?? {})) {
+      if (!temples.has(ko)) continue;
+      // 괄호 안의 지역 이름(（釜山）)은 빼고 본다 — 거기만 한자면 오해한다.
+      const body = String(v).replace(/[（(][^）)]*[）)]/g, "");
+      if (HAN.test(body) && !TEMPLE_WORD.test(body)) { delete store[code][ko]; n++; }
+    }
+  }
+  if (n) console.log(`🛕 절 이름에서 「절」이 빠진 것 ${n}개를 걷어냈다 (영어로 대신 보여 준다)`);
+  return n;
+}
+
 function save() {
   // 🚨 **순서가 규칙이다** — 관광공사를 먼저 덮고, 그 위에 사람이 확인한 것을 덮는다.
   //    뒤집으면 우리가 눈으로 고친 값이 관광공사 것으로 되돌아간다.
   applyOfficial(store);
   applyOverrides(store);
+  // 🛕 마지막에 한 번 더 훑는다 — 위 두 단계가 못 채운 자리에 구글 것이 남아 있다.
+  dropBrokenTempleNames(store);
   const sorted = {};
   for (const code of Object.keys(store).sort()) {
     sorted[code] = Object.fromEntries(
