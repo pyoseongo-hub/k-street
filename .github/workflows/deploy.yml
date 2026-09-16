@@ -30,6 +30,10 @@ jobs:
       #    **다음에 그 워크플로를 돌리려 할 때** "workflow_dispatch 트리거가 없다"는
       #    엉뚱한 말만 듣게 된다. 그때는 무엇을 언제 깨뜨렸는지 찾기 어렵다.
       - run: node scripts/check-workflows.mjs
+      # 🏷️ **관광공사 분류표가 실제 자료에 맞나** (2026-09-16).
+      #    표에서 코드 한 줄이 빠지면 그 갈래가 통째로 사라지는데 화면엔 티가 안 난다.
+      #    저장해 둔 조사 자료에만 대 보므로 관광공사를 부르지 않는다.
+      - run: node scripts/check-tour-categories.mjs
       - run: npm run audit-seed
       # 🎨 **없는 색 이름을 부르고 있지 않나** (2026-09-15).
       #    `var(--muted, #6b6559)` 처럼 **정해 준 적 없는 이름**을 부르면 CSS 는
