@@ -40,8 +40,17 @@ if (!API_KEY) {
 }
 
 const args = process.argv.slice(2);
-const areaCode = args[args.indexOf("--area") + 1];
-const wantArea = args.includes("--area") && areaCode && !areaCode.startsWith("--");
+const argOf = (flag) => {
+  const i = args.indexOf(flag);
+  const v = i >= 0 ? args[i + 1] : undefined;
+  return v && !v.startsWith("--") ? v : undefined;
+};
+let areaCode = argOf("--area");
+// 🏙️ **이름으로도 찾을 수 있다** (2026-09-16에 넣었다).
+//    번호를 외워서 넣지 않는다는 원칙은 그대로다 — 이름을 줘도 **관광공사에 물어봐서**
+//    번호를 알아내고, 무엇에 맞췄는지 화면에 찍는다. 사람이 눈으로 확인할 수 있어야 한다.
+//    번호를 손으로 옮겨 적는 단계가 하나 줄면 그만큼 잘못 옮겨 적을 일도 없다.
+const wantCity = argOf("--city");
 
 const ROOT = "https://apis.data.go.kr/B551011/KorService2";
 
@@ -113,13 +122,29 @@ async function call(path, extraParams) {
 }
 
 // ── 지역 코드를 물어본다 ────────────────────────────────────────────────
-if (!wantArea) {
+if (!areaCode || wantCity) {
   console.log("🗺️  관광공사가 쓰는 **지역 코드**를 물어본다 (외워서 넣지 않는다)\n");
   const { list } = await call("areaCode2", { numOfRows: "50" });
   for (const a of list) console.log(`   ${String(a.code).padStart(2)}  ${a.name}`);
-  console.log("\n다음 단계 — 위에서 고른 번호로 다시 돌린다:");
-  console.log("   node scripts/survey-city.mjs --area <번호>");
-  process.exit(0);
+
+  if (!wantCity) {
+    console.log("\n다음 단계 — 위에서 고른 번호로 다시 돌린다:");
+    console.log("   node scripts/survey-city.mjs --area <번호>   (또는 --city 부산)");
+    process.exit(0);
+  }
+
+  // 🚨 **하나로 좁혀지지 않으면 멈춘다.** 여러 개에 걸리는데 아무거나 고르면
+  //    조용히 엉뚱한 도(道) 자료를 받아 온다 — 그게 이 스크립트가 제일 무서워하는 사고다.
+  const hits = list.filter((a) => String(a.name).includes(wantCity));
+  if (hits.length !== 1) {
+    console.error(`\n❌ 「${wantCity}」로는 한 곳으로 좁혀지지 않는다 (${hits.length}곳).`);
+    if (hits.length) console.error(`   걸린 것 — ${hits.map((h) => `${h.code} ${h.name}`).join(" · ")}`);
+    console.error("   위 목록에서 골라 --area <번호> 로 다시 돌릴 것.");
+    process.exit(1);
+  }
+  areaCode = String(hits[0].code);
+  console.log(`\n✅ 「${wantCity}」 → 관광공사 지역 ${areaCode} **${hits[0].name}**`);
+  console.log("   (번호를 외워서 넣은 게 아니라 물어봐서 받은 것이다)\n");
 }
 
 // ── 그 지역의 시군구 목록 ───────────────────────────────────────────────
@@ -199,6 +224,48 @@ for (const [k, n] of [...second].sort((a, b) => b[1] - a[1]).slice(0, 20))
   console.log(`   ${String(n).padStart(5)}곳  ${k}`);
 console.log("");
 
+// ── 📷 사진이 붙어 있나 ─────────────────────────────────────────────────
+//
+// 🚨 **이 도시를 열 수 있나 없나가 여기서 갈린다.**
+//    사장님 (2026-09-16): *"사진 없으면 의미 없어."*
+//    실제로 앱 코드가 그렇게 돼 있다 — ALL_PLACES 가 **사진 없는 곳을 걸러 낸다.**
+//    곳을 1,000개 넣어도 사진이 없으면 화면에는 한 곳도 안 나온다.
+//
+//    관광공사 목록은 대표사진 주소(firstimage)를 같이 준다. 그래서 **자료를 받은
+//    이 자리에서 바로 셀 수 있다** — 갤러리를 따로 뒤지기 전에 큰 그림이 나온다.
+//
+// ⚠️ **여기 숫자는 「대표사진이 있다」까지만 말한다.** 그 사진이 진짜 그 곳 사진인지는
+//    이 단계가 모른다. 남의 가게 사진이 붙는 사고를 케이푸드에서 겪었다 —
+//    받아서 쓸 때 이름 대조를 따로 해야 한다.
+console.log("④ 📷 대표사진이 붙어 있는 곳 (없으면 앱 화면에 안 나온다)");
+const hasPhoto = (it) => Boolean(String(it.firstimage ?? "").trim());
+const photoAll = pool.filter(hasPhoto).length;
+const pct = (n, d) => (d ? `${Math.round((n / d) * 100)}%` : "—");
+console.log(`   전체        ${String(photoAll).padStart(5)} / ${String(pool.length).padStart(5)}곳  (${pct(photoAll, pool.length)})`);
+for (const t of POOL_TYPES) {
+  const mine = pool.filter((it) => it.__type === t.label);
+  if (!mine.length) continue;
+  const n = mine.filter(hasPhoto).length;
+  console.log(`   ${t.label.padEnd(10)} ${String(n).padStart(5)} / ${String(mine.length).padStart(5)}곳  (${pct(n, mine.length)})`);
+}
+// 동네별로도 본다 — 사진이 한 동네에만 쏠려 있으면 「도시를 열었다」고 할 수 없다.
+console.log("\n   동네별 (사진 있는 곳 기준 · 위 10곳)");
+const byGu = new Map();
+for (const it of pool) {
+  const gu = String(it.addr1 ?? "").split(/\s+/)[1] || "(주소 없음)";
+  const cur = byGu.get(gu) ?? { all: 0, pic: 0 };
+  cur.all++;
+  if (hasPhoto(it)) cur.pic++;
+  byGu.set(gu, cur);
+}
+const guRows = [...byGu].sort((a, b) => b[1].pic - a[1].pic);
+for (const [gu, v] of guRows.slice(0, 10))
+  console.log(`   ${gu.padEnd(10)} ${String(v.pic).padStart(4)} / ${String(v.all).padStart(4)}곳  (${pct(v.pic, v.all)})`);
+const empty = guRows.filter(([, v]) => v.pic === 0);
+if (empty.length)
+  console.log(`   ⚠️ 사진이 한 장도 없는 동네 ${empty.length}곳 — ${empty.map(([g]) => g).join(" · ")}`);
+console.log("");
+
 // ── 서울 규칙을 그대로 대 보면 ──────────────────────────────────────────
 //
 // 🚨 이것이 「비교」다. 서울에서 쓰는 갈래 규칙을 이 도시 자료에 그대로 대 보고,
@@ -214,7 +281,7 @@ const RULES = [
   { key: "street", re: /(골목|거리|가로수길|경리단길|우사단길|서순라길|로렌스길|감고당길|차이나타운|떡볶이타운|로데오)/ },
 ];
 
-console.log("④ 서울 규칙을 그대로 대 보면");
+console.log("⑤ 서울 규칙을 그대로 대 보면");
 const hit = new Map();
 let miss = 0;
 const missTitles = [];
@@ -241,7 +308,7 @@ console.log("");
 // 안 걸린 제목들에서 자주 나오는 낱말을 센다. 제주라면 여기에 **오름·해수욕장·
 // 올레·포구** 같은 것이 올라올 것이다 — 그게 곧 「새로 만들어야 할 칸」이다.
 // 추측으로 칸을 만들지 않고 **실제 제목이 알려 주게** 한다.
-console.log("⑤ 안 걸린 제목에 자주 나오는 낱말 (새 칸의 후보)");
+console.log("⑥ 안 걸린 제목에 자주 나오는 낱말 (새 칸의 후보)");
 const words = new Map();
 for (const t of missTitles) {
   // 2~4글자 한글 덩어리를 센다. 너무 흔한 말은 아래에서 뺀다.
