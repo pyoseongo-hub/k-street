@@ -15,6 +15,7 @@ import RainyPanel from "./components/RainyPanel";
 import WeatherCard from "./components/WeatherCard";
 import VideoCard from "./components/VideoCard";
 import BrandMark from "./components/BrandMark";
+import CityPicker from "./components/CityPicker";
 
 function App() {
   const { toggleTheme, getIcon } = useTheme();
@@ -164,6 +165,13 @@ function App() {
                 season={<MonthlyFestivalPanel onGoRoads={() => setRoadJump((n) => n + 1)} />}
                 district={<DistrictExplorer forceCategory="autumn" jump={roadJump} />}
               />
+              {/* 🗺️ 「한국, 어디로 가세요?」 — 도시 고르는 칸 (2026-09-16 사장님 지시).
+                  **맨 아래에 둔다.** 지금 열린 도시는 서울 하나뿐이라 맨 위에 두면
+                  고를 것도 없는 칸이 진짜 볼거리를 아래로 밀어낸다. 서울을 다 보고
+                  난 손님이 마지막에 「부산은 아직이구나」를 읽는 자리가 맞다.
+                  → 부산이 열리면 이 칸을 **위로 올린다**(그때는 고를 것이 생긴다).
+                  저장한 곳 탭에는 안 띄운다 — 거기는 손님이 담아 둔 것만 보는 자리다. */}
+              <CityPicker />
             </div>
             <div hidden={tab !== "saved"}>
               <SavedPanel />

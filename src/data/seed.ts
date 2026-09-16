@@ -31,6 +31,14 @@ export type Category =
 
 export interface Place {
   id: string;
+  /**
+   * 어느 시·도인가 (cities.ts 의 key — "seoul" · "busan" …).
+   *
+   * 🚨 **비워 두면 서울로 친다.** 지금 자료가 전부 서울이라 그렇게 뒀다.
+   *    부산 자료를 넣을 때는 **반드시 적어야 한다** — 「중구」는 서울에도
+   *    부산에도 있어서, 안 적으면 부산 중구가 서울 화면에 섞인다.
+   */
+  city?: string;
   gu: string;
   dong?: string; // 법정동 (법정동 이름, 예: "강남동", "서초동")
   category: Category;
@@ -770,7 +778,7 @@ export const ALL_PLACES: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   // 🙈 사람이 "이건 안 내보낸다"고 정한 것(Place.hidden). 자료는 남아 있지만
   //    어느 화면에도 안 나온다 — 이유는 그 항목의 hidden에 적혀 있다.
   .filter((p) => !p.hidden)
-  .filter((p) => isInLaunchScope(sidoOf(p.gu)))
+  .filter((p) => isInLaunchScope(sidoOf(p.gu, p.city ?? "seoul")))
   .map(withFetchedCoords)
   // 🏛️ 구청이 올린 올해 회차가 **좌표까지 이긴다** — 위 주석 참고.
   //    withFetchedCoords 뒤에 둔다: 저쪽은 빈 칸만 채우고, 이쪽은 덮어쓴다.
@@ -786,7 +794,7 @@ export const HIDDEN_NO_PHOTO: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   // 🙈 사람이 "이건 안 내보낸다"고 정한 것(Place.hidden). 자료는 남아 있지만
   //    어느 화면에도 안 나온다 — 이유는 그 항목의 hidden에 적혀 있다.
   .filter((p) => !p.hidden)
-  .filter((p) => isInLaunchScope(sidoOf(p.gu)))
+  .filter((p) => isInLaunchScope(sidoOf(p.gu, p.city ?? "seoul")))
   .map(withManualPhoto)
   .map(withGalleryPhoto)
   // 🍁 단풍길은 "사진 없어 가려진 곳"이 아니다(이미 화면에 나온다).
@@ -848,7 +856,7 @@ export const ALL_FESTIVALS: Place[] = (() => {
   // 🙈 사람이 "이건 안 내보낸다"고 정한 것(Place.hidden). 자료는 남아 있지만
   //    어느 화면에도 안 나온다 — 이유는 그 항목의 hidden에 적혀 있다.
   .filter((p) => !p.hidden)
-  .filter((p) => isInLaunchScope(sidoOf(p.gu)))
+  .filter((p) => isInLaunchScope(sidoOf(p.gu, p.city ?? "seoul")))
   // 🔒 **달의 근거가 없는 축제는 안 내보낸다** (사용자 지시 2026-09-02:
   //    "부정확한건 가리고 서치가 맞을때 개시").
   //
