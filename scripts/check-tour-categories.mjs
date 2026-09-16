@@ -9,6 +9,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { categoryOf, CODE_TO_CATEGORY, SKIP_CODES } from "./lib/tour-categories.mjs";
+import { cityByArea } from "./lib/city-registry.mjs";
 
 const DIR = "src/data";
 const files = readdirSync(DIR).filter((f) => /^survey-\d+\.json$/.test(f));
@@ -26,11 +27,20 @@ let bad = 0;
 
 for (const f of files) {
   const pool = JSON.parse(readFileSync(join(DIR, f), "utf8"));
+  // 🏙️ 이 파일이 어느 도시 것인가 — 파일 이름의 번호가 관광공사 지역 번호다.
+  //    도시를 알아야 **바다가 있는지**를 알고, 그래야 바다 갈래를 막을 수 있다.
+  const area = f.match(/^survey-(\d+)\.json$/)[1];
+  const city = cityByArea(area);
+  if (!city) {
+    console.error(`❌ ${f} — 지역 번호 ${area} 가 cities.ts 에 없다. 명부에 먼저 넣을 것.`);
+    bad++;
+    continue;
+  }
   const hit = new Map();
   const unknown = [];
   let skipped = 0;
   for (const it of pool) {
-    const { category, why } = categoryOf(it);
+    const { category, why } = categoryOf(it, { coast: city.coast });
     if (category) hit.set(category, (hit.get(category) ?? 0) + 1);
     else if (why.startsWith("제외")) skipped++;
     else unknown.push(`${it.title}  ← ${why}`);
@@ -38,7 +48,7 @@ for (const f of files) {
   const counted = [...hit.values()].reduce((a, b) => a + b, 0);
   const judged = pool.length - skipped;           // 제외한 것은 분모에서 뺀다
   const cover = judged ? counted / judged : 0;
-  console.log(`\n📋 ${f} — ${pool.length}곳 (관광객 대상 아님 ${skipped}곳 제외)`);
+  console.log(`\n📋 ${f} — ${city.ko} ${pool.length}곳 (관광객 대상 아님 ${skipped}곳 제외${city.coast ? "" : " · 바다 없는 도시"})`);
   for (const [k, n] of [...hit].sort((a, b) => b[1] - a[1]))
     console.log(`   ${k.padEnd(9)} ${String(n).padStart(4)}곳`);
   console.log(`   ${"── 갈린 곳".padEnd(9)} ${String(counted).padStart(4)} / ${judged}곳  (${Math.round(cover * 100)}%)`);

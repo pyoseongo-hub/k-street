@@ -49,6 +49,25 @@ export interface City {
   enFull: string;
   kind: CityKind;
   status: CityStatus;
+  /**
+   * 🪪 **관광공사 지역 번호.** 조사 자료가 `src/data/survey-<번호>.json` 으로 저장되므로,
+   *    「이 파일이 어느 도시 것인가」를 되짚는 열쇠이기도 하다.
+   *
+   *    외워서 적지 않았다 — 관광공사 `areaCode2` 창구가 돌려준 목록을 그대로 옮겼다
+   *    (2026-09-17, Survey city 를 이름·번호 둘 다 비우고 돌리면 이 목록이 나온다).
+   */
+  areaCode: string;
+  /**
+   * 🌊 **바다가 있나.**
+   *
+   * 「바다·해변」 칸이 화면에 그대로 뜨기 때문에, 바다 없는 도시에 한 곳이라도
+   * 들어가면 그 자체로 거짓말이 된다. 실제로 서울 자료에 **뚝섬 윈드서핑장**(서핑
+   * 코드)과 **한강레져스포츠**(수상레포츠 코드)가 있었다 — 한강이지 바다가 아니다.
+   *
+   * 관광공사 분류 코드로는 못 가른다(같은 코드를 두 도시가 다르게 쓴다).
+   * 그래서 **명부 한 칸으로 막는다** — scripts/lib/tour-categories.mjs 가 읽는다.
+   */
+  coast: boolean;
   /** 시청·도청 좌표(날씨용) */
   lat: number;
   lng: number;
@@ -71,6 +90,7 @@ export const CITIES: readonly City[] = [
     key: "seoul", ko: "서울", koFull: "서울특별시",
     en: "Seoul", enFull: "Seoul",
     kind: "대도시", status: "공개",
+    areaCode: "1", coast: false,
     lat: 37.5665, lng: 126.978, row: 0, col: 1,
     units: [ // 25곳
       "종로구", "중구", "용산구", "성동구", "광진구",
@@ -84,6 +104,7 @@ export const CITIES: readonly City[] = [
     key: "incheon", ko: "인천", koFull: "인천광역시",
     en: "Incheon", enFull: "Incheon",
     kind: "대도시", status: "빈칸",
+    areaCode: "2", coast: true,
     lat: 37.4563, lng: 126.7052, row: 0, col: 0,
     units: [ // 10곳
       "중구", "동구", "미추홀구", "연수구", "남동구",
@@ -94,6 +115,7 @@ export const CITIES: readonly City[] = [
     key: "gyeonggi", ko: "경기", koFull: "경기도",
     en: "Gyeonggi", enFull: "Gyeonggi-do",
     kind: "도", status: "빈칸",
+    areaCode: "31", coast: true,
     lat: 37.2636, lng: 127.0286, row: 0, col: 2,
     units: [ // 31곳
       "수원시", "성남시", "의정부시", "안양시", "부천시",
@@ -109,6 +131,7 @@ export const CITIES: readonly City[] = [
     key: "gangwon", ko: "강원", koFull: "강원특별자치도",
     en: "Gangwon", enFull: "Gangwon-do",
     kind: "도", status: "빈칸",
+    areaCode: "32", coast: true,
     lat: 37.8813, lng: 127.73, row: 0, col: 3,
     units: [ // 18곳
       "춘천시", "원주시", "강릉시", "동해시", "태백시",
@@ -121,6 +144,7 @@ export const CITIES: readonly City[] = [
     key: "chungnam", ko: "충남", koFull: "충청남도",
     en: "Chungnam", enFull: "Chungcheongnam-do",
     kind: "도", status: "빈칸",
+    areaCode: "34", coast: true,
     lat: 36.6588, lng: 126.6728, row: 1, col: 0,
     units: [ // 15곳
       "천안시", "공주시", "보령시", "아산시", "서산시",
@@ -132,6 +156,7 @@ export const CITIES: readonly City[] = [
     key: "sejong", ko: "세종", koFull: "세종특별자치시",
     en: "Sejong", enFull: "Sejong",
     kind: "대도시", status: "빈칸",
+    areaCode: "8", coast: false,
     lat: 36.48, lng: 127.289, row: 1, col: 1,
     units: [ // 10곳
       "조치원읍", "연기면", "연동면", "부강면", "금남면",
@@ -142,6 +167,7 @@ export const CITIES: readonly City[] = [
     key: "daejeon", ko: "대전", koFull: "대전광역시",
     en: "Daejeon", enFull: "Daejeon",
     kind: "대도시", status: "빈칸",
+    areaCode: "3", coast: false,
     lat: 36.3504, lng: 127.3845, row: 1, col: 2,
     units: [ // 5곳
       "동구", "중구", "서구", "유성구", "대덕구",
@@ -151,6 +177,7 @@ export const CITIES: readonly City[] = [
     key: "chungbuk", ko: "충북", koFull: "충청북도",
     en: "Chungbuk", enFull: "Chungcheongbuk-do",
     kind: "도", status: "빈칸",
+    areaCode: "33", coast: false,
     lat: 36.6424, lng: 127.489, row: 1, col: 3,
     units: [ // 11곳
       "청주시", "충주시", "제천시", "보은군", "옥천군",
@@ -162,6 +189,7 @@ export const CITIES: readonly City[] = [
     key: "gyeongbuk", ko: "경북", koFull: "경상북도",
     en: "Gyeongbuk", enFull: "Gyeongsangbuk-do",
     kind: "도", status: "빈칸",
+    areaCode: "35", coast: true,
     lat: 36.5684, lng: 128.7294, row: 1, col: 4,
     units: [ // 22곳
       "포항시", "경주시", "김천시", "안동시", "구미시",
@@ -175,6 +203,7 @@ export const CITIES: readonly City[] = [
     key: "jeonbuk", ko: "전북", koFull: "전북특별자치도",
     en: "Jeonbuk", enFull: "Jeonbuk-do",
     kind: "도", status: "빈칸",
+    areaCode: "37", coast: true,
     lat: 35.8242, lng: 127.148, row: 2, col: 1,
     units: [ // 14곳
       "전주시", "군산시", "익산시", "정읍시", "남원시",
@@ -186,6 +215,7 @@ export const CITIES: readonly City[] = [
     key: "daegu", ko: "대구", koFull: "대구광역시",
     en: "Daegu", enFull: "Daegu",
     kind: "대도시", status: "빈칸",
+    areaCode: "4", coast: false,
     lat: 35.8714, lng: 128.6014, row: 2, col: 4,
     units: [ // 9곳
       "중구", "동구", "서구", "남구", "북구",
@@ -196,6 +226,7 @@ export const CITIES: readonly City[] = [
     key: "gwangju", ko: "광주", koFull: "광주광역시",
     en: "Gwangju", enFull: "Gwangju",
     kind: "대도시", status: "빈칸",
+    areaCode: "5", coast: false,
     lat: 35.1595, lng: 126.8526, row: 3, col: 1,
     units: [ // 5곳
       "동구", "서구", "남구", "북구", "광산구",
@@ -205,6 +236,7 @@ export const CITIES: readonly City[] = [
     key: "gyeongnam", ko: "경남", koFull: "경상남도",
     en: "Gyeongnam", enFull: "Gyeongsangnam-do",
     kind: "도", status: "빈칸",
+    areaCode: "36", coast: true,
     lat: 35.228, lng: 128.6811, row: 3, col: 3,
     units: [ // 18곳
       "창원시", "진주시", "통영시", "사천시", "김해시",
@@ -217,6 +249,7 @@ export const CITIES: readonly City[] = [
     key: "ulsan", ko: "울산", koFull: "울산광역시",
     en: "Ulsan", enFull: "Ulsan",
     kind: "대도시", status: "빈칸",
+    areaCode: "7", coast: true,
     lat: 35.5384, lng: 129.3114, row: 3, col: 4,
     units: [ // 5곳
       "중구", "남구", "동구", "북구", "울주군",
@@ -226,6 +259,7 @@ export const CITIES: readonly City[] = [
     key: "jeonnam", ko: "전남", koFull: "전라남도",
     en: "Jeonnam", enFull: "Jeollanam-do",
     kind: "도", status: "빈칸",
+    areaCode: "38", coast: true,
     lat: 34.8161, lng: 126.4629, row: 4, col: 0,
     units: [ // 22곳
       "목포시", "여수시", "순천시", "나주시", "광양시",
@@ -239,6 +273,7 @@ export const CITIES: readonly City[] = [
     key: "busan", ko: "부산", koFull: "부산광역시",
     en: "Busan", enFull: "Busan",
     kind: "대도시", status: "준비중",
+    areaCode: "6", coast: true,
     lat: 35.1796, lng: 129.0756, row: 4, col: 4,
     units: [ // 16곳
       "중구", "서구", "동구", "영도구", "부산진구",
@@ -251,6 +286,7 @@ export const CITIES: readonly City[] = [
     key: "jeju", ko: "제주", koFull: "제주특별자치도",
     en: "Jeju", enFull: "Jeju-do",
     kind: "도", status: "빈칸",
+    areaCode: "39", coast: true,
     lat: 33.4996, lng: 126.5312, row: 5, col: 0,
     units: [ // 2곳
       "제주시", "서귀포시",

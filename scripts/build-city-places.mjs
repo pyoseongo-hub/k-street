@@ -23,6 +23,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { categoryOf } from "./lib/tour-categories.mjs";
 import { httpsPhoto } from "./lib/https-photo.mjs";
 import { distanceKm, nearCity, MAX_KM } from "./lib/city-geo.mjs";
+import { cityByKey } from "./lib/city-registry.mjs";
 
 const args = process.argv.slice(2);
 const argOf = (f) => { const i = args.indexOf(f); const v = i >= 0 ? args[i + 1] : undefined; return v && !v.startsWith("--") ? v : undefined; };
@@ -38,16 +39,27 @@ const SRC = `src/data/survey-${AREA}.json`;
 const OUT = `src/data/${CITY}-places.json`;
 
 // 🧾 도시 이름이 명부에 있나 먼저 본다. 없으면 만들어 봐야 화면에 자리가 없다.
-const cities = readFileSync("src/data/cities.ts", "utf8");
-const block = cities.split(/\n  \{\n/).slice(1).find((b) => new RegExp(`key: "${CITY}"`).test(b));
-if (!block) {
+const city = cityByKey(CITY);
+if (!city) {
   console.error(`❌ cities.ts 에 「${CITY}」가 없다. 명부에 먼저 넣을 것.`);
   process.exit(1);
 }
-const UNITS = [...(block.match(/units:\s*\[([\s\S]*?)\]/)?.[1] ?? "").matchAll(/"([^"]+)"/g)].map((m) => m[1]);
-const CITY_KO = block.match(/ko:\s*"([^"]+)"/)?.[1] ?? CITY;
-const CITY_LAT = Number(block.match(/lat:\s*([\d.]+)/)?.[1]);
-const CITY_LNG = Number(block.match(/lng:\s*([\d.]+)/)?.[1]);
+// 🚨 **지역 번호가 명부와 다르면 멈춘다.** `--city seoul --area 6` 처럼 한 글자만
+//    어긋나도 **부산 자료가 서울 이름표를 달고** 저장된다 — 화면에서는 티가 안 난다.
+if (city.areaCode !== String(AREA)) {
+  console.error(`❌ 「${city.ko}」의 관광공사 지역 번호는 ${city.areaCode} 인데 --area ${AREA} 를 적었다.`);
+  console.error(`   맞다면 cities.ts 의 areaCode 를 먼저 고칠 것. 지금 그대로 두면 남의 도시 자료가 섞인다.`);
+  process.exit(1);
+}
+const UNITS = city.units;
+const CITY_KO = city.ko;
+const CITY_LAT = city.lat;
+const CITY_LNG = city.lng;
+// 🌊 바다가 없는 도시에서는 「바다·해변」 갈래를 통째로 막는다 (cities.ts 의 coast 참고).
+if (typeof city.coast !== "boolean") {
+  console.error(`❌ cities.ts 의 「${CITY}」에 coast 칸이 없다 — 바다 갈래를 막을지 알 수 없다.`);
+  process.exit(1);
+}
 
 const pool = JSON.parse(readFileSync(SRC, "utf8"));
 const out = [];
@@ -56,7 +68,7 @@ const drop = (why, title) => dropped.set(why, [...(dropped.get(why) ?? []), titl
 
 for (const it of pool) {
   const name = String(it.title ?? "").trim();
-  const { category, why } = categoryOf(it);
+  const { category, why } = categoryOf(it, { coast: city.coast });
   if (!category) { drop(why.startsWith("제외") ? why : "갈래를 모름", name); continue; }
 
   // 🏘️ 동네는 **주소의 둘째 칸**에서 뽑는다. 도로명이 아니라 주소 그대로다.
