@@ -48,6 +48,8 @@ const NAMES_TS = join(__dirname, "..", "src", "data", "districtNamesEn.ts");
 const OUT = join(__dirname, "..", "src", "data", "place-translations.json");
 // 🪪 손으로 확인한 이름 — **기계 번역을 이긴다.** 그 파일 머리말에 기준을 적어 뒀다.
 const OVERRIDES = join(__dirname, "..", "src", "data", "name-overrides.json");
+// 🏛️ 관광공사가 **언어별로 직접 내는 공식 이름**. 기계 번역보다 세고, 사람이 확인한 것보다 약하다.
+const OFFICIAL = join(__dirname, "..", "src", "data", "tour-official-names.json");
 
 const args = process.argv.slice(2);
 const APPLY = args.includes("--apply");
@@ -282,6 +284,37 @@ try {
 } catch {
   /* 없으면 그냥 안 쓴다 */
 }
+let official = {};
+try {
+  official = JSON.parse(readFileSync(OFFICIAL, "utf-8"));
+} catch {
+  /* 아직 안 받아 왔으면 그냥 안 쓴다 */
+}
+/**
+ * 🏛️ **관광공사 공식 이름을 덮어쓴다.**
+ *
+ * 순서가 규칙의 일부다 — **구글 < 관광공사 < 사람**.
+ *   · 구글      — 「북한산 → 北朝鮮山」처럼 소리만 맞는 엉뚱한 한자를 고른다
+ *   · 관광공사  — 그 곳의 **공식 표기**다. 지어낸 게 아니다
+ *   · 사람      — 우리가 눈으로 확인한 것. 관광공사에 없는 것을 메운다
+ *
+ * 🪪 관광공사 자료가 우리 판단을 **따로 확인해 줬다**(2026-09-17):
+ *     동백공원 → 冬柏公園 / 冬柏公园  ← 손으로 넣은 것과 글자까지 같다
+ *     북한산 자락길 → 北汉山山麓道      ← 北漢山이 맞다는 확인
+ *     땅뫼산 → タンメ山 / 唐马山        ← 「한자가 없다」고 지운 판단이 옳았다
+ */
+function applyOfficial(store) {
+  let n = 0;
+  for (const [code, map] of Object.entries(official)) {
+    if (!store[code]) store[code] = {};
+    for (const [ko, name] of Object.entries(map)) {
+      if (store[code][ko] !== name) { store[code][ko] = name; n++; }
+    }
+  }
+  if (n) console.log(`🏛️ 관광공사 공식 이름 ${n}개를 덮어썼다 (tour-official-names.json)`);
+  return store;
+}
+
 function applyOverrides(store) {
   let n = 0;
   for (const [code, map] of Object.entries(overrides)) {
@@ -304,6 +337,9 @@ function applyOverrides(store) {
 
 // 언어별로 열쇠를 정렬해 두면 다음 실행의 diff가 읽기 쉽다.
 function save() {
+  // 🚨 **순서가 규칙이다** — 관광공사를 먼저 덮고, 그 위에 사람이 확인한 것을 덮는다.
+  //    뒤집으면 우리가 눈으로 고친 값이 관광공사 것으로 되돌아간다.
+  applyOfficial(store);
   applyOverrides(store);
   const sorted = {};
   for (const code of Object.keys(store).sort()) {
