@@ -30,12 +30,20 @@ const TARGETS = [
 ];
 
 for (const [기관, 이름, base, extra] of TARGETS) {
-  const url = new URL(base);
-  url.searchParams.set("serviceKey", KEY);
-  url.searchParams.set("MobileOS", "ETC");
-  url.searchParams.set("MobileApp", "KStreet");
-  url.searchParams.set("_type", "json");
-  for (const [k, v] of Object.entries(extra)) url.searchParams.set(k, v);
+  // 🚨 **인증키를 URLSearchParams 에 넣지 않는다** (2026-09-17에 여기서 틀렸다).
+  //    공공데이터포털 인증키는 **이미 URL 인코딩된 값**이다(%2B·%2F·%3D 가 들어 있다).
+  //    URLSearchParams 에 넣으면 한 번 더 인코딩돼(%25 2B) 키가 깨진다 —
+  //    그러면 **잘 되는 창구까지 「활용신청이 안 돼 있다」로 나온다.**
+  //    처음 만들 때 이 실수를 했고, **잘 쓰고 있는 국문 창구를 대조군으로 넣어 둔 덕에**
+  //    바로 드러났다. 셋 다 ❌ 면 내 검사가 틀린 것이지 키가 틀린 게 아니다.
+  //    저장소의 다른 스크립트도 전부 이렇게 붙인다(fetch-festival-dates.mjs 주석 참고).
+  const params = new URLSearchParams({
+    MobileOS: "ETC",
+    MobileApp: "KStreet",
+    _type: "json",
+    ...extra,
+  });
+  const url = `${base}?serviceKey=${KEY}&${params.toString()}`;
 
   let 결과;
   try {
@@ -58,6 +66,10 @@ for (const [기관, 이름, base, extra] of TARGETS) {
 }
 
 console.log(`
+🧪 **맨 윗줄(국문 관광정보)은 대조군이다.** 그건 지금 일곱 개 워크플로가 쓰고 있어
+   반드시 ✅ 여야 한다. 그게 ❌ 면 **아래 결과를 믿지 말 것** — 키가 아니라
+   이 검사가 틀린 것이다(인증키를 한 번 더 인코딩하면 그렇게 된다).
+
 🪪 ❌「활용신청이 안 돼 있다」가 뜨면 — 공공데이터포털에서 그 서비스에 **활용신청**을
    한 번 누르면 된다(무료·대개 자동승인). 계정마다 인증키는 **하나**라,
    승인만 되면 GitHub Secrets 의 TOUR_API_KEY 는 **손댈 것이 없다.**`);
