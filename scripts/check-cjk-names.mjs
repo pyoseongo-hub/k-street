@@ -21,6 +21,8 @@
 //   근본 해결은 관광공사 **다국어 서비스**다 — 서비스는 있는데 우리 인증키가 그쪽에
 //   등록돼 있지 않다(2026-09-16 확인, HTTP 403). 등록하면 공식 표기를 그대로 받는다.
 import { readdirSync, readFileSync } from "node:fs";
+// 🀄 이름인지 낱말인지 가리는 잣대. **저장하는 쪽과 같은 파일을 쓴다.**
+import { brokenCjkNames, loadPlaces } from "./lib/cjk-name-rules.mjs";
 
 /** 한국 곳 이름에 들어가면 **틀린 것이 확실한** 말. [찾을 말, 왜 틀렸나] */
 const WRONG = [
@@ -63,38 +65,22 @@ if (hits.length) {
 }
 console.log(`✅ 한자권 번역 — 알려진 잘못된 말 ${WRONG.length}가지 중 걸린 것 없음`);
 
-// ── 🛕 **절 이름에 「절」이 들어 있나** (2026-09-17에 더했다) ────────────────
+// ── 🀄 **이름인가, 구글이 뜻으로 옮긴 낱말인가** (2026-09-17에 더했다) ────────
 //
-//   위 목록은 「이 말은 틀렸다」를 하나씩 적는 방식이라, **다음 도시에서 새로 나오는
-//   것은 못 잡는다.** 절에서만은 규칙으로 잡을 수 있다 — 절 이름에는 寺·庵·菴·院
-//   가운데 하나가 반드시 있다. 한자가 있는데 그 글자가 하나도 없으면 절 이름이 아니다.
-//   실제로 걸렸던 것: 운수사 → 運輸会社 · 구강사 → 口腔護理 · 금용암 → 屍速列車(부산행!).
+//   위 목록은 「이 말은 틀렸다」를 하나씩 적는 방식이라 **다음 도시의 새것은 못 잡는다.**
+//   갈래를 알면 규칙으로 잡을 수 있다 — 절이면 寺, 산이면 山. 규칙은
+//   scripts/lib/cjk-name-rules.mjs 에 있고, **저장하는 쪽(translate-places.mjs)과
+//   같은 파일을 쓴다.**
 //
-//   🚨 이건 **그물이지 고치는 도구가 아니다.** 실제로 걷어내는 일은
-//      translate-places.mjs 의 dropBrokenTempleNames 가 저장할 때 한다.
-//      여기서 걸린다는 건 **그 단계를 안 거친 자료가 들어왔다**는 뜻이다.
+//   🚨 여기는 **그물이지 고치는 도구가 아니다.** 실제로 걷어내는 일은 저장할 때 한다.
+//      여기서 걸린다는 건 그 단계를 안 거친 자료가 들어왔다는 뜻이다.
 {
-  const HAN = /[\u4E00-\u9FFF]/;
-  const TEMPLE_WORD = /[寺庵菴院]/;
-  const temples = new Set(
-    readdirSync("src/data")
-      .filter((f) => /-places\.json$/.test(f))
-      .flatMap((f) => JSON.parse(readFileSync(`src/data/${f}`, "utf8")))
-      .filter((p) => p?.category === "temple")
-      .map((p) => String(p.name))
-  );
-  const broken = [];
-  for (const lang of CJK)
-    for (const [ko, v] of Object.entries(T[lang] ?? {})) {
-      if (!temples.has(ko)) continue;
-      const body = String(v).replace(/[（(][^）)]*[）)]/g, "");   // 괄호 안 지역 이름은 뺀다
-      if (HAN.test(body) && !TEMPLE_WORD.test(body)) broken.push({ lang, ko, v });
-    }
+  const broken = brokenCjkNames(T, loadPlaces(readFileSync, readdirSync));
   if (broken.length) {
-    console.error(`\n❌ 절 이름인데 寺·庵·菴·院 이 하나도 없다 — ${broken.length}군데`);
-    for (const b of broken) console.error(`   ${b.lang.padEnd(6)} 「${b.ko}」 → ${b.v}`);
+    console.error(`\n❌ 이름이 아니라 낱말로 옮겨진 것 ${broken.length}군데`);
+    for (const b of broken) console.error(`   [${b.label}] ${b.lang.padEnd(6)} 「${b.ko}」 → ${b.value}`);
     console.error(`\n   고치는 법: node scripts/translate-places.mjs --overrides-only --apply`);
     process.exit(1);
   }
-  console.log(`✅ 절 이름 ${temples.size}곳 — 「절」이 빠진 한자 이름 없음`);
+  console.log(`✅ 절·산·공원 이름 — 낱말로 옮겨진 것 없음`);
 }
