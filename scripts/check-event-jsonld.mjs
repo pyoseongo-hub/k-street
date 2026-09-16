@@ -12,8 +12,10 @@
 // 무엇을 재나 — Festival 로 낸 페이지는 아래를 **반드시** 갖고 있어야 한다:
 //   · startDate   (없으면 검색 결과에서 빠진다)
 //   · location    (행사는 주소를 location 안에 넣는다. 장소와 규칙이 다르다)
-// 그리고 **지난 날짜로 Festival 을 내지 않았는지**도 본다 — 오류를 없애려고 작년
+// 그리고 **이미 끝난 Festival 을 내고 있지 않은지**도 본다 — 오류를 없애려고 작년
 // 날짜를 적어 넣는 것이 가장 나쁜 선택이기 때문이다(손님이 헛걸음한다).
+// ⚠️ 「끝난 것」이지 「시작이 지난 것」이 아니다. 여러 달 하는 축제는 시작이 과거다.
+//    그걸 막았다가 배포를 세운 적이 있다 — 아래 판정 자리에 적어 뒀다.
 //
 // 돌리는 법:
 //   npm run build && npm run place-pages
@@ -34,7 +36,11 @@ if (!existsSync(PLACES)) {
   process.exit(2);
 }
 
-const TODAY = new Date().toISOString().slice(0, 10);
+// 🧪 `CHECK_TODAY=2026-12-01 node scripts/check-event-jsonld.mjs` — **날짜를 옮겨 본다.**
+//    고친 검사가 정말 잡는지 보려면 「끝난 축제」가 있어야 하는데, 오늘 자료에는 없다.
+//    날짜를 앞으로 밀어 보면 **검사를 끈 게 아니라 고친 것**임을 눈으로 확인할 수 있다.
+//    (이 저장소가 여러 번 데인 자리다 — 고친 뒤에 다시 돌려 숫자가 바뀌는지 본다.)
+const TODAY = process.env.CHECK_TODAY || new Date().toISOString().slice(0, 10);
 let festivals = 0;
 const bad = [];
 
@@ -61,9 +67,25 @@ for (const slug of readdirSync(PLACES)) {
     if (!d.startDate) bad.push([slug, "startDate 없음 (검색 결과에서 빠진다)"]);
     if (!d.location) bad.push([slug, "location 없음 (검색 결과에서 빠진다)"]);
     else if (!d.location.address) bad.push([slug, "location 안에 address 가 없다"]);
-    // 🚨 지난 날짜로 행사를 내면 손님이 헛걸음한다 — 빈 칸이 틀린 값보다 낫다.
-    if (d.startDate && d.startDate < TODAY)
-      bad.push([slug, `지난 날짜로 행사를 냈다 (${d.startDate})`]);
+    // 🚨 **끝난 행사**를 내면 손님이 헛걸음한다 — 빈 칸이 틀린 값보다 낫다.
+    //
+    // ⚠️ 「시작이 과거」는 그 자체로 잘못이 아니다 (2026-09-16에 여기서 데였다).
+    //    처음엔 `startDate < 오늘` 이면 무조건 막았는데, 그러면 **여러 달 하는 축제**가
+    //    통째로 걸린다 — 서울국제정원박람회(5~10월)·오픈노들(8~10월)·조각페스티벌
+    //    (8~11월)·태권도 공연(5~10월) 넷이 그래서 막혔고 **배포가 멈춰 있었다.**
+    //    넷 다 자료는 맞았다. **틀린 건 이 검사였다.**
+    //    구글 기준으로도 진행 중인 행사는 시작일이 과거인 것이 정상이다.
+    //    가르는 것은 시작이 아니라 **끝나는 날**이다:
+    //      · 끝나는 날이 있으면 → 그날이 지났을 때만 막는다
+    //      · 끝나는 날이 없으면 → 하루짜리로 보고, 시작이 지났으면 막는다
+    if (d.endDate) {
+      if (d.endDate < TODAY)
+        bad.push([slug, `이미 끝난 행사를 내고 있다 (${d.startDate} ~ ${d.endDate})`]);
+      else if (d.startDate && d.endDate < d.startDate)
+        bad.push([slug, `끝나는 날이 시작보다 앞선다 (${d.startDate} ~ ${d.endDate})`]);
+    } else if (d.startDate && d.startDate < TODAY) {
+      bad.push([slug, `지난 날짜로 행사를 냈다 (${d.startDate} · 끝나는 날 없음)`]);
+    }
   }
 }
 
