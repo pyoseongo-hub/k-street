@@ -118,6 +118,21 @@ function extractPlaces(source) {
     const category = body.match(/category:\s*"([^"]+)"/)?.[1];
     const name = body.match(/name:\s*"([^"]+)"/)?.[1];
     if (!category || !name) continue;
+    // 🚨 **서울 아닌 곳이 섞이면 멈춘다** (2026-09-17에 막아 뒀다).
+    //
+    //    이 스크립트는 관광공사에 `areaCode: "1"`(서울)로만 물어본다. seed.ts 가
+    //    지금은 전부 서울이라 맞지만, 부산 항목을 손으로 하나 적어 넣는 날
+    //    **서울에서 찾다가 못 찾고 조용히 건너뛴다** — 오류가 안 난다.
+    //    실제로 같은 종류의 구멍이 오늘만 세 군데서 나왔다
+    //    (이름 받기 · 사진 여러 장 · 축제 날짜 — 전부 서울이 박혀 있었다).
+    //    여기는 고치는 대신 **소리를 내게** 해 둔다: 그날 이 자리를 보게 된다.
+    const city = body.match(/city:\s*"([^"]+)"/)?.[1];
+    if (city && city !== "seoul")
+      throw new Error(
+        `❌ seed.ts 에 서울 아닌 곳이 있다(${name} — ${city}).\n` +
+          `   이 스크립트는 관광공사에 서울(areaCode 1)로만 물어본다.\n` +
+          `   도시별로 물어보게 고칠 것 — fetch-festival-dates.mjs 가 명부(cities.ts)를 보고 도는 방식이 본보기다.`
+      );
     places.push({ id: `ks_${seq.toString(36)}`, category, name });
   }
   return places;

@@ -99,6 +99,8 @@ async function callTourApi(path, extraParams) {
 async function smokeTest(sampleContentId) {
   console.log("창구 확인 중…");
   try {
+    // ℹ️ 여기 areaCode 는 **창구가 살아 있나만 보는 것**이라 아무 지역이나 된다.
+    //    받을 대상을 고르는 자리가 아니다(그건 아래 targets). 도시와 무관하다.
     const list = await callTourApi("areaBasedList2", {
       contentTypeId: "15",
       areaCode: "1",
