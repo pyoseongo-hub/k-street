@@ -23,7 +23,7 @@
 //   node scripts/survey-city.mjs --area 39       ← 그 지역을 조사한다
 //
 // 결과: src/data/survey-<지역코드>.json (원본 그대로) + 화면 요약
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -122,20 +122,24 @@ async function call(path, extraParams) {
 }
 
 // ── 지역 코드를 물어본다 ────────────────────────────────────────────────
-if (!areaCode || wantCity) {
-  console.log("🗺️  관광공사가 쓰는 **지역 코드**를 물어본다 (외워서 넣지 않는다)\n");
-  const { list } = await call("areaCode2", { numOfRows: "50" });
-  for (const a of list) console.log(`   ${String(a.code).padStart(2)}  ${a.name}`);
+//
+// 🚨 **목록은 언제나 받아 둔다.** 번호로 돌릴 때도 마찬가지다 —
+//    그 번호가 **무슨 도시인지 이름을 알아야** 아래에서 우리 명부(cities.ts)와
+//    맞춰 볼 수 있다. 호출 한 번이고, 서버가 열려 있는지도 여기서 같이 확인된다.
+console.log("🗺️  관광공사가 쓰는 **지역 코드**를 물어본다 (외워서 넣지 않는다)\n");
+const { list: AREAS } = await call("areaCode2", { numOfRows: "50" });
+for (const a of AREAS) console.log(`   ${String(a.code).padStart(2)}  ${a.name}`);
 
-  if (!wantCity) {
-    console.log("\n다음 단계 — 위에서 고른 번호로 다시 돌린다:");
-    console.log("   node scripts/survey-city.mjs --area <번호>   (또는 --city 부산)");
-    process.exit(0);
-  }
+if (!areaCode && !wantCity) {
+  console.log("\n다음 단계 — 위에서 고른 번호로 다시 돌린다:");
+  console.log("   node scripts/survey-city.mjs --area <번호>   (또는 --city 부산)");
+  process.exit(0);
+}
 
+if (wantCity) {
   // 🚨 **하나로 좁혀지지 않으면 멈춘다.** 여러 개에 걸리는데 아무거나 고르면
   //    조용히 엉뚱한 도(道) 자료를 받아 온다 — 그게 이 스크립트가 제일 무서워하는 사고다.
-  const hits = list.filter((a) => String(a.name).includes(wantCity));
+  const hits = AREAS.filter((a) => String(a.name).includes(wantCity));
   if (hits.length !== 1) {
     console.error(`\n❌ 「${wantCity}」로는 한 곳으로 좁혀지지 않는다 (${hits.length}곳).`);
     if (hits.length) console.error(`   걸린 것 — ${hits.map((h) => `${h.code} ${h.name}`).join(" · ")}`);
@@ -146,6 +150,34 @@ if (!areaCode || wantCity) {
   console.log(`\n✅ 「${wantCity}」 → 관광공사 지역 ${areaCode} **${hits[0].name}**`);
   console.log("   (번호를 외워서 넣은 게 아니라 물어봐서 받은 것이다)\n");
 }
+const areaName = String(AREAS.find((a) => String(a.code) === String(areaCode))?.name ?? "");
+
+/**
+ * 🧾 **우리 명부(cities.ts)에 적힌 그 도시의 구·군을 꺼내 온다.**
+ *
+ * 왜 API 가 아니라 우리 파일을 보나 — cities.ts 의 목록은 **행정표준코드관리시스템**
+ * 법정동 자료에서 뽑은 것이라 근거가 더 세다. 관광공사 시군구 API 는 실제로
+ * 자주 400 을 낸다. 그리고 진짜 알고 싶은 건 「API 가 뭐라 하나」가 아니라
+ * **「우리가 만들어 둔 칸과 받아 온 자료가 맞나」**이다.
+ *
+ * ⚠️ .ts 파일을 글자로 읽는다. 못 읽으면 **조용히 넘어가지 않고 그렇다고 말한다** —
+ *    "대조 결과 이상 없음"과 "대조를 아예 못 했음"은 전혀 다른 말이다.
+ */
+function registryUnits(cityKo) {
+  const path = join(OUT_DIR, "cities.ts");
+  let text;
+  try {
+    text = readFileSync(path, "utf8");
+  } catch {
+    return { ok: false, why: "cities.ts 를 못 읽었다" };
+  }
+  const blocks = text.split(/\n  \{\n/).slice(1);
+  const hit = blocks.find((b) => new RegExp(`ko:\\s*"${cityKo}"`).test(b));
+  if (!hit) return { ok: false, why: `cities.ts 에 「${cityKo}」가 없다` };
+  const m = hit.match(/units:\s*\[([\s\S]*?)\]/);
+  if (!m) return { ok: false, why: `「${cityKo}」의 units 를 못 찾았다` };
+  return { ok: true, units: [...m[1].matchAll(/"([^"]+)"/g)].map((x) => x[1]) };
+}
 
 // ── 그 지역의 시군구 목록 ───────────────────────────────────────────────
 //
@@ -154,7 +186,10 @@ if (!areaCode || wantCity) {
 console.log(`🔍 지역 ${areaCode} 를 조사한다\n`);
 console.log("① 이 지역은 무엇으로 나뉘나 (관광공사 기준)");
 const sigungu = await tryOr("시군구 목록", [], async () => {
-  const { list } = await call("sigunguCode2", { areaCode, numOfRows: "60" });
+  // 🚨 pageNo 를 안 보내서 **HTTP 400** 이 나고 있었다(제주·부산 조사 모두 실패).
+  //    스크립트가 "부르는 쪽이 틀렸다"고 이미 짚어 줬는데 그걸 안 고치고 있었다 —
+  //    다시 돌린다고 낫는 게 아니다. data.go.kr 은 필수 칸이 비면 400 을 준다.
+  const { list } = await call("sigunguCode2", { areaCode, numOfRows: "60", pageNo: "1" });
   return list;
 });
 for (const s of sigungu) console.log(`   ${String(s.code).padStart(2)}  ${s.name}`);
@@ -222,6 +257,31 @@ for (const it of pool) {
 }
 for (const [k, n] of [...second].sort((a, b) => b[1] - a[1]).slice(0, 20))
   console.log(`   ${String(n).padStart(5)}곳  ${k}`);
+
+// 🧾 **우리 명부와 맞춰 본다.** 여기가 「칸을 만들어 뒀나」를 실제로 확인하는 자리다.
+const reg = registryUnits(areaName);
+if (!reg.ok) {
+  console.log(`\n   ⚠️ 우리 명부와 대조하지 **못했다** — ${reg.why}`);
+  console.log("      「이상 없음」이 아니라 「확인을 못 했다」는 뜻이다. 둘을 갈라서 읽을 것.");
+} else {
+  const got = new Set([...second.keys()].filter((k) => k !== "(주소 없음)"));
+  const want = new Set(reg.units);
+  const 없는칸 = [...got].filter((g) => !want.has(g));   // 자료엔 있는데 명부엔 없다
+  const 빈칸 = [...want].filter((w) => !got.has(w));     // 명부엔 있는데 자료가 0곳
+  console.log(`\n   🧾 우리 명부(cities.ts)의 ${areaName} — ${want.size}곳`);
+  if (!없는칸.length && !빈칸.length) {
+    console.log(`   ✅ 자료에 나온 동네 ${got.size}곳이 명부와 **정확히 맞는다.**`);
+  } else {
+    if (없는칸.length) {
+      console.log(`   ❌ 자료엔 있는데 **명부에 없는 이름** ${없는칸.length}곳 — ${없는칸.join(" · ")}`);
+      console.log("      명부를 고쳐야 한다. 이 곳들은 지금 화면에 자리가 없다.");
+    }
+    if (빈칸.length) {
+      console.log(`   ⬜ 명부엔 있는데 **자료가 한 곳도 없는 동네** ${빈칸.length}곳 — ${빈칸.join(" · ")}`);
+      console.log("      틀린 게 아니라 **비어 있는 것**이다. 여기부터 채우면 된다.");
+    }
+  }
+}
 console.log("");
 
 // ── 📷 사진이 붙어 있나 ─────────────────────────────────────────────────
@@ -309,16 +369,32 @@ console.log("");
 // 올레·포구** 같은 것이 올라올 것이다 — 그게 곧 「새로 만들어야 할 칸」이다.
 // 추측으로 칸을 만들지 않고 **실제 제목이 알려 주게** 한다.
 console.log("⑥ 안 걸린 제목에 자주 나오는 낱말 (새 칸의 후보)");
+// 🚨 **2026-09-16에 여기가 틀려 있던 것을 찾았다.**
+//    예전 코드는 `/[가-힣]{2,4}/g` 로 제목을 훑었다. 이건 낱말을 찾는 게 아니라
+//    **네 글자씩 뭉텅뭉텅 자른다** — 「해운대해수욕장」이 「해운대해」 + 「수욕장」이 된다.
+//    그래서 부산 1차 조사에서 나온 답이 「부산광역(← 부산광역시)」·「국가지질(← 국가지질공원)」
+//    같은 **잘린 조각**뿐이었다. 정작 알고 싶었던 「해수욕장」은 한 번도 안 나왔다.
+//    이 단계는 **새 갈래를 무엇으로 만들지 정하는 자리**라, 여기가 틀리면 그 위가 다 틀린다.
+//    → 자르지 말고 **겹쳐 가며** 센다(2~5글자 모든 토막). 「해수욕장」이 제대로 걸린다.
 const words = new Map();
 for (const t of missTitles) {
-  // 2~4글자 한글 덩어리를 센다. 너무 흔한 말은 아래에서 뺀다.
-  for (const w of t.match(/[가-힣]{2,4}/g) ?? []) words.set(w, (words.get(w) ?? 0) + 1);
+  const seen = new Set(); // 한 제목 안에서 같은 토막을 두 번 세지 않는다
+  for (const run of t.match(/[가-힣]+/g) ?? []) {
+    for (let len = 2; len <= 5; len++)
+      for (let i = 0; i + len <= run.length; i++) seen.add(run.slice(i, i + len));
+  }
+  for (const w of seen) words.set(w, (words.get(w) ?? 0) + 1);
 }
-const TOO_COMMON = /^(서울|제주|부산|관광|여행|체험|공원|센터|마을|한국|우리|지역|문화|축제|행사)$/;
-const top = [...words]
-  .filter(([w, n]) => n >= 3 && !TOO_COMMON.test(w))
-  .sort((a, b) => b[1] - a[1])
-  .slice(0, 40);
+const TOO_COMMON = /^(서울|제주|부산|관광|여행|체험|공원|센터|마을|한국|우리|지역|문화|축제|행사|광역|광역시|지질|국가)$/;
+// 겹쳐 세면 「해수욕」과 「해수욕장」이 같이 올라온다. 짧은 쪽이 긴 쪽에 **완전히
+// 묻히면**(횟수가 같으면) 짧은 쪽을 버린다 — 같은 말을 두 줄로 보여 줘 봐야 헷갈린다.
+const kept = [...words].filter(([w, n]) => {
+  if (n < 3 || TOO_COMMON.test(w)) return false;
+  for (const [w2, n2] of words)
+    if (w2 !== w && w2.includes(w) && n2 === n) return false;
+  return true;
+});
+const top = kept.sort((a, b) => b[1] - a[1] || b[0].length - a[0].length).slice(0, 40);
 for (const [w, n] of top) console.log(`   ${String(n).padStart(4)}회  ${w}`);
 
 // ⚠️ **못 받은 것과 없는 것을 갈라서 적는다.**
