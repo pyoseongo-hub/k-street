@@ -49,12 +49,15 @@ function App() {
   //    그게 깜박임보다 낫다: 색과 움직임만으로 뜻을 전하면 화면을 읽어 주는 손님은
   //    아무것도 못 받지만, 글자는 읽어 준다.
   const [rainyOpen, setRainyOpen] = useState(false);
+  // 🗺️ 도시 고르는 시트 — 머리줄 📍 로 연다.
+  const [cityOpen, setCityOpen] = useState(false);
   // ☔ 비 오는 날 지하상가는 **서울시설공단 자료**다. 부산에는 같은 자료가 없다.
   const isSeoul = useIsSeoul();
   const savedCount = useSavedEntries().length;
   // 🏙️ 도시 카드가 고른 도시를 앱 전체에 알린다(useCity.tsx).
   //    2026-09-17에 부산이 열리면서 카드가 나타났고, 이 값도 실제로 바뀐다.
-  const { setCity } = useCity();
+  // 🏙️ 머리줄 단추에 지금 도시 이름을 적고, 고를 것이 둘 이상일 때만 그린다.
+  const { city, canChoose } = useCity();
 
   return (
     <div className="app-shell">
@@ -95,6 +98,29 @@ function App() {
             {/* ☂️ **여기 있던 「비 오는 날」 단추를 뺐다** (2026-09-13). 이유는 위
                 rainyOpen 주석에 적었다 — 한 줄로: 날씨 칸과 **같은 창을 여는 문**이
                 둘이었다. 머리줄 그림도 넷에서 셋으로 줄어 좁은 폰이 편해졌다. */}
+            {/* 📍 **지금 보는 도시.** 사장님이 화면에 동그라미를 쳐 주신 자리다
+                (2026-09-17) — 언어 고르개 바로 오른쪽, 머리줄 그림 맨 앞.
+                ⚠️ 이 단추로 머리줄 그림이 **셋에서 넷**이 됐다. 아래 ShareApp 주석의
+                   경고대로 **320px 에서 다시 재서** 줄이 안 갈라지는 것을 확인했다.
+                🙈 고를 도시가 하나뿐이면 안 그린다 — 눌러도 아무 일 없는 단추는
+                   손님 눈에 「고장 난 앱」이다(같은 주석의 오랜 규칙).
+                📏 **그림만 둔다 — 이름을 적었다가 뺐다.** 이름까지 적으니 360~420px
+                   구간에서 머리줄이 **가로로 34px 밀려 나갔다**(영어 기준. 로마자가
+                   한글보다 넓다). 머리줄의 오랜 규칙은 「대표 이름과 언어 단추는
+                   안 줄인다」라, 줄일 것은 이 단추뿐이었다.
+                   🗣️ 지금 도시는 **읽어 주는 말(aria-label)** 에 들어 있고, 화면에도
+                      이미 보인다 — 계절 제목이 「그리고 부산」이고 동네 지도가 부산 구다.
+                      시트를 열면 지금 도시에 ✓ 가 붙는다. */}
+            {canChoose && (
+              <button
+                type="button"
+                className="icon-btn city-btn"
+                onClick={() => setCityOpen(true)}
+                aria-label={`${t.cityPickerTitle} — ${language === "ko" ? city.ko : city.en}`}
+              >
+                📍
+              </button>
+            )}
             <button
               className="icon-btn arrival-btn"
               onClick={() => setGuideOpen(true)}
@@ -180,13 +206,11 @@ function App() {
                 season={<MonthlyFestivalPanel onGoRoads={() => setRoadJump((n) => n + 1)} />}
                 district={<DistrictExplorer forceCategory="autumn" jump={roadJump} />}
               />
-              {/* 🗺️ 「한국, 어디로 가세요?」 — 도시 고르는 칸 (2026-09-16 사장님 지시).
-                  ✅ **2026-09-17에 나타났다** — 부산이 열려 도시가 둘이 됐다.
-                     그전에는 스스로 숨어 있었다(사장님: *"지금 아무것도 없는데
-                     부산 열릴 때까지 가릴 수 있나"*). 다시 하나가 되면 또 숨는다.
-                  📍 자리는 **맨 아래**다. 나타나는 날 위로 올릴지는 그때 본다.
-                  저장한 곳 탭에는 안 띄운다 — 거기는 손님이 담아 둔 것만 보는 자리다. */}
-              <CityPicker onPick={setCity} />
+              {/* 🗺️ 도시 고르는 칸은 **머리줄로 올라갔다** (2026-09-17).
+                  사장님이 부산을 열고 직접 써 보시고: *"이렇게 넣으면 불편해.
+                  케이푸드 지역찾기처럼… 자리는 위쪽."* 맞는 말씀이다 — 도시를
+                  바꾸려고 **화면 끝까지 내려와야** 했다. 이제 머리줄 📍 를 누르면
+                  아래에서 시트가 올라온다(CityPicker.tsx 머리말). */}
             </div>
             <div hidden={tab !== "saved"}>
               <SavedPanel />
@@ -234,6 +258,7 @@ function App() {
           안 열어 보는 손님에게까지 그려 둘 이유가 없다. */}
       {guideOpen && <ArrivalGuide onClose={() => setGuideOpen(false)} />}
       {isSeoul && rainyOpen && <RainyPanel onClose={() => setRainyOpen(false)} />}
+      {cityOpen && <CityPicker onClose={() => setCityOpen(false)} />}
     </div>
   );
 }

@@ -1,131 +1,137 @@
-import { CITIES, MAP_COLS, type City, type CityStatus } from "../data/cities";
+import { createPortal } from "react-dom";
+import { CITIES, type City, type CityStatus } from "../data/cities";
 import { useLanguage } from "../lib/useLanguage";
+import { useCity } from "../lib/useCity";
 
-// 🗺️ **도시 고르는 칸** — 「한국, 어디로 가세요?」
+// 🗺️ **도시 고르는 시트** — 아래에서 올라온다.
 //
-// 사장님 (2026-09-16):
-//   *"도시를 고를 수 있는 카드를 만들어야 할 거 같아, 점진적 확대할 거니"*
-//   *"도별로 나누고 지도 참조해서 대도시 따로"*
+// 사장님 (2026-09-17, 화면에 동그라미를 쳐서):
+//   *"이렇게 넣으면 불편해. 케이푸드 지역찾기처럼 넣을 수 있어?
+//     자리는 위쪽 체크. 케이푸드처럼 열리게."*
 //
-// ── 왜 17곳을 다 그리나 ───────────────────────────────────────────────────
-//   서울 하나만 그리면 **부산이 언제 오는지 아무도 모른다.** 손님도 모르고
-//   우리도 모른다. 칸을 다 그려 두면 비어 있는 게 눈에 보이고, 보이면 채운다.
-//   서울 법정동 467개를 등록하자 빈 동네가 **0 → 428개**로 드러났던 것과 같다 —
-//   그전에 「빈 곳 0」이었던 건 다 채워서가 아니라 **볼 자리가 없어서**였다.
+// ── ⏪ 앞판이 왜 불편했나 ─────────────────────────────────────────────────
+//   처음엔 **화면 맨 아래에 한반도 모양 격자 카드**로 뒀다. 부산이 열리자 실제로
+//   써 보시고 바로 짚으셨다 — 도시를 바꾸려면 **화면 끝까지 내려가야** 했다.
+//   도시는 「보는 것」이 아니라 「고르는 것」이라, 목록 끝에 둘 일이 아니었다.
+//   Kfood 는 이미 그렇게 하고 있다: **머리줄 단추 → 아래에서 시트가 올라온다.**
+//   같은 손이 쓰는 두 앱이니 여는 법도 같은 편이 낫다.
 //
-// ── 🔁 처음에는 격자를 **둘로 나눠** 그렸다. 되돌렸다 ────────────────────
-//   지시대로 대도시 격자 · 도 격자를 위아래로 놓아 보니, 둘 다 같은 5열 지도라
-//   빈 칸이 절반이 넘고 **폰에서 두 화면을 통째로 먹었다**(약 800px).
-//   17곳이 한 장에 들어가면 6줄(약 360px)이고, 무엇보다 **한반도 모양이 보인다** —
-//   서해안이 왼쪽, 강원이 오른쪽 위, 제주가 왼쪽 아래.
-//   → **지도는 한 장**으로 합치고, 대도시와 도는 **모양으로** 갈랐다(둥근 칸 vs 네모 칸).
-//     아래 설명 줄에 어느 모양이 무엇인지 적어 둔다 — 모양만으로는 안 통한다.
-//   나눠 그리는 쪽이 맞다고 하시면 되돌리기는 쉽다(이 파일 하나만 고치면 된다).
+// ── 그래서 바뀐 것 ───────────────────────────────────────────────────────
+//   · 자리  — 화면 맨 아래 카드 → **머리줄 단추**(App.tsx)
+//   · 모양  — 한반도 격자 → **두 칸짜리 목록**. 격자는 이름이 작아 누르기 어려웠다.
+//   · 여는 법 — 늘 펼쳐져 있던 칸 → **누를 때만** 올라오는 시트
 //
-// ── 🙈 **열린 도시가 하나면 이 칸은 아예 안 나온다** (2026-09-16) ────────
-//   사장님: *"지금 아무것도 없는데 부산 열릴 때까지 가릴 수 있나"*
-//
-//   맞는 말씀이다. 서울 하나뿐인데 「한국, 어디로 가세요?」를 띄우면
-//   손님에게는 **못 가는 곳 열여섯 개를 보여 주는 화면**이 된다.
-//   앱이 작아 보이지, 커 보이지 않는다. 아래 탭에서 이미 겪은 일이다 —
-//   네 칸 중 셋이 흐리게 죽어 있으면 "아직 안 만든 앱"으로 보인다.
-//
-//   🔑 **가리는 것과 지우는 것은 다르다.** 자리(cities.ts 17곳)는 그대로 둔다.
-//      가려 두면 부산이 열리는 날 저절로 나타난다 — 아무도 다시 안 만들어도 된다.
-//
-//   ⚙️ 되살아나는 조건 — cities.ts 에서 부산 status 를 「공개」로 바꾸면
-//      열린 도시가 둘이 되어 **이 칸도 나오고 단추도 된다.** 그 한 줄이 전부다.
-//
-// ── 🚨 왜 「단추」가 나중에 생기나 ────────────────────────────────────────
-//   고를 것이 하나면 고르는 게 아니다. 눌러도 아무 일 없는 단추를 놓으면
-//   손님은 앱이 고장 난 줄 안다(App.tsx: *"단추는 없애든 되게 하든
-//   둘 중 하나여야 한다"*).
-//   → 열린 도시가 둘 이상이 되는 순간 칸이 저절로 단추가 된다(아래 pick).
-//     그때 App 에서 onPick 만 넘겨 주면 된다. 지금은 넘기지 않는다.
-//
-// ── ⚠️ 이 그림은 실측 지도가 아니다 ──────────────────────────────────────
-//   cities.ts 의 row/col 을 그대로 격자에 앉힌 것이다. 위도(북→남)·경도(서→동)
-//   순서는 맞지만 모양은 손으로 앉혔다. 서울 육각형 지도(seoulHexMap.ts)처럼
-//   참고 이미지를 픽셀로 잰 것이 아니다 — 고칠 일이 있으면 cities.ts 를 고친다.
+// ── 그대로 둔 것 ─────────────────────────────────────────────────────────
+//   🔑 **17곳을 다 그린다.** 서울 하나만 그리면 부산이 언제 오는지 아무도 모른다.
+//      칸을 다 그려 두면 비어 있는 게 눈에 보이고, 보이면 채운다(cities.ts 머리말).
+//   🙈 **열린 도시가 하나면 아예 안 나온다.** 고를 것이 하나면 고르는 게 아니다 —
+//      머리줄 단추도 같이 사라진다(App.tsx 가 `canChoose` 를 본다).
 
 function statusMod(s: CityStatus): string {
   return s === "공개" ? "open" : s === "준비중" ? "soon" : "later";
 }
 
-/** 칸 하나. 열린 도시가 둘 이상일 때만 단추가 된다(위 머리말 참고). */
-function Tile({
-  city, label, statusText, kindText, onPick,
-}: {
-  city: City;
-  label: string;
-  statusText: string;
-  kindText: string;
-  onPick?: (key: string) => void;
-}) {
-  const style = { gridRow: city.row + 1, gridColumn: city.col + 1 };
-  const cls = `city-tile is-${statusMod(city.status)}`
-    + (city.kind === "대도시" ? " is-big" : "");
-  // 🗣️ 화면에는 이름만 적지만, 읽어 주는 손님에게는 **무엇이고 어떤 상태인지**까지
-  //    말해 준다. 모양과 색만으로 뜻을 전하면 그 손님은 아무것도 못 받는다.
-  const spoken = `${label} — ${kindText} · ${statusText}`;
+/**
+ * 🔢 **고를 수 있는 곳을 맨 위로.**
+ *
+ * 🐞 처음엔 명부(cities.ts) 순서를 그대로 썼다가 **부산이 열일곱 칸 중 열여섯 번째**에
+ *    묻혔다. 그 순서는 한반도 격자(row/col) 자리 값이라 **지도일 때만** 뜻이 있다 —
+ *    목록이 된 지금은 손님에게 아무 의미가 없다. 열린 도시가 둘뿐인데 그걸 찾아
+ *    끝까지 내려가야 한다면, 맨 아래 카드를 치운 뜻이 없어진다.
+ *
+ * 순서: 공개 → 준비중 → 빈칸, 같은 상태 안에서는 대도시 먼저.
+ */
+const RANK: Record<CityStatus, number> = { 공개: 0, 준비중: 1, 빈칸: 2 };
+const ORDERED = [...CITIES].sort(
+  (a, b) =>
+    RANK[a.status] - RANK[b.status] ||
+    (a.kind === "대도시" ? 0 : 1) - (b.kind === "대도시" ? 0 : 1)
+);
 
-  if (city.status === "공개" && onPick) {
-    return (
-      <button type="button" className={cls} style={style}
-        aria-label={spoken} onClick={() => onPick(city.key)}>
-        {label}
-      </button>
-    );
-  }
-  return (
-    <div className={cls} style={style} role="img" aria-label={spoken}>
-      {label}
-    </div>
-  );
-}
-
-export default function CityPicker({ onPick }: { onPick?: (key: string) => void }) {
+export default function CityPicker({ onClose }: { onClose: () => void }) {
   const { t, language } = useLanguage();
+  const { cityKey, setCity } = useCity();
 
   // 🌏 도시 **이름**은 translations.ts 에 넣지 않았다 — 17곳 × 12언어 = 204칸을
   //    손으로 채우면 반드시 어긋난다. 한국어 손님에게는 한글, 나머지 손님에게는
   //    로마자를 준다. 로마자는 한국 안내판·지하철·고속버스표에 실제로 쓰는 표기라
   //    어느 나라 손님이든 그대로 들고 물어볼 수 있다.
+  //    (화면 문구 안에 들어가는 이름은 cities.ts 의 `names` 를 쓴다 — 그건 12개 언어다.)
   const nameOf = (c: City) => (language === "ko" ? c.ko : c.en);
   const statusOf = (c: City) =>
     c.status === "공개" ? t.cityReady : c.status === "준비중" ? t.citySoon : t.cityLater;
-  const kindOf = (c: City) =>
-    c.kind === "대도시" ? t.cityGroupBig : t.cityGroupProvince;
 
-  // 🔢 지금 열려 있는 도시 수. 이 숫자 하나가 두 가지를 정한다(머리말 참고).
-  const open = CITIES.filter((c) => c.status === "공개").length;
+  const pick = (key: string) => {
+    setCity(key);
+    onClose();
+  };
 
-  // 🙈 하나뿐이면 **아무것도 그리지 않는다.** 2026-09-17에 부산이 열려 나타났다.
-  if (open < 2) return null;
+  return createPortal(
+    <div
+      className="city-sheet-back"
+      /* 🖱️ 바깥을 누르면 닫힌다 — 시트의 기본 동작이다. 안쪽 누름은 아래에서 막는다. */
+      onClick={onClose}
+    >
+      <div
+        className="city-sheet"
+        role="dialog"
+        aria-modal="true"
+        aria-label={t.cityPickerTitle}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* 🤏 손잡이 — 아래에서 올라온 시트라는 것을 모양으로 알려 준다. */}
+        <div className="city-sheet-grip" aria-hidden="true" />
 
-  const pick = onPick;
+        <div className="city-sheet-head">
+          <h2 className="city-sheet-title">
+            <span aria-hidden="true">📍</span> {t.cityPickerTitle}
+          </h2>
+          <button type="button" className="ag-close" onClick={onClose} aria-label="✕">
+            ✕
+          </button>
+        </div>
+        <p className="city-sheet-note">{t.cityPickerNote}</p>
 
-  return (
-    <section className="city-picker" aria-labelledby="city-picker-h">
-      <h2 id="city-picker-h" className="city-picker-title">{t.cityPickerTitle}</h2>
-      <p className="city-picker-note">{t.cityPickerNote}</p>
-
-      <div className="city-grid" style={{ gridTemplateColumns: `repeat(${MAP_COLS}, 1fr)` }}>
-        {CITIES.map((c) => (
-          <Tile key={c.key} city={c} label={nameOf(c)}
-            statusText={statusOf(c)} kindText={kindOf(c)} onPick={pick} />
-        ))}
+        <div className="city-sheet-grid">
+          {ORDERED.map((c) => {
+            const open = c.status === "공개";
+            const here = c.key === cityKey;
+            const cls =
+              `city-opt is-${statusMod(c.status)}` + (here ? " is-here" : "");
+            // 🗣️ 읽어 주는 손님에게는 **무엇이고 어떤 상태인지**까지 말해 준다.
+            //    색과 흐림만으로 뜻을 전하면 그 손님은 아무것도 못 받는다.
+            const spoken = `${nameOf(c)} — ${statusOf(c)}`;
+            if (!open) {
+              return (
+                // 🚨 **눌리지 않는 것은 단추로 만들지 않는다.** 눌러도 아무 일 없는
+                //    단추는 손님 눈에 「고장 난 앱」이다(App.tsx 의 오랜 규칙).
+                <div key={c.key} className={cls} role="img" aria-label={spoken}>
+                  <span className="city-opt-name">{nameOf(c)}</span>
+                  <span className="city-opt-tag">{statusOf(c)}</span>
+                </div>
+              );
+            }
+            return (
+              <button
+                key={c.key}
+                type="button"
+                className={cls}
+                aria-current={here ? "true" : undefined}
+                aria-label={spoken}
+                onClick={() => pick(c.key)}
+              >
+                <span className="city-opt-name">{nameOf(c)}</span>
+                {here && (
+                  <span className="city-opt-tag" aria-hidden="true">
+                    ✓
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
       </div>
-
-      {/* 🏷️ 모양만으로는 안 통한다 — 어느 모양이 무엇인지 글자로 적는다.
-          `aria-hidden` 인 이유: 칸마다 이미 "대도시 · 준비 중"을 말로 달아 뒀다.
-          여기까지 읽어 주면 같은 말을 두 번 듣는다. */}
-      <p className="city-legend" aria-hidden="true">
-        <span className="city-legend-item"><i className="city-swatch is-big" />{t.cityGroupBig}</span>
-        <span className="city-legend-item"><i className="city-swatch" />{t.cityGroupProvince}</span>
-        <span className="city-legend-item"><i className="city-swatch is-open" />{t.cityReady}</span>
-        <span className="city-legend-item"><i className="city-swatch is-soon" />{t.citySoon}</span>
-      </p>
-    </section>
+    </div>,
+    document.body
   );
 }

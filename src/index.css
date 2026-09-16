@@ -3284,140 +3284,133 @@ html[lang^="zh"] * {
   border-radius: 999px;
 }
 
-/* 🗺️ **도시 고르는 칸** (CityPicker.tsx) — 「한국, 어디로 가세요?」
-   사장님 (2026-09-16): *"도별로 나누고 지도 참조해서 대도시 따로"*
+/* 🗺️ **도시 고르는 시트** (CityPicker.tsx) — 아래에서 올라온다.
 
-   격자 자리(row/col)는 cities.ts 가 들고 있다 — 컴포넌트가 인라인으로
-   gridRow/gridColumn 을 준다. 여기서는 **모양만** 맡는다.
-   대도시는 둥근 칸, 도는 네모 칸이다(처음엔 격자를 둘로 나눴다가 화면 두 장을
-   먹어서 합쳤다 — CityPicker.tsx 머리말에 그 경위를 적어 뒀다). */
-.city-picker {
-  margin: 22px 0 4px;
-  padding: 15px 13px 12px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
+   사장님 (2026-09-17, 화면에 동그라미를 쳐서):
+     *"이렇게 넣으면 불편해. 케이푸드 지역찾기처럼… 자리는 위쪽. 케이푸드처럼 열리게."*
+
+   ⏪ 앞판은 **화면 맨 아래의 한반도 모양 격자**였다. 부산이 열려 실제로 써 보시고
+      바로 나온 말씀이다 — 도시를 바꾸려면 화면 끝까지 내려가야 했고, 격자 칸은
+      이름이 작아 누르기도 어려웠다. 격자 CSS 는 여기서 통째로 걷어냈다.
+      (자리 값 row/col 은 cities.ts 에 그대로 있다 — 지도가 다시 필요하면 거기서 시작한다.) */
+
+.city-sheet-back {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  /* 🚨 **아래에 붙인다.** 시트는 손가락이 닿는 쪽에서 올라와야 한다 —
+     한 손으로 드는 폰에서 화면 위쪽은 엄지가 안 닿는다. */
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+}
+.city-sheet {
+  width: 100%;
+  max-width: 560px;
+  /* 🚨 화면보다 길어질 수 있다(17곳 + 머리말). 시트 안에서만 스크롤한다 —
+     뒤 화면이 같이 밀리면 어디를 보고 있는지 잃는다. */
+  max-height: 86vh;
+  overflow-y: auto;
+  padding: 8px 16px calc(20px + env(safe-area-inset-bottom, 0px));
+  border-radius: 18px 18px 0 0;
+  border-top: 1px solid var(--border);
   background: var(--surface);
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.45);
+  animation: city-sheet-up 0.18s ease-out;
+}
+@keyframes city-sheet-up {
+  from { transform: translateY(14px); opacity: 0.6; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+/* 🚦 움직임을 줄여 달라고 한 손님에게는 안 움직인다. */
+@media (prefers-reduced-motion: reduce) {
+  .city-sheet { animation: none; }
 }
 
-.city-picker-title {
+/* 🤏 손잡이 — 아래에서 올라온 것이라는 걸 모양으로 알려 준다. */
+.city-sheet-grip {
+  width: 38px;
+  height: 4px;
+  margin: 2px auto 10px;
+  border-radius: 999px;
+  background: var(--border);
+}
+
+.city-sheet-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.city-sheet-title {
+  flex: 1;
   margin: 0;
-  font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.25;
-  text-wrap: balance;
-  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 700;
 }
-
-.city-picker-note {
-  margin: 4px 0 12px;
-  font-size: 12.5px;
-  line-height: 1.55;
+.city-sheet-note {
+  margin: 4px 0 14px;
+  font-size: 0.82rem;
   color: var(--text-muted);
 }
 
-.city-grid {
+.city-sheet-grid {
   display: grid;
-  /* 열 개수는 컴포넌트가 준다(MAP_COLS = 5). 빈 칸은 그냥 비워 둔다 —
-     그 빈 자리가 한반도 모양을 만든다(서해안 왼쪽 · 강원 오른쪽 위 · 제주 왼쪽 아래). */
-  gap: 4px;
+  /* 두 칸. Kfood 지역 시트와 같은 모양이라, 두 앱을 같이 쓰는 손이 헷갈리지 않는다. */
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
 }
-
-.city-tile {
-  /* 폰(390px)에서 카드 안쪽이 약 336px, 5열이니 한 칸이 63px 남짓이다.
-     로마자(Gyeongbuk·Chungnam)는 한글보다 훨씬 길다 — 글자를 줄여 한 줄에 넣는다.
-     정사각형으로 두면 세로가 너무 커져 여섯 줄이 화면을 먹으므로 납작하게 둔다. */
-  aspect-ratio: 1 / 0.66;
+.city-opt {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 2px;
-  border-radius: 8px;
+  gap: 6px;
+  /* 🚨 **눌리는 높이를 지킨다.** 격자 칸이 작아 누르기 어려웠던 것이 이번 개편의
+     이유 중 하나다. 48px 는 손가락이 빗나가지 않는 최소치다. */
+  min-height: 48px;
+  padding: 10px 12px;
   border: 1px solid var(--border);
-  /* 🚨 **도는 안 채운다.** 처음엔 대도시/도를 모서리 둥글기로만 갈랐는데,
-     63×42 짜리 작은 칸에서는 둥근 칸과 네모 칸이 **눈으로 구분이 안 됐다**
-     (찍어 보고 알았다 — 안 찍어 봤으면 갈라 놓은 줄 알았을 것이다).
-     채움이 있고 없고는 작아도 바로 보인다. 둥글기는 거드는 정도로만 남긴다. */
-  background: transparent;
-  color: var(--text-muted);
-  font-size: 9.5px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.15;
-  /* 붙임표 없는 긴 한 단어는 줄바꿈 기회가 없어 칸을 넘친다(육각형 지도에서
-     이미 겪었다) — 넘치면 낱말 중간에서라도 접는다. */
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
-
-/* 🏙️ 대도시(특별시·광역시·특별자치시)는 **채운 둥근 칸**. 도는 빈 네모 칸이다.
-   사장님 지시 *"대도시 따로"* 를 한 장의 지도 안에서 지키는 방법이다. */
-.city-tile.is-big {
-  border-radius: 999px;
+  border-radius: 11px;
   background: var(--surface-2);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  text-align: center;
+}
+.city-opt-name { line-height: 1.25; }
+.city-opt-tag {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
 }
 
-/* 지금 볼 수 있는 곳. 🚨 색만으로 말하지 않는다 — 점을 같이 찍는다.
-   색으로만 나누면 색을 못 가리는 손님에게는 열일곱 칸이 다 똑같이 보인다. */
-.city-tile.is-open {
+/* ✅ 지금 보고 있는 도시 */
+.city-opt.is-here {
   border-color: var(--accent);
   background: var(--accent-soft);
-  color: var(--text);
-  font-weight: 700;
 }
-.city-tile.is-open::before {
-  content: "\25CF";
-  font-size: 6px;
-  color: var(--accent);
-  margin-right: 2px;
-}
+.city-opt.is-here .city-opt-tag { color: var(--accent); }
 
-/* 채우는 중 — 테두리를 점선으로. 「아직 방이 없다」를 모양으로 말한다. */
-.city-tile.is-soon {
-  border-style: dashed;
-  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
-  color: var(--text);
-}
-
-/* 아직 손도 안 댄 곳. 투명도로 칸째 흐리게 하지 않는다 — 어두운 배경에서는
-   칸이 통째로 사라져 벌집에 구멍이 뚫린 것처럼 보인다(육각형 지도에서 배운 것).
-   **글자 밝기만** 낮춘다. 채움은 건드리지 않는다 — 건드리면 대도시/도 구분이 깨진다. */
-.city-tile.is-later {
-  color: color-mix(in srgb, var(--text-muted) 72%, transparent);
-}
-
-/* 단추가 됐을 때(열린 도시가 둘 이상일 때)만 눌리는 느낌을 준다. */
-button.city-tile { cursor: pointer; font-family: inherit; }
-button.city-tile:active { transform: scale(0.94); }
-
-/* 🏷️ 어느 모양이 무엇인지 적는 줄. 모양만으로는 안 통한다. */
-.city-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 12px;
-  margin: 11px 0 0;
-  font-size: 10.5px;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.city-legend-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.city-swatch {
-  width: 14px;
-  height: 10px;
-  border-radius: 3px;
-  border: 1px solid var(--border);
+/* 🚧 아직 못 가는 곳 — **보이되 눌리지 않는다.** 지우지 않는 이유는
+   CityPicker.tsx 머리말에 있다(빈 자리가 보여야 채운다). */
+.city-opt.is-soon,
+.city-opt.is-later {
   background: transparent;
+  color: var(--text-muted);
+  font-weight: 500;
+  cursor: default;
 }
-.city-swatch.is-big { border-radius: 999px; background: var(--surface-2); }
-.city-swatch.is-open { border-color: var(--accent); background: var(--accent-soft); }
-.city-swatch.is-soon {
-  border-style: dashed;
-  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
-}
+.city-opt.is-soon { border-style: dashed; }
+.city-opt.is-later { opacity: 0.55; }
+
+/* 📍 머리줄의 도시 단추 — 그림 하나가 아니라 **이름까지** 적는다.
+   그림만 두면 **지금 어느 도시를 보고 있는지** 열어 보기 전에는 알 수 없다.
+
+   📏 **재서 맞췄다** (2026-09-17). 이 단추가 머리줄 그림을 셋 → 넷으로 늘려서,
+      처음 넣었을 때 390px 에서 **가로로 3px 밀려 나갔다**(actions 오른끝 393).
+      머리줄의 오랜 규칙은 「대표 이름과 언어 단추는 안 줄인다」라(위 주석),
+      줄일 것은 **이 단추뿐**이다. 그래서 여백과 사이를 깎았다.
+      ⚠️ 로마자 이름(Seoul·Busan)이 한글(서울·부산)보다 넓다 — **영어로도 재야 한다.** */
+/* 다른 그림 단추와 **같은 크기**로 둔다 — .icon-btn 이 이미 그 크기다.
+   따로 줄 것이 없어서 규칙을 비워 두지 않고, 왜 비었는지만 남긴다. */
