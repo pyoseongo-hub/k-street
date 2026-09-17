@@ -129,17 +129,60 @@ function pick(row, candidates, used, label) {
   return undefined;
 }
 
-/** "2026-10-01" · "20261001" · "2026.10.01" 을 모두 YYYYMMDD 로. 못 읽으면 undefined. */
-function toYmd(s) {
-  if (!s) return undefined;
-  const d = String(s).replace(/[^0-9]/g, "");
-  if (d.length < 8) return undefined;
-  const ymd = d.slice(0, 8);
-  const m = Number(ymd.slice(4, 6));
-  const day = Number(ymd.slice(6, 8));
-  if (m < 1 || m > 12 || day < 1 || day > 31) return undefined;
-  return ymd;
+/**
+ * 🗓️ **날짜는 한글 문장으로 온다** — 2026-09-17에 날것을 보고 알았다.
+ *
+ *   "USAGE_DAY" 는 **비어 있고**, 진짜 날짜는 여기 있다:
+ *     · "2025. 7. 5.(토) ~ 7. 13.(일) "
+ *     · "2026. 05. 22. ~ 05. 31."
+ *   끝나는 해가 따로 없고, 요일이 괄호로 붙고, 점과 공백이 제멋대로다.
+ *
+ *   🚨 **지난 해 날짜가 섞여 있다.** 이 창구는 「올해 일정표」가 아니라
+ *      **축제 소개 목록**이라, 마지막으로 열린 회차가 그대로 남아 있다.
+ *      그래서 아래 규칙을 지킨다 —
+ *        · **달(月)은 쓴다.** 축제는 해마다 같은 시기에 다시 열린다.
+ *          관광공사 쪽도 같은 이유로 작년치를 받는다(fetch-festival-dates.mjs).
+ *        · **지난 해 날짜는 「날짜」로 쓰지 않는다.** 올해 그 날인 것처럼 보이면
+ *          손님이 헛걸음한다. 연도가 올해 이상일 때만 정확한 날짜를 적는다.
+ *
+ * @returns {{y:number,m:number,d:number,em:number,ed:number}|null}
+ */
+function parseRange(raw) {
+  if (!raw) return null;
+  // 요일 괄호(토)·(일)만 걷어낸다. 다른 괄호는 건드리지 않는다.
+  const t = String(raw).replace(/\([월화수목금토일]\)/g, " ").replace(/\s+/g, " ").trim();
+  const parts = t.split(/[~∼–—]/);
+  const nums = (x) => (String(x).match(/\d+/g) || []).map(Number);
+
+  const a = nums(parts[0] || "");
+  // 시작은 반드시 **연·월·일 셋 다** 있어야 한다. 둘뿐이면 연도를 모르는 것이고,
+  // 연도를 모르면 「올해 것인지」를 가릴 수 없다 — 그러면 안 쓴다.
+  if (a.length < 3) return null;
+  const [y, m, d] = a;
+  if (y < 2000 || y > 2100 || m < 1 || m > 12 || d < 1 || d > 31) return null;
+
+  let em = m, ed = d;
+  const b = nums(parts[1] || "");
+  if (b.length >= 3 && b[0] > 2000) { em = b[1]; ed = b[2]; }
+  else if (b.length === 2)          { em = b[0]; ed = b[1]; }
+  else if (b.length === 1)          { ed = b[0]; }
+  if (em < 1 || em > 12 || ed < 1 || ed > 31) { em = m; ed = d; }
+
+  return { y, m, d, em, ed };
 }
+
+/**
+ * 🏷️ 상호 뒤에 붙은 **언어 꼬리표**를 뗀다 — "센텀맥주축제(한,영,중간,중번,일)".
+ *    ⚠️ 괄호를 다 떼면 안 된다. "○○축제(해운대)" 처럼 뜻이 있는 괄호가 있다.
+ *    그래서 **언어를 가리키는 낱말만** 쉼표로 이어진 괄호일 때만 뗀다.
+ */
+function cleanName(name) {
+  return String(name)
+    .replace(/\s*\((?:\s*(?:한|영|중|일|중간|중번|러|베|태|독|불|스|아)\s*,)+\s*(?:한|영|중|일|중간|중번|러|베|태|독|불|스|아)\s*\)\s*$/, "")
+    .trim();
+}
+
+const ymd = (y, m, d) => `${y}${String(m).padStart(2, "0")}${String(d).padStart(2, "0")}`;
 
 const main = async () => {
   // 먼저 1건만 불러 총 건수를 본다 — 몇 쪽인지 모르고 100씩 긁으면 호출을 버린다.
@@ -168,51 +211,56 @@ const main = async () => {
     if (!items.length) break;
   }
 
-  // ── 앱이 쓰는 모양으로 바꾼다 ──────────────────────────────────────────
+  // ── 앱이 쓰는 모양으로 바꾼다 ────────────────────────────────────────
+  //    칸 이름은 **추측하지 않았다.** 2026-09-17에 --dump 로 날것을 보고 적었다.
+  const THIS_YEAR = new Date().getFullYear();
   const used = new Map();
   const made = [];
   const 버린것 = [];
   for (const row of rows) {
-    const name = pick(row, ["MAIN_TITLE", "TITLE", "FESTIVAL_NM", "SUBTITLE"], used, "이름");
-    const gu = pick(row, ["GUGUN_NM", "GUGUN", "SIGUNGU_NM"], used, "구");
-    const addr = pick(row, ["ADDR1", "ADDR", "PLACE_ADDR", "ROAD_ADDR"], used, "주소");
-    const place = pick(row, ["PLACE", "PLACE_NM", "LOCATION"], used, "장소");
-    const start = toYmd(pick(row, ["START_DATE", "FESTIVAL_START_DATE", "USAGE_DAY", "BEGIN_DE"], used, "시작"));
-    const end = toYmd(pick(row, ["END_DATE", "FESTIVAL_END_DATE", "END_DE"], used, "끝"));
-    const lat = Number(pick(row, ["LAT", "LATITUDE", "Y", "GPS_Y"], used, "위도"));
-    const lng = Number(pick(row, ["LNG", "LONGITUDE", "X", "GPS_X"], used, "경도"));
-    const image = pick(row, ["MAIN_IMG_NORMAL", "MAIN_IMG", "IMG_URL", "MAIN_IMG_THUMB"], used, "사진");
-    const thumb = pick(row, ["MAIN_IMG_THUMB", "THUMB_URL"], used, "작은사진");
-    const homepage = pick(row, ["HOMEPAGE_URL", "HOMEPAGE", "URL", "CNTCT_URL"], used, "홈페이지");
-    const id = pick(row, ["UC_SEQ", "SEQ", "ID", "CONTENT_ID"], used, "번호");
+    const name = cleanName(pick(row, ["MAIN_TITLE", "PLACE", "TITLE"], used, "이름") ?? "");
+    const gu   = pick(row, ["GUGUN_NM"], used, "구");
+    const addr = pick(row, ["ADDR1"], used, "주소");
+    const when = pick(row, ["USAGE_DAY_WEEK_AND_TIME", "USAGE_DAY"], used, "기간");
+    const lat  = Number(pick(row, ["LAT"], used, "위도"));
+    const lng  = Number(pick(row, ["LNG"], used, "경도"));
+    const image = pick(row, ["MAIN_IMG_NORMAL"], used, "사진");
+    const thumb = pick(row, ["MAIN_IMG_THUMB"], used, "작은사진");
+    const home  = pick(row, ["HOMEPAGE_URL"], used, "홈페이지");
+    const id    = pick(row, ["UC_SEQ"], used, "번호");
 
-    // 🚫 **확인 못 한 것은 넣지 않는다.** 이름·시작일이 없으면 버린다 —
-    //    달이 없는 축제는 달·계절 화면에서 어차피 가려지고(seed.ts 의 monthSource 게이트),
-    //    이름이 없으면 카드를 그릴 수가 없다.
-    if (!name || !start) {
-      버린것.push({ name: name ?? "(이름 없음)", 왜: !name ? "이름이 없다" : "시작일을 못 읽었다" });
+    const r = parseRange(when);
+    // 🚫 **확인 못 한 것은 넣지 않는다.** 이름이 없거나 기간을 못 읽으면 버린다 —
+    //    달을 모르는 축제는 달·계절 화면에서 어차피 가려진다.
+    if (!name || !r) {
+      버린것.push({ name: name || "(이름 없음)", 왜: !name ? "이름이 없다" : `기간을 못 읽었다 — "${when ?? ""}"` });
       continue;
     }
+    // 🗓️ 올해 이후의 회차만 **정확한 날짜**를 적는다. 지난 해 것은 달만 남긴다.
+    const 올해것 = r.y >= THIS_YEAR;
     made.push({
       id: id ? `busanfest-${id}` : `busanfest-${name}`,
       city: "busan",
       gu,
       category: "festival",
       name,
-      addr: addr ?? place,
-      start,
-      end: end ?? start,
-      startMonth: Number(start.slice(4, 6)),
-      endMonth: Number((end ?? start).slice(4, 6)),
-      // 🔒 달의 근거를 여기 적어 둔다 — 없으면 앱이 가린다(사용자 지시 2026-09-02).
-      monthSource: "부산광역시 축제정보 창구(공공데이터포털)",
+      addr,
+      ...(올해것 ? { start: ymd(r.y, r.m, r.d), end: ymd(r.y, r.em, r.ed) } : {}),
+      startMonth: r.m,
+      endMonth: r.em,
+      // 🔒 달의 근거. 없으면 앱이 가린다(사용자 지시 2026-09-02).
+      monthSource: 올해것
+        ? "부산광역시 축제정보 창구(공공데이터포털)"
+        : `부산광역시 축제정보 창구 — ${r.y}년 회차 기준(달만 사용)`,
       lat: Number.isFinite(lat) ? lat : undefined,
       lng: Number.isFinite(lng) ? lng : undefined,
       image,
       thumb,
-      officialUrl: homepage,
+      officialUrl: home,
       source: "busan-city",
       confirmed: true,
+      // 사람이 볼 때 쓰는 원문. 화면에는 안 쓴다.
+      _원문기간: when,
     });
   }
 
@@ -243,7 +291,10 @@ const main = async () => {
 
   console.log(`\n🎪 새로 들어올 축제:`);
   for (const p of 새것) {
-    console.log(`   ${(p.gu ?? "?").padEnd(5)} ${p.start}~${p.end}  ${p.name}${p.image ? "" : "  (사진 없음)"}`);
+    const 달 = `${String(p.startMonth).padStart(2, " ")}월`;
+    const 표시 = p.start ? `${p.start}~${p.end}` : `${달} (달만)`;
+    console.log(`   ${(p.gu ?? "?").padEnd(5)} ${표시.padEnd(20)} ${p.name}${p.image ? "" : "  (사진 없음)"}`);
+    console.log(`         원문: ${p._원문기간}`);
   }
 
   if (!APPLY) {
@@ -259,7 +310,7 @@ const main = async () => {
           "부산광역시가 공공데이터포털에 직접 올린 축제. scripts/fetch-busan-festivals.mjs 가 받는다. 손으로 고치지 말 것.",
         출처: "부산광역시_부산축제정보 서비스 (공공데이터포털, 공공누리 1유형)",
         받은날: new Date().toISOString().slice(0, 10),
-        곳: 새것,
+        곳: 새것.map(({ _원문기간, ...rest }) => rest),
       },
       null,
       1
