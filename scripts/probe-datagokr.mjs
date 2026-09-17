@@ -31,6 +31,16 @@ const TARGETS = [
   ["한국관광공사", "국문 관광정보 (지금 쓰는 것)", "https://apis.data.go.kr/B551011/KorService2/areaCode2", { numOfRows: "1" }],
   ["부산광역시", "부산축제정보", "https://apis.data.go.kr/6260000/FestivalService/getFestivalKr", { pageNo: "1", numOfRows: "3", resultType: "json" }],
   ["부산광역시", "부산명소정보", "https://apis.data.go.kr/6260000/AttractionService/getAttractionKr", { pageNo: "1", numOfRows: "3", resultType: "json" }],
+  // 📷 **포토코리아(관광사진 갤러리)** — 2026-09-17에 넣었다.
+  //    왜 필요한가: 우리가 쓸 수 있는 사진의 갈래는 생각보다 좁다.
+  //    · 서울시 뉴스·한강사업본부 사진 → 공공누리 **제4유형**(출처표시 + **상업적 이용금지** + 변경금지)
+  //      → 앱·SNS 홍보에는 **못 쓴다.**
+  //    · 관광공사 포토코리아 → 공공누리 **제1유형**(출처만 표시하면 상업적 이용도 된다) ✅
+  //    사진 약 10만 장이 여기 있고, 지역 코드가 없어 **이름·검색어로 찾는다.**
+  //    창구 이름이 갈려 있어(구버전 1 / GW) 둘 다 재 본다 — 어느 쪽이 열리는지 모른 채
+  //    한쪽만 물어보면 「없다」로 잘못 적게 된다.
+  ["한국관광공사", "포토코리아 (검색)", "https://apis.data.go.kr/B551011/PhotoGalleryService1/gallerySearchList1", { pageNo: "1", numOfRows: "1", arrange: "A", keyword: "한강" }],
+  ["한국관광공사", "포토코리아 (GW)", "https://apis.data.go.kr/B551011/PhotoGalleryService/gallerySearchList", { pageNo: "1", numOfRows: "1", arrange: "A", keyword: "한강" }],
 ];
 
 for (const [기관, 이름, base, extra] of TARGETS) {
