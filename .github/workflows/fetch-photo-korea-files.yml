@@ -1,0 +1,50 @@
+name: Fetch Photo Korea files (사진 파일 받기)
+
+# 📷 고른 포토코리아 사진을 **파일로** 받아 저장소에 넣는다.
+#    찾기(find-photo-korea)는 보여 주기만 하고, 이것이 실제로 가져오는 쪽이다.
+#    🪪 공공누리 제1유형 — 출처 표시로 재배포·상업 이용이 가능하다.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 사진을 받는다
+        run: |
+          set -o pipefail
+          node scripts/fetch-photo-korea-files.mjs 2>&1 | tee photo-files-log.txt
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 📷 받은 사진"
+            echo ""
+            echo '```'
+            cat photo-files-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 커밋
+        run: |
+          rm -f photo-files-log.txt
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/photo-korea
+          if git diff --cached --quiet; then echo "바뀐 게 없다"; exit 0; fi
+          git commit -m "포토코리아 경복궁 야경 사진 6장 (공공누리 1유형)"
+          for i in 1 2 3 4; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep $((2 ** i))
+          done
+          exit 1
