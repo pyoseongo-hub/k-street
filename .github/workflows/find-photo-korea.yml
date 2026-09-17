@@ -1,0 +1,67 @@
+name: Find Photo Korea (쓸 수 있는 사진 찾기)
+
+# 📷 **공공누리 제1유형 사진만 찾는다 — 포토코리아(한국관광공사).**
+#
+#   왜 여기만 쓰나 (2026-09-17에 갈라 봤다):
+#     · 서울시 뉴스·한강사업본부 사진 → 공공누리 **제4유형**
+#       (출처표시 + **상업적 이용금지** + 변경금지) → 우리는 못 쓴다.
+#     · 포토코리아 → **제1유형**. 출처만 밝히면 상업적 이용도 된다. ✅
+#
+#   🚨 **아무것도 저장하지 않는다.** 찾아서 보여 주기만 한다.
+#      포토코리아 검색에는 지역 코드가 없어 「드론」이면 전국 드론 사진이 섞여 온다.
+#      고르는 것은 사람이다 — 이름만 비슷한 남의 사진을 붙이는 사고를
+#      이 저장소는 이미 여러 번 겪었다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      keywords:
+        description: "검색어 (쉼표로 여러 개). 예: 드론,한강 불빛,뚝섬한강공원"
+        type: string
+        default: "드론,한강 불빛,뚝섬한강공원"
+      dump:
+        description: "첫 건의 날것을 찍을까요? (칸 이름 확인용)"
+        type: boolean
+        default: false
+
+jobs:
+  find:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 인증키가 있나 본다
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          if [ -z "$TOUR_API_KEY" ]; then
+            echo "❌ TOUR_API_KEY 가 없다."; exit 1
+          fi
+          echo "🔑 인증키 ${#TOUR_API_KEY}자"
+
+      - name: 사진을 찾는다
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        # pipefail 이 없으면 node 가 죽어도 tee 가 성공해 이 단계가 초록색이 된다.
+        run: |
+          set -o pipefail
+          if [ "${{ inputs.dump }}" = "true" ]; then
+            node scripts/find-photo-korea.mjs --keywords "${{ inputs.keywords }}" --dump 2>&1 | tee photo-log.txt
+          else
+            node scripts/find-photo-korea.mjs --keywords "${{ inputs.keywords }}" 2>&1 | tee photo-log.txt
+          fi
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 📷 쓸 수 있는 사진 (공공누리 제1유형)"
+            echo ""
+            echo '```'
+            cat photo-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
