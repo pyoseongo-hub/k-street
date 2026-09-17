@@ -84,24 +84,37 @@ async function call(pageNo, numOfRows) {
  * 무엇보다 **내가 칸 이름을 추측해서 틀리는 일**을 막는다.
  */
 function findItems(data) {
-  let found = null;
+  // 🐞 **두 번 훑는다** (2026-09-17에 여기서 틀렸다).
+  //    처음엔 한 번에 훑으면서 배열을 만나면 곧바로 돌려줬는데,
+  //    부산 창구의 답은 `body: { item: [...], numOfRows, pageNo, totalCount }` 라
+  //    **item 을 먼저 만나 멈추는 바람에 옆칸 totalCount 를 못 봤다.**
+  //    총 0건으로 나와 한 건도 안 받아졌다. 세는 것과 찾는 것을 갈라 둔다.
   let total = null;
-  (function walk(node) {
-    if (found || node == null || typeof node !== "object") return;
+  (function scanTotal(node) {
+    if (node == null || typeof node !== "object") return;
     for (const [k, v] of Object.entries(node)) {
       if (/^totalCount$/i.test(k) && total == null) total = Number(v);
-      if (Array.isArray(v) && v.length && typeof v[0] === "object") {
-        found = v;
-        return;
-      }
-      if (v && typeof v === "object") walk(v);
+      if (v && typeof v === "object") scanTotal(v);
     }
   })(data);
+
+  let found = null;
+  (function scanItems(node) {
+    if (found || node == null || typeof node !== "object") return;
+    for (const v of Object.values(node)) {
+      if (Array.isArray(v) && v.length && typeof v[0] === "object") { found = v; return; }
+    }
+    for (const v of Object.values(node)) {
+      if (found) return;
+      if (v && typeof v === "object" && !Array.isArray(v)) scanItems(v);
+    }
+  })(data);
+
   // 1건만 올 때는 배열이 아니라 객체로 온다 — 공공데이터포털 전체가 그렇다.
   if (!found) {
     const one = (function pick(node) {
       if (node == null || typeof node !== "object") return null;
-      if (node.item && typeof node.item === "object") return [node.item];
+      if (node.item && typeof node.item === "object" && !Array.isArray(node.item)) return [node.item];
       for (const v of Object.values(node)) {
         const r = pick(v);
         if (r) return r;
