@@ -165,23 +165,38 @@ function parseRange(raw) {
   // 요일 괄호(토)·(일)만 걷어낸다. 다른 괄호는 건드리지 않는다.
   const t = String(raw).replace(/\([월화수목금토일]\)/g, " ").replace(/\s+/g, " ").trim();
   const parts = t.split(/[~∼–—]/);
-  const nums = (x) => (String(x).match(/\d+/g) || []).map(Number);
 
-  const a = nums(parts[0] || "");
-  // 시작은 반드시 **연·월·일 셋 다** 있어야 한다. 둘뿐이면 연도를 모르는 것이고,
-  // 연도를 모르면 「올해 것인지」를 가릴 수 없다 — 그러면 안 쓴다.
-  if (a.length < 3) return null;
-  const [y, m, d] = a;
+  // 🚨 **숫자를 전부 긁어모으면 안 된다** (2026-09-17에 맛보기에서 잡았다).
+  //    "2026. 5. 15. ~ 5. 24. 점등시간 매일 저녁 7시~새벽 1시" 를 숫자로 긁으면
+  //    끝 쪽이 [5, 24, 7, 1] 이 되어 어느 규칙에도 안 맞고, 끝 날짜가 조용히
+  //    **시작 날짜로 되돌아갔다** — 5/15~5/24 축제가 화면에 5/15 하루로 떴다.
+  //    그래서 시각·회차 같은 뒤따라오는 숫자는 보지 않고, **앞에서부터 날짜 꼴만** 읽는다.
+  const YMD = /(\d{4})\s*[.\-년/]\s*(\d{1,2})\s*[.\-월/]\s*(\d{1,2})/;      // 2026. 5. 15.
+  const MD  = /^\D*(\d{1,2})\s*[.\-월/]\s*(\d{1,2})/;                        // 5. 24.
+  const D   = /^\D*(\d{1,2})\s*[.일]/;                                        //    24.
+
+  // 시작은 반드시 **연·월·일 셋 다** 있어야 한다. 연도를 모르면 「올해 것인지」를
+  // 가릴 수 없고, 가릴 수 없으면 안 쓴다.
+  const a = YMD.exec(parts[0] || "");
+  if (!a) return null;
+  const y = +a[1], m = +a[2], d = +a[3];
   if (y < 2000 || y > 2100 || m < 1 || m > 12 || d < 1 || d > 31) return null;
 
-  let em = m, ed = d;
-  const b = nums(parts[1] || "");
-  if (b.length >= 3 && b[0] > 2000) { em = b[1]; ed = b[2]; }
-  else if (b.length === 2)          { em = b[0]; ed = b[1]; }
-  else if (b.length === 1)          { ed = b[0]; }
-  if (em < 1 || em > 12 || ed < 1 || ed > 31) { em = m; ed = d; }
+  // 끝은 세 가지 꼴을 차례로 본다. 하나도 안 맞으면 **하루짜리**로 본다.
+  let em = m, ed = d, ey = y;
+  const tail = parts[1] || "";
+  let b;
+  if ((b = YMD.exec(tail)))     { ey = +b[1]; em = +b[2]; ed = +b[3]; }
+  else if ((b = MD.exec(tail))) { em = +b[1]; ed = +b[2]; }
+  else if ((b = D.exec(tail)))  { ed = +b[1]; }
+  if (em < 1 || em > 12 || ed < 1 || ed > 31) { ey = y; em = m; ed = d; }
 
-  return { y, m, d, em, ed };
+  // 🔎 **끝이 시작보다 앞서면 날짜를 쓰지 않는다.** 창구 원문 자체가 틀린 것이 있다
+  //    (자갈치축제: "2025. 10. 23. ~ 10. 06."). 해를 넘기는 것은 정상이므로 가른다.
+  const 뒤집힘 = ey === y && (em < m || (em === m && ed < d));
+  if (뒤집힘) return { y, m, d, em: m, ed: d, endUnsure: true };
+
+  return { y, m, d, em, ed, crossYear: ey !== y, endYear: ey };
 }
 
 /**
@@ -258,7 +273,10 @@ const main = async () => {
       category: "festival",
       name,
       addr,
-      ...(올해것 ? { start: ymd(r.y, r.m, r.d), end: ymd(r.y, r.em, r.ed) } : {}),
+      // 끝이 시작보다 앞선 원문(endUnsure)은 **끝 날짜를 안 적는다** — 시작 하루만 적는다.
+      ...(올해것
+        ? { start: ymd(r.y, r.m, r.d), end: ymd(r.endYear ?? r.y, r.em, r.ed) }
+        : {}),
       startMonth: r.m,
       endMonth: r.em,
       // 🔒 달의 근거. 없으면 앱이 가린다(사용자 지시 2026-09-02).
