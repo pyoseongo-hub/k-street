@@ -1,0 +1,118 @@
+name: Fetch Busan festivals (부산 축제 받기)
+
+# 🎪 **부산 축제를 「부산광역시」에서 직접 받아온다.**
+#
+#   왜 필요한가 — 관광공사로 받은 부산 축제는 **14곳**인데, 거기에
+#   부산국제영화제도 부산불꽃축제도 부산바다축제도 없다. 자세한 것은
+#   scripts/fetch-busan-festivals.mjs 머리말에 적어 뒀다.
+#
+#   🪪 공공데이터포털 「부산광역시_부산축제정보 서비스」에 **활용신청**이 돼 있어야
+#      열린다. 열렸는지는 **Probe data.go.kr** 워크플로로 먼저 잰다.
+#
+#   ⏳ 예약은 아직 안 건다. 한 번도 성공한 적 없는 길을 매일 돌리면
+#      **매일 빨간 X 만 쌓인다** — 이 저장소가 알림으로 여러 번 데인 자리다.
+#      손으로 돌려 자료가 제대로 들어오는 것을 보고 나서 예약을 건다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "무엇을 할까요?"
+        type: choice
+        default: "맛보기"
+        options:
+          - "맛보기"       # 받아서 표로 보여만 준다. 저장 안 함
+          - "날것보기"     # 창구가 준 칸 이름을 그대로 찍는다 (칸 이름 확인용)
+          - "저장"         # src/data/busan-festivals.json 에 저장하고 커밋
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    # ⏱️ 이 창구는 되다 말다 한다. 매달려 있으면 무슨 일인지 알 수가 없으니
+    #    시간을 끊어 준다 — 「멈춘 것」과 「느린 것」을 가르기 위해서다.
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 인증키가 있나 본다
+        id: key
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          if [ -z "$TOUR_API_KEY" ]; then
+            echo "❌ TOUR_API_KEY 가 없다 — Settings → Secrets 에 넣어야 한다."
+            exit 1
+          fi
+          echo "🔑 인증키 ${#TOUR_API_KEY}자"
+
+      - name: 부산 축제 받기
+        id: fetch
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        # pipefail 이 없으면 node 가 죽어도 tee 가 성공해 이 단계가 초록색이 된다.
+        run: |
+          set -o pipefail
+          case "${{ inputs.mode }}" in
+            "저장")     node scripts/fetch-busan-festivals.mjs --apply 2>&1 | tee busan-fest-log.txt ;;
+            "날것보기") node scripts/fetch-busan-festivals.mjs --dump  2>&1 | tee busan-fest-log.txt ;;
+            *)          node scripts/fetch-busan-festivals.mjs         2>&1 | tee busan-fest-log.txt ;;
+          esac
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🎪 부산 축제 받기 — ${{ inputs.mode }}"
+            echo ""
+            echo '```'
+            cat busan-fest-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 저장된 것이 있으면 커밋
+        id: commit
+        if: inputs.mode == '저장'
+        run: |
+          # 맛보기로 끝난 날은 파일이 없다. `git add <없는 파일>` 은 fatal 로 죽는다.
+          if [ ! -f src/data/busan-festivals.json ]; then
+            echo "committed=no" >> "$GITHUB_OUTPUT"
+            echo "⬜ 저장된 파일이 없다 — 커밋할 것이 없다"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A src/data/busan-festivals.json
+          if git diff --cached --quiet; then
+            echo "committed=no" >> "$GITHUB_OUTPUT"
+            echo "⬜ 바뀐 게 없다"
+          else
+            git commit -m "부산 축제를 부산시 창구에서 받았다 (fetch-busan-festivals) [skip render]"
+            # 🚨 밀렸을 때 다시 해 본다 — 그냥 두면 받아 온 자료가 통째로 버려진다.
+            pushed=no
+            for i in 1 2 3; do
+              if git push; then pushed=yes; break; fi
+              echo "   밀렸다 — 원격을 당겨 다시 얹는다 ($i/3)"
+              git pull --rebase origin "$(git rev-parse --abbrev-ref HEAD)" || exit 1
+              sleep $((i * 3))
+            done
+            if [ "$pushed" != yes ]; then
+              echo "❌ 세 번 다 밀렸다. 받아 둔 자료가 올라가지 못했다 — 다시 돌릴 것."
+              exit 1
+            fi
+            echo "committed=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      # 🚀 봇이 기본 토큰으로 민 커밋으로는 다른 워크플로가 안 뜬다 — 직접 깨운다.
+      - name: 바뀐 게 있으면 배포를 깨운다
+        if: steps.commit.outputs.committed == 'yes'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run deploy.yml --ref main
+          echo "🚀 배포를 깨웠다 — 몇 분 뒤 korea-street.com 에 반영된다"
