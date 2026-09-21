@@ -336,6 +336,17 @@ if (RETRY_DROPPED) {
 }
 /** 장부에 적힌 것인가 (「_읽어보세요」 같은 설명 칸은 장부가 아니다). */
 const isDropped = (code, ko) => Boolean(dropped[code] && dropped[code][ko]);
+
+/**
+ * 🪪 **사람이 「지움」으로 표시한 것인가** (name-overrides.json 의 null).
+ *
+ * 장부와 이유는 다르지만 **고리는 똑같다** — 물어보면 받아 오고, 저장 직전
+ * applyOverrides 가 null 을 보고 또 지운다. 사람이 「이 언어에는 맞는 말이
+ * 없다」고 이미 판단한 것을 기계에 다시 물을 이유가 없다.
+ * 사람이 null 을 지우거나 값을 넣으면 그 순간부터 다시 물어본다.
+ */
+const isNulled = (code, ko) =>
+  Boolean(overrides[code]) && ko in overrides[code] && overrides[code][ko] === null;
 /**
  * 🏛️ **관광공사 공식 이름을 덮어쓴다.**
  *
@@ -480,10 +491,11 @@ for (const { code, google } of TARGETS) {
   const have = (store[code] ??= {});
   // 🀄 **장부에 적힌 것은 묻지 않는다.** 물어 봐야 같은 답이 오고 또 버리게 된다.
   const skipped = all.filter((s) => !have[s] && isDropped(code, s));
-  const todo = all.filter((s) => !have[s] && !isDropped(code, s));
-  const skipNote = skipped.length
-    ? ` · 이름이 아니어서 걸러 둔 ${skipped.length}개는 건너뛴다`
-    : "";
+  const nulled = all.filter((s) => !have[s] && !isDropped(code, s) && isNulled(code, s));
+  const todo = all.filter((s) => !have[s] && !isDropped(code, s) && !isNulled(code, s));
+  const skipNote =
+    (skipped.length ? ` · 이름이 아니어서 걸러 둔 ${skipped.length}개는 건너뛴다` : "") +
+    (nulled.length ? ` · 사람이 지운 ${nulled.length}개는 건너뛴다` : "");
   if (!todo.length) {
     console.log(`${code.padEnd(6)} 이미 다 돼 있음 (${Object.keys(have).length}개)${skipNote}`);
     continue;
