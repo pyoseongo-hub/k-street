@@ -33,6 +33,15 @@
 //   맛보기  : GOOGLE_TRANSLATE_API_KEY=... node scripts/translate-places.mjs
 //   실제 반영: GOOGLE_TRANSLATE_API_KEY=... node scripts/translate-places.mjs --apply
 //   한 언어만: node scripts/translate-places.mjs --apply --lang ja
+//   이름만 고치기: node scripts/translate-places.mjs --overrides-only   (열쇠 필요 없음)
+//   걸러 둔 것 다시 묻기: node scripts/translate-places.mjs --apply --retry-dropped
+//
+// 🀄 **왜 번역 수와 저장 수가 다른가** (2026-09-21에 적어 둔다).
+//    구글이 한국 절·산 이름을 소리가 비슷한 낱말로 옮긴다 —
+//    「운수사 → 運輸会社」·「금련산 → 禁煙」·「법안정사 → 法律與秩序」.
+//    그래서 저장 직전에 그물로 거른다(lib/cjk-name-rules.mjs). **버린 것은
+//    cjk-dropped.json 에 적어 두고 다시 묻지 않는다** — 안 적어 두면 매번
+//    같은 것을 사서 또 버린다. 그물에 걸린 이름은 앱이 영어로 대신 보여 준다.
 
 import { readFileSync, writeFileSync, readdirSync } from "node:fs";
 // 🀄 이름인지 낱말인지 가리는 잣대. **감사와 같은 파일을 쓴다** — 그 파일 머리말 참고.
@@ -57,6 +66,19 @@ const OUT = join(__dirname, "..", "src", "data", "place-translations");
 const OVERRIDES = join(__dirname, "..", "src", "data", "name-overrides.json");
 // 🏛️ 관광공사가 **언어별로 직접 내는 공식 이름**. 기계 번역보다 세고, 사람이 확인한 것보다 약하다.
 const OFFICIAL = join(__dirname, "..", "src", "data", "tour-official-names.json");
+// 🀄 **한 번 걸러낸 것을 적어 두는 장부** (2026-09-21에 넣었다).
+//
+//    왜 — 아래 그물(dropBrokenCjkNames)이 「운수사 → 運輸会社」 같은 것을 버리는데,
+//    버리고 나면 파일에 없으니 **다음 실행이 「아직 안 됐네」 하고 또 부른다.**
+//    구글에 돈(글자 수)을 내고 받아서 또 버리기를 영원히 되풀이한다.
+//    더 나쁜 것은 **화면이 거짓말을 한다는 점**이다 — 맛보기가 「27개 번역하겠다」고
+//    해 놓고 실제로는 2개만 저장된다. 2026-09-20에 이것 때문에 한나절을 헤맸다.
+//
+//    그래서 걸러낸 것을 여기에 적고, 다음부터는 **부르지 않는다.**
+//    ⚠️ 다시 시도하고 싶으면 `--retry-dropped` 를 붙인다(그물 규칙을 고쳤을 때).
+//    ⚠️ 관광공사 공식 이름이나 사람이 적은 이름이 나중에 들어오면 **장부에서 저절로
+//       빠진다**(pruneDropped) — 장부가 옳은 값을 막지 않는다.
+const DROPPED = join(__dirname, "..", "src", "data", "cjk-dropped.json");
 
 const args = process.argv.slice(2);
 const APPLY = args.includes("--apply");
@@ -69,6 +91,8 @@ const ONLY = args.includes("--lang") ? args[args.indexOf("--lang") + 1] : null;
 //    「국제시장 → Gukje Market」처럼 손으로 고친 값을 반영하는 데 번역 호출이
 //    필요할 이유가 없다. 열쇠를 챙겨야 한다면 사람이 고치기를 미루게 된다.
 const OVERRIDES_ONLY = args.includes("--overrides-only");
+// 🀄 걸러 둔 장부를 비우고 처음부터 다시 물어본다. 그물 규칙을 고쳤을 때만 쓴다.
+const RETRY_DROPPED = args.includes("--retry-dropped");
 
 const KEY = (process.env.GOOGLE_TRANSLATE_API_KEY || "").trim();
 if (!KEY && !OVERRIDES_ONLY) {
@@ -297,6 +321,21 @@ try {
 } catch {
   /* 아직 안 받아 왔으면 그냥 안 쓴다 */
 }
+/** 🀄 걸러 둔 장부 — `{ "<언어>": { "<한국어>": { 구글, 갈래 } } }` */
+let dropped = {};
+try {
+  dropped = JSON.parse(readFileSync(DROPPED, "utf-8"));
+} catch {
+  /* 첫 실행이면 빈 장부에서 시작한다 */
+}
+if (RETRY_DROPPED) {
+  const n = Object.values(dropped).reduce(
+    (s, m) => s + (m && typeof m === "object" ? Object.keys(m).length : 0), 0);
+  dropped = {};
+  console.log(`🔁 --retry-dropped — 걸러 둔 장부 ${n}개를 비웠다. 처음부터 다시 물어본다.`);
+}
+/** 장부에 적힌 것인가 (「_읽어보세요」 같은 설명 칸은 장부가 아니다). */
+const isDropped = (code, ko) => Boolean(dropped[code] && dropped[code][ko]);
 /**
  * 🏛️ **관광공사 공식 이름을 덮어쓴다.**
  *
@@ -354,7 +393,11 @@ function applyOverrides(store) {
  */
 function dropBrokenCjkNames(store) {
   const broken = brokenCjkNames(store, loadPlaces(readFileSync, readdirSync));
-  for (const b of broken) delete store[b.lang]?.[b.ko];
+  for (const b of broken) {
+    delete store[b.lang]?.[b.ko];
+    // 🀄 **장부에 적는다.** 적어 두지 않으면 다음 실행이 같은 것을 또 물어본다.
+    (dropped[b.lang] ??= {})[b.ko] = { 구글: b.value, 갈래: b.label };
+  }
   if (broken.length) {
     const by = {};
     for (const b of broken) by[b.label] = (by[b.label] ?? 0) + 1;
@@ -364,6 +407,44 @@ function dropBrokenCjkNames(store) {
   return broken.length;
 }
 
+/**
+ * 🧹 **장부에서 빼야 할 것을 뺀다.**
+ *
+ * 두 가지다 —
+ *   ① 이제 **맞는 값이 생긴 것**. 관광공사 공식 이름이 들어왔거나 사람이 적어 줬다.
+ *      장부에 남겨 두면 다음에 그 값이 사라져도 다시 물어보지 못한다.
+ *   ② 원문 목록에서 **아예 없어진 곳**. 지운 장소의 찌꺼기를 들고 있을 이유가 없다.
+ */
+function pruneDropped(store, sourceList) {
+  const live = new Set(sourceList);
+  let n = 0;
+  for (const code of Object.keys(dropped)) {
+    if (code.startsWith("_")) continue;
+    for (const ko of Object.keys(dropped[code])) {
+      if (store[code]?.[ko] || !live.has(ko)) { delete dropped[code][ko]; n++; }
+    }
+    if (!Object.keys(dropped[code]).length) delete dropped[code];
+  }
+  return n;
+}
+
+/** 장부를 파일로 쓴다. 사람이 열어 볼 것이므로 설명 한 줄을 맨 위에 둔다. */
+function writeDropped() {
+  const out = {
+    "_읽어보세요":
+      "구글이 이름이 아니라 낱말로 옮겨서 버린 것들이다(scripts/lib/cjk-name-rules.mjs). " +
+      "여기 적힌 것은 다시 번역을 부르지 않는다 — 부르면 또 같은 답이 오고 또 버리게 된다. " +
+      "그물 규칙을 고쳤다면 --retry-dropped 로 이 파일을 비우고 다시 돌린다. " +
+      "앱은 번역이 없으면 영어로 대신 보여 주므로 화면은 깨지지 않는다.",
+  };
+  for (const code of Object.keys(dropped).filter((c) => !c.startsWith("_")).sort()) {
+    out[code] = Object.fromEntries(
+      Object.entries(dropped[code]).sort(([a], [b]) => a.localeCompare(b, "ko"))
+    );
+  }
+  writeFileSync(DROPPED, JSON.stringify(out, null, 2) + "\n", "utf-8");
+}
+
 function save() {
   // 🚨 **순서가 규칙이다** — 관광공사를 먼저 덮고, 그 위에 사람이 확인한 것을 덮는다.
   //    뒤집으면 우리가 눈으로 고친 값이 관광공사 것으로 되돌아간다.
@@ -371,6 +452,9 @@ function save() {
   applyOverrides(store);
   // 🀄 마지막에 한 번 더 훑는다 — 위 두 단계가 못 채운 자리에 구글 것이 남아 있다.
   dropBrokenCjkNames(store);
+  // 🧹 그리고 장부를 손본다 — 맞는 값이 생겼거나 없어진 곳을 빼고, 파일에 적는다.
+  pruneDropped(store, all);
+  writeDropped();
   const sorted = {};
   for (const code of Object.keys(store).sort()) {
     sorted[code] = Object.fromEntries(
@@ -394,13 +478,18 @@ if (OVERRIDES_ONLY) {
 let spent = 0;
 for (const { code, google } of TARGETS) {
   const have = (store[code] ??= {});
-  const todo = all.filter((s) => !have[s]);
+  // 🀄 **장부에 적힌 것은 묻지 않는다.** 물어 봐야 같은 답이 오고 또 버리게 된다.
+  const skipped = all.filter((s) => !have[s] && isDropped(code, s));
+  const todo = all.filter((s) => !have[s] && !isDropped(code, s));
+  const skipNote = skipped.length
+    ? ` · 이름이 아니어서 걸러 둔 ${skipped.length}개는 건너뛴다`
+    : "";
   if (!todo.length) {
-    console.log(`${code.padEnd(6)} 이미 다 돼 있음 (${Object.keys(have).length}개)`);
+    console.log(`${code.padEnd(6)} 이미 다 돼 있음 (${Object.keys(have).length}개)${skipNote}`);
     continue;
   }
   const need = todo.reduce((s, x) => s + x.length, 0);
-  console.log(`${code.padEnd(6)} 새로 번역할 것 ${todo.length}개 / ${need}자`);
+  console.log(`${code.padEnd(6)} 새로 번역할 것 ${todo.length}개 / ${need}자${skipNote}`);
   spent += need;
   if (!APPLY) {
     // 맛보기 — 실제로 부르지 않고 무엇이 번역될지만 보여준다.
@@ -423,7 +512,13 @@ for (const { code, google } of TARGETS) {
   // 그때까지 번역한 것이 통째로 사라졌다. 게다가 그 글자 수는 **이미 구글에서
   // 차감된 뒤**라 되돌릴 수도 없다. 다시 돌리면 이미 된 언어는 건너뛴다.
   save();
-  console.log(`         ✅ ${Object.keys(have).length}개 저장`);
+  // 🚨 **부른 수와 저장된 수를 같이 적는다.** 예전에는 저장된 수만 적어서,
+  //    「27개 번역하겠다」 뒤에 「2개 저장」이 뜨는 이유를 아무도 알 수 없었다.
+  const lost = todo.filter((s) => !have[s]).length;
+  console.log(
+    `         ✅ ${Object.keys(have).length}개 저장` +
+      (lost ? ` — 방금 부른 ${todo.length}개 중 ${lost}개는 이름이 아니어서 걸렀다(장부에 적었다)` : "")
+  );
 }
 
 console.log("");
