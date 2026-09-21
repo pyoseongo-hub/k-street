@@ -183,7 +183,11 @@ export const FESTIVALS: Place[] = [
   // 강남구 공식 안내(visitgangnam.net)로 곧장 간다 — 사용자가 준 주소(2026-09-02).
   // 2025년은 9월 25일~10월 3일로 **한 해에 두 달을 걸쳐** 열렸다. 서울숲 재즈처럼
   // 달이 옮겨 다니는 것이 아니라 원래 걸치는 축제라, monthVaries는 붙이지 않는다.
-  { id: id(), gu: "강남구", category: "festival", name: "강남페스티벌", startMonth: 9, endMonth: 10, dateLabel: "9월 말~10월 초", officialUrl: "https://www.visitgangnam.net/festival#stages", monthSource: "강남구 보도자료 (2025 9.25–10.3)", confirmed: true },
+  // 🎪 **해마다 옮겨 다닌다.** 2025년은 9.25~10.3(9월에 걸쳤다), 2026년은 **10.3~10.5**
+  //    (10월 안에 다 들어간다). 그래서 달 범위는 9~10 그대로 두고 monthVaries 를 붙인다 —
+  //    올해 날짜를 박아 두면 내년에 그대로 틀린 값이 된다(불꽃축제에서 같은 판단을 했다).
+  //    2026년 주 무대는 **도산대로**다: 청담사거리~도산공원사거리 약 2km 그랜드 퍼레이드.
+  { id: id(), gu: "강남구", category: "festival", name: "강남페스티벌", startMonth: 9, endMonth: 10, monthVaries: true, dateLabel: "9월 말~10월 초", addr: "도산대로 일대", note: "도산대로가 무대 — 퍼레이드·K-POP·패션·미식", officialUrl: "https://www.visitgangnam.net/festival#stages", monthSource: "강남구 보도자료 (2026 10.3–5, 제15회 「HEY GANGNAM」). 2025년은 9.25–10.3", confirmed: true },
   { id: id(), gu: "강동구", category: "festival", name: "강동선사문화축제", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "서울 암사동 유적, 무료. 1996년 시작, 서울 유일 선사시대 테마 축제", officialUrl: "https://m.gdsunsa.com/", monthSource: "네이버 축제정보 (2026 10.16–18, 제30회). 사용자가 화면으로 확인해 줌", confirmed: true },
   // 🙈 화면에서 뺐다 (사용자 지시 2026-09-02: "4.19는 빼 축제의 개념은 아니야").
   //    4·19민주묘지에서 열리는 **추모·기념 행사**라, 놀러 갈 곳을 찾는 손님에게
