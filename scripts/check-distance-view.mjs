@@ -38,7 +38,14 @@ const PORT = process.argv[2] ?? "8127";
 const BASE = `http://127.0.0.1:${PORT}`;
 const LANGS = ["ko", "en", "ja", "zh", "zh-TW", "vi", "es", "fr", "de", "ru", "id", "th"];
 
-const b = await chromium.launch();
+// 🧭 **작업 환경에는 크로뮴이 이미 깔려 있다** (2026-09-22). playwright 를 새로 받으면
+//    판 번호가 어긋나 「Executable doesn't exist at …-1243」로 죽는다 — 브라우저를
+//    다시 받을 수 없는 환경이면 거기서 끝이라 **검사를 아예 못 돌린다.**
+//    그래서 이미 있는 실행 파일을 가리킬 구멍을 하나 둔다. 안 주면 지금까지와 똑같다.
+//      PLAYWRIGHT_EXECUTABLE=/opt/pw-browsers/chromium-1194/chrome-linux/chrome node scripts/check-distance-view.mjs
+const b = await chromium.launch(
+  process.env.PLAYWRIGHT_EXECUTABLE ? { executablePath: process.env.PLAYWRIGHT_EXECUTABLE } : {},
+);
 let bad = 0;
 const fail = (m) => {
   bad++;

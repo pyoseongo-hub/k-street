@@ -25,7 +25,8 @@
     "check-city-places": "node scripts/check-city-places.mjs",
     "build-city-places": "node scripts/build-city-places.mjs",
     "check-hex-maps": "node scripts/check-hex-maps.mjs",
-    "check-cjk-names": "node scripts/check-cjk-names.mjs"
+    "check-cjk-names": "node scripts/check-cjk-names.mjs",
+    "check-nearby-course": "vite build --ssr scripts/check-nearby-course.ts --outDir dist-ssr && node dist-ssr/check-nearby-course.js"
   },
   "dependencies": {
     "react": "^19.2.8",
