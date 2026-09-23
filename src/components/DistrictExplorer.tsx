@@ -19,6 +19,8 @@ import { getTourImage } from "../lib/tourImages";
 import { getMyDistrict, type MyDistrict } from "../lib/myDistrict";
 import { isNaverAuthFailed } from "../lib/naverMaps";
 import { placeName, translateText } from "../lib/placeText";
+// 🧭 **내 주변 코스** — 이 화면 맨 위의 접힌 단추. 그 파일 머리말에 왜 여기인지 적었다.
+import NearbyCourse from "./NearbyCourse";
 
 // 화면 위 갈래 칩. 칩 하나가 반드시 칸 하나는 아니다 — 아래 walk처럼 **여러 칸을
 // 한 칩으로 묶을 수** 있다.
@@ -192,6 +194,14 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
         <span className="de-eyebrow">{t.exploreNowLabel}</span>
         <h2>{withCity(t.exploreTitle)}</h2>
       </div>
+
+      {/* 🧭 **내 주변 코스** — 접힌 단추 하나로만 있는다.
+          아래 지도는 **숙소에서 내일을 계획할 때**(구를 고른다), 이 단추는
+          **이미 밖에 나와 있을 때**(내 위치에서 잇는다) 쓴다. 쓰는 때가 달라서
+          둘 다 둔다 — 사장님이 2026-09-12에 구 선택을 택한 이유("매일 숙소에서
+          계획 짜면 같은장소니")는 여전히 맞고, 이건 그 반대쪽 경우다.
+          🔒 **열어도 위치를 안 묻는다** — 「코스 만들기」를 눌러야 묻는다. */}
+      <NearbyCourse />
 
       {/* 🗺️ 고르는 것(갈래 칩 · 내 위치 · 육각 지도)을 맨 위에 모아 둔다.
           **화면에 붙여 두지 않는다** — 스크롤하면 그냥 위로 밀려 나간다.

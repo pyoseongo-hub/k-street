@@ -3414,3 +3414,196 @@ html[lang^="zh"] * {
       ⚠️ 로마자 이름(Seoul·Busan)이 한글(서울·부산)보다 넓다 — **영어로도 재야 한다.** */
 /* 다른 그림 단추와 **같은 크기**로 둔다 — .icon-btn 이 이미 그 크기다.
    따로 줄 것이 없어서 규칙을 비워 두지 않고, 왜 비었는지만 남긴다. */
+
+/* ════════════════════════════════════════════════════════════════════════
+   🧭 내 주변 코스 (NearbyCourse.tsx) — 사장님 2026-09-22
+   ⚠️ **시간을 뜻하는 글자가 한 자도 없다.** 「몇 곳」과 「미터」뿐이다.
+      이유는 그 파일 머리말과 docs/코스-추천.md 에 있다 — 줄이면 안 되는 선이다.
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* 🔘 접힌 단추 — 화면 맨 위에 한 줄. 펴기 전에는 자리를 거의 안 먹는다. */
+.nc-open {
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin: 0 0 14px;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.nc-open:hover { border-color: var(--accent); }
+.nc-open-pin { font-size: 17px; }
+
+.nearby-course { margin-bottom: 16px; }
+
+.nc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.nc-head h2 { margin: 0; font-size: 18px; }
+
+.nc-close {
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.nc-intro {
+  margin: 8px 0 14px;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.nc-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.nc-row-label {
+  flex: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+.nc-opts { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.nc-opt {
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 7px 13px;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  /* ⚠️ 12개 언어라 길이가 제각각이다 — 독일어 「Auch U-Bahn」이 가장 길다.
+     잘리면 무엇을 누르는지 모르게 된다. 갈래 칩이 같은 이유로 같은 규칙을 쓴다. */
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.nc-opt.on {
+  border-color: transparent;
+  background: var(--cc, var(--accent));
+  color: #fff;
+}
+
+.nc-make {
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  width: 100%;
+  margin-top: 6px;
+  padding: 13px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.nc-make:disabled { opacity: 0.6; cursor: default; }
+
+/* 🚨 못 받았을 때·못 찾았을 때. **조용히 빈 화면을 두지 않는다** — 빈 화면은
+   손님 눈에 고장이다. 무엇이 안 됐는지 한 줄로 말한다. */
+.nc-warn {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.nc-result { margin-top: 16px; }
+
+.nc-total {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.nc-stops { margin: 0; padding: 0; list-style: none; }
+.nc-stop { position: relative; }
+
+/* ➡️ 앞 지점에서 여기까지 — 카드 **사이**에 놓는다. 거리가 카드 안에 있으면
+   「이 곳이 그만큼 멀다」로 읽히는데, 실제로는 **앞 곳에서** 그만큼이다. */
+.nc-leg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 2px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.nc-leg-from { font-weight: 700; }
+.nc-leg-m {
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-variant-numeric: tabular-nums;
+}
+
+.nc-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  background: var(--bg);
+}
+.nc-card-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+.nc-no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--cc, var(--accent));
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+.nc-cat { color: var(--cc, var(--accent)); font-weight: 700; }
+.nc-gu { color: var(--text-muted); }
+.nc-card-top .save-btn { margin-left: auto; }
+
+.nc-name { font-size: 16px; font-weight: 700; line-height: 1.35; }
