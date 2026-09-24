@@ -62,7 +62,7 @@ export interface PlaceCoord {
   lat: number;
   lng: number;
   /** 좌표가 어디서 왔나 — 나중에 의심스러울 때 되짚을 수 있어야 한다 */
-  from: "coords.json" | "tour";
+  from: "coords.json" | "self" | "tour";
 }
 
 export const PLACES: PlaceCoord[] = [];
@@ -75,6 +75,28 @@ for (const p of ALL_PLACES) {
     continue;
   }
   const cid = (p as { tourContentId?: string }).tourContentId;
+
+  // 🚨 **곳이 좌표를 제 안에 들고 있으면 그걸 쓴다** (2026-09-24에 이걸로 데였다).
+  //
+  //    부산 202곳은 busan-places.json 에 **lat/lng 가 항목 안에 박혀** 있다.
+  //    그런데 여기는 coords.json 과 관광공사 pool 두 군데만 보고 있었다 —
+  //    **부산 곳이 통째로 「좌표 없음」으로 분류**되어, 이 파일을 쓰는 것들
+  //    (가까운 역 찾기 · 짐보관)에서 **부산이 한 곳도 안 걸렸다.**
+  //
+  //    사장님이 Nearest station 을 **두 판 돌리고 210곳을 받았는데 부산은 0건**이었다.
+  //    워크플로는 멀쩡했고 로그도 초록이었다. 새는 자리는 여기였다.
+  //
+  // ⚠️ **믿지 않기로 한 좌표는 여기서도 막는다.** 항목 안의 lat/lng 가 관광공사에서
+  //    베껴 온 것일 수 있어서, 그대로 받으면 이 파일 머리말이 경고한 **두 번째 길**이
+  //    또 생긴다. 그래서 distrust 를 먼저 본다 — 막는 자리는 한 곳이어야 한다.
+  const own = p.lat != null && p.lng != null && !(cid && DISTRUSTED.has(`tour_${cid}`))
+    ? { lat: p.lat, lng: p.lng }
+    : undefined;
+  if (own) {
+    PLACES.push({ id: p.id, name: p.name, gu: p.gu, category: p.category, lat: own.lat, lng: own.lng, from: "self" });
+    continue;
+  }
+
   const t = cid ? byContentId.get(String(cid)) : undefined;
   if (t) {
     PLACES.push({ id: p.id, name: p.name, gu: p.gu, category: p.category, lat: t.lat, lng: t.lng, from: "tour" });
@@ -87,6 +109,7 @@ for (const p of ALL_PLACES) {
 if (process.argv[1]?.includes("dump-place-coords")) {
   console.log(`곳 ${ALL_PLACES.length}개 · 좌표 있는 곳 ${PLACES.length}개 (${Math.round((PLACES.length / ALL_PLACES.length) * 100)}%)`);
   console.log(`  coords.json 에서 ${PLACES.filter((p) => p.from === "coords.json").length}`);
+  console.log(`  곳 자료 자체에서 ${PLACES.filter((p) => p.from === "self").length}`);
   console.log(`  관광공사에서    ${PLACES.filter((p) => p.from === "tour").length}`);
   if (missing.length) console.log(`⚠️ 좌표 없는 곳 ${missing.length}: ${missing.join(" · ")}`);
   console.log(`🚫 믿지 않기로 한 좌표 ${DISTRUSTED.size}곳은 뺐다 (src/data/bad-coords.json)`);
