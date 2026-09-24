@@ -28,9 +28,29 @@ if (!API_KEY) {
   process.exit(1);
 }
 
-const args = process.argv.slice(2).filter((a) => !a.startsWith("--"));
+const argv = process.argv.slice(2);
+const args = argv.filter((a) => !a.startsWith("--"));
 const NAMES = args.length ? args : ["경복궁", "창덕궁", "종묘", "홍대", "명동", "가로수길"];
 const PER = 8;
+
+/**
+ * 🏙️ **어느 도시에서 찾나** (2026-09-24에 이걸로 헛돌았다).
+ *
+ * 이 파일은 areaCode 를 **"1"(서울)로 박아 두고**, 주소에 「서울」이 든 것만 남기고 있었다.
+ * 그래서 부산 곳 열 개를 물었더니 **열 개 다 「서울에서는 안 나온다」**로 끝났다.
+ * 워크플로는 초록이었고 오류도 없었다 — 그냥 서울에서 찾고 있었던 것이다.
+ *
+ * 도시가 둘이 된 뒤로 「서울만」은 더 이상 기본값이 아니다. 그래서 밖에서 받는다.
+ * 지역 번호는 관광공사 areaCode 다 — 서울 1 · 부산 6.
+ */
+const CITIES = {
+  "1": { code: "1", label: "서울", addr: "서울" },
+  "6": { code: "6", label: "부산", addr: "부산" },
+};
+const areaArg = (argv.find((a) => a.startsWith("--area=")) ?? "").split("=")[1] ?? "1";
+const CITY = CITIES[areaArg] ?? CITIES["1"];
+if (!CITIES[areaArg]) console.log(`⚠️ 모르는 지역 번호 「${areaArg}」 — 서울로 찾는다`);
+console.log(`🏙️ ${CITY.label}에서 찾는다 (areaCode ${CITY.code})\n`);
 
 const ROOT = "https://apis.data.go.kr/B551011/KorService2";
 
@@ -95,7 +115,7 @@ for (const name of NAMES) {
     pageNo: "1",
     arrange: "O",
     keyword: name,
-    areaCode: "1", // 서울
+    areaCode: CITY.code,
   });
   if (r.why) {
     console.log(`   ⬜ 못 물어봤다 — ${r.why}`);
@@ -105,15 +125,15 @@ for (const name of NAMES) {
   }
 
   const items = itemsOf(r.json);
-  const seoul = items.filter((it) => (it.addr1 ?? "").includes("서울"));
-  console.log(`   받은 것 ${items.length}건 · 서울 ${seoul.length}건`);
-  if (!seoul.length) {
-    console.log(`   ❌ 서울에서는 안 나온다. 다른 낱말로 다시 찾아볼 것.`);
+  const inCity = items.filter((it) => (it.addr1 ?? "").includes(CITY.addr));
+  console.log(`   받은 것 ${items.length}건 · ${CITY.label} ${inCity.length}건`);
+  if (!inCity.length) {
+    console.log(`   ❌ ${CITY.label}에서는 안 나온다. 다른 낱말로 다시 찾아볼 것.`);
     await new Promise((s) => setTimeout(s, 600));
     continue;
   }
 
-  for (const [i, it] of seoul.slice(0, PER).entries()) {
+  for (const [i, it] of inCity.slice(0, PER).entries()) {
     const hit = norm(it.title).includes(norm(name));
     console.log(`\n   ${hit ? "✅" : "△ "} ${i + 1}. ${it.title}`);
     console.log(`      주소   ${it.addr1 ?? "?"} ${it.addr2 ?? ""}`.trimEnd());

@@ -14,6 +14,10 @@ on:
         description: "찾을 이름 (빈칸으로 나눠 여럿 — 예: 경복궁 창덕궁 종묘)"
         required: true
         default: "경복궁 창덕궁 종묘 홍대 명동 가로수길"
+      area:
+        description: "어느 도시에서 찾나 — 1 서울 · 6 부산"
+        required: false
+        default: "1"
 
 jobs:
   lookup:
@@ -29,7 +33,7 @@ jobs:
           TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
         run: |
           set -o pipefail
-          node scripts/lookup-places.mjs ${{ inputs.names }} 2>&1 | tee lookup-log.txt
+          node scripts/lookup-places.mjs --area=${{ inputs.area }} ${{ inputs.names }} 2>&1 | tee lookup-log.txt
 
       - name: 결과 요약
         if: always()
