@@ -37,8 +37,27 @@ rmSync(tmp, { force: true });
 //    「중구」는 서울에도 부산에도 있어서 그냥은 못 가른다.
 const CITIES_ON_DISK = readCities();
 const UNITS_BY_CITY = new Map(CITIES_ON_DISK.map((c) => [c.key, c.units]));
-/** 서울 25개 구 — 아래 커버리지 표(W1·W3)는 여전히 서울 기준으로 센다. */
+/** 서울 25개 구 — 맨 아래 「총 …개 자치구 기준」 한 줄에만 쓴다. */
 const DISTRICTS = UNITS_BY_CITY.get("seoul") ?? [];
+
+/**
+ * 🏙️ **커버리지(W1·W3)는 도시마다 따로 센다** (2026-09-24에 이걸로 데였다).
+ *
+ * 그전에는 **두 도시 곳을 한 자루에 담고 서울 25개 구로 나누고** 있었다.
+ * 「중구」·「서구」·「동구」·「남구」·「북구」·「강서구」는 **서울에도 부산에도 있어서**
+ * 부산 곳이 서울 칸을 대신 채웠다. 실제로 이랬다 —
+ *
+ *   야경 : 서울엔 5개 구뿐인데 **11개 구**로 셌다
+ *          (부산 중구·해운대구 등 6개가 서울 칸을 채웠다)
+ *   절   : 서울 16 → **29**
+ *   해변 : 서울은 0인데 **6**  ← 서울에 바다가 없다는 사실이 가려졌다
+ *
+ * 그래서 W3(「행 자체가 빠진 구」)가 **진짜 빈 칸을 안 짚어 줬다.**
+ * 서울 중구에 야경이 없는데 부산 중구가 있으니 「있음」으로 넘어갔다.
+ * 숫자는 커 보이고 경보는 조용했다 — 가장 나쁜 조합이다.
+ */
+const CITY_KEYS = [...UNITS_BY_CITY.keys()];
+const cityOf = (p) => p.city ?? "seoul";
 
 const blocking = [];
 const warning = [];
@@ -190,18 +209,25 @@ add(
   ALL_PLACES.filter((p) => !p.confirmed && !PLACEHOLDER_RE.test(p.name)).map((p) => `${p.gu} ${p.name}`)
 );
 
-// ⚠️ W1 — 카테고리별 커버리지(25개 구 중 몇 곳 확인됐나)
+// ⚠️ W1 — 카테고리별 커버리지 (**도시마다 따로**)
 {
   const lines = [];
-  for (const cat of Object.keys(CATEGORY_META)) {
-    const inCat = ALL_PLACES.filter((p) => p.category === cat);
-    const confirmedGu = new Set(inCat.filter((p) => p.confirmed).map((p) => p.gu));
-    const pct = Math.round((confirmedGu.size / DISTRICTS.length) * 100);
-    lines.push(
-      `${CATEGORY_META[cat].icon} ${CATEGORY_META[cat].label}: ${confirmedGu.size}/${DISTRICTS.length} (${pct}%)`
-    );
+  for (const key of CITY_KEYS) {
+    const units = UNITS_BY_CITY.get(key) ?? [];
+    if (!units.length) continue;
+    const here = ALL_PLACES.filter((p) => cityOf(p) === key);
+    if (!here.length) continue;
+    lines.push(`── ${key} (${units.length}개 동네 · 곳 ${here.length})`);
+    for (const cat of Object.keys(CATEGORY_META)) {
+      const inCat = here.filter((p) => p.category === cat);
+      const confirmedGu = new Set(inCat.filter((p) => p.confirmed).map((p) => p.gu));
+      const pct = Math.round((confirmedGu.size / units.length) * 100);
+      lines.push(
+        `   ${CATEGORY_META[cat].icon} ${CATEGORY_META[cat].label}: ${confirmedGu.size}/${units.length} (${pct}%)`
+      );
+    }
   }
-  add(warning, "W1", "카테고리별 커버리지", lines);
+  add(warning, "W1", "카테고리별 커버리지 (도시별)", lines);
 }
 
 // ⚠️ W2 — 축제인데 월 정보가 없는 항목(홈 상단 칸에 절대 안 뜬다)
@@ -215,10 +241,23 @@ add(
 // ⚠️ W3 — 자치구 하나에 특정 카테고리가 아예 없는 경우(행이 통째로 빠졌을 가능성)
 {
   const missing = [];
-  for (const cat of Object.keys(CATEGORY_META)) {
-    const gusInCat = new Set(ALL_PLACES.filter((p) => p.category === cat).map((p) => p.gu));
-    for (const d of DISTRICTS) {
-      if (!gusInCat.has(d)) missing.push(`${d} — ${CATEGORY_META[cat].label} 행 자체가 없음`);
+  for (const key of CITY_KEYS) {
+    const units = UNITS_BY_CITY.get(key) ?? [];
+    const here = ALL_PLACES.filter((p) => cityOf(p) === key);
+    if (!units.length || !here.length) continue;
+    for (const cat of Object.keys(CATEGORY_META)) {
+      // 🏙️ **그 도시 곳만 본다.** 합쳐 보면 부산 중구가 서울 중구 칸을 채운다.
+      const gusInCat = new Set(here.filter((p) => p.category === cat).map((p) => p.gu));
+      // 🤫 **그 도시에 그 갈래가 아예 없으면 한 줄로 끝낸다.**
+      //    서울에 바다가 없는 것은 사고가 아니라 사실이다. 그걸 25줄로 적으면
+      //    진짜 빠진 한 줄이 그 사이에 묻힌다 — 경보는 울릴 때만 울려야 한다.
+      if (gusInCat.size === 0) {
+        missing.push(`[${key}] ${CATEGORY_META[cat].label} — 이 도시에 한 곳도 없다`);
+        continue;
+      }
+      for (const d of units) {
+        if (!gusInCat.has(d)) missing.push(`[${key}] ${d} — ${CATEGORY_META[cat].label} 행 자체가 없음`);
+      }
     }
   }
   add(warning, "W3", "행 자체가 빠진 구 (확인 필요 표시조차 없음)", missing);

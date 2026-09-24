@@ -82,6 +82,12 @@ async function callTourApi(path, extraParams) {
 }
 
 // contentTypeId별 서울(areaCode=1) 전체를 페이지네이션으로 다 받아온다.
+//
+// 🏙️ **여기는 서울 전용이 맞다 — 고치지 말 것** (2026-09-24에 서울 박힌 자리를 훑으며 확인).
+//    이 파일이 채우는 tour-places-raw.json 은 **서울의 원천**이다.
+//    다른 도시는 다른 길로 들어온다 — Survey city → survey-<지역코드>.json →
+//    build-city-places.mjs → <도시>-places.json.
+//    그러니 여기 areaCode 를 도시별로 바꾸면 **서울 파일에 부산이 섞인다.**
 async function fetchAllByContentType(contentTypeId) {
   const items = [];
   let pageNo = 1;
