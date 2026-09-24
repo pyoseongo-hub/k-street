@@ -23,7 +23,10 @@ if (!existsSync(DIR)) {
 // 🗂️ 묶음 페이지(/seoul/…)도 **같은 잣대로** 잰다 (2026-09-08).
 //    곳 페이지만 검사하고 묶음은 안 하면, 벌점을 받는 쪽이 검사 밖에 남는다 —
 //    묶음 페이지야말로 얇아지기 쉬운 자리다(목록만 있고 내용이 없기 쉽다).
-const HUB_DIR = join(process.cwd(), "dist", "seoul");
+// 🏙️ **도시마다 대문이 하나씩 있다** (2026-09-24, 부산을 열면서).
+//    서울만 재면 부산 묶음 300장이 **검사 밖에** 남는다 — 얇은 페이지를 300장
+//    올리는 것이야말로 이 검사가 막으려던 일이다.
+const HUB_CITIES = ["seoul", "busan"];
 
 /** 태그·스크립트·스타일을 걷어 낸 **사람이 읽는 글**만 남긴다. */
 const textOf = (html) =>
@@ -71,7 +74,7 @@ for (const { slug, f } of files) {
   const html = readFileSync(f, "utf-8");
   const lang = html.match(/<html[^>]*\slang="([^"]+)"/i)?.[1] ?? "en";
   const rest = slug.startsWith(`${lang}/`) ? slug.slice(lang.length + 1) : slug;
-  const hub = rest === "seoul" || rest.startsWith("seoul/");
+  const hub = HUB_CITIES.some((c) => rest === c || rest.startsWith(`${c}/`));
   rows.push({
     slug,
     lang,

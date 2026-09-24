@@ -93,8 +93,11 @@ import {
   HUB_STRINGS,
   HUB_LANGS,
   hubLang,
+  withCityName,
   type HubStrings,
 } from "./lib/page-strings";
+// 🏙️ 도시 이름 12개 언어는 명부에 이미 있다 — 그날을 위해 만들어 뒀던 것이다.
+import { cityName, CITY_BY_KEY } from "../src/data/cities";
 
 // 🌐 **곳 이름 번역 11개 언어를 통째로 받아 둔다.**
 //
@@ -187,7 +190,31 @@ function upcomingEventDates(p: Place): { startDate: string; endDate?: string } |
  * ⏳ 여는 법: 아래 한 줄을 지우고, page-strings.ts 의 도시 이름을 칸으로 바꾸면 된다.
  *    cities.ts 의 `names`(12개 언어)와 `cityName()` 은 **그날을 위해 이미 만들어 뒀다.**
  */
-const PAGE_CITY = "seoul";
+const PAGE_CITY = (process.argv.find((a) => a.startsWith("--city=")) ?? "").split("=")[1] || "seoul";
+/** 🏙️ 서울 말고 다른 도시를 낼 때만 참. 서울 전용 페이지를 거르는 잣대다. */
+const IS_SEOUL = PAGE_CITY === "seoul";
+console.log(`🏙️ ${PAGE_CITY} 페이지를 만든다`);
+
+/**
+ * 🏙️ **그 도시 이름으로 바꾼 문구표.**
+ *
+ * page-strings.ts 에는 도시 이름이 304군데 박혀 있다. 손으로 고치는 대신
+ * 글자만 갈아 끼운다(withCityName). **서울은 자기 이름으로 바꾸므로 결과가
+ * 지금과 글자 하나까지 같다** — 이미 쌓인 검색 순위를 건드리지 않으려고 고른 방식이다.
+ */
+// ⚠️ cityName 은 **열쇠가 아니라 City 를** 받는다 — 열쇠를 그대로 넘기면 조용히 빈 문자열이 온다.
+const CITY_NAME = (lang: Language) => cityName(CITY_BY_KEY.get(PAGE_CITY), lang);
+const SEOUL_NAME = (lang: Language) => cityName(CITY_BY_KEY.get("seoul"), lang);
+const STRINGS = Object.fromEntries(
+  PAGE_LANGS.map((l) => [l, withCityName(PAGE_STRINGS[l], SEOUL_NAME(l), CITY_NAME(l))])
+) as typeof PAGE_STRINGS;
+/** 🗂️ 묶음 페이지 문구도 같이 갈아 끼운다 — 여기에도 도시 이름이 264군데 있다. */
+const HUBS = Object.fromEntries(
+  Object.entries(HUB_STRINGS).map(([l, v]) => [
+    l,
+    v ? withCityName(v, SEOUL_NAME(l as Language), CITY_NAME(l as Language)) : v,
+  ])
+) as typeof HUB_STRINGS;
 
 /** 두 목록은 겹친다(축제가 양쪽에 있다) — id 로 한 번만 센다. */
 const ALL: Place[] = [
@@ -274,8 +301,8 @@ const dongEn = (d: string) => dongName(d, "en");
 // 🚨 얇은 껍데기를 만들지 않는다(곳 페이지와 같은 규칙). 묶음 페이지에는
 //    목록만이 아니라 **곳마다 한 줄 설명**과 구별 묶음이 들어간다.
 const hubSlugGu = (gu: string) => slugify(guEn(gu));
-const hubPathGu = (gu: string) => `seoul/${hubSlugGu(gu)}`;
-const hubPathMonth = (m: number) => `seoul/festivals-in-${MONTHS[m].toLowerCase()}`;
+const hubPathGu = (gu: string) => `${PAGE_CITY}/${hubSlugGu(gu)}`;
+const hubPathMonth = (m: number) => `${PAGE_CITY}/festivals-in-${MONTHS[m].toLowerCase()}`;
 
 /**
  * 갈래 묶음 페이지의 주소와 이름. 없는 갈래는 페이지를 안 만든다.
@@ -301,7 +328,7 @@ const CATEGORY_HUB: Record<string, { slug: string; plural: string }> = {
   //       한 곳일 때 쓰는 말은 page-strings.ts 의 EN_ONE(shop: "shopping spot")에 따로 있다.
   shop: { slug: "shopping", plural: "Shopping spots" },
 };
-const hubPathCategory = (c: string) => `seoul/${CATEGORY_HUB[c]?.slug ?? "places"}`;
+const hubPathCategory = (c: string) => `${PAGE_CITY}/${CATEGORY_HUB[c]?.slug ?? "places"}`;
 
 /**
  * 🌧️ **테마 묶음** — 구·달·갈래가 아니라 **상황**으로 묶는다 (2026-09-12).
@@ -499,7 +526,7 @@ function stationHtml(p: Place, lang: Language): string {
   //    자양역 679m」 같은 줄이 찍힌다. 한 칸 안에서 서로 다른 말을 하는 셈이다.
   const r = nearestStation(p.id, p);
   if (!r) return "";
-  const S2 = PAGE_STRINGS[lang];
+  const S2 = STRINGS[lang];
   if (r.none) return `<dt>${esc(S2.stationHeading)}</dt><dd>${esc(S2.stationNone)}</dd>`;
   if (!r.station || r.dist == null) return "";
   // 📱 **여기서 앱을 안내한다** (2026-09-10 사장님: "어플을 안내해").
@@ -510,21 +537,27 @@ function stationHtml(p: Place, lang: Language): string {
   // ⚠️ 앱 이름 글자는 짐 보관 안내(LUGGAGE_STRINGS)에 이미 12개 언어로 있다.
   //    여기에 또 적으면 **둘이 어긋나는 날**이 온다. 하나만 둔다.
   const A = LUGGAGE_STRINGS[lang];
+  // 🚨 **또타라커는 서울 지하철에만 있다.** 부산 곳에 이 줄을 붙이면
+  //    손님이 부산 역에서 없는 보관함을 찾는다 — 역 안내만 남기고 뗀다.
+  const locker = IS_SEOUL
+    ? `<br><span class="note">${esc(S2.stationLocker)}</span>` +
+      `<br><span class="note">` +
+      `<a href="${esc(LOCKER_APP_ANDROID)}" rel="nofollow noopener" target="_blank">${esc(A.appAndroid)} ↗</a>` +
+      ` · ` +
+      `<a href="${esc(LOCKER_APP_IPHONE)}" rel="nofollow noopener" target="_blank">${esc(A.appIphone)} ↗</a>` +
+      `</span>`
+    : "";
   return (
     `<dt>${esc(S2.stationHeading)}</dt>` +
     `<dd>${esc(S2.stationLine(stationLabel(r.station, lang), r.dist))}` +
-    `<br><span class="note">${esc(S2.stationLocker)}</span>` +
-    `<br><span class="note">` +
-    `<a href="${esc(LOCKER_APP_ANDROID)}" rel="nofollow noopener" target="_blank">${esc(A.appAndroid)} ↗</a>` +
-    ` · ` +
-    `<a href="${esc(LOCKER_APP_IPHONE)}" rel="nofollow noopener" target="_blank">${esc(A.appIphone)} ↗</a>` +
-    `</span></dd>`
+    locker +
+    `</dd>`
   );
 }
 
 function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
   const slug = savedSlugs[p.id];
-  const S = PAGE_STRINGS[lang];
+  const S = STRINGS[lang];
   const T = getTranslations(lang);
   // 🗂️ 묶음 페이지로 갈 때 쓰는 언어. 그 언어에 묶음이 없으면 영어로 간다.
   //    2026-09-10에 12개 언어가 다 차서 지금은 늘 자기 언어로 가지만, 새 언어를
@@ -532,7 +565,7 @@ function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
   const HL = hubLang(lang);
   // 이름에 지난 연도가 박혔나 — 「2025 서울한옥위크」 같은 것.
   const pastYear = pastEditionYear(p.name);
-  const HS = HUB_STRINGS[HL] as HubStrings;
+  const HS = HUBS[HL] as HubStrings;
   // 구 이름도 앱과 **같은 표**를 쓴다 — 「종로구」/「Jongno-gu」/「鍾路区」.
   const guName = districtFullName(p.gu, lang);
   const title = translateText(p.name, lang);
@@ -565,7 +598,9 @@ function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
     lang === "en"
       ? `${title}${showKo ? ` (${p.name})` : ""} — ` +
         (note ? `${note} ` : "") +
-        `${kind} in ${guEn(p.gu)}, Seoul.` +
+        // 🏙️ **여기도 서울이 박혀 있었다** — 부산 곳이 「Gangseo-gu, Seoul」로 나갔다.
+        //    검색 결과에 그대로 뜨는 줄이라 손님이 제일 먼저 보는 거짓말이 된다.
+        `${kind} in ${guEn(p.gu)}, ${S.seoul}.` +
         (p.addr ? ` ${p.addr}` : "")
       : [`${title}${showKo ? ` (${p.name})` : ""}`, note, `${kind} · ${guName}`, p.addr]
           .filter(Boolean)
@@ -595,7 +630,8 @@ function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
   const address = {
     "@type": "PostalAddress",
     addressCountry: "KR",
-    addressLocality: "Seoul",
+    // 🏙️ **박아 두면 부산 곳이 「서울에 있다」고 구글에 말한다.** 영어 이름을 쓴다.
+    addressLocality: cityName(CITY_BY_KEY.get(PAGE_CITY), "en"),
     addressRegion: guEn(p.gu),
     ...(p.addr ? { streetAddress: p.addr } : {}),
   };
@@ -684,7 +720,7 @@ function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "K-Street", item: `${SITE}/` },
-      { "@type": "ListItem", position: 2, name: S.seoul, item: `${SITE}/${langPath(HL, "seoul/")}` },
+      { "@type": "ListItem", position: 2, name: S.seoul, item: `${SITE}/${langPath(HL, `${PAGE_CITY}/`)}` },
       // 묶음 페이지는 아직 영어만 있다 — 길 표시는 그 영어 페이지를 가리킨다.
       { "@type": "ListItem", position: 3, name: guName, item: `${SITE}/${langPath(HL, `${hubPathGu(p.gu)}/`)}` },
       { "@type": "ListItem", position: 4, name: title, item: url },
@@ -920,7 +956,7 @@ function hubItem(p: Place, showGu = true, lang: Language = "en", withStation = f
       ? (() => {
           const r = nearestStation(p.id, p);
           return r?.station && r.dist != null
-            ? PAGE_STRINGS[lang].stationLine(stationLabel(r.station, lang), r.dist)
+            ? STRINGS[lang].stationLine(stationLabel(r.station, lang), r.dist)
             : "";
         })()
       : "",
@@ -988,7 +1024,7 @@ function hubPage(o: {
   faq?: { q: string; a: string }[];
 }): string {
   const lang = o.lang ?? "en";
-  const S = HUB_STRINGS[lang] as HubStrings;
+  const S = HUBS[lang] as HubStrings;
   const url = `${SITE}/${langPath(lang, `${o.path}/`)}`;
   const items = o.groups.flatMap((g) => g.items);
 
@@ -1001,7 +1037,7 @@ function hubPage(o: {
         {
           "@type": "ListItem",
           position: 2,
-          name: PAGE_STRINGS[lang].seoul,
+          name: STRINGS[lang].seoul,
           item: `${SITE}/${langPath(lang, "seoul/")}`,
         },
         { "@type": "ListItem", position: 3, name: o.h1, item: url },
@@ -1089,7 +1125,7 @@ ${body}
 
 ${
   o.chips?.length
-    ? `<h2>${esc(o.chipsTitle ?? PAGE_STRINGS[lang].browse)}</h2><ul class="chips">${o.chips
+    ? `<h2>${esc(o.chipsTitle ?? STRINGS[lang].browse)}</h2><ul class="chips">${o.chips
         .map((c) => `<li><a href="${esc(c.href)}">${esc(c.label)}</a></li>`)
         .join("")}</ul>`
     : ""
@@ -1103,11 +1139,11 @@ ${
       `<div class="go"><a class="eat" href="${esc(o.eat.href)}" rel="noopener">${esc(o.eat.label)}</a></div>`
     : ""
 }
-<div class="go"><a class="app" href="/">${esc(PAGE_STRINGS[lang].openApp)}</a></div>
+<div class="go"><a class="app" href="/">${esc(STRINGS[lang].openApp)}</a></div>
 
 <footer>
-${esc(PAGE_STRINGS[lang].footerAbout)}<br>
-${esc(PAGE_STRINGS[lang].footerData)}
+${esc(STRINGS[lang].footerAbout)}<br>
+${esc(STRINGS[lang].footerData)}
 </footer>
 </div>
 </body>
@@ -1133,7 +1169,7 @@ const yearForMonth = (m: number) => (m >= NOW.getMonth() + 1 ? NOW.getFullYear()
  *    갈래 이름 뒤에 수를 붙인다. 언어마다 다른 그 규칙은 HUB_STRINGS 에 있다.
  */
 function countByKind(items: Place[], max = 0, lang: Language = "en"): string {
-  const S = HUB_STRINGS[lang] as HubStrings;
+  const S = HUBS[lang] as HubStrings;
   const n = new Map<string, number>();
   for (const p of items) n.set(p.category, (n.get(p.category) ?? 0) + 1);
   // 🧹 **영어만 따로 처리하던 갈래를 없앴다** (2026-09-10). 예전에는 여기서 영어의
@@ -1185,8 +1221,8 @@ const hubs: { path: string; lang: Language; html: string }[] = [];
 // 그러면 구글이 hreflang 으로 묶어 놓고도 "다른 페이지"처럼 읽을 여지가 생긴다.
 // 사람에게도 이쪽이 낫다 — 언어를 바꿔도 찾던 자리가 그 자리에 있다.
 for (const lang of HUB_LANGS) {
-const S = HUB_STRINGS[lang] as HubStrings;
-const P = PAGE_STRINGS[lang];
+const S = HUBS[lang] as HubStrings;
+const P = STRINGS[lang];
 const guName = (gu: string) => districtFullName(gu, lang);
 const monthName = (m: number) => monthLabel(m, lang);
 // 🔤 **딱지는 딱지에 쓰인 글자 순으로 늘어놓는다** (2026-09-10, 사장님이 폰 화면을 보내 주셔서 찾았다).
@@ -1321,7 +1357,9 @@ for (const [cat, meta] of Object.entries(CATEGORY_HUB)) {
 // 📌 지금은 박물관뿐이다. 지붕 있는 시장·지하상가는 **빈 칸**이고,
 //    화면에 그렇게 적는다(S.rainyMissing). 빈 칸을 빈 칸이라 말하지 않으면
 //    다음 사람이 「없구나」가 아니라 「서울엔 그런 게 없구나」로 읽는다.
-{
+// 🚨 **서울 전용이다.** 지하상가는 서울시설공단 자료라 부산엔 없다 —
+//    이름만 바꾸면 **없는 것을 있다고 말하게 된다.**
+if (IS_SEOUL) {
   const picked = ALL.map((p) => ({ p, s: nearestStation(p.id, p) }))
     .filter(
       (x): x is { p: Place; s: { station: string; dist: number } } =>
@@ -1364,11 +1402,11 @@ for (const [cat, meta] of Object.entries(CATEGORY_HUB)) {
 
 // 묶음 페이지의 대문 — 크롤러가 여기 한 장만 봐도 나머지를 다 찾아간다.
 hubs.push({
-  path: "seoul",
+  path: PAGE_CITY,
   lang,
   html: hubPage({
     lang,
-    path: "seoul",
+    path: PAGE_CITY,
     kind: S.index,
     h1: S.indexH1,
     title: S.indexTitle(ALL.length),
@@ -1384,7 +1422,8 @@ hubs.push({
         .map(([c]) => ({ href: `/${langPath(lang, `${hubPathCategory(c)}/`)}`, label: kindLabel(c, lang) })),
       // 🌧️ 테마도 여기서 잇는다. 대문에서 안 이어 주면 **크롤러가 영영 못 찾는다** —
       //    사이트맵에만 있는 주소는 구글이 「아무도 안 가리키는 페이지」로 읽는다.
-      { href: `/${langPath(lang, `${hubPathRainy}/`)}`, label: S.rainyH1 },
+      // 🌧️ 비 오는 날은 서울에만 있다 — 없는 페이지로 가는 링크를 만들지 않는다.
+      ...(IS_SEOUL ? [{ href: `/${langPath(lang, `${hubPathRainy}/`)}`, label: S.rainyH1 }] : []),
     ],
   }),
 });
@@ -1400,7 +1439,9 @@ hubs.push({
 //    닫힌 보관소 앞에 선 사람은 **캐리어를 끌고 오도 가도 못한다.**
 //    대신 「맡기기 전에 물어볼 것」을 준다 — 우리가 모르는 사실을 지어내지 않으면서
 //    외국인에게 실제로 쓸모 있는 유일한 방식이다.
-{
+// 🚨 **서울 전용이다.** 또타러기지·또타라커는 서울 지하철 자료다.
+//    부산 대문에 이 페이지를 걸면 없는 보관소를 안내하게 된다.
+if (IS_SEOUL) {
   const L = LUGGAGE_STRINGS[lang];
   const item = (name: string, desc: string) =>
     `<li><strong>${esc(name)}</strong><span class="meta">${esc(desc)}</span></li>`;
@@ -1639,9 +1680,24 @@ const urls = [
     )
   ),
 ];
+/**
+ * 🗺️ **사이트맵은 도시마다 덮어쓰지 않고 합친다** (2026-09-24, 부산을 열면서).
+ *
+ * 이 스크립트는 이제 도시마다 한 번씩 돈다(`--city=`). 그냥 쓰면 **뒤에 돈 도시가
+ * 앞 도시 주소를 통째로 지운다** — 페이지는 dist 에 그대로 있는데 사이트맵에서만
+ * 사라지고, 그러면 구글이 영영 못 찾는다. 파일도 화면도 멀쩡해 보인다.
+ *
+ * 순서에 기대지 않는다: 이미 있으면 읽어서 합치고, 같은 주소는 한 번만 적는다.
+ * (`npm run build` 가 dist 를 지우고 시작하므로 첫 도시는 늘 빈 상태에서 쓴다.)
+ */
+const SITEMAP = join(DIST, "sitemap.xml");
+const before = existsSync(SITEMAP)
+  ? (readFileSync(SITEMAP, "utf-8").match(/^\s*<url>.*<\/url>$/gm) ?? [])
+  : [];
+const merged = [...new Set([...before, ...urls])];
 writeFileSync(
-  join(DIST, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<!-- scripts/build-place-pages.ts 가 만든다. 손으로 고치지 말 것. -->\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`
+  SITEMAP,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<!-- scripts/build-place-pages.ts 가 만든다. 손으로 고치지 말 것. -->\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${merged.join("\n")}\n</urlset>\n`
 );
 
 console.log(
@@ -1649,5 +1705,5 @@ console.log(
     `묶음 페이지 ${hubs.length}장(${HUB_LANGS.length}개 언어 × ${hubs.length / HUB_LANGS.length}장) · ` +
     `사이트맵 주소 ${urls.length}개`
 );
-console.log(`   묶음 언어 — ${HUB_LANGS.join(" · ")} (나머지 ${PAGE_LANGS.length - HUB_LANGS.length}개 언어는 영어 묶음으로 보낸다)`);
+console.log(`   사이트맵 주소 합계 ${merged.length}개 (이 도시 ${urls.length}개)\n   묶음 언어 — ${HUB_LANGS.join(" · ")} (나머지 ${PAGE_LANGS.length - HUB_LANGS.length}개 언어는 영어 묶음으로 보낸다)`);
 if (newSlugs) console.log(`   새 주소 ${newSlugs}개를 src/data/place-slugs.json 에 적었다 — 커밋할 것.`);

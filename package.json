@@ -13,7 +13,7 @@
     "festival-todo": "node scripts/audit-festivals.mjs",
     "audit-dupes": "node scripts/audit-duplicates.mjs",
     "rekey": "node scripts/rekey-by-name.mjs",
-    "place-pages": "vite build --ssr scripts/build-place-pages.ts --outDir dist-ssr && node dist-ssr/build-place-pages.js",
+    "place-pages": "vite build --ssr scripts/build-place-pages.ts --outDir dist-ssr && node dist-ssr/build-place-pages.js --city=seoul && node dist-ssr/build-place-pages.js --city=busan",
     "check-place-pages": "node scripts/check-place-pages.mjs",
     "check-hub-strings": "vite build --ssr scripts/check-hub-strings.ts --outDir dist-ssr && node dist-ssr/check-hub-strings.js",
     "festival-freshness": "vite build --ssr scripts/audit-festival-freshness.ts --outDir dist-ssr && node dist-ssr/audit-festival-freshness.js",

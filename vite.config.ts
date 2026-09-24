@@ -160,6 +160,12 @@ export default defineConfig({
           /^\/place\//,
           /^\/seoul$/,
           /^\/seoul\//,
+          // 🏙️ **도시마다 대문이 하나씩 있다** (2026-09-24, 부산 묶음 25장을 열면서).
+          //    빠뜨리면 서비스워커가 그 주소를 **앱 껍데기로 바꿔치기한다** —
+          //    손님 눈엔 앱이 뜨니 멀쩡해 보이고, **크롤러만 빈 페이지를 본다.**
+          //    check-place-pages.mjs 가 이걸 잡아 줬다.
+          /^\/busan$/,
+          /^\/busan\//,
           /^\/(ko|ja|zh|zh-TW|vi|es|fr|de|ru|id|th)\//,
           /^\/sitemap\.xml$/,
           /^\/robots\.txt$/,

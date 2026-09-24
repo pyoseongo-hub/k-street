@@ -1540,3 +1540,39 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     byDistrictChips: "По районам",
   },
 };
+
+/**
+ * 🏙️ **도시 이름을 갈아 끼운다** (2026-09-24, 사장님: *"열어"*).
+ *
+ * 이 파일에는 도시 이름이 **304군데** 박혀 있다 — 12개 언어의 제목·소개·설명에.
+ * 부산 페이지를 내려면 그걸 다 손으로 고쳐야 하는데, 290줄을 12개 언어로 고치면
+ * **어디 한 군데가 틀려도 화면엔 오류가 안 뜬다.** 검색에서 들어온 손님만 본다.
+ *
+ * 그래서 손으로 고치지 않는다 — **글자만 바꿔 끼운다.** 서울은 자기 이름으로
+ * 바꾸므로 **결과가 글자 하나까지 지금과 같다**(그게 이 방식을 고른 이유다).
+ *
+ * 📌 **PAGE_STRINGS 와 HUB_STRINGS 둘 다** 이걸 통과시켜야 한다. 처음에 곳 페이지만
+ *    바꿨더니 묶음 페이지 제목이 **「What to see in Jung-gu, Seoul」** 로 나왔다 —
+ *    부산 중구인데. 도시 이름이 든 표가 둘이라 **한쪽만 고치면 반쪽만 바뀐다.**
+ *
+ * ⚠️ **왜 이게 먹히나** — 어미가 붙어도 앞머리만 갈면 맞는 말이 된다:
+ *      서울의 → 부산의 · 서울에서 → 부산에서 · Сеула → Пусана · ソウル → 釜山
+ *    ✅ 조사 「로/으로」가 갈리는 자리(서울로)는 이 파일에 **없다**(세어 봤다).
+ * 🚨 **서울 전용 페이지는 애초에 안 만든다** — 지하상가(서울시설공단)·짐보관(또타러기지)은
+ *    서울에만 있는 자료다. 이름만 바꾸면 **없는 것을 있다고 말하게 된다.**
+ *    거르는 자리는 build-place-pages.ts 다.
+ */
+export function withCityName<T extends object>(s: T, from: string, cityName: string): T {
+  if (!from || from === cityName) return s;
+  const swap = (t: string) => t.split(from).join(cityName);
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(s)) {
+    if (typeof v === "string") out[k] = swap(v);
+    else if (typeof v === "function") out[k] = (...a: unknown[]) => {
+      const r = (v as (...x: unknown[]) => unknown)(...a);
+      return typeof r === "string" ? swap(r) : r;
+    };
+    else out[k] = v;
+  }
+  return out as T;
+}
