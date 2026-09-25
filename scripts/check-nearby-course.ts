@@ -20,6 +20,8 @@ import { buildCourse, formatMeters, REACH } from "../src/lib/nearbyCourse";
 import { cityOf, placesInCity } from "../src/lib/usePlaces";
 
 const strict = process.argv.includes("--strict");
+/** 걸어서도 지하철로도 한 곳이 안 나오는 구 — **이것만 배포를 막는다.** 아래 머리말 참고. */
+let emptyBoth = 0;
 const CITIES = [...new Set(ALL_PLACES.map(cityOf))].sort();
 
 let noOrigin = 0;
@@ -58,8 +60,13 @@ for (const city of CITIES) {
     return `${c.stops.length}곳 · ${formatMeters(c.total)}`;
   };
   const walk = buildCourse(CITY_PLACES, o, { size: 3, reach: REACH.walk });
-  if (!walk) emptyWalk++;
-  else if (walk.stops.length < 3) shortWalk++;
+  const transit = buildCourse(CITY_PLACES, o, { size: 3, reach: REACH.transit });
+  if (!walk) {
+    emptyWalk++;
+    // 🚨 **둘 다 비어야 진짜 빈 화면이다.** 걸어서만 비면 손님은 「지하철로」를
+    //    고르면 되고, 화면이 그렇다고 말해 준다(nearbyCourseShort).
+    if (!transit) emptyBoth++;
+  } else if (walk.stops.length < 3) shortWalk++;
   console.log(`  ${mark}${gu.padEnd(8)} ${cell(REACH.walk).padEnd(20)} ${cell(REACH.transit)}`);
   }
 }
@@ -74,7 +81,30 @@ console.log(
     : "✅ 모든 구에서 걸어서 3곳이 나온다.",
 );
 
-if (strict && (noOrigin || emptyWalk)) {
-  console.error("❌ --strict: 코스가 아예 안 나오는 구가 있다");
+// ─────────────────────────────────────────────────────────────────────────
+// 🚦 **무엇이 배포를 막나** (2026-09-25에 고쳤다)
+// ─────────────────────────────────────────────────────────────────────────
+//   전에는 **「걸어서」가 빈 구가 하나라도 있으면** 배포를 막았다.
+//   그런데 부산 남구가 그렇게 됐고(걸어서 없음 · 지하철로 3곳 · 3.9km),
+//   그 바람에 **배포가 통째로 멈춰 있었다** — 그 사이 다른 고친 것들도
+//   앱에 못 올라갔다. 자료가 얇은 것 하나가 앱 전체를 붙잡는 꼴이다.
+//
+//   🔑 **가르는 잣대는 「손님이 빈 화면을 보나」다.**
+//     · 걸어서만 빔  → 빈 화면이 아니다. 「지하철로」를 고르면 나오고,
+//                      화면이 그렇다고 말해 준다(nearbyCourseShort). **경고.**
+//     · 둘 다 빔     → **진짜 빈 화면.** 손님이 할 수 있는 게 없다. **막는다.**
+//     · 설 자리 없음 → 좌표가 한 곳도 없다. 계산 자체가 안 된다. **막는다.**
+//
+//   ⚠️ 이 문턱을 낮추고 싶어지면 **곳을 채우는 게 먼저다.** 부산 남구는
+//      survey-6.json 이 얇아서 생긴 일이지 코드 문제가 아니다.
+if (strict && (noOrigin || emptyBoth)) {
+  console.error(
+    `❌ --strict: 손님이 **빈 화면**을 보는 구가 있다 (설 자리 없음 ${noOrigin} · 걸어서도 지하철로도 없음 ${emptyBoth})`,
+  );
   process.exit(1);
+}
+if (emptyWalk) {
+  console.log(
+    `\n🔔 걸어서가 빈 구 ${emptyWalk}개 — 지하철로는 나오므로 배포는 막지 않는다. **곳을 채워야 할 자리다.**`,
+  );
 }
