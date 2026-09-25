@@ -50,6 +50,30 @@ if (existsSync("src/data/dead-links.json")) {
   for (const m of readFileSync("src/data/dead-links.json", "utf8").matchAll(URL_RE)) dead.add(m[0]);
 }
 
+// ─────────────────────────────────────────────────────────────────────────
+// 🕵️ **추적용 꼬리표가 붙은 주소** — 인터넷이 없어도 볼 수 있다
+// ─────────────────────────────────────────────────────────────────────────
+//   2026-09-25 전수 점검에서 둘 찾았다. 인스타 프로필의 「링크」를 그대로
+//   복사하면 이런 것이 딸려 온다:
+//     …?utm_source=ig&utm_medium=social&fbclid=PAZXh0bgNhZW0CMTEA…(200자)
+//   · **손님의 클릭이 페이스북·인스타로 새어 나간다.** 우리가 그럴 이유가 없다.
+//   · 꼬리표는 **언젠가 만료된다.** 그때 그 주소는 통째로 안 열린다.
+//   · 주소가 화면에 길게 뜨고, 공유했을 때 지저분하다.
+//   → 물음표 앞까지만 남기면 된다. 다만 `menuCd=` 처럼 **페이지를 가리키는 칸**은
+//     지우면 안 된다 — 그래서 **꼬리표만 골라서** 본다.
+const TRACKERS = /[?&](utm_[a-z]+|fbclid|gclid|igsh|mc_[ce]id|ref_src|spm)=/i;
+const tracked = [...found].filter(([u]) => TRACKERS.test(u));
+if (tracked.length) {
+  console.error(`\n❌ 추적용 꼬리표가 붙은 주소 ${tracked.length}개 — 물음표 뒤 꼬리표를 지울 것`);
+  for (const [u, src] of tracked) console.error(`   ${u.slice(0, 110)}…  [${src}]`);
+} else {
+  console.log("✅ 추적용 꼬리표(utm_·fbclid·igsh…)가 붙은 주소 없음");
+}
+// 📴 `--offline` 은 여기까지만 본다 — 인터넷이 필요 없어 **배포마다** 걸 수 있다.
+if (process.argv.includes("--offline")) {
+  process.exit(tracked.length ? 1 : 0);
+}
+
 const list = [...found].filter(([u]) => !dead.has(u));
 console.log(`자료 속 바깥 링크 ${found.size}개 (이미 죽은 걸로 빼 둔 것 ${dead.size}개 제외 → ${list.length}개 두드린다)\n`);
 

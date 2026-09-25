@@ -58,18 +58,35 @@ export default function WeatherCard({ onOpen }: { onOpen?: () => void }) {
             **여는** 칸인데, 「23°」만 크게 있으면 그냥 정보로 읽힌다 — 누를 것이 아니라.
             → **윗줄은 무엇을 여는지**(비 오는 날), 아랫줄이 날씨다.
             ⚠️ 비가 올 때는 순서가 뒤집힌다 — 그날은 「지금 비」가 먼저 알아야 할 것이다. */}
-        <strong>{rain ? (weather.rainingNow ? t.rainyNow : t.rainyForecast) : t.rainyDay}</strong>
+        {/* 🚧 **안 눌리는 칸에 「비 오는 날」이라고 쓰지 않는다** (2026-09-25 전수 점검에서 찾았다).
+            머리말에 *"그때는 날씨만 보여 주고 눌리지 않는다 — 눌러도 아무 일 없는 단추는
+            고장난 것처럼 보인다"* 고 적어 뒀는데, 실제로는 `onClick` 만 빼고 **글자와 → 는
+            그대로 뒀다.** 그래서 부산에서 「Rainy day →」가 뜨고 눌러도 아무 일이 없었다.
+            적어 둔 대로 고친다 — 안 눌리면 **날씨가 윗줄**이다.
+            ⚠️ 비가 올 때는 부산에서도 「지금 비」를 그대로 쓴다. 그건 여는 칸의 이름이
+               아니라 **날씨 사실**이라, 부산 손님에게도 맞는 말이다. */}
+        <strong>
+          {rain ? (weather.rainingNow ? t.rainyNow : t.rainyForecast) : onOpen ? t.rainyDay : temp}
+        </strong>
         {/* 🐞 처음엔 `${t.feelsLike} 26°` 로 낱말을 다 썼는데, **독일어
             「Gefühlte Temperatur」가 두 줄이 되어** 320px 화면에서 칸이 81px 까지
             커졌다(재 봤다). 반반 칸에서는 낱말 하나가 줄 높이를 좌우한다.
             → `≈26°` 로 줄인다. 뜻은 **aria-label 이 말로** 전한다(위). */}
-        <span>{rain ? temp : `${temp} ≈${Math.round(weather.feelsLikeC)}°`}</span>
+        {/* 🚨 **안 눌리는 칸에서도 `≈` 를 쓴다.** 낱말을 다 쓰면 베트남어·스페인어·
+            독일어·러시아어·인도네시아어 **5개 언어가 두 줄**이 되어 칸이 56→63px 로
+            커진다(320px 에서 재 봤다). 옆 영상 칸과 높이가 어긋난다.
+            아래 머리말에 적힌 그대로다 — **뜻은 읽어 주는 말(aria-label)이 전한다.** */}
+        <span>{rain ? temp : `${onOpen ? temp + " " : ""}≈${Math.round(weather.feelsLikeC)}°`}</span>
       </span>
       {/* → 를 되살렸다. 「누를 수 있는 것」이라는 표시가 없으면 글자를 고쳐도
-          여전히 안내판으로 읽힌다. 옆 영상 칸의 ↗(바깥으로 나감)과 짝이 된다. */}
-      <span className="top-card-go" aria-hidden="true">
-        →
-      </span>
+          여전히 안내판으로 읽힌다. 옆 영상 칸의 ↗(바깥으로 나감)과 짝이 된다.
+          🚧 **안 눌리면 → 도 안 그린다.** 화살표는 「눌러 보라」는 약속이다 —
+             부산에서 그 약속을 지킬 수 없다(위 주석). */}
+      {onOpen && (
+        <span className="top-card-go" aria-hidden="true">
+          →
+        </span>
+      )}
     </Tag>
   );
 }
