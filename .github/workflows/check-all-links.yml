@@ -1,0 +1,33 @@
+# 🔗 **손님에게 보여 주고 있는 바깥 링크가 아직 열리나** — 달마다 두드려 본다.
+#
+# 사장님 지시 (2026-09-25): "링크도 테스트".
+#
+# 왜 러너에서 도나 — 저장소를 만드는 세션은 바깥 인터넷이 막혀 있다.
+# 거기서 돌리면 멀쩡한 주소가 전부 실패로 나와서, 그걸 믿고 지우면 오히려 망가진다.
+# (2026-09-25에 실제로 재 봤다 — 77개 중 연결 실패 71 · 프록시 403 6.)
+#
+# 🚦 **아무것도 커밋하지 않는다. 보고만 한다.** 축제 홈페이지는 로봇을 막거나
+#    잠깐 끊기는 일이 잦아서, 한 번 실패를 죽음으로 읽으면 안 된다
+#    (src/data/dead-links.json 머리말의 오랜 규칙).
+name: Check all links
+
+on:
+  schedule:
+    # 달마다 1일 새벽. 축제 홈페이지는 해마다 도메인이 바뀐다 — 그 주기에 맞춘다.
+    - cron: "17 19 1 * *"
+  workflow_dispatch:
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20 # ⏱️ 천장이 없으면 느려진 것이 안 드러난다
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: node scripts/check-all-links.mjs 2>&1 | tee links.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: link-report
+          path: links.txt
