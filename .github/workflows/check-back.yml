@@ -1,0 +1,46 @@
+# 🔙 **뒤로가기가 앱을 꺼뜨리지 않나** — 배포마다 기계가 눌러 본다.
+#
+# 왜 따로 두나 — 이 검사는 **진짜 브라우저**가 있어야 한다. deploy.yml 은
+# 브라우저가 필요 없는 검사만 모아 두었고(거기 주석), playwright 는 이 저장소의
+# 의존성도 아니다(앱에는 필요 없다). 그래서 배포를 붙잡지 않도록 옆에서 따로 돈다.
+#
+# 🚨 **왜 기계가 해야 하나 — 이 사고가 세 번째다.**
+#   · 2026-09-12 전체화면(도착 안내·짐보관)에서 뒤로가기가 앱을 껐다
+#   · 2026-09-14 띠를 눌러 건너간 화면에서 또 껐다
+#   · 2026-09-25 **화면이 겹쳐 뜨면** 또 껐다 (비 오는 날 → 짐보관)
+#   세 번 다 tsc 는 통과했고, 화면도 멀쩡히 그려졌고, PC 에서는 ✕ 로 닫으니
+#   티가 안 났다. **세 번 다 사장님이 폰에서 찾으셨다.** 그래서 기계가 누른다.
+name: Check back button
+
+on:
+  push:
+    branches: [main]
+    # 뒤로가기에 손댈 수 있는 자리만 본다 — 자료만 바뀐 푸시에서는 안 돈다.
+    paths:
+      - "src/**"
+      - "scripts/check-back-view.mjs"
+      - ".github/workflows/check-back.yml"
+  workflow_dispatch:
+
+jobs:
+  back:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15 # ⏱️ 천장이 없으면 느려진 것이 안 드러난다
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # 🎭 playwright 는 이 저장소의 의존성이 아니다(앱에는 필요 없다).
+      #    여기서만 받아 쓴다 — shoot-pages.yml 과 같은 방식이다.
+      - run: |
+          npm i --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: 뒤로가기를 눌러 본다
+        run: |
+          (cd dist && python3 -m http.server 8129 &)
+          sleep 2
+          node scripts/check-back-view.mjs 8129

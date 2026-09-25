@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useLanguage } from "../lib/useLanguage";
+import { overlayOpen } from "../lib/useOverlay";
 
 // 🔀 화면 두 개를 **위아래로 쌓지 않고 좌우로 나눈다** (사용자 지시 2026-09-02:
 // "자료가 많아지면서 이 페이지가 너무 아래인데 맨 위로 가면서 화면 스위치 스왑?
@@ -91,6 +92,13 @@ export default function HomeSwitch({ season, district, showDistrict = 0 }: Props
 
   useEffect(() => {
     const onPop = () => {
+      // 🚨 **전체화면이 떠 있으면 이 뒤로가기는 그 화면 몫이다** (2026-09-25).
+      //    사장님: *"짐보관에서 뒤로가기하면 꺼짐"*. 짐보관·비 오는 날 같은
+      //    전체화면도 열 때 기록을 한 칸 남기는데, popstate 는 전역이라
+      //    여기까지 같이 울렸다 — 짐보관만 닫으려던 한 번이 홈 화면까지
+      //    되돌리고, 남은 칸 때문에 그다음 한 번이 앱을 껐다.
+      //    (자세한 것은 lib/useOverlay.ts 머리말 ④)
+      if (overlayOpen()) return;
       if (!jumped.current) return; // 우리가 남긴 칸이 아니다 — 건드리지 않는다
       jumped.current = false;
       setView("season");
