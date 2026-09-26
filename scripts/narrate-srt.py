@@ -114,9 +114,34 @@ def trim_silence(path):
     tmp.replace(path)
 
 
+#: 🗣️ **글로 읽을 때와 소리 내 읽을 때가 다른 것들.**
+#    사장님 (2026-09-26): *"중간에 이상한걸 읽는데"*.
+#    긴 줄표(—)는 **자막에서는 쉼표 노릇**을 하지만, 읽히면 「dash」라고
+#    소리 내 읽히거나 엉뚱하게 끊긴다. 자막에는 남기고 **소리에서만** 바꾼다.
+#    ⚠️ 자막까지 바꾸면 안 된다 — 글로는 줄표가 읽기 편하다.
+SPEECH_FIX = [
+    (" — ", ". "),   # 긴 줄표는 문장을 끊는 자리다 → 마침표로
+    (" – ", ". "),   # 중간 줄표도 같다
+    ("—", ", "),
+    ("–", ", "),
+    ("…", "."),      # 말줄임표를 「dot dot dot」 으로 읽는 목소리가 있다
+    ("&", " and "),
+]
+
+
+def for_speech(text):
+    """읽히기 전에 손본다. **자막은 안 건드린다.**"""
+    out = text
+    for a, b in SPEECH_FIX:
+        out = out.replace(a, b)
+    # 줄표를 마침표로 바꾸면 그 뒤가 소문자로 남는다 — 읽는 투가 어색해진다.
+    out = re.sub(r"([.!?]\s+)([a-z])", lambda m: m.group(1) + m.group(2).upper(), out)
+    return " ".join(out.split())
+
+
 async def say(text, voice, path, rate=0):
     kw = {"rate": f"{rate:+d}%"} if rate else {}
-    await edge_tts.Communicate(text, voice, **kw).save(str(path))
+    await edge_tts.Communicate(for_speech(text), voice, **kw).save(str(path))
     trim_silence(path)
 
 
@@ -171,7 +196,9 @@ async def main():
             p = tmp / f"{i:02d}.mp3"
             await say(line, args.voice, p, BASE_RATE)
             d = sec(p)
-            print(f"   {t:5.2f}s  {line[:46]:<46}  {d:4.1f}s")
+            spoken = for_speech(line)
+            mark = "  ✎ 읽을 때만 고침" if spoken != line else ""
+            print(f"   {t:5.2f}s  {line[:46]:<46}  {d:4.1f}s{mark}")
             parts.append((t, p))
             new_cues.append((t, t + d, line))
             t += d + args.gap
