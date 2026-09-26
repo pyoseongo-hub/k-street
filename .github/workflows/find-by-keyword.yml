@@ -1,0 +1,79 @@
+# 🔎 **낱말로 곳을 찾는다** — 카카오 지역검색을 구별로 훑는다.
+#
+# 사장님 지시 (2026-09-26): "체험 중에 동물카페 넣어 보게 찾아봐".
+#
+# 왜 — 관광공사 자료에는 **사설 가게가 거의 없다.** 동물카페·공방·쿠킹클래스처럼
+# 손님이 「해 보는」 것들은 관광지로 등록돼 있지 않다. 카카오에는 있다.
+#
+# 🚨 **아무것도 seed 에 넣지 않는다.** 찾아서 보여 줄 뿐이고, 들일지는 사람이 정한다.
+#    자세한 것은 scripts/find-by-keyword.mjs 머리말.
+name: Find by keyword
+
+on:
+  workflow_dispatch:
+    inputs:
+      words:
+        description: "찾을 낱말 (쉼표로 나눈다) — 예: 고양이카페,강아지카페,애견카페"
+        type: string
+        required: true
+        default: "고양이카페,강아지카페,애견카페"
+      city:
+        description: "어느 도시 — seoul · busan"
+        type: choice
+        options: ["seoul", "busan"]
+        default: "seoul"
+      save:
+        description: "찾은 것을 자료 파일로 남길까 (가지에 올린다)"
+        type: boolean
+        default: false
+
+jobs:
+  find:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20 # ⏱️ 천장이 없으면 느려진 것이 안 드러난다
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 열쇠가 있나 먼저 본다
+        env:
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
+        run: |
+          if [ -z "$KAKAO_REST_API_KEY" ]; then
+            echo "❌ KAKAO_REST_API_KEY 시크릿이 없다 — Settings → Secrets 에 넣을 것"
+            exit 1
+          fi
+          echo "✅ 열쇠 있음 (${#KAKAO_REST_API_KEY}자)"
+
+      - name: 찾기
+        env:
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
+        run: |
+          node scripts/find-by-keyword.mjs \
+            --words "${{ inputs.words }}" --city "${{ inputs.city }}" \
+            ${{ inputs.save && '--out data/찾은-곳/latest.json' || '' }} \
+            2>&1 | tee found.txt
+
+      - name: 요약에 붙인다
+        run: |
+          { echo "## 🔎 찾은 곳"; echo ""; echo '```'; cat found.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: found
+          path: found.txt
+
+      - name: 가지에 올린다
+        if: ${{ inputs.save }}
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B claude/found-places
+          git add -f data/찾은-곳
+          git commit -q -m "🔎 낱말로 찾은 곳 (${{ inputs.words }})"
+          git push -f origin claude/found-places
