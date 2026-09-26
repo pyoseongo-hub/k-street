@@ -25,6 +25,14 @@ on:
         description: "파일 이름 (확장자 빼고)"
         type: string
         default: "narration"
+      free:
+        description: "자유 — 시간표를 무시하고 자연스럽게 읽은 뒤 자막을 새로 뽑는다 (영상을 소리에 맞출 때)"
+        type: boolean
+        default: false
+      gap:
+        description: "자유일 때 줄과 줄 사이 틈(초)"
+        type: string
+        default: "0.4"
       branch:
         description: "소리를 올릴 가지. **덮어쓴다**"
         type: string
@@ -52,7 +60,8 @@ jobs:
           SRT: ${{ inputs.srt }}
         run: |
           python3 scripts/narrate-srt.py \
-            --out narration --voice "${{ inputs.voice }}" --name "${{ inputs.name }}"
+            --out narration --voice "${{ inputs.voice }}" --name "${{ inputs.name }}" \
+            ${{ inputs.free && format('--free --gap {0}', inputs.gap) || '' }}
 
       - name: 가지에 올린다
         env:

@@ -22,7 +22,20 @@
 #    보는 사람은 어긋난 걸 바로 느낀다. 그래도 안 들어가면 **경고하고 멈추지
 #    않는다** — 대신 어느 줄이 넘쳤는지 찍어 준다. 문장은 사람이 줄여야 한다.
 #
+# ─────────────────────────────────────────────────────────────────────────
+# 두 가지 모드
+# ─────────────────────────────────────────────────────────────────────────
+#   ① **맞춤(기본)** — 준 SRT 의 시간표에 **소리를 맞춘다.**
+#      영상 길이가 이미 정해졌을 때. 칸을 넘치면 빠르게 읽혀서 밀어 넣는다.
+#
+#   ② **자유(`--free`)** — 글을 **자연스럽게 읽고, 시간표를 새로 뽑는다.**
+#      사장님 지시 (2026-09-26): *"시간은 넘어도 되 / 영상을 맞출거야"*.
+#      영상을 소리에 맞출 때 이쪽이 맞다 — 읽는 속도를 억지로 올리지 않으니
+#      말이 편하고, 문장도 줄일 필요가 없다. 준 SRT 의 **시각은 무시**하고
+#      글만 가져다 쓴 뒤, **실제로 읽힌 길이로 SRT 를 다시 써서** 같이 낸다.
+#
 #   SRT="$(cat a.srt)" python3 scripts/narrate-srt.py --out out --voice en-US-AvaMultilingualNeural
+#   SRT="$(cat a.srt)" python3 scripts/narrate-srt.py --free --gap 0.4
 import asyncio, os, re, shutil, subprocess, sys, argparse
 from pathlib import Path
 
@@ -127,6 +140,10 @@ async def main():
     ap.add_argument("--out", default="narration")
     ap.add_argument("--voice", default="en-US-AvaMultilingualNeural")
     ap.add_argument("--name", default="narration")
+    ap.add_argument("--free", action="store_true",
+                    help="준 시간표를 무시하고 자연스럽게 읽은 뒤 시간표를 새로 뽑는다")
+    ap.add_argument("--gap", type=float, default=0.4,
+                    help="자유 모드에서 줄과 줄 사이에 둘 틈(초)")
     args = ap.parse_args()
 
     raw = os.environ.get("SRT", "").strip()
@@ -143,15 +160,41 @@ async def main():
     out = Path(args.out); out.mkdir(parents=True, exist_ok=True)
     tmp = out / "_parts"; tmp.mkdir(exist_ok=True)
 
-    print(f"🎙️ {args.voice} · {len(cues)}줄\n")
+    mode = "자유 — 소리에 영상을 맞춘다" if args.free else "맞춤 — 준 시간표에 소리를 맞춘다"
+    print(f"🎙️ {args.voice} · {len(cues)}줄 · {mode}\n")
     parts, over = [], 0
-    for i, (a, z, line) in enumerate(cues):
-        p = tmp / f"{i:02d}.mp3"
-        _, spill = await say_fitting(line, args.voice, p, z - a, f"{a:5.2f}s  {line[:46]:<46}")
-        over += spill
-        parts.append((a, p))
 
-    total = max(z for _, z, _ in cues)
+    if args.free:
+        # 🕊️ **자유 모드** — 속도를 안 건드리고 그냥 읽은 뒤, 읽힌 길이대로 줄을 세운다.
+        t, new_cues = 0.0, []
+        for i, (_, _, line) in enumerate(cues):
+            p = tmp / f"{i:02d}.mp3"
+            await say(line, args.voice, p, BASE_RATE)
+            d = sec(p)
+            print(f"   {t:5.2f}s  {line[:46]:<46}  {d:4.1f}s")
+            parts.append((t, p))
+            new_cues.append((t, t + d, line))
+            t += d + args.gap
+        total = new_cues[-1][1] + 0.3  # 마지막 말 뒤에 조금 남긴다
+        cues = new_cues
+
+        # 🚨 **시간표가 바뀌었으니 자막도 다시 써야 한다.** 안 그러면 손님이
+        #    예전 SRT 를 그대로 쓰고, 소리와 글자가 어긋난 영상이 나간다.
+        srt_out = out / f"{args.name}.srt"
+        def stamp(x):
+            h, r = divmod(x, 3600); m, s2 = divmod(r, 60)
+            return f"{int(h):02d}:{int(m):02d}:{int(s2):02d},{int(round((s2 % 1) * 1000)):03d}"
+        srt_out.write_text("\n\n".join(
+            f"{i+1}\n{stamp(a)} --> {stamp(z)}\n{line}"
+            for i, (a, z, line) in enumerate(cues)) + "\n", encoding="utf-8")
+        print(f"\n📝 {srt_out.name}  — 읽힌 길이대로 새로 뽑았다")
+    else:
+        for i, (a, z, line) in enumerate(cues):
+            p = tmp / f"{i:02d}.mp3"
+            _, spill = await say_fitting(line, args.voice, p, z - a, f"{a:5.2f}s  {line[:46]:<46}")
+            over += spill
+            parts.append((a, p))
+        total = max(z for _, z, _ in cues)
 
     # 🎬 조각들을 제자리에 놓아 한 줄로 만든다.
     #    adelay 가 「몇 밀리초 뒤에 시작」을, amix 가 합치기를 맡는다.
@@ -181,6 +224,8 @@ async def main():
     tmp.rmdir()
     if over:
         print(f"\n⚠️ 자리를 넘친 줄 {over}개 — 위 표에서 ⚠️ 표를 볼 것.")
+    if args.free:
+        print(f"\n🎬 **영상을 {total:.1f}초로 맞추면 된다.**")
 
 
 if __name__ == "__main__":
