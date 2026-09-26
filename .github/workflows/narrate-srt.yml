@@ -1,0 +1,74 @@
+# 🎙️ **자막(SRT) 그대로 읽혀서 나레이션을 만든다.**
+#
+# 사장님 질문 (2026-09-26): "목소리 나레이션 안되지?" → 된다. 여기서 만든다.
+#
+# 왜 러너에서 도나 — 음성 서비스가 **웹소켓**으로 붙는데 작업 환경 프록시가
+# 그걸 막는다(`WSServerHandshakeError: 403`). 인증서를 고쳐도 안 풀린다.
+# 사진을 받아 올 때와 같은 이유다.
+#
+# 기존 Make narration 은 **그 릴스 전용**(컷 길이가 make-reel.py 에 박혀 있다)이다.
+# 이쪽은 **아무 SRT나** 받는다 — 카드가 바뀔 때마다 스크립트를 안 고쳐도 된다.
+name: Narrate SRT
+
+on:
+  workflow_dispatch:
+    inputs:
+      srt:
+        description: "자막 (SRT 본문을 그대로 붙여넣는다)"
+        type: string
+        required: true
+      voice:
+        description: "목소리 — 예: en-US-AvaMultilingualNeural · en-US-AndrewMultilingualNeural"
+        type: string
+        default: "en-US-AvaMultilingualNeural"
+      name:
+        description: "파일 이름 (확장자 빼고)"
+        type: string
+        default: "narration"
+      branch:
+        description: "소리를 올릴 가지. **덮어쓴다**"
+        type: string
+        default: "claude/social-cards"
+
+jobs:
+  narrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15 # ⏱️ 천장이 없으면 느려진 것이 안 드러난다
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 🧰 edge-tts 가 말을 소리로 바꾸고, imageio-ffmpeg 이 조각을 이어 붙인다.
+      # 🚨 **러너에 ffmpeg 이 없다** (2026-09-16에 여기서 한 번 죽었다).
+      #    pip 로 따라오는 static 바이너리를 쓴다 — apt 보다 빠르다.
+      - run: python3 -m pip install --quiet edge-tts imageio-ffmpeg
+
+      - name: 읽힌다
+        env:
+          SRT: ${{ inputs.srt }}
+        run: |
+          python3 scripts/narrate-srt.py \
+            --out narration --voice "${{ inputs.voice }}" --name "${{ inputs.name }}"
+
+      - name: 가지에 올린다
+        env:
+          BRANCH: ${{ inputs.branch }}
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH" || true
+          git checkout -B "$BRANCH" "origin/$BRANCH" 2>/dev/null || git checkout -B "$BRANCH"
+          git add -f narration
+          git commit -q -m "🎙️ 나레이션 ${{ inputs.name }}"
+          git push -f origin "$BRANCH"
+          echo "올렸다 → $BRANCH"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: narration
+          path: narration
