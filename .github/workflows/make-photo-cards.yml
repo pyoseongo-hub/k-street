@@ -1,0 +1,68 @@
+# 📇 **SNS 카드를 찍는다** — 포토코리아 사진 위에 글자를 얹어 PNG 로 낸다.
+#
+# 사장님 지시 (2026-09-26): "다운받게 만들어".
+#
+# 왜 러너에서 도나 — 저장소를 만드는 세션은 **tong.visitkorea.or.kr 이 막혀 있다**
+# (프록시 403). 링크는 아는데 그림을 못 받는다. 러너는 받을 수 있다.
+#
+# 🚨 **원본 사진은 저장소에 안 남는다.** 카드(PNG)만 가지에 올린다.
+#    자세한 것은 scripts/make-photo-cards.py 머리말.
+name: Make photo cards
+
+on:
+  workflow_dispatch:
+    inputs:
+      cards:
+        description: "카드 정의 (JSON 배열: id·url·ko·ro·en·ja·by)"
+        type: string
+        required: true
+      sizes:
+        description: "크기 — ig(1080×1350) · tiktok(1080×1920). 쉼표로 여럿"
+        type: string
+        default: "ig,tiktok"
+      branch:
+        description: "PNG 를 올릴 가지. **덮어쓴다**"
+        type: string
+        default: "claude/social-cards"
+
+jobs:
+  make:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15 # ⏱️ 천장이 없으면 느려진 것이 안 드러난다
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      # 🔤 한글·가나·한자가 한 카드에 같이 들어간다. 이 글꼴 하나로 다 덮는다.
+      #    안 깔면 스크립트가 멈춘다 — 네모 박힌 카드를 올리는 것이 더 나쁘다.
+      - name: 글꼴을 깐다
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+
+      - name: 파이썬 살림
+        run: python3 -m pip install --quiet Pillow
+
+      - name: 카드를 찍는다
+        env:
+          CARDS: ${{ inputs.cards }}
+        run: python3 scripts/make-photo-cards.py --out cards --sizes "${{ inputs.sizes }}"
+
+      - name: 가지에 올린다
+        env:
+          BRANCH: ${{ inputs.branch }}
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add -f cards
+          git commit -q -m "📇 SNS 카드 $(ls cards | wc -l)장"
+          # ⚠️ **덮어쓴다.** 이 가지는 옮기는 용도지 기록을 쌓는 자리가 아니다.
+          git push -f origin "$BRANCH"
+          echo "올렸다 → $BRANCH"
+
+      # 사람이 GitHub 에서 바로 받을 수도 있게 (가지로 못 갈 때의 두 번째 길)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: photo-cards
+          path: cards
