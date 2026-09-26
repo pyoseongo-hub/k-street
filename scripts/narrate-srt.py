@@ -82,9 +82,29 @@ def parse_srt(text):
     return out
 
 
+def trim_silence(path):
+    """앞뒤 빈 소리를 잘라낸다.
+
+    🚨 **edge-tts 는 조각마다 0.5~0.9초쯤 빈 소리를 붙여 보낸다** (2026-09-26에 잡았다).
+       그래서 「Come back after dark」처럼 **네 낱말짜리 말도 2.1초**를 먹었다.
+       2.2초 칸에 넣으면 당연히 넘친다 — 글을 아무리 줄여도 바닥이 2.1초라
+       **문장을 줄이는 것으로는 절대 안 풀리는 문제**였다.
+       빈 소리를 잘라내면 같은 말이 1.2~1.4초가 된다.
+
+    ⚠️ 말 사이의 틈(문장 사이 쉼)은 건드리지 않는다 — `start_periods=1` 이라
+       **맨 앞 한 번만** 자른다. 뒤는 뒤집어서 같은 방법으로 자른다."""
+    cut = ("silenceremove=start_periods=1:start_silence=0.03:start_threshold=-45dB")
+    tmp = path.with_name(path.stem + "-t.mp3")
+    subprocess.run([ffmpeg(), "-y", "-i", str(path),
+                    "-af", f"{cut},areverse,{cut},areverse", str(tmp)],
+                   check=True, capture_output=True)
+    tmp.replace(path)
+
+
 async def say(text, voice, path, rate=0):
     kw = {"rate": f"{rate:+d}%"} if rate else {}
     await edge_tts.Communicate(text, voice, **kw).save(str(path))
+    trim_silence(path)
 
 
 async def say_fitting(text, voice, path, slot, label):
