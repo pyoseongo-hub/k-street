@@ -166,6 +166,8 @@ NAMES_ROMAN = {
 }
 #: 어느 표를 쓸까. main() 이 `--names` 를 보고 정한다.
 NAMES = NAMES_KO
+#: 이미 한글로 읽힌 이름. 아래 「한 번만」 규칙이 본다.
+_said = set()
 
 
 def for_speech(text):
@@ -175,8 +177,27 @@ def for_speech(text):
         out = out.replace(a, b)
     # 🇰🇷 고유명사를 낱말 단위로 바꾼다. 대소문자를 가리지 않는다
     #    (문장 첫머리의 Hanbok 과 가운데의 hanbok 이 둘 다 잡혀야 한다).
+    #
+    # 🚨 **한글은 한 번만 넣는다** (사장님 지시, 2026-09-26:
+    #    *"경복궁 앞에 한번만 넣어 뒤에는 설정이 이상한지 책 읽는 듯한 이상한 소리로 나와"*).
+    #    다국어 목소리는 한글을 만나면 **한국어 말투로 갈아탄다.** 한 번은 또렷해서
+    #    좋은데, 같은 문단에서 두 번 세 번 갈아타면 말투가 오락가락해서
+    #    **책 읽는 소리**처럼 들린다.
+    #    → 처음 한 번만 한글로 읽히고, 그다음부터는 **소리나는 대로**(roman) 간다.
+    #      로마자 원문으로 되돌리면 안 된다 — 그건 「자이엔복강」으로 되돌아가는 길이다.
     for eng, ko in NAMES.items():
-        out = re.sub(rf"\b{re.escape(eng)}\b", ko, out, flags=re.IGNORECASE)
+        pat = rf"\b{re.escape(eng)}\b"
+        if not re.search(pat, out, flags=re.IGNORECASE):
+            continue
+        first = eng not in _said
+        _said.add(eng)
+        swap = ko if first else NAMES_ROMAN.get(eng, ko)
+        if first:
+            # 첫 번째만 한글, 나머지는 소리나는 대로
+            out = re.sub(pat, swap, out, count=1, flags=re.IGNORECASE)
+            out = re.sub(pat, NAMES_ROMAN.get(eng, ko), out, flags=re.IGNORECASE)
+        else:
+            out = re.sub(pat, swap, out, flags=re.IGNORECASE)
     # 줄표를 마침표로 바꾸면 그 뒤가 소문자로 남는다 — 읽는 투가 어색해진다.
     out = re.sub(r"([.!?]\s+)([a-z])", lambda m: m.group(1) + m.group(2).upper(), out)
     return " ".join(out.split())
@@ -216,8 +237,9 @@ async def main():
                     help="고유명사를 어떻게 읽힐까 — ko(한글) · roman(소리나는 대로) · off")
     args = ap.parse_args()
 
-    global NAMES
+    global NAMES, _said
     NAMES = {"ko": NAMES_KO, "roman": NAMES_ROMAN, "off": {}}[args.names]
+    _said = set()  # 판마다 새로 센다
 
     raw = os.environ.get("SRT", "").strip()
     if not raw:
