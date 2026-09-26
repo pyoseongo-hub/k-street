@@ -48,6 +48,13 @@ async def one(voice: str, text: str) -> tuple[str, bool, str]:
     path = OUT / f"{voice}.mp3"
     try:
         await edge_tts.Communicate(text, voice).save(str(path))
+        # 🚨 **없는 이름을 불러도 예외가 안 난다 — 0바이트 파일이 조용히 남는다.**
+        #    2026-09-26에 ko-KR 여성 목소리 셋을 넣었더니 ✅ 넷이 찍히고
+        #    파일 셋이 0바이트였다. 크기로 잡는다.
+        size = path.stat().st_size if path.exists() else 0
+        if size < 1000:
+            path.unlink(missing_ok=True)
+            return voice, False, f"소리가 비었다 ({size}바이트) — 그런 이름이 없을 것"
         return voice, True, ""
     except Exception as e:  # 이름이 없거나 서비스가 잠깐 막힌 것 — 다른 목소리는 계속 만든다
         return voice, False, f"{type(e).__name__}: {str(e)[:80]}"

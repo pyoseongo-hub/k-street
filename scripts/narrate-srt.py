@@ -210,10 +210,26 @@ def for_speech(text):
     return " ".join(out.split())
 
 
+#: 🎚️ 음높이(Hz). 목소리가 하나뿐인 언어에서 **나이·분위기를 바꾸는 유일한 손잡이**다.
+#:   한국어 여성은 edge-tts 에 ko-KR-SunHiNeural 하나뿐이라(2026-09-26 확인:
+#:   ko-KR 은 SunHi · InJoon · HyunsuMultilingual 셋이고 여성은 SunHi 뿐),
+#:   「젊고 밝게」를 목소리를 바꿔서는 못 낸다. 음높이를 올리고 조금 빠르게 읽힌다.
+PITCH = 0
+
+
 async def say(text, voice, path, rate=0):
-    kw = {"rate": f"{rate:+d}%"} if rate else {}
+    kw = {}
+    if rate:
+        kw["rate"] = f"{rate:+d}%"
+    if PITCH:
+        kw["pitch"] = f"{PITCH:+d}Hz"
     await edge_tts.Communicate(for_speech(text), voice, **kw).save(str(path))
     trim_silence(path)
+    # 🚨 **없는 목소리·막힌 연결은 소리 없이 0바이트를 남긴다.** 여기서 잡는다 —
+    #    오늘 sample-voices 가 빈 파일 셋을 ✅ 라고 올렸다.
+    if path.stat().st_size < 1000:
+        sys.exit(f"❌ 소리가 비었다 ({path.name}, {path.stat().st_size}바이트) — "
+                 f"목소리 이름이나 연결을 볼 것")
 
 
 async def say_fitting(text, voice, path, slot, label):
@@ -242,7 +258,14 @@ async def main():
                     help="자유 모드에서 줄과 줄 사이에 둘 틈(초)")
     ap.add_argument("--names", choices=["ko", "roman", "off"], default="ko",
                     help="고유명사를 어떻게 읽힐까 — ko(한글) · roman(소리나는 대로) · off")
+    ap.add_argument("--rate", type=int, default=0,
+                    help="기본 속도에 더할 값(%%). 밝고 경쾌하게는 +8 쯤")
+    ap.add_argument("--pitch", type=int, default=0,
+                    help="음높이(Hz). 젊은 느낌은 +10~+20, 낮고 차분하게는 -10")
     args = ap.parse_args()
+
+    global PITCH
+    PITCH = args.pitch
 
     global NAMES, _said
     NAMES = {"ko": NAMES_KO, "roman": NAMES_ROMAN, "off": {}}[args.names]
@@ -263,7 +286,8 @@ async def main():
     tmp = out / "_parts"; tmp.mkdir(exist_ok=True)
 
     mode = "자유 — 소리에 영상을 맞춘다" if args.free else "맞춤 — 준 시간표에 소리를 맞춘다"
-    print(f"🎙️ {args.voice} · {len(cues)}줄 · {mode}\n")
+    tune = f" · 속도 {args.rate:+d}% · 음높이 {args.pitch:+d}Hz" if (args.rate or args.pitch) else ""
+    print(f"🎙️ {args.voice} · {len(cues)}줄 · {mode}{tune}\n")
     parts, over = [], 0
 
     if args.free:
@@ -271,7 +295,7 @@ async def main():
         t, new_cues = 0.0, []
         for i, (_, _, line) in enumerate(cues):
             p = tmp / f"{i:02d}.mp3"
-            await say(line, args.voice, p, BASE_RATE)
+            await say(line, args.voice, p, BASE_RATE + args.rate)
             d = sec(p)
             spoken = for_speech(line)
             mark = "  ✎ 읽을 때만 고침" if spoken != line else ""
