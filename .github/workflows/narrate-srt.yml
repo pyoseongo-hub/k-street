@@ -33,6 +33,11 @@ on:
         description: "자유일 때 줄과 줄 사이 틈(초)"
         type: string
         default: "0.4"
+      names:
+        description: "고유명사 발음 — ko(한글, 진짜 한국 발음) · roman(영어로 소리나는 대로) · off"
+        type: choice
+        options: ["ko", "roman", "off"]
+        default: "ko"
       branch:
         description: "소리를 올릴 가지. **덮어쓴다**"
         type: string
@@ -61,6 +66,7 @@ jobs:
         run: |
           python3 scripts/narrate-srt.py \
             --out narration --voice "${{ inputs.voice }}" --name "${{ inputs.name }}" \
+            --names "${{ inputs.names }}" \
             ${{ inputs.free && format('--free --gap {0}', inputs.gap) || '' }}
 
       - name: 가지에 올린다

@@ -129,11 +129,54 @@ SPEECH_FIX = [
 ]
 
 
+# ─────────────────────────────────────────────────────────────────────────
+# 🇰🇷 **고유명사는 한국식으로 읽힌다** (사장님 지시, 2026-09-26)
+# ─────────────────────────────────────────────────────────────────────────
+#   사장님: *"경복궁이네 발음이 이상해 / 이상하니 언어가 아니게 들려 /
+#            자이엔복강 이렇게 들레 / 고유 명사 발음 한국식으로해"*
+#
+#   영어 목소리는 `Gyeongbokgung` 의 **`Gy` 를 「자이」로** 읽는다.
+#   그러면 손님 귀에 「자이엔복강」이 되고, **말이 아닌 소리**로 들린다.
+#   외국인이 가게에서 그 이름을 말해야 하는데, 잘못 배운 발음을 가르치는 꼴이다.
+#
+#   🚨 **자막은 로마자 그대로 둔다.** 손님이 읽고 찾아야 하는 글자다.
+#      바꾸는 것은 **읽히는 소리뿐**이다.
+#
+#   두 가지 길 — 어느 쪽이 나은지는 **귀로 들어야** 안다:
+#     · `ko`    — 한글을 그대로 넣는다. 다국어 목소리가 **진짜 한국어**로 읽는다.
+#     · `roman` — 영어로 소리나는 대로 적는다. 영어 발음이지만 훨씬 가깝다.
+#     · `off`   — 안 건드린다.
+NAMES_KO = {
+    "Gyeongbokgung": "경복궁", "Geunjeongjeon": "근정전", "Gyeonghoeru": "경회루",
+    "Hyangwonjeong": "향원정", "Gwanghwamun": "광화문", "Changdeokgung": "창덕궁",
+    "Deoksugung": "덕수궁", "Bukchon": "북촌", "Insadong": "인사동",
+    "Myeongdong": "명동", "Hongdae": "홍대", "Namsan": "남산",
+    "Bukhansan": "북한산", "Jongno": "종로", "hanbok": "한복",
+    "Sumunjang": "수문장", "Cheonggyecheon": "청계천", "Gwangjang": "광장",
+}
+NAMES_ROMAN = {
+    "Gyeongbokgung": "Kyung-bok-goong", "Geunjeongjeon": "Keun-jung-jun",
+    "Gyeonghoeru": "Kyung-hway-roo", "Hyangwonjeong": "Hyang-won-jung",
+    "Gwanghwamun": "Gwang-hwa-moon", "Changdeokgung": "Chang-duk-goong",
+    "Deoksugung": "Duk-soo-goong", "Bukchon": "Book-chon",
+    "Insadong": "In-sa-dong", "Myeongdong": "Myung-dong",
+    "Hongdae": "Hong-dae", "Namsan": "Nam-san", "Bukhansan": "Book-han-san",
+    "Jongno": "Jong-no", "hanbok": "Han-bok", "Sumunjang": "Soo-moon-jang",
+    "Cheonggyecheon": "Chung-gye-chun", "Gwangjang": "Gwang-jang",
+}
+#: 어느 표를 쓸까. main() 이 `--names` 를 보고 정한다.
+NAMES = NAMES_KO
+
+
 def for_speech(text):
     """읽히기 전에 손본다. **자막은 안 건드린다.**"""
     out = text
     for a, b in SPEECH_FIX:
         out = out.replace(a, b)
+    # 🇰🇷 고유명사를 낱말 단위로 바꾼다. 대소문자를 가리지 않는다
+    #    (문장 첫머리의 Hanbok 과 가운데의 hanbok 이 둘 다 잡혀야 한다).
+    for eng, ko in NAMES.items():
+        out = re.sub(rf"\b{re.escape(eng)}\b", ko, out, flags=re.IGNORECASE)
     # 줄표를 마침표로 바꾸면 그 뒤가 소문자로 남는다 — 읽는 투가 어색해진다.
     out = re.sub(r"([.!?]\s+)([a-z])", lambda m: m.group(1) + m.group(2).upper(), out)
     return " ".join(out.split())
@@ -169,7 +212,12 @@ async def main():
                     help="준 시간표를 무시하고 자연스럽게 읽은 뒤 시간표를 새로 뽑는다")
     ap.add_argument("--gap", type=float, default=0.4,
                     help="자유 모드에서 줄과 줄 사이에 둘 틈(초)")
+    ap.add_argument("--names", choices=["ko", "roman", "off"], default="ko",
+                    help="고유명사를 어떻게 읽힐까 — ko(한글) · roman(소리나는 대로) · off")
     args = ap.parse_args()
+
+    global NAMES
+    NAMES = {"ko": NAMES_KO, "roman": NAMES_ROMAN, "off": {}}[args.names]
 
     raw = os.environ.get("SRT", "").strip()
     if not raw:
