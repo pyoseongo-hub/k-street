@@ -95,6 +95,9 @@ export default function NearbyCourse() {
       </div>
       {/* 📏 **직선거리라는 사실을 여기서 한 번 밝힌다.** 아래 숫자마다 붙이면 읽기 힘들다 */}
       <p className="nc-intro">{t.nearbyCourseIntro}</p>
+      {/* 📌 직선거리라는 사실은 위 줄이 말한다. 이 줄은 **값 자체가 틀릴 수 있다**는 말이다
+          (사장님 지시 2026-09-26: "자료도 100 프로 믿을수 없으니 안내문 필수야"). */}
+      <p className="map-disclaimer map-disclaimer--fine">{t.dataMayBeWrong}</p>
 
       <div className="nc-row">
         <span className="nc-row-label">{t.nearbyCourseHowMany}</span>

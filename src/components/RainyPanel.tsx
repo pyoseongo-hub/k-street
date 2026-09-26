@@ -138,6 +138,12 @@ export default function RainyPanel({ onClose }: { onClose: () => void }) {
           </span>
         </p>
 
+        {/* 📌 **자료는 100% 못 믿는다 — 안내문은 필수다** (사장님 지시 2026-09-26).
+            실내·아케이드 판정도, 역까지의 거리도 우리가 매긴 값이다.
+            목록 맨 위에 **한 번만** 적는다 — 줄마다 붙이면 목록이 안 읽힌다
+            (2026-09-02 "칸차지가 심해"). */}
+        <p className="map-disclaimer map-disclaimer--fine">{t.dataMayBeWrong}</p>
+
         {/* 🚇 **호선을 고른다.** 사장님: "지하철 1호선 방면 2호선 방면 이런 식이
             되어야 사람이 계획을 잡지." 옆으로 굴러가는 줄이라 자리를 한 줄만 먹는다. */}
         <div className="rp-lines" role="tablist" aria-label={t.rainyH1}>

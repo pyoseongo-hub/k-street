@@ -82,7 +82,7 @@ export default function ArrivalGuide({ onClose }: { onClose: () => void }) {
   // 🔙 폰 뒤로가기로 닫는다 — 전체화면에서 손님이 실제로 쓰는 길이다.
   //    주소 기록을 안 남기면 뒤로가기가 **앱을 통째로 꺼뜨린다**(useOverlay 머리말).
   useOverlay(onClose);
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const g = pick(DATA.안내, language);
   const linkLabel = pick(DATA.공식링크라벨, language);
   // 🔽 **첫 칸은 펼쳐 둔다.** 아홉 칸이 다 접혀 있으면 열자마자 제목만 보여
@@ -103,6 +103,10 @@ export default function ArrivalGuide({ onClose }: { onClose: () => void }) {
           </button>
         </div>
         <p className="ag-intro">{g.intro}</p>
+        {/* 📌 **자료는 100% 못 믿는다 — 안내문은 필수다** (사장님 지시 2026-09-26).
+            칸마다 공식 링크를 달아 뒀지만, 손님이 그걸 누르기 전에 **여기 적힌 말을
+            먼저 믿는다.** 공항 안내는 틀리면 비행기를 놓치는 자리라 더 그렇다. */}
+        <p className="map-disclaimer map-disclaimer--fine">{t.dataMayBeWrong}</p>
 
         {g.sections.map((s, i) => {
           const links = DATA.공식링크[i] ?? [];
