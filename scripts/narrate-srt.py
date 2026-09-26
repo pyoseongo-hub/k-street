@@ -153,6 +153,10 @@ NAMES_KO = {
     "Myeongdong": "명동", "Hongdae": "홍대", "Namsan": "남산",
     "Bukhansan": "북한산", "Jongno": "종로", "hanbok": "한복",
     "Sumunjang": "수문장", "Cheonggyecheon": "청계천", "Gwangjang": "광장",
+    # 🏞️ 한강 (2026-09-26에 넣었다 — 없으면 "행갱"처럼 읽힌다)
+    "Hangang": "한강", "Yanghwa": "양화", "Mangwon": "망원",
+    "Banpo": "반포", "Yeouido": "여의도", "Ttukseom": "뚝섬",
+    "Yongyangbongjeojeong": "용양봉저정",
 }
 NAMES_ROMAN = {
     "Gyeongbokgung": "Kyung-bok-goong", "Geunjeongjeon": "Keun-jung-jun",
@@ -163,6 +167,9 @@ NAMES_ROMAN = {
     "Hongdae": "Hong-dae", "Namsan": "Nam-san", "Bukhansan": "Book-han-san",
     "Jongno": "Jong-no", "hanbok": "Han-bok", "Sumunjang": "Soo-moon-jang",
     "Cheonggyecheon": "Chung-gye-chun", "Gwangjang": "Gwang-jang",
+    "Hangang": "Han-gang", "Yanghwa": "Yang-hwa", "Mangwon": "Mang-won",
+    "Banpo": "Ban-po", "Yeouido": "Yuh-ui-do", "Ttukseom": "Ttook-seom",
+    "Yongyangbongjeojeong": "Yong-yang-bong-juh-jung",
 }
 #: 어느 표를 쓸까. main() 이 `--names` 를 보고 정한다.
 NAMES = NAMES_KO
