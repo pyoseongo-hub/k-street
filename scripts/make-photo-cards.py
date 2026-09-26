@@ -83,14 +83,21 @@ def cover(img, w, h):
     return img.resize((w, h), Image.LANCZOS, box=box)
 
 
-def scrim(img, top_y, strength=232):
-    """아래쪽을 어둡게 깐다. 안 깔면 밝은 사진에서 흰 글자가 안 읽힌다."""
+def scrim(img, top_y, strength=248):
+    """아래쪽을 어둡게 깐다. 안 깔면 밝은 사진에서 흰 글자가 안 읽힌다.
+
+    🚨 **처음엔 약하게 잡았다가 첫 판에서 데였다** (2026-09-26).
+       가짜 사진(단색 그라데이션)으로 시험했을 때는 충분해 보였는데,
+       실제 수문장 사진은 **빨강·파랑 한복이 그 자리에 그대로** 있어서
+       흰 글자가 묻혔다. 진짜 사진은 가짜보다 훨씬 밝고 복잡하다.
+       → 더 진하게(248), 더 일찍(지수 0.72) 깔고, **띠도 더 높이서** 시작한다.
+       사진이 조금 어두워지는 것이 글자가 안 읽히는 것보다 낫다."""
     w, h = img.size
     band = h - top_y
     mask = Image.new("L", (1, band))
     for y in range(band):
         t = y / max(band - 1, 1)
-        mask.putpixel((0, y), int(strength * (t ** 0.85)))
+        mask.putpixel((0, y), int(strength * (t ** 0.72)))
     mask = mask.resize((w, band))
     img.paste(Image.new("RGB", (w, band), (8, 11, 9)), (0, top_y), mask)
 
@@ -154,7 +161,7 @@ def render(card, kind, bold_path, reg_path, out_dir, src_path):
 
     bottom = TIKTOK_SAFE_BOTTOM if kind == "tiktok" else h - pad
     y = bottom - block
-    scrim(img, max(0, y - 150))
+    scrim(img, max(0, y - 240))
 
     def put(text, font, fill, yy):
         d.text((pad, yy), text, font=font, fill=fill)
