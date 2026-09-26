@@ -787,6 +787,13 @@ ${
   //    (사장님 지시 2026-09-12: "항상 공식 페이지 링크 주고 직접 확인 가능하게").
   //    「10월 2일 – 11일 — 확정 일정은 며칠 전에야 공지되기도 합니다」는 말이 안 된다.
   //    이미 공지된 날짜이기 때문이다. 대신 근거를 댄다.
+  //
+  //    🚨 **그래도 「바뀔 수 있다」는 빼지 않는다** (사장님 지시 2026-09-26:
+  //       "우리 자료는 항상 안내문 달아놔, 날자는 해당 주최측 사정으로 바뀔수있다").
+  //       확정은 **공지가 났다**는 뜻이지 **반드시 열린다**는 뜻이 아니다 —
+  //       태풍·예산·사고로 미뤄지거나 취소되는 일이 해마다 있다. 손님은 비행기를
+  //       끊고 온다. 문구를 바꿔 단다: 「며칠 전에야 공지된다」(아직 모를 때)가
+  //       아니라 **「주최 측 사정으로 바뀔 수 있다」**(이미 공지된 뒤).
   //    기관 이름은 한국어 그대로 둔다 — 현지에서 그대로 보여 줄 수 있어야 한다.
   (() => {
     if (!when) return "";
@@ -805,7 +812,8 @@ ${
     const checked = sure.fetchedAt
       ? `<br><span class="note">${esc(S.checkedOn(isoLabel(sure.fetchedAt, lang)))}</span>`
       : "";
-    return `<dt>${esc(S.when)}</dt><dd><strong>${esc(when)}</strong> — ${tail}${checked}</dd>`;
+    const mayChange = `<br><span class="note">${esc(S.datesMayChange)}</span>`;
+    return `<dt>${esc(S.when)}</dt><dd><strong>${esc(when)}</strong> — ${tail}${checked}${mayChange}</dd>`;
   })()
 }
 ${

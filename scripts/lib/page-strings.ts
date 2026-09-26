@@ -39,6 +39,8 @@ export interface PageStrings {
    * 앱 화면의 같은 안내는 src/lib/translations.ts 의 festivalDateDisclaimer.
    */
   datesShift: string;
+  /** 🚨 **확정 날짜에도 붙인다** — 주최 측이 미루거나 취소할 수 있다 (사장님 지시 2026-09-26) */
+  datesMayChange: string;
   /**
    * 🗓️ 이름에 지난 연도가 박힌 행사에 붙이는 한 줄 (2026-09-10).
    *    「2025년 회차 기록입니다 — 올해도 열리는지 공식 안내를 확인하세요」
@@ -100,6 +102,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     sells: "파는 것",
     official: "공식 안내",
     datesShift: "확정 일정은 며칠 전에야 공지되기도 합니다. 가시기 전에 공식 안내를 확인하세요",
+    datesMayChange: "주최 측 사정으로 날짜가 바뀔 수 있습니다. 가시기 전에 공식 안내를 확인하세요",
     pastEdition: (y) => `${y}년 회차 기록입니다 — 올해도 열리는지 공식 안내를 확인하세요`,
     checkedOn: (d) => `${d}에 주최 측 공지에서 확인했습니다`,
     moreIn: (gu) => `${gu}의 다른 곳`,
@@ -123,6 +126,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     sells: "What's sold",
     official: "Official",
     datesShift: "the exact schedule is sometimes announced only days beforehand, check the official notice before you go",
+    datesMayChange: "dates can still change at the organiser's discretion — check the official notice before you go",
     pastEdition: (y) => `Record of the ${y} edition — check the official notice to see if it runs this year`,
     checkedOn: (d) => `Checked against the organiser's notice on ${d}`,
     moreIn: (gu) => `More in ${gu}`,
@@ -148,6 +152,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     sells: "扱う品",
     official: "公式案内",
     datesShift: "確定日程は開催の数日前に発表されることもあります。おでかけ前に公式案内をご確認ください",
+    datesMayChange: "主催者の都合で日程が変更になる場合があります。おでかけ前に公式案内をご確認ください",
     pastEdition: (y) => `${y}年開催分の記録です — 今年も開催されるかは公式案内をご確認ください`,
     checkedOn: (d) => `${d}に主催者の公式告知で確認しました`,
     moreIn: (gu) => `${gu}のほかの場所`,
@@ -171,6 +176,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     sells: "经营品类",
     official: "官方信息",
     datesShift: "确切日程有时在活动前几天才公布，出发前请查看官方公告",
+    datesMayChange: "主办方可能因故变更日期，出发前请查看官方公告",
     pastEdition: (y) => `这是${y}年那一届的记录 — 今年是否举办请查看官方公告`,
     checkedOn: (d) => `已于${d}核对主办方公告`,
     moreIn: (gu) => `${gu}的其他地方`,
@@ -194,6 +200,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     sells: "經營品項",
     official: "官方資訊",
     datesShift: "確切日程有時在活動前幾天才公布，出發前請查看官方公告",
+    datesMayChange: "主辦單位可能因故變更日期，出發前請查看官方公告",
     pastEdition: (y) => `這是${y}年那一屆的紀錄 — 今年是否舉辦請查看官方公告`,
     checkedOn: (d) => `已於${d}核對主辦單位公告`,
     moreIn: (gu) => `${gu}的其他地方`,
@@ -217,6 +224,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     sells: "Mặt hàng",
     official: "Thông tin chính thức",
     datesShift: "lịch chính thức đôi khi chỉ được công bố vài ngày trước, hãy xem thông báo chính thức trước khi đi",
+    datesMayChange: "ngày có thể thay đổi tùy theo ban tổ chức — hãy xem thông báo chính thức trước khi đi",
     pastEdition: (y) => `Ghi nhận của kỳ ${y} — hãy xem thông báo chính thức để biết năm nay có tổ chức không`,
     checkedOn: (d) => `Đã đối chiếu với thông báo của ban tổ chức ngày ${d}`,
     moreIn: (gu) => `Địa điểm khác ở ${gu}`,
@@ -242,6 +250,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     sells: "Qué se vende",
     official: "Información oficial",
     datesShift: "el calendario definitivo a veces se anuncia solo unos días antes; consulta el aviso oficial antes de ir",
+    datesMayChange: "las fechas pueden cambiar por decisión de la organización; consulta el aviso oficial antes de ir",
     pastEdition: (y) => `Registro de la edición de ${y} — consulta el aviso oficial para saber si se celebra este año`,
     checkedOn: (d) => `Verificado con el aviso del organizador el ${d}`,
     moreIn: (gu) => `Más en ${gu}`,
@@ -267,6 +276,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     sells: "Ce qu'on y vend",
     official: "Infos officielles",
     datesShift: "le programme définitif n'est parfois annoncé que quelques jours avant ; consultez l'avis officiel avant de partir",
+    datesMayChange: "les dates peuvent changer selon l'organisateur ; consultez l'avis officiel avant de partir",
     pastEdition: (y) => `Trace de l’édition ${y} — consultez l’avis officiel pour savoir si elle a lieu cette année`,
     checkedOn: (d) => `Vérifié auprès de l’annonce de l’organisateur le ${d}`,
     moreIn: (gu) => `Autres lieux à ${gu}`,
@@ -292,6 +302,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     sells: "Angebot",
     official: "Offizielle Info",
     datesShift: "der genaue Zeitplan wird manchmal erst wenige Tage vorher bekannt gegeben; bitte vor dem Besuch die offizielle Ankündigung prüfen",
+    datesMayChange: "die Termine können sich seitens des Veranstalters ändern; bitte vor dem Besuch die offizielle Ankündigung prüfen",
     pastEdition: (y) => `Aufzeichnung der Ausgabe ${y} — bitte die offizielle Ankündigung prüfen, ob sie dieses Jahr stattfindet`,
     checkedOn: (d) => `Am ${d} mit der Ankündigung des Veranstalters abgeglichen`,
     moreIn: (gu) => `Mehr in ${gu}`,
@@ -317,6 +328,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     sells: "Что продают",
     official: "Официально",
     datesShift: "точное расписание иногда объявляют лишь за несколько дней; перед поездкой смотрите официальное объявление",
+    datesMayChange: "организатор может изменить даты — перед поездкой смотрите официальное объявление",
     pastEdition: (y) => `Запись о выпуске ${y} года — смотрите официальное объявление, проводится ли он в этом году`,
     checkedOn: (d) => `Сверено с объявлением организатора ${d}`,
     moreIn: (gu) => `Ещё в ${gu}`,
@@ -342,6 +354,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     sells: "Yang dijual",
     official: "Info resmi",
     datesShift: "jadwal pastinya kadang baru diumumkan beberapa hari sebelumnya; cek pengumuman resmi sebelum berangkat",
+    datesMayChange: "tanggal bisa berubah sesuai keputusan penyelenggara; cek pengumuman resmi sebelum berangkat",
     pastEdition: (y) => `Catatan edisi ${y} — cek pengumuman resmi apakah tahun ini digelar`,
     checkedOn: (d) => `Dicek dengan pengumuman penyelenggara pada ${d}`,
     moreIn: (gu) => `Lainnya di ${gu}`,
@@ -367,6 +380,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     sells: "สินค้าที่ขาย",
     official: "ข้อมูลทางการ",
     datesShift: "กำหนดการที่แน่นอนบางครั้งประกาศก่อนงานเพียงไม่กี่วัน โปรดตรวจสอบประกาศทางการก่อนเดินทาง",
+    datesMayChange: "ผู้จัดงานอาจเปลี่ยนแปลงวันจัดงาน โปรดตรวจสอบประกาศทางการก่อนเดินทาง",
     pastEdition: (y) => `บันทึกของครั้งปี ${y} — โปรดตรวจสอบประกาศทางการว่าปีนี้จัดหรือไม่`,
     checkedOn: (d) => `ตรวจสอบกับประกาศของผู้จัดเมื่อ ${d}`,
     moreIn: (gu) => `ที่อื่นใน ${gu}`,
