@@ -25,7 +25,7 @@
 #
 #   CARDS='[{...}]' python3 scripts/make-photo-cards.py --out out
 import json, os, sys, argparse, urllib.request
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance, ImageStat
 
 # 📐 **크기.** 인스타는 세로 4:5, 틱톡은 9:16.
 SIZES = {
@@ -83,23 +83,50 @@ def cover(img, w, h):
     return img.resize((w, h), Image.LANCZOS, box=box)
 
 
-def scrim(img, top_y, strength=248):
-    """아래쪽을 어둡게 깐다. 안 깔면 밝은 사진에서 흰 글자가 안 읽힌다.
+def scrim(img, top_y, dark=True, strength=248):
+    """글자가 앉을 아래쪽을 덮는다. 안 덮으면 사진 무늬에 글자가 묻힌다.
 
     🚨 **처음엔 약하게 잡았다가 첫 판에서 데였다** (2026-09-26).
        가짜 사진(단색 그라데이션)으로 시험했을 때는 충분해 보였는데,
        실제 수문장 사진은 **빨강·파랑 한복이 그 자리에 그대로** 있어서
        흰 글자가 묻혔다. 진짜 사진은 가짜보다 훨씬 밝고 복잡하다.
-       → 더 진하게(248), 더 일찍(지수 0.72) 깔고, **띠도 더 높이서** 시작한다.
-       사진이 조금 어두워지는 것이 글자가 안 읽히는 것보다 낫다."""
+
+    @param dark 어둡게 덮을지(흰 글자용), 밝게 덮을지(검은 글자용).
+                밝은 사진에 억지로 검은 띠를 깔면 사진이 죽는다 — 그때는
+                **반대로** 하얗게 덮고 검은 글자를 쓴다(아래 pick_ink).
+    """
     w, h = img.size
     band = h - top_y
+    if band <= 1:
+        return
     mask = Image.new("L", (1, band))
     for y in range(band):
         t = y / max(band - 1, 1)
         mask.putpixel((0, y), int(strength * (t ** 0.72)))
     mask = mask.resize((w, band))
-    img.paste(Image.new("RGB", (w, band), (8, 11, 9)), (0, top_y), mask)
+    veil = (8, 11, 9) if dark else (248, 248, 245)
+    img.paste(Image.new("RGB", (w, band), veil), (0, top_y), mask)
+
+
+def brightness(img, box):
+    """그 자리가 밝나 어둡나 — 0(검정) ~ 255(흰색)."""
+    return ImageStat.Stat(img.crop(box).convert("L")).mean[0]
+
+
+def pick_ink(img, box):
+    """**사진 위에 얹을 글자 색을 사진을 보고 고른다** (사장님 지시 2026-09-26:
+    *"세로면 사진에 잘보이는 색 택스트로"*).
+
+    글자가 앉을 자리의 밝기를 실제로 재서 고른다. 늘 흰 글자로 두면
+    눈 덮인 마당·흰 하늘 같은 밝은 사진에서 안 읽힌다.
+
+    @return (글자색, 흐린색, 표색, 어둡게덮을까)
+    """
+    if brightness(img, box) > 148:
+        # 밝은 사진 → 하얗게 덮고 **검은 글자**. 표는 노랑이 안 보이니 붉은 흙빛으로.
+        return (18, 22, 20), (92, 100, 94), (162, 60, 34), False
+    # 어두운 사진 → 어둡게 덮고 **흰 글자**
+    return (255, 255, 255), (198, 206, 199), (255, 206, 92), True
 
 
 def wrap(draw, text, font, max_w):
@@ -136,8 +163,21 @@ def wrap(draw, text, font, max_w):
 
 
 def render(card, kind, bold_path, reg_path, out_dir, src_path):
+    """카드 한 장.
+
+    🖼️ **사진 모양에 따라 두 가지로 찍는다** (사장님 지시 2026-09-26:
+       *"사진이 가로면 빈자리 텍스트 넣고 / 세로면 사진에 잘보이는 색 택스트로"*).
+
+       · **가로 사진** — 자르지 않는다. 폭에 맞춰 통째로 넣고, **남는 자리에**
+         글자를 앉힌다. 뒤는 같은 사진을 크게 흐려 깐다(단색 판보다 사진과
+         어울린다). 잘라 버리면 관광공사 사진의 좌우가 날아간다 —
+         근정전이나 경회루는 **옆으로 긴 건물**이라 잘리면 건물이 반토막 난다.
+       · **세로 사진** — 꽉 채우고 그 위에 글자를 얹는다. 색은 **그 자리 밝기를
+         재서** 고른다(pick_ink).
+    """
     w, h = SIZES[kind]
-    img = cover(Image.open(src_path).convert("RGB"), w, h)
+    src = Image.open(src_path).convert("RGB")
+    landscape = src.width > src.height
 
     pad = 76
     max_w = w - pad * 2
@@ -148,46 +188,71 @@ def render(card, kind, bold_path, reg_path, out_dir, src_path):
     f_cr = ImageFont.truetype(reg_path, 23)
     f_mk = ImageFont.truetype(bold_path, 27)
 
-    d = ImageDraw.Draw(img)
-    en_lines = wrap(d, card.get("en", ""), f_en, max_w)
-    ja_lines = wrap(d, card.get("ja", ""), f_ja, max_w)
-
-    # 글자 덩어리 높이를 먼저 잰다 — 어디서부터 어둡게 깔지 정해야 한다.
+    # 글자 덩어리 높이를 먼저 잰다 — 사진을 어디에 놓을지가 여기 달렸다.
+    probe = ImageDraw.Draw(Image.new("RGB", (w, h)))
+    en_lines = wrap(probe, card.get("en", ""), f_en, max_w)
+    ja_lines = wrap(probe, card.get("ja", ""), f_ja, max_w)
     gap_s, gap_m, gap_l = 10, 18, 30
     block = 74 + gap_s + 27 + gap_l
     block += len(en_lines) * 56
     block += gap_m + len(ja_lines) * 52
     block += gap_l + 23
 
+    # 🚧 틱톡은 아래쪽을 제 UI 가 덮는다. 그 위에서 끝낸다.
     bottom = TIKTOK_SAFE_BOTTOM if kind == "tiktok" else h - pad
-    y = bottom - block
-    scrim(img, max(0, y - 240))
+
+    if landscape:
+        # ── 가로: 사진 통째로 + 빈자리에 글자 ──────────────────────────
+        ph_h = int(w * src.height / src.width)
+        photo = src.resize((w, ph_h), Image.LANCZOS)
+
+        # 뒤 판 — 같은 사진을 꽉 채워 흐리고 **확실히 어둡게**. 밝은 사진이 와도
+        # 흰 글자가 읽히도록 밝기를 고정한다(재서 고르는 것보다 결과가 고르다).
+        img = cover(src, w, h).filter(ImageFilter.GaussianBlur(48))
+        img = ImageEnhance.Brightness(img).enhance(0.42)
+
+        gap_photo = 46
+        content = ph_h + gap_photo + block
+        top = max(pad, (bottom - content) // 2)
+        img.paste(photo, (0, top))
+        y = top + ph_h + gap_photo
+        ink, dim, mark_col = (255, 255, 255), (206, 213, 206), (255, 206, 92)
+    else:
+        # ── 세로: 꽉 채우고 그 위에 글자 ──────────────────────────────
+        img = cover(src, w, h)
+        y = bottom - block
+        box = (0, max(0, y - 30), w, min(h, y + block + 20))
+        ink, dim, mark_col, dark = pick_ink(img, box)
+        scrim(img, max(0, y - 240), dark=dark)
+
+    d = ImageDraw.Draw(img)
 
     def put(text, font, fill, yy):
         d.text((pad, yy), text, font=font, fill=fill)
 
-    put(card["ko"], f_ko, (255, 255, 255), y); y += 74 + gap_s
-    put(card.get("ro", ""), f_ro, (198, 206, 199), y); y += 27 + gap_l
+    put(card["ko"], f_ko, ink, y); y += 74 + gap_s
+    put(card.get("ro", ""), f_ro, dim, y); y += 27 + gap_l
     for ln in en_lines:
-        put(ln, f_en, (255, 255, 255), y); y += 56
+        put(ln, f_en, ink, y); y += 56
     y += gap_m - 12
     for ln in ja_lines:
-        put(ln, f_ja, (214, 221, 214), y); y += 52
+        put(ln, f_ja, dim, y); y += 52
     y += gap_l
     # 🪪 포토코리아의 촬영자 칸은 「한국관광공사 이범수」처럼 기관 이름이 붙어 오기도 한다.
     #    그대로 쓰면 「한국관광공사 포토코리아 – 한국관광공사 이범수」가 된다 — 앞을 떼어낸다.
     by = card["by"].strip()
     if by.startswith("한국관광공사"):
         by = by[len("한국관광공사"):].strip() or card["by"].strip()
-    put("사진: 한국관광공사 포토코리아 – " + by, f_cr, (168, 178, 170), y)
+    put("사진: 한국관광공사 포토코리아 – " + by, f_cr, dim, y)
 
     # 🏷️ K-STREET 표는 **오른쪽 아래 구석**에 작게. 사진을 가리지 않는다.
     mark = "K-STREET"
     mw = d.textlength(mark, font=f_mk)
-    d.text((w - pad - mw, y - 2), mark, font=f_mk, fill=(255, 206, 92))
+    d.text((w - pad - mw, y - 2), mark, font=f_mk, fill=mark_col)
 
     name = f"{card['id']}-{kind}.png"
     img.save(os.path.join(out_dir, name), "PNG")
+    print(f"      {'가로(빈자리에 글자)' if landscape else '세로(사진 위 글자)'} · {src.width}×{src.height}")
     return name
 
 
