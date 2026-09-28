@@ -1,0 +1,57 @@
+name: Fetch category names (분류 코드 이름 받기)
+
+# 🏷️ 관광공사 분류 코드의 **공식 이름**을 받아 찍어 준다.
+#    표(scripts/lib/tour-categories.mjs)를 고치기 전에 돌린다 —
+#    코드 뜻을 제목 몇 개로 짐작하다 한 번 크게 틀린 적이 있다(A01010500).
+#
+# ⚠️ **아무것도 커밋하지 않는다.** 받아서 보여 주기만 한다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      codes:
+        description: "궁금한 코드만 (쉼표로). 비우면 소분류 전부"
+        type: string
+        required: false
+        default: ""
+
+jobs:
+  names:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15 # ⏱️ 천장이 없으면 느려진 것이 안 드러난다
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 인증키가 있나 본다
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          if [ -z "$TOUR_API_KEY" ]; then echo "❌ TOUR_API_KEY 가 없다."; exit 1; fi
+          echo "🔑 인증키 ${#TOUR_API_KEY}자"
+
+      - name: 이름을 받는다
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        # pipefail 이 없으면 node 가 죽어도 tee 가 성공해 이 단계가 초록색이 된다.
+        run: |
+          set -o pipefail
+          ARGS=""
+          if [ -n "${{ inputs.codes }}" ]; then ARGS="--codes ${{ inputs.codes }}"; fi
+          node scripts/fetch-category-names.mjs $ARGS 2>&1 | tee names.txt
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          { echo "## 🏷️ 분류 코드 이름"; echo ""; echo '```'
+            cat names.txt 2>/dev/null || echo "(로그 없음)"; echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: category-names
+          path: names.txt
+          if-no-files-found: ignore
