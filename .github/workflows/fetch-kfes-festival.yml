@@ -1,0 +1,40 @@
+name: Fetch kfes festival (구석구석 축제 날짜 받기)
+
+# 🎪 구석구석(kfes) 축제 **상세 주소**를 주면 확정 날짜·위치·주최를 읽어 온다.
+#    `src/data/festival-dates.json` 의 71건이 2025년에 멈춰 있어 만들었다 —
+#    자세한 것은 scripts/fetch-kfes-festival.mjs 머리말.
+#
+# 🚨 **아무것도 커밋하지 않는다.** 읽어서 보여 주기만 한다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: "구석구석 축제 상세 주소 (쉼표로 여럿). 목록·검색 주소는 안 된다 — 상세만 된다"
+        type: string
+        required: true
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10 # ⏱️ 천장이 없으면 느려진 것이 안 드러난다
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 읽어 온다
+        env:
+          URLS: ${{ inputs.urls }}
+        # pipefail 이 없으면 node 가 죽어도 tee 가 성공해 이 단계가 초록색이 된다.
+        run: |
+          set -o pipefail
+          node scripts/fetch-kfes-festival.mjs 2>&1 | tee kfes-log.txt
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          { echo "## 🎪 구석구석 축제 날짜"; echo ""; echo '```'
+            cat kfes-log.txt 2>/dev/null || echo "(로그 없음)"; echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
