@@ -1,0 +1,59 @@
+name: Make photo thumbs (사진 줄여서 보기)
+
+# 🖼️ 사진 주소를 주면 **가로 720px 로 줄여** 가지에 올린다. 고르시라고 만드는 것이다.
+#    원본은 저장소에 안 남긴다 — 자세한 것은 scripts/make-photo-thumbs.py 머리말.
+
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: "사진 주소 (쉼표로 여럿)"
+        type: string
+        required: true
+      width:
+        description: "줄일 가로 크기(px)"
+        type: string
+        default: "720"
+      branch:
+        description: "올릴 가지. **덮어쓴다**"
+        type: string
+        default: "claude/social-cards"
+
+jobs:
+  thumbs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15 # ⏱️ 천장이 없으면 느려진 것이 안 드러난다
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m pip install --quiet Pillow
+
+      - name: 받아서 줄인다
+        env:
+          URLS: ${{ inputs.urls }}
+        # pipefail 이 없으면 python 이 죽어도 tee 가 성공해 이 단계가 초록색이 된다.
+        run: |
+          set -o pipefail
+          python3 scripts/make-photo-thumbs.py --out thumbs --width "${{ inputs.width }}" 2>&1 | tee thumb-log.txt
+
+      - name: 가지에 올린다
+        env:
+          BRANCH: ${{ inputs.branch }}
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH" || true
+          git checkout -B "$BRANCH" "origin/$BRANCH" 2>/dev/null || git checkout -B "$BRANCH"
+          git add -f thumbs
+          git commit -q -m "🖼️ 줄인 사진 $(ls thumbs | wc -l)장"
+          git push -f origin "$BRANCH"
+          echo "올렸다 → $BRANCH"
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          { echo "## 🖼️ 줄인 사진"; echo ""; echo '```'
+            cat thumb-log.txt 2>/dev/null || echo "(로그 없음)"; echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
