@@ -59,6 +59,24 @@ export const RULES = [
     is: (p) => /공원$/.test(p.name),
     need: { ja: /公園|パーク|園/, zh: /公园|园/, "zh-TW": /公園|園/ },
   },
+  // 🧵 **한글이 남아 있는 것** (2026-10-01에 더했다 — 갈래를 안 가린다)
+  //
+  //   일곱 도시를 번역하고 보니 이런 것이 나왔다:
+  //       군위 남천고택 → 「軍位南天高택」   ← 「고택」의 택이 한글로 남았다
+  //   구글이 긴 이름을 조각내 옮기다 한 조각을 못 옮기면 이렇게 된다.
+  //
+  //   일본어·중국어 이름에 **한글이 섞이는 일은 없다.** 그래서 이 그물은
+  //   오해의 여지가 없다 — 걸리면 틀린 것이다. 갈래를 볼 필요도 없다.
+  //   (「경리단길 → キョンニダンギル」처럼 소리로 옮긴 것은 한글이 아니라 가타카나다.)
+  //
+  //   ⚠️ 그 대신 **지어내서 고치지 않는다.** 걸린 것은 버리고, 앱이 영어로 대신
+  //      보여 준다. 관광공사 공식 이름이 들어오면 그게 이 자리를 메운다.
+  {
+    key: "hangul-left",
+    label: "한글이 남은 이름",
+    is: () => true,
+    forbid: { ja: /[가-힣]/, zh: /[가-힣]/, "zh-TW": /[가-힣]/ },
+  },
 ];
 
 export const CJK_LANGS = ["ja", "zh", "zh-TW"];
@@ -80,6 +98,12 @@ export function brokenCjkNames(translations, places) {
         if (!names.has(ko)) continue;
         // 괄호 안의 지역 이름(（釜山）·（首尔）)은 빼고 본다 — 거기만 한자면 오해한다.
         const body = String(v).replace(/[（(][^）)]*[）)]/g, "");
+        // 🧵 **있으면 안 되는 글자** 쪽 규칙(한글이 남은 것). 한자가 있든 없든 본다 —
+        //    「軍位南天高택」처럼 한자와 한글이 섞여 오는 것이 바로 걸러야 할 꼴이다.
+        if (rule.forbid) {
+          if (rule.forbid[lang].test(body)) out.push({ lang, ko, value: v, label: rule.label });
+          continue;
+        }
         if (HAN.test(body) && !rule.need[lang].test(body))
           out.push({ lang, ko, value: v, label: rule.label });
       }

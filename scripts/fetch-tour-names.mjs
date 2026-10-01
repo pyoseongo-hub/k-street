@@ -139,7 +139,21 @@ for (const [lang, svc, label] of SERVICES) {
       try {
         r = await call(svc, "areaBasedList2", { areaCode: area, numOfRows: "500", pageNo: String(page), arrange: "A" });
       } catch (e) {
-        console.log(`   ⚠️ ${areaName} ${page}쪽 — 못 받았다 (${String(e.message).slice(0, 70)})`);
+        const msg = String(e.message);
+        console.log(`   ⚠️ ${areaName} ${page}쪽 — 못 받았다 (${msg.slice(0, 70)})`);
+        // 🚦 **403 은 「없다」가 아니라 「이 열쇠로는 못 본다」다** (2026-10-01에 확인).
+        //    영문 서비스(EngService2)가 아홉 지역 전부 403 을 줬다. 이름 꼴이 달라서가
+        //    아니라 **이 열쇠가 그 서비스를 구독하고 있지 않아서**다.
+        //    → data.go.kr → 「한국관광공사 영문 관광정보 서비스」 → 활용신청.
+        //      같은 열쇠에 붙으므로 시크릿은 안 바꿔도 된다. 승인되면 저절로 붙는다.
+        //    ⚠️ 구독이 안 된 것을 「영어 공식 이름이 없다」고 적지 않는다 — 다른 말이다.
+        if (/HTTP 403/.test(msg)) {
+          console.log(
+            `      🚦 403 — 이 열쇠로 **${svc} 를 구독하고 있지 않다.** 자료가 없는 것이 아니다.\n` +
+              `         data.go.kr → 한국관광공사 ${label} 관광정보 서비스 → 활용신청 (열쇠는 그대로 쓴다)`
+          );
+          break;
+        }
         break;
       }
       total = r.total;
