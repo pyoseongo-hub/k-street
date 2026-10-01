@@ -20,6 +20,8 @@ export interface Translations {
   //    17곳 × 12언어 = 204칸을 손으로 채우면 반드시 어긋난다. 로마자 표기는
   //    한국 안내판에 실제로 쓰는 것이라 어느 나라 손님에게도 통한다.
   cityPickerTitle: string;
+  /** 📍 머리줄 아래 「지금 보는 도시」 칸의 작은 글씨. **짧게** — 세 칸이 한 줄에 선다(CityCard.tsx). */
+  cityCardLabel: string;
   cityPickerNote: string;
   cityGroupBig: string;
   cityGroupProvince: string;
@@ -395,6 +397,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: '저장한 곳은 이 기기에만 남습니다.',
     freeNoSignup: '평생 무료 · 가입 없음',
     cityPickerTitle: '한국, 어디로 가세요?',
+    cityCardLabel: '위치 선택',
     cityPickerNote: '도시를 하나씩 늘려 갑니다.',
     cityGroupBig: '대도시',
     cityGroupProvince: '도',
@@ -559,6 +562,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'Saved places stay on this device only.',
     freeNoSignup: 'Free forever · No sign-up',
     cityPickerTitle: 'Where in Korea?',
+    cityCardLabel: 'Choose city',
     cityPickerNote: 'We add cities one at a time.',
     cityGroupBig: 'Major cities',
     cityGroupProvince: 'Provinces',
@@ -723,6 +727,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: '保存した場所はこの端末にのみ残ります。',
     freeNoSignup: 'ずっと無料 · 登録不要',
     cityPickerTitle: '韓国、どこへ行きますか？',
+    cityCardLabel: '都市を選ぶ',
     cityPickerNote: '都市を一つずつ増やしていきます。',
     cityGroupBig: '大都市',
     cityGroupProvince: '道',
@@ -887,6 +892,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: '收藏内容仅保存在本设备上。',
     freeNoSignup: '永久免费 · 无需注册',
     cityPickerTitle: '韩国，你要去哪里？',
+    cityCardLabel: '选择城市',
     cityPickerNote: '我们会一座城市一座城市地增加。',
     cityGroupBig: '大城市',
     cityGroupProvince: '道（省）',
@@ -1051,6 +1057,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: '收藏內容僅保存在本裝置上。',
     freeNoSignup: '永久免費 · 無需註冊',
     cityPickerTitle: '韓國，你要去哪裡？',
+    cityCardLabel: '選擇城市',
     cityPickerNote: '我們會一座城市一座城市地增加。',
     cityGroupBig: '大城市',
     cityGroupProvince: '道（省）',
@@ -1215,6 +1222,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'Địa điểm đã lưu chỉ nằm trên thiết bị này.',
     freeNoSignup: 'Miễn phí mãi mãi · Không cần đăng ký',
     cityPickerTitle: 'Bạn đi đâu ở Hàn Quốc?',
+    cityCardLabel: 'Chọn thành phố',
     cityPickerNote: 'Chúng tôi thêm từng thành phố một.',
     cityGroupBig: 'Thành phố lớn',
     cityGroupProvince: 'Tỉnh',
@@ -1379,6 +1387,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'Los lugares guardados solo quedan en este dispositivo.',
     freeNoSignup: 'Gratis para siempre · Sin registro',
     cityPickerTitle: '¿A dónde vas en Corea?',
+    cityCardLabel: 'Elegir ciudad',
     cityPickerNote: 'Añadimos ciudades una a una.',
     cityGroupBig: 'Ciudades principales',
     cityGroupProvince: 'Provincias',
@@ -1543,6 +1552,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'Les lieux enregistrés restent sur cet appareil uniquement.',
     freeNoSignup: 'Gratuit à vie · Sans inscription',
     cityPickerTitle: 'Où allez-vous en Corée ?',
+    cityCardLabel: 'Choisir la ville',
     cityPickerNote: 'Nous ajoutons les villes une par une.',
     cityGroupBig: 'Grandes villes',
     cityGroupProvince: 'Provinces',
@@ -1707,6 +1717,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'Gespeicherte Orte bleiben nur auf diesem Gerät.',
     freeNoSignup: 'Für immer kostenlos · Ohne Anmeldung',
     cityPickerTitle: 'Wohin in Korea?',
+    cityCardLabel: 'Stadt wählen',
     cityPickerNote: 'Weitere Städte kommen nach und nach dazu.',
     cityGroupBig: 'Großstädte',
     cityGroupProvince: 'Provinzen',
@@ -1871,6 +1882,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'Сохранённые места остаются только на этом устройстве.',
     freeNoSignup: 'Навсегда бесплатно · Без регистрации',
     cityPickerTitle: 'Куда в Корее?',
+    cityCardLabel: 'Выбрать город',
     cityPickerNote: 'Города добавляем по одному.',
     cityGroupBig: 'Крупные города',
     cityGroupProvince: 'Провинции',
@@ -2035,6 +2047,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'Tempat yang disimpan hanya tersimpan di perangkat ini.',
     freeNoSignup: 'Gratis selamanya · Tanpa daftar',
     cityPickerTitle: 'Mau ke mana di Korea?',
+    cityCardLabel: 'Pilih kota',
     cityPickerNote: 'Kami menambah kota satu per satu.',
     cityGroupBig: 'Kota besar',
     cityGroupProvince: 'Provinsi',
@@ -2199,6 +2212,7 @@ const translations: Record<Language, Translations> = {
     savedOnThisPhone: 'ที่บันทึกไว้จะอยู่บนเครื่องนี้เท่านั้น',
     freeNoSignup: 'ฟรีตลอดไป · ไม่ต้องสมัคร',
     cityPickerTitle: 'ไปที่ไหนในเกาหลี',
+    cityCardLabel: 'เลือกเมือง',
     cityPickerNote: 'เราจะเพิ่มเมืองทีละแห่ง',
     cityGroupBig: 'เมืองใหญ่',
     cityGroupProvince: 'จังหวัด',

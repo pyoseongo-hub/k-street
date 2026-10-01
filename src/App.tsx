@@ -23,7 +23,7 @@ import WeatherCard from "./components/WeatherCard";
 import VideoCard from "./components/VideoCard";
 import BrandMark from "./components/BrandMark";
 import CityPicker from "./components/CityPicker";
-import { useCity } from "./lib/useCity";
+import CityCard from "./components/CityCard";
 
 function App() {
   const { toggleTheme, getIcon } = useTheme();
@@ -54,10 +54,10 @@ function App() {
   // ☔ 비 오는 날 지하상가는 **서울시설공단 자료**다. 부산에는 같은 자료가 없다.
   const isSeoul = useIsSeoul();
   const savedCount = useSavedEntries().length;
-  // 🏙️ 도시 카드가 고른 도시를 앱 전체에 알린다(useCity.tsx).
-  //    2026-09-17에 부산이 열리면서 카드가 나타났고, 이 값도 실제로 바뀐다.
-  // 🏙️ 머리줄 단추에 지금 도시 이름을 적고, 고를 것이 둘 이상일 때만 그린다.
-  const { city, canChoose } = useCity();
+  // 🏙️ **지금 도시는 여기서 안 읽는다** (2026-10-01). 이 줄에서 `city`·`canChoose` 를
+  //    꺼내 머리줄 📍 단추를 그렸는데, 그 단추가 글자 칸 줄로 내려가면서(CityCard.tsx)
+  //    여기서 쓸 일이 없어졌다. 쓰지도 않는 값을 꺼내 두면 다음 사람이 「이 화면이
+  //    도시를 본다」고 읽는다 — 안 읽는다. 여는 단추만 여기 있다(cityOpen).
 
   return (
     <div className="app-shell">
@@ -98,29 +98,15 @@ function App() {
             {/* ☂️ **여기 있던 「비 오는 날」 단추를 뺐다** (2026-09-13). 이유는 위
                 rainyOpen 주석에 적었다 — 한 줄로: 날씨 칸과 **같은 창을 여는 문**이
                 둘이었다. 머리줄 그림도 넷에서 셋으로 줄어 좁은 폰이 편해졌다. */}
-            {/* 📍 **지금 보는 도시.** 사장님이 화면에 동그라미를 쳐 주신 자리다
-                (2026-09-17) — 언어 고르개 바로 오른쪽, 머리줄 그림 맨 앞.
-                ⚠️ 이 단추로 머리줄 그림이 **셋에서 넷**이 됐다. 아래 ShareApp 주석의
-                   경고대로 **320px 에서 다시 재서** 줄이 안 갈라지는 것을 확인했다.
-                🙈 고를 도시가 하나뿐이면 안 그린다 — 눌러도 아무 일 없는 단추는
-                   손님 눈에 「고장 난 앱」이다(같은 주석의 오랜 규칙).
-                📏 **그림만 둔다 — 이름을 적었다가 뺐다.** 이름까지 적으니 360~420px
-                   구간에서 머리줄이 **가로로 34px 밀려 나갔다**(영어 기준. 로마자가
-                   한글보다 넓다). 머리줄의 오랜 규칙은 「대표 이름과 언어 단추는
-                   안 줄인다」라, 줄일 것은 이 단추뿐이었다.
-                   🗣️ 지금 도시는 **읽어 주는 말(aria-label)** 에 들어 있고, 화면에도
-                      이미 보인다 — 계절 제목이 「그리고 부산」이고 동네 지도가 부산 구다.
-                      시트를 열면 지금 도시에 ✓ 가 붙는다. */}
-            {canChoose && (
-              <button
-                type="button"
-                className="icon-btn city-btn"
-                onClick={() => setCityOpen(true)}
-                aria-label={`${t.cityPickerTitle} — ${language === "ko" ? city.ko : city.en}`}
-              >
-                📍
-              </button>
-            )}
+            {/* 📍 **도시 고르개는 여기 있었다 — 아래 글자 칸 줄로 내려갔다** (2026-10-01).
+                사장님: *"여기 세 칸으로 만들고 위치선택 여기에 넣어.
+                         지금 맨 위고 텍스트도 아니라 눈에 안 띄어."*
+                맞는 말씀이다. 📍·✈️·🌙·🔗 가 나란히 넷이면 어느 것이 도시 고르개인지
+                알 수가 없다. 2026-09-17 에 **이름을 적었다가 뺀** 이유가 폭이었는데
+                (360~420px 에서 머리줄이 34px 밀려 나갔다), 글자 칸 줄에는 그 문제가 없다.
+                🚫 **되돌려 여기에 다시 달지 말 것.** 달면 같은 일을 하는 문이 둘이 되고,
+                   머리줄이 다시 넷으로 늘어 언어 칸이 좁아진다(아래 420px 주석 참고).
+                자세한 것은 CityCard.tsx 머리말에 적었다. */}
             <button
               className="icon-btn arrival-btn"
               onClick={() => setGuideOpen(true)}
@@ -170,6 +156,12 @@ function App() {
             📌 한쪽이 없으면(영상 주소가 없는 언어, 날씨를 못 받은 때)
                **남은 하나가 줄 전체를 쓴다** — index.css 의 flex: 1 이 맡는다. */}
         <div className="top-cards">
+          {/* 📍 **지금 보는 도시 — 맨 왼쪽.** 손님이 이 앱에서 가장 먼저 하는 일이
+              「어느 도시를 볼까」라서 줄의 처음에 둔다. 왼쪽부터 읽는 말이든
+              오른쪽부터 읽는 말이든, 첫 칸은 가장 먼저 보는 자리다.
+              🙈 고를 도시가 하나뿐이면 스스로 안 그린다 — 그러면 남은 둘이 줄을
+                 나눠 쓴다(CityCard.tsx 머리말). */}
+          <CityCard onOpen={() => setCityOpen(true)} />
           {/* ▶️ 유튜브 사용법 영상 — 그 언어의 주소가 있을 때만 뜬다(VideoCard.tsx) */}
           <VideoCard />
           {/* 🌤️ 날씨 — **늘 있다.** 비 오는 날엔 안에 드는 말과 색이 바뀐다.
