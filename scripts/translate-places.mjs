@@ -291,6 +291,29 @@ for (const f of cityFiles) {
   console.log(`   ${f} — 이름 ${n}개`);
 }
 
+// 🍁 **단풍길 110곳도 번역한다** (2026-10-01에 찾았다).
+//
+//   🐞 그전에는 **한 건도 번역되지 않고 있었다.** 이 자료는 seed.ts 에 글자로 적혀
+//      있지 않고(위 정규식이 못 본다) `-places.json` 도 아니라서(바로 위 줄이 못 본다),
+//      **두 그물 사이로 통째로 빠졌다.**
+//      결과 — korea-street.com/seoul/jung-gu/ 의 **첫 네 장이 전부 한국어**였다:
+//        「남산 북측순환로 / 왕벚나무, 단풍나무 · 3.5km — 차량 통행이 없는 …」
+//      영어 화면에서도, 일본어 화면에서도 그랬다. 외국 손님에게는 읽을 수가 없다.
+//      Kfood 가 「이 근처 산책로·시장 둘러보기」로 보내는 바로 그 페이지라
+//      **밥 먹고 넘어온 손님이 처음 보는 자리**다.
+//
+//   ✅ 이름과 설명을 둘 다 넣는다. 설명에는 수종·길이·풍경이 들어 있어
+//      「갈까 말까」를 가르는 칸이다 — 이름만 옮기면 반쪽이다.
+//   🚨 **주소는 여기에도 없다.** 넣지 않는다(위 머리말의 규칙 그대로).
+{
+  const roads = JSON.parse(readFileSync(join(DATA_DIR, "autumn-roads.json"), "utf-8"));
+  let n = 0;
+  for (const r of roads.길 ?? []) {
+    for (const v of [r.이름, r.설명]) if (v && /[가-힣]/.test(v)) { source.add(String(v)); n++; }
+  }
+  console.log(`   autumn-roads.json — 이름·설명 ${n}개`);
+}
+
 const all = [...source].sort();
 const chars = all.reduce((s, x) => s + x.length, 0);
 console.log(`번역 대상: ${all.length}개 문구 / ${chars}자`);

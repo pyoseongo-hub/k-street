@@ -276,7 +276,38 @@ const CATEGORY_EN: Record<string, string> = {
   museum: "Museum",
   street: "Street & alley",
   shop: "Shopping",
+  // 🍁 2026-10-01에 더했다 — **영어 페이지에서만 「Place」로 나오고 있었다.**
+  //    다른 열한 언어는 앱의 표(translations.ts 의 categoryLabels)를 읽어서
+  //    「紅葉の道」·「赏枫步道」·「Herbstlaub-Wege」로 멀쩡히 나왔는데,
+  //    **영어만 이 표를 따로 본다.** 그래서 여기 한 줄이 빠진 것을 아무도 못 봤다.
+  //    중구 페이지의 **첫 네 장**이 전부 「— Place」였다(25개 구에 107군데).
+  //    이 저장소의 오랜 교훈 그대로다 — **같은 표가 둘이면 한쪽만 고치게 된다.**
+  //    아래 검사가 이제 이 빠짐을 막는다.
+  autumn: "Autumn road",
+  temple: "Temple",
+  beach: "Beach & coast",
+  view: "View & night scene",
 };
+
+/**
+ * 🚨 **자료에 있는 갈래가 위 표에 다 있나** (2026-10-01에 넣었다).
+ *
+ * 위 주석의 사고를 되풀이하지 않으려고 둔다. 갈래를 하나 새로 만들면 영어 표에
+ * 넣는 것을 잊기 쉽고, 잊어도 **화면은 안 깨진다** — 그냥 「Place」로 조용히 나온다.
+ * 한국어를 읽는 사람 눈에는 아무 이상이 없어서 **영어 손님만 겪는다.**
+ * 그래서 페이지를 만들기 전에 세어 보고, 빠진 게 있으면 **멈춘다.**
+ */
+function assertEveryCategoryHasEnglish(places: { category?: string }[]): void {
+  const missing = [...new Set(places.map((p) => p.category).filter(Boolean))]
+    .filter((c) => !CATEGORY_EN[c as string] && !CATEGORY_HUB[c as string]);
+  if (!missing.length) return;
+  console.error(
+    `\n❌ 영어 이름이 없는 갈래 ${missing.length}가지 — ${missing.join(" · ")}\n` +
+      `   영어 페이지에서 「Place」로 조용히 나간다. scripts/build-place-pages.ts 의\n` +
+      `   CATEGORY_EN 에 한 줄씩 넣을 것. (다른 언어는 src/lib/translations.ts 를 본다)`
+  );
+  process.exit(1);
+}
 
 const MONTHS = ["", "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"];
@@ -300,6 +331,12 @@ const dongEn = (d: string) => dongName(d, "en");
 //
 // 🚨 얇은 껍데기를 만들지 않는다(곳 페이지와 같은 규칙). 묶음 페이지에는
 //    목록만이 아니라 **곳마다 한 줄 설명**과 구별 묶음이 들어간다.
+// 🚨 **갈래가 영어 표에 다 있나** — 없으면 여기서 멈춘다(그 함수 주석 참고).
+//    ⚠️ **CATEGORY_HUB 가 만들어진 뒤에 불러야 한다.** `const` 는 끌어올려지지 않아
+//       위쪽(ALL 바로 뒤)에서 부르면 `Cannot read properties of undefined` 로 죽는다 —
+//       이 파일 아래쪽 kindLabel 주석에 같은 함정이 이미 적혀 있다. 그대로 밟았다.
+assertEveryCategoryHasEnglish(ALL);
+
 const hubSlugGu = (gu: string) => slugify(guEn(gu));
 const hubPathGu = (gu: string) => `${PAGE_CITY}/${hubSlugGu(gu)}`;
 const hubPathMonth = (m: number) => `${PAGE_CITY}/festivals-in-${MONTHS[m].toLowerCase()}`;
