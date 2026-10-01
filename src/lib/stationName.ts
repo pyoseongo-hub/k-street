@@ -19,6 +19,8 @@
 //    때문이다. 영어로 떨어뜨리는 것보다는 읽힌다 — 안 주는 것을 지어내지 않는다.
 
 import STATIONS from "../data/subway-stations.json";
+// 🏙️ 「부산2호선」의 「부산」을 손님 말로 바꾸는 데 쓴다 — 아래 CITY_BY_KO 주석 참고.
+import { CITIES, cityName } from "../data/cities";
 
 interface Station {
   name: string;
@@ -136,10 +138,29 @@ export function stationLabel(stored: string, lang: string): string {
  *    서울시가 번역을 안 주고, **안 주는 것을 지어내지 않는다** — 안내판에도
  *    로마자로 「Sinbundang」이라 적혀 있어 한국어를 보여 주는 편이 대조하기 쉽다.
  */
+/**
+ * 🏙️ **「부산2호선」처럼 도시 이름이 붙은 노선** (2026-10-01, 아홉 도시를 열고 재 보니 나왔다).
+ *
+ * 카카오가 돌려주는 노선 이름은 서울만 「2호선」이고 나머지는 **도시가 앞에 붙는다** —
+ * 부산1~4호선 · 대구1~3호선 · 대전1호선 · 광주1호선. 실제로 세어 보니 29가지 중 9가지다.
+ * 그전 규칙(`^\d{1,2}호선$`)은 이들을 하나도 못 알아보고 **한국어 그대로 내보냈다.**
+ *
+ * 🚨 도시 이름을 **떼지 않는다.** 「Line 2」만 쓰면 어느 도시 2호선인지 사라진다 —
+ *    부산에도 2호선이 있고 대구에도 있다. 명부(cities.ts)의 이름을 그대로 쓴다.
+ *    ⚠️ 명부에 그 언어 이름이 없으면 cityName 이 로마자를 준다(「Daegu」). 지어내지 않는다.
+ */
+const CITY_BY_KO = new Map(CITIES.map((c) => [c.ko, c]));
+
 export function lineLabel(line: string, lang: string): string {
   if (lang === "ko") return line;
-  const num = /^(\d{1,2})호선$/.exec(line.normalize("NFC"))?.[1];
-  return num ? (LINE[lang] ?? LINE.en)(num) : line;
+  const m = /^([가-힣]*)(\d{1,2})호선$/.exec(line.normalize("NFC"));
+  if (!m) return line;
+  const [, koCity, num] = m;
+  const num말 = (LINE[lang] ?? LINE.en)(num);
+  if (!koCity) return num말;
+  const city = CITY_BY_KO.get(koCity);
+  // 명부에 없는 앞가지(새 노선 이름)는 **건드리지 않는다.** 모르면 한국어 그대로가 낫다.
+  return city ? `${cityName(city, lang)} ${num말}` : line;
 }
 
 /**

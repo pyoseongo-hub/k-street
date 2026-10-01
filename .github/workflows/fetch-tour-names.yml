@@ -20,6 +20,12 @@ on:
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    # ⏱️ **천장을 단다** (2026-10-01에 당하고 넣었다 — CLAUDE.md 「검사를 만들었으면 울려 봐야」).
+    #    맛보기는 13초에 끝났는데 같은 판을 apply 로 다시 돌리니 **35분을 넘겨도 안 끝났다.**
+    #    관광공사가 막히면 `fetchWithRetry` 가 한 호출에 최대 5분을 쓰는데(6번 × 30초 +
+    #    기다림 135초), 호출이 수백 개라 천장이 없으면 **몇 시간이고 긴다.**
+    #    로그에는 재시도 줄만 찍혀서 「느린 건가」 하고 계속 기다리게 된다.
+    timeout-minutes: 30
     permissions:
       contents: write
     steps:

@@ -38,10 +38,15 @@ const SERVICES = [
   ["zh-TW", "ChtService2", "중문 번체"],
 ];
 
+/**
+ * @param {string} service 관광공사 서비스 이름
+ * @param {string} [areaCodeNum] 비우면 **시·도 목록**(17곳), 주면 그 안의 시·군·구 목록.
+ */
 async function areaCode(service, areaCodeNum) {
   const q = new URLSearchParams({
     MobileOS: "ETC", MobileApp: "KStreet", _type: "json",
-    areaCode: areaCodeNum, numOfRows: "100", pageNo: "1",
+    ...(areaCodeNum ? { areaCode: areaCodeNum } : {}),
+    numOfRows: "100", pageNo: "1",
   });
   const res = await fetchWithRetry(`https://apis.data.go.kr/B551011/${service}/areaCode2?serviceKey=${KEY}&${q}`);
   const text = await res.text();
@@ -104,6 +109,39 @@ for (const [key, v] of byCode) {
     if (!name || /[가-힣]/.test(name)) { 버린것.push(`${v.ko} ${lang} — ${name || "빈 값"}`); continue; }
     표[lang][v.ko] = name;
   }
+}
+
+// ── 🏙️ **시·도 이름도 같이 받는다** (2026-10-01) ─────────────────────────────
+//   왜 — 「부산2호선」을 손님 말로 바꿀 때 「부산」을 어디선가 가져와야 한다
+//   (src/lib/stationName.ts 의 lineLabel). 지금 cities.ts 에 12개 언어 이름이 있는
+//   도시는 **서울·부산 둘뿐**이고, 나머지는 로마자로 떨어져 일본어 화면에
+//   「Daegu 1号線」처럼 글자가 섞인다.
+//   🚨 한자를 내가 적지 않는다. `areaCode2` 를 **areaCode 없이** 부르면 그 언어로 된
+//      시·도 17곳 목록이 오고, **지역 코드는 언어가 달라도 같다.** 코드로 이어 붙인다.
+//   ⚠️ 여기서는 **적어 주기만 한다.** cities.ts 는 사람이 보고 옮긴다 —
+//      그 파일은 손으로 맞춘 값이 많아 기계가 덮어쓸 자리가 아니다.
+const 시도 = new Map();
+for (const [lang, svc, label] of SERVICES) {
+  let rows;
+  try { rows = await areaCode(svc); }
+  catch (e) { console.log(`   ⚠️ ${label} 시·도 목록 — 못 받았다 (${String(e.message).slice(0, 60)})`); continue; }
+  for (const r of rows) {
+    const slot = 시도.get(String(r.code)) ?? {};
+    slot[lang] = String(r.name ?? "").trim();
+    시도.set(String(r.code), slot);
+  }
+  await new Promise((s2) => setTimeout(s2, 150));
+}
+const 열린도시 = new Map(CITIES.map((c) => [c.areaCode, c]));
+console.log("\n🏙️ 시·도 이름 — cities.ts 의 `names` 에 **사람이 보고 옮긴다**(여기서 안 고친다)");
+for (const [code, v] of 시도) {
+  const c = 열린도시.get(code);
+  if (!c) continue;
+  const 섞임 = ["ja", "zh", "zh-TW"].some((l) => v[l] && /[가-힣]/.test(v[l]));
+  console.log(
+    `   ${String(c.ko).padEnd(4)} (${code}) ko=${v.ko ?? "?"} · ja=${v.ja ?? "?"} · zh=${v.zh ?? "?"} · zh-TW=${v["zh-TW"] ?? "?"}` +
+      (섞임 ? "   ⚠️ 한글이 그대로 왔다 — 옮기지 말 것" : "")
+  );
 }
 
 console.log("");
