@@ -36,6 +36,17 @@ jobs:
           if [ "${{ inputs.apply }}" = "true" ]; then ARGS="--apply"; fi
           node scripts/fetch-tour-names.mjs $ARGS 2>&1 | tee names-log.txt
 
+      # 🪪 **시·군·구 이름도 같은 창구에서 받는다** (2026-10-01에 넣었다).
+      #    같은 열쇠·같은 서비스라 따로 워크플로를 만들 이유가 없다. 한 판에서 끝낸다.
+      - name: 시·군·구 공식 일본어·중국어 이름
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          set -o pipefail
+          ARGS=""
+          if [ "${{ inputs.apply }}" = "true" ]; then ARGS="--apply"; fi
+          node scripts/fetch-district-names.mjs $ARGS 2>&1 | tee district-log.txt
+
       # 🔗 **사슬의 다음 칸 — 받은 이름을 화면까지 보낸다.** (2026-10-01에 넣었다)
       #
       #   그전에는 이 워크플로가 tour-official-names.json 만 저장하고 끝났다.
@@ -58,7 +69,7 @@ jobs:
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/tour-official-names.json src/data/place-translations src/data/cjk-dropped.json
+          git add src/data/tour-official-names.json src/data/district-names-cjk.json src/data/place-translations src/data/cjk-dropped.json
           if git diff --cached --quiet; then
             echo "바뀐 것이 없다 — 커밋하지 않는다."
           else
@@ -92,5 +103,11 @@ jobs:
             echo ""
             echo '```'
             cat names-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+            echo ""
+            echo "## 🗺️ 시·군·구 공식 일본어·중국어 이름"
+            echo ""
+            echo '```'
+            tail -30 district-log.txt 2>/dev/null || echo "(로그 없음)"
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
