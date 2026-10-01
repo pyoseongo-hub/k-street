@@ -795,6 +795,21 @@
     "confirmed": true
   },
   {
+    "id": "2751543",
+    "city": "daegu",
+    "gu": "달서구",
+    "category": "walk",
+    "name": "성당못",
+    "addr": "대구광역시 달서구 공원순환로 216 (성당동)",
+    "image": "https://tong.visitkorea.or.kr/cms/resource/95/3569995_image2_1.jpg",
+    "thumb": "https://tong.visitkorea.or.kr/cms/resource/95/3569995_image3_1.jpg",
+    "lat": 35.8450388632,
+    "lng": 128.5620913067,
+    "tourContentId": "2751543",
+    "source": "tour",
+    "confirmed": true
+  },
+  {
     "id": "1610383",
     "city": "daegu",
     "gu": "달서구",
@@ -2598,6 +2613,21 @@
     "lat": 35.8623810103,
     "lng": 128.5439590887,
     "tourContentId": "1944751",
+    "source": "tour",
+    "confirmed": true
+  },
+  {
+    "id": "2366429",
+    "city": "daegu",
+    "gu": "서구",
+    "category": "shop",
+    "name": "퀸스로드",
+    "addr": "대구광역시 서구 평리로35길 18-17",
+    "image": "https://tong.visitkorea.or.kr/cms/resource/33/2366433_image2_1.jpg",
+    "thumb": "https://tong.visitkorea.or.kr/cms/resource/33/2366433_image3_1.jpg",
+    "lat": 35.8617144394,
+    "lng": 128.545056233,
+    "tourContentId": "2366429",
     "source": "tour",
     "confirmed": true
   },

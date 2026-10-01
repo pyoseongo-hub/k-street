@@ -109,6 +109,40 @@ const out = [];
 const dropped = new Map();
 const drop = (why, title) => dropped.set(why, [...(dropped.get(why) ?? []), title]);
 
+// 🏝️ **섬은 시청에서 멀다 — 그래서 자(尺)를 하나 더 만든다.** (2026-10-01)
+//
+//   🐞 무슨 일이 있었나: 경북을 넣고 `check-nearby-course --strict` 가 막았다 —
+//      「울릉군 설 자리 없음 — 좌표 있는 곳 0 (곳 34)」.
+//      울릉도는 경북 시청에서 약 220km다. 도(道)에 쓰는 자가 160km라
+//      **34곳의 좌표가 전부 버려졌다.** 좌표가 틀린 게 아니라 **자가 짧았다.**
+//      MAX_KM=60 을 전국에 들이댔던 것과 **똑같은 병**이다(그 주석은 city-geo.mjs 에).
+//
+//   ❌ 자를 220km 로 늘리지 않는다. 그러면 원래 잡으려던 것(남중국해에 찍힌 반송공원)을
+//      놓친다. 자를 늘리는 것은 지키려던 것을 버리는 일이다.
+//   ✅ **재는 자리를 바꾼다.** 시청에서 재는 대신 **그 시·군에 모인 곳들의 가운데**에서 잰다.
+//      울릉군 34곳은 다 울릉도에 모여 있으니 가운데도 울릉도다 — 한 곳도 안 버려진다.
+//      반송공원은 해운대구 다른 곳들의 가운데에서 수천 km라 그대로 걸린다.
+//      **중앙값**을 쓴다(평균이 아니다) — 틀린 좌표 하나가 평균을 끌고 가 버리기 때문이다.
+//
+//   ⚠️ 곳이 적은 시·군(1~2곳)에서는 가운데가 곧 그 곳이라 아무것도 못 가른다.
+//      그래서 **시청 자를 없애지 않고 둘 중 하나만 통과해도 받는다.** 그물을 두 겹으로 둔다.
+const DISTRICT_LIMIT_KM = 30;
+const 시군가운데 = (() => {
+  const 모음 = new Map();
+  for (const it of pool) {
+    const gu = String(it.addr1 ?? "").split(/\s+/)[1] ?? "";
+    const lat = Number(it.mapy), lng = Number(it.mapx);
+    if (!gu || !Number.isFinite(lat) || !Number.isFinite(lng) || (!lat && !lng)) continue;
+    if (!모음.has(gu)) 모음.set(gu, []);
+    모음.get(gu).push([lat, lng]);
+  }
+  const mid = (xs) => { const a = [...xs].sort((x, y) => x - y); return a[Math.floor(a.length / 2)]; };
+  const out2 = new Map();
+  for (const [gu, pts] of 모음)
+    if (pts.length >= 3) out2.set(gu, { lat: mid(pts.map((p) => p[0])), lng: mid(pts.map((p) => p[1])) });
+  return out2;
+})();
+
 for (const it of pool) {
   const name = String(it.title ?? "").trim();
   const { category, why } = categoryOf(it, { coast: city.coast });
@@ -133,11 +167,21 @@ for (const it of pool) {
   //    관광공사 자료가 틀린 것이고 우리가 고칠 수 있는 값이 아니다.
   //    지어내지 않는다(빈 칸이 틀린 값보다 낫다). 주소가 있으면 길찾기는 된다.
   let lat = Number(it.mapy), lng = Number(it.mapx);
-  if (!nearCity(CITY_LAT, CITY_LNG, lat, lng, LIMIT_KM)) {
+  // 🏝️ 두 겹 그물 — 시청 자, 아니면 그 시·군에 모인 곳들의 가운데 자(위 주석).
+  const mid = 시군가운데.get(gu);
+  const 시청자통과 = nearCity(CITY_LAT, CITY_LNG, lat, lng, LIMIT_KM);
+  const 동네자통과 = mid ? nearCity(mid.lat, mid.lng, lat, lng, DISTRICT_LIMIT_KM) : false;
+  if (!시청자통과 && !동네자통과) {
     if (Number.isFinite(lat) && Number.isFinite(lng) && (lat || lng))
       drop(`좌표가 ${CITY_KO} 밖 — 좌표만 버림(${Math.round(distanceKm(CITY_LAT, CITY_LNG, lat, lng))}km)`, name);
     lat = NaN; lng = NaN;
   }
+  // 🔂 **이 판에서 넣은 이름도 담아 둔다** (2026-10-01에 찾았다).
+  //    그전에는 takenNames 에 **이미 앱에 있는 것만** 담고, 이 판에서 새로 넣은 이름은
+  //    안 담았다. 그래서 관광공사가 같은 가게를 두 번 주면(「왜관시장」 — 5일장 132123 과
+  //    상설시장 3433032, 100m 거리) **둘 다 들어갔다.** 감사(check-city-places)가 잡아 줬다.
+  //    먼저 들어온 것을 남긴다 — 「이미 있는 것을 남긴다」는 위 규칙과 같은 손이다.
+  takenNames.add(nfc(name));
   out.push({
     id: String(it.contentid),
     city: CITY,

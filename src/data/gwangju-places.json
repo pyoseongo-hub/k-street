@@ -630,6 +630,21 @@
     "confirmed": true
   },
   {
+    "id": "126329",
+    "city": "gwangju",
+    "gu": "북구",
+    "category": "walk",
+    "name": "광주호",
+    "addr": "전남광주통합특별시 북구 충효샘길 7 (충효동)",
+    "image": "https://tong.visitkorea.or.kr/cms/resource/04/3368304_image2_1.jpg",
+    "thumb": "https://tong.visitkorea.or.kr/cms/resource/04/3368304_image3_1.jpg",
+    "lat": 35.1840804198,
+    "lng": 127.0010882121,
+    "tourContentId": "126329",
+    "source": "tour",
+    "confirmed": true
+  },
+  {
     "id": "2614773",
     "city": "gwangju",
     "gu": "북구",
@@ -701,6 +716,21 @@
     "lat": 35.1441458348,
     "lng": 126.9890013959,
     "tourContentId": "2614826",
+    "source": "tour",
+    "confirmed": true
+  },
+  {
+    "id": "2614828",
+    "city": "gwangju",
+    "gu": "북구",
+    "category": "view",
+    "name": "시무지기 폭포 (무등산권 국가지질공원)",
+    "addr": "전남광주통합특별시 북구 무등로 1550",
+    "image": "https://tong.visitkorea.or.kr/cms/resource/76/3350476_image2_1.jpg",
+    "thumb": "https://tong.visitkorea.or.kr/cms/resource/76/3350476_image3_1.jpg",
+    "lat": 35.1441458348,
+    "lng": 126.9890013959,
+    "tourContentId": "2614828",
     "source": "tour",
     "confirmed": true
   },
@@ -941,6 +971,21 @@
     "lat": 35.1471654718,
     "lng": 126.8562352777,
     "tourContentId": "1621652",
+    "source": "tour",
+    "confirmed": true
+  },
+  {
+    "id": "1622215",
+    "city": "gwangju",
+    "gu": "서구",
+    "category": "walk",
+    "name": "풍암호수",
+    "addr": "전남광주통합특별시 서구 풍암동",
+    "image": "https://tong.visitkorea.or.kr/cms/resource/72/3367472_image2_1.jpg",
+    "thumb": "https://tong.visitkorea.or.kr/cms/resource/72/3367472_image3_1.jpg",
+    "lat": 35.1276401393,
+    "lng": 126.8705150584,
+    "tourContentId": "1622215",
     "source": "tour",
     "confirmed": true
   },

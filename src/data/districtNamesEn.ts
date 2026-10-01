@@ -20,6 +20,20 @@
 //      한 표에 담아도 부딪히지 않는다(中区 · 江西区). 그래서 서울 표 뒤에
 //      그대로 이어 붙인다 — 도시별로 표를 나누면 같은 값을 두 번 적게 되고,
 //      한쪽만 고치는 사고가 난다.
+// 🪪 **시·군·구 한자 표기는 관광공사에서 받아 온다** (2026-10-01).
+//
+//   일곱 도시를 열면서 새 시·군 63곳이 들어왔다. 손으로 한자를 적을 수는 없다 —
+//   「경주시=慶州市」는 알아도 「횡성군·장수군·임실군」까지 62곳을 외워 적으면
+//   한둘은 틀린다. 그래서 **관광공사가 언어별로 내는 지역 목록**을 받아 둔다.
+//   받는 법은 scripts/fetch-district-names.mjs 머리말에 있다(시군구 코드로 이어 붙인다).
+//
+//   🚨 **순서가 규칙이다** — 받아 온 것을 먼저 깔고, **손으로 확인한 것을 그 위에 덮는다.**
+//      서울·부산 구 이름은 눈으로 맞춰 둔 것이라(아래 「근거」 주석) 기계보다 세다.
+//      뒤집으면 확인해 둔 값이 되돌아간다. translate-places 의 save() 와 같은 순서다.
+import DISTRICT_CJK from "./district-names-cjk.json";
+
+const CJK = (DISTRICT_CJK as { 이름?: Record<string, Record<string, string>> })["이름"] ?? {};
+
 export const DISTRICT_NAME_EN: Record<string, string> = {
   "종로구": "Jongno-gu", "중구": "Jung-gu", "용산구": "Yongsan-gu",
   "성동구": "Seongdong-gu", "광진구": "Gwangjin-gu", "동대문구": "Dongdaemun-gu",
@@ -109,6 +123,7 @@ export const DISTRICT_NAME_EN: Record<string, string> = {
 };
 
 export const DISTRICT_NAME_JA: Record<string, string> = {
+  ...(CJK["ja"] ?? {}),   // 관광공사 — 아래 손으로 확인한 것이 이 위를 덮는다
   "종로구": "鍾路区", "중구": "中区", "용산구": "龍山区",
   "성동구": "城東区", "광진구": "広津区", "동대문구": "東大門区",
   "중랑구": "中浪区", "성북구": "城北区", "강북구": "江北区",
@@ -144,6 +159,7 @@ export const DISTRICT_NAME_JA: Record<string, string> = {
 // ⚠️ **동(洞) 이름은 손대지 않는다.** 동은 한자가 없는 것도 있고(가리봉·개봉)
 //    표기가 갈리는 것도 많아, 넣으면 확인 못 한 것을 넣는 셈이 된다. 동은 로마자로 둔다.
 export const DISTRICT_NAME_ZH_TW: Record<string, string> = {
+  ...(CJK["zh-TW"] ?? {}),   // 관광공사 — 아래 손으로 확인한 것이 이 위를 덮는다
   "종로구": "鍾路區", "중구": "中區", "용산구": "龍山區",
   "성동구": "城東區", "광진구": "廣津區", "동대문구": "東大門區",
   "중랑구": "中浪區", "성북구": "城北區", "강북구": "江北區",
@@ -162,6 +178,7 @@ export const DISTRICT_NAME_ZH_TW: Record<string, string> = {
 };
 
 export const DISTRICT_NAME_ZH: Record<string, string> = {
+  ...(CJK["zh"] ?? {}),   // 관광공사 — 아래 손으로 확인한 것이 이 위를 덮는다
   "종로구": "钟路区", "중구": "中区", "용산구": "龙山区",
   "성동구": "城东区", "광진구": "广津区", "동대문구": "东大门区",
   "중랑구": "中浪区", "성북구": "城北区", "강북구": "江北区",
