@@ -27,6 +27,8 @@
 //   TOUR_API_KEY=… node scripts/fetch-tour-names.mjs --apply    ← 저장
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fetchWithRetry } from "./lib/tour-fetch.mjs";
+// 🗺️ 받아 올 지역을 **명부에서 읽는다** — 아래 AREAS 주석 참고.
+import { readCities } from "./lib/city-registry.mjs";
 
 const KEY = process.env.TOUR_API_KEY;
 if (!KEY) { console.error("❌ TOUR_API_KEY 가 없다."); process.exit(1); }
@@ -35,13 +37,36 @@ const OUT = "src/data/tour-official-names.json";
 
 /** 언어 열쇠 → 관광공사 서비스. 우리 앱이 쓰는 언어 코드에 맞춘다. */
 const SERVICES = [
+  // 🇬🇧 **영문도 물어본다** (2026-10-01에 넣었다).
+  //    왜 — 구글이 영어에서도 고유명사를 뜻으로 풀어 버린다:
+  //      고산 → 「High Mountain」 · 계산서원 → (하마터면) 「Calculation…」
+  //    관광공사 영문 이름은 **관광공사가 정해 쓰는 표기**라 지어낸 게 아니다.
+  //    ⚠️ 영문 서비스가 「이름（한국어）」 꼴로 주지 않으면 splitName 이 null 을
+  //       돌려주고 **한 건도 안 담긴다** — 그게 맞는 동작이다. 못 맞추면 안 쓴다.
+  ["en", "EngService2", "영문"],
   ["ja", "JpnService2", "일문"],
   ["zh", "ChsService2", "중문 간체"],
   ["zh-TW", "ChtService2", "중문 번체"],
 ];
 
-/** 받아 올 지역. 지금 자료가 있는 곳만 — 없는 지역을 훑어 봐야 호출만 쓴다. */
-const AREAS = [["1", "서울"], ["6", "부산"]];
+/**
+ * 받아 올 지역. 지금 자료가 있는 곳만 — 없는 지역을 훑어 봐야 호출만 쓴다.
+ *
+ * 🚨 **손으로 적지 않는다** (2026-10-01에 바꿨다). 전에는 `[["1","서울"],["6","부산"]]`
+ *    라고 박혀 있었다. 그래서 일곱 도시를 열었는데도 **서울·부산만 다시 받고**,
+ *    새 2,581곳은 관광공사 공식 이름을 한 건도 못 받았다. 성공(exit 0)이라
+ *    로그를 안 보면 그냥 지나간다 — 바로 아래 「도시 파일을 하나씩 적지 않는다」와
+ *    **똑같은 사고**를 다른 줄에서 반복한 것이다.
+ *    → 명부(cities.ts)에서 **열린 도시**를 읽는다. 도시를 열면 저절로 따라온다.
+ */
+const AREAS = readCities()
+  .filter((c) => c.status === "공개" && c.areaCode)
+  .map((c) => [c.areaCode, c.ko]);
+if (!AREAS.length) {
+  console.error("❌ 열린 도시가 없다 — src/data/cities.ts 의 status 를 볼 것.");
+  process.exit(1);
+}
+console.log(`🗺️ 받아 올 지역 ${AREAS.length}곳 — ${AREAS.map(([, n]) => n).join(" · ")}\n`);
 
 async function call(service, path, params) {
   const q = new URLSearchParams({ MobileOS: "ETC", MobileApp: "KStreet", _type: "json", ...params });
@@ -135,7 +160,11 @@ for (const [lang, svc, label] of SERVICES) {
     + ` · **우리 것과 맞은 것 ${Object.keys(map).length}개**`);
   const 보기 = Object.entries(map).slice(0, 5);
   for (const [ko, fo] of 보기) console.log(`      ${ko.padEnd(16)} → ${fo}`);
-  store[lang] = Object.fromEntries(Object.entries(map).sort(([a], [b]) => a.localeCompare(b, "ko")));
+  // 🚨 **한 건도 못 맞춘 언어는 담지 않는다.** 빈 칸을 담아 두면 다음 사람이
+  //    「받아는 왔는데 왜 비었지」를 의심하게 되고, 못 맞췄다는 사실이 묻힌다.
+  if (Object.keys(map).length)
+    store[lang] = Object.fromEntries(Object.entries(map).sort(([a], [b]) => a.localeCompare(b, "ko")));
+  else console.log(`   ⚠️ ${label} — **한 건도 못 맞췄다.** 담지 않는다(이름 꼴이 다를 것).`);
   console.log("");
 }
 

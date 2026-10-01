@@ -36,13 +36,29 @@ jobs:
           if [ "${{ inputs.apply }}" = "true" ]; then ARGS="--apply"; fi
           node scripts/fetch-tour-names.mjs $ARGS 2>&1 | tee names-log.txt
 
+      # 🔗 **사슬의 다음 칸 — 받은 이름을 화면까지 보낸다.** (2026-10-01에 넣었다)
+      #
+      #   그전에는 이 워크플로가 tour-official-names.json 만 저장하고 끝났다.
+      #   그런데 화면이 읽는 것은 **place-translations/** 다. 둘을 이어 주는 것은
+      #   `translate-places --overrides-only` 뿐인데 **아무도 안 돌렸다.**
+      #   그러면 공식 이름을 받아 와도 손님 화면은 그대로 구글 번역이다 —
+      #   「검사를 만들었으면 저절로 돌게 걸어라」와 같은 자리다(CLAUDE.md).
+      #
+      #   이 길은 **구글을 한 번도 안 부른다**(열쇠도 필요 없다). 받은 공식 이름을
+      #   덮어쓰고, 사람이 확인한 이름을 그 위에 덮고, 깨진 한자를 걸러 낸다.
+      - name: 받은 이름을 번역 파일에 반영 (apply 를 켰을 때만)
+        if: inputs.apply
+        run: |
+          set -o pipefail
+          node scripts/translate-places.mjs --overrides-only 2>&1 | tee apply-log.txt
+
       - name: 저장소에 넣기 (apply 를 켰을 때만)
         if: inputs.apply
         run: |
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/tour-official-names.json
+          git add src/data/tour-official-names.json src/data/place-translations src/data/cjk-dropped.json
           if git diff --cached --quiet; then
             echo "바뀐 것이 없다 — 커밋하지 않는다."
           else
