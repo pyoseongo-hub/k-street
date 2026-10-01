@@ -309,7 +309,19 @@ for (const f of cityFiles) {
   const roads = JSON.parse(readFileSync(join(DATA_DIR, "autumn-roads.json"), "utf-8"));
   let n = 0;
   for (const r of roads.길 ?? []) {
-    for (const v of [r.이름, r.설명]) if (v && /[가-힣]/.test(v)) { source.add(String(v)); n++; }
+    // 🚨 **화면에 뜨는 그 글자 그대로를 열쇠로 넣어야 한다.**
+    //    번역을 찾는 쪽(src/lib/placeText.ts 의 translateText)은 **문장을 통째로** 찾는다.
+    //    쪼개 놓은 조각을 넣어 봐야 화면의 긴 줄과는 안 맞아 한국어가 그대로 나간다.
+    //    (처음에 설명만 넣고 「됐다」고 했다가 화면에서 그대로인 것을 보고 알았다.)
+    //
+    //    ⚠️ **seed.ts 의 AUTUMN_ROADS 와 같은 모양으로 지어야 한다** — 거기서는
+    //       `[수종 · 길이, 설명].join(" — ")` 로 만든다. 한쪽을 바꾸면 열쇠가 어긋나고,
+    //       어긋나도 **화면은 안 깨진다**(한국어가 그냥 나온다). 그래서 감사를 같이 뒀다:
+    //       `node scripts/audit-autumn-text.mjs` 가 안 맞는 줄을 세어 준다.
+    const note = [[r.수종, r.길이].filter(Boolean).join(" · ") || null, r.설명]
+      .filter(Boolean)
+      .join(" — ");
+    for (const v of [r.이름, note]) if (v && /[가-힣]/.test(v)) { source.add(String(v)); n++; }
   }
   console.log(`   autumn-roads.json — 이름·설명 ${n}개`);
 }
