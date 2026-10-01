@@ -1,0 +1,51 @@
+name: Check one festival (축제 하나 공식 창구에 물어보기)
+
+# 🔎 **축제 하나를 공식 창구에 직접 물어본다.**
+#
+# 사장님이 인스타 캡처를 보내시며 *"확인해"* 하신 데서 나왔다 (2026-10-01).
+# 「2026-2027 서울 빛초롱축제 · 청계천 · 12/4~1/31」이라는 글이었는데,
+# 그 계정은 소개란에 스스로 **「AI 콘텐츠」**라고 적어 두었고 글머리도
+# 「일정 최초 공개」였다 — 공식 발표 **전**이라는 뜻이다. 그때가 가장 틀리기 쉽다.
+#
+# ✅ 글을 버리지는 않는다. **찾아볼 단서**로 쓰고, 날짜는 창구에서 받는다.
+# 🚨 「없다」와 「못 물어봤다」를 섞지 않는다 — 섞으면 서버가 죽은 날에
+#    「그런 축제 없다」고 적게 된다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "찾을 말 (이름의 일부면 된다 — 예: 빛초롱)"
+        required: true
+        default: "빛초롱"
+
+permissions:
+  contents: read
+
+jobs:
+  ask:
+    runs-on: ubuntu-latest
+    # ⏱️ 관광공사가 막히면 한 호출에 몇 분을 쓴다 — 천장이 없으면 몇 시간이고 긴다.
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 물어본다
+        env:
+          SEOUL_OPEN_API_KEY: ${{ secrets.SEOUL_OPEN_API_KEY }}
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/check-one-festival.mjs --name "${{ inputs.name }}" 2>&1 | tee ask.txt
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🔎 축제 확인"
+            echo ""
+            echo '```'
+            cat ask.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
