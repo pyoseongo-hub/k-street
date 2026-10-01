@@ -97,7 +97,22 @@ export function stationLabel(stored: string, lang: string): string {
   // 🇹🇼 대만은 서울시가 번체를 안 줘서 간체를 쓴다(위 머리말 참고).
   const foreign =
     lang === "ja" ? hit?.ja : lang === "zh" || lang === "zh-TW" ? hit?.zh : hit?.en;
-  if (!foreign) return stored;
+  // 🚇 **표에 없는 역 — 노선만이라도 그 언어로** (2026-10-01, 일곱 도시를 열면서).
+  //
+  //   이 표는 **서울시 자료**다(subway-stations.json). 그래서 부산·대구·대전·광주
+  //   역은 한 줄도 없고, 그전에는 영어 화면에 「서면역 2호선」이 그대로 떴다.
+  //
+  //   손님이 실제로 쓰는 것은 **「몇 호선을 타야 하나」**다 — 그건 우리가 안다.
+  //   역 이름은 한국어 그대로 두는 편이 **안내판·역무원과 대조하기 쉽다**
+  //   (이 파일 머리말의 「한국어를 괄호로 같이 둔다」와 같은 이유다).
+  //
+  //   🚨 **로마자를 지어내지 않는다.** 「서면」을 번역기에 맡기면 「In writing」이
+  //      나온다 — 뜻이 있는 낱말이기 때문이다. 틀린 영어 이름은 한글보다 나쁘다.
+  //      부산교통공사가 공식 표기를 내놓으면 그때 표에 넣는다.
+  if (!foreign) {
+    const only = lineLabel(rawLine, lang);
+    return rawLine && only !== rawLine ? `${rawName} ${only}` : stored;
+  }
 
   // 「Seoul Station」처럼 이미 Station 이 든 이름에 또 붙이지 않는다.
   const suffix = suffixFor(lang);

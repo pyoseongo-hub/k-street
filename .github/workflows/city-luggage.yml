@@ -1,0 +1,102 @@
+name: City luggage (서울 밖 보관함 찾기)
+
+# 🧳 **짐 보관함이 서울 밖에도 있나 찾아본다.** (2026-10-01)
+#
+# 사장님: *"보관함 등 자료 있으면 있는 만큼 해"*
+#
+# 지금 짐 보관 단추는 서울에서만 뜬다 — 또타러기지가 **서울메트로 역에만**
+# 있기 때문이다(src/lib/seoulOnly.ts). 그 결정은 그대로 맞다.
+# 다만 또타러기지가 없다는 것이 **보관함이 없다**는 뜻은 아니라서 찾아본다.
+#
+# ⚠️ 받은 것은 **후보**다. 앱에 바로 안 띄운다 — 카카오는 여행자용 보관함과
+#    월세 창고를 **같은 업종**으로 돌려준다. 사람이 고른 뒤에 쓴다.
+#
+# 🚨 카카오는 **분당 한도**가 있다. 몰아치면 전부 400이 온다(2026-09-12).
+#    그래서 gap_ms 로 쉬어 가고, 한도라고 하면 기다렸다 다시 묻는다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "파일에 적을까 (끄면 찾은 것만 보여준다)"
+        type: boolean
+        default: false
+      city:
+        description: "한 도시만 보려면 열쇠 (busan jeju daegu daejeon gwangju gyeongbuk jeonbuk gangwon). 비우면 서울 빼고 전부"
+        required: false
+        default: ""
+      gap_ms:
+        description: "호출 사이에 몇 ms 쉴까. 🚨 카카오는 **분당 한도**가 있다"
+        required: false
+        default: "300"
+      limit:
+        description: "✂️ 도시마다 닻을 몇 개까지만 (0 이면 전부)"
+        required: false
+        default: "0"
+
+permissions:
+  contents: write
+
+jobs:
+  survey:
+    runs-on: ubuntu-latest
+    # ⏱️ 천장이 없으면 느려진 것이 안 드러난다 (CLAUDE.md 「검사를 만들었으면 울려 봐야 한다」).
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # 📍 닻을 우리 자료에서 뽑는다 — 좌표가 있어야 뽑힌다.
+      - name: 좌표 모으기
+        run: |
+          npx vite build --ssr scripts/dump-place-coords.ts --outDir dist-ssr
+          node dist-ssr/dump-place-coords.js
+
+      - name: 보관함 찾기
+        env:
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
+          GAP_MS: ${{ inputs.gap_ms }}
+          LIMIT: ${{ inputs.limit }}
+        run: |
+          set -o pipefail
+          ARGS=""
+          if [ "${{ inputs.apply }}" = "true" ]; then ARGS="$ARGS --apply"; fi
+          if [ -n "${{ inputs.city }}" ]; then ARGS="$ARGS --city ${{ inputs.city }}"; fi
+          node scripts/survey-city-luggage.mjs $ARGS 2>&1 | tee luggage-log.txt
+
+      - name: 반영한 것 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/city-luggage-candidates.json
+          git diff --cached --quiet && echo "바뀐 게 없다" || {
+            git commit -m "서울 밖 짐 보관함 후보를 찾는다 (카카오 지역검색)"
+            # 🚨 밀렸을 때 다시 해 본다 — 안 그러면 받아 온 자료가 통째로 버려진다.
+            pushed=no
+            for i in 1 2 3; do
+              if git push; then pushed=yes; break; fi
+              echo "   밀렸다 — 원격을 당겨 다시 얹는다 ($i/3)"
+              git pull --rebase origin "$(git rev-parse --abbrev-ref HEAD)" || exit 1
+              sleep $((i * 3))
+            done
+            if [ "$pushed" != yes ]; then
+              echo "❌ 세 번 다 밀렸다. 받아 둔 자료가 올라가지 못했다 — 다시 돌릴 것."
+              exit 1
+            fi
+          }
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🧳 서울 밖 짐 보관함 후보"
+            echo ""
+            echo '```'
+            tail -40 luggage-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

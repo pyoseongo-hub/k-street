@@ -41,6 +41,9 @@ permissions:
 jobs:
   find:
     runs-on: ubuntu-latest
+    # ⏱️ 천장이 없으면 느려진 것이 안 드러난다 (CLAUDE.md 「검사를 만들었으면 울려 봐야 한다」).
+    #    2026-10-01에 곳이 497 → 3,078개로 늢었다. 한 판이 길어진 것을 모를 수 없게 말뚝는다.
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
