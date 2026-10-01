@@ -54,7 +54,17 @@ const SWIPE_RATIO = 1.5;
 
 export default function HomeSwitch({ season, district, showDistrict = 0 }: Props) {
   const { t } = useLanguage();
-  const [view, setView] = useState<HomeView>("season");
+  // 🏘️ **동네 화면으로 시작한다** (사장님 지시, 2026-10-01: *"그럼 기본 시작 페이지
+  //    동네로 나오게 / 고치고 수정 전까지"*).
+  //
+  //    왜 — 계절 화면 맨 위가 **이 달의 축제**인데, 부산 축제 14곳이 **전부 2025년
+  //    날짜**다. 관광공사 쪽이 1년째 안 움직이고, 서울과 달리 부산은 구청 자료
+  //    (서울문화포털 같은 자리)를 아직 못 찾았다. 그래서 부산으로 들어온 손님은
+  //    **첫 화면이 지난 축제로 채워진 것**을 본다.
+  //
+  // ⏳ **임시다.** 축제 날짜가 고쳐지면 `"season"` 으로 되돌린다 — 이 한 줄이다.
+  //    되돌릴 때 같이 볼 것: src/data/festival-dates.json 이 2026년을 담고 있나.
+  const [view, setView] = useState<HomeView>("district");
   const start = useRef<{ x: number; y: number; ok: boolean } | null>(null);
 
   // 🔙 **띠를 눌러 건너왔을 때 폰 뒤로가기로 돌아오게 한다** (2026-09-14).
