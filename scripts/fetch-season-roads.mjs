@@ -44,9 +44,12 @@
 //    .github/workflows/fetch-season-roads.yml 로 Actions 에서 돌린다.
 
 import { writeFileSync } from "node:fs";
+import { argValue } from "./lib/args.mjs";
 
 const APPLY = process.argv.includes("--apply");
-const SEASON = (process.argv[process.argv.indexOf("--season") + 1] ?? "autumn").toLowerCase();
+// 🎚️ **쓴 적이 있을 때만 값을 본다**(lib/args.mjs). 그전에는 `--season` 을 안 주면
+//    node 실행 파일 경로가 계절 이름으로 들어왔다 — 보관함 찾기가 그래서 터졌다.
+const SEASON = argValue("--season", "autumn").toLowerCase();
 
 const SEASONS = {
   autumn: {

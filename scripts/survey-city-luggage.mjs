@@ -35,10 +35,15 @@
 
 import { writeFileSync, readFileSync, existsSync } from "node:fs";
 import { readCities } from "./lib/city-registry.mjs";
+import { argValue } from "./lib/args.mjs";
 
 const KEY = process.env.KAKAO_REST_API_KEY ?? "";
 const APPLY = process.argv.includes("--apply");
-const ONLY = process.argv[process.argv.indexOf("--city") + 1];
+// 🎚️ 🐞 **여기가 조용히 터졌던 자리다.** `--city` 를 안 주면 indexOf 가 -1 이라
+//    argv[0](node 실행 파일 경로)이 들어와 **여덟 도시를 전부 건너뛰었다.**
+//    카카오를 한 번도 안 부르고 29초에 끝났는데 워크플로는 초록불이었다.
+//    자세한 것은 lib/args.mjs 머리말에.
+const ONLY = argValue("--city");
 const GAP_MS = Number(process.env.GAP_MS ?? 300);
 const LIMIT = Number(process.env.LIMIT ?? 0); // 닻을 몇 개까지만 (0 = 전부)
 const OUT = "src/data/city-luggage-candidates.json";
@@ -205,6 +210,20 @@ for (const city of CITIES) {
     console.log(`        업종: ${x.업종} · ${x.도로명 || x.지번}`);
   }
   if (list.length > 8) console.log(`      … 그리고 ${list.length - 8}곳 더 (파일에 다 있다)`);
+}
+
+// 🚨 **한 도시도 안 봤으면 초록불을 주지 않는다** (2026-10-01에 당하고 넣었다).
+//    `--city` 를 잘못 읽어 여덟 도시를 전부 건너뛰었는데 **exit 0 에 파일까지 저장**됐다.
+//    `"도시": {}` 만 들어 있는 파일이 커밋되고 워크플로는 성공으로 떴다.
+//    「아무것도 안 했다」와 「해 봤더니 없더라」는 **다른 말**이다 — 섞이면 아무도 모른다.
+if (!Object.keys(결과.도시).length) {
+  console.error(
+    `\n❌ **한 도시도 보지 않았다.** 찾을 도시가 하나도 안 걸렸다는 뜻이다.\n` +
+      `   · --city 에 적은 열쇠(${ONLY || "(없음)"})가 cities.ts 에 있는지\n` +
+      `   · cities.ts 에 status: "공개" 인 도시가 서울 말고 또 있는지\n` +
+      `   둘을 보라. 「없다」가 아니라 **안 봤다**이므로 저장하지 않는다.`
+  );
+  process.exit(1);
 }
 
 console.log("\n═══ 합계 ═══");

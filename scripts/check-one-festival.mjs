@@ -20,9 +20,12 @@
 //   SEOUL_OPEN_API_KEY=… TOUR_API_KEY=… node scripts/check-one-festival.mjs --name 빛초롱
 
 import { fetchWithRetry } from "./lib/tour-fetch.mjs";
+import { argValue } from "./lib/args.mjs";
 
-const NAME = process.argv[process.argv.indexOf("--name") + 1];
-if (!NAME || NAME.startsWith("--")) {
+// 🎚️ **쓴 적이 있을 때만 값을 본다**(lib/args.mjs) — indexOf 가 -1 이면 argv[0],
+//    즉 node 실행 파일 경로가 「찾을 말」로 들어온다.
+const NAME = argValue("--name");
+if (!NAME) {
   console.error("❌ 쓰는 법: node scripts/check-one-festival.mjs --name 빛초롱");
   process.exit(1);
 }
