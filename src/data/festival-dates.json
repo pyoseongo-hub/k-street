@@ -51,6 +51,20 @@
     "lng": 127.0029878163,
     "homepage": "https://sdf1979.koreadanceassociation.org/v2/"
   },
+  "674023": {
+    "name": "병오년 해맞이 행사",
+    "city": "gangwon",
+    "gu": "강릉시",
+    "addr": "강원특별자치도 강릉시 경포로 515 (안현동)",
+    "start": "20251231",
+    "end": "20260101",
+    "startMonth": 12,
+    "endMonth": 1,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/40/3588540_image2_1.jpg",
+    "lat": 37.8052793467,
+    "lng": 128.9067724937,
+    "homepage": "https://www.gn.go.kr/www/selectBbsNttView.do?key=258&bbsNo=12&nttNo=201011&searchCtgry=&searchCnd=all&searchKrwd=&pageIndex=1&integrDeptCode="
+  },
   "1080734": {
     "name": "영도다리축제",
     "city": "busan",
@@ -64,6 +78,20 @@
     "lat": 35.0786013237,
     "lng": 129.0802726164,
     "homepage": "https://www.yeongdo.go.kr/ydfestival.web"
+  },
+  "1122739": {
+    "name": "청춘양구 펀치볼 시래기사과축제",
+    "city": "gangwon",
+    "gu": "양구군",
+    "addr": "강원특별자치도 양구군 해안면 해안서화로 15",
+    "start": "20251031",
+    "end": "20251102",
+    "startMonth": 10,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/97/3543397_image2_1.jpg",
+    "lat": 38.2911497868,
+    "lng": 128.1434933608,
+    "homepage": "https://ygcf.or.kr/Festival/F60000/index"
   },
   "1399532": {
     "name": "부산고등어축제",
@@ -79,6 +107,34 @@
     "lng": 129.0180752934,
     "homepage": "https://www.busangde.co.kr/"
   },
+  "1748721": {
+    "name": "2025 포항스틸아트페스티벌 (2025PSAF)",
+    "city": "gyeongbuk",
+    "gu": "포항시",
+    "addr": "경상북도 포항시 북구 선착로 78 (동빈1가)",
+    "start": "20251025",
+    "end": "20251109",
+    "startMonth": 10,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/03/3547903_image2_1.jpg",
+    "lat": 36.0486865532,
+    "lng": 129.3716421277,
+    "homepage": "https://festival.phcf.or.kr/steelArt/subMain.do"
+  },
+  "1769697": {
+    "name": "홍천강 꽁꽁축제",
+    "city": "gangwon",
+    "gu": "홍천군",
+    "addr": "강원특별자치도 홍천군 홍천읍 갈마곡리",
+    "start": "20260109",
+    "end": "20260125",
+    "startMonth": 1,
+    "endMonth": 1,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/12/3580712_image2_1.JPG",
+    "lat": 37.6881873125,
+    "lng": 127.8867488167,
+    "homepage": "http://xn--9y5b95fmvab9w.kr/Home/H60000/festival"
+  },
   "1806376": {
     "name": "강동북페스티벌",
     "gu": "강동구",
@@ -91,6 +147,20 @@
     "lat": 37.5244036592,
     "lng": 127.1369827856,
     "homepage": "https://www.gdlibrary.or.kr/portal/menu/10/book-festival"
+  },
+  "1855589": {
+    "name": "제19회 전북청소년영화제",
+    "city": "jeonbuk",
+    "gu": "전주시",
+    "addr": "전북특별자치도 전주시 완산구 전주객사3길 34 (고사동)",
+    "start": "20251107",
+    "end": "20251108",
+    "startMonth": 11,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/64/3563364_image2_1.jpg",
+    "lat": 35.8188247887,
+    "lng": 127.1423260609,
+    "homepage": "http://www.jyff.kr"
   },
   "2028176": {
     "name": "허준축제",
@@ -210,6 +280,62 @@
     "lng": 126.9787960237,
     "homepage": null
   },
+  "2623638": {
+    "name": "2025 홀로그램 엑스포 - HOLO WAVE",
+    "city": "jeonbuk",
+    "gu": "익산시",
+    "addr": "전북특별자치도 익산시 익산대로 460 (신동)",
+    "start": "20251120",
+    "end": "20251122",
+    "startMonth": 11,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/96/3565396_image2_1.png",
+    "lat": 35.9670185276,
+    "lng": 126.9533945826,
+    "homepage": "http://www.holoexpo.kr"
+  },
+  "2641128": {
+    "name": "수성빛예술제",
+    "city": "daegu",
+    "gu": "수성구",
+    "addr": "대구광역시 수성구 무학로 112 (두산동)",
+    "start": "20251224",
+    "end": "20260104",
+    "startMonth": 12,
+    "endMonth": 1,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/12/3578312_image2_1.JPG",
+    "lat": 35.829419486,
+    "lng": 128.6206032541,
+    "homepage": "https://sslaf.kr/"
+  },
+  "2642299": {
+    "name": "전주제야축제",
+    "city": "jeonbuk",
+    "gu": "전주시",
+    "addr": "전북특별자치도 전주시 완산구 서노송동",
+    "start": "20251231",
+    "end": "20251231",
+    "startMonth": 12,
+    "endMonth": 12,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/73/3589873_image2_1.jpg",
+    "lat": 35.8236298879,
+    "lng": 127.1475254718,
+    "homepage": "https://www.jeonju.go.kr/planweb/board/view.9is?dataUid=9be517a89b0bad18019b0c6eb34617e6&contentUid=ff8080818990c349018b041a87453954&boardUid=ff8080818b5bc5cf018b6588a3d91e94"
+  },
+  "2667583": {
+    "name": "백두대간 봉자페스티벌",
+    "city": "gyeongbuk",
+    "gu": "봉화군",
+    "addr": "경상북도 봉화군 춘양면 춘양로 1501",
+    "start": "20251002",
+    "end": "20251012",
+    "startMonth": 10,
+    "endMonth": 10,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/14/3544414_image2_1.JPG",
+    "lat": 37.0081974711,
+    "lng": 128.8299396966,
+    "homepage": "https://www.bdna.or.kr/contents/dynamicDetailExhbit?menuId=M0143&upMenuId=M0060&s0&postNo=16669"
+  },
   "2702333": {
     "name": "카운트다운 부산",
     "city": "busan",
@@ -262,6 +388,20 @@
     "lat": 37.5071957139,
     "lng": 127.0475969642,
     "homepage": "https://www.jrtf.or.kr/"
+  },
+  "2759249": {
+    "name": "경산 대추축제 & 농산물 한마당",
+    "city": "gyeongbuk",
+    "gu": "경산시",
+    "addr": "경상북도 경산시 남매로 100 (상방동)",
+    "start": "20251017",
+    "end": "20251019",
+    "startMonth": 10,
+    "endMonth": 10,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/22/3566322_image2_1.jpg",
+    "lat": 35.8199172753,
+    "lng": 128.7434010472,
+    "homepage": "https://gsctf.or.kr/user/festival/festival/view?boardIdx=373"
   },
   "2769990": {
     "name": "2025 대한민국 우리술 대축제",
@@ -395,6 +535,48 @@
     "lng": 129.0567056306,
     "homepage": "https://www.bsma.co.kr/"
   },
+  "2873042": {
+    "name": "홍천 사과축제",
+    "city": "gangwon",
+    "gu": "홍천군",
+    "addr": "강원특별자치도 홍천군 홍천읍 갈마곡리",
+    "start": "20251030",
+    "end": "20251102",
+    "startMonth": 10,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/55/3561055_image2_1.jpg",
+    "lat": 37.6893539667,
+    "lng": 127.8933204084,
+    "homepage": "https://xn--9y5b95fmvab9w.kr/Home/H40000/festival"
+  },
+  "2915307": {
+    "name": "2025 유성온천 크리스마스 축제",
+    "city": "daejeon",
+    "gu": "유성구",
+    "addr": "대전광역시 유성구 어은로 27 (봉명동)",
+    "start": "20251205",
+    "end": "20251207",
+    "startMonth": 12,
+    "endMonth": 12,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/43/3574143_image2_1.jpg",
+    "lat": 36.3607306283,
+    "lng": 127.3577063021,
+    "homepage": "http://ysfesta.com/"
+  },
+  "2930662": {
+    "name": "부안 설(雪)숭어 축제",
+    "city": "jeonbuk",
+    "gu": "부안군",
+    "addr": "전북특별자치도 부안군 부안읍 서외리",
+    "start": "20251205",
+    "end": "20251206",
+    "startMonth": 12,
+    "endMonth": 12,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/47/3575947_image2_1.jpg",
+    "lat": 35.7272448141,
+    "lng": 126.7312455993,
+    "homepage": null
+  },
   "3000221": {
     "name": "은평청년축제",
     "gu": "은평구",
@@ -433,6 +615,20 @@
     "lat": 37.5294186076,
     "lng": 127.0739939307,
     "homepage": "https://bitseomfestival.com/2025/"
+  },
+  "3014969": {
+    "name": "문화의 달 행사",
+    "city": "jeju",
+    "gu": "서귀포시",
+    "addr": "제주특별자치도 서귀포시 남성중로 2-9 (서홍동)",
+    "start": "20251017",
+    "end": "20251019",
+    "startMonth": 10,
+    "endMonth": 10,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/69/3562069_image2_1.jpg",
+    "lat": 33.2438675382,
+    "lng": 126.5598424335,
+    "homepage": "http://www.culturemonth2025.com/"
   },
   "3018117": {
     "name": "전포커피축제",
@@ -552,6 +748,20 @@
     "lng": 126.9580520415,
     "homepage": "https://www.sfac.or.kr/opensquare/notice/notice_list.do?cbIdx=955&bcIdx=137044&type="
   },
+  "3115337": {
+    "name": "원주시 반려동물 문화행사 <애니멀 대학>",
+    "city": "gangwon",
+    "gu": "원주시",
+    "addr": "강원특별자치도 원주시 봉산동",
+    "start": "20251004",
+    "end": "20251004",
+    "startMonth": 10,
+    "endMonth": 10,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/08/3546108_image2_1.png",
+    "lat": 37.3444506969,
+    "lng": 127.960221718,
+    "homepage": "https://g-animal.co.kr/59"
+  },
   "3345610": {
     "name": "부산국제아동도서전",
     "city": "busan",
@@ -578,6 +788,20 @@
     "lat": 37.6104117333,
     "lng": 127.0605761839,
     "homepage": null
+  },
+  "3349628": {
+    "name": "제주독서대전",
+    "city": "jeju",
+    "gu": "제주시",
+    "addr": "제주특별자치도 제주시 사라봉동길 30 (건입동)",
+    "start": "20251024",
+    "end": "20251026",
+    "startMonth": 10,
+    "endMonth": 10,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/29/3560629_image2_1.jpg",
+    "lat": 33.5149873859,
+    "lng": 126.5478984552,
+    "homepage": "http://woodang.jejusi.go.kr/"
   },
   "3351622": {
     "name": "DDP 가을축제: 디자인 라운지",
@@ -657,6 +881,20 @@
     "lng": 127.1107693087,
     "homepage": "https://www.garak.co.kr/homepage/M0000075/board/view.do?atcSn=17462&pageIndex=1"
   },
+  "3381612": {
+    "name": "전주막걸리축제",
+    "city": "jeonbuk",
+    "gu": "전주시",
+    "addr": "전북특별자치도 전주시 완산구 효자동2가",
+    "start": "20251031",
+    "end": "20251101",
+    "startMonth": 10,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/75/3550475_image2_1.jpg",
+    "lat": 35.8100832359,
+    "lng": 127.0914919246,
+    "homepage": "https://jeonjumakgeolli.com/"
+  },
   "3383832": {
     "name": "케미스트릿 강남역 페스티벌",
     "gu": "서초구",
@@ -695,6 +933,20 @@
     "lat": 37.5422918129,
     "lng": 126.902442527,
     "homepage": "https://www.ydpcf.or.kr/festival/seonyudo.do"
+  },
+  "3410210": {
+    "name": "별빛주막 : 소양점",
+    "city": "jeonbuk",
+    "gu": "완주군",
+    "addr": "전북특별자치도 완주군 소양면 송광수만로 472-23",
+    "start": "20251115",
+    "end": "20251115",
+    "startMonth": 11,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/29/3567029_image2_1.jpg",
+    "lat": 35.9031141763,
+    "lng": 127.2433009708,
+    "homepage": "https://www.wfac.or.kr/2024/inner.php?sMenu=A4000&mode=view&no=1092"
   },
   "3422647": {
     "name": "게임 체험 팝업 전시 ‘Game-Playground’",
@@ -750,6 +1002,20 @@
     "lat": 37.5103955843,
     "lng": 127.0610512042,
     "homepage": "https://gangnameyes.com/event/festival"
+  },
+  "3460731": {
+    "name": "광주여성영화제",
+    "city": "gwangju",
+    "gu": "동구",
+    "addr": "전남광주통합특별시 동구 중앙로160번길 16-7 (불로동)",
+    "start": "20251106",
+    "end": "20251110",
+    "startMonth": 11,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/26/3460726_image2_1.jpg",
+    "lat": 35.1468609363,
+    "lng": 126.9146634529,
+    "homepage": "http://www.wffig.com/"
   },
   "3489468": {
     "name": "창덕궁 약다방",
@@ -829,6 +1095,34 @@
     "lng": 126.9867060298,
     "homepage": "https://hanok.seoul.go.kr/"
   },
+  "3546882": {
+    "name": "2025 음악실연자 페스티벌",
+    "city": "jeju",
+    "gu": "제주시",
+    "addr": "제주특별자치도 제주시 중앙로 2 (삼도이동)",
+    "start": "20251024",
+    "end": "20251024",
+    "startMonth": 10,
+    "endMonth": 10,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/81/3546881_image2_1.jpg",
+    "lat": 33.5181838831,
+    "lng": 126.5246670689,
+    "homepage": "https://www.instagram.com/ofjeju.kr/,"
+  },
+  "3548867": {
+    "name": "대구 동구 어울림한마당 두두다동",
+    "city": "daegu",
+    "gu": "동구",
+    "addr": "대구광역시 동구 금호강변로 278 (율하동)",
+    "start": "20251018",
+    "end": "20251018",
+    "startMonth": 10,
+    "endMonth": 10,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/63/3548863_image2_1.jpg",
+    "lat": 35.85996181,
+    "lng": 128.6928627093,
+    "homepage": "https://www.dong.daegu.kr/portal/board/post/view.do?bcIdx=500&mid=0201010000&idx=191645#"
+  },
   "3548994": {
     "name": "그린칩스 페스티벌",
     "gu": "마포구",
@@ -854,6 +1148,34 @@
     "lat": 37.5388210345,
     "lng": 126.9605734386,
     "homepage": "https://www.yongsan.go.kr/portal/bbs/B0000041/view.do?nttId=718229&menuNo=200228"
+  },
+  "3551562": {
+    "name": "2025년 제20회 인문주간",
+    "city": "daejeon",
+    "gu": "유성구",
+    "addr": "대전광역시 유성구 가정로 201 (가정동)",
+    "start": "20251027",
+    "end": "20251102",
+    "startMonth": 10,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/28/3551428_image2_1.jpg",
+    "lat": 36.3844891614,
+    "lng": 127.3656327264,
+    "homepage": "https://www.nrf.re.kr/biz/notice/view?postNo=253072&menuNo=364&bizNo=82"
+  },
+  "3554702": {
+    "name": "원도심 야간여행 ‘섬夜시즌’ 운영",
+    "city": "jeju",
+    "gu": "서귀포시",
+    "addr": "제주특별자치도 서귀포시 칠십리로 120-12 (서귀동)",
+    "start": "20251101",
+    "end": "20251102",
+    "startMonth": 11,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/00/3554700_image2_1.jpg",
+    "lat": 33.241942872,
+    "lng": 126.5675084795,
+    "homepage": "http://www.visitjeju.or.kr/web/bbs/bbsDtl.do?pageIndex=1&sBbsId=NOTICE&bbsId=NOTICE&noticeNum=3478&authNum=&sKeyOpt=1&sKey="
   },
   "3554794": {
     "name": "2025 대한민국 김장대축제",
@@ -896,6 +1218,20 @@
     "lng": 129.0323594995,
     "homepage": "https://www.bsjunggu.go.kr/board/view.junggu?boardId=BBS_0000001&menuCd=DOM_000000103001001000&dataSid=250114"
   },
+  "3563389": {
+    "name": "죽변항 수산물축제",
+    "city": "gyeongbuk",
+    "gu": "울진군",
+    "addr": "경상북도 울진군 죽변면 죽변항길 150",
+    "start": "20251107",
+    "end": "20251109",
+    "startMonth": 11,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/82/3563382_image2_1.jpg",
+    "lat": 37.0571311575,
+    "lng": 129.4250268958,
+    "homepage": "https://www.uljin.go.kr/tour/index.uljin?menuCd=DOM_000000203006001000"
+  },
   "3563444": {
     "name": "방배카페 골목페스타",
     "gu": "서초구",
@@ -908,6 +1244,34 @@
     "lat": 37.4963319705,
     "lng": 126.9854168201,
     "homepage": "https://www.seocho.go.kr/site/seocho/ex/bbs/View.do?pageIndex=1&pageUnit=10&cbIdx=59&searchMedia=&bcIdx=405392&searchCondition=subCont&searchKeyword="
+  },
+  "3566596": {
+    "name": "굿네이버스 세계 놀이 페스티벌 '놀자GO! 지구로!'",
+    "city": "gyeongbuk",
+    "gu": "포항시",
+    "addr": "경상북도 포항시 북구 양덕남로 166 (양덕동)",
+    "start": "20251207",
+    "end": "20251207",
+    "startMonth": 12,
+    "endMonth": 12,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/61/3567661_image2_1.jpg",
+    "lat": 36.0800254208,
+    "lng": 129.4107100131,
+    "homepage": "https://gb.goodneighbors.kr/gngb/board/cd103101100/info/56484"
+  },
+  "3569496": {
+    "name": "담그랑께 나누랑께",
+    "city": "jeonbuk",
+    "gu": "전주시",
+    "addr": "전북특별자치도 전주시 완산구 전라감영로 55 (중앙동4가)",
+    "start": "20251130",
+    "end": "20251130",
+    "startMonth": 11,
+    "endMonth": 11,
+    "image": "https://tong.visitkorea.or.kr/cms/resource/95/3569495_image2_1.jpg",
+    "lat": 35.8157779693,
+    "lng": 127.1455841839,
+    "homepage": "https://www.instagram.com/culture__art/"
   },
   "3572025": {
     "name": "동궐동락",
