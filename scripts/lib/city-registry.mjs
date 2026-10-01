@@ -10,7 +10,7 @@ import { readFileSync } from "node:fs";
 
 const SRC = "src/data/cities.ts";
 
-/** @returns {{key:string, ko:string, areaCode:string, coast:boolean, lat:number, lng:number, units:string[], status:string}[]} */
+/** @returns {{key:string, ko:string, areaCode:string, kind:string, coast:boolean, lat:number, lng:number, units:string[], status:string}[]} */
 export function readCities(path = SRC) {
   const text = readFileSync(path, "utf8");
   const blocks = text.split(/\n  \{\n/).slice(1);
@@ -23,6 +23,10 @@ export function readCities(path = SRC) {
       ko: b.match(/ko: "([^"]+)"/)?.[1] ?? key,
       koFull: b.match(/koFull: "([^"]+)"/)?.[1] ?? "",
       status: b.match(/status: "([^"]+)"/)?.[1] ?? "",
+      // 🗺️ **대도시인가 도인가.** 좌표 자(city-geo.mjs)가 이걸로 갈린다 —
+      //    안 읽으면 도에도 60km 자를 대고 **경북 좌표 절반이 조용히 잘린다**
+      //    (2026-10-01에 실제로 그랬다: 717곳 중 291곳만 살아남았다).
+      kind: b.match(/kind: "([^"]+)"/)?.[1] ?? "",
       areaCode: b.match(/areaCode: "([^"]+)"/)?.[1] ?? "",
       // 🌊 **없으면 「있다」로 치지 않는다.** 못 읽었는데 바다가 있다고 치면
       //    서울에 「바다·해변」이 되살아난다 — 못 읽은 것은 못 읽었다고 한다.

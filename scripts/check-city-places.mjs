@@ -8,20 +8,16 @@
 //   ④ 좌표가 그 도시 안에 있나 — 한 곳이 엉뚱한 데 찍히면 길찾기가 손님을 딴 데로 보낸다
 import { readdirSync, readFileSync } from "node:fs";
 
-const cities = readFileSync("src/data/cities.ts", "utf8");
-function city(key) {
-  const b = cities.split(/\n  \{\n/).slice(1).find((x) => new RegExp(`key: "${key}"`).test(x));
-  if (!b) return null;
-  return {
-    ko: b.match(/ko:\s*"([^"]+)"/)?.[1],
-    lat: Number(b.match(/lat:\s*([\d.]+)/)?.[1]),
-    lng: Number(b.match(/lng:\s*([\d.]+)/)?.[1]),
-    units: [...(b.match(/units:\s*\[([\s\S]*?)\]/)?.[1] ?? "").matchAll(/"([^"]+)"/g)].map((m) => m[1]),
-  };
-}
+// 🧾 **명부는 공용 파일에서 읽는다** (2026-10-01에 고쳤다).
+//    여기엔 cities.ts 를 **따로 파싱하는 함수가 있었다.** 그 함수가 `kind` 를
+//    안 읽어서, 도(道)에도 대도시 자(60km)를 대고 **강원·경북 좌표 900곳을
+//    「시청에서 100km 떨어졌다」고 잡았다.** 멀쩡한 좌표였다.
+//    이 파일 머리말이 경계하던 「잣대가 둘」이 **명부 쪽에도 있었던 것**이다.
+import { cityByKey } from "./lib/city-registry.mjs";
+const city = (key) => cityByKey(key) ?? null;
 
 // 🗺️ 잣대는 만드는 쪽과 **같은 파일**에서 가져온다 — 둘이 다르면 반쪽 적용이 생긴다.
-import { distanceKm as km, MAX_KM } from "./lib/city-geo.mjs";
+import { distanceKm as km, maxKmFor } from "./lib/city-geo.mjs";
 
 const seen = new Map();   // id → 어디서 나왔나
 const bad = [];
@@ -68,7 +64,7 @@ for (const f of files) {
     // 좌표가 **없는 것**은 문제가 아니다 — 만드는 쪽이 일부러 버린 것일 수 있다
     // (관광공사가 틀린 값을 준 곳). 주소로 길을 찾는다. 세어서 보여만 준다.
     if (p.lat == null || p.lng == null) noXY++;
-    else if (km(C.lat, C.lng, p.lat, p.lng) > MAX_KM) {
+    else if (km(C.lat, C.lng, p.lat, p.lng) > maxKmFor(C)) {
       far++;
       bad.push(`${f} — ${p.name}: ${C.ko} 시청에서 ${Math.round(km(C.lat, C.lng, p.lat, p.lng))}km 떨어져 있다`);
     }

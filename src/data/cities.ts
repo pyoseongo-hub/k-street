@@ -155,7 +155,7 @@ export const CITIES: readonly City[] = [
   {
     key: "gangwon", ko: "강원", koFull: "강원특별자치도",
     en: "Gangwon", enFull: "Gangwon-do",
-    kind: "도", status: "빈칸",
+    kind: "도", status: "공개",
     areaCode: "32", coast: true,
     lat: 37.8813, lng: 127.73, row: 0, col: 3,
     units: [ // 18곳
@@ -191,7 +191,7 @@ export const CITIES: readonly City[] = [
   {
     key: "daejeon", ko: "대전", koFull: "대전광역시",
     en: "Daejeon", enFull: "Daejeon",
-    kind: "대도시", status: "빈칸",
+    kind: "대도시", status: "공개",
     areaCode: "3", coast: false,
     lat: 36.3504, lng: 127.3845, row: 1, col: 2,
     units: [ // 5곳
@@ -213,7 +213,7 @@ export const CITIES: readonly City[] = [
   {
     key: "gyeongbuk", ko: "경북", koFull: "경상북도",
     en: "Gyeongbuk", enFull: "Gyeongsangbuk-do",
-    kind: "도", status: "빈칸",
+    kind: "도", status: "공개",
     areaCode: "35", coast: true,
     lat: 36.5684, lng: 128.7294, row: 1, col: 4,
     units: [ // 22곳
@@ -227,7 +227,7 @@ export const CITIES: readonly City[] = [
   {
     key: "jeonbuk", ko: "전북", koFull: "전북특별자치도",
     en: "Jeonbuk", enFull: "Jeonbuk-do",
-    kind: "도", status: "빈칸",
+    kind: "도", status: "공개",
     areaCode: "37", coast: true,
     lat: 35.8242, lng: 127.148, row: 2, col: 1,
     units: [ // 14곳
@@ -239,7 +239,7 @@ export const CITIES: readonly City[] = [
   {
     key: "daegu", ko: "대구", koFull: "대구광역시",
     en: "Daegu", enFull: "Daegu",
-    kind: "대도시", status: "빈칸",
+    kind: "대도시", status: "공개",
     areaCode: "4", coast: false,
     lat: 35.8714, lng: 128.6014, row: 2, col: 4,
     units: [ // 9곳
@@ -250,7 +250,7 @@ export const CITIES: readonly City[] = [
   {
     key: "gwangju", ko: "광주", koFull: "광주광역시",
     en: "Gwangju", enFull: "Gwangju",
-    kind: "대도시", status: "빈칸",
+    kind: "대도시", status: "공개",
     areaCode: "5", coast: false,
     lat: 35.1595, lng: 126.8526, row: 3, col: 1,
     units: [ // 5곳
@@ -312,7 +312,7 @@ export const CITIES: readonly City[] = [
   {
     key: "jeju", ko: "제주", koFull: "제주특별자치도",
     en: "Jeju", enFull: "Jeju-do",
-    kind: "도", status: "빈칸",
+    kind: "도", status: "공개",
     areaCode: "39", coast: true,
     lat: 33.4996, lng: 126.5312, row: 5, col: 0,
     units: [ // 2곳

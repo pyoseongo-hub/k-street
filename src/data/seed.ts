@@ -17,6 +17,7 @@ import autumnRoads from "./autumn-roads.json";
 // 🌊 부산. 지금은 launchScope 가 전부 걸러 내므로 화면에 한 곳도 안 나온다 —
 //    그래도 여기서 합쳐 두는 이유는 busanPlaces.ts 머리말에 적어 뒀다.
 import { BUSAN_PLACES } from "./busanPlaces";
+import { CITY_PLACES_2026_10 } from "./cityPlaces";
 // 🏙️ 분류 코드로 다시 갈라 보고 **그동안 빠져 있던 것**을 찾아낸 서울 346곳.
 //    왜 tourPlaces.ts 와 따로 두는지는 그 파일 머리말에 있다.
 import { SEOUL_TOUR_PLACES } from "./seoulPlaces";
@@ -630,6 +631,9 @@ const ALL_PLACES_RAW: Place[] = [
   //    id 는 관광공사 contentId 라 순서에 영향을 주지 않고, 이미 있는 304곳과는
   //    **번호와 이름 둘 다로** 걸러 놨다(seoulPlaces.ts 머리말 참고).
   ...SEOUL_TOUR_PLACES,
+  // 🏙️ 2026-10-01에 연 일곱 곳 — 제주·광주·대구·대전·경북(경주)·전북(전주)·강원.
+  //    id 가 관광공사 contentId 라 순서에 영향을 주지 않는다. cityPlaces.ts 참고.
+  ...CITY_PLACES_2026_10,
 ];
 
 // scripts/fetch-coords.mjs가 채운 좌표를 덧씌운다 — seed.ts에 이미 직접 박아 둔

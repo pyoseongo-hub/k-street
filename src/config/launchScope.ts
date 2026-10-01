@@ -13,7 +13,15 @@
 //    사진이 붙은 곳이 202곳 중 184곳(91%)이 된 것을 보고 정하셨다.
 //    ⏳ 축제는 아직 14곳뿐이다(관광공사에 그것밖에 없다 — 직접 물어서 확인했다).
 //       부산시 자료가 열리면 채운다. 그때까지 부산 화면에 축제는 적게 뜬다.
-export const LAUNCH_REGIONS: readonly string[] = ["서울", "부산"];
+// 🏙️ **일곱 곳을 더 열었다** (2026-10-01, 사장님 지시:
+//    *"제주 광주 대구 경주 대전 전주 강원도 순으로 만들어 … 동네부터 채워서 열고"*).
+//    ⏳ 축제는 아직 안 채웠다 — 관광공사 날짜가 2025년에 멈춰 있다.
+//       그래서 첫 화면을 동네로 열어 뒀다(HomeSwitch.tsx).
+//    🏯 **경주는 경북, 전주는 전북** 안에 있다 — 둘 다 광역시가 아니다.
+export const LAUNCH_REGIONS: readonly string[] = [
+  "서울", "부산",
+  "제주", "광주", "대구", "대전", "경북", "전북", "강원",
+];
 
 export function isInLaunchScope(sido: string): boolean {
   return LAUNCH_REGIONS.includes(sido);

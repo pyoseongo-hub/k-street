@@ -22,7 +22,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { categoryOf } from "./lib/tour-categories.mjs";
 import { httpsPhoto } from "./lib/https-photo.mjs";
-import { distanceKm, nearCity, MAX_KM } from "./lib/city-geo.mjs";
+import { distanceKm, nearCity, maxKmFor } from "./lib/city-geo.mjs";
 import { cityByKey } from "./lib/city-registry.mjs";
 
 const args = process.argv.slice(2);
@@ -46,6 +46,10 @@ if (!city) {
 }
 // 🚨 **지역 번호가 명부와 다르면 멈춘다.** `--city seoul --area 6` 처럼 한 글자만
 //    어긋나도 **부산 자료가 서울 이름표를 달고** 저장된다 — 화면에서는 티가 안 난다.
+// 🗺️ **도는 자를 길게 쓴다.** 60km 는 부산 하나를 보고 정한 값이라 경북·강원에서
+//    좌표가 절반 넘게 잘렸다(경북 717곳 중 291곳만 살아남았다). city-geo.mjs 참고.
+const LIMIT_KM = maxKmFor(city);
+
 if (city.areaCode !== String(AREA)) {
   console.error(`❌ 「${city.ko}」의 관광공사 지역 번호는 ${city.areaCode} 인데 --area ${AREA} 를 적었다.`);
   console.error(`   맞다면 cities.ts 의 areaCode 를 먼저 고칠 것. 지금 그대로 두면 남의 도시 자료가 섞인다.`);
@@ -129,7 +133,7 @@ for (const it of pool) {
   //    관광공사 자료가 틀린 것이고 우리가 고칠 수 있는 값이 아니다.
   //    지어내지 않는다(빈 칸이 틀린 값보다 낫다). 주소가 있으면 길찾기는 된다.
   let lat = Number(it.mapy), lng = Number(it.mapx);
-  if (!nearCity(CITY_LAT, CITY_LNG, lat, lng)) {
+  if (!nearCity(CITY_LAT, CITY_LNG, lat, lng, LIMIT_KM)) {
     if (Number.isFinite(lat) && Number.isFinite(lng) && (lat || lng))
       drop(`좌표가 ${CITY_KO} 밖 — 좌표만 버림(${Math.round(distanceKm(CITY_LAT, CITY_LNG, lat, lng))}km)`, name);
     lat = NaN; lng = NaN;
@@ -177,7 +181,7 @@ console.log(`\n📷 사진 있는 곳 ${out.length - noPic} / ${out.length}곳`)
 if (noPic) console.log(`   ⚠️ 사진 없는 ${noPic}곳은 **앱 화면에 안 나온다**(ALL_PLACES 가 거른다). 자료는 남겨 둔다.`);
 // 🚨 좌표가 없으면 길찾기가 안 된다 — 몇 곳인지 알고 있어야 한다.
 const noXY = out.filter((p) => p.lat == null || p.lng == null).length;
-console.log(`📍 좌표 있는 곳 ${out.length - noXY} / ${out.length}곳${noXY ? `  (나머지는 주소로 길을 찾는다 · ${MAX_KM}km 넘게 튄 것은 버렸다)` : ""}`);
+console.log(`📍 좌표 있는 곳 ${out.length - noXY} / ${out.length}곳${noXY ? `  (나머지는 주소로 길을 찾는다 · ${LIMIT_KM}km 넘게 튄 것은 버렸다)` : ""}`);
 
 if (!APPLY) {
   console.log(`\n(맛보기다. 저장하려면 --apply 를 붙인다 → ${OUT})`);
