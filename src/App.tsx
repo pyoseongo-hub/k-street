@@ -24,6 +24,8 @@ import VideoCard from "./components/VideoCard";
 import BrandMark from "./components/BrandMark";
 import CityPicker from "./components/CityPicker";
 import CityCard from "./components/CityCard";
+// 🔗 주소로 받은 도시·구(`?city=seoul&gu=jung-gu`). 그 파일 머리말 참고.
+import { START } from "./lib/startParams";
 
 function App() {
   const { toggleTheme, getIcon } = useTheme();
@@ -194,6 +196,10 @@ function App() {
                   HomeSwitch 는 화면을 바꾸고, DistrictExplorer 는 칩을 누른다.
                   참/거짓이 아니라 숫자인 이유는 두 곳 주석에 적어 뒀다. */}
               <HomeSwitch
+                /* 🔗 주소로 구를 받아 들어왔으면 **동네 화면으로 연다**
+                   (`?gu=jung-gu` — src/lib/startParams.ts). 보러 온 동네가
+                   손가락 한 번 뒤에 숨지 않게. */
+                initialView={START.gu ? "district" : undefined}
                 showDistrict={roadJump}
                 season={<MonthlyFestivalPanel onGoRoads={() => setRoadJump((n) => n + 1)} />}
                 district={<DistrictExplorer forceCategory="autumn" jump={roadJump} />}

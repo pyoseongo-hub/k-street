@@ -45,6 +45,17 @@ interface Props {
    *    먹혀야 한다. 참/거짓이면 "참 → 참"은 안 바뀐 것으로 보여 아무 일도 안 난다.
    */
   showDistrict?: number;
+  /**
+   * 🔗 **처음에 어느 화면으로 열까** (2026-10-02, `?gu=jung-gu` 때문에 생겼다).
+   *
+   * 주소로 구를 받아 들어온 손님에게 계절 화면을 먼저 보여 주면, 보러 온 동네가
+   * 한 번 미는 손가락 뒤에 숨는다. 그때는 동네 화면으로 연다(App.tsx 가 넘겨 준다).
+   *
+   * ⚠️ 아래 기본값과 **따로 둔다.** 기본값은 축제 날짜가 고쳐지면 `"season"` 으로
+   *    되돌릴 **임시**인데, 그때도 이 길은 그대로 동네로 열려야 한다.
+   *    기본값에 기대고 이 칸을 안 두면, 되돌리는 날 조용히 같이 깨진다.
+   */
+  initialView?: HomeView;
 }
 
 /** 손가락을 이만큼 옆으로 끌어야 화면이 바뀐다. */
@@ -52,7 +63,7 @@ const SWIPE_MIN = 60;
 /** 옆으로 끈 거리가 위아래보다 이만큼 더 커야 '옆으로 민 것'으로 본다. */
 const SWIPE_RATIO = 1.5;
 
-export default function HomeSwitch({ season, district, showDistrict = 0 }: Props) {
+export default function HomeSwitch({ season, district, showDistrict = 0, initialView }: Props) {
   const { t } = useLanguage();
   // 🏘️ **동네 화면으로 시작한다** (사장님 지시, 2026-10-01: *"그럼 기본 시작 페이지
   //    동네로 나오게 / 고치고 수정 전까지"*).
@@ -64,7 +75,7 @@ export default function HomeSwitch({ season, district, showDistrict = 0 }: Props
   //
   // ⏳ **임시다.** 축제 날짜가 고쳐지면 `"season"` 으로 되돌린다 — 이 한 줄이다.
   //    되돌릴 때 같이 볼 것: src/data/festival-dates.json 이 2026년을 담고 있나.
-  const [view, setView] = useState<HomeView>("district");
+  const [view, setView] = useState<HomeView>(initialView ?? "district");
   const start = useRef<{ x: number; y: number; ok: boolean } | null>(null);
 
   // 🔙 **띠를 눌러 건너왔을 때 폰 뒤로가기로 돌아오게 한다** (2026-09-14).

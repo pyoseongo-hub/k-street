@@ -30,28 +30,45 @@ const rows = roads
     설명: [[r.수종, r.길이].filter(Boolean).join(" · ") || null, r.설명].filter(Boolean).join(" — "),
   }));
 
+// 🚨 **묻는 것은 「번역이 있나」가 아니라 「손님이 한글을 보나」다.**
+//
+//   앱이 찾는 법(src/lib/placeText.ts)은 이렇다:
+//       그 언어 → 없으면 **영어** → 그것도 없으면 한국어 원문
+//   그러니 일본어 칸이 비어 있어도 **영어가 있으면 손님은 영어를 본다.** 멀쩡하다.
+//
+//   🐞 처음엔 「그 언어에 있나」만 봤다가 **일부러 지운 칸을 사고로 셌다.**
+//      「북한산 → 北朝鮮山」처럼 번역기가 망친 일본어를 사람이 null 로 지우면
+//      (name-overrides.json) 앱은 영어로 대신 보여 준다 — 그게 **고친 상태**인데
+//      감사가 「3칸이 한국어로 나간다」고 말했다. 거짓 경보는 진짜 경보를 묻는다.
+//   ✅ 그래서 **앱과 똑같은 잣대**를 쓴다. 잣대가 둘이면 반쪽 적용이 생긴다.
+const EN = T.en ?? {};
 let 빈칸 = 0;
 const 보기 = [];
 for (const lang of LANGS) {
   const t = T[lang] ?? {};
   let n = 0;
+  let 영어로 = 0;
   for (const r of rows) {
     for (const [칸, ko] of [["이름", r.이름], ["설명", r.설명]]) {
       if (!ko || !/[가-힣]/.test(ko)) continue;
-      if (!t[ko]) {
-        n++;
-        if (보기.length < 6) 보기.push(`${lang} ${칸} — ${ko.slice(0, 40)}…`);
-      }
+      if (t[ko]) continue;
+      // 그 언어엔 없지만 영어가 있다 — 손님은 영어를 본다. 사고가 아니다.
+      if (EN[ko]) { 영어로++; continue; }
+      n++;
+      if (보기.length < 6) 보기.push(`${lang} ${칸} — ${ko.slice(0, 40)}…`);
     }
   }
-  console.log(`${lang.padEnd(6)} 못 옮긴 칸 ${String(n).padStart(4)} / ${rows.length * 2}`);
+  console.log(
+    `${lang.padEnd(6)} 한글로 나가는 칸 ${String(n).padStart(4)} / ${rows.length * 2}` +
+      (영어로 ? `   (그 밖에 ${영어로}칸은 영어로 대신 나간다 — 사람이 지운 자리)` : "")
+  );
   빈칸 += n;
 }
 
 console.log("");
 if (빈칸) {
   console.error(
-    `❌ 단풍길 ${rows.length}곳 중 **${빈칸}칸**이 한국어로 나간다.\n` +
+    `❌ 단풍길 ${rows.length}곳 중 **${빈칸}칸**이 한국어로 나간다(영어도 없다).\n` +
       보기.map((b) => "   " + b).join("\n") +
       `\n\n   고치는 법: Actions → **Translate places** (apply 켜기).\n` +
       `   그래도 남으면 열쇠가 어긋난 것이다 — scripts/translate-places.mjs 가 짓는\n` +

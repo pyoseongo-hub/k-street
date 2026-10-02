@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+// 🔗 주소로 받은 구(`?gu=jung-gu`). 왜·어떻게는 그 파일 머리말에.
+import { START } from "../lib/startParams";
 import { useLanguage } from "../lib/useLanguage";
 // 🏙️ 문구 안의 도시 이름을 지금 보는 도시로 바꾼다 — 그 파일 머리말 참고.
 import { useCityText } from "../lib/cityText";
@@ -85,7 +87,7 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
   const withCity = useCityText();
   // 🏙️ 지금 보고 있는 도시의 곳만. 도시가 하나일 때는 ALL_PLACES 와 같다.
   const PLACES = usePlacesHere();
-  const { cityKey } = useCity();
+  const { cityKey, city } = useCity();
   // 🚨 배치가 없는 도시는 **빈 배열**이 온다 — 남의 도시 지도를 대신 보여 주지 않는다.
   const hexRows = hexRowsOf(cityKey);
   const [category, setCategory] = useState<Category>("market");
@@ -93,6 +95,28 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
   // 내 위치의 구. null = 아직 안 눌러 봤다, "loading" = 찾는 중.
   const [myGu, setMyGu] = useState<MyDistrict | "loading" | null>(null);
   const map = useMapOffScreen();
+
+  // 🔗 **주소로 온 구에서 시작한다** (2026-10-02, `?gu=jung-gu`).
+  //
+  //    🚨 **useState 의 첫 값으로는 못 한다.** 도시를 정하는 쪽(CityProvider)이
+  //       저장된 값·주소를 **그린 다음에** 읽기 때문에, 첫 그림의 도시는 늘 기본값이다.
+  //       `?city=busan&gu=haeundae-gu` 로 들어오면 첫 그림은 아직 서울이라
+  //       「해운대구가 서울에 없다」며 버리고, 부산이 와도 다시 안 본다.
+  //       그래서 **도시가 자리를 잡은 뒤에** 넣는다.
+  //
+  //    ⚠️ **그 도시에 있는 구인지 보고 넣는다.** 서울을 보는데 해운대구를 넣으면
+  //       누를 칩도 없고 목록도 비어, 손님 눈에는 「고장 난 앱」이다.
+  //       모르는 값이면 **아무 일도 안 한다** — 구가 안 골라진 지금 홈 그대로다.
+  //
+  //    ⚠️ **한 번만 넣는다.** 손님이 다른 구를 누른 뒤에 도시가 다시 그려져도
+  //       주소에 적힌 구로 되돌아가면, 방금 누른 것이 사라진다.
+  const startGuUsed = useRef(false);
+  useEffect(() => {
+    if (startGuUsed.current || !START.gu) return;
+    if (!city.units.includes(START.gu)) return; // 아직 다른 도시다 — 바뀌면 다시 본다
+    startGuUsed.current = true;
+    setGu(START.gu);
+  }, [city]);
 
   // 밖에서 갈래를 눌러 주면 그대로 따른다. 고른 구는 지운다 —
   // 시장 보다가 단풍길로 건너오면 그 구에 단풍길이 없을 수 있고,

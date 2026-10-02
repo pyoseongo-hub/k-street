@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { CITIES, CITY_BY_KEY, type City } from "../data/cities";
+// 🔗 주소로 받은 도시(`?city=seoul`). 왜 필요한지는 그 파일 머리말에.
+import { START } from "./startParams";
 
 // 🏙️ **지금 보고 있는 도시.**
 //
@@ -56,7 +58,23 @@ export function CityProvider({ children }: { children: ReactNode }) {
 
   // 첫 그림은 언제나 기본값으로 그린다 — localStorage 를 그리는 중에 읽으면
   // 서버에서 미리 만들어 둔 화면과 달라져 깜박인다(useLanguage 와 같은 방식).
-  useEffect(() => setCityState(readStored()), []);
+  //
+  // 🔗 **주소로 온 도시가 저장된 도시를 이긴다** (2026-10-02, `?city=seoul`).
+  //    손님이 부산을 보다가 **서울 중구 링크**를 눌러 들어왔다면, 보고 싶은 것은
+  //    서울이다. 저장된 값(부산)을 쓰면 **엉뚱한 중구**가 열린다 —
+  //    「중구」는 서울에도 부산에도 있어서 화면이 멀쩡해 보이는 채로 틀린다.
+  //    🚨 그래서 **저장도 한다.** 여기서 서울로 바꿔 놓고 저장을 안 하면,
+  //       손님이 다음에 그냥 들어왔을 때 다시 부산으로 돌아간다 — 방금 본 것과 달라진다.
+  //    ⚠️ 모르는 도시·안 열린 도시면 아무 일도 안 한다. 늘 하던 대로 저장된 값을 쓴다.
+  useEffect(() => {
+    const fromUrl = START.city ? CITY_BY_KEY.get(START.city) : null;
+    if (fromUrl && fromUrl.status === "공개") {
+      setCityState(fromUrl);
+      try { localStorage.setItem(KEY, fromUrl.key); } catch { /* 저장 못 해도 화면은 돈다 */ }
+      return;
+    }
+    setCityState(readStored());
+  }, []);
 
   const value = useMemo<CityContextValue>(() => ({
     city,
