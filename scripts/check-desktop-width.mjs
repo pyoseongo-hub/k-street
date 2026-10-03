@@ -18,7 +18,8 @@ let bad = 0;
 for (const [w, h] of [[1440, 900], [1920, 1080]]) {
   const ctx = await b.newContext({ viewport: { width: w, height: h } });
   const p = await ctx.newPage();
-  await p.goto("http://127.0.0.1:8127/", { waitUntil: "networkidle" });
+  await p.goto("http://127.0.0.1:8127/", { waitUntil: "domcontentloaded" });
+  await waitSettled(p);
   await p.locator("select").first().selectOption("ko").catch(()=>{});
   await p.waitForTimeout(900);
   const r = await p.evaluate(() => {
@@ -43,3 +44,20 @@ for (const [w, h] of [[1440, 900], [1920, 1080]]) {
 await b.close();
 console.log(bad ? `\n❌ ${bad}개 창 크기에서 칸이 둘이다 — 2단 배치가 되살아났다` : "\n✅ 두 창 크기 다 가운데 한 줄이다");
 process.exit(bad ? 1 : 0);
+
+// ⏳ **화면이 자리를 잡을 때까지 기다린다 — `networkidle` 은 안 쓴다.** (2026-10-03)
+//
+// 🐞 주말 점검을 러너에 걸었더니 이 검사들이 **30초 시간 초과**로 줄줄이 떨어졌다:
+//      page.goto: Timeout 30000ms exceeded — waiting until "networkidle"
+//    앱이 고장난 게 아니다. 이 앱은 **서비스 워커**가 새 판을 지켜보고(swUpdate.ts)
+//    **날씨**를 계속 다시 물어본다. 그래서 네트워크가 **영영 조용해지지 않는다.**
+//    내 컴퓨터에서는 어쩌다 조용해져서 됐을 뿐이라, 「되는 날과 안 되는 날」이 갈렸다.
+//
+// ✅ 그래서 **글자와 글꼴이 다 왔는지**로 바꿔 기다린다 — 폭을 재는 데 필요한 건 그것뿐이다.
+//    (네트워크가 한가한지는 폭과 아무 상관이 없다.)
+async function waitSettled(pg) {
+  await pg.waitForLoadState("load").catch(() => {});
+  // 글꼴이 늦게 오면 글자 폭이 달라진다 — 폭을 재는 검사라 이걸 꼭 기다린다.
+  await pg.evaluate(() => document.fonts?.ready).catch(() => {});
+  await pg.waitForTimeout(1200);
+}
