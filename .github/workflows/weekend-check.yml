@@ -60,9 +60,13 @@ jobs:
         id: fresh
         continue-on-error: true
         run: npm run festival-freshness
+      # 🔑 이 검사만 카카오에 물어본다(좌표가 진짜 그 동네인지 되묻는다) — 열쇠를 넘긴다.
+      #    🐞 첫 판에서 안 넘겨서 「KAKAO_REST_API_KEY 가 없다」로 떨어졌다.
       - name: 📍 좌표가 엉뚱한 데 찍혔나
         id: coords
         continue-on-error: true
+        env:
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
         run: node scripts/check-coords.mjs
       - name: 🚇 역 사슬이 끊겼나
         id: station
@@ -97,6 +101,12 @@ jobs:
         if: ${{ inputs.browser != false }}
         run: |
           npm run build
+          # 🐞 **브라우저만 받으면 안 된다** (첫 판에서 셋이 여기서 떨어졌다).
+          #    `playwright install` 은 **크로미움 파일**을 받을 뿐, `import("playwright")`
+          #    가 찾는 **npm 꾸러미**는 안 깐다. 이 저장소는 playwright 를 의존성으로
+          #    두지 않으므로(배포에 안 쓰니까) 여기서 그때만 받는다.
+          #    `--no-save` 라 package.json 은 안 건드린다.
+          npm install --no-save playwright
           npx playwright install --with-deps chromium
           npx http-server dist -p 8127 -s &
           # 서버가 뜰 때까지 기다린다 — 안 기다리면 첫 검사가 「연결 거부」로 떨어진다.
@@ -105,16 +115,25 @@ jobs:
         id: phone
         if: ${{ inputs.browser != false }}
         continue-on-error: true
+        env:
+          # check-desktop-width 는 이 값만 본다(대비책이 없다) — 비면 「package undefined」로 죽는다.
+          PLAYWRIGHT_MODULE: playwright
         run: node scripts/check-phone-width.mjs 8127
       - name: 🔘 단추가 잘렸나
         id: btn
         if: ${{ inputs.browser != false }}
         continue-on-error: true
+        env:
+          # check-desktop-width 는 이 값만 본다(대비책이 없다) — 비면 「package undefined」로 죽는다.
+          PLAYWRIGHT_MODULE: playwright
         run: node scripts/check-btn-clip.mjs 8127
       - name: 🖥️ 넓은 화면에서 깨지나
         id: desktop
         if: ${{ inputs.browser != false }}
         continue-on-error: true
+        env:
+          # check-desktop-width 는 이 값만 본다(대비책이 없다) — 비면 「package undefined」로 죽는다.
+          PLAYWRIGHT_MODULE: playwright
         run: node scripts/check-desktop-width.mjs 8127
 
       # ── ④ 한 장으로 모아 보여 준다 ─────────────────────────────────────
