@@ -26,7 +26,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - run: node scripts/check-all-links.mjs 2>&1 | tee links.txt
+      # ⚠️ `... | tee` 뒤의 종료코드는 **tee 것**이라 늘 0이다. pipefail 이 없으면
+      #    죽은 링크를 찾아도 이 달치 점검이 **초록으로** 지나간다 — 형제 워크플로
+      #    (check-dns·check-live·check-domains·check-guide-links)는 전부 pipefail 을
+      #    쓰는데 여기만 빠져 있었다(2026-10-03에 잡았다).
+      - run: |
+          set -o pipefail
+          node scripts/check-all-links.mjs 2>&1 | tee links.txt
       - uses: actions/upload-artifact@v4
         with:
           name: link-report
