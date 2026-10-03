@@ -170,6 +170,19 @@ export interface Translations {
    */
   festivalNoPhoto: string;
   /**
+   * 📝 **이름과 자리밖에 없는 곳**에 붙는 한 줄 (사장님 지시 2026-10-03:
+   * *"자료없는거 이름 만 넣고 안내문구 넣어"*).
+   *
+   * 서울시 「관광거리」 128곳이 여기 걸린다. 서울시가 등록한 것은 **이름 · 자치구 ·
+   * 법정동 · 지번 주소**뿐이고, 사진 · 소개 글 · 영업시간은 **자료가 없다.**
+   * 지어내지 않고 빈 칸으로 두는 대신 이 한 줄을 띄운다 —
+   * 아무 말 없이 이름만 두면 손님은 "앱이 부실하다"고 읽고,
+   * 이유를 적으면 "지어내지 않는 앱"으로 읽는다.
+   *
+   * `festivalNoPhoto` 와 같은 결이다. 끝은 늘 **다음 행동**으로 — 변명이 아니다.
+   */
+  nameOnlyNote: string;
+  /**
    * 🚕 **택시 기사에게 보여 주는 화면**(2026-09-04 사용자 지시: "기사보여주기도 진행").
    *
    * 왜 만들었나 — 카카오맵·우버 어느 쪽도 택시 호출로 이어지지 않는 것을
@@ -450,6 +463,7 @@ const translations: Record<Language, Translations> = {
     festivalOfficialNotice: '공식 안내',
     festivalConfirmedBy: (org) => `${org} 확정 일정입니다`,
     festivalNoPhoto: '사진은 사용 권한이 없어 싣지 못했습니다. 이름을 누르면 공식 안내로 갑니다.',
+    nameOnlyNote: '서울시에 등록된 이름과 자리만 있습니다. 이름을 누르면 더 찾아볼 수 있습니다.',
     showToDriver: '목적지 보여주기',
     shareLabel: '공유',
     shareCopied: '복사됨',
@@ -615,6 +629,7 @@ const translations: Record<Language, Translations> = {
     festivalOfficialNotice: 'Official notice',
     festivalConfirmedBy: (org) => `Dates confirmed by ${org}`,
     festivalNoPhoto: 'No photo — we don’t have the image rights. Tap the name for the official page.',
+    nameOnlyNote: 'Only the name and location, as registered by Seoul city. Tap the name to look it up.',
     showToDriver: 'Show destination',
     shareLabel: 'Share',
     shareCopied: 'Copied',
@@ -780,6 +795,7 @@ const translations: Record<Language, Translations> = {
     festivalOfficialNotice: '公式案内',
     festivalConfirmedBy: (org) => `${org}が登録した確定日程です`,
     festivalNoPhoto: '写真は使用許諾がないため掲載していません。名前をタップすると公式案内に移動します。',
+    nameOnlyNote: 'ソウル市に登録された名称と場所のみです。名前をタップすると詳しく調べられます。',
     showToDriver: '目的地を表示',
     shareLabel: '共有',
     shareCopied: 'コピーしました',
@@ -945,6 +961,7 @@ const translations: Record<Language, Translations> = {
     festivalOfficialNotice: '官方公告',
     festivalConfirmedBy: (org) => `由${org}发布的确定日程`,
     festivalNoPhoto: '因图片使用权未获授权，暂不提供照片。点击名称可前往官方介绍页。',
+    nameOnlyNote: '仅有首尔市登记的名称和位置。点击名称可进一步查询。',
     showToDriver: '出示目的地',
     shareLabel: '分享',
     shareCopied: '已复制',
@@ -1110,6 +1127,7 @@ const translations: Record<Language, Translations> = {
     festivalOfficialNotice: '官方公告',
     festivalConfirmedBy: (org) => `由${org}發布的確定日程`,
     festivalNoPhoto: '因圖片使用權未取得授權，暫不提供照片。點擊名稱可前往官方介紹頁。',
+    nameOnlyNote: '僅有首爾市登記的名稱和位置。點擊名稱可進一步查詢。',
     showToDriver: '出示目的地',
     shareLabel: '分享',
     shareCopied: '已複製',
@@ -1275,6 +1293,7 @@ const translations: Record<Language, Translations> = {
     festivalOfficialNotice: 'Thông báo chính thức',
     festivalConfirmedBy: (org) => `Lịch đã được ${org} xác nhận`,
     festivalNoPhoto: 'Không có ảnh vì chưa có bản quyền sử dụng. Nhấn vào tên để mở trang chính thức.',
+    nameOnlyNote: 'Chỉ có tên và vị trí do thành phố Seoul đăng ký. Nhấn vào tên để tìm hiểu thêm.',
     showToDriver: 'Hiện điểm đến',
     shareLabel: 'Chia sẻ',
     shareCopied: 'Đã sao chép',
@@ -1440,6 +1459,7 @@ const translations: Record<Language, Translations> = {
     festivalOfficialNotice: 'Aviso oficial',
     festivalConfirmedBy: (org) => `Fechas confirmadas por ${org}`,
     festivalNoPhoto: 'Sin foto: no tenemos los derechos de imagen. Toca el nombre para ver la página oficial.',
+    nameOnlyNote: 'Solo el nombre y la ubicación registrados por la ciudad de Seúl. Toca el nombre para buscar más.',
     showToDriver: 'Ver destino',
     shareLabel: 'Compartir',
     shareCopied: 'Copiado',
@@ -1605,6 +1625,7 @@ const translations: Record<Language, Translations> = {
     festivalOfficialNotice: 'Avis officiel',
     festivalConfirmedBy: (org) => `Dates confirmées par ${org}`,
     festivalNoPhoto: 'Pas de photo : nous n’avons pas les droits d’image. Appuyez sur le nom pour la page officielle.',
+    nameOnlyNote: 'Seuls le nom et le lieu enregistrés par la ville de Séoul. Appuyez sur le nom pour en savoir plus.',
     showToDriver: 'Voir destination',
     shareLabel: 'Partager',
     shareCopied: 'Copié',
@@ -1770,6 +1791,7 @@ const translations: Record<Language, Translations> = {
     festivalOfficialNotice: 'Offizielle Ankündigung',
     festivalConfirmedBy: (org) => `Termine bestätigt von ${org}`,
     festivalNoPhoto: 'Kein Foto – die Bildrechte liegen uns nicht vor. Tippen Sie auf den Namen für die offizielle Seite.',
+    nameOnlyNote: 'Nur Name und Lage, wie von der Stadt Seoul erfasst. Tippen Sie auf den Namen, um mehr zu finden.',
     showToDriver: 'Ziel zeigen',
     shareLabel: 'Teilen',
     shareCopied: 'Kopiert',
@@ -1935,6 +1957,7 @@ const translations: Record<Language, Translations> = {
     festivalOfficialNotice: 'Официальное объявление',
     festivalConfirmedBy: (org) => `Даты подтверждены: ${org}`,
     festivalNoPhoto: 'Фото нет — у нас нет прав на изображение. Нажмите на название, чтобы открыть официальную страницу.',
+    nameOnlyNote: 'Только название и место по данным города Сеула. Нажмите на название, чтобы узнать больше.',
     showToDriver: 'Показать адрес',
     shareLabel: 'Поделиться',
     shareCopied: 'Скопировано',
@@ -2100,6 +2123,7 @@ const translations: Record<Language, Translations> = {
     festivalOfficialNotice: 'Pengumuman resmi',
     festivalConfirmedBy: (org) => `Tanggal dikonfirmasi oleh ${org}`,
     festivalNoPhoto: 'Tidak ada foto karena hak gambar belum diperoleh. Ketuk nama untuk membuka halaman resmi.',
+    nameOnlyNote: 'Hanya nama dan lokasi yang terdaftar di kota Seoul. Ketuk nama untuk mencari lebih lanjut.',
     showToDriver: 'Tunjukkan tujuan',
     shareLabel: 'Bagikan',
     shareCopied: 'Tersalin',
@@ -2265,6 +2289,7 @@ const translations: Record<Language, Translations> = {
     festivalOfficialNotice: 'ประกาศทางการ',
     festivalConfirmedBy: (org) => `กำหนดการยืนยันโดย ${org}`,
     festivalNoPhoto: 'ไม่มีรูปภาพเนื่องจากยังไม่ได้รับสิทธิ์ใช้ภาพ แตะที่ชื่อเพื่อไปยังหน้าทางการ',
+    nameOnlyNote: 'มีเฉพาะชื่อและตำแหน่งที่กรุงโซลขึ้นทะเบียนไว้ แตะที่ชื่อเพื่อค้นหาเพิ่มเติม',
     showToDriver: 'แสดงจุดหมาย',
     shareLabel: 'แชร์',
     shareCopied: 'คัดลอกแล้ว',

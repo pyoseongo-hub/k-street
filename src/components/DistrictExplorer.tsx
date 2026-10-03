@@ -456,6 +456,11 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
                     <div className="name-ko" lang="ko">{p.name}</div>
                   )}
                   {p.note && <div className="pr-note">{translateText(p.note, language)}</div>}
+                  {/* 📝 이름과 자리밖에 없는 곳 — 사장님 지시 2026-10-03:
+                      *"자료없는거 이름 만 넣고 안내문구 넣어"*.
+                      서울시 관광거리 128곳이 여기 걸린다. 사진·소개 글이 붙으면
+                      그 곳의 `nameOnly` 를 지우면 이 줄도 같이 사라진다. */}
+                  {p.nameOnly && <div className="pr-note">{t.nameOnlyNote}</div>}
                   {/* 주소는 관광공사에서 받은 곳만 있다. 사진이 없는 작은 카드일수록
                       글로 줄 수 있는 정보가 하나라도 더 있는 게 낫다. */}
                   {p.addr && <div className="pr-addr">{p.addr}</div>}
