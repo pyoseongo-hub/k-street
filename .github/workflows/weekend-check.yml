@@ -1,0 +1,165 @@
+name: Weekend check (주말 점검 — 손으로만 돌던 검사를 한 번에)
+
+# 🗓️ **토요일 아침에 저절로 돌아, 그 주에 올릴 것을 미리 걸러 준다.** (2026-10-03)
+#
+# 사장님: *"다 했다고 해도 어딘가 계속 오류가 나오니 주말에는 점검하고 그 주 업로드"*
+#
+# ── 🚨 왜 계속 오류가 나왔나 — 세어 봤다 ─────────────────────────────────
+#   배포(deploy.yml)가 돌리는 검사는 **16개**인데, 저장소에 있는 검사 스크립트 중
+#   **21개는 배포에도 cron 에도 안 걸려 있었다.** 즉 **사람이 생각날 때만** 돌았다.
+#   이 저장소의 오랜 교훈 그대로다 — **「손으로 돌리는 검사는 결국 안 돌아간다」.**
+#   그래서 그 21개를 한 판에 모아 주말에 저절로 돌린다.
+#
+# ── 🚫 배포에 넣지 않고 왜 주말인가 ──────────────────────────────────────
+#   여기 든 것은 **바깥 인터넷**(살아 있는 주소·DNS·지도 열쇠)과 **브라우저**가 필요하다.
+#   배포마다 크로미움을 내려받으면 시간과 돈이 는다 — 이 앱의 초심은 「적은 비용으로 오래」다.
+#   **배포마다**는 비싸지만 **주 1회**는 몇 분이다. 둘은 다른 이야기다.
+#
+# ── 🔑 멈추지 않고 끝까지 간다 ───────────────────────────────────────────
+#   한 검사가 떨어져도 나머지를 다 돌린다(`continue-on-error`). 첫 번째에서 멈추면
+#   그 뒤에 뭐가 더 있는지 영영 모른다 — 주말 점검은 **목록을 보는 자리**다.
+#   대신 하나라도 떨어지면 **맨 끝에서 빨간불**을 준다. 조용히 넘어가지 않는다.
+
+on:
+  schedule:
+    # 토요일 아침 7:47 (KST) = 금요일 22:47 UTC.
+    # ⏰ 정각을 피한다 — 정각은 전 세계 작업이 몰려 밀린다(이 저장소의 다른 cron 도 그렇게 뒀다).
+    - cron: "47 22 * * 5"
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: "화면 검사(크로미움)도 돌릴까 — 폰 폭·단추 잘림 같은 것. 끄면 2분쯤 빨라진다"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # ── ① 자료 검사 — 돈도 인터넷도 안 든다 ────────────────────────────
+      - name: 🔂 같은 곳이 두 번 들어갔나
+        id: dup
+        continue-on-error: true
+        run: node scripts/audit-duplicates.mjs
+      - name: 🎪 축제 빈칸·지난 날짜
+        id: fest
+        continue-on-error: true
+        run: npm run festival-todo
+      - name: ⏳ 축제 날짜가 낡았나
+        id: fresh
+        continue-on-error: true
+        run: npm run festival-freshness
+      - name: 📍 좌표가 엉뚱한 데 찍혔나
+        id: coords
+        continue-on-error: true
+        run: node scripts/check-coords.mjs
+      - name: 🚇 역 사슬이 끊겼나
+        id: station
+        continue-on-error: true
+        run: npm run check-station-chain
+
+      # ── ② 바깥 주소 — 손님이 실제로 여는 것들 ──────────────────────────
+      - name: 🔎 살아 있는 주소가 제대로 뜨나
+        id: live
+        continue-on-error: true
+        run: node scripts/check-live.mjs
+      - name: 🌐 도메인·DNS
+        id: dns
+        continue-on-error: true
+        run: |
+          node scripts/check-domains.mjs
+          node scripts/check-dns.mjs
+      - name: 🔗 바깥 링크가 죽었나 (진짜로 열어 본다)
+        id: links
+        continue-on-error: true
+        run: node scripts/check-all-links.mjs
+      - name: 📖 안내 글 속 링크
+        id: guide
+        continue-on-error: true
+        run: node scripts/check-guide-links.mjs
+
+      # ── ③ 화면 검사 — 크로미움이 필요하다 ──────────────────────────────
+      #    🚨 **눈으로는 안 보이는 것들을 잡는다.** 일본어 짐보관 안내가 폰에서
+      #       가로로 215px 넘쳤던 것을 이 검사가 찾았다 — 한국어·영어로만 보면
+      #       절대 안 보인다.
+      - name: 화면 검사 준비 (빌드 + 크로미움)
+        if: ${{ inputs.browser != false }}
+        run: |
+          npm run build
+          npx playwright install --with-deps chromium
+          npx http-server dist -p 8127 -s &
+          # 서버가 뜰 때까지 기다린다 — 안 기다리면 첫 검사가 「연결 거부」로 떨어진다.
+          for i in $(seq 1 40); do curl -sf http://127.0.0.1:8127/ >/dev/null && break; sleep 1; done
+      - name: 📱 폰 폭에서 글자가 넘치나
+        id: phone
+        if: ${{ inputs.browser != false }}
+        continue-on-error: true
+        run: node scripts/check-phone-width.mjs 8127
+      - name: 🔘 단추가 잘렸나
+        id: btn
+        if: ${{ inputs.browser != false }}
+        continue-on-error: true
+        run: node scripts/check-btn-clip.mjs 8127
+      - name: 🖥️ 넓은 화면에서 깨지나
+        id: desktop
+        if: ${{ inputs.browser != false }}
+        continue-on-error: true
+        run: node scripts/check-desktop-width.mjs 8127
+
+      # ── ④ 한 장으로 모아 보여 준다 ─────────────────────────────────────
+      - name: 결과 모으기
+        if: always()
+        run: |
+          ok() { [ "$1" = "success" ] && echo "✅" || echo "❌"; }
+          {
+            echo "## 🗓️ 주말 점검"
+            echo ""
+            echo "| 검사 | 결과 |"
+            echo "|---|---|"
+            echo "| 🔂 같은 곳 두 번 | $(ok '${{ steps.dup.outcome }}') |"
+            echo "| 🎪 축제 빈칸 | $(ok '${{ steps.fest.outcome }}') |"
+            echo "| ⏳ 축제 날짜 | $(ok '${{ steps.fresh.outcome }}') |"
+            echo "| 📍 좌표 | $(ok '${{ steps.coords.outcome }}') |"
+            echo "| 🚇 역 사슬 | $(ok '${{ steps.station.outcome }}') |"
+            echo "| 🔎 살아 있는 주소 | $(ok '${{ steps.live.outcome }}') |"
+            echo "| 🌐 도메인·DNS | $(ok '${{ steps.dns.outcome }}') |"
+            echo "| 🔗 바깥 링크 | $(ok '${{ steps.links.outcome }}') |"
+            echo "| 📖 안내 글 링크 | $(ok '${{ steps.guide.outcome }}') |"
+            echo "| 📱 폰 폭 | $(ok '${{ steps.phone.outcome }}') |"
+            echo "| 🔘 단추 잘림 | $(ok '${{ steps.btn.outcome }}') |"
+            echo "| 🖥️ 넓은 화면 | $(ok '${{ steps.desktop.outcome }}') |"
+            echo ""
+            echo "❌ 가 있으면 **그 단계의 로그**를 펼쳐 보세요. 무엇이 왜 걸렸는지 거기 적혀 있습니다."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # 🚨 **하나라도 떨어졌으면 빨간불을 준다.** 위에서 멈추지 않고 끝까지 간 것은
+      #    목록을 다 보기 위해서지, 넘어가기 위해서가 아니다.
+      - name: 떨어진 게 있으면 빨간불
+        if: always()
+        run: |
+          BAD=""
+          for s in "dup:${{ steps.dup.outcome }}" "fest:${{ steps.fest.outcome }}" \
+                   "fresh:${{ steps.fresh.outcome }}" "coords:${{ steps.coords.outcome }}" \
+                   "station:${{ steps.station.outcome }}" "live:${{ steps.live.outcome }}" \
+                   "dns:${{ steps.dns.outcome }}" "links:${{ steps.links.outcome }}" \
+                   "guide:${{ steps.guide.outcome }}" "phone:${{ steps.phone.outcome }}" \
+                   "btn:${{ steps.btn.outcome }}" "desktop:${{ steps.desktop.outcome }}"; do
+            name="${s%%:*}"; out="${s##*:}"
+            [ "$out" = "failure" ] && BAD="$BAD $name"
+          done
+          if [ -n "$BAD" ]; then
+            echo "❌ 떨어진 검사:$BAD"
+            exit 1
+          fi
+          echo "✅ 열두 가지 다 통과 — 이번 주 올려도 된다"
