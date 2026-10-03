@@ -283,12 +283,55 @@ for (const p of Object.values(tour).flat()) {
 // 🌊 새 도시 곳 목록도 함께 번역한다(부산 202곳 등).
 //    🚨 **주소는 안 넣는다** — 주소는 뜻을 아는 게 아니라 택시 기사에게 보여 주는
 //       것이다(위 머리말과 같은 규칙). 이름만 넣는다.
-const cityFiles = readdirSync(DATA_DIR).filter((f) => /-places\.json$/.test(f));
+//    🐞 **`-places.json` 만 읽고 있었다** (2026-10-03에 또 당했다).
+//       서울시 관광거리 114곳을 `seoul-streets.json` 에 넣었는데 이 정규식이 못 봐서
+//       **「이번에 쓸 글자 수: 약 0자」** 가 떴다. 이름이 이미 다 돼 있는 줄 알았다.
+//       단풍길이 두 그물 사이로 빠졌던 것과 **같은 구조**다 — 파일 이름 규칙에
+//       기대면, 규칙에서 벗어난 파일이 생길 때마다 조용히 빠진다.
+//       그래서 ① 그물을 넓히고 ② **안 걸린 자료 파일을 세어 알려 준다**(아래).
+const cityFiles = readdirSync(DATA_DIR).filter((f) => /-(places|streets)\.json$/.test(f));
 for (const f of cityFiles) {
   const list = JSON.parse(readFileSync(join(DATA_DIR, f), "utf-8"));
+  // 🚨 **배열이 아닌 것은 건너뛴다.** `tour-streets.json`(서울시에서 받은 **원본**)이
+  //    `-streets.json` 그물에 걸리는데, 그건 `{ SebcTourStreetKor: [...] }` 꼴이라
+  //    돌리면 「list is not iterable」로 **번역이 통째로 멈춘다.**
+  //    원본은 번역하지 않는다 — 번역하는 것은 거기서 뽑아낸 `seoul-streets.json` 이다.
+  if (!Array.isArray(list)) continue;
   let n = 0;
   for (const p of list) if (p?.name && /[가-힣]/.test(p.name)) { source.add(p.name); n++; }
   console.log(`   ${f} — 이름 ${n}개`);
+}
+
+// 🚨 **그물에 안 걸린 곳 목록 파일이 있나** — 다음에 또 빠지지 않게 여기서 센다.
+//    「이름(name)과 자치구(gu)를 가진 객체의 배열」이면 곳 목록으로 본다.
+//    걸러야 할 파일이면 아래 EXPECTED_NOT_PLACES 에 **이유와 함께** 적는다.
+const EXPECTED_NOT_PLACES = new Set([
+  "festival-venues.json",   // 축제 장소 좌표표 — 곳이 아니라 자리
+  "luggage-branches.json",  // 짐 보관함 지점 — 이름을 번역하지 않는다(브랜드)
+  "luggage-candidates.json",
+  "city-luggage-candidates.json",
+  "bad-coords.json",
+  "coords-rejected.json",
+]);
+{
+  const missed = [];
+  for (const f of readdirSync(DATA_DIR).filter((x) => x.endsWith(".json"))) {
+    if (cityFiles.includes(f) || EXPECTED_NOT_PLACES.has(f)) continue;
+    let d;
+    try { d = JSON.parse(readFileSync(join(DATA_DIR, f), "utf-8")); } catch { continue; }
+    const rows = Array.isArray(d) ? d : Array.isArray(d?.곳) ? d.곳 : null;
+    if (!rows?.length) continue;
+    const looksLikePlaces = rows.filter((r) => r?.name && r?.gu).length >= rows.length / 2;
+    if (looksLikePlaces) missed.push(`${f} (${rows.length}곳)`);
+  }
+  if (missed.length) {
+    console.log("");
+    console.log("🚨 곳 목록처럼 보이는데 번역 대상에 안 들어간 파일이 있다:");
+    for (const m of missed) console.log(`     · ${m}`);
+    console.log("   번역해야 할 것이면 위 cityFiles 그물에 넣고,");
+    console.log("   아니면 EXPECTED_NOT_PLACES 에 **이유와 함께** 적을 것.");
+    console.log("");
+  }
 }
 
 // 🍁 **단풍길 110곳도 번역한다** (2026-10-01에 찾았다).
