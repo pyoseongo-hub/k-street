@@ -3649,3 +3649,29 @@ html[lang^="zh"] * {
 .nc-card-top .save-btn { margin-left: auto; }
 
 .nc-name { font-size: 16px; font-weight: 700; line-height: 1.35; }
+
+/* ✉️ 문의하기 — 화면 맨 아래 소개 줄(.app-note) 바로 아래.
+   사장님 지시 2026-10-03: "사용자가 문의 메일 보낼수 있게 해".
+
+   ⚠️ **눈에 띄되 시끄럽지 않게.** 이 자리는 간판이 아니라 설명 자리다
+   (.app-note 주석 참고). 그래서 테두리 단추가 아니라 밑줄 링크로 둔다 —
+   찾는 사람만 찾으면 되고, 화면의 주인공은 여전히 곳 목록이다.
+
+   손가락으로 누를 수 있어야 하므로 글자는 작아도 **누르는 칸은 넉넉히** 둔다
+   (padding). 작은 링크를 못 눌러 서너 번 두드리게 만드는 쪽이 더 나쁘다. */
+.contact-link {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 10px;
+  padding: 8px 14px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.contact-link:hover,
+.contact-link:focus-visible {
+  color: var(--text);
+}

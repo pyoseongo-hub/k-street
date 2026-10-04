@@ -183,6 +183,22 @@ export interface Translations {
    */
   nameOnlyNote: string;
   /**
+   * ✉️ **문의 메일** (사장님 지시 2026-10-03: *"사용자가 문의 메일 보낼수 있게 해"*).
+   *
+   * 화면 맨 아래 소개 줄(.app-note) 옆에 작게 붙는다. 서버가 없는 앱이라
+   * **입력 양식이 아니라 `mailto:` 링크**다 — 돈이 안 들고 고장날 게 없다.
+   * 손님의 메일 앱이 열리고, 제목은 미리 채워진다. **보내기 전에 손님이 다 본다.**
+   *
+   * 🚨 **아무것도 몰래 담지 않는다.** 이 앱은 「K-Street collects nothing」을
+   *    약속해 두었다(/privacy/). 위치·기기 정보는 넣지 않고, 지금 보고 있는
+   *    페이지 주소 한 줄만 넣는다 — 그것도 손님이 지울 수 있다.
+   */
+  contactLabel: string;
+  /** 메일 제목. 받은메일함에서 한눈에 갈라 보려고 앱 이름을 앞에 붙인다. */
+  contactSubject: string;
+  /** 메일 본문 첫 줄 — 무엇을 적어 주면 되는지 알려 준다. 길게 쓰지 않는다. */
+  contactBodyHint: string;
+  /**
    * 🚕 **택시 기사에게 보여 주는 화면**(2026-09-04 사용자 지시: "기사보여주기도 진행").
    *
    * 왜 만들었나 — 카카오맵·우버 어느 쪽도 택시 호출로 이어지지 않는 것을
@@ -464,6 +480,9 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `${org} 확정 일정입니다`,
     festivalNoPhoto: '사진은 사용 권한이 없어 싣지 못했습니다. 이름을 누르면 공식 안내로 갑니다.',
     nameOnlyNote: '서울시에 등록된 이름과 자리만 있습니다. 이름을 누르면 더 찾아볼 수 있습니다.',
+    contactLabel: '문의하기',
+    contactSubject: '[K-Street] 문의',
+    contactBodyHint: '안녕하세요. 아래에 문의 내용을 적어 주세요.',
     showToDriver: '목적지 보여주기',
     shareLabel: '공유',
     shareCopied: '복사됨',
@@ -630,6 +649,9 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `Dates confirmed by ${org}`,
     festivalNoPhoto: 'No photo — we don’t have the image rights. Tap the name for the official page.',
     nameOnlyNote: 'Only the name and location, as registered by Seoul city. Tap the name to look it up.',
+    contactLabel: 'Contact us',
+    contactSubject: '[K-Street] Inquiry',
+    contactBodyHint: 'Hello. Please write your question below.',
     showToDriver: 'Show destination',
     shareLabel: 'Share',
     shareCopied: 'Copied',
@@ -796,6 +818,9 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `${org}が登録した確定日程です`,
     festivalNoPhoto: '写真は使用許諾がないため掲載していません。名前をタップすると公式案内に移動します。',
     nameOnlyNote: 'ソウル市に登録された名称と場所のみです。名前をタップすると詳しく調べられます。',
+    contactLabel: 'お問い合わせ',
+    contactSubject: '[K-Street] お問い合わせ',
+    contactBodyHint: 'こんにちは。下にご質問をお書きください。',
     showToDriver: '目的地を表示',
     shareLabel: '共有',
     shareCopied: 'コピーしました',
@@ -962,6 +987,9 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `由${org}发布的确定日程`,
     festivalNoPhoto: '因图片使用权未获授权，暂不提供照片。点击名称可前往官方介绍页。',
     nameOnlyNote: '仅有首尔市登记的名称和位置。点击名称可进一步查询。',
+    contactLabel: '联系我们',
+    contactSubject: '[K-Street] 咨询',
+    contactBodyHint: '您好。请在下面写下您的问题。',
     showToDriver: '出示目的地',
     shareLabel: '分享',
     shareCopied: '已复制',
@@ -1128,6 +1156,9 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `由${org}發布的確定日程`,
     festivalNoPhoto: '因圖片使用權未取得授權，暫不提供照片。點擊名稱可前往官方介紹頁。',
     nameOnlyNote: '僅有首爾市登記的名稱和位置。點擊名稱可進一步查詢。',
+    contactLabel: '聯絡我們',
+    contactSubject: '[K-Street] 諮詢',
+    contactBodyHint: '您好。請在下面寫下您的問題。',
     showToDriver: '出示目的地',
     shareLabel: '分享',
     shareCopied: '已複製',
@@ -1294,6 +1325,9 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `Lịch đã được ${org} xác nhận`,
     festivalNoPhoto: 'Không có ảnh vì chưa có bản quyền sử dụng. Nhấn vào tên để mở trang chính thức.',
     nameOnlyNote: 'Chỉ có tên và vị trí do thành phố Seoul đăng ký. Nhấn vào tên để tìm hiểu thêm.',
+    contactLabel: 'Liên hệ',
+    contactSubject: '[K-Street] Liên hệ',
+    contactBodyHint: 'Xin chào. Vui lòng viết câu hỏi của bạn bên dưới.',
     showToDriver: 'Hiện điểm đến',
     shareLabel: 'Chia sẻ',
     shareCopied: 'Đã sao chép',
@@ -1460,6 +1494,9 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `Fechas confirmadas por ${org}`,
     festivalNoPhoto: 'Sin foto: no tenemos los derechos de imagen. Toca el nombre para ver la página oficial.',
     nameOnlyNote: 'Solo el nombre y la ubicación registrados por la ciudad de Seúl. Toca el nombre para buscar más.',
+    contactLabel: 'Contacto',
+    contactSubject: '[K-Street] Consulta',
+    contactBodyHint: 'Hola. Escriba su pregunta a continuación.',
     showToDriver: 'Ver destino',
     shareLabel: 'Compartir',
     shareCopied: 'Copiado',
@@ -1626,6 +1663,9 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `Dates confirmées par ${org}`,
     festivalNoPhoto: 'Pas de photo : nous n’avons pas les droits d’image. Appuyez sur le nom pour la page officielle.',
     nameOnlyNote: 'Seuls le nom et le lieu enregistrés par la ville de Séoul. Appuyez sur le nom pour en savoir plus.',
+    contactLabel: 'Nous contacter',
+    contactSubject: '[K-Street] Question',
+    contactBodyHint: 'Bonjour. Veuillez écrire votre question ci-dessous.',
     showToDriver: 'Voir destination',
     shareLabel: 'Partager',
     shareCopied: 'Copié',
@@ -1792,6 +1832,9 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `Termine bestätigt von ${org}`,
     festivalNoPhoto: 'Kein Foto – die Bildrechte liegen uns nicht vor. Tippen Sie auf den Namen für die offizielle Seite.',
     nameOnlyNote: 'Nur Name und Lage, wie von der Stadt Seoul erfasst. Tippen Sie auf den Namen, um mehr zu finden.',
+    contactLabel: 'Kontakt',
+    contactSubject: '[K-Street] Anfrage',
+    contactBodyHint: 'Hallo. Bitte schreiben Sie Ihre Frage unten.',
     showToDriver: 'Ziel zeigen',
     shareLabel: 'Teilen',
     shareCopied: 'Kopiert',
@@ -1958,6 +2001,9 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `Даты подтверждены: ${org}`,
     festivalNoPhoto: 'Фото нет — у нас нет прав на изображение. Нажмите на название, чтобы открыть официальную страницу.',
     nameOnlyNote: 'Только название и место по данным города Сеула. Нажмите на название, чтобы узнать больше.',
+    contactLabel: 'Связаться с нами',
+    contactSubject: '[K-Street] Вопрос',
+    contactBodyHint: 'Здравствуйте. Напишите ваш вопрос ниже.',
     showToDriver: 'Показать адрес',
     shareLabel: 'Поделиться',
     shareCopied: 'Скопировано',
@@ -2124,6 +2170,9 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `Tanggal dikonfirmasi oleh ${org}`,
     festivalNoPhoto: 'Tidak ada foto karena hak gambar belum diperoleh. Ketuk nama untuk membuka halaman resmi.',
     nameOnlyNote: 'Hanya nama dan lokasi yang terdaftar di kota Seoul. Ketuk nama untuk mencari lebih lanjut.',
+    contactLabel: 'Hubungi kami',
+    contactSubject: '[K-Street] Pertanyaan',
+    contactBodyHint: 'Halo. Silakan tulis pertanyaan Anda di bawah ini.',
     showToDriver: 'Tunjukkan tujuan',
     shareLabel: 'Bagikan',
     shareCopied: 'Tersalin',
@@ -2290,6 +2339,9 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `กำหนดการยืนยันโดย ${org}`,
     festivalNoPhoto: 'ไม่มีรูปภาพเนื่องจากยังไม่ได้รับสิทธิ์ใช้ภาพ แตะที่ชื่อเพื่อไปยังหน้าทางการ',
     nameOnlyNote: 'มีเฉพาะชื่อและตำแหน่งที่กรุงโซลขึ้นทะเบียนไว้ แตะที่ชื่อเพื่อค้นหาเพิ่มเติม',
+    contactLabel: 'ติดต่อเรา',
+    contactSubject: '[K-Street] สอบถาม',
+    contactBodyHint: 'สวัสดีค่ะ กรุณาเขียนคำถามของคุณด้านล่าง',
     showToDriver: 'แสดงจุดหมาย',
     shareLabel: 'แชร์',
     shareCopied: 'คัดลอกแล้ว',

@@ -2,6 +2,7 @@ import { Suspense, lazy, useState } from "react";
 import { useTheme } from "./lib/useTheme";
 import { useLanguage } from "./lib/useLanguage";
 import SavedPanel from "./components/SavedPanel";
+import ContactLink from "./components/ContactLink";
 import InstallHint from "./components/InstallHint";
 import { useSavedEntries } from "./lib/savedPlaces";
 import MonthlyFestivalPanel from "./components/MonthlyFestivalPanel";
@@ -218,6 +219,10 @@ function App() {
                 간판처럼 튀지 않고, 자리가 넉넉해 로마자·태국어도 안 잘린다.
                 두 탭 밖에 두어 홈에서든 저장한 곳에서든 늘 끝에 붙는다. */}
             <p className="app-note">{t.freeNoSignup}</p>
+            {/* ✉️ 문의하기 (사장님 지시 2026-10-03). 소개 줄 바로 아래 —
+                맨 아래까지 내려온 손님이 "여기 말할 데가 없네" 하지 않게.
+                서버가 없는 앱이라 입력 양식이 아니라 메일 링크다(ContactLink.tsx). */}
+            <ContactLink />
             {/* 🔗 앱 공유 단추가 **여기 있었다.** 2026-09-12 에 머리줄 맨 오른쪽으로
                 올렸다(위 헤더 참고) — 자료가 늘면서 이 자리를 아무도 못 봤다.
                 되돌리지 말 것. 이유는 ShareApp.tsx 머리말에 다 적었다. */}
