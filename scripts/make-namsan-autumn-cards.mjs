@@ -6,7 +6,10 @@
 // 그 뒤 *"영어"* · *"텍스트 중국어 일어 반반"* 으로 세 벌이 됐다.
 //
 // ── 세 벌 ────────────────────────────────────────────────────────────────
-//   ko  한국어 4장        en  영어 4장        cj  중국어·일본어 반반 4장
+//   en  영어 4장        cj  중국어·일본어 반반 4장
+//   🚫 **한국어 벌은 뺐다** (사장님 2026-10-05: *"한글은 필요 없는데"*).
+//      이 앱은 **외국 손님**에게 한국을 알리는 일이다 — 인스타도 그쪽을 본다.
+//      한국어 글은 아래 영어·중·일의 **원문**으로 주석에 남겨 둔다.
 //   ⚠️ cj 는 사장님이 영어 4번 카드의 **빈 오른쪽**을 동그라미 쳐서 생겼다.
 //      한 칸에 두 말을 나란히 둔다 — 왼쪽 中文 · 오른쪽 日本語.
 //
@@ -46,12 +49,6 @@ const PHOTOS = {
 // 🖐️ **글은 사장님이 쓰신 것이다.** 영어·중국어·일본어는 직역하지 않고 같은 결로 옮겼다.
 //    빈 문자열 "" 은 한 줄 띄움이다.
 const SETS = {
-  ko: { lang: "ko", serif: '"Gowun Batang","Nanum Myeongjo","Malgun Gothic",serif', cards: [
-    { p: "autumn", fs: 44, pad: 54, lines: ["가을이 되면", "남산은 조금 다른 얼굴을", "보여줍니다."] },
-    { p: "leaves", fs: 40, pad: 54, lines: ["도시 한가운데 있지만,", "길을 따라 걷다 보면", "어느새 소음은 멀어지고", "낙엽 밟는 소리만 가까워집니다."] },
-    { p: "tower",  fs: 40, pad: 54, lines: ["노랗고 붉게 물든 나무들 사이로", "서울이 보이고,", "그 위로 남산타워가", "조용히 서 있습니다."] },
-    { p: "trail",  fs: 37, pad: 42, cta: 3, lines: ["바쁘게 둘러보는 곳이라기보다,", "잠깐 속도를 늦추고 걷기 좋은 곳.", "", "서울의 가을을 느끼고 싶다면", "남산으로 가보세요."] },
-  ]},
   en: { lang: "en", serif: '"Gowun Batang",Georgia,"Times New Roman",serif', cards: [
     { p: "autumn", fs: 52, pad: 56, lines: ["In autumn,", "Namsan shows", "a different face."] },
     { p: "leaves", fs: 37, pad: 50, lines: ["It sits in the middle of the city.", "But walk the path a while and", "the noise falls away, until all you hear", "is leaves under your feet."] },
@@ -184,5 +181,6 @@ for (const j of jobs) {
 }
 await browser.close();
 rmSync(TMP, { recursive: true, force: true });
-console.log(`\n${탈 ? `❌ 손볼 카드 ${탈}장` : `✅ 12장 다 깨끗하다 → ${OUT}`}`);
+// 🔢 **숫자를 박아 두지 않는다** — 한국어 벌을 뺐더니 8장인데도 「12장」이라고 말했다.
+console.log(`\n${탈 ? `❌ 손볼 카드 ${탈}장` : `✅ ${jobs.length}장 다 깨끗하다 → ${OUT}`}`);
 if (탈) process.exit(1);
