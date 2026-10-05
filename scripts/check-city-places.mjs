@@ -20,7 +20,7 @@ const city = (key) => cityByKey(key) ?? null;
 // 🏝️ **잣대를 만드는 쪽과 같은 파일에서 가져온다.** 두 군데 적으면 반쪽 적용이 생긴다 —
 //    실제로 그랬다(그 파일의 coordLooksRight 주석 참고): 만드는 쪽만 고쳤더니
 //    여기가 울릉군 19곳을 「217km 떨어져 있다」고 막았다.
-import { distanceKm as km, districtMedians, coordLooksRight } from "./lib/city-geo.mjs";
+import { distanceKm as km, districtMedians, districtClusters, coordLooksRight } from "./lib/city-geo.mjs";
 
 const seen = new Map();   // id → 어디서 나왔나
 const bad = [];
@@ -57,6 +57,12 @@ for (const f of files) {
   let far = 0, noPic = 0, noXY = 0;
   // 🏝️ 이 도시 시·군마다 곳들이 모인 가운데 — 섬(울릉군)을 가르는 두 번째 자다.
   const medians = districtMedians(list);
+  // 🏝️🏝️ 저희끼리 뭉친 자리 — 백령도(옹진군)를 가르는 **세 번째 자**다.
+  //    🚨 **만드는 쪽과 똑같은 것을 넘겨야 한다.** 2026-10-05에 세 번째 그물을
+  //       빌더에만 넣고 여기엔 안 넘겼더니, 빌더가 살린 백령도 8곳을 **검사가
+  //       도로 막았다.** city-geo.mjs 주석이 경고하던 그대로다 —
+  //       「잣대가 둘이면 반쪽 적용이 생긴다」. 그 주석을 적어 놓고 또 당했다.
+  const clusters = districtClusters(list);
   for (const p of list) {
     if (seen.has(p.id)) bad.push(`${f} — id ${p.id} 가 이미 있다 (${seen.get(p.id)} · ${p.name})`);
     else seen.set(p.id, `${key} ${p.name}`);
@@ -71,7 +77,7 @@ for (const f of files) {
     // 좌표가 **없는 것**은 문제가 아니다 — 만드는 쪽이 일부러 버린 것일 수 있다
     // (관광공사가 틀린 값을 준 곳). 주소로 길을 찾는다. 세어서 보여만 준다.
     if (p.lat == null || p.lng == null) noXY++;
-    else if (!coordLooksRight(C, medians, p.gu, p.lat, p.lng)) {
+    else if (!coordLooksRight(C, medians, p.gu, p.lat, p.lng, clusters)) {
       far++;
       bad.push(
         `${f} — ${p.name}: ${C.ko} 시청에서 ${Math.round(km(C.lat, C.lng, p.lat, p.lng))}km 떨어져 있고` +

@@ -17,7 +17,7 @@ import autumnRoads from "./autumn-roads.json";
 // 🌊 부산. 지금은 launchScope 가 전부 걸러 내므로 화면에 한 곳도 안 나온다 —
 //    그래도 여기서 합쳐 두는 이유는 busanPlaces.ts 머리말에 적어 뒀다.
 import { BUSAN_PLACES } from "./busanPlaces";
-import { CITY_PLACES_2026_10 } from "./cityPlaces";
+import { CITY_PLACES_2026_10, CITY_PLACES_2026_10_05 } from "./cityPlaces";
 // 🏙️ 분류 코드로 다시 갈라 보고 **그동안 빠져 있던 것**을 찾아낸 서울 346곳.
 //    왜 tourPlaces.ts 와 따로 두는지는 그 파일 머리말에 있다.
 import { SEOUL_TOUR_PLACES } from "./seoulPlaces";
@@ -659,6 +659,9 @@ const ALL_PLACES_RAW: Place[] = [
   // 🏙️ 2026-10-01에 연 일곱 곳 — 제주·광주·대구·대전·경북(경주)·전북(전주)·강원.
   //    id 가 관광공사 contentId 라 순서에 영향을 주지 않는다. cityPlaces.ts 참고.
   ...CITY_PLACES_2026_10,
+  // 🗺️ 2026-10-05에 연 일곱 — 인천·울산·세종·경기·충북·경남·전남 (2,837곳).
+  //    이것으로 빈 칸이 있던 시·도가 (충남만 빼고) 사라진다. cityPlaces.ts 참고.
+  ...CITY_PLACES_2026_10_05,
   // 🛣️ 서울시 「관광거리」 128곳 (2026-10-03). 피맛골 · 명동거리 · 삼청동문화거리 ·
   //    논현동포차골목 · 먹자골목 여섯 군데 — 2026-09-14에 받아 두고 **앱에 넣는
   //    단계를 안 해서** 134곳 중 128곳이 잠들어 있었다.

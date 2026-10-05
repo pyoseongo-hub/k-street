@@ -95,6 +95,70 @@ const GANGWON_HEX_ROWS: HexRow[] = [
   { offset: 0.5, gus: ["동해시", "태백시", "삼척시"] },
 ];
 
+
+/**
+ * 🆕 **2026-10-05에 연 여덟 시·도.** 위 일곱과 같은 방법이다 —
+ *    `scripts/make-hex-map.mjs` 가 조사 자료의 곳 좌표를 시·군·구별로 평균내어
+ *    위도로 줄을 나누고 줄 안에서 서→동 순으로 놓았다. 근거가 자료에 남는다.
+ *
+ * ⚠️ **세종 세 곳은 손으로 끼웠다** — 연동면·장군면·소정면은 관광 자료가 한 곳도
+ *    없어 생성기가 자리를 못 준다. 그래도 **칸은 있어야 빈 곳이 보인다**(이 저장소의
+ *    오랜 교훈). 소정면은 가장 북쪽(전의면 위), 장군면은 서쪽, 연동면은 동쪽에 뒀다.
+ */
+/** 🛳️ **인천 11곳** — 제물포·영종이 서쪽 섬·공항 쪽, 부평·남동이 동남쪽이다. */
+const INCHEON_HEX_ROWS: HexRow[] = [
+  { offset: 0.0, gus: ["강화군", "검단구", "서해구", "계양구"] },
+  { offset: 0.5, gus: ["옹진군", "영종구", "제물포구", "미추홀구"] },
+  { offset: 0.0, gus: ["연수구", "부평구", "남동구"] },
+];
+
+/** 🏭 **울산 5곳** — 울주군이 시를 크게 둘러싼다. */
+const ULSAN_HEX_ROWS: HexRow[] = [
+  { offset: 0.0, gus: ["중구", "남구", "북구"] },
+  { offset: 0.5, gus: ["울주군", "동구"] },
+];
+
+/** 🏛️ **세종 12곳** — 시·군·구가 없어 **읍·면·동**이다. */
+const SEJONG_HEX_ROWS: HexRow[] = [
+  { offset: 0.0, gus: ["소정면", "전의면", "전동면", "조치원읍"] },
+  { offset: 0.5, gus: ["장군면", "연서면", "연기면", "부강면", "연동면"] },
+  { offset: 0.0, gus: ["대평동", "세종동", "금남면"] },
+];
+
+/** 🏙️ **경기 31곳** — 서울을 둘러싼 고리라 줄이 여섯이다. */
+const GYEONGGI_HEX_ROWS: HexRow[] = [
+  { offset: 0.0, gus: ["김포시", "연천군", "의정부시", "동두천시", "포천시", "가평군"] },
+  { offset: 0.5, gus: ["파주시", "부천시", "구리시", "하남시", "남양주시", "양평군"] },
+  { offset: 0.0, gus: ["양주시", "광명시", "안양시", "과천시", "성남시", "광주시"] },
+  { offset: 0.5, gus: ["고양시", "시흥시", "군포시", "의왕시", "수원시", "여주시"] },
+  { offset: 0.0, gus: ["안산시", "화성시", "오산시", "용인시", "이천시", "안성시"] },
+  { offset: 0.5, gus: ["평택시"] },
+];
+
+/** 🏞️ **충북 11곳** */
+const CHUNGBUK_HEX_ROWS: HexRow[] = [
+  { offset: 0.0, gus: ["음성군", "충주시", "제천시", "단양군"] },
+  { offset: 0.5, gus: ["진천군", "청주시", "증평군", "괴산군"] },
+  { offset: 0.0, gus: ["옥천군", "보은군", "영동군"] },
+];
+
+/** ⛰️ **경남 18곳** */
+const GYEONGNAM_HEX_ROWS: HexRow[] = [
+  { offset: 0.0, gus: ["함양군", "거창군", "합천군", "창녕군", "밀양시"] },
+  { offset: 0.5, gus: ["산청군", "의령군", "함안군", "김해시", "양산시"] },
+  { offset: 0.0, gus: ["하동군", "사천시", "진주시", "고성군", "창원시"] },
+  { offset: 0.5, gus: ["남해군", "통영시", "거제시"] },
+];
+
+/** 🌊 **전남 22곳** */
+const JEONNAM_HEX_ROWS: HexRow[] = [
+  { offset: 0.0, gus: ["영광군", "함평군", "장성군", "곡성군", "구례군"] },
+  { offset: 0.5, gus: ["무안군", "나주시", "화순군", "순천시", "광양시"] },
+  { offset: 0.0, gus: ["신안군", "목포시", "영암군", "담양군", "보성군"] },
+  { offset: 0.5, gus: ["해남군", "강진군", "장흥군", "고흥군", "여수시"] },
+  { offset: 0.0, gus: ["진도군", "완도군"] },
+];
+
 export const HEX_ROWS_BY_CITY: Record<string, HexRow[]> = {
   seoul: SEOUL_HEX_ROWS,
   busan: BUSAN_HEX_ROWS,
@@ -105,6 +169,13 @@ export const HEX_ROWS_BY_CITY: Record<string, HexRow[]> = {
   gyeongbuk: GYEONGBUK_HEX_ROWS,
   jeonbuk: JEONBUK_HEX_ROWS,
   gangwon: GANGWON_HEX_ROWS,
+  incheon: INCHEON_HEX_ROWS,
+  ulsan: ULSAN_HEX_ROWS,
+  sejong: SEJONG_HEX_ROWS,
+  gyeonggi: GYEONGGI_HEX_ROWS,
+  chungbuk: CHUNGBUK_HEX_ROWS,
+  gyeongnam: GYEONGNAM_HEX_ROWS,
+  jeonnam: JEONNAM_HEX_ROWS,
 };
 
 /** 그 도시의 배치. 없으면 빈 배열 — **서울 것을 대신 보여 주지 않는다.**

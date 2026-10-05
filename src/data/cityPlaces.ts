@@ -31,6 +31,19 @@ import gyeongbuk from "./gyeongbuk-places.json";
 import jeonbuk from "./jeonbuk-places.json";
 import gangwon from "./gangwon-places.json";
 
+// 🗺️ **2026-10-05에 연 일곱 — 빈 칸이 있던 시·도를 채웠다.**
+//    사장님: *"스트릿 비워진 지역 채워"*
+//    🚨 **자료 파일만 만들면 한 곳도 안 보인다.** 2026-10-05에 그렇게 했다가
+//       「화면 0곳 · 빈 칸 110」을 세고서야 알았다 — 앱은 멀쩡히 돌고 칸만 빈다.
+//       파일을 만들었으면 **여기에 이어 붙이고 seed.ts 의 ALL_PLACES_RAW 에도** 넣는다.
+import incheon from "./incheon-places.json";
+import ulsan from "./ulsan-places.json";
+import sejong from "./sejong-places.json";
+import gyeonggi from "./gyeonggi-places.json";
+import chungbuk from "./chungbuk-places.json";
+import gyeongnam from "./gyeongnam-places.json";
+import jeonnam from "./jeonnam-places.json";
+
 export const CITY_PLACES_2026_10: Place[] = [
   ...(jeju as Place[]),
   ...(gwangju as Place[]),
@@ -39,4 +52,15 @@ export const CITY_PLACES_2026_10: Place[] = [
   ...(gyeongbuk as Place[]),
   ...(jeonbuk as Place[]),
   ...(gangwon as Place[]),
+];
+
+/** 🗺️ 2026-10-05에 연 일곱 시·도. id 가 관광공사 contentId 라 순서에 영향을 주지 않는다. */
+export const CITY_PLACES_2026_10_05: Place[] = [
+  ...(incheon as Place[]),
+  ...(ulsan as Place[]),
+  ...(sejong as Place[]),
+  ...(gyeonggi as Place[]),
+  ...(chungbuk as Place[]),
+  ...(gyeongnam as Place[]),
+  ...(jeonnam as Place[]),
 ];

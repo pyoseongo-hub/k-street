@@ -128,7 +128,7 @@ export const CITIES: readonly City[] = [
   {
     key: "incheon", ko: "인천", koFull: "인천광역시",
     en: "Incheon", enFull: "Incheon",
-    kind: "대도시", status: "빈칸",
+    kind: "대도시", status: "공개",
     areaCode: "2", coast: true,
     lat: 37.4563, lng: 126.7052, row: 0, col: 0,
     // 🗺️ **인천은 행정구역을 새로 짰다** (2026-10-05에 알았다).
@@ -152,7 +152,7 @@ export const CITIES: readonly City[] = [
   {
     key: "gyeonggi", ko: "경기", koFull: "경기도",
     en: "Gyeonggi", enFull: "Gyeonggi-do",
-    kind: "도", status: "빈칸",
+    kind: "도", status: "공개",
     areaCode: "31", coast: true,
     lat: 37.2636, lng: 127.0286, row: 0, col: 2,
     units: [ // 31곳
@@ -193,7 +193,7 @@ export const CITIES: readonly City[] = [
   {
     key: "sejong", ko: "세종", koFull: "세종특별자치시",
     en: "Sejong", enFull: "Sejong",
-    kind: "대도시", status: "빈칸",
+    kind: "대도시", status: "공개",
     areaCode: "8", coast: false,
     lat: 36.48, lng: 127.289, row: 1, col: 1,
     // 🏙️ **세종은 시·군·구가 없다** — 바로 읍·면·동이다. 그래서 여기 units 는
@@ -221,7 +221,7 @@ export const CITIES: readonly City[] = [
   {
     key: "chungbuk", ko: "충북", koFull: "충청북도",
     en: "Chungbuk", enFull: "Chungcheongbuk-do",
-    kind: "도", status: "빈칸",
+    kind: "도", status: "공개",
     areaCode: "33", coast: false,
     lat: 36.6424, lng: 127.489, row: 1, col: 3,
     units: [ // 11곳
@@ -280,7 +280,7 @@ export const CITIES: readonly City[] = [
   {
     key: "gyeongnam", ko: "경남", koFull: "경상남도",
     en: "Gyeongnam", enFull: "Gyeongsangnam-do",
-    kind: "도", status: "빈칸",
+    kind: "도", status: "공개",
     areaCode: "36", coast: true,
     lat: 35.228, lng: 128.6811, row: 3, col: 3,
     units: [ // 18곳
@@ -293,7 +293,7 @@ export const CITIES: readonly City[] = [
   {
     key: "ulsan", ko: "울산", koFull: "울산광역시",
     en: "Ulsan", enFull: "Ulsan",
-    kind: "대도시", status: "빈칸",
+    kind: "대도시", status: "공개",
     areaCode: "7", coast: true,
     lat: 35.5384, lng: 129.3114, row: 3, col: 4,
     units: [ // 5곳
@@ -303,7 +303,7 @@ export const CITIES: readonly City[] = [
   {
     key: "jeonnam", ko: "전남", koFull: "전라남도",
     en: "Jeonnam", enFull: "Jeollanam-do",
-    kind: "도", status: "빈칸",
+    kind: "도", status: "공개",
     areaCode: "38", coast: true,
     lat: 34.8161, lng: 126.4629, row: 4, col: 0,
     units: [ // 22곳

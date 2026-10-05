@@ -120,6 +120,58 @@ export const DISTRICT_NAME_EN: Record<string, string> = {
   "인제군": "Inje-gun",
   "고성군": "Goseong-gun",
   "양양군": "Yangyang-gun",
+
+  // ── 🆕 2026-10-05에 연 여덟 시·도 (105곳) ────────────────────────────
+  //   로마자는 **국립국어원 표기** 그대로다. 지어낸 것이 아니라 도로 표지판과
+  //   역 안내에 실제로 쓰는 말이다.
+  //   🚨 **영어 이름이 하나도 안 겹치는 것을 세어 확인했다** — 겹치면 주소의
+  //      `?gu=…` 로 동네를 되찾을 때 엉뚱한 곳이 나온다(startParams.ts).
+  // 🛳️ 인천 11곳 — 2026-10-05. 중구·동구·서구가 아니라 **제물포구·영종구·서해구·검단구**다
+  //    (인천이 행정구역을 새로 짰다. cities.ts 의 인천 주석 참고).
+  "제물포구": "Jemulpo-gu", "영종구": "Yeongjong-gu", "미추홀구": "Michuhol-gu",
+  "연수구": "Yeonsu-gu", "남동구": "Namdong-gu", "부평구": "Bupyeong-gu",
+  "계양구": "Gyeyang-gu", "서해구": "Seohae-gu", "검단구": "Geomdan-gu",
+  "강화군": "Ganghwa-gun", "옹진군": "Ongjin-gun",
+  // 🏭 울산 — 중구·남구·동구·북구는 다른 도시에 이미 있다. 울주군만 새것이다.
+  "울주군": "Ulju-gun",
+  // 🏛️ 세종 12곳 — **시·군·구가 없어 읍·면·동이다.** 그래서 접미사가 -eup/-myeon/-dong 이다.
+  "조치원읍": "Jochiwon-eup", "연기면": "Yeongi-myeon", "연동면": "Yeondong-myeon",
+  "부강면": "Bugang-myeon", "금남면": "Geumnam-myeon", "장군면": "Janggun-myeon",
+  "연서면": "Yeonseo-myeon", "전의면": "Jeonui-myeon", "전동면": "Jeondong-myeon",
+  "소정면": "Sojeong-myeon", "세종동": "Sejong-dong", "대평동": "Daepyeong-dong",
+  // 🏙️ 경기 31곳
+  "수원시": "Suwon-si", "성남시": "Seongnam-si", "의정부시": "Uijeongbu-si",
+  "안양시": "Anyang-si", "부천시": "Bucheon-si", "광명시": "Gwangmyeong-si",
+  "평택시": "Pyeongtaek-si", "동두천시": "Dongducheon-si", "안산시": "Ansan-si",
+  "고양시": "Goyang-si", "과천시": "Gwacheon-si", "구리시": "Guri-si",
+  "남양주시": "Namyangju-si", "오산시": "Osan-si", "시흥시": "Siheung-si",
+  "군포시": "Gunpo-si", "의왕시": "Uiwang-si", "하남시": "Hanam-si",
+  "용인시": "Yongin-si", "파주시": "Paju-si", "이천시": "Icheon-si",
+  "안성시": "Anseong-si", "김포시": "Gimpo-si", "화성시": "Hwaseong-si",
+  "광주시": "Gwangju-si", "양주시": "Yangju-si", "포천시": "Pocheon-si",
+  "여주시": "Yeoju-si", "연천군": "Yeoncheon-gun", "가평군": "Gapyeong-gun",
+  "양평군": "Yangpyeong-gun",
+  // 🏞️ 충북 11곳
+  "청주시": "Cheongju-si", "충주시": "Chungju-si", "제천시": "Jecheon-si",
+  "보은군": "Boeun-gun", "옥천군": "Okcheon-gun", "영동군": "Yeongdong-gun",
+  "증평군": "Jeungpyeong-gun", "진천군": "Jincheon-gun", "괴산군": "Goesan-gun",
+  "음성군": "Eumseong-gun", "단양군": "Danyang-gun",
+  // ⛰️ 경남 17곳 — 마산시·진해시는 **2010년에 창원시로 합쳐졌다.** 안 적는다.
+  "창원시": "Changwon-si", "진주시": "Jinju-si", "통영시": "Tongyeong-si",
+  "사천시": "Sacheon-si", "김해시": "Gimhae-si", "밀양시": "Miryang-si",
+  "거제시": "Geoje-si", "양산시": "Yangsan-si", "의령군": "Uiryeong-gun",
+  "함안군": "Haman-gun", "창녕군": "Changnyeong-gun", "남해군": "Namhae-gun",
+  "하동군": "Hadong-gun", "산청군": "Sancheong-gun", "함양군": "Hamyang-gun",
+  "거창군": "Geochang-gun", "합천군": "Hapcheon-gun",
+  // 🌊 전남 22곳 — 고성군(경남)과 달리 여기 **고흥군**이다. 비슷한 이름을 헷갈리지 말 것.
+  "목포시": "Mokpo-si", "여수시": "Yeosu-si", "순천시": "Suncheon-si",
+  "나주시": "Naju-si", "광양시": "Gwangyang-si", "담양군": "Damyang-gun",
+  "곡성군": "Gokseong-gun", "구례군": "Gurye-gun", "고흥군": "Goheung-gun",
+  "보성군": "Boseong-gun", "화순군": "Hwasun-gun", "장흥군": "Jangheung-gun",
+  "강진군": "Gangjin-gun", "해남군": "Haenam-gun", "영암군": "Yeongam-gun",
+  "무안군": "Muan-gun", "함평군": "Hampyeong-gun", "영광군": "Yeonggwang-gun",
+  "장성군": "Jangseong-gun", "완도군": "Wando-gun", "진도군": "Jindo-gun",
+  "신안군": "Sinan-gun",
 };
 
 export const DISTRICT_NAME_JA: Record<string, string> = {
