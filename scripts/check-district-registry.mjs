@@ -1,90 +1,96 @@
 #!/usr/bin/env node
-// 🗺️ **우리 명부(cities.ts)의 시·군·구가 관광공사와 맞나.**
+// 🗺️ **명부(cities.ts)에 없는 동네 때문에 곳이 버려지고 있나.**
 //
 // 🐞 왜 만들었나 (2026-10-05, 인천을 열다 걸렸다) —
 //    관광공사가 돌려준 인천 주소가 **영종구 · 제물포구 · 서해구 · 검단구** 였다.
-//    그런데 cities.ts 에는 **중구 · 동구 · 서구** 로 적혀 있었다. 인천이 행정구역을
-//    새로 짠 것을 우리 명부가 못 따라간 것이다.
-//    결과 — `build-city-places` 가 그 주소들을 「명부에 없는 동네」로 보고
-//    **114곳 중 73곳을 통째로 버렸다.** 차이나타운·월미도가 있는 자리다.
+//    그런데 cities.ts 에는 **중구 · 동구 · 서구** 로 적혀 있었다.
+//    `build-city-places` 는 명부에 없는 동네를 보면 그 곳을 버린다 —
+//    **114곳 중 73곳이 통째로 버려졌다.** 차이나타운·월미도가 있는 자리다.
 //
-// 🚨 **화면은 안 깨진다.** 그 구가 그냥 **없는 채로** 앱이 멀쩡히 돈다 —
-//    벌집 지도에 칸이 없으니 빈 곳으로도 안 보인다. 이 저장소가 여러 번 적어 둔
-//    「칸이 없으면 빈 곳이 안 보인다」가 그대로 재현됐다.
-//    행정구역은 앞으로도 바뀐다. 그래서 **기계가 묻게** 해 둔다.
+// 🚨 **화면은 안 깨진다.** 그 구가 없는 채로 앱이 멀쩡히 돈다 — 벌집에 칸이
+//    없으니 **빈 곳으로도 안 보인다.** 「칸이 없으면 빈 곳이 안 보인다」 그대로다.
 //
-// 돌리기 (관광공사를 부르므로 Actions 에서 — Check district registry):
-//   TOUR_API_KEY=… node scripts/check-district-registry.mjs
-//   TOUR_API_KEY=… node scripts/check-district-registry.mjs --all   ← 빈칸 도시까지
+// ── 🚨 무엇을 근거로 삼나 — **주소다. 코드표가 아니다.** ──────────────────
+//   처음엔 관광공사 `areaCode2`(시·군·구 코드표)에 물어봤다. **그게 틀렸다.**
+//   코드표는 **옛날 이름을 그대로 들고 있고 새 이름은 없다**:
+//     · 제주 → 「남제주군 · 북제주군」  (2006년에 없어졌다)
+//     · 경남 → 「마산시 · 진해시」      (2010년에 창원시로 합쳐졌다)
+//     · 충북 → 「청원군」              (2014년에 청주시로 합쳐졌다)
+//     · 인천 → 「중구 · 동구 · 서구」   (주소는 영종구·제물포구·서해구·검단구를 쓴다)
+//   그 말을 믿고 명부를 맞췄으면 **없어진 군을 되살려 놓을 뻔했다.**
+//   → 그래서 **실제 곳들의 주소**(survey-*.json)를 본다. 그게 지금 쓰이는 이름이다.
+//     덤으로 **관광공사를 안 불러도 된다** — 공짜고, 푸시마다 돌릴 수 있다.
 //
-// ⚠️ **고치지는 않는다. 알려만 준다.** 명부를 기계가 덮어쓰면 손으로 맞춰 둔 것이
-//    날아간다(벌집 지도·번역된 이름이 그 이름을 열쇠로 쓴다). 사람이 보고 고친다.
+// ── ⚠️ 두 방향은 무게가 다르다 ───────────────────────────────────────────
+//   ❌ **주소에 있는데 명부에 없다** — 그 곳들이 **버려진다.** 고쳐야 한다.
+//   ⬜ **명부에 있는데 주소에 없다** — 그냥 **빈 칸**이다. 관광 자료가 없을 뿐이고
+//      칸은 있어야 빈 곳이 보인다. **알려만 주고 막지 않는다.**
+//
+// 돌리기:  node scripts/check-district-registry.mjs
+import { readFileSync, existsSync } from "node:fs";
 import { readCities } from "./lib/city-registry.mjs";
-// 🚨 **관광공사는 공용 함수로 부른다.** 처음에 맨 `fetch` 를 쓰고 세 번만 다시
-//    물어봤더니 **17곳이 전부 「fetch failed」** 로 떨어졌다 — 그 한 줄로는
-//    원인을 알 수 없다(tour-fetch.mjs 주석이 그걸 적어 뒀는데 안 읽고 새로 짰다).
-//    공용 함수는 30초 천장을 걸고 5~60초씩 여섯 번 다시 물어보며,
-//    **진짜 이유(cause)** 를 꺼내 찍어 준다.
-import { fetchWithRetry } from "./lib/tour-fetch.mjs";
 
-const KEY = process.env.TOUR_API_KEY;
-if (!KEY) { console.error("❌ TOUR_API_KEY 가 없다 — 워크플로에 시크릿을 넘겼는지 볼 것."); process.exit(1); }
-const ALL = process.argv.includes("--all");
+const cities = readCities().filter((c) => c.areaCode);
+let 막음 = 0, 본도시 = 0;
+const 알림 = [];
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
-async function sigungu(areaCodeNum) {
-  const q = new URLSearchParams({
-    MobileOS: "ETC", MobileApp: "KStreet", _type: "json",
-    areaCode: String(areaCodeNum), numOfRows: "100", pageNo: "1",
-  });
-  const url = `https://apis.data.go.kr/B551011/KorService2/areaCode2?serviceKey=${KEY}&${q}`;
-  const res = await fetchWithRetry(url, { log: (m) => console.log(m) });
-  const text = await res.text();
-  if (!res.ok) throw new Error(`HTTP ${res.status} — ${text.slice(0, 100).replace(/\s+/g, " ")}`);
-  let data;
-  try { data = JSON.parse(text); }
-  catch { throw new Error(`JSON 이 아니다 — ${text.slice(0, 120).replace(/\s+/g, " ")}`); }
-  const h = data?.response?.header;
-  if (h?.resultCode && h.resultCode !== "0000") throw new Error(`API ${h.resultCode} ${h.resultMsg}`);
-  const it = data?.response?.body?.items?.item;
-  const list = !it ? [] : Array.isArray(it) ? it : [it];
-  if (!list.length) throw new Error("빈 목록이 왔다");
-  return list.map((x) => String(x.name).trim());
-}
-
-const cities = readCities().filter((c) => c.areaCode && (ALL || c.status === "공개"));
-console.log(`🗺️ 대 볼 도시 ${cities.length}곳 — ${cities.map((c) => c.ko).join(" · ")}\n`);
-
-let 안맞음 = 0, 못물어봄 = 0;
 for (const c of cities) {
-  let theirs;
-  try { theirs = await sigungu(c.areaCode); }
-  catch (e) { console.error(`❌ ${c.ko} — 못 물어봤다: ${e.message}`); 못물어봄++; continue; }
-  const ours = new Set(c.units);
-  const 그들 = new Set(theirs);
-  // 🚨 **「못 물어본 것」과 「없는 것」을 가른다** — 위에서 실패하면 여기 안 온다.
-  const 우리만 = c.units.filter((u) => !그들.has(u));
-  const 그들만 = theirs.filter((u) => !ours.has(u));
-  if (!우리만.length && !그들만.length) {
-    console.log(`✅ ${c.ko.padEnd(4)} ${String(c.units.length).padStart(2)}칸 — 그대로 맞는다`);
-    continue;
+  const f = `src/data/survey-${c.areaCode}.json`;
+  if (!existsSync(f)) continue;   // 아직 조사 안 한 도시 — 댈 것이 없다
+  본도시++;
+  let rows;
+  try { rows = JSON.parse(readFileSync(f, "utf-8")); }
+  catch (e) { console.error(`❌ ${c.ko} — ${f} 를 못 읽었다: ${e.message}`); 막음++; continue; }
+
+  const 셈 = new Map();
+  for (const r of rows) {
+    // 주소의 **둘째 칸**이 시·군·구다 — build-city-places 와 **똑같이** 뽑는다.
+    // (잣대가 둘이면 반쪽 적용이 생긴다 — 이 저장소가 여러 번 데인 자리다.)
+    const p = String(r?.addr1 ?? "").split(/\s+/);
+    if (p.length > 1 && p[1]) 셈.set(p[1], (셈.get(p[1]) ?? 0) + 1);
   }
-  안맞음++;
-  console.log(`❌ ${c.ko.padEnd(4)} [${c.status}] 우리 ${c.units.length}칸 · 관광공사 ${theirs.length}칸`);
-  if (우리만.length) console.log(`      우리에만 있다 (없어졌거나 이름이 바뀌었다): ${우리만.join(" · ")}`);
-  if (그들만.length) console.log(`      관광공사에만 있다 (칸을 만들어야 한다): ${그들만.join(" · ")}`);
-  await sleep(300);
+  const ours = new Set(c.units);
+  // 🚨 시·군·구 **꼴인 것만** 본다. 세종처럼 시·군·구가 없는 곳은 주소 둘째 칸이
+  //    도로명(「다솜로」)이나 동 이름이라, 안 거르면 도로를 「없는 구」라고 외친다.
+  const 구꼴 = (s) => /(시|군|구|읍|면)$/.test(s);
+  // 🚨 **남의 시·도 동네는 고칠 게 아니다** (2026-10-05에 바로 걸렸다).
+  //    광주 조사에 「화순군 1곳」이 섞여 있었다 — 화순군은 **전남**이다.
+  //    경계 가까운 곳이 한두 개 넘어오는 것은 흔하고, 빌더가 버리는 게 맞다.
+  //    이걸 ❌ 로 외치면 **광주 명부에 화순군을 넣으라**는 말이 된다.
+  //    그래서 **다른 도시 명부에 있는 이름이면 알림으로만** 돌린다.
+  const 남의동네 = new Set();
+  for (const o of cities) if (o.key !== c.key) for (const u of o.units) 남의동네.add(u);
+  const 넘어온것 = [];
+  const 버려지는것 = [];
+  for (const [k, n] of [...셈.entries()].sort((a, b) => b[1] - a[1])) {
+    if (ours.has(k) || !구꼴(k)) continue;
+    (남의동네.has(k) ? 넘어온것 : 버려지는것).push([k, n]);
+  }
+  if (넘어온것.length)
+    알림.push(`   ↔️ ${c.ko} — 이웃 시·도 동네가 섞여 왔다(버리는 게 맞다): ` +
+      넘어온것.map(([k, n]) => `${k}(${n})`).join(" · "));
+  const 빈칸 = c.units.filter((u) => !셈.has(u));
+
+  if (버려지는것.length) {
+    막음++;
+    console.log(`❌ ${c.ko} [${c.status}] — 주소에 나오는데 명부에 없다 → 그 곳들이 버려진다`);
+    for (const [k, n] of 버려지는것) console.log(`      ${k} — ${n}곳`);
+  } else {
+    console.log(`✅ ${c.ko.padEnd(4)} ${String(c.units.length).padStart(2)}칸 — 버려지는 동네 없음`);
+  }
+  if (빈칸.length) 알림.push(`   ⬜ ${c.ko} — 주소에 안 나온 칸 ${빈칸.length}개: ${빈칸.join(" · ")}`);
 }
 
 console.log("");
-// 🚨 **「못 물어봤다」를 「안 맞는다」로 세지 않는다.** 처음에 그렇게 적었더니
-//    접속이 전부 실패한 판에서 「17곳이 안 맞는다」가 떴다 — 명부는 멀쩡한데.
-//    모르는 것과 틀린 것을 가르는 것은 이 저장소의 기본 규칙이다.
-if (못물어봄) console.log(`⚠️ 못 물어본 도시 ${못물어봄}곳 — 명부가 틀렸다는 뜻이 아니다. 다시 돌릴 것.`);
-if (안맞음) {
-  console.log(`❌ 명부가 안 맞는 도시 ${안맞음}곳 — src/data/cities.ts 의 units 를 손으로 맞출 것.`);
-  console.log("   ⚠️ 이름을 바꾸면 cityHexMaps.ts 의 벌집 배치도 같이 고쳐야 한다(check-hex-maps 가 잡아 준다).");
+if (!본도시) { console.log("⬜ 조사 자료(survey-*.json)가 하나도 없다 — 댈 것이 없다."); process.exit(0); }
+if (알림.length) {
+  console.log("⬜ 빈 칸 (막지 않는다 — 관광 자료가 없을 뿐이고 칸은 있어야 빈 곳이 보인다)");
+  for (const a of 알림) console.log(a);
+  console.log("");
 }
-if (안맞음 || 못물어봄) process.exit(1);
-console.log("✅ 모든 도시의 시·군·구가 관광공사와 맞는다.");
+if (막음) {
+  console.log(`❌ ${막음}곳에서 곳이 버려지고 있다 — src/data/cities.ts 의 units 에 그 이름을 더할 것.`);
+  console.log("   ⚠️ 이름을 더하면 cityHexMaps.ts 의 벌집 배치도 같이 고쳐야 한다(check-hex-maps 가 잡아 준다).");
+  process.exit(1);
+}
+console.log(`✅ 조사한 ${본도시}곳 — 명부에 없어서 버려지는 동네가 없다.`);
