@@ -163,6 +163,12 @@ export const DISTRICT_NAME_EN: Record<string, string> = {
   "함안군": "Haman-gun", "창녕군": "Changnyeong-gun", "남해군": "Namhae-gun",
   "하동군": "Hadong-gun", "산청군": "Sancheong-gun", "함양군": "Hamyang-gun",
   "거창군": "Geochang-gun", "합천군": "Hapcheon-gun",
+  // 🏖️ **충남 15곳** (2026-10-05)
+  "천안시": "Cheonan-si", "공주시": "Gongju-si", "보령시": "Boryeong-si",
+  "아산시": "Asan-si", "서산시": "Seosan-si", "논산시": "Nonsan-si",
+  "계룡시": "Gyeryong-si", "당진시": "Dangjin-si", "금산군": "Geumsan-gun",
+  "부여군": "Buyeo-gun", "서천군": "Seocheon-gun", "청양군": "Cheongyang-gun",
+  "홍성군": "Hongseong-gun", "예산군": "Yesan-gun", "태안군": "Taean-gun",
   // 🌊 전남 22곳 — 고성군(경남)과 달리 여기 **고흥군**이다. 비슷한 이름을 헷갈리지 말 것.
   "목포시": "Mokpo-si", "여수시": "Yeosu-si", "순천시": "Suncheon-si",
   "나주시": "Naju-si", "광양시": "Gwangyang-si", "담양군": "Damyang-gun",

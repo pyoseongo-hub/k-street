@@ -181,7 +181,7 @@ export const CITIES: readonly City[] = [
   {
     key: "chungnam", ko: "충남", koFull: "충청남도",
     en: "Chungnam", enFull: "Chungcheongnam-do",
-    kind: "도", status: "빈칸",
+    kind: "도", status: "공개",
     areaCode: "34", coast: true,
     lat: 36.6588, lng: 126.6728, row: 1, col: 0,
     units: [ // 15곳

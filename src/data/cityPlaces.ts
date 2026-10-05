@@ -43,6 +43,7 @@ import gyeonggi from "./gyeonggi-places.json";
 import chungbuk from "./chungbuk-places.json";
 import gyeongnam from "./gyeongnam-places.json";
 import jeonnam from "./jeonnam-places.json";
+import chungnam from "./chungnam-places.json";
 
 export const CITY_PLACES_2026_10: Place[] = [
   ...(jeju as Place[]),
@@ -63,4 +64,5 @@ export const CITY_PLACES_2026_10_05: Place[] = [
   ...(chungbuk as Place[]),
   ...(gyeongnam as Place[]),
   ...(jeonnam as Place[]),
+  ...(chungnam as Place[]),
 ];

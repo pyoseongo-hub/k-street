@@ -159,6 +159,14 @@ const JEONNAM_HEX_ROWS: HexRow[] = [
   { offset: 0.0, gus: ["진도군", "완도군"] },
 ];
 
+/** 🏖️ **충남 15곳** — 조사가 접속 끊김으로 하루 밀렸다가 같은 날 들어왔다. */
+const CHUNGNAM_HEX_ROWS: HexRow[] = [
+  { offset: 0.0, gus: ["서산시", "당진시", "아산시", "천안시"] },
+  { offset: 0.5, gus: ["태안군", "홍성군", "예산군", "공주시"] },
+  { offset: 0.0, gus: ["보령시", "청양군", "부여군", "계룡시"] },
+  { offset: 0.5, gus: ["서천군", "논산시", "금산군"] },
+];
+
 export const HEX_ROWS_BY_CITY: Record<string, HexRow[]> = {
   seoul: SEOUL_HEX_ROWS,
   busan: BUSAN_HEX_ROWS,
@@ -176,6 +184,7 @@ export const HEX_ROWS_BY_CITY: Record<string, HexRow[]> = {
   chungbuk: CHUNGBUK_HEX_ROWS,
   gyeongnam: GYEONGNAM_HEX_ROWS,
   jeonnam: JEONNAM_HEX_ROWS,
+  chungnam: CHUNGNAM_HEX_ROWS,
 };
 
 /** 그 도시의 배치. 없으면 빈 배열 — **서울 것을 대신 보여 주지 않는다.**
