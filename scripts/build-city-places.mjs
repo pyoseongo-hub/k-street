@@ -22,7 +22,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { categoryOf } from "./lib/tour-categories.mjs";
 import { httpsPhoto } from "./lib/https-photo.mjs";
-import { distanceKm, nearCity, maxKmFor } from "./lib/city-geo.mjs";
+import { distanceKm, nearCity, maxKmFor, districtMedians, districtClusters, coordLooksRight } from "./lib/city-geo.mjs";
 import { cityByKey } from "./lib/city-registry.mjs";
 
 const args = process.argv.slice(2);
@@ -126,22 +126,22 @@ const drop = (why, title) => dropped.set(why, [...(dropped.get(why) ?? []), titl
 //
 //   ⚠️ 곳이 적은 시·군(1~2곳)에서는 가운데가 곧 그 곳이라 아무것도 못 가른다.
 //      그래서 **시청 자를 없애지 않고 둘 중 하나만 통과해도 받는다.** 그물을 두 겹으로 둔다.
-const DISTRICT_LIMIT_KM = 30;
-const 시군가운데 = (() => {
-  const 모음 = new Map();
-  for (const it of pool) {
-    const gu = String(it.addr1 ?? "").split(/\s+/)[1] ?? "";
-    const lat = Number(it.mapy), lng = Number(it.mapx);
-    if (!gu || !Number.isFinite(lat) || !Number.isFinite(lng) || (!lat && !lng)) continue;
-    if (!모음.has(gu)) 모음.set(gu, []);
-    모음.get(gu).push([lat, lng]);
-  }
-  const mid = (xs) => { const a = [...xs].sort((x, y) => x - y); return a[Math.floor(a.length / 2)]; };
-  const out2 = new Map();
-  for (const [gu, pts] of 모음)
-    if (pts.length >= 3) out2.set(gu, { lat: mid(pts.map((p) => p[0])), lng: mid(pts.map((p) => p[1])) });
-  return out2;
-})();
+//
+//   🏝️🏝️ **2026-10-05 — 그물을 하나 더 둔다.** 인천 옹진군 39곳이 **200km 바다에**
+//      흩어져 있다. 가운데는 남쪽 섬에 잡히는데 **백령도·대청도 8곳은 거기서 160km 넘는다** —
+//      두 겹으로도 못 잡아 두무진·콩돌해변·심청각의 좌표가 버려졌다. 그 좌표는 맞다.
+//      → **저희끼리 셋 이상 뭉쳐 있으면 믿는다**(districtClusters). 자세한 셈은 city-geo.mjs.
+//
+// 🚨 **여기서 따로 세지 않는다.** 예전에는 이 파일이 가운데를 **자기 사본**으로 구했다 —
+//    공용 함수가 바로 옆에 있는데도. 잣대가 둘이면 한쪽만 고치게 되고, 이 저장소는
+//    그 일로 이미 한 번 데였다(검사 쪽이 19곳을 막았다). 이제 둘 다 city-geo.mjs 를 쓴다.
+const 좌표행 = pool.map((it) => ({
+  gu: String(it.addr1 ?? "").split(/\s+/)[1] ?? "",
+  lat: Number(it.mapy),
+  lng: Number(it.mapx),
+}));
+const 시군가운데 = districtMedians(좌표행);
+const 시군묶음 = districtClusters(좌표행);
 
 for (const it of pool) {
   const name = String(it.title ?? "").trim();
@@ -167,11 +167,9 @@ for (const it of pool) {
   //    관광공사 자료가 틀린 것이고 우리가 고칠 수 있는 값이 아니다.
   //    지어내지 않는다(빈 칸이 틀린 값보다 낫다). 주소가 있으면 길찾기는 된다.
   let lat = Number(it.mapy), lng = Number(it.mapx);
-  // 🏝️ 두 겹 그물 — 시청 자, 아니면 그 시·군에 모인 곳들의 가운데 자(위 주석).
-  const mid = 시군가운데.get(gu);
-  const 시청자통과 = nearCity(CITY_LAT, CITY_LNG, lat, lng, LIMIT_KM);
-  const 동네자통과 = mid ? nearCity(mid.lat, mid.lng, lat, lng, DISTRICT_LIMIT_KM) : false;
-  if (!시청자통과 && !동네자통과) {
+  // 🏝️ 세 겹 그물 — 시청 자 · 시·군 가운데 자 · 저희끼리 뭉친 자리(위 주석).
+  //    **검사하는 쪽(check-city-places)과 똑같은 함수**를 쓴다.
+  if (!coordLooksRight(city, 시군가운데, gu, lat, lng, 시군묶음)) {
     if (Number.isFinite(lat) && Number.isFinite(lng) && (lat || lng))
       drop(`좌표가 ${CITY_KO} 밖 — 좌표만 버림(${Math.round(distanceKm(CITY_LAT, CITY_LNG, lat, lng))}km)`, name);
     lat = NaN; lng = NaN;

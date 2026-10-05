@@ -98,13 +98,81 @@ export function districtMedians(rows) {
   return out;
 }
 
+// ── 🏝️ 세 번째 그물: **같은 시·군 안에서 저희끼리 모여 있나** (2026-10-05) ──
+//
+// 인천을 열다 걸렸다. **옹진군 39곳이 200km 바다에 흩어져 있다** —
+// 가운데는 남쪽 섬(영흥도 쪽, 시청에서 36km)에 잡히는데,
+// **백령도·대청도 8곳은 그 가운데에서 160~173km**다. 그래서 —
+//   · 시청 자(인천은 대도시라 60km)  → 못 잡는다
+//   · 시·군 가운데 자(30km)         → 못 잡는다
+// 둘 다 놓쳐서 **두무진·콩돌해변·심청각·사곶해변 여덟 곳의 좌표가 버려졌다.**
+// 그런데 그 좌표는 **맞다.** 백령도는 정말 거기 있다.
+//
+// ✅ **저희끼리 모여 있으면 믿는다.** 같은 시·군 안에서 30km 안에 **셋 이상**이
+//    뭉쳐 있으면 그건 튄 좌표가 아니라 **진짜 동떨어진 섬·산간**이다.
+//    백령도 여덟 곳은 서로 10km 안이라 함께 통과한다.
+//
+// 🚨 **왜 셋인가.** 하나는 그냥 오류다. 둘은 **같은 오류가 두 번** 날 수 있다
+//    (관광공사가 한 묶음을 같은 엉뚱한 자리에 찍어 두는 일이 있다).
+//    셋부터는 묶음으로 본다 — districtMedians 가 3을 쓰는 것과 같은 이유다.
+// 🚨 **남중국해 반송공원은 여전히 걸린다** — 혼자다. 자를 늘린 게 아니라
+//    **재는 자리를 하나 더 둔 것**이라, 원래 잡으려던 것은 그대로 잡는다.
+
+/** 떨어진 섬·산간으로 인정하는 **최소 묶음 크기**. 이보다 적으면 오류로 본다. */
+export const CLUSTER_MIN = 3;
+
 /**
- * 그 좌표를 믿어도 되나 — **시청 자, 아니면 시·군 가운데 자.** 둘 중 하나만 통과하면 받는다.
+ * 시·군마다 **저희끼리 뭉친 자리들**을 구한다(30km 안에 CLUSTER_MIN 이상).
+ * @param {{gu?: string, lat?: number, lng?: number}[]} rows
+ * @returns {Map<string, {lat:number,lng:number}[]>} 시·군 → 뭉친 자리들의 가운데
+ */
+export function districtClusters(rows) {
+  const 모음 = new Map();
+  for (const r of rows ?? []) {
+    const gu = r?.gu;
+    const lat = Number(r?.lat), lng = Number(r?.lng);
+    if (!gu || !Number.isFinite(lat) || !Number.isFinite(lng) || (!lat && !lng)) continue;
+    if (!모음.has(gu)) 모음.set(gu, []);
+    모음.get(gu).push([lat, lng]);
+  }
+  const out = new Map();
+  for (const [gu, pts] of 모음) {
+    // 아주 단순한 묶기 — 아직 아무 묶음에도 안 든 점을 씨앗으로 삼아
+    // 30km 안의 점을 끌어모은다. 곳 수가 수백 단위라 이 정도면 충분하다.
+    const 남음 = [...pts];
+    const 묶음들 = [];
+    while (남음.length) {
+      const [씨lat, 씨lng] = 남음.shift();
+      const 식구 = [[씨lat, 씨lng]];
+      for (let i = 남음.length - 1; i >= 0; i--) {
+        if (nearCity(씨lat, 씨lng, 남음[i][0], 남음[i][1], DISTRICT_LIMIT_KM)) {
+          식구.push(남음[i]); 남음.splice(i, 1);
+        }
+      }
+      if (식구.length >= CLUSTER_MIN) {
+        const mid = (xs) => { const a = [...xs].sort((x, y) => x - y); return a[Math.floor(a.length / 2)]; };
+        묶음들.push({ lat: mid(식구.map((p) => p[0])), lng: mid(식구.map((p) => p[1])) });
+      }
+    }
+    if (묶음들.length) out.set(gu, 묶음들);
+  }
+  return out;
+}
+
+/**
+ * 그 좌표를 믿어도 되나 — 그물 **셋 중 하나**만 통과하면 받는다.
+ *   ① 시청에서 가깝다 (대도시 60km · 도 160km)
+ *   ② 그 시·군 곳들의 **가운데**에서 30km 안 — 울릉도를 살린 자
+ *   ③ 그 시·군 안에서 **셋 이상이 뭉친 자리**에서 30km 안 — 백령도를 살린 자
  * @param {{lat:number, lng:number, kind?:string}} city 도시 명부 한 줄
  * @param {Map<string, {lat:number,lng:number}>} medians districtMedians() 가 만든 것
+ * @param {Map<string, {lat:number,lng:number}[]>} [clusters] districtClusters() 가 만든 것
  */
-export function coordLooksRight(city, medians, gu, lat, lng) {
+export function coordLooksRight(city, medians, gu, lat, lng, clusters) {
   if (nearCity(city.lat, city.lng, lat, lng, maxKmFor(city))) return true;
   const mid = medians?.get(gu);
-  return mid ? nearCity(mid.lat, mid.lng, lat, lng, DISTRICT_LIMIT_KM) : false;
+  if (mid && nearCity(mid.lat, mid.lng, lat, lng, DISTRICT_LIMIT_KM)) return true;
+  for (const c of clusters?.get(gu) ?? [])
+    if (nearCity(c.lat, c.lng, lat, lng, DISTRICT_LIMIT_KM)) return true;
+  return false;
 }
