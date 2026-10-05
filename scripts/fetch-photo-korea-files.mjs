@@ -36,6 +36,21 @@ const PICKS = [
     what: "경복궁 경회루 야경", by: "한국관광공사 이범수", byEn: "Lee Beom-su", when: "2011-05" },
   { file: "gyeongbokgung-heungnyemun-2010.jpg",     id: "1134330",
     what: "경복궁 흥례문 야경", by: "한국관광공사 김지호", byEn: "Kim Ji-ho", when: "2010-11" },
+
+  // 🍁 **가을 남산 네 장** (2026-10-05, 사장님이 11장 중에서 고르셨다).
+  //    인스타 카드에 쓴다. 촬영장소가 「서울」·「서울특별시 중구」인 것만이고,
+  //    1·2번은 검색어에 **가을·낙엽**이, 3·4번은 **11월 추천여행지**가 박혀 있다.
+  //    ⚠️ 앞의 경복궁 여섯을 **지우지 않고 덧붙인다** — 목록을 갈아 끼우면
+  //       credits.json 이 덮어써져 그 사진들의 **촬영자가 사라진다.**
+  //       촬영자를 잃는 순간 출처를 못 밝히게 되고, 그 사진은 못 쓰게 된다.
+  { file: "namsan-seonggwakgil-fallen-leaves.jpg",  id: "1432608",
+    what: "남산성곽길 · 가을 낙엽", by: "한국관광공사 이범수", byEn: "Lee Beom-su", when: "2011-11" },
+  { file: "namsan-seonggwakgil-autumn.jpg",         id: "1432643",
+    what: "남산성곽길 · 가을", by: "한국관광공사 이범수", byEn: "Lee Beom-su", when: "2011-11" },
+  { file: "namsan-hanyangdoseong-trail.jpg",        id: "3097080",
+    what: "서울 한양도성길 남산구간", by: "김민수", byEn: "Kim Min-su", when: "2023-11" },
+  { file: "namsan-hanyangdoseong-tower.jpg",        id: "3097083",
+    what: "서울 한양도성길 남산구간 · 남산타워", by: "김민수", byEn: "Kim Min-su", when: "2023-11" },
 ];
 
 const url = (id) => `https://tong.visitkorea.or.kr/cms2/website/${id.slice(-2)}/${id}.jpg`;
