@@ -1,0 +1,204 @@
+{
+  "_읽어보세요": [
+    "🙋 **사람이 공식 공지에서 직접 확인한 축제 날짜.**",
+    "",
+    "사장님 지시 (2026-10-06): \"최대한 서치해봐 서울시 행자부 등 /",
+    "행사는 하는데 날짜가 없다는건 기본적 말이 안되 / 어딘가 공지가 있을거야\"",
+    "",
+    "맞는 지적이었다. 10월 축제 39곳 중 확정 날짜가 붙은 것이 8곳이었는데,",
+    "서울시 문화포털(기계가 매일 받는 자리)에 **아직 안 올라온 것**이 대부분이었다.",
+    "그런데 날짜 자체는 **딴 데에 이미 공지돼 있었다** — 주최 기관 누리집,",
+    "서울시 보도자료, 국가유산청 발표. 그걸 사람이 찾아 여기 적는다.",
+    "",
+    "─────────────────────────────────────────────────────────────────",
+    "🚨 왜 gu-festival-dates.json 에 직접 안 적나",
+    "─────────────────────────────────────────────────────────────────",
+    "  그 파일은 fetch-gu-festival-dates.ts 가 **매일 아침 덮어쓰는 자리**다.",
+    "  머리에 「손으로 고치지 말 것」이라고 적혀 있다. 거기에 손으로 적으면",
+    "  다음 사람이 「기계가 받은 것」으로 읽고, 날짜가 지나면 조용히 사라진다.",
+    "  그래서 **사람 자리와 기계 자리를 가른다.**",
+    "",
+    "  합치는 순서 (src/lib/guFestival.ts) — **기계가 이긴다.**",
+    "    이 파일(사람) → gu-festival-dates.json(문화포털) 로 덮어쓴다.",
+    "  주최 측이 문화포털에 직접 올린 것이 더 앞선 사실이기 때문이다.",
+    "  그래서 여기 적어 둔 것은 구청이 올리면 **저절로 뒤로 물러난다.**",
+    "",
+    "─────────────────────────────────────────────────────────────────",
+    "✋ 넣는 기준 — 이 중 하나로도 모자라면 **비워 둔다**",
+    "─────────────────────────────────────────────────────────────────",
+    "  ① 주최 기관의 공식 페이지(hanok.seoul.go.kr · kcdf.or.kr) 또는",
+    "     서울시·국가유산청 보도자료",
+    "  ② 또는 **서로 다른 매체 둘 이상**이 같은 날짜를 적은 것",
+    "  ③ 그리고 **요일이 2026년 달력과 맞아야 한다.**",
+    "",
+    "  🚨 ③ 이 제일 많이 걸러 냈다. 검색 요약은 작년 회차를 올해 것처럼 말한다.",
+    "     「종로K축제 10월 17일(금)~18일(토)」 — 2026년 10월 17일은 **토요일**이다.",
+    "     2025년 10월 17일이 금요일이다. 즉 그건 **작년 것**이었다. 안 넣었다.",
+    "     같은 이유로 네 곳을 버렸다 — 종로K축제 · 정동문화축제(제27회는 2025) ·",
+    "     영등포선유도원축제 · 서울와우북페스티벌(회차·날짜가 자료마다 엇갈린다).",
+    "     **엇갈리면 숫자를 적지 않는다.** 빈 칸이 틀린 날짜보다 낫다.",
+    "",
+    "  ⚠️ 자료가 2025 회차만 있는 곳은 **안 넣었다** — 가락옥토버페스트 미식야행 ·",
+    "     은평누리축제(2026에는 「은평 에브리바디 페스티벌」이 보인다) ·",
+    "     이태원 지구촌축제 · 도심 속 바다축제(24~25 와 25~26 이 엇갈린다) ·",
+    "     서울숲 JAZZ페스티벌.",
+    "",
+    "─────────────────────────────────────────────────────────────────",
+    "📌 다음 사람이 알아야 할 것",
+    "─────────────────────────────────────────────────────────────────",
+    "  · **날짜가 지나면 지운다.** 화면 쪽(guFestivalDate)이 지난 것을 걸러 주지만,",
+    "    이 파일은 아무도 안 비워 주므로 해마다 쌓인다. 회차마다 새로 적는다.",
+    "  · 「곳」의 열쇠는 **seed.ts 의 id** 다. id 는 재사용하지 않는다.",
+    "  · `gu` 는 **그해 열리는 구**다. 우리 seed 와 달라도 이쪽이 맞다 —",
+    "    K-웨이브 댄스 페스티벌은 2026년에 서초구가 아니라 **용산구 이태원**이다.",
+    "  · 네이버 검색으로 사장님이 확인해 준 두 곳(ks_j 다다페스타 · ks_5 관악강감찬축제)은",
+    "    아직 gu-festival-dates.json 에 들어 있다. 날짜가 지나면 사라진다 —",
+    "    **다음에 손으로 넣을 것은 그 파일이 아니라 여기다.**",
+    "  · 저작권: 서울시 보도자료는 공공누리 제4유형(상업적 이용금지)이다.",
+    "    **글을 옮겨 적지 않는다.** 우리가 쓰는 것은 날짜·장소라는 사실뿐이고,",
+    "    근거 주소를 함께 적어 손님이 직접 확인할 수 있게 한다."
+  ],
+
+  "곳": {
+    "tour_626944": {
+      "start": "2026-10-17",
+      "end": "2026-10-23",
+      "title": "제25회 서울억새축제 <억새, 자연이 건네는 위로>",
+      "gu": "마포구",
+      "place": "월드컵공원 하늘공원 일대",
+      "time": "10:00~21:00",
+      "org": "서울시청",
+      "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=683",
+      "page": "https://news.seoul.go.kr/env/archives/570795",
+      "source": "서울시 환경분야 누리집 · 펀서울 (사람이 확인)",
+      "근거": [
+        "https://news.seoul.go.kr/env/archives/570795",
+        "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=683"
+      ],
+      "fetchedAt": "2026-10-06"
+    },
+
+    "tour_2756476": {
+      "start": "2026-10-17",
+      "end": "2026-10-25",
+      "title": "2026 세계유산 조선왕릉축전 (개막 10.16 융릉·건릉)",
+      "gu": "강남구",
+      "place": "선릉·정릉, 태릉·강릉, 의릉 등 전국 조선왕릉 12곳",
+      "org": "국가유산청·국가유산진흥원",
+      "orgLink": "https://www.kh.or.kr/cms/content/view/237",
+      "page": "https://www.kh.or.kr/cms/content/view/237",
+      "source": "국가유산진흥원 · 복수 매체 (사람이 확인)",
+      "근거": [
+        "https://www.kh.or.kr/cms/content/view/237",
+        "https://www.lecturernews.com/news/articleView.html?idxno=210595",
+        "https://www.reviewtimes.co.kr/news/articleView.html?idxno=12744",
+        "https://www.kukak21.com/bbs/board.php?bo_table=news&wr_id=44446"
+      ],
+      "fetchedAt": "2026-10-06"
+    },
+
+    "tour_2740046": {
+      "start": "2026-10-19",
+      "end": "2026-10-25",
+      "title": "2026 한복문화주간",
+      "gu": "종로구",
+      "place": "전국 주요 거점 (서울 포함)",
+      "org": "한국공예·디자인문화진흥원 한복진흥센터",
+      "orgLink": "https://www.kcdf.or.kr/cms/content/view/232",
+      "page": "https://www.kcdf.or.kr/cms/content/view/232",
+      "source": "한국공예·디자인문화진흥원 (사람이 확인)",
+      "근거": [
+        "https://www.kcdf.or.kr/cms/content/view/232",
+        "https://kcdf.or.kr/hanbokcultureweek/brd/board/1220/L/menu/1222?bbIdx=2207&brdType=R"
+      ],
+      "fetchedAt": "2026-10-06"
+    },
+
+    "ks_l": {
+      "start": "2026-10-25",
+      "title": "제3회 양천가족 거리축제",
+      "gu": "양천구",
+      "place": "신정네거리역~신정1동우체국 약 900m (신월로)",
+      "time": "10:30~21:00",
+      "org": "양천구청",
+      "orgLink": "https://www.yangcheon.go.kr/site/yangcheon/05/10505010000002023100512.jsp",
+      "page": "https://www.seoul.co.kr/news/society/2026/08/25/20260825500239",
+      "source": "양천구청 · 복수 매체 (사람이 확인)",
+      "근거": [
+        "https://www.seoul.co.kr/news/society/2026/08/25/20260825500239",
+        "https://www.shinailbo.co.kr/news/articleView.html?idxno=5064906",
+        "https://www.pinpointnews.co.kr/news/articleView.html?idxno=489637"
+      ],
+      "fetchedAt": "2026-10-06"
+    },
+
+    "tour_2862358": {
+      "start": "2026-10-16",
+      "end": "2026-11-08",
+      "title": "2026 노원달빛산책: 새로운 달 (제7회)",
+      "gu": "노원구",
+      "place": "당현천 1.3km (중계역 당현1교~양지교)",
+      "time": "매일 17:30~22:00",
+      "org": "노원구청",
+      "page": "https://www.gukjenews.com/news/articleView.html?idxno=3713768",
+      "source": "노원구 보도자료 · 복수 매체 (사람이 확인)",
+      "근거": [
+        "https://www.gukjenews.com/news/articleView.html?idxno=3713768",
+        "https://biz.heraldcorp.com/article/10893552",
+        "https://www.webeconomy.co.kr/news/articleView.html?idxno=2325164"
+      ],
+      "fetchedAt": "2026-10-06"
+    },
+
+    "tour_3001045": {
+      "start": "2026-10-10",
+      "title": "2026 한강 종이비행기 축제",
+      "gu": "영등포구",
+      "place": "여의도한강공원 녹음수광장",
+      "time": "10:00~18:00",
+      "org": "서울시청",
+      "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=412",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=412",
+      "source": "펀서울 · 복수 매체 (사람이 확인)",
+      "근거": [
+        "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=412",
+        "https://www.lecturernews.com/news/articleView.html?idxno=210850",
+        "https://www.mt.co.kr/policy/2026/10/06/2026100609380647072"
+      ],
+      "fetchedAt": "2026-10-06"
+    },
+
+    "tour_3546110": {
+      "start": "2026-10-02",
+      "end": "2026-10-11",
+      "title": "2026 서울한옥위크 (제4회)",
+      "gu": "종로구",
+      "place": "북촌·서촌·은평한옥마을 일대",
+      "org": "서울시청",
+      "orgLink": "https://hanok.seoul.go.kr/front/hanokWeek.do",
+      "page": "https://hanok.seoul.go.kr/front/hanokWeek.do",
+      "source": "서울한옥일상(서울시) (사람이 확인)",
+      "근거": [
+        "https://hanok.seoul.go.kr/front/hanokWeek.do",
+        "https://www.seoulcity.co.kr/news/articleView.html?idxno=547412",
+        "https://www.naewoeilbo.com/news/articleView.html?idxno=2418132"
+      ],
+      "fetchedAt": "2026-10-06"
+    },
+
+    "ks_58": {
+      "start": "2026-09-06",
+      "end": "2026-10-25",
+      "title": "차 없는 잠수교 뚜벅뚜벅 축제",
+      "gu": "서초구",
+      "place": "잠수교",
+      "time": "매주 일요일",
+      "org": "서울시청 미래한강본부",
+      "orgLink": "https://hangang.seoul.go.kr/",
+      "page": "https://hangang.seoul.go.kr/",
+      "source": "서울시 미래한강본부 (우리 자료 monthSource 에 이미 적혀 있던 것)",
+      "근거": ["https://hangang.seoul.go.kr/"],
+      "fetchedAt": "2026-10-06"
+    }
+  }
+}

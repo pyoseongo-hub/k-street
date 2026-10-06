@@ -262,11 +262,11 @@ export const FESTIVALS: Place[] = [
   //    확인된 것: 2025년 6월 13~17일 중랑천(도봉구청~세월교 540m)에서 열렸다
   //    (아시아경제·다음뉴스·도봉구 문화관광 일치). 달 자체가 틀린 것은 아니다.
   { id: id(), gu: "도봉구", category: "festival", name: "도봉별빛축제", startMonth: 6, endMonth: 6, dateLabel: "6월", note: "중랑천(도봉구청~세월교 540m)", officialUrl: "https://tour.dobong.go.kr/Contents.asp?code=10003458", monthSource: "아시아경제·도봉구 (2025 6.13–17)", hidden: "회차마다 구청 공고를 새로 찾아야 해 고정된 안내가 없다 (사용자 판단 2026-09-02, 댄싱노원과 같은 이유)", confirmed: true },
-  { id: id(), gu: "동대문구", category: "festival", name: "동대문페스티벌", startMonth: 10, endMonth: 10, note: "공연예술축제 — 거리예술·음악공연", officialUrl: "https://ddmf.co.kr/", monthSource: "시민일보·헤럴드경제·서울문화포털 (2025 10.18)", confirmed: true },
+  { id: id(), gu: "동대문구", category: "festival", name: "동대문페스티벌", startMonth: 10, endMonth: 10, note: "공연예술축제 — 거리예술·음악공연", officialUrl: "https://ddmf.co.kr/", monthSource: "문화일보·펀서울·메가경제 (2026 10.3, 장한로 일대). 2025 회차는 10.18", confirmed: true },
   // 10월 확인(2026-09-01): 제8회가 10월 25~26일 노량진수산시장 일대에서 열렸다.
   // 문화일보·헤럴드경제·시정일보와 서울문화포털 자치구브랜드축제 안내가 일치한다.
   { id: id(), gu: "동작구", category: "festival", name: "도심 속 바다축제", startMonth: 10, endMonth: 10, note: "노량진수산시장 일대", monthSource: "문화일보·헤럴드경제·서울문화포털 (제8회 10.25–26)", confirmed: true },
-  { id: id(), gu: "마포구", category: "festival", name: "서울와우북페스티벌", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "책문화예술축제, 구의 유일한 축제는 아닐 수 있음", confirmed: true },
+  { id: id(), gu: "마포구", category: "festival", name: "서울와우북페스티벌", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "책문화예술축제, 구의 유일한 축제는 아닐 수 있음", monthSource: "매년 10월 홍대 일대. 2025 회차 10.17–19(서울생활문화센터 서교). 올해 회차는 자료가 엇갈려(제22회가 어느 해인지, 10.16–18인지 10.17–19인지) 날짜를 적지 않았다", confirmed: true },
   // 🙈 화면에서 뺐다 (사용자 지시 2026-09-02: "불확실 가려").
   //    **지금도 열리는지가 불확실하다.** 우리 자료는 "7월, 연세로"인데 마지막으로
   //    그랬던 것이 2019년(7.6–7)이다:
@@ -295,7 +295,7 @@ export const FESTIVALS: Place[] = [
   //    아래 hidden 문구만 고치면 된다.
   { id: id(), gu: "성북구", dong: "석관동", category: "festival", name: "성북거리문화축제 다다페스타", startMonth: 10, endMonth: 10, note: "이주민·다문화가정·청년이 함께하는 거리문화축제", hidden: "회차마다 구청 공고를 새로 찾아야 해 고정된 안내가 없다 (사용자 판단 2026-09-02, 댄싱노원·도봉별빛과 같은 이유)", confirmed: true },
   { id: id(), gu: "송파구", category: "festival", name: "한성백제문화제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "올림픽공원", officialUrl: "https://www.songpa.go.kr/hanseong/", monthSource: "서울문화포털·송파구 공식 (2025 9.26–28, 2024 9.27–29)", confirmed: true },
-  { id: id(), gu: "양천구", dong: "신정동", category: "festival", name: "양천가족거리축제", startMonth: 10, endMonth: 10, note: "신정네거리역 일대(약 900m 구간), 무료. 별도로 '우리동네축제'(14개 동 개별 개최)도 운영", monthSource: "네이버 축제정보 (2025 10.26). 사용자가 화면으로 확인해 줌", confirmed: true },
+  { id: id(), gu: "양천구", dong: "신정동", category: "festival", name: "양천가족거리축제", startMonth: 10, endMonth: 10, note: "신정네거리역 일대(약 900m 구간), 무료. 별도로 '우리동네축제'(14개 동 개별 개최)도 운영", monthSource: "양천구청·서울신문·신아일보 (2026 10.25, 제3회 · 10:30~21:00). 2025 회차는 10.26", confirmed: true },
   { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "여의도 봄꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4월", note: "여의서로 윤중로 벚꽃길, 무료", monthSource: "네이버 축제정보 (2026 4.3–4.7). 2005년부터 매년 4월 — 사용자가 화면으로 확인해 줌", confirmed: true },
   // 🎆 "9.5"라고 **올해 날짜가 박혀 있었다.** 해마다 옮겨 다니는 축제라 내년에는
   //    그대로 틀린 값이 된다 — 2026년은 9월 5일인데 2025년은 9월 말이었다

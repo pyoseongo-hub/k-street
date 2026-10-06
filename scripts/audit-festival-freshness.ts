@@ -26,6 +26,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ALL_FESTIVALS, type Place } from "../src/data/seed";
 import { pastEditionYear } from "../src/lib/pastEdition";
+import { guFestivalDate } from "../src/lib/guFestival";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const NOW = new Date();
@@ -55,8 +56,23 @@ const pastNamed = F.map((p) => ({ p, y: pastEditionYear(p.name, NOW) }))
 // ── ② 근거가 낡음 ───────────────────────────────────────────────────────
 //    이름엔 연도가 없지만, 우리가 근거로 적어 둔 것이 작년 이전인 축제.
 //    「올해도 열린다」고 말할 근거가 우리에게 없다는 뜻이다.
+//
+// 🏛️ **올해 확정 날짜가 들어온 축제는 뺀다** (2026-10-06에 고침).
+//    허준축제가 여기 올라 있었다 — 그런데 강서구청이 문화포털에 **올해 날짜를
+//    이미 올려** 뒀고(10.10~11), 우리도 그걸 받아 화면에 띄우고 있었다.
+//    「올해 열리는지 확인이 필요하다」는 말이 **사실과 달랐다.**
+//    monthSource 는 그 달을 어디서 알았는지 적은 자리이고, 확정 날짜는 그보다
+//    앞선 근거다. 화면 쪽(MonthlyFestivalPanel)도 확정 날짜가 있으면 「지난 회차」
+//    딱지를 안 붙인다 — **잣대를 거기에 맞춘다.**
+//    (거짓 경보가 섞이면 이 목록 전체를 안 읽게 된다. 그게 제일 비싸다.)
 const staleSource = F.map((p) => ({ p, y: sourceYear(p) }))
-  .filter((x) => x.y !== undefined && x.y < THIS_YEAR && !pastEditionYear(x.p.name, NOW))
+  .filter(
+    (x) =>
+      x.y !== undefined &&
+      x.y < THIS_YEAR &&
+      !pastEditionYear(x.p.name, NOW) &&
+      !guFestivalDate(x.p.id),
+  )
   .sort((a, b) => (a.y ?? 0) - (b.y ?? 0));
 
 // ── ③ 확인 안 된 것 ─────────────────────────────────────────────────────

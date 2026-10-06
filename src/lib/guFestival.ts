@@ -29,6 +29,7 @@
 //   **대신 확정해 주는 앱이 아니라, 어디를 봐야 하는지 알려 주는 앱**이다.
 
 import guDates from "../data/gu-festival-dates.json";
+import manualDates from "../data/festival-dates-manual.json";
 import { isOfficialSite } from "./officialSite";
 
 export interface GuFestivalDate {
@@ -58,7 +59,21 @@ export interface GuFestivalDate {
   fetchedAt: string;
 }
 
-const RAW = (guDates as { 곳?: Record<string, GuFestivalDate> })["곳"] ?? {};
+/**
+ * 🙋 **사람이 공식 공지에서 직접 찾아 적은 날짜** (festival-dates-manual.json).
+ *
+ * 사장님 지시 (2026-10-06): "행사는 하는데 날짜가 없다는건 기본적 말이 안되 —
+ * 어딘가 공지가 있을거야". 맞았다. 문화포털에 아직 안 올라온 축제도 주최 기관
+ * 누리집·서울시 보도자료에는 날짜가 이미 있었다. 그걸 적어 둔 자리다.
+ *
+ * 🚨 **기계가 이긴다.** 사람 자리를 먼저 깔고 문화포털 것으로 덮어쓴다 —
+ *    주최 측이 직접 올린 것이 더 앞선 사실이고, 사람이 적어 둔 것은 구청이
+ *    올리는 순간 **저절로 뒤로 물러나야** 한다. 반대로 깔면 손으로 적은
+ *    옛 날짜가 기계가 받아 온 새 날짜를 영영 가린다.
+ */
+const BY_HAND = (manualDates as { 곳?: Record<string, GuFestivalDate> })["곳"] ?? {};
+const FROM_PORTAL = (guDates as { 곳?: Record<string, GuFestivalDate> })["곳"] ?? {};
+const RAW: Record<string, GuFestivalDate> = { ...BY_HAND, ...FROM_PORTAL };
 
 /** 오늘(현지 시각) YYYY-MM-DD. 서울에서 보는 앱이라 UTC 로 자르면 하루가 밀린다. */
 function todayYmd(): string {
