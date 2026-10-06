@@ -240,8 +240,47 @@ if (near.length) {
   console.log("   같은 축제가 맞으면 src/data/name-aliases.json 에 적어 둔다.");
 }
 
+// 📝 **표로 남긴다 — 맛보기로 돌린 날도.**
+//
+// 🐞 왜 이게 필요한가 (2026-10-06에 겪었다): 이 작업의 요약은 로그 한가운데에
+//    찍히는데, 뒤에 붙은 audit-seed·build 가 수백 줄이라 **정작 볼 목록이 묻힌다.**
+//    깃허브 로그는 끝에서부터 읽게 되므로 사실상 못 본다.
+//    축제 신선도(audit-festival-freshness)가 하는 것과 같게 **파일로 남긴다.**
+//    맛보기로 돌린 날도 남기는 이유 — 「저장하기 전에 먼저 보기」가 이 저장소의
+//    순서인데, 볼 자리가 없으면 그 순서를 지킬 수 없다.
+const REPORT = join(ROOT, "docs", "펀서울-축제-기간.md");
+{
+  const row = (h: Hit, id: string) =>
+    `| ${h.start}${h.end ? ` ~ ${h.end}` : ""} | ${h.gu} | ${h.title.replace(/\|/g, "/")} | ${h.place?.replace(/\|/g, "/") ?? ""} | [펀서울](${h.page}) | \`${id}\` |`;
+  const sorted = Object.entries(hits).sort((a, b) => a[1].start.localeCompare(b[1].start));
+  writeFileSync(
+    REPORT,
+    `# 🎪 펀서울에 올라온 축제 기간\n\n` +
+      `_${TODAY} 에 \`scripts/fetch-funseoul-dates.ts\` 가 받아 적었다. 손으로 고치지 말 것 — 다시 돌리면 덮어쓴다._\n\n` +
+      `펀서울(festival.seoul.go.kr) 낱장 ${MAX}개를 두드려, **열린 쪽 ${got}개 · 기간이 적힌 올해 축제 ${found.length}곳**을 봤다.\n` +
+      `그중 우리 축제와 **이름이 꼭 맞은 것이 ${sorted.length}곳**이다.\n\n` +
+      `## ✅ 우리 축제에 붙은 것\n\n` +
+      (sorted.length
+        ? `| 기간 | 구 | 펀서울에 적힌 이름 | 장소 | 근거 | id |\n|---|---|---|---|---|---|\n` +
+          sorted.map(([id, h]) => row(h, id)).join("\n")
+        : "_없다._") +
+      `\n\n## 🔎 사람이 봐야 할 후보 (저장하지 않았다)\n\n` +
+      `이름이 비슷하지만 **꼭 맞지는 않아** 안 받은 것이다. 같은 축제가 맞으면\n` +
+      `\`src/data/name-aliases.json\` 에 적으면 다음 실행부터 붙는다.\n\n` +
+      (near.length ? "```\n" + near.join("\n") + "\n```" : "_없다._") +
+      `\n\n## ⚠️ 구가 다른 것\n\n` +
+      (guDiff.length
+        ? "```\n" + guDiff.join("\n") + "\n```\n\n한강 축제처럼 여러 구에 걸친 행사라 그렇다. 엉뚱한 축제면 여기서 보인다."
+        : "_없다._") +
+      `\n\n## 🧱 못 읽은 쪽\n\n` +
+      (broke.length ? "```\n" + broke.slice(0, 40).join("\n") + "\n```" : "_없다._") +
+      `\n`,
+  );
+  console.log(`\n💾 docs/펀서울-축제-기간.md 에 표로 남겼다.`);
+}
+
 if (!APPLY) {
-  console.log(`\n🔍 맛보기라 **저장하지 않았다.** 저장하려면: npm run funseoul-dates -- --apply`);
+  console.log(`\n🔍 맛보기라 **날짜는 저장하지 않았다**(표만 남겼다). 저장하려면: npm run funseoul-dates -- --apply`);
   process.exit(0);
 }
 

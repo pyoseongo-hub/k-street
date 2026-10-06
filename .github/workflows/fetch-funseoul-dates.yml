@@ -84,7 +84,9 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A src/data/funseoul-dates.json
+          # 표(docs/펀서울-축제-기간.md)는 맛보기로 돌린 날도 남는다 — 저장하기 전에
+          # 먼저 볼 자리가 필요하기 때문이다(스크립트 주석 참고). 같이 커밋한다.
+          git add -A src/data/funseoul-dates.json "docs/펀서울-축제-기간.md"
           if git diff --cached --quiet; then
             echo "committed=no" >> "$GITHUB_OUTPUT"
             echo "🔕 바뀐 것이 없다"
