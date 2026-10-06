@@ -1,5 +1,183 @@
 {
  "설명": "펀서울(festival.seoul.go.kr)에 서울시가 올려 둔 축제 기간. scripts/fetch-funseoul-dates.ts 가 받는다. 손으로 고치지 말 것 — 손으로 적을 것은 src/data/festival-dates-manual.json 에 적는다.",
- "받은날": "",
- "곳": {}
+ "받은날": "2026-10-06",
+ "곳": {
+  "ks_5": {
+   "start": "2026-10-16",
+   "end": "2026-10-18",
+   "title": "2026 관악강감찬축제",
+   "gu": "관악구",
+   "place": "낙성대공원",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=770",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=770",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  },
+  "ks_8": {
+   "start": "2026-10-17",
+   "end": "2026-10-18",
+   "title": "2026 금천하모니축제",
+   "gu": "금천구",
+   "place": "금천구청, 금나래중앙공원",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=646",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=646",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  },
+  "ks_c": {
+   "start": "2026-10-24",
+   "end": "2026-10-25",
+   "title": "제9회 도심 속 바다축제",
+   "gu": "동작구",
+   "place": "노량진 수산시장, 노량진 축구장 일대",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=673",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=673",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  },
+  "ks_d": {
+   "start": "2026-10-16",
+   "end": "2026-10-18",
+   "title": "제22회 서울와우북페스티벌",
+   "gu": "마포구",
+   "place": "홍대 레드로드 R1, R2 등",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=847",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=847",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  },
+  "ks_k": {
+   "start": "2026-10-23",
+   "end": "2026-10-25",
+   "title": "제26회 한성백제문화제",
+   "gu": "송파구",
+   "place": "올림픽공원 88잔디마당 일대",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=580",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=580",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  },
+  "ks_l": {
+   "start": "2026-10-25",
+   "title": "2026 양천가족 거리축제",
+   "gu": "양천구",
+   "place": "신월로 신정네거리역 일대",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=584",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=584",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  },
+  "ks_r": {
+   "start": "2026-10-30",
+   "end": "2026-10-31",
+   "title": "2026 정동야행",
+   "gu": "중구",
+   "place": "정동일대(덕수궁길, 정동길, 정동일대 역사문화시설 등)",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=833",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=833",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  },
+  "ks_57": {
+   "start": "2026-10-24",
+   "end": "2026-10-25",
+   "title": "2026 서울 바비큐 페스티벌",
+   "gu": "마포구",
+   "place": "난지한강공원",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=347",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=347",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  },
+  "ks_58": {
+   "start": "2026-09-06",
+   "end": "2026-10-25",
+   "title": "2026 차없는 잠수교 뚜벅뚜벅 축제(하반기)",
+   "gu": "서초구",
+   "place": "잠수교 및 반포한강공원 일원",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=402",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=402",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  },
+  "ks_59": {
+   "start": "2026-05-01",
+   "end": "2026-10-27",
+   "title": "2026 서울국제정원박람회",
+   "gu": "성동구",
+   "place": "서울숲",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=86",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=86",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  },
+  "tour_2618971": {
+   "start": "2026-10-17",
+   "title": "2026 제11회 구로청소년축제",
+   "gu": "구로구",
+   "place": "우신고등학교 운동장",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=700",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=700",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  },
+  "tour_626944": {
+   "start": "2026-10-17",
+   "end": "2026-10-23",
+   "title": "제25회 서울억새축제 [억새, 자연이 건네는 위로]",
+   "gu": "마포구",
+   "place": "서울월드컵공원 하늘공원 일대",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=257",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=257",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  },
+  "tour_2621558": {
+   "start": "2026-10-10",
+   "title": "2026 중랑용마폭포축제",
+   "gu": "중랑구",
+   "place": "용마폭포공원(중랑구 용마산로 250-12)",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=606",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=606",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  },
+  "tour_3069470": {
+   "start": "2026-12-18",
+   "end": "2026-12-27",
+   "title": "로맨틱한강 크리스마스마켓",
+   "gu": "광진구",
+   "place": "뚝섬한강공원",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=415",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=415",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  },
+  "tour_3546110": {
+   "start": "2026-10-02",
+   "end": "2026-10-11",
+   "title": "2026 서울한옥위크",
+   "gu": "종로구",
+   "place": "북촌 및 서촌 등 한옥마을 일대",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=710",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=710",
+   "source": "funseoul",
+   "fetchedAt": "2026-10-06"
+  }
+ }
 }
