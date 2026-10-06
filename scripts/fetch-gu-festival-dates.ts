@@ -336,7 +336,19 @@ const missed: Place[] = [];
 
 for (const f of festivals) {
   const k = key(f.name);
-  const cands = byName.get(k) ?? [];
+  // 🔀 **같은 축제가 여러 건으로 올라와 있으면 날짜가 같은 것은 하나로 센다**
+  //    (2026-10-06에 펀서울 쪽에서 잡고 여기도 같이 고쳤다 — 잣대를 맞춘다).
+  //    문화포털도 한 축제를 분야별로 여러 번 등록하는 일이 있다. 그때 「꼭 맞은 게
+  //    하나뿐이면 받는다」에 걸려 **이름이 글자까지 같은데도 못 맞춘다.**
+  //    날짜가 **다른** 것이 둘 이상 남으면 그때는 받지 않는다(정말 다른 회차일 수 있다).
+  const cands = [
+    ...new Map(
+      (byName.get(k) ?? []).map((c) => [
+        `${ymd(c.STRTDATE) ?? ""}|${ymd(c.END_DATE) ?? ""}|${c.GUNAME ?? ""}`,
+        c,
+      ]),
+    ).values(),
+  ];
   const exact =
     cands.length === 1
       ? cands[0]
@@ -402,7 +414,7 @@ if (guDiff.length) {
 if (near.length) {
   console.log(`\n🔎 **사람이 봐야 할 후보** ${near.length}건 — 저장하지 않았다:`);
   for (const l of near.slice(0, 30)) console.log(l);
-  console.log("   같은 축제가 맞으면 src/data/name-aliases.json 에 적어 둔다.");
+  console.log("   같은 축제가 맞으면 src/data/festival-dates-manual.json 에 손으로 적는다\n   (이 스크립트는 name-aliases.json 을 읽지 않는다 — 그 표는 관광공사 이름을 잇는 자리다).");
 }
 
 console.log(`\n⏳ 아직 확정 날짜가 없는 축제 ${missed.length}곳 — 정상이다.`);

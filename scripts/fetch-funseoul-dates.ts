@@ -192,7 +192,22 @@ const near: string[] = [];
 for (const f of ALL_FESTIVALS) {
   if (!f.gu) continue;
   const k = key(f.name);
-  const cands = byKey.get(k) ?? [];
+  // 🔀 **같은 축제가 펀서울에 여러 쪽으로 올라와 있다** (2026-10-06에 잡았다).
+  //
+  // 🐞 첫 실행에서 꼭 맞은 것이 6곳뿐이었다. 그런데 후보 목록을 보니
+  //    「관악강감찬축제 ≈ 2026 관악강감찬축제」처럼 **다듬은 이름이 글자까지 같은 것**이
+  //    열 줄 있었다. key() 를 따로 돌려 보니 둘이 정말 같았다 — 즉 이름 문제가 아니라
+  //    **후보가 둘이어서** 「하나뿐이면 받는다」에 걸려 버린 것이었다.
+  //    펀서울은 회차마다 쪽을 새로 내고 옛 쪽도 남겨 둔다.
+  //
+  // → **날짜·구가 같은 쪽은 같은 것으로 센다.** 쪽이 둘이라고 못 맞출 이유가 없다.
+  //   날짜가 **다른** 것이 둘 이상 남으면 그때는 받지 않는다(상·하반기처럼 정말
+  //   다른 회차일 수 있다). 애매하면 비워 두는 잣대는 그대로다.
+  const cands = [
+    ...new Map(
+      (byKey.get(k) ?? []).map((c) => [`${c.start}|${c.end ?? ""}|${c.gu ?? ""}`, c]),
+    ).values(),
+  ];
   const exact =
     cands.length === 1
       ? cands[0]
@@ -237,7 +252,7 @@ if (guDiff.length) {
 if (near.length) {
   console.log(`\n🔎 **사람이 봐야 할 후보** ${near.length}건 — 저장하지 않았다:`);
   for (const l of near.slice(0, 25)) console.log(l);
-  console.log("   같은 축제가 맞으면 src/data/name-aliases.json 에 적어 둔다.");
+  console.log("   같은 축제가 맞으면 src/data/festival-dates-manual.json 에 손으로 적는다.");
 }
 
 // 📝 **표로 남긴다 — 맛보기로 돌린 날도.**
@@ -266,7 +281,8 @@ const REPORT = join(ROOT, "docs", "펀서울-축제-기간.md");
         : "_없다._") +
       `\n\n## 🔎 사람이 봐야 할 후보 (저장하지 않았다)\n\n` +
       `이름이 비슷하지만 **꼭 맞지는 않아** 안 받은 것이다. 같은 축제가 맞으면\n` +
-      `\`src/data/name-aliases.json\` 에 적으면 다음 실행부터 붙는다.\n\n` +
+      `\`src/data/festival-dates-manual.json\` 에 손으로 적는다 — 이 스크립트는\n` +
+      `\`name-aliases.json\` 을 읽지 않는다(그 표는 관광공사 이름을 잇는 자리다).\n\n` +
       (near.length ? "```\n" + near.join("\n") + "\n```" : "_없다._") +
       `\n\n## ⚠️ 구가 다른 것\n\n` +
       (guDiff.length
