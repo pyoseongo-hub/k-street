@@ -1,0 +1,5 @@
+{
+ "설명": "펀서울(festival.seoul.go.kr)에 서울시가 올려 둔 축제 기간. scripts/fetch-funseoul-dates.ts 가 받는다. 손으로 고치지 말 것 — 손으로 적을 것은 src/data/festival-dates-manual.json 에 적는다.",
+ "받은날": "",
+ "곳": {}
+}

@@ -17,7 +17,7 @@
 //
 //   URLS="https://a.com,https://b.com" node scripts/fetch-page-text.mjs
 
-const UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125 Safari/537.36";
+import { htmlToText, fetchHtml } from "./lib/html-text.mjs";
 const LIMIT = Number(process.env.CHARS ?? 6000);
 
 const URLS = (process.env.URLS ?? "")
@@ -30,38 +30,9 @@ if (!URLS.length) {
   process.exit(1);
 }
 
-/** 태그를 걷어내고 사람이 읽을 글만 남긴다. 표는 줄로 편다. */
-function toText(html) {
-  return html
-    .replace(/<script[\s\S]*?<\/script>/gi, " ")
-    .replace(/<style[\s\S]*?<\/style>/gi, " ")
-    .replace(/<!--[\s\S]*?-->/g, " ")
-    // 표 칸은 붙어 버리면 「3,0004,000」처럼 읽을 수 없게 된다 — 갈라 준다
-    .replace(/<\/(td|th)>/gi, " | ")
-    .replace(/<\/(tr|p|div|li|h[1-6])>/gi, "\n")
-    .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .split("\n")
-    .map((l) => l.replace(/[ \t|]+/g, (m) => (m.includes("|") ? " | " : " ")).trim())
-    .filter((l) => l && l !== "|")
-    .join("\n")
-    .replace(/\n{3,}/g, "\n\n");
-}
-
-async function get(url) {
-  const r = await fetch(url, {
-    redirect: "follow",
-    signal: AbortSignal.timeout(30000),
-    headers: { "User-Agent": UA },
-  });
-  return { status: r.status, final: r.url, html: await r.text() };
-}
+// 🔁 글로 바꾸는 일과 받아 오는 일은 scripts/lib/html-text.mjs 하나로 모았다 (2026-10-06).
+const toText = htmlToText;
+const get = fetchHtml;
 
 for (const url of URLS) {
   console.log(`\n${"═".repeat(70)}`);

@@ -30,6 +30,7 @@
 
 import guDates from "../data/gu-festival-dates.json";
 import manualDates from "../data/festival-dates-manual.json";
+import funseoulDates from "../data/funseoul-dates.json";
 import { isOfficialSite } from "./officialSite";
 
 export interface GuFestivalDate {
@@ -72,8 +73,19 @@ export interface GuFestivalDate {
  *    옛 날짜가 기계가 받아 온 새 날짜를 영영 가린다.
  */
 const BY_HAND = (manualDates as { 곳?: Record<string, GuFestivalDate> })["곳"] ?? {};
+/**
+ * 🎪 **펀서울**(festival.seoul.go.kr) — 서울시가 직접 올리는 축제 누리집.
+ *    낱장에 「기간 2026-10-17 ~ 2026-10-23」이 글로 박혀 있어 그대로 읽어 온다
+ *    (scripts/fetch-funseoul-dates.ts). 구청이 문화포털에 안 올린 축제도 여기엔 있다.
+ */
+const FROM_FUNSEOUL = (funseoulDates as { 곳?: Record<string, GuFestivalDate> })["곳"] ?? {};
 const FROM_PORTAL = (guDates as { 곳?: Record<string, GuFestivalDate> })["곳"] ?? {};
-const RAW: Record<string, GuFestivalDate> = { ...BY_HAND, ...FROM_PORTAL };
+/**
+ * 뒤에 오는 것이 이긴다 — **사람 → 펀서울 → 문화포털**.
+ * 문화포털을 맨 위에 두는 이유: 주최 측(구청·구 문화재단)이 **자기 손으로** 올린
+ * 자리라 가장 앞선 사실이다. 펀서울은 서울시가 모아 두는 자리라 한 다리 건너다.
+ */
+const RAW: Record<string, GuFestivalDate> = { ...BY_HAND, ...FROM_FUNSEOUL, ...FROM_PORTAL };
 
 /** 오늘(현지 시각) YYYY-MM-DD. 서울에서 보는 앱이라 UTC 로 자르면 하루가 밀린다. */
 function todayYmd(): string {

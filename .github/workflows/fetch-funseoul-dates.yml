@@ -1,0 +1,131 @@
+name: Fetch funseoul dates (펀서울 축제 기간 받기)
+
+# 🎪 **펀서울(서울시 축제 누리집)에서 축제 확정 기간을 받아온다.**
+#
+# 사장님 지시 (2026-10-06): "최대한 서치해봐 서울시 행자부 등 /
+# 행사는 하는데 날짜가 없다는건 기본적 말이 안되 / 어딘가 공지가 있을거야"
+#
+# 왜 또 하나인지는 scripts/fetch-funseoul-dates.ts 맨 위에 적어 뒀다. 요약 —
+#   · 문화포털(Fetch gu festival dates)은 **구청이 올려 줘야** 생기는 자리다.
+#     10월 축제 39곳 중 확정 날짜가 8곳뿐이었던 이유가 그것이다.
+#   · 펀서울 낱장에는 「기간 2026-10-17 ~ 2026-10-23」이 **글로 박혀 있다.**
+#     열쇠도 필요 없고 목록도 필요 없다 — festacode 를 1번부터 두드리면 된다.
+#
+# ⚠️ 문화포털 쪽을 **대신하지 않는다.** 둘을 같이 둔다. 겹치면 문화포털이 이긴다
+#    (주최 측이 자기 손으로 올린 자리라 더 앞선 사실이다 — src/lib/guFestival.ts).
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "받은 기간을 저장할까요? (끄면 맛보기 — 처음에는 꺼서 돌려 볼 것)"
+        type: boolean
+        default: false
+      max:
+        description: "festacode 를 몇 번까지 두드릴까 (기본 900). 지금까지 본 가장 큰 번호는 753"
+        required: false
+        default: "900"
+  # 하루 한 번. 문화포털 쪽(06:00 KST)·관광공사 쪽(05:00 KST)과 한 시간씩 떼어 둔다 —
+  # 같은 시각에 돌면 둘이 같은 저장소를 밀고 당기며 푸시가 부딪친다.
+  schedule:
+    - cron: "0 22 * * *" # 매일 07:00 KST
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    # ⏱️ 천장을 반드시 단다. 900쪽을 두드리는 일이라 서울시 서버가 느려지면
+    #    끝없이 돈다 — 이 저장소가 「Audit seed 8분 → 74분」으로 데인 자리다.
+    timeout-minutes: 25
+    permissions:
+      contents: write
+      actions: write # 배포를 손으로 깨워야 한다 (아래 주석 참고)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: 펀서울 기간 받기
+        id: fetch
+        # pipefail 이 없으면 node 가 죽어도 tee 가 성공해서 이 단계가 초록색이 된다.
+        # 2>&1 이 없으면 오류가 로그에 안 담긴다. 둘 다 이 저장소가 당한 것이다.
+        run: |
+          set -o pipefail
+          # 🚦 예약으로 도는 날은 입력 칸이 **비어 있다**(false 가 아니다).
+          #    「false 면 맛보기」로 가르면 예약 실행이 맛보기가 되어 매일 돌면서
+          #    아무것도 저장하지 않는다. 저장하는 쪽을 명시로 고른다.
+          MAXN="${{ inputs.max }}"
+          MAXN="${MAXN:-900}"
+          if [ "${{ inputs.apply }}" = "true" ] || [ "${{ github.event_name }}" = "schedule" ]; then
+            npm run funseoul-dates -- --apply "--max=$MAXN" 2>&1 | tee funseoul-log.txt
+          else
+            npm run funseoul-dates -- "--max=$MAXN" 2>&1 | tee funseoul-log.txt
+          fi
+
+      # 🧨 **감사를 커밋 앞에서 돌린다.** 받은 자료가 화면을 깨면 커밋하지 않는다.
+      #    번역 워크플로가 같은 순서다 — 잣대를 맞춘다.
+      - name: 받은 자료로 화면이 깨지지 않나 본다
+        run: |
+          set -o pipefail
+          npm run audit-seed
+          npm run build
+
+      - name: 저장된 것이 있으면 커밋
+        id: commit
+        run: |
+          # 🐞 맛보기로 돌린 날은 파일이 안 바뀐다. `git add <없는 파일>` 은 fatal 로
+          #    죽으므로 없으면 그냥 지나간다 (문화포털 쪽이 첫 실행에서 그래서 빨갰다).
+          if [ ! -f src/data/funseoul-dates.json ]; then
+            echo "committed=no" >> "$GITHUB_OUTPUT"
+            echo "⬜ 저장된 파일이 없다 — 커밋할 것이 없다"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A src/data/funseoul-dates.json
+          if git diff --cached --quiet; then
+            echo "committed=no" >> "$GITHUB_OUTPUT"
+            echo "🔕 바뀐 것이 없다"
+          else
+            git commit -m "펀서울 축제 기간 갱신 (fetch-funseoul-dates) [skip render]"
+            # 🚨 **밀렸을 때 다시 해 본다.** 워크플로 두 개가 겹치면 뒤에 끝난 쪽의
+            #    push 가 막히고, 그냥 두면 받아 온 자료가 통째로 버려진다.
+            #    ⚠️ 세 번 다 밀리면 **초록불을 주지 않는다** — 조용히 넘어가면 모른다.
+            pushed=no
+            for i in 1 2 3; do
+              if git push; then pushed=yes; break; fi
+              echo "   밀렸다 — 원격을 당겨 다시 얹는다 ($i/3)"
+              git pull --rebase origin "$(git rev-parse --abbrev-ref HEAD)" || exit 1
+              sleep $((i * 3))
+            done
+            if [ "$pushed" != yes ]; then
+              echo "❌ 세 번 다 밀렸다. 받아 둔 자료가 올라가지 못했다 — 다시 돌릴 것."
+              exit 1
+            fi
+            echo "committed=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      # 🚀 **배포를 깨운다.** 깃허브는 봇이 기본 토큰으로 민 커밋으로는 다른
+      #    워크플로를 안 띄운다. 그래서 자료를 받아 커밋해도 **배포가 안 돈다** —
+      #    문화포털 쪽에서 실제로 그랬다(봇이 띄운 Deploy 0회).
+      #    ⚠️ 커밋한 날에만 부른다. 안 바뀐 날까지 배포하면 매일 빌드를 태운다.
+      - name: 바뀐 게 있으면 배포를 깨운다
+        if: steps.commit.outputs.committed == 'yes'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run deploy.yml --ref main
+          echo "🚀 배포를 깨웠다 — 몇 분 뒤 korea-street.com 에 반영된다"
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 🎪 펀서울 축제 기간 받기"
+            echo ""
+            echo '```'
+            cat funseoul-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
