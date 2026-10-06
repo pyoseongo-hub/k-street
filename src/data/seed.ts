@@ -265,8 +265,8 @@ export const FESTIVALS: Place[] = [
   { id: id(), gu: "동대문구", category: "festival", name: "동대문페스티벌", startMonth: 10, endMonth: 10, note: "공연예술축제 — 거리예술·음악공연", officialUrl: "https://ddmf.co.kr/", monthSource: "문화일보·펀서울·메가경제 (2026 10.3, 장한로 일대). 2025 회차는 10.18", confirmed: true },
   // 10월 확인(2026-09-01): 제8회가 10월 25~26일 노량진수산시장 일대에서 열렸다.
   // 문화일보·헤럴드경제·시정일보와 서울문화포털 자치구브랜드축제 안내가 일치한다.
-  { id: id(), gu: "동작구", category: "festival", name: "도심 속 바다축제", startMonth: 10, endMonth: 10, note: "노량진수산시장 일대", monthSource: "문화일보·헤럴드경제·서울문화포털 (제8회 10.25–26)", confirmed: true },
-  { id: id(), gu: "마포구", category: "festival", name: "서울와우북페스티벌", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "책문화예술축제, 구의 유일한 축제는 아닐 수 있음", monthSource: "매년 10월 홍대 일대. 2025 회차 10.17–19(서울생활문화센터 서교). 올해 회차는 자료가 엇갈려(제22회가 어느 해인지, 10.16–18인지 10.17–19인지) 날짜를 적지 않았다", confirmed: true },
+  { id: id(), gu: "동작구", category: "festival", name: "도심 속 바다축제", startMonth: 10, endMonth: 10, note: "노량진수산시장 일대", monthSource: "펀서울 festacode=673 (2026 제9회 10.24–25, 노량진 수산시장·축구장 일대). 2025 제8회는 10.25–26 — 두 해가 섞여 돌아다녀 한동안 엇갈렸다", confirmed: true },
+  { id: id(), gu: "마포구", category: "festival", name: "서울와우북페스티벌", startMonth: 10, endMonth: 10, dateLabel: "10월", note: "책문화예술축제, 구의 유일한 축제는 아닐 수 있음", monthSource: "펀서울 festacode=847 (2026 제22회 10.16–18, 홍대 레드로드 R1·R2). 검색으로는 제22회가 2025인지 2026인지 엇갈렸는데 서울시 쪽이 2026으로 못 박았다", confirmed: true },
   // 🙈 화면에서 뺐다 (사용자 지시 2026-09-02: "불확실 가려").
   //    **지금도 열리는지가 불확실하다.** 우리 자료는 "7월, 연세로"인데 마지막으로
   //    그랬던 것이 2019년(7.6–7)이다:
@@ -294,7 +294,7 @@ export const FESTIVALS: Place[] = [
   //    구청이 공고를 새로 내서 그때그때 찾아야 하는 축제다. 다른 이유였다면
   //    아래 hidden 문구만 고치면 된다.
   { id: id(), gu: "성북구", dong: "석관동", category: "festival", name: "성북거리문화축제 다다페스타", startMonth: 10, endMonth: 10, note: "이주민·다문화가정·청년이 함께하는 거리문화축제", hidden: "회차마다 구청 공고를 새로 찾아야 해 고정된 안내가 없다 (사용자 판단 2026-09-02, 댄싱노원·도봉별빛과 같은 이유)", confirmed: true },
-  { id: id(), gu: "송파구", category: "festival", name: "한성백제문화제", startMonth: 9, endMonth: 9, dateLabel: "9월", note: "올림픽공원", officialUrl: "https://www.songpa.go.kr/hanseong/", monthSource: "서울문화포털·송파구 공식 (2025 9.26–28, 2024 9.27–29)", confirmed: true },
+  { id: id(), gu: "송파구", category: "festival", name: "한성백제문화제", startMonth: 9, endMonth: 10, monthVaries: true, note: "올림픽공원", officialUrl: "https://www.songpa.go.kr/hanseong/", monthSource: "펀서울 festacode=580 (2026 제26회 10.23–25, 올림픽공원 88잔디마당). 2025는 9.26–28, 2024는 9.27–29 — 해마다 9월·10월을 옮겨 다닌다", confirmed: true },
   { id: id(), gu: "양천구", dong: "신정동", category: "festival", name: "양천가족거리축제", startMonth: 10, endMonth: 10, note: "신정네거리역 일대(약 900m 구간), 무료. 별도로 '우리동네축제'(14개 동 개별 개최)도 운영", monthSource: "양천구청·서울신문·신아일보 (2026 10.25, 제3회 · 10:30~21:00). 2025 회차는 10.26", confirmed: true },
   { id: id(), gu: "영등포구", dong: "여의도동", category: "festival", name: "여의도 봄꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4월", note: "여의서로 윤중로 벚꽃길, 무료", monthSource: "네이버 축제정보 (2026 4.3–4.7). 2005년부터 매년 4월 — 사용자가 화면으로 확인해 줌", confirmed: true },
   // 🎆 "9.5"라고 **올해 날짜가 박혀 있었다.** 해마다 옮겨 다니는 축제라 내년에는
@@ -310,7 +310,7 @@ export const FESTIVALS: Place[] = [
   //       "여기로 가세요"라고 찍을 점이 없다. 손으로 박아 둔 좌표가 있었지만
   //       어디서 온 값인지 근거가 없었다.
   { id: id(), gu: "종로구", dong: "종로1가동", category: "festival", name: "연등회", startMonth: 4, endMonth: 5, monthVaries: true, note: "유네스코 인류무형문화유산, 조계사~종로 일대, 무료", officialUrl: "http://www.llf.or.kr/", monthSource: "음력 4월 8일 기준 — 해마다 4월 또는 5월 (2026 연등회 5.16–17)", hidden: "종교 행사이고 갈 자리가 한 점으로 안 정해진다 (사용자 판단 2026-09-02)", confirmed: true },
-  { id: id(), gu: "중구", category: "festival", name: "정동야행", startMonth: 5, endMonth: 5, note: "덕수궁 돌담길~정동 일대, 2025년 이틀간 13.3만 명", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=601", monthSource: "서울시 펀서울·서울문화포털 (2025 5.23–24)", confirmed: true },
+  { id: id(), gu: "중구", category: "festival", name: "정동야행", startMonth: 5, endMonth: 10, monthVaries: true, note: "덕수궁 돌담길~정동 일대, 2025년 이틀간 13.3만 명", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=833", monthSource: "펀서울 festacode=833 (2026 10.30–31, 정동 일대). 2025는 5.23–24였다 — 봄에서 가을로 옮겼다. 5월로만 적어 두면 10월 묶음에 아예 안 나온다", confirmed: true },
   { id: id(), gu: "중랑구", category: "festival", name: "중랑 서울장미축제", startMonth: 5, endMonth: 5, dateLabel: "5월", note: "장미터널 5.45km, 국내 최대", officialUrl: "https://www.jnfac.or.kr/rose/index", monthSource: "중랑문화재단 공식 (2026 5.15–23)", confirmed: true },
   { id: id(), gu: "송파구", category: "festival", name: "석촌호수 호수벚꽃축제", startMonth: 4, endMonth: 4, dateLabel: "4월", note: "석촌호수 일대, 무료. 왕벚나무 1,000여 그루", monthSource: "네이버 축제정보 (2026 4.3–4.11). 매년 봄 — 사용자가 화면으로 확인해 줌", confirmed: true },
   // 아래 4개는 2026-08-28 사용자 지시("3월까지 빈것도 서치해서 채우기")로 추가 —
