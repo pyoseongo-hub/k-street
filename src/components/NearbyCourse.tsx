@@ -3,7 +3,7 @@ import { useLanguage } from "../lib/useLanguage";
 import { usePlacesHere } from "../lib/usePlaces";
 import { getPositionOrNull } from "../lib/userPosition";
 import { buildCourse, formatMeters, COURSE_SIZES, REACH, type Course, type CourseSize, type Reach } from "../lib/nearbyCourse";
-import { CATEGORY_META, type Category } from "../data/seed";
+import { CATEGORY_META, type Category, inCategories } from "../data/seed";
 import { districtFullName, dongName } from "../data/districtNamesEn";
 import { placeName } from "../lib/placeText";
 import MapDirections from "./MapDirections";
@@ -59,7 +59,8 @@ export default function NearbyCourse() {
   //    손님 눈에 「고장 난 앱」이다 — DistrictExplorer 가 같은 이유로 같은 일을 한다.
   //    docs/코스-추천.md 의 경고(9개 구에 골목 0곳)가 여기서 풀린다.
   const shownChips = useMemo(
-    () => CHIPS.filter((c) => PLACES.some((p) => p.category === c && p.confirmed && p.lat != null)),
+    // 🌗 두 칸에 걸치는 곳도 센다 — seed.ts 의 inCategories 와 같은 잣대를 쓴다.
+    () => CHIPS.filter((c) => PLACES.some((p) => inCategories(p, [c]) && p.confirmed && p.lat != null)),
     [PLACES],
   );
 

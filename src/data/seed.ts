@@ -14,6 +14,7 @@ import { TOUR_PLACES, findTourPlace, nameKey } from "./tourPlaces";
 import { getManualPhoto } from "../lib/manualPhotos";
 import { galleryShotsFor } from "../lib/photoGallery";
 import autumnRoads from "./autumn-roads.json";
+import alsoCats from "./also-categories.json";
 // 🌊 부산. 지금은 launchScope 가 전부 걸러 내므로 화면에 한 곳도 안 나온다 —
 //    그래도 여기서 합쳐 두는 이유는 busanPlaces.ts 머리말에 적어 뒀다.
 import { BUSAN_PLACES } from "./busanPlaces";
@@ -60,6 +61,17 @@ export interface Place {
   gu: string;
   dong?: string; // 법정동 (법정동 이름, 예: "강남동", "서초동")
   category: Category;
+  /**
+   * 🌗 **이 칸에서도 찾을 수 있다** (2026-10-07, 사장님: *"둘다 넣을순 없나 /
+   * 밤 낮 둘다 틀린게 아니면"*). 한강공원은 낮엔 산책이고 밤엔 야경이다.
+   *
+   * 🔑 **대표 갈래(category)는 그대로 하나다.** 카드의 아이콘·색·이름표와 지도
+   *    핀 색은 대표 갈래만 쓴다 — 둘을 다 그리면 카드가 어수선해지고 핀 색이
+   *    둘이 될 수도 없다. 여기 적은 것은 **찾을 때만** 더해진다.
+   *
+   * 손으로 적는 자리는 src/data/also-categories.json 이다(이유도 거기 적혀 있다).
+   */
+  alsoCategories?: Category[];
   name: string;
   note?: string;
   /** 지번/도로명 주소. 관광공사에서 받은 곳만 값이 있다. */
@@ -896,6 +908,29 @@ function showsWithoutPhoto(p: Place): boolean {
  */
 const isPlaceholder = (p: Place) => p.confirmed === false;
 
+/**
+ * 🌗 **두 칸에 걸치는 곳을 표에서 읽어 덧입힌다** — src/data/also-categories.json.
+ *
+ * 왜 표로 두나: 한강공원 넉 곳은 **기계가 만드는 파일**(seoul-places.json)에 있어
+ * 거기 적으면 다음 실행에 덮어써진다. 사람이 정한 것은 사람 자리에 둔다.
+ */
+function withAlsoCategories(p: Place): Place {
+  const row = (alsoCats as { 곳?: Record<string, { 더?: string[] }> })["곳"]?.[p.id];
+  const 더 = row?.더?.filter((c) => c !== p.category) as Category[] | undefined;
+  return 더?.length ? { ...p, alsoCategories: 더 } : p;
+}
+
+/**
+ * 🔎 **그 곳이 이 칸들에 드나.** 대표 갈래 하나와 덧붙인 갈래를 함께 본다.
+ *
+ * 🚨 **잣대를 한 군데 둔다.** 구별 찾기와 근처 코스가 같은 함수를 쓴다 —
+ *    따로 적으면 한쪽만 고쳐져 「산책에선 보이는데 야경에선 안 보이는」 반쪽이 생긴다.
+ *    이 저장소가 이름 대조에서 여러 번 겪은 일이다.
+ */
+export function inCategories(p: Place, cats: readonly string[]): boolean {
+  return cats.includes(p.category) || (p.alsoCategories?.some((c) => cats.includes(c)) ?? false);
+}
+
 export const ALL_PLACES: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .filter((p) => !isPlaceholder(p))
   // 🙈 사람이 "이건 안 내보낸다"고 정한 것(Place.hidden). 자료는 남아 있지만
@@ -908,6 +943,8 @@ export const ALL_PLACES: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .map(withGuFestival)
   .map(withManualPhoto)
   .map(withGalleryPhoto)
+  // 🌗 두 칸에 걸치는 곳 — withAlsoCategories 주석 참고.
+  .map(withAlsoCategories)
   // 🍁 단풍길은 사진이 없어도 내보낸다 — showsWithoutPhoto 주석 참고.
   .filter((p) => hasPhoto(p) || showsWithoutPhoto(p));
 
@@ -920,6 +957,10 @@ export const HIDDEN_NO_PHOTO: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .filter((p) => isInLaunchScope(sidoOf(p.gu, p.city ?? "seoul")))
   .map(withManualPhoto)
   .map(withGalleryPhoto)
+  // 🌗 가려진 곳도 **같은 손질을 거친다.** 여기만 빼 두면 「표에는 적혀 있는데
+  //    곳에는 안 붙은」 어긋남이 생기고, 사진이 붙어 화면에 나오는 날
+  //    조용히 달라진다. 두 목록은 같은 줄로 만든다.
+  .map(withAlsoCategories)
   // 🍁 단풍길은 "사진 없어 가려진 곳"이 아니다(이미 화면에 나온다).
   //    여기 섞이면 '하루 3곳 채우기' 목록이 107곳으로 불어나 쓸모가 없어진다.
   .filter((p) => !hasPhoto(p) && !showsWithoutPhoto(p));

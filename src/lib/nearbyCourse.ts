@@ -23,7 +23,7 @@
 //   — 고정비 0원을 지킨다. 좌표가 있으면 거리는 하버사인으로 정확히 나온다.
 
 import { metersBetween, type Point } from "./districtDistance";
-import type { Category, Place } from "../data/seed";
+import { inCategories, type Category, type Place } from "../data/seed";
 // 🗓️ 축제는 **날짜가 있는 곳**이다 — 아래 onToday 주석 참고.
 import { guFestivalDate } from "./guFestival";
 import { isPastEdition } from "./pastEdition";
@@ -149,7 +149,9 @@ function usable(places: readonly Place[], categories: readonly Category[] | unde
       p.lat != null &&
       p.lng != null &&
       onToday(p, today) &&
-      (!categories || categories.length === 0 || categories.includes(p.category)),
+      // 🌗 두 칸에 걸치는 곳도 고른다 — 칩을 그릴 때와 **같은 잣대**여야 한다.
+      //    한쪽만 고치면 「칩은 떴는데 눌러도 안 나오는」 반쪽이 생긴다.
+      (!categories || categories.length === 0 || inCategories(p, categories)),
   );
 }
 

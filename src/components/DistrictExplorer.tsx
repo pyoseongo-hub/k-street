@@ -4,7 +4,7 @@ import { START } from "../lib/startParams";
 import { useLanguage } from "../lib/useLanguage";
 // 🏙️ 문구 안의 도시 이름을 지금 보는 도시로 바꾼다 — 그 파일 머리말 참고.
 import { useCityText } from "../lib/cityText";
-import { CATEGORY_META, type Category, type Place } from "../data/seed";
+import { CATEGORY_META, type Category, type Place, inCategories } from "../data/seed";
 // 🏙️ **이 화면은 한 도시만 본다** — 부산을 열면 ALL_PLACES 에 두 도시가 섞인다.
 import { usePlacesHere } from "../lib/usePlaces";
 // 🗺️ 벌집 배치는 **도시마다 다르다**(서울 25칸 · 부산 16칸).
@@ -140,14 +140,15 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
   const shownChips = useMemo(
     () => MAP_CHIPS.filter((c) => {
       const cats = [c.key, ...(c.extra ?? [])];
-      return PLACES.some((p) => cats.includes(p.category));
+      // 🌗 두 칸에 걸치는 곳도 센다 — 야경 칩이 안 떠서 한강공원을 못 찾는 일이 없게.
+      return PLACES.some((p) => inCategories(p, cats));
     }),
     [PLACES],
   );
 
   const inCategory = useMemo(() => {
     const cats = catsOf(category);
-    return PLACES.filter((p) => cats.includes(p.category));
+    return PLACES.filter((p) => inCategories(p, cats));
   }, [category]);
   const guWithData = useMemo(
     () => new Set(inCategory.filter((p) => p.confirmed).map((p) => p.gu)),
