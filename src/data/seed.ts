@@ -643,10 +643,11 @@ export const VIEWS: Place[] = [
   //    근거: 서울시 한강사업본부 hangang.seoul.go.kr/archives/46727
   //    ⚠️ **분수 가동 시기·시각은 적지 않는다.** 해마다 바뀐다 —
   //       공식 쪽을 보게 두는 것이 이 앱이 하는 일이다.
-  { id: id(), gu: "서초구", dong: "반포동", category: "view", name: "반포한강공원",
-    addr: "서울특별시 서초구 신반포로11길 40",
-    note: "잠수교·세빛섬이 여기다. 반포대교 양쪽에 달빛무지개분수(1,140m)가 있다. 상시 개방·무료",
-    officialUrl: "https://hangang.seoul.go.kr/archives/46727", confirmed: true },
+  // 🚨 **한 줄로 적는다. 줄을 바꾸면 좌표가 영영 안 붙는다** (2026-10-07에 당했다).
+  //    scripts/fetch-coords.mjs 가 `{ id: id(), …[^\n]*? }` 로 읽는다 — 한 줄에
+  //    다 있지 않으면 **그 곳을 아예 못 본다.** 보기 좋으라고 줄을 나눴더니
+  //    좌표 작업이 성공으로 끝나면서 이 곳만 조용히 빠졌다. 화면엔 아무 표시도 안 난다.
+  { id: id(), gu: "서초구", dong: "반포동", category: "view", name: "반포한강공원", addr: "서울특별시 서초구 신반포로11길 40", note: "잠수교·세빛섬이 여기다. 반포대교 양쪽에 달빛무지개분수(1,140m)가 있다. 상시 개방·무료", officialUrl: "https://hangang.seoul.go.kr/archives/46727", confirmed: true },
 ];
 
 interface AutumnRow {
