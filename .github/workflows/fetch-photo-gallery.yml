@@ -26,6 +26,11 @@ on:
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    # ⏱️ **천장을 단다** (2026-10-07에 달았다). limit: all 로 돌렸더니 50분이 넘도록
+    #    끝나지 않았는데 **아무도 모르고 있었다** — 천장이 없으면 느려진 것이 안 드러난다.
+    #    이 저장소가 「Audit seed 8분 → 74분」으로 크게 데인 자리와 같은 꼴이다.
+    #    곳 수가 늘면 예전에 싸던 일이 갑자기 비싸진다.
+    timeout-minutes: 45
     permissions:
       contents: write
     env:
