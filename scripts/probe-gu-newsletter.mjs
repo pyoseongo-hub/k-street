@@ -30,9 +30,17 @@ import { fetchHtml } from "./lib/html-text.mjs";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_MD = join(__dirname, "..", "docs", "구청-메일-소식지.md");
 
-const ONLY = process.argv.find((a) => a.startsWith("--gu"))?.includes("=")
-  ? process.argv.find((a) => a.startsWith("--gu=")).split("=")[1]
-  : process.argv[process.argv.indexOf("--gu") + 1];
+// 🚨 `--gu` 를 안 줬을 때 argv[-1+1] = argv[0](node 경로)를 구 이름으로 읽는
+//    버그가 있었다 (2026-10-08 첫 실행이 그래서 바로 죽었다). 문법 검사로는
+//    안 잡힌다 — **돌려 봐야 잡힌다.**
+function 구이름() {
+  const eq = process.argv.find((a) => a.startsWith("--gu="));
+  if (eq) return eq.split("=")[1] || "";
+  const i = process.argv.indexOf("--gu");
+  if (i >= 0) return process.argv[i + 1] ?? "";
+  return "";
+}
+const ONLY = 구이름();
 
 // 구마다 후보 주소. 첫 번째가 답하면 거기서 멈춘다.
 const GU = [
@@ -67,6 +75,31 @@ const GU = [
 // 「민원 처리 알림」·「채용 공고 알림」은 우리에게 쓸모가 없다.
 const 소식지말 = /뉴스레터|전자소식지|웹진|e-?소식|구소식|소식지|newsletter/i;
 const 메일말 = /메일링|이메일\s*구독|메일\s*구독|이메일\s*수신|구독\s*신청|메일링리스트|mailing/i;
+
+// 📡 **메일보다 RSS 가 우리에게 낫다.** 메일은 사람이 읽어야 하고 구독 신청이
+//    필요하지만, RSS 는 기계가 매일 받아 올 수 있다(지금 축제 날짜를 받는 방식과 같다).
+//    그래서 같은 걸음에 RSS 도 같이 본다 — 있으면 메일이 없어도 길이 열린다.
+function rss찾기(html, base) {
+  const out = new Set();
+  const link = /<link\b[^>]*type\s*=\s*["']application\/(rss|atom)\+xml["'][^>]*>/gi;
+  let m;
+  while ((m = link.exec(html))) {
+    const href = m[0].match(/href\s*=\s*["']([^"']+)["']/i)?.[1];
+    if (href) {
+      try {
+        out.add(new URL(href, base).toString());
+      } catch { /* 주소가 깨진 것은 버린다 */ }
+    }
+  }
+  const a = /<a\b[^>]*href\s*=\s*["']([^"']*(?:rss|RSS)[^"']*)["']/g;
+  while ((m = a.exec(html))) {
+    if (/^(javascript|#)/i.test(m[1])) continue;
+    try {
+      out.add(new URL(m[1], base).toString());
+    } catch { /* 같다 */ }
+  }
+  return [...out].slice(0, 3);
+}
 
 function 링크뽑기(html, base) {
   const out = [];
@@ -137,11 +170,12 @@ for (const [gu, hosts] of 목록) {
   }
 
   if (!열린곳) {
-    결과.push({ gu, host: null, 못연곳, 후보: [], 메일: [] });
+    결과.push({ gu, host: null, 못연곳, 후보: [], 메일: [], rss: [] });
     console.log(`❌ ${gu} — 누리집을 못 열었다: ${못연곳.join(" · ")}`);
     continue;
   }
 
+  const rss = rss찾기(열린곳.html, 열린곳.final);
   const 후보 = 링크뽑기(열린곳.html, 열린곳.final).slice(0, 6);
   const 메일 = [];
   for (const l of 후보) {
@@ -155,13 +189,13 @@ for (const [gu, hosts] of 목록) {
       /* 못 열면 넘어간다 — 「못 열었다」와 「없다」를 섞지 않으려고 아래에서 후보로 남긴다 */
     }
   }
-  결과.push({ gu, host: 열린곳.host, 못연곳, 후보, 메일 });
+  결과.push({ gu, host: 열린곳.host, 못연곳, 후보, 메일, rss });
   const 표시 = 메일.length
     ? `📬 메일 받는 자리 ${메일.length}곳`
     : 후보.length
       ? `🔎 소식지 링크 ${후보.length}곳 (메일 받는 자리는 못 찾음)`
       : "— 소식지 링크 자체가 첫 화면에 없다";
-  console.log(`${메일.length ? "✅" : "·"} ${gu} (${열린곳.host}) — ${표시}`);
+  console.log(`${메일.length ? "✅" : "·"} ${gu} (${열린곳.host}) — ${표시}${rss.length ? ` · 📡 RSS ${rss.length}개` : ""}`);
 }
 
 // ── 표로 남긴다
@@ -214,6 +248,21 @@ if (흔적.length) {
     );
   md.push("");
 }
+const rss있음 = 결과.filter((r) => r.rss.length);
+md.push("## 📡 RSS — 메일보다 이게 낫다");
+md.push("");
+md.push("메일은 **사람이 읽어야** 하고 구독 신청이 필요하다. RSS 는 **기계가 매일 받아 온다** —");
+md.push("지금 축제 날짜를 받는 방식과 같다. 그래서 같은 걸음에 같이 봤다.");
+md.push("");
+if (rss있음.length) {
+  md.push("| 구 | RSS 주소 |");
+  md.push("|---|---|");
+  for (const r of rss있음) md.push(`| ${r.gu} | ${r.rss.join("<br>")} |`);
+} else {
+  md.push("첫 화면에서 RSS 를 찾은 구가 없다.");
+}
+md.push("");
+
 if (없음.length) {
   md.push("## · 첫 화면에 소식지 링크가 없던 곳");
   md.push("");
@@ -234,5 +283,5 @@ if (못염.length) {
 
 writeFileSync(OUT_MD, md.join("\n") + "\n");
 console.log("");
-console.log(`📬 메일 받는 자리 ${보냄.length}곳 · 🔎 흔적만 ${흔적.length}곳 · · 없음 ${없음.length}곳 · ❌ 못 연 곳 ${못염.length}곳`);
+console.log(`📬 메일 받는 자리 ${보냄.length}곳 · 🔎 흔적만 ${흔적.length}곳 · 없음 ${없음.length}곳 · ❌ 못 연 곳 ${못염.length}곳 · 📡 RSS ${rss있음.length}곳`);
 console.log(`💾 docs/구청-메일-소식지.md 에 표로 남겼다.`);
