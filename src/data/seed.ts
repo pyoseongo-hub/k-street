@@ -642,7 +642,9 @@ export const FESTIVALS_ADDED: Place[] = [
  *
  * 🚨 **id 는 맨 뒤에서만 늘린다.** 위 FESTIVALS_ADDED 한가운데에 끼우면
  *    뒤쪽 곳들의 id 가 통째로 밀려 남의 좌표·사진이 붙는다.
- *    그래서 이 목록은 id() 를 쓰는 마지막 자리다 — 새 곳은 **여기 맨 뒤**에 붙인다.
+ *    그래서 새 곳은 **id() 를 쓰는 마지막 목록의 맨 뒤**에 붙인다.
+ *    ⚠️ 2026-10-08부터 그 마지막은 이 VIEWS 가 아니라 **아래 FESTIVALS_FROM_MAIL** 이다.
+ *       (서울시 소식지에서 받은 행사를 둘 자리를 그 뒤에 새로 만들었다.)
  *
  * ⏳ **좌표는 비워 둔다.** scripts/fetch-coords.mjs 가 카카오·네이버 둘을
  *    대조해서 채운다. 손으로 적으면 틀려도 아무도 모른다 —
@@ -660,6 +662,36 @@ export const VIEWS: Place[] = [
   //    다 있지 않으면 **그 곳을 아예 못 본다.** 보기 좋으라고 줄을 나눴더니
   //    좌표 작업이 성공으로 끝나면서 이 곳만 조용히 빠졌다. 화면엔 아무 표시도 안 난다.
   { id: id(), gu: "서초구", dong: "반포동", category: "view", name: "반포한강공원", addr: "서울특별시 서초구 신반포로11길 40", note: "잠수교·세빛섬이 여기다. 반포대교 양쪽에 달빛무지개분수(1,140m)가 있다. 상시 개방·무료", officialUrl: "https://hangang.seoul.go.kr/archives/46727", confirmed: true },
+];
+
+/**
+ * 📬 **서울시 소식지(「내손안에 서울」)에서 알게 된 행사.**
+ *
+ * 사장님 지시 (2026-10-08): "메일도 확인 하루에 한번 서울시 메일에 행사 내용
+ * 있으니 확인후 업데이트" — 서울시가 **매일 아침 메일로 보내 주는 것**이
+ * 우리가 기계로 받아 오는 자리(문화포털·펀서울)보다 **먼저 오는 경우가 있다.**
+ * 서울디자인위크가 그랬다: 열흘 전에 메일로 왔는데 어느 창구에도 없었다.
+ *
+ * 🚨 **왜 FESTIVALS_ADDED 뒤에 안 붙이고 새 목록을 만들었나**
+ *    위 VIEWS 머리말대로 id() 는 **파일에 적힌 순서대로** 매겨진다.
+ *    FESTIVALS_ADDED 맨 뒤에 붙이면 그 뒤에 있는 VIEWS(반포한강공원 ks_5f)의
+ *    id 가 한 칸 밀려 **사진(manual-photos.json)과 좌표가 남의 곳에 붙는다.**
+ *    그래서 **id() 를 쓰는 맨 마지막 자리**인 여기에 따로 둔다.
+ *    새 행사는 **이 목록 맨 뒤**에 한 줄로 붙인다.
+ *
+ * ⚠️ 이 목록도 ALL_FESTIVALS 에 **직접 넣어야** 달·계절 화면에 나온다
+ *    (관광공사 축제 57곳이 예전에 그래서 통째로 안 보였다 — 그 함수 머리말 참고).
+ */
+export const FESTIVALS_FROM_MAIL: Place[] = [
+  // 🎨 **서울 전체가 무대인 12일짜리 행사다.** DDP 에서 전시·컨퍼런스·마켓을 하고,
+  //    동대문·성수·연희·서촌·압구정 다섯 권역의 디자인 가게 150곳을 잇는
+  //    「서울 디자인로드」가 따로 있다. 걸어 다니는 손님에게 바로 쓸모가 있다.
+  //    근거 ① 서울시 소식지 제5773호(2026.10.06.) ② 서울시 미디어허브 기사
+  //        ③ 요일 대조 — 10.14 은 수요일, 10.25 은 일요일로 2026년 달력과 맞는다.
+  //    ✋ **주제·참여 브랜드 수는 적지 않았다.** 자료마다 79개·80여 개로 엇갈리고
+  //       「디자인 레시피」가 2026년 주제인지도 한 곳에서만 말한다 — 엇갈리면 안 적는다.
+  //    🚨 **한 줄로 적는다.** 줄을 나누면 scripts/fetch-coords.mjs 가 못 읽는다(VIEWS 머리말).
+  { id: id(), gu: "중구", dong: "을지로7가", category: "festival", name: "서울디자인위크", startMonth: 10, endMonth: 10, addr: "서울특별시 중구 을지로 281 (DDP)", note: "DDP 전시·마켓 + 동대문·성수·연희·서촌·압구정 디자인 가게 150곳을 잇는 「서울 디자인로드」", officialUrl: "https://mediahub.seoul.go.kr/archives/2019559", monthSource: "서울시 소식지 「내손안에 서울」 제5773호(2026.10.06.) · 서울시 미디어허브 (2026 10.14–25, DDP 중심)", confirmed: true },
 ];
 
 interface AutumnRow {
@@ -700,6 +732,8 @@ const ALL_PLACES_RAW: Place[] = [
   ...FESTIVALS_ADDED,
   // 🌃 전망·야경. id() 를 쓰는 **마지막** 목록이다 — VIEWS 머리말 참고.
   ...VIEWS,
+  // 📬 서울시 소식지에서 알게 된 행사. id() 를 쓰는 **진짜 마지막** 자리다.
+  ...FESTIVALS_FROM_MAIL,
   // 🍁 단풍길은 id 를 따로 매기므로 순서에 영향을 주지 않는다.
   ...AUTUMN_ROADS,
   // 🌊 부산 202곳. id 가 관광공사 contentId 라 **순서에 영향을 주지 않는다**
@@ -990,7 +1024,7 @@ export const ALL_FESTIVALS: Place[] = (() => {
   // 🆕 나중에 들인 축제(FESTIVALS_ADDED)도 여기 들어와야 계절·달 화면에 뜬다.
   //    ⚠️ 빼먹으면 **자료는 있는데 어느 화면에도 안 나온다** — 관광공사 축제 57곳이
   //       예전에 그랬다(이 함수 맨 위 주석). 같은 실수를 되풀이하지 않는다.
-  const merged = [...FESTIVALS, ...FESTIVALS_ADDED].map((p) => {
+  const merged = [...FESTIVALS, ...FESTIVALS_ADDED, ...FESTIVALS_FROM_MAIL].map((p) => {
     const t = findTourPlace(p.name) ?? byName.get(nameKey(p.name));
     if (!t || t.category !== "festival") return p;
     used.add(t.id);
