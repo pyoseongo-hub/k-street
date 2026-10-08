@@ -1,0 +1,69 @@
+name: Probe gu newsletter (구청이 메일로 소식지를 보내나)
+
+# 📬 **25개 구청 누리집을 러너가 직접 열어** 메일 구독 자리가 있는지 본다.
+#    사장님 지시(2026-10-08): "구청도 소식지나 자료 메일 발송 하는지 알아봐"
+#
+#    왜 러너인가 — 이 저장소를 만드는 세션은 *.go.kr 이 막혀 있다(DNS).
+#    검색 요약으로는 "메뉴에 이메일 구독이 있다"까지만 나오고, 그게 소식지인지
+#    민원 알림인지 가릴 수 없다. **페이지를 열어야 가려진다.**
+#
+#    결과는 docs/구청-메일-소식지.md 에 표로 남고, 바뀌면 커밋한다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      gu:
+        description: "한 곳만 볼 때 구 이름 (예: 강남구). 비우면 25개 구 전부"
+        required: false
+        default: ""
+      apply:
+        description: "표를 저장소에 커밋한다 (끄면 보기만)"
+        type: boolean
+        required: false
+        default: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    # ⏱️ 구청 누리집 25곳 + 후보 페이지를 차례로 연다. 한 곳이 응답을 안 하면
+    #    30초씩 기다리므로 천장을 달아 둔다 — 없으면 안 드러난다(2026-09-11 교훈).
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 두드려 보기
+        env:
+          GU: ${{ inputs.gu }}
+        run: |
+          set -o pipefail
+          if [ -n "$GU" ]; then
+            node scripts/probe-gu-newsletter.mjs --gu "$GU" 2>&1 | tee probe-log.txt
+          else
+            node scripts/probe-gu-newsletter.mjs 2>&1 | tee probe-log.txt
+          fi
+      - name: 표 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- docs/구청-메일-소식지.md; then
+            echo "바뀐 것이 없다 — 커밋하지 않는다."
+          else
+            git add docs/구청-메일-소식지.md
+            git commit -m "구청 메일 소식지 확인 결과 갱신 (probe-gu-newsletter) [skip render]"
+            git push
+          fi
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 📬 구청이 메일로 소식지를 보내나"
+            echo ""
+            echo '```'
+            cat probe-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
