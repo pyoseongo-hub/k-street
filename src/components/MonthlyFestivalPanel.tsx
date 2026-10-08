@@ -118,6 +118,24 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
     return FESTIVAL_THEMES.filter((k) => found.has(k));
   }, [inMonth]);
 
+  // 🈳 달이 안 적힌 축제 — 위 inMonth 에는 절대 안 들어온다(opensIn 이 null 을 거른다).
+  //    테마 칩과도 상관없다. "이 달"의 목록이 아니라 "아직 못 적은 것"의 목록이라서다.
+  //
+  // 🚫 **이름에 지난 연도가 박힌 것은 뺀다** (2026-10-08에 넣자마자 섞여 들어왔다).
+  //    「2025 유성온천 크리스마스 축제」를 「날짜가 아직 안 적힌 축제」라고 띄우면
+  //    **올해도 열리는 것처럼 읽힌다.** 우리가 아는 것은 작년에 열렸다는 사실뿐이다.
+  //    이름에서 연도를 떼는 일은 `display-names.json` 이 사람 손으로 하고 있고,
+  //    「올해 것도 열리나」는 `npm run festival-freshness` 가 따로 짚어 준다.
+  //    여기서는 **안 보여 주는 쪽**을 고른다 — 빈 칸이 틀린 정보보다 낫다.
+  const undated = useMemo(() => {
+    const 올해 = new Date().getFullYear();
+    return festivalsHere.filter((f) => {
+      if (f.startMonth != null) return false;
+      const 해 = [...f.name.matchAll(/20\d{2}/g)].map((m) => Number(m[0]));
+      return !해.length || Math.max(...해) >= 올해;
+    });
+  }, [festivalsHere]);
+
   const festivals = useMemo(() => {
     const picked = theme ? inMonth.filter((f) => themeOf(f.name) === theme) : inMonth;
     // 📷 **사진 있는 카드를 위로 올린다** (사용자 지적 2026-09-04: "왜 아직 사진없는게
@@ -439,6 +457,37 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
             );
           })}
         </div>
+
+        {/* 🈳 **날짜가 아직 안 적힌 축제.**
+            열리는 것은 맞는데 올해 날짜를 못 확인한 곳들이다. 달이 없으면
+            위 opensIn 이 걸러 내므로 **어느 달을 눌러도 안 나온다** — 예전에는
+            그래서 서울 밖 도시의 이 화면이 통째로 비어 있었다(2026-10-08에 찾았다).
+
+            🚫 **아무 달에나 끼워 넣지 않는다.** 그건 손님을 틀린 날에 보내는 짓이다.
+               대신 달력 아래에 따로 모아 두고 **왜 날짜가 없는지 한 줄로 말한다.**
+               이 앱은 날짜를 대신 확정해 주는 앱이 아니라 어디를 봐야 하는지
+               알려 주는 앱이다(guFestival.ts 머리말과 같은 줄).
+
+            카드를 크게 그리지 않는다 — 사진도 날짜도 없는 것을 크게 띄우면
+            화면만 먹는다(2026-09-04 "카드도줄이고 공간 낭비하지마"). */}
+        {undated.length > 0 && (
+          <div className="undated-festivals">
+            <h3 className="uf-title">{t.undatedFestivalsTitle(undated.length)}</h3>
+            <p className="empty-note">{t.undatedFestivalsNote}</p>
+            <ul className="uf-list">
+              {undated.map((f) => {
+                const nm = placeName(f.name, language);
+                return (
+                  <li key={f.id}>
+                    <span className="uf-gu">{districtFullName(f.gu, language)}</span>
+                    <span className="uf-name">{nm.main}</span>
+                    {nm.sub && <span className="uf-sub">{nm.sub}</span>}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
       </div>
     </section>
   );

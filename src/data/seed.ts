@@ -1048,7 +1048,28 @@ export const ALL_FESTIVALS: Place[] = (() => {
       officialUrl: p.officialUrl ?? t.officialUrl,
     };
   });
-  return [...merged, ...tourFestivals.filter((t) => !used.has(t.id))];
+  // 🏙️ **서울 밖 도시의 축제** — 부산·경기·전북… 이들은 위 어느 줄에도 안 들어 있었다.
+  //    FESTIVALS 는 서울 것이고, tourFestivals 는 **서울 관광공사 자료**(TOUR_PLACES)다.
+  //    부산·일곱 도시·일곱 도시는 따로 들어오는 목록이라 **축제 화면에 한 곳도 안 떴다.**
+  //
+  //    🚨 2026-10-08에 숫자를 세다가 찾았다. 곳 목록에는 76곳이 멀쩡히 있어서
+  //       「동네 → 축제」 칩에서는 보였다 — 그래서 **아무도 몰랐다.**
+  //       비어 있던 것은 계절·달 화면 하나뿐이었고, 그 화면은 조용히 "없다"고만 말했다.
+  //       이 함수 맨 위 주석이 경고하던 바로 그 일이 **다시** 일어난 것이다.
+  //
+  //    ⏳ 들어와도 **달이 없으면 달 화면에는 안 뜬다**(opensIn 이 거른다).
+  //       76곳 전부 달이 비어 있다 — 관광공사 축제 날짜가 2025년에 멈춰 있어서다.
+  //       그래서 화면 쪽에 **「날짜가 아직 안 적힌 축제」 자리**를 따로 뒀다.
+  //       지어내서 아무 달에나 넣지 않는다.
+  const 서울밖축제 = ALL_PLACES_RAW.filter(
+    (p) => p.category === "festival" && (p.city ?? "seoul") !== "seoul",
+  );
+  const 이미있음 = new Set([...merged, ...tourFestivals].map((p) => p.id));
+  return [
+    ...merged,
+    ...tourFestivals.filter((t) => !used.has(t.id)),
+    ...서울밖축제.filter((p) => !이미있음.has(p.id)),
+  ];
 })()
   .filter((p) => !isPlaceholder(p))
   // 🙈 사람이 "이건 안 내보낸다"고 정한 것(Place.hidden). 자료는 남아 있지만

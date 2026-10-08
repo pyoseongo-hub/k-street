@@ -43,6 +43,10 @@ export interface Translations {
   monthlyEditorLabel: string;
   monthlyTitle: (month: number) => string;
   noFestivalsMessage: (month: number) => string;
+  /** 🈳 **열리는 것은 맞는데 올해 날짜를 아직 못 확인한 축제.** 지어내서 아무 달에나
+   *  넣지 않고 달력 아래에 따로 모아 둔다 — 서울 밖 76곳이 전부 이 꼴이다. */
+  undatedFestivalsTitle: (count: number) => string;
+  undatedFestivalsNote: string;
   photoCredit: string;
   /** 사진이 여러 장일 때 그 자리를 눌러 넘길 수 있다고 알려 주는 말(화면에 안 보이고 읽어 주는 용). */
   morePhotos: (count: number) => string;
@@ -446,6 +450,9 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `${month}월에 놓치면 안 되는 것`,
     noFestivalsMessage: (month) =>
       `이번 세션 조사에서는 ${month}월에 확인된 축제가 없다 — 없는 게 아니라 아직 확인을 못 한 것일 수 있다.`,
+    undatedFestivalsTitle: (n) => `날짜가 아직 안 적힌 축제 ${n}곳`,
+    undatedFestivalsNote:
+      '열리는 것은 맞는데 올해 날짜를 아직 확인하지 못했습니다. 확인되는 대로 위 달력에 올립니다.',
     photoCredit: '사진: 한국관광공사',
     morePhotos: (n: number) => `사진 ${n}장 — 눌러서 넘기기`,
 
@@ -615,6 +622,9 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `Must not miss in ${getMonthName('en', month)}`,
     noFestivalsMessage: (month) =>
       `No festivals confirmed for ${getMonthName('en', month)} in this session — but there may be events we haven't documented yet.`,
+    undatedFestivalsTitle: (n) => `${n} festivals without a confirmed date`,
+    undatedFestivalsNote:
+      'These do run, but this year\u2019s dates are not confirmed yet. They move up into the calendar above as soon as they are.',
     photoCredit: 'Photo: Korea Tourism Organization',
     morePhotos: (n: number) => `${n} photos — tap to see the next`,
 
@@ -784,6 +794,9 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `${getMonthName('ja', month)}で見逃せないもの`,
     noFestivalsMessage: (month) =>
       `このセッションの調査では${getMonthName('ja', month)}に確認されたフェスティバルはありません。ただし、まだ記録していないイベントがある可能性があります。`,
+    undatedFestivalsTitle: (n) => `日程が未確認のお祭り ${n}件`,
+    undatedFestivalsNote:
+      '開催はされますが、今年の日程がまだ確認できていません。確認でき次第、上のカレンダーに掲載します。',
     photoCredit: '写真：韓国観光公社',
     morePhotos: (n: number) => `写真${n}枚 — タップで次へ`,
 
@@ -953,6 +966,9 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `${getMonthName('zh', month)}不容错过的`,
     noFestivalsMessage: (month) =>
       `本次调查中未发现${getMonthName('zh', month)}的节庆活动 — 但可能还有我们尚未记录的活动。`,
+    undatedFestivalsTitle: (n) => `尚未确认日期的庆典 ${n} 个`,
+    undatedFestivalsNote:
+      '这些庆典确实会举办，但今年的日期尚未确认。确认后会移到上方日历中。',
     photoCredit: '照片：韩国旅游组织',
     morePhotos: (n: number) => `照片 ${n} 张 — 点击查看下一张`,
 
@@ -1122,6 +1138,9 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `${getMonthName('zh-TW', month)}不容錯過的`,
     noFestivalsMessage: (month) =>
       `本次調查中未發現${getMonthName('zh-TW', month)}的節慶活動 — 但可能還有我們尚未記錄的活動。`,
+    undatedFestivalsTitle: (n) => `尚未確認日期的慶典 ${n} 個`,
+    undatedFestivalsNote:
+      '這些慶典確實會舉辦，但今年的日期尚未確認。確認後會移到上方日曆中。',
     photoCredit: '照片：韓國觀光公社',
     morePhotos: (n: number) => `照片 ${n} 張 — 點擊查看下一張`,
 
@@ -1291,6 +1310,9 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `Điều không được bỏ lỡ trong tháng ${getMonthName('vi', month)}`,
     noFestivalsMessage: (month) =>
       `Không có lễ hội nào được xác nhận vào tháng ${getMonthName('vi', month)} trong phiên này — nhưng có thể có các sự kiện mà chúng tôi chưa ghi lại.`,
+    undatedFestivalsTitle: (n) => `${n} lễ hội chưa có ngày xác nhận`,
+    undatedFestivalsNote:
+      'Các lễ hội này vẫn diễn ra, nhưng ngày của năm nay chưa được xác nhận. Khi có, chúng sẽ được đưa lên lịch ở trên.',
     photoCredit: 'Ảnh: Tổ chức Du lịch Hàn Quốc',
     morePhotos: (n: number) => `${n} ảnh — chạm để xem tiếp`,
 
@@ -1460,6 +1482,9 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `No te pierdas en ${getMonthName('es', month)}`,
     noFestivalsMessage: (month) =>
       `No hay festivales confirmados en ${getMonthName('es', month)} en esta sesión — pero puede haber eventos que aún no hemos documentado.`,
+    undatedFestivalsTitle: (n) => `${n} festivales sin fecha confirmada`,
+    undatedFestivalsNote:
+      'Sí se celebran, pero las fechas de este año aún no están confirmadas. Pasarán al calendario de arriba en cuanto lo estén.',
     photoCredit: 'Foto: Organización de Turismo de Corea',
     morePhotos: (n: number) => `${n} fotos — toca para ver la siguiente`,
 
@@ -1629,6 +1654,9 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `À ne pas manquer en ${getMonthName('fr', month)}`,
     noFestivalsMessage: (month) =>
       `Aucun festival confirmé en ${getMonthName('fr', month)} dans cette session — mais il peut y avoir des événements que nous n'avons pas encore documentés.`,
+    undatedFestivalsTitle: (n) => `${n} festivals sans date confirmée`,
+    undatedFestivalsNote:
+      'Ils ont bien lieu, mais les dates de cette année ne sont pas encore confirmées. Ils rejoindront le calendrier ci-dessus dès que ce sera le cas.',
     photoCredit: 'Photo : Organisation du Tourisme de Corée',
     morePhotos: (n: number) => `${n} photos — appuyez pour la suivante`,
 
@@ -1798,6 +1826,9 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `Darf man im ${getMonthName('de', month)} nicht verpassen`,
     noFestivalsMessage: (month) =>
       `Keine Festivals im ${getMonthName('de', month)} in dieser Sitzung bestätigt — es kann aber Veranstaltungen geben, die wir noch nicht dokumentiert haben.`,
+    undatedFestivalsTitle: (n) => `${n} Feste ohne bestätigtes Datum`,
+    undatedFestivalsNote:
+      'Sie finden statt, aber die diesjährigen Termine sind noch nicht bestätigt. Sobald sie es sind, erscheinen sie oben im Kalender.',
     photoCredit: 'Foto: Korea Tourism Organization',
     morePhotos: (n: number) => `${n} Fotos — zum Weiterblättern tippen`,
 
@@ -1967,6 +1998,9 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `Не пропустите в ${getMonthName('ru', month)}`,
     noFestivalsMessage: (month) =>
       `В этой сессии на ${getMonthName('ru', month)} не подтверждено никаких фестивалей — но могут быть события, которые мы еще не задокументировали.`,
+    undatedFestivalsTitle: (n) => `Фестивалей без подтверждённой даты: ${n}`,
+    undatedFestivalsNote:
+      'Они проводятся, но даты этого года ещё не подтверждены. Как только они появятся, фестивали попадут в календарь выше.',
     photoCredit: 'Фото: Организация туризма Кореи',
     morePhotos: (n: number) => `${n} фото — нажмите, чтобы посмотреть следующее`,
 
@@ -2136,6 +2170,9 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `Jangan lewatkan di ${getMonthName('id', month)}`,
     noFestivalsMessage: (month) =>
       `Tidak ada festival yang dikonfirmasi pada ${getMonthName('id', month)} dalam sesi ini — tetapi mungkin ada acara yang belum kami dokumentasikan.`,
+    undatedFestivalsTitle: (n) => `${n} festival tanpa tanggal pasti`,
+    undatedFestivalsNote:
+      'Festival ini tetap digelar, tetapi tanggal tahun ini belum dipastikan. Begitu dipastikan, akan naik ke kalender di atas.',
     photoCredit: 'Foto: Organisasi Pariwisata Korea',
     morePhotos: (n: number) => `${n} foto — ketuk untuk berikutnya`,
 
@@ -2305,6 +2342,9 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `สิ่งที่ต้องไม่พลาดในเดือน${getMonthName('th', month)}`,
     noFestivalsMessage: (month) =>
       `ไม่มีเทศกาลที่ยืนยันสำหรับเดือน${getMonthName('th', month)}ในเซสชันนี้ — แต่อาจมีกิจกรรมที่เรายังไม่ได้บันทึก`,
+    undatedFestivalsTitle: (n) => `เทศกาลที่ยังไม่ยืนยันวันที่ ${n} งาน`,
+    undatedFestivalsNote:
+      'เทศกาลเหล่านี้จัดจริง แต่ยังไม่ได้ยืนยันวันที่ของปีนี้ เมื่อยืนยันแล้วจะย้ายขึ้นไปในปฏิทินด้านบน',
     photoCredit: 'ภาพ: องค์การท่องเที่ยวเกาหลี',
     morePhotos: (n: number) => `${n} ภาพ — แตะเพื่อดูภาพถัดไป`,
 

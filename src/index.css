@@ -541,6 +541,50 @@ button {
   font-weight: 700;
 }
 
+/* ── 🈳 날짜가 아직 안 적힌 축제 ──────────────────────
+   달력 아래에 작게 모아 둔다. 사진도 날짜도 없는 것을 카드로 크게 그리면
+   화면만 먹는다 — 한 줄짜리 목록이면 충분하다. 테두리를 점선으로 둬서
+   "아직 덜 된 자리"라는 것이 눈으로도 보이게 한다. */
+.undated-festivals {
+  margin-top: 22px;
+  padding: 14px 14px 6px;
+  border: 1px dashed var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+.uf-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+.uf-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.uf-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 2px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+}
+.uf-gu {
+  flex: 0 0 auto;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.uf-name {
+  font-weight: 600;
+}
+.uf-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
 /* ── festival cards ─────────────────────────────────── */
 .festival-cards {
   margin-top: 14px;
