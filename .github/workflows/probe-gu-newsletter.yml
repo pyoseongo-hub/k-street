@@ -50,10 +50,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- docs/구청-메일-소식지.md; then
+          # 🚨 **`git diff` 는 처음 생기는 파일을 못 본다** (2026-10-08 첫 실행이 그랬다).
+          #    표를 잘 만들어 놓고 "바뀐 것이 없다"며 커밋하지 않고 끝났다 —
+          #    워크플로는 **초록불**이었다. 그래서 먼저 add 하고 **--cached** 로 본다.
+          git add docs/구청-메일-소식지.md
+          if git diff --cached --quiet -- docs/구청-메일-소식지.md; then
             echo "바뀐 것이 없다 — 커밋하지 않는다."
           else
-            git add docs/구청-메일-소식지.md
             git commit -m "구청 메일 소식지 확인 결과 갱신 (probe-gu-newsletter) [skip render]"
             git push
           fi

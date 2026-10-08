@@ -144,6 +144,18 @@ function 메일받나(html) {
   return 근거;
 }
 
+// 🙋 **첫 화면에 없어도 깊은 곳에 있는 곳이 있다.**
+//    강남구가 그랬다 — 첫 화면에는 링크가 없는데 「종합민원 > 이메일 구독 신청
+//    서비스」가 실제로 있다. 메뉴를 자바스크립트로 띄우기 때문에 링크로는 안 보인다.
+//    그래서 **사람이 찾아 둔 주소**를 여기 적고, 기계가 같은 잣대(메일받나)로 확인한다.
+//    · 찾는 법: 구청 누리집에서 「구독」·「알림서비스」·「메일링」으로 검색
+//    · ⚠️ 여기 적는 것은 **주소뿐이다.** 「메일을 보내 준다」는 판정은 기계가 한다 —
+//      사람이 적어 두면 페이지가 바뀌어도 아무도 모른다.
+const 손으로찾은주소 = {
+  강남구: ["https://www.gangnam.go.kr/apply/email_notice_service/newest/view.do?mid=ID03_030610"],
+  서대문구: ["https://www.sdm.go.kr/news/path/service.do"],
+};
+
 const 결과 = [];
 const 목록 = ONLY ? GU.filter(([g]) => g === ONLY) : GU;
 if (ONLY && !목록.length) {
@@ -156,17 +168,29 @@ for (const [gu, hosts] of 목록) {
   const 못연곳 = [];
   for (const h of hosts) {
     const url = `https://${h}/`;
-    try {
-      const r = await fetchHtml(url, { timeoutMs: 25000 });
-      if (r.status >= 400) {
-        못연곳.push(`${h} → HTTP ${r.status}`);
-        continue;
+    // 🚨 **「못 열었다」를 한 덩어리로 적으면 안 된다** (2026-10-08 첫 결과가 그랬다).
+    //    다섯 구가 "fetch failed" 였는데 그 한 줄로는 **주소를 틀린 것**과
+    //    **거기서 우리를 막는 것**을 가릴 수 없다. 둘은 할 일이 정반대다 —
+    //    앞은 주소를 고치면 되고, 뒤는 고쳐도 안 된다.
+    //    그래서 이유 코드(ENOTFOUND·ETIMEDOUT·인증서…)를 그대로 남기고,
+    //    한 번만 다시 해 본다(한 번 튄 것과 늘 막힌 것을 가르려고).
+    let 마지막 = null;
+    for (const 차례 of [1, 2]) {
+      try {
+        const r = await fetchHtml(url, { timeoutMs: 25000 });
+        if (r.status >= 400) {
+          마지막 = `HTTP ${r.status}`;
+          break;
+        }
+        열린곳 = { host: h, ...r };
+        break;
+      } catch (e) {
+        마지막 = e.cause?.code ?? e.code ?? e.message?.slice(0, 40);
+        if (차례 === 1) await new Promise((r) => setTimeout(r, 3000));
       }
-      열린곳 = { host: h, ...r };
-      break;
-    } catch (e) {
-      못연곳.push(`${h} → ${e.message?.slice(0, 40)}`);
     }
+    if (열린곳) break;
+    못연곳.push(`${h} → ${마지막}`);
   }
 
   if (!열린곳) {
@@ -176,7 +200,10 @@ for (const [gu, hosts] of 목록) {
   }
 
   const rss = rss찾기(열린곳.html, 열린곳.final);
-  const 후보 = 링크뽑기(열린곳.html, 열린곳.final).slice(0, 6);
+  const 후보 = [
+    ...링크뽑기(열린곳.html, 열린곳.final).slice(0, 6),
+    ...(손으로찾은주소[gu] ?? []).map((u) => ({ text: "(사람이 찾아 둔 주소)", url: u })),
+  ];
   const 메일 = [];
   for (const l of 후보) {
     if (!l.url) continue;
