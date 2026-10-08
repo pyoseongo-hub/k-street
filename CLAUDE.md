@@ -179,7 +179,7 @@ npx vite build --ssr scripts/count-for-promo.ts --outDir dist-ssr && node dist-s
 | 매일 06:00 | 구청 확정 날짜 받기 | Actions → **Fetch gu festival dates** |
 | 매일 05:00 | 관광공사 날짜 + 축제 신선도 | Actions → **Fetch festival dates** |
 | 매일 07:00 | 펀서울 축제 기간 | Actions → **Fetch funseoul dates** |
-| 매일 07:47 | 📬 **서울시 소식지 메일** 확인·반영 | 루틴(Routine). 자세히는 `docs/서울시-소식지-매일-확인.md` |
+| 매일 12:55 | 📬 **서울시 소식지 메일** 확인·반영 | 루틴 「매일 메일 확인」에 얹어 뒀다. 자세히는 `docs/서울시-소식지-매일-확인.md` |
 
 📬 **메일을 보는 이유는 창구 셋이 못 보는 구멍이 있기 때문이다** (사장님 지시 2026-10-08:
 "메일도 확인 하루에 한번 서울시 메일에 행사 내용 있으니 확인후 업데이트").
