@@ -1,0 +1,196 @@
+{
+  "_읽어보세요": [
+    "📡 **25개 구청의 RSS 주소.** scripts/fetch-gu-rss.mjs 가 서울시에서 받아 온다.",
+    "손으로 고치지 말 것 — 다음 실행이 덮어쓴다.",
+    "받는 곳: https://www.seoul.go.kr/news/rssboard/siteList.do (schGu 칸에 구 이름을 넣어 POST)",
+    "왜 메일이 아니라 RSS 인가: docs/구청-메일-소식지.md 참고 (메일을 보내는 구는 6곳뿐이었다)"
+  ],
+  "받은날": "2026-10-08",
+  "구": {
+    "강남": {
+      "feeds": [
+        {
+          "이름": "강남구청 보도자료",
+          "url": "https://www.gangnam.go.kr/portal/rss/rssList.do?bbsId=B_000031&recordCountPerPage=10"
+        }
+      ]
+    },
+    "강동": {
+      "feeds": [
+        {
+          "이름": "강동구청 새소식",
+          "url": "https://www.gangdong.go.kr/web/newportal/rss/b_068/list?cp=1&baCategory1=U0072"
+        }
+      ]
+    },
+    "강북": {
+      "feeds": [
+        {
+          "이름": "강북구청 새소식",
+          "url": "https://func.seoul.go.kr/data/RSS/rss_news.xml?1=1"
+        }
+      ]
+    },
+    "강서": {
+      "feeds": [
+        {
+          "이름": "강서구청 입찰정보",
+          "url": "https://www.gangseo.seoul.kr/gs030501.rss?1=1"
+        }
+      ]
+    },
+    "관악": {
+      "feeds": [
+        {
+          "이름": "관악구청 새소식",
+          "url": "http://www.gwanak.go.kr/site/gwanak/publicData/PublicData.do?dataid=rss&cbIdx=239"
+        }
+      ]
+    },
+    "광진": {
+      "feeds": [
+        {
+          "이름": "광진구청 보도자료",
+          "url": "https://www.gwangjin.go.kr/portal/bbs/B0000002/rssService.do?viewType=CONTBODY&bbsId=B02"
+        }
+      ]
+    },
+    "구로": {
+      "feeds": [
+        {
+          "이름": "구로구청 새소식",
+          "url": "https://www.guro.go.kr/rssBbsNtt.do?bbsNo=662&integrDeptCode="
+        }
+      ]
+    },
+    "금천": {
+      "feeds": [
+        {
+          "이름": "금천구청 보도자료",
+          "url": "https://www.geumcheon.go.kr/portal/rssBbsNtt.do?key=297&id=&bbsNo=8&searchCtgry=&pageUnit=10&searchCnd=all&searchKrwd=&integrDeptCode=&searchDeptCode=&pageIndex=1"
+        }
+      ]
+    },
+    "노원": {
+      "feeds": [
+        {
+          "이름": "노원구청 공지사항",
+          "url": "https://www.nowon.kr/www/user/bbs/ND_selectRssList.do?q_bbsCode=1001&q_estnColumn1=11"
+        }
+      ]
+    },
+    "도봉": {
+      "feeds": [
+        {
+          "이름": "도봉구 공지사항",
+          "url": "https://www.dobong.go.kr/WDB_common/rss/bbs.asp?code=10004124"
+        }
+      ]
+    },
+    "동대문": {
+      "feeds": []
+    },
+    "동작": {
+      "feeds": [
+        {
+          "이름": "동작구청 알려드립니다",
+          "url": "https://www.dongjak.go.kr/portal/bbs/B0000022/rssService.do?menuNo=200641"
+        }
+      ]
+    },
+    "마포": {
+      "feeds": [
+        {
+          "이름": "마포구청 공고/고시",
+          "url": "https://www.mapo.go.kr/site/main/rss/gosi/list?1=1"
+        }
+      ]
+    },
+    "서대문": {
+      "feeds": [
+        {
+          "이름": "서대문구 공지사항",
+          "url": "http://www.sdm.go.kr/rss/rssBoard.do?seq=106"
+        }
+      ]
+    },
+    "서초": {
+      "feeds": [
+        {
+          "이름": "서초구청 공지사항",
+          "url": "https://www.seocho.go.kr/rss/notice.jsp?1=1"
+        }
+      ]
+    },
+    "성동": {
+      "feeds": [
+        {
+          "이름": "성동구청 새소식",
+          "url": "https://www.sd.go.kr/rssBbsNtt.do?bbsNo=183"
+        }
+      ]
+    },
+    "성북": {
+      "feeds": [
+        {
+          "이름": "성북구청 구정안내",
+          "url": "http://www.sb.go.kr/RssXML3.do?listcount=20&fid=sosik"
+        }
+      ]
+    },
+    "양천": {
+      "feeds": [
+        {
+          "이름": "양천구청 공지사항",
+          "url": "https://www.yangcheon.go.kr/rss/yangcheon/board/254.do?siteCd=yangcheon"
+        }
+      ]
+    },
+    "영등포": {
+      "feeds": [
+        {
+          "이름": "영등포구청 영등포소식",
+          "url": "https://www.ydp.go.kr/rssBbsNtt.do?bbsNo=40&integrDeptCode="
+        }
+      ]
+    },
+    "용산": {
+      "feeds": []
+    },
+    "은평": {
+      "feeds": [
+        {
+          "이름": "은평구청 강좌안내",
+          "url": "https://www.ep.go.kr/rssBbsNtt.do?bbsNo=44"
+        }
+      ]
+    },
+    "종로": {
+      "feeds": [
+        {
+          "이름": "종로구청 교육",
+          "url": "https://www.jongno.go.kr/Rss.do?fid=Education"
+        }
+      ]
+    },
+    "중구": {
+      "feeds": [
+        {
+          "이름": "중구 공지사항",
+          "url": "https://www.junggu.seoul.kr/rss.jsp?bid=457&returnURL=https://www.junggu.seoul.kr/content.do?cmsid=14231"
+        }
+      ]
+    },
+    "중랑": {
+      "feeds": [
+        {
+          "이름": "중랑구 공지사항",
+          "url": "https://www.jungnang.go.kr/portal/bbs/rss/B0000002.do?menuNo=200473"
+        }
+      ]
+    },
+    "송파": {
+      "feeds": []
+    }
+  }
+}
