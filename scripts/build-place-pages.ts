@@ -160,7 +160,22 @@ function upcomingEventDates(p: Place): { startDate: string; endDate?: string } |
   //    📌 사람이 손으로 적은 축제(`ks_…`)도 이쪽으로는 날짜가 들어온다 —
   //       아래 관광공사 길은 `tour_` 만 보므로 그쪽은 영영 못 받던 것이다.
   const sure = guFestivalDate(p.id);
-  if (sure) return { startDate: sure.start, ...(sure.end ? { endDate: sure.end } : {}) };
+  // 📅 **끝나는 날이 없으면 하루짜리다 — 그래서 시작일을 그대로 끝으로 쓴다.**
+  //    짐작이 아니라 **우리 자료의 약속**이다. 날짜를 받아 오는 세 곳이 전부
+  //    「끝나는 날이 시작과 같으면 적지 않는다」로 저장한다
+  //    (fetch-gu-festival-dates.ts 365줄 · fetch-funseoul-dates.ts 115줄,
+  //     사람 자리는 guFestival.ts 의 `하루짜리면 없다` 주석).
+  //    그러니 여기서 비어 있다는 것은 「모른다」가 아니라 **「하루다」**라는 뜻이다.
+  //
+  //    🔎 왜 채우나 — 구글 Search Console 이 2026-10-08에 알려 왔다:
+  //       「‘endDate’ 입력란이 누락되었습니다」(심각하지 않은 문제).
+  //       검색에서 빠지지는 않지만, 끝나는 날이 없으면 구글이 **언제까지 보여 줄지**
+  //       를 못 정한다. 하루짜리 행사가 지난 뒤에도 검색에 남으면 손님이 헛걸음한다.
+  //
+  //    🚫 관광공사 쪽(아래)은 이렇게 하지 않는다. 그쪽은 end 를 **늘 함께 주므로**
+  //       비어 있다면 자료가 깨진 것이고, 그때 시작일로 메우면 **없는 사실을 지어내는**
+  //       꼴이 된다. (실제로 126건 전부 end 가 있다 — 2026-10-09 확인.)
+  if (sure) return { startDate: sure.start, endDate: sure.end ?? sure.start };
   if (!p.id.startsWith("tour_")) return undefined;
   const rec = FESTIVAL_DATES[p.id.slice("tour_".length)];
   const start = rec?.start;

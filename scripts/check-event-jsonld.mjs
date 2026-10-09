@@ -65,6 +65,13 @@ for (const slug of readdirSync(PLACES)) {
     if (!/Festival|Event/.test(String(d["@type"] ?? ""))) continue;
     festivals++;
     if (!d.startDate) bad.push([slug, "startDate 없음 (검색 결과에서 빠진다)"]);
+    // 📅 **끝나는 날도 반드시 넣는다** (구글이 2026-10-08에 알려 와서 달았다:
+    //    「‘endDate’ 입력란이 누락되었습니다」). 검색에서 빠지지는 않지만, 끝나는
+    //    날이 없으면 구글이 **언제까지 보여 줄지**를 못 정한다 — 지난 행사가 검색에
+    //    남으면 손님이 헛걸음한다.
+    //    하루짜리는 끝 = 시작으로 채운다(build-place-pages.ts 의 upcomingEventDates).
+    //    그러니 여기서 비어 있다면 **그 자리를 안 거친 것**이고, 그건 고쳐야 한다.
+    else if (!d.endDate) bad.push([slug, "endDate 없음 (하루짜리면 시작일을 그대로 넣는다)"]);
     if (!d.location) bad.push([slug, "location 없음 (검색 결과에서 빠진다)"]);
     else if (!d.location.address) bad.push([slug, "location 안에 address 가 없다"]);
     // 🚨 **끝난 행사**를 내면 손님이 헛걸음한다 — 빈 칸이 틀린 값보다 낫다.
@@ -99,7 +106,19 @@ if (bad.length) {
   console.log("");
   for (const [slug, why] of bad.slice(0, 20)) console.log(`   ❌ ${slug} — ${why}`);
   if (bad.length > 20) console.log(`   … 그 밖에 ${bad.length - 20}건`);
-  console.log(`\n❌ 행사 구조화 자료 문제 ${bad.length}건 — 이대로면 구글이 그 페이지를 안 띄운다`);
+  // 🈳 **무게를 섞어 말하지 않는다.** startDate·location 이 없으면 구글이 그 페이지를
+  //    행사로 **안 띄운다**(심각). endDate 가 없는 것은 구글이 「심각하지 않은 문제」로
+  //    분류한다 — 검색에서 빠지지는 않는다. 둘을 같은 말로 적으면,
+  //    다음 사람이 가벼운 쪽을 보고 **경보 전체를 안 믿게 된다.** 그게 제일 비싸다.
+  //    (그래도 둘 다 막는다 — 고치는 값이 싸고, 끝나는 날이 없으면 지난 행사가
+  //     검색에 남아 손님이 헛걸음한다.)
+  const 가벼움 = bad.every(([, why]) => why.startsWith("endDate 없음"));
+  console.log(
+    `\n❌ 행사 구조화 자료 문제 ${bad.length}건 — ` +
+      (가벼움
+        ? "검색에서 빠지지는 않지만(구글이 「심각하지 않은 문제」라 한다) 끝나는 날은 채운다"
+        : "이대로면 구글이 그 페이지를 안 띄운다"),
+  );
   process.exit(1);
 }
 
