@@ -16,6 +16,13 @@ on:
         description: "photo-gallery.json 에 실제로 저장할지 (꺼두면 로그만 확인)"
         type: boolean
         default: false
+      missing:
+        # 📷 사진이 **없는 곳만** 물어본다. 빈 자리를 채우려는 날에 쓴다 —
+        #    전부 물어보면 300곳이 넘어 50분이 걸리고 갤러리 하루 한도를 다 쓴다
+        #    (2026-10-07에 429로 끊겼다).
+        description: "사진이 없는 곳만 찾는다 (켜면 빠르고 한도를 아낀다)"
+        type: boolean
+        default: false
       limit:
         # 🚨 "빈 칸이면 전체"로 만들 수 없다 — workflow_dispatch는 빈 값을 받으면
         #    여기 적힌 default로 되돌린다. 그래서 전체는 all이라고 적게 한다.
@@ -36,6 +43,7 @@ jobs:
     env:
       APPLY: ${{ inputs.apply }}
       LIMIT: ${{ inputs.limit }}
+      MISSING: ${{ inputs.missing }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -60,6 +68,7 @@ jobs:
           set -o pipefail
           ARGS="links.json"
           if [ -n "$LIMIT" ] && [ "$LIMIT" != "all" ]; then ARGS="$ARGS --limit $LIMIT"; fi
+          if [ "$MISSING" = "true" ]; then ARGS="$ARGS --missing"; fi
           if [ "$APPLY" = "true" ]; then ARGS="$ARGS --apply"; fi
           node scripts/fetch-photo-gallery.mjs $ARGS 2>&1 | tee gallery-log.txt
 

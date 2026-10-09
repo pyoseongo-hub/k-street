@@ -99,10 +99,27 @@ for (const p of [...dump.festivals, ...dump.hidden, ...dump.rows]) {
   const key = `${nfc(p.gu)}|${nfc(p.name)}`;
   if (!byKey.has(key)) byKey.set(key, p);
 }
-const targets = [...byKey.values()].slice(0, LIMIT);
+// 📷 **사진이 없는 곳만 다시 물어보기** (사장님 지시 2026-10-10: "축제 중 사진 없는 거
+//    다시 확인해서 채워").
+//
+//    위 주석대로 평소에는 **사진이 있는 곳까지 전부** 물어본다 — 갤러리에 더 좋은
+//    사진이 있을 수 있어서다. 그런데 그러면 한 번에 300곳이 넘어 **50분이 걸리고
+//    갤러리 하루 한도를 다 쓴다**(2026-10-07에 429로 끊겼다).
+//
+//    빈 자리만 채우려는 날에는 그 값이 아깝다. `--missing` 을 주면
+//    **이미 사진이 있는 곳은 건너뛴다.** 기본값은 예전 그대로(전부)라 평소 쓰임은 안 바뀐다.
+const MISSING_ONLY = process.argv.includes("--missing");
+const 사진있나 = (p) => Boolean(p.image || p.thumb);
+const 모두 = [...byKey.values()];
+const 고른것 = MISSING_ONLY ? 모두.filter((p) => !사진있나(p)) : 모두;
+const targets = 고른것.slice(0, LIMIT);
 
-console.log(`**${byKey.size}곳**을 갤러리에서 찾아본다 (사진이 이미 있는 곳까지 전부).`);
-if (targets.length !== byKey.size) console.log(`(이번 실행은 앞 ${targets.length}곳만)`);
+console.log(
+  MISSING_ONLY
+    ? `**${고른것.length}곳**을 갤러리에서 찾아본다 (${모두.length}곳 중 **사진이 없는 곳만**).`
+    : `**${byKey.size}곳**을 갤러리에서 찾아본다 (사진이 이미 있는 곳까지 전부).`,
+);
+if (targets.length !== 고른것.length) console.log(`(이번 실행은 앞 ${targets.length}곳만)`);
 console.log(APPLY ? "저장: 켬\n" : "저장: 끔 (맛보기)\n");
 
 // ── ② 창구 부르기 ────────────────────────────────────────────────────────
