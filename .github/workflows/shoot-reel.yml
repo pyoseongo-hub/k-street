@@ -60,6 +60,9 @@ jobs:
           name: kstreet-reel-stills
           path: docs/홍보-사진/릴스/*.png
           if-no-files-found: error
+          # 🗑️ 보관일. 없으면 깃허브 기본 **90일**이라 조용히 쌓인다 —
+          #    계정 전체 무료 한도가 0.5GB 뿐이고 2026-10-03에 100%를 찍었다.
+          retention-days: 14
 
       - name: 저장소에 커밋
         if: ${{ inputs.apply }}
