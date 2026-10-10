@@ -103,9 +103,23 @@ function parse(code: number, html: string): { ok?: Found; ended?: Found; why?: s
     if (lines[i] !== "기간") continue;
     const m = DATE_LINE.exec(lines[i + 1] ?? "");
     if (!m) continue;
-    const title = (lines[i - 1] ?? "").trim();
+    // 🐞 **「기간」 바로 앞 줄이 이름이 아닐 때가 있다** (2026-10-09에 잡았다).
+    //    사장님이 festacode=542 를 보여 줘서 알았다. 그 쪽의 글 순서는 이렇다 —
+    //      도봉구 / 제15회 도봉한글잔치 / 2026-10-09 ~ 2026-10-09 / 방학동 원당샘공원 /
+    //      홈페이지 / 관심 있어요 / 축제 안내 / **세부정보** / 기간 / 2026-10-09 ~ …
+    //    즉 「기간」 앞 줄이 **「세부정보」**다. 이름을 「세부정보」로 읽어 버렸고,
+    //    그래서 우리 「도봉한글잔치」와 영영 안 맞았다 — **조용히.**
+    //    → 자리 이름 같은 줄은 넘기고 **이름처럼 생긴 줄**까지 거슬러 올라간다.
+    const 자리말 = new Set([
+      "세부정보", "축제 안내", "기간", "시간", "장소", "대상", "요금", "문의",
+      "홈페이지", "관심 있어요", "축제 검색", "상세정보", "첨부파일", "주최", "주관",
+    ]);
+    let t = i - 1;
+    while (t >= 0 && (!lines[t] || 자리말.has(lines[t]) || DATE_LINE.test(lines[t]))) t--;
+    if (i - t > 8) continue; // 너무 멀면 엉뚱한 줄이다 — 지어내지 않는다
+    const title = (lines[t] ?? "").trim();
     if (!title || title.length > 80) continue;
-    const before = (lines[i - 2] ?? "").trim();
+    const before = (lines[t - 1] ?? "").trim();
     const gu = /^[가-힣]{1,4}[구군]$/.test(before) ? before : undefined;
     const placeLine = lines.slice(i + 2, i + 5).find((l) => l.startsWith("장소"));
     blocks.push({
