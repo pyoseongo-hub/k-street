@@ -159,6 +159,27 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
     [gu, inCategory]
   );
 
+  /**
+   * 🗺️ **고른 동네에 무엇이 있나** — 그 구에 곳이 있는 갈래만 모은다 (2026-10-10).
+   *
+   * 사장님: *"동네에서 카테고리 고르는것도 맞지만 내지역에서 시장 갈지
+   * 꽃길 갈지 결정 하는게 더 맞는거 같아"*
+   *
+   * 맞는 말이다. 손님은 숙소가 정해져 있다 — **「어디 갈까」가 아니라
+   * 「여기서 뭘 볼까」**를 묻는다. 그래서 구를 먼저 고르고 갈래를 바꾼다.
+   * 그때 **그 구에 없는 갈래**는 눌러도 빈 화면이라, 흐리게 표시해 미리 알려 준다.
+   * 🚫 **감추지는 않는다.** 칩이 사라지면 자리가 밀려서 손이 엉뚱한 것을 누른다.
+   */
+  const catsHere = useMemo(() => {
+    if (!gu) return null;
+    const here = new Set<string>();
+    for (const c of MAP_CHIPS) {
+      const cats = catsOf(c.key);
+      if (PLACES.some((p) => p.gu === gu && inCategories(p, cats))) here.add(c.key);
+    }
+    return here;
+  }, [gu, PLACES]);
+
   // 📏 **가까운 순 보기** (2026-09-12 사장님 생각).
   //
   //    "구를 선택 / 아래로 리스트 거리순 나열 / 1km 미만 장소 …
@@ -244,12 +265,13 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
           {shownChips.map(({ key: c, label }) => (
             <button
               key={c}
-              className={"cat-chip" + (c === category ? " active" : "")}
+              className={
+                "cat-chip" +
+                (c === category ? " active" : "") +
+                (catsHere && !catsHere.has(c) ? " cat-chip-empty" : "")
+              }
               style={{ "--cc": CATEGORY_META[c].color } as CSSProperties}
-              onClick={() => {
-                setCategory(c);
-                setGu(null);
-              }}
+              onClick={() => setCategory(c)}
             >
               <span className="cat-chip-icon">
                 {CATEGORY_META[c].iconImage ? (
