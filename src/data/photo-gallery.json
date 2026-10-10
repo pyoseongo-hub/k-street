@@ -1372,5 +1372,1282 @@
     "source": "한국관광공사 관광사진갤러리(포토코리아)",
     "license": "공공누리 제1유형",
     "fetchedAt": "2026-09-04"
+  },
+  "강서구|가덕도 연대봉": {
+    "name": "가덕도 연대봉",
+    "gu": "강서구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/27/2925827.jpg",
+        "title": "가덕도 연대봉",
+        "photographer": "부산관광공사",
+        "createdAt": "20221130131624",
+        "contentId": "2925827"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "남구|황령산 전망대": {
+    "name": "황령산 전망대",
+    "gu": "남구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/07/2803007.jpg",
+        "title": "황령산 전망대",
+        "photographer": "부산울산지사 디자인글꼴",
+        "createdAt": "20211228172013",
+        "contentId": "2803007"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/06/2803006.jpg",
+        "title": "황령산 전망대",
+        "photographer": "부산울산지사 디자인글꼴",
+        "createdAt": "20211228171942",
+        "contentId": "2803006"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/05/2803005.jpg",
+        "title": "황령산 전망대",
+        "photographer": "부산울산지사 디자인글꼴",
+        "createdAt": "20211228171909",
+        "contentId": "2803005"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/04/2803004.jpg",
+        "title": "황령산 전망대",
+        "photographer": "부산울산지사 디자인글꼴",
+        "createdAt": "20211228171833",
+        "contentId": "2803004"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/02/2803002.jpg",
+        "title": "황령산 전망대",
+        "photographer": "부산울산지사 디자인글꼴",
+        "createdAt": "20211228171619",
+        "contentId": "2803002"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "영도구|절영해안산책로": {
+    "name": "절영해안산책로",
+    "gu": "영도구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/14/2927514.jpg",
+        "title": "절영해안산책로",
+        "photographer": "부산관광공사",
+        "createdAt": "20221130201804",
+        "contentId": "2927514"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/18/2927518.jpg",
+        "title": "절영해안산책로",
+        "photographer": "부산관광공사",
+        "createdAt": "20221130201805",
+        "contentId": "2927518"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/81/2927581.jpg",
+        "title": "절영해안산책로",
+        "photographer": "부산관광공사",
+        "createdAt": "20221130201848",
+        "contentId": "2927581"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/99/2620299.jpg",
+        "title": "부산 절영해안산책로",
+        "photographer": "권일민",
+        "createdAt": "20190921024427",
+        "contentId": "2620299"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/46/2443446.jpg",
+        "title": "절영해안산책로",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20161128143840",
+        "contentId": "2443446"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "마포구|망원한강공원": {
+    "name": "망원한강공원",
+    "gu": "마포구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/05/3551105.jpg",
+        "title": "망원한강공원",
+        "photographer": "서문교",
+        "createdAt": "20251020110043",
+        "contentId": "3551105"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/85/2676385.jpg",
+        "title": "한강시민공원 망원지구(망원한강공원)",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20201014140107",
+        "contentId": "2676385"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/84/2676384.jpg",
+        "title": "한강시민공원 망원지구(망원한강공원)",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20201014140007",
+        "contentId": "2676384"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/83/2676383.jpg",
+        "title": "한강시민공원 망원지구(망원한강공원)",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20201014135919",
+        "contentId": "2676383"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/81/2676381.jpg",
+        "title": "한강시민공원 망원지구(망원한강공원)",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20201014135547",
+        "contentId": "2676381"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "서귀포시|동백포레스트": {
+    "name": "동백포레스트",
+    "gu": "서귀포시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/08/2710908.jpg",
+        "title": "동백포레스트",
+        "photographer": "한국관광공사 신수진",
+        "createdAt": "20210324141158",
+        "contentId": "2710908"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "제주시|제주절물자연휴양림": {
+    "name": "제주절물자연휴양림",
+    "gu": "제주시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/00/2390900.jpg",
+        "title": "제주절물자연휴양림",
+        "photographer": "한국관광공사 김지호 ",
+        "createdAt": "20160630140914",
+        "contentId": "2390900"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/07/2390907.jpg",
+        "title": "제주절물자연휴양림",
+        "photographer": "한국관광공사 김지호 ",
+        "createdAt": "20160630141431",
+        "contentId": "2390907"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/03/2390903.jpg",
+        "title": "제주절물자연휴양림",
+        "photographer": "한국관광공사 김지호 ",
+        "createdAt": "20160630141217",
+        "contentId": "2390903"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/02/2390902.jpg",
+        "title": "제주절물자연휴양림",
+        "photographer": "한국관광공사 김지호 ",
+        "createdAt": "20160630141142",
+        "contentId": "2390902"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/99/2390899.jpg",
+        "title": "제주절물자연휴양림",
+        "photographer": "한국관광공사 김지호 ",
+        "createdAt": "20160630140746",
+        "contentId": "2390899"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "경주시|운곡서원": {
+    "name": "운곡서원",
+    "gu": "경주시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/56/3043056.jpg",
+        "title": "운곡서원의 가을",
+        "photographer": "노명유",
+        "createdAt": "20231117152559",
+        "contentId": "3043056"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "안동시|예끼마을": {
+    "name": "예끼마을",
+    "gu": "안동시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/37/2950037.jpg",
+        "title": "예끼마을",
+        "photographer": "앙지뉴 필름",
+        "createdAt": "20230220165832",
+        "contentId": "2950037"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/36/2950036.jpg",
+        "title": "예끼마을",
+        "photographer": "앙지뉴 필름",
+        "createdAt": "20230220165759",
+        "contentId": "2950036"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/35/2950035.jpg",
+        "title": "예끼마을",
+        "photographer": "앙지뉴 필름",
+        "createdAt": "20230220165438",
+        "contentId": "2950035"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/34/2950034.jpg",
+        "title": "예끼마을",
+        "photographer": "앙지뉴 필름",
+        "createdAt": "20230220165402",
+        "contentId": "2950034"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/33/2950033.jpg",
+        "title": "예끼마을",
+        "photographer": "앙지뉴 필름",
+        "createdAt": "20230220165138",
+        "contentId": "2950033"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "정읍시|미르샘 다리": {
+    "name": "미르샘 다리",
+    "gu": "정읍시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/82/2907782.jpeg",
+        "title": "미르샘다리",
+        "photographer": "남상우",
+        "createdAt": "20221114173637",
+        "contentId": "2907782"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "동해시|추암조각공원": {
+    "name": "추암조각공원",
+    "gu": "동해시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/47/1928447.jpg",
+        "title": "추암조각공원",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140625161305",
+        "contentId": "1928447"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/46/1928446.jpg",
+        "title": "추암조각공원",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140625161230",
+        "contentId": "1928446"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/45/1928445.jpg",
+        "title": "추암조각공원",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140625161140",
+        "contentId": "1928445"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/42/1928442.jpg",
+        "title": "추암조각공원",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140625160843",
+        "contentId": "1928442"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/43/1928443.jpg",
+        "title": "추암조각공원",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20140625160843",
+        "contentId": "1928443"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "삼척시|황영조 기념공원": {
+    "name": "황영조 기념공원",
+    "gu": "삼척시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/42/2716142.jpg",
+        "title": "황영조기념공원",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20210511150108",
+        "contentId": "2716142"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/41/2716141.jpg",
+        "title": "황영조기념공원",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20210511150001",
+        "contentId": "2716141"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/40/2716140.jpg",
+        "title": "황영조기념공원",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20210511145745",
+        "contentId": "2716140"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "속초시|동명항": {
+    "name": "동명항",
+    "gu": "속초시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/86/2028786.jpg",
+        "title": "동명항",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20150911132833",
+        "contentId": "2028786"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/88/2028788.jpg",
+        "title": "동명항",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20150911133011",
+        "contentId": "2028788"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/89/2028789.jpg",
+        "title": "동명항",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20150911133408",
+        "contentId": "2028789"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "양구군|양구전쟁기념관": {
+    "name": "양구전쟁기념관",
+    "gu": "양구군",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/83/2025583.jpg",
+        "title": "양구전쟁기념관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20150827143350",
+        "contentId": "2025583"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/81/2025581.jpg",
+        "title": "양구전쟁기념관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20150827142831",
+        "contentId": "2025581"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/80/2025580.jpg",
+        "title": "양구전쟁기념관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20150827142755",
+        "contentId": "2025580"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/79/2025579.jpg",
+        "title": "양구전쟁기념관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20150827142714",
+        "contentId": "2025579"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/78/2025578.jpg",
+        "title": "양구전쟁기념관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20150827142613",
+        "contentId": "2025578"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "평창군|휘닉스 파크": {
+    "name": "휘닉스 파크",
+    "gu": "평창군",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/71/1770471.jpg",
+        "title": "휘닉스파크스키장",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20121221104252",
+        "contentId": "1770471"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/59/1770459.jpg",
+        "title": "휘닉스파크스키장",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20121221102441",
+        "contentId": "1770459"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/58/1770458.jpg",
+        "title": "휘닉스파크스키장",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20121221102222",
+        "contentId": "1770458"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/46/1770446.jpg",
+        "title": "휘닉스파크스키장",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20121221101837",
+        "contentId": "1770446"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/39/1770439.jpg",
+        "title": "휘닉스파크스키장",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20121221101448",
+        "contentId": "1770439"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "화천군|칠성전망대": {
+    "name": "칠성전망대",
+    "gu": "화천군",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/12/2594312.jpg",
+        "title": "칠성전망대",
+        "photographer": "한반도관광센터 비켄",
+        "createdAt": "20190402102014",
+        "contentId": "2594312"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/07/2594307.jpg",
+        "title": "칠성전망대",
+        "photographer": "한반도관광센터 비켄",
+        "createdAt": "20190402101941",
+        "contentId": "2594307"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/99/2594299.jpg",
+        "title": "칠성전망대",
+        "photographer": "한반도관광센터 비켄",
+        "createdAt": "20190402101915",
+        "contentId": "2594299"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/97/2594297.jpg",
+        "title": "칠성전망대",
+        "photographer": "한반도관광센터 비켄",
+        "createdAt": "20190402101848",
+        "contentId": "2594297"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/92/2594292.jpg",
+        "title": "칠성전망대",
+        "photographer": "한반도관광센터 비켄",
+        "createdAt": "20190402101826",
+        "contentId": "2594292"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "화천군|피니시타워": {
+    "name": "피니시타워",
+    "gu": "화천군",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/40/2594340.jpg",
+        "title": "피니시타워",
+        "photographer": "한반도관광센터 비켄",
+        "createdAt": "20190402102538",
+        "contentId": "2594340"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/41/2594341.jpg",
+        "title": "피니시타워",
+        "photographer": "한반도관광센터 비켄",
+        "createdAt": "20190402102613",
+        "contentId": "2594341"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/39/2594339.jpg",
+        "title": "피니시타워",
+        "photographer": "한반도관광센터 비켄",
+        "createdAt": "20190402102508",
+        "contentId": "2594339"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/38/2594338.jpg",
+        "title": "피니시타워",
+        "photographer": "한반도관광센터 비켄",
+        "createdAt": "20190402102446",
+        "contentId": "2594338"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/33/2594333.jpg",
+        "title": "피니시타워",
+        "photographer": "한반도관광센터 비켄",
+        "createdAt": "20190402102347",
+        "contentId": "2594333"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "수원시|팔달문": {
+    "name": "팔달문",
+    "gu": "수원시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/81/2612081.jpg",
+        "title": "팔달문시장",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20190719135012",
+        "contentId": "2612081"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/80/2612080.jpg",
+        "title": "팔달문시장",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20190719134944",
+        "contentId": "2612080"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/79/2612079.jpg",
+        "title": "팔달문시장",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20190719134918",
+        "contentId": "2612079"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/78/2612078.jpg",
+        "title": "팔달문시장",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20190719134827",
+        "contentId": "2612078"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "파주시|도라전망대": {
+    "name": "도라전망대",
+    "gu": "파주시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/40/2574740.jpg",
+        "title": "도라전망대",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181206165819",
+        "contentId": "2574740"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/38/2574738.jpg",
+        "title": "도라전망대",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181206165757",
+        "contentId": "2574738"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/36/2574736.jpg",
+        "title": "도라전망대",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181206165737",
+        "contentId": "2574736"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/33/2574733.jpg",
+        "title": "도라전망대",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181206165657",
+        "contentId": "2574733"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/31/2574731.jpg",
+        "title": "도라전망대",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181206165625",
+        "contentId": "2574731"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "파주시|제3땅굴": {
+    "name": "제3땅굴",
+    "gu": "파주시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/04/2574904.jpg",
+        "title": "제3땅굴",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181206180223",
+        "contentId": "2574904"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/02/2574902.jpg",
+        "title": "제3땅굴",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181206180107",
+        "contentId": "2574902"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/01/2574901.jpg",
+        "title": "제3땅굴",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181206180048",
+        "contentId": "2574901"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/99/2574899.jpg",
+        "title": "제3땅굴",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181206175958",
+        "contentId": "2574899"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/97/2574897.jpg",
+        "title": "제3땅굴",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181206175914",
+        "contentId": "2574897"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "포천시|명성산": {
+    "name": "명성산",
+    "gu": "포천시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/24/2585724.jpg",
+        "title": "명성산",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20190108103712",
+        "contentId": "2585724"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/23/2585723.jpg",
+        "title": "명성산",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20190108103650",
+        "contentId": "2585723"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/22/2585722.jpg",
+        "title": "명성산",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20190108103627",
+        "contentId": "2585722"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/21/2585721.jpg",
+        "title": "명성산",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20190108103539",
+        "contentId": "2585721"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/20/2585720.jpg",
+        "title": "명성산",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20190108103512",
+        "contentId": "2585720"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "밀양시|달빛쌈지공원": {
+    "name": "달빛쌈지공원",
+    "gu": "밀양시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/05/3067405.JPG",
+        "title": "달빛쌈지공원",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20231213112817",
+        "contentId": "3067405"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/04/3067404.JPG",
+        "title": "달빛쌈지공원",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20231213112743",
+        "contentId": "3067404"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/88/3067388.JPG",
+        "title": "달빛쌈지공원",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20231213112717",
+        "contentId": "3067388"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/72/3067372.JPG",
+        "title": "달빛쌈지공원",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20231213112625",
+        "contentId": "3067372"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/71/3067371.JPG",
+        "title": "달빛쌈지공원",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20231213112537",
+        "contentId": "3067371"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "담양군|담양곤충박물관": {
+    "name": "담양곤충박물관",
+    "gu": "담양군",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/85/2564785.jpg",
+        "title": "담양곤충박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181101024857",
+        "contentId": "2564785"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/86/2564786.jpg",
+        "title": "담양곤충박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181101025543",
+        "contentId": "2564786"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/87/2564787.jpg",
+        "title": "담양곤충박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181101025654",
+        "contentId": "2564787"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/88/2564788.jpg",
+        "title": "담양곤충박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181101025802",
+        "contentId": "2564788"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/89/2564789.jpg",
+        "title": "담양곤충박물관",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20181101030033",
+        "contentId": "2564789"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "순천시|순천 웃장": {
+    "name": "순천 웃장",
+    "gu": "순천시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/95/2836195.jpg",
+        "title": "순천웃장",
+        "photographer": "한국관광공사 송재근",
+        "createdAt": "20220812095900",
+        "contentId": "2836195"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/99/2836199.jpg",
+        "title": "순천웃장",
+        "photographer": "한국관광공사 송재근",
+        "createdAt": "20220812095942",
+        "contentId": "2836199"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/06/2836206.jpg",
+        "title": "순천웃장",
+        "photographer": "한국관광공사 송재근",
+        "createdAt": "20220812100146",
+        "contentId": "2836206"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/07/2836207.jpg",
+        "title": "순천웃장",
+        "photographer": "한국관광공사 송재근",
+        "createdAt": "20220812100252",
+        "contentId": "2836207"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/08/2836208.jpg",
+        "title": "순천웃장",
+        "photographer": "한국관광공사 송재근",
+        "createdAt": "20220812100616",
+        "contentId": "2836208"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "화순군|운주사": {
+    "name": "운주사",
+    "gu": "화순군",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/91/3387291.jpg",
+        "title": "화순 운주사",
+        "photographer": "강시몬",
+        "createdAt": "20241015111931",
+        "contentId": "3387291"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/98/3387298.jpg",
+        "title": "화순 운주사",
+        "photographer": "강시몬",
+        "createdAt": "20241015112002",
+        "contentId": "3387298"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/14/3387314.jpg",
+        "title": "화순 운주사",
+        "photographer": "강시몬",
+        "createdAt": "20241015112231",
+        "contentId": "3387314"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/18/3387318.jpg",
+        "title": "화순 운주사",
+        "photographer": "강시몬",
+        "createdAt": "20241015112323",
+        "contentId": "3387318"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/19/3387319.jpg",
+        "title": "화순 운주사",
+        "photographer": "강시몬",
+        "createdAt": "20241015112345",
+        "contentId": "3387319"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "논산시|강경역사관": {
+    "name": "강경역사관",
+    "gu": "논산시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/00/2442500.jpg",
+        "title": "강경역사관(구 한일은행 강경지점)",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20161122170206",
+        "contentId": "2442500"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/96/2442496.jpg",
+        "title": "강경역사관(구 한일은행 강경지점)",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20161122170016",
+        "contentId": "2442496"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/95/2442495.jpg",
+        "title": "강경역사관(구 한일은행 강경지점)",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20161122165952",
+        "contentId": "2442495"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/94/2442494.jpg",
+        "title": "강경역사관(구 한일은행 강경지점)",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20161122165925",
+        "contentId": "2442494"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/93/2442493.jpg",
+        "title": "강경역사관(구 한일은행 강경지점)",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20161122165905",
+        "contentId": "2442493"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "서산시|웅도": {
+    "name": "웅도",
+    "gu": "서산시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/54/2664354.jpg",
+        "title": "웅도",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20200720163308",
+        "contentId": "2664354"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/53/2664353.jpg",
+        "title": "웅도",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20200720163234",
+        "contentId": "2664353"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/52/2664352.jpg",
+        "title": "웅도",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20200720163150",
+        "contentId": "2664352"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/51/2664351.jpg",
+        "title": "웅도",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20200720163112",
+        "contentId": "2664351"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/50/2664350.jpg",
+        "title": "웅도",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20200720163045",
+        "contentId": "2664350"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "홍성군|결성농요농사박물관": {
+    "name": "결성농요농사박물관",
+    "gu": "홍성군",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/12/1611812.jpg",
+        "title": "결성농요농사박물관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20120424191908",
+        "contentId": "1611812"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/65/1611865.jpg",
+        "title": "결성농요농사박물관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20120424103817",
+        "contentId": "1611865"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/25/1611825.jpg",
+        "title": "결성농요농사박물관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20120424102357",
+        "contentId": "1611825"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/28/1611828.jpg",
+        "title": "결성농요농사박물관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20120424102544",
+        "contentId": "1611828"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/23/1611823.jpg",
+        "title": "결성농요농사박물관",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20120424102225",
+        "contentId": "1611823"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "홍성군|김좌진 장군 생가지": {
+    "name": "김좌진 장군 생가지",
+    "gu": "홍성군",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/39/2048239.jpg",
+        "title": "김좌진장군생가지",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20151210111513",
+        "contentId": "2048239"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/31/2048231.jpg",
+        "title": "김좌진장군생가지",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20151210111149",
+        "contentId": "2048231"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/30/2048230.jpg",
+        "title": "김좌진장군생가지",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20151210111120",
+        "contentId": "2048230"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/18/2048218.jpg",
+        "title": "김좌진장군생가지",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20151210110652",
+        "contentId": "2048218"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/15/2048215.jpg",
+        "title": "김좌진장군생가지",
+        "photographer": "한국관광공사 김지호",
+        "createdAt": "20151210110539",
+        "contentId": "2048215"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "홍성군|오서산": {
+    "name": "오서산",
+    "gu": "홍성군",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/68/4064268.jpg",
+        "title": "오서산",
+        "photographer": "김석태",
+        "createdAt": "20260513155039",
+        "contentId": "4064268"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/69/4064269.jpg",
+        "title": "오서산",
+        "photographer": "김석태",
+        "createdAt": "20260513155103",
+        "contentId": "4064269"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/15/2006915.jpg",
+        "title": "오서산자연휴양림",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20150601174542",
+        "contentId": "2006915"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/14/2006914.jpg",
+        "title": "오서산자연휴양림",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20150601174450",
+        "contentId": "2006914"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/11/2006911.jpg",
+        "title": "오서산자연휴양림",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20150601174419",
+        "contentId": "2006911"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "금천구|벚꽃로": {
+    "name": "벚꽃로",
+    "gu": "금천구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/17/2707517.jpg",
+        "title": "남해 벚꽃로드",
+        "photographer": "이정훈",
+        "createdAt": "20210302165343",
+        "contentId": "2707517"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "강남구|양재천": {
+    "name": "양재천",
+    "gu": "강남구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/16/2535416.jpg",
+        "title": "양재천",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180201170533",
+        "contentId": "2535416"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/15/2535415.jpg",
+        "title": "양재천",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180201170454",
+        "contentId": "2535415"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/14/2535414.jpg",
+        "title": "양재천",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180201170430",
+        "contentId": "2535414"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/13/2535413.jpg",
+        "title": "양재천",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180201170359",
+        "contentId": "2535413"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/12/2535412.jpg",
+        "title": "양재천",
+        "photographer": "IR 스튜디오",
+        "createdAt": "20180201170245",
+        "contentId": "2535412"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "중구|명동거리": {
+    "name": "명동거리",
+    "gu": "중구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/57/2997057.JPG",
+        "title": "명동거리",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20230803171728",
+        "contentId": "2997057"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/25/2997025.JPG",
+        "title": "명동거리",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20230803170738",
+        "contentId": "2997025"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/56/2997056.JPG",
+        "title": "명동거리",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20230803171646",
+        "contentId": "2997056"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/24/2997024.JPG",
+        "title": "명동거리",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20230803170602",
+        "contentId": "2997024"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/23/2997023.JPG",
+        "title": "명동거리",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20230803170456",
+        "contentId": "2997023"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
+  },
+  "용산구|이태원거리": {
+    "name": "이태원거리",
+    "gu": "용산구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/00/2553300.jpg",
+        "title": "이태원거리",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20180710164548",
+        "contentId": "2553300"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/97/2553297.jpg",
+        "title": "이태원거리",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20180710164437",
+        "contentId": "2553297"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/96/2553296.jpg",
+        "title": "이태원거리",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20180710164417",
+        "contentId": "2553296"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/95/2553295.jpg",
+        "title": "이태원거리",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20180710164353",
+        "contentId": "2553295"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/94/2553294.jpg",
+        "title": "이태원거리",
+        "photographer": "한국관광공사 이범수",
+        "createdAt": "20180710164330",
+        "contentId": "2553294"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-10"
   }
 }
