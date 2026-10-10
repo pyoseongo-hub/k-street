@@ -96,11 +96,33 @@ jobs:
             # 🚨 **밀렸을 때 다시 해 본다.** 워크플로 두 개가 겹치면 뒤에 끝난 쪽의
             #    push 가 막히고, 그냥 두면 받아 온 자료가 통째로 버려진다.
             #    ⚠️ 세 번 다 밀리면 **초록불을 주지 않는다** — 조용히 넘어가면 모른다.
+            #
+            # 🐞 **rebase 로는 안 됐다** (2026-10-09에 빨간불로 드러났다).
+            #    이 세 파일은 **기계가 통째로 다시 쓰는 자리**다. 다른 실행이
+            #    먼저 올려 두면 줄마다 충돌이 나고 `git pull --rebase` 가
+            #    「Resolve all conflicts manually」로 죽는다 — 그러면 25분 동안
+            #    받아 온 자료가 통째로 버려진다. 실제로 그렇게 버렸다.
+            # → **방금 받은 것이 이긴다.** 사람이 손으로 적는 파일이 아니므로
+            #    옛것을 살릴 이유가 없다. 복사해 두고 원격에 맞춘 뒤 되붓는다.
             pushed=no
             for i in 1 2 3; do
               if git push; then pushed=yes; break; fi
-              echo "   밀렸다 — 원격을 당겨 다시 얹는다 ($i/3)"
-              git pull --rebase origin "$(git rev-parse --abbrev-ref HEAD)" || exit 1
+              echo "   밀렸다 — 방금 받은 것을 안고 원격에 다시 얹는다 ($i/3)"
+              mkdir -p /tmp/funseoul-keep/src/data "/tmp/funseoul-keep/docs"
+              cp src/data/funseoul-dates.json /tmp/funseoul-keep/src/data/ 2>/dev/null || true
+              cp src/data/funseoul-all.json   /tmp/funseoul-keep/src/data/ 2>/dev/null || true
+              cp "docs/펀서울-축제-기간.md"    "/tmp/funseoul-keep/docs/" 2>/dev/null || true
+              git fetch origin "$(git rev-parse --abbrev-ref HEAD)" || exit 1
+              git reset --hard FETCH_HEAD
+              cp /tmp/funseoul-keep/src/data/*.json src/data/ 2>/dev/null || true
+              cp "/tmp/funseoul-keep/docs/펀서울-축제-기간.md" docs/ 2>/dev/null || true
+              git add -A src/data/funseoul-dates.json src/data/funseoul-all.json "docs/펀서울-축제-기간.md"
+              if git diff --cached --quiet; then
+                echo "   ↳ 원격이 이미 같다 — 올릴 것이 없다"
+                pushed=yes
+                break
+              fi
+              git commit -m "펀서울 축제 기간 갱신 (fetch-funseoul-dates) [skip render]"
               sleep $((i * 3))
             done
             if [ "$pushed" != yes ]; then
