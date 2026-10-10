@@ -98,7 +98,15 @@ const 구목록 = (feeds as { 구: Record<string, { feeds: { 이름: string; url
 for (const [구, v] of Object.entries(구목록)) {
   for (const f of v.feeds) {
     try {
-      const r = await fetchHtml(f.url, { timeoutMs: 20000 });
+      // 🐞 **10건만 돌려주는 칸이 있다** (2026-10-10에 잡았다).
+      //    강남구청 보도자료 주소에 `recordCountPerPage=10` 이 박혀 있어서,
+      //    9/16 에 올라온 **「2026 강남페스티벌」 보도자료를 이미 밀려나 못 봤다.**
+      //    바로 그 글에서 10.3–5 라는 날짜를 찾았는데, 이 창구로는 못 찾을 뻔했다.
+      //    → 쪽수 칸이 보이면 **넉넉히 올려** 부른다. 안 받는 서버는 그냥 무시한다.
+      const url = f.url
+        .replace(/recordCountPerPage=\d+/i, "recordCountPerPage=100")
+        .replace(/listcount=\d+/i, "listcount=100");
+      const r = await fetchHtml(url, { timeoutMs: 20000 });
       if (r.status !== 200) { 못읽음.push(`${구} — HTTP ${r.status} (${f.이름})`); continue; }
       const items = 글뽑기(r.html);
       if (!items.length) { 못읽음.push(`${구} — 글이 하나도 없다 (${f.이름})`); continue; }
