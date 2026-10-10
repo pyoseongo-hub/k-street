@@ -26,7 +26,7 @@
 import { writeFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { ALL_FESTIVALS } from "../src/data/seed";
-import { guFestivalDate } from "../src/lib/guFestival";
+import { guFestivalDate, festivalEndedThisYear } from "../src/lib/guFestival";
 
 const OUT = join(process.cwd(), "docs", "축제-일자-빈칸.md");
 
@@ -51,13 +51,25 @@ function 지금범위(p: { startMonth?: number | null; endMonth?: number | null 
 const 서울축제 = ALL_FESTIVALS.filter((p) => (p.city ?? "seoul") === "seoul");
 const 범위안 = 서울축제.filter(지금범위);
 const 있음 = 범위안.filter((p) => guFestivalDate(p.id));
-const 없음 = 범위안.filter((p) => !guFestivalDate(p.id));
+/**
+ * ⏳ **「끝난 것」을 「모르는 것」에 섞지 않는다** (2026-10-10).
+ *
+ * 처음엔 확정 날짜가 없으면 전부 「모른다」로 셌다. 그런데 동대문페스티벌(10.3 종료)·
+ * 강남페스티벌(10.3–5)은 **우리가 날짜를 안다.** 지났을 뿐이다.
+ * 섞어 세면 숫자가 부풀어, 정작 **진짜 찾아야 할 것**이 몇 곳인지 모르게 된다.
+ */
+const 끝남 = 범위안.filter((p) => !guFestivalDate(p.id) && festivalEndedThisYear(p.id));
+const 없음 = 범위안.filter((p) => !guFestivalDate(p.id) && !festivalEndedThisYear(p.id));
 
 // 🚦 이번 달에 걸치는데 날짜를 모르는 것 — 열흘 안에 시작할 수 있다
 const 급한것 = 없음.filter((p) => 지금범위({ startMonth: p.startMonth, endMonth: p.endMonth }) && (p.startMonth === 이번달 || (p.endMonth ?? p.startMonth) === 이번달));
 
 console.log(`🎪 서울 축제 ${서울축제.length}곳 — 이번 달(${이번달})·다음 달(${다음달})에 걸치는 것 ${범위안.length}곳`);
-console.log(`   📅 확정 일자 있음 ${있음.length}곳 · ❓ 없음 ${없음.length}곳`);
+console.log(`   📅 확정 일자 있음 ${있음.length}곳 · ⏳ 올해 끝남 ${끝남.length}곳 · ❓ 모름 ${없음.length}곳`);
+if (끝남.length) {
+  console.log(`\n⏳ 올해 회차가 끝난 축제 (${끝남.length}곳) — 화면에 흑백으로 남는다`);
+  for (const p of 끝남) console.log(`   ${p.id.padEnd(14)} ${p.gu.padEnd(5)} ${p.name}  (${festivalEndedThisYear(p.id)!.end} 종료)`);
+}
 if (없음.length) {
   console.log(`\n❓ 며칟날인지 모르는 축제 (${없음.length}곳)`);
   for (const p of 없음) console.log(`   ${p.id.padEnd(14)} ${p.gu.padEnd(5)} ${p.name}`);
@@ -73,7 +85,8 @@ writeFileSync(
     `**${ymd} 기준 · 기계가 적는다** (scripts/audit-festival-dates.ts — 손으로 고치지 말 것).`,
     "",
     `서울 축제 ${서울축제.length}곳 중 이번 달(${이번달})·다음 달(${다음달})에 걸치는 것은 **${범위안.length}곳**이고,`,
-    `그중 **${있음.length}곳**에 확정 일자가 붙어 있다. 남은 **${없음.length}곳**은 「몇 월」만 안다.`,
+    `그중 **${있음.length}곳**에 확정 일자가 붙어 있고, **${끝남.length}곳**은 올해 회차가 이미 끝났다(화면엔 흑백으로 남는다).`,
+    `남은 **${없음.length}곳**이 「몇 월」만 아는 곳 — 이것이 진짜 찾아야 할 숫자다.`,
     "",
     "## 어디서 채우나",
     "",

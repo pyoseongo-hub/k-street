@@ -113,12 +113,26 @@ function todayYmd(): string {
  * ✋ **지우지 않는다.** 그 축제는 내년에 또 열린다 — 다른 달을 보는 손님에게는
  *    그대로 보여야 한다. 가리는 것은 **이번 달 목록**뿐이다(화면 쪽이 정한다).
  */
-export function festivalEndedThisYear(id: string): { end: string; page: string } | undefined {
+export function festivalEndedThisYear(id: string): { end: string; page?: string } | undefined {
+  const 올해 = String(new Date().getFullYear());
+  const 끝났나 = (start: string, end?: string) => {
+    const e = end ?? start;
+    return e.slice(0, 4) === 올해 && e < todayYmd() ? e : undefined;
+  };
+  // ① **우리가 아는 확정 날짜가 이미 지났으면 끝난 것이다** (2026-10-10에 넓혔다).
+  //    처음엔 펀서울의 「지난 회차」만 봤는데, 그러면 사람이 손으로 확인해 적은
+  //    날짜(강남페스티벌 10.3–5 — 강남구청 보도자료)가 지나도 화면은 「날짜를 모른다」고
+  //    말한다. **모르는 것과 끝난 것은 다르다** — 우리는 알고 있었다.
+  const 아는것 = RAW[id];
+  if (아는것?.start) {
+    const e = 끝났나(아는것.start, 아는것.end);
+    if (e) return { end: e, page: 아는것.page ?? 아는것.orgLink };
+  }
+  // ② 펀서울이 올려 둔 「지난 회차」 (build-festival-ended.ts 가 맞춰 적는다)
   const d = (endedDates as { 곳?: Record<string, { start: string; end?: string; page: string }> })["곳"]?.[id];
   if (!d) return undefined;
-  const end = d.end ?? d.start;
-  if (end.slice(0, 4) !== String(new Date().getFullYear())) return undefined;
-  return end < todayYmd() ? { end, page: d.page } : undefined;
+  const e = 끝났나(d.start, d.end);
+  return e ? { end: e, page: d.page } : undefined;
 }
 
 export function guFestivalDate(id: string): GuFestivalDate | undefined {
