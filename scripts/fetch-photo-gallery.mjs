@@ -112,7 +112,26 @@ const MISSING_ONLY = process.argv.includes("--missing");
 const 사진있나 = (p) => Boolean(p.image || p.thumb);
 const 모두 = [...byKey.values()];
 const 고른것 = MISSING_ONLY ? 모두.filter((p) => !사진있나(p)) : 모두;
-const targets = 고른것.slice(0, LIMIT);
+/**
+ * 🔁 **날마다 다른 자리에서 시작한다** (2026-10-10).
+ *
+ * 🐞 왜 — 한도를 아끼려고 `--limit` 을 걸면 **늘 앞에서부터** 자른다.
+ *    그러면 목록 뒤쪽 곳은 매일 돌려도 **영영 차례가 안 온다.**
+ *    실제로 오늘 429(일일 한도 초과)로 끊겼는데, 끊긴 자리가 늘 같은 곳이었다.
+ *
+ * → 그날이 한 해의 몇째 날인지로 시작 자리를 민다. 며칠이면 한 바퀴를 돈다.
+ *    (전체를 도는 날(`--limit` 없음)은 그대로다 — 밀 이유가 없다.)
+ */
+function 오늘의시작(총) {
+  if (!Number.isFinite(LIMIT) || 총 === 0) return 0;
+  const 새해 = new Date(new Date().getFullYear(), 0, 0);
+  const 며칠째 = Math.floor((Date.now() - 새해.getTime()) / 86400000);
+  return (며칠째 * LIMIT) % 총;
+}
+const 시작 = 오늘의시작(고른것.length);
+const targets = Number.isFinite(LIMIT)
+  ? [...고른것.slice(시작), ...고른것.slice(0, 시작)].slice(0, LIMIT)
+  : 고른것;
 
 console.log(
   MISSING_ONLY

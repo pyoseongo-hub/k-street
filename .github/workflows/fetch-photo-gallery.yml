@@ -10,6 +10,14 @@ name: Fetch photo gallery (사진 없는 곳 채우기)
 #    검색 결과를 그대로 저장하면 **남의 곳 사진**이 붙는다 — Kfood에서 겪은 사고다.
 
 on:
+  # 🗓️ **매일 저절로 돈다** (2026-10-10).
+  #    사장님: "사진 채워" — 그런데 관광공사 **일일 호출 한도**가 있어 하루에 다 못 한다
+  #    (오늘 429 로 끊겼다). 그래서 **하루 150곳씩 나눠** 돌린다.
+  #    스크립트가 **날마다 시작 자리를 민다** — 안 그러면 늘 앞쪽만 보고
+  #    뒤쪽 곳은 영영 차례가 안 온다.
+  #    ⏰ 05:40 KST = 20:40 UTC. 날짜 받기(05:00)·구청(06:00)과 겹치지 않게 둔다.
+  schedule:
+    - cron: "40 20 * * *"
   workflow_dispatch:
     inputs:
       apply:
@@ -41,9 +49,11 @@ jobs:
     permissions:
       contents: write
     env:
-      APPLY: ${{ inputs.apply }}
-      LIMIT: ${{ inputs.limit }}
-      MISSING: ${{ inputs.missing }}
+      # 🚦 예약으로 도는 날은 입력 칸이 **비어 있다**. 그날은 저장하고,
+      #    사진 없는 곳만, 150곳씩 본다 — 손으로 돌릴 때는 입력대로 한다.
+      APPLY: ${{ inputs.apply || (github.event_name == 'schedule' && 'true') }}
+      LIMIT: ${{ inputs.limit || (github.event_name == 'schedule' && '150') }}
+      MISSING: ${{ inputs.missing || (github.event_name == 'schedule' && 'true') }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
