@@ -14,8 +14,11 @@ name: Fetch gu RSS (구청 RSS 주소 받기)
 #    다시 할 때는 아래 `schedule:` 두 줄의 주석을 벗기면 된다.
 #    자세한 것은 docs/할-일-대기.md.
 on:
-  # schedule:
-  #   - cron: "40 21 1 * *" # 매달 1일 06:40 KST
+  # ▶️ **보류를 풀었다** (2026-10-10, 사장님: "구청 자료 모아").
+  #    주소 목록이 바뀌는 일은 드물어 **달에 한 번**이면 넉넉하다.
+  #    실제로 글을 읽는 것은 collect-gu-news.yml 이 **매일** 한다.
+  schedule:
+    - cron: "40 21 1 * *" # 매달 1일 06:40 KST
   workflow_dispatch:
     inputs:
       apply:

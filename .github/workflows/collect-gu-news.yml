@@ -1,0 +1,86 @@
+name: Collect gu news (구청 새소식에서 축제 찾기)
+
+# 📡 **구청이 알리는데 우리는 모르는 축제**를 매일 추려 준다.
+#
+# 사장님: **"구청 자료 모아"** (2026-10-10). 10/8 「구청 보류」로 멈춰 뒀던 2단계다.
+#
+# 🚨 왜 — 우리 창구 셋(관광공사·문화포털·펀서울)은 **주최 측이 올려 줄 때까지 기다린다.**
+#    구청 보도자료는 그보다 **2주쯤 앞선다.** 강남페스티벌 10.3–5 도, 노원 북 페스티벌도
+#    구청 쪽에는 이미 있었는데 우리 셋에는 없었다.
+#
+# ✋ **아무것도 앱에 넣지 않는다.** 목록을 내밀 뿐이고, 사람이 글을 열어 확인한 뒤
+#    festival-dates-manual.json 에 적는다. 제목 한 줄로 며칟날을 알 수 없다.
+
+on:
+  # ⏰ 06:20 KST = 21:20 UTC. 날짜 받기(05:00)·사진(05:40)·문화포털(06:00)과 겹치지 않게.
+  schedule:
+    - cron: "20 21 * * *"
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "며칠 안의 글만 볼까 (기본 60)"
+        required: false
+        default: "60"
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    # ⏱️ 천장이 없으면 느려진 것이 안 드러난다 — 이 저장소가 크게 데인 자리다.
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: 구청 새소식에서 축제 글을 모은다
+        run: |
+          set -o pipefail
+          DAYS="${{ inputs.days }}"
+          npm run gu-news -- "--days=${DAYS:-60}" 2>&1 | tee gu-news-log.txt
+
+      - name: 요약에 붙인다
+        if: always()
+        run: |
+          { echo "## 📡 구청 새소식에서 찾은 축제"; echo ""; echo '```'; \
+            cat gu-news-log.txt 2>/dev/null || echo "(로그 없음)"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 바뀐 것이 있으면 커밋
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # 🐞 `git diff` 는 **새 파일을 못 본다** — 이 저장소에서 두 번 당했다.
+          #    add 를 먼저 하고 --cached 로 본다.
+          git add -A "docs/구청-새소식-축제.md" src/data/gu-news-festivals.json
+          if git diff --cached --quiet; then
+            echo "🔕 바뀐 것이 없다"
+            exit 0
+          fi
+          git commit -m "구청 새소식에서 축제 글 갱신 (collect-gu-news) [skip render]"
+          # 🔁 밀리면 **방금 받은 것이 이긴다** — 기계가 통째로 다시 쓰는 파일이다.
+          #    rebase 로는 줄마다 충돌이 나서 받아 온 것을 통째로 버린다(펀서울에서 겪었다).
+          pushed=no
+          for i in 1 2 3; do
+            if git push; then pushed=yes; break; fi
+            echo "   밀렸다 — 방금 받은 것을 안고 다시 얹는다 ($i/3)"
+            mkdir -p /tmp/gunews/docs /tmp/gunews/src/data
+            cp "docs/구청-새소식-축제.md" /tmp/gunews/docs/ 2>/dev/null || true
+            cp src/data/gu-news-festivals.json /tmp/gunews/src/data/ 2>/dev/null || true
+            git fetch origin "$(git rev-parse --abbrev-ref HEAD)" || exit 1
+            git reset --hard FETCH_HEAD
+            cp "/tmp/gunews/docs/구청-새소식-축제.md" docs/ 2>/dev/null || true
+            cp /tmp/gunews/src/data/gu-news-festivals.json src/data/ 2>/dev/null || true
+            git add -A "docs/구청-새소식-축제.md" src/data/gu-news-festivals.json
+            if git diff --cached --quiet; then echo "   ↳ 원격이 이미 같다"; pushed=yes; break; fi
+            git commit -m "구청 새소식에서 축제 글 갱신 (collect-gu-news) [skip render]"
+            sleep $((i * 3))
+          done
+          if [ "$pushed" != yes ]; then
+            echo "❌ 세 번 다 밀렸다 — 다시 돌릴 것."
+            exit 1
+          fi
