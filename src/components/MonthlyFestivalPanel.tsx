@@ -107,22 +107,23 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
   //    (이 줄이 없어서 부산을 골라도 서울 축제가 떴다 — usePlaces.ts 머리말 참고.)
   const festivalsHere = useFestivalsHere();
   /**
-   * ⏳ **이번 달인데 올해 회차가 이미 끝난 축제는 뺀다** (2026-10-10).
+   * ⏳ **올해 회차가 끝난 축제는 감추지 않는다 — 흑백으로 남긴다** (2026-10-10).
    *
-   * 사장님이 짚어 준 도봉한글잔치가 그랬다 — 어제(10/9) 끝났는데 「10월 축제」에
-   * 그대로 있었다. 손님이 보고 찾아가면 아무것도 없다.
+   * 사장님: *"내린다는 게 안 보이게 하는 거면 — 회색 그레이로, 흑백 사진에
+   * 「내년 축제에 계속」 뭐 이런 걸로 대처. 자료가 없는 게 아니고 끝났고
+   * 다음 해 계속된다 이런 뜻"*
    *
-   * 🚫 **다른 달에서는 안 뺀다.** 축제는 내년에 또 열린다 — 5월을 보는 손님에게
-   *    「올해 5월 것은 끝났다」며 감추면, 내년 5월 계획을 짜는 길이 막힌다.
-   *    가리는 것은 **지금 달**뿐이다.
+   * 맞는 말이다. 처음에는 **빼 버렸는데**, 그러면 손님 눈에는
+   * 「이 앱엔 그 축제가 없다」로 읽힌다 — 사실은 **있고, 올해 것이 끝났을 뿐**이다.
+   * 없는 것과 끝난 것은 다르다. 이 저장소가 계속 지켜 온 「빈 칸과 틀린 값을
+   * 가른다」와 같은 줄이다.
+   *
+   * → 카드는 그대로 두고 **사진을 흑백으로, 글자를 회색으로** 하고
+   *   「올해는 끝났어요 · 내년에 또 열려요」를 붙인다. 맨 아래로 내린다.
    */
-  const 이번달 = new Date().getMonth() + 1;
   const inMonth = useMemo(
-    () =>
-      festivalsHere.filter(
-        (f) => opensIn(f, month) && !(month === 이번달 && festivalEndedThisYear(f.id)),
-      ),
-    [festivalsHere, month, 이번달]
+    () => festivalsHere.filter((f) => opensIn(f, month)),
+    [festivalsHere, month]
   );
 
   // 이 달에 실제로 있는 테마만 칩으로 띄운다. 눌러도 0곳인 칩을 보여주면
@@ -162,7 +163,15 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
     //
     //    sort는 요즘 자바스크립트에서 **순서가 뒤바뀌지 않으므로**(stable), 사진이
     //    있는 것끼리·없는 것끼리는 원래 순서를 그대로 지킨다.
-    return picked.slice().sort((a, b) => Number(hasPhoto(b)) - Number(hasPhoto(a)));
+    // ⏳ **올해 끝난 것은 맨 아래로.** 지우지도 감추지도 않지만, 아직 갈 수 있는
+    //    축제가 위에 와야 한다 — 손님이 훑는 순서가 곧 쓸모의 순서다.
+    return picked
+      .slice()
+      .sort(
+        (a, b) =>
+          Number(Boolean(festivalEndedThisYear(a.id))) - Number(Boolean(festivalEndedThisYear(b.id))) ||
+          Number(hasPhoto(b)) - Number(hasPhoto(a)),
+      );
   }, [inMonth, theme]);
 
   const pickMonth = (m: number) => {
@@ -296,8 +305,14 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
             //    없으면(대부분) 지금까지와 똑같이 달만 보여 준다 — 지어내지 않는다.
             const sure = guFestivalDate(f.id);
             const sureLink = sure ? guOfficialLink(sure) : undefined;
+            // ⏳ 올해 회차가 끝난 축제 — 감추지 않고 **흑백으로** 남긴다(위 주석).
+            const ended = festivalEndedThisYear(f.id);
             return (
-              <div className={"festival-card" + (compact ? " fc-compact" : "")} key={f.id}>
+              <div
+                className={"festival-card" + (compact ? " fc-compact" : "") + (ended ? " fc-ended" : "")}
+                key={f.id}
+              >
+                {ended && <p className="fc-ended-tag">⏳ {t.festivalEndedThisYearLabel}</p>}
                 {/* 🤍 저장 단추는 사진 위에 얹는다. 사진이 없는 작은 카드에서는
                     아래 fc-top 줄 끝에 작게 붙는다 — 자리가 하나뿐이라 헷갈리지 않는다. */}
                 {photoUrl && (

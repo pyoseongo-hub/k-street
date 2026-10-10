@@ -604,6 +604,41 @@ button {
   border: 1px solid var(--border);
 }
 
+/* ⏳ **올해 회차가 끝난 축제** — 감추지 않고 흑백으로 남긴다 (2026-10-10).
+   사장님: "내린다는 게 안 보이게 하는 거면 — 회색 그레이로, 흑백 사진에
+   「내년 축제에 계속」 … 자료가 없는 게 아니고 끝났고 다음 해 계속된다 이런 뜻".
+
+   처음엔 목록에서 **빼 버렸는데**, 그러면 손님 눈에 「이 앱엔 그 축제가 없다」로
+   읽힌다. 사실은 **있고, 올해 것이 끝났을 뿐**이다. 「없는 것」과 「끝난 것」은 다르다 —
+   이 저장소가 지켜 온 「빈 칸과 틀린 값을 가른다」와 같은 줄이다.
+
+   🚫 opacity 로 통째로 흐리게 하지 않는다 — 글씨까지 흐려져 **읽히지 않는다**.
+      사진만 흑백으로 돌리고(filter), 글자는 한 단계 여린 색으로 둔다. */
+.fc-ended {
+  border-style: dashed;
+}
+
+/* 📷 사진은 <img> 가 아니라 **배경그림을 깐 div**(PlacePhoto 의 .fc-art-photo)다 —
+   `img` 를 집으면 아무 일도 안 일어난다. 실제 자리를 집는다. */
+.fc-ended .fc-art-photo {
+  filter: grayscale(1) contrast(0.92);
+}
+
+.fc-ended .fc-body {
+  color: var(--text-muted);
+}
+
+.fc-ended-tag {
+  margin: 0;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text-muted);
+  background: color-mix(in srgb, var(--text-muted) 12%, var(--surface));
+  border-bottom: 1px solid var(--border);
+}
+
 /* 🖼️ **사진이 없는 축제 카드는 작게** (사용자 지시 2026-09-04: "카드도줄이고
    공간 낭비하지마"). 80곳 중 24곳은 관광공사에 사진 자료가 아예 없다.
    예전에는 그 자리에 계절 일러스트를 16:9로 꽉 채워 그렸는데, 그림은 그 축제에
@@ -2787,7 +2822,7 @@ button {
   font-weight: 600;
   white-space: nowrap;
   background: color-mix(in srgb, var(--accent) 14%, transparent);
-  /* 🐞 여기 `var(--muted)` 라고 적혀 있었다 — **그런 변수는 없다**(2026-09-12에 찾음).
+  /* 🐞 여기 `var(--text-muted)` 라고 적혀 있었다 — **그런 변수는 없다**(2026-09-12에 찾음).
      없는 변수를 부르면 색이 통째로 안 먹어서, 「눈에 띄되 겁주지 않게」 하려던 이 딱지가
      둘레 글자색을 그대로 물려받고 있었다. 우리 이름은 `--text-muted` 다. */
   color: var(--text-muted);
