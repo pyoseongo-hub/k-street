@@ -151,6 +151,18 @@ const found: Found[] = [];
 const endedList: Found[] = [];
 let got = 0;
 let empty = 0;
+/**
+ * 🐞 **「기간이 없다」는 쪽이 정말 없는 것인지, 서버가 지친 것인지 가른다** (2026-10-09).
+ *
+ * 사장님이 festacode=542 를 보여 줬다 — 「제15회 도봉한글잔치 2026-10-09」.
+ * 혼자 열어 보면 기간이 **똑똑히 적혀 있다.** 그런데 900쪽을 한 번에 두드린
+ * 실행에서는 그 쪽이 **「기간이 없다」로 버려져** 있었다. 다섯 쪽씩 몰아치니
+ * 서울시 서버가 더러 빈 쪽을 돌려준 것이다.
+ *
+ * → **한 번 더, 한 쪽씩 천천히** 두드린다. 그래도 없으면 정말 없는 것이다.
+ *    「없는 것」과 「못 받은 것」을 가르는 이 저장소의 잣대 그대로다.
+ */
+const emptyCodes: number[] = [];
 const broke: string[] = [];
 
 async function one(code: number) {
@@ -161,7 +173,7 @@ async function one(code: number) {
     const { ok, ended, why } = parse(code, r.html);
     if (ok) found.push(ok);
     else if (ended) endedList.push(ended);
-    else if (why === "기간이 없다") empty++;
+    else if (why === "기간이 없다") { empty++; emptyCodes.push(code); }
     else if (why?.startsWith("기간이")) broke.push(`${code} → ${why}`);
   } catch (e) {
     // 🚨 왜 멈추지 않나 — 900쪽 중 한 쪽이 느린 것으로 전체를 버릴 이유가 없다.
@@ -179,6 +191,26 @@ for (let start = 1; start <= MAX; start += LANES) {
 console.log(
   `📄 열린 쪽 ${got}개 · 기간이 적힌 올해 축제 ${found.length}곳 · 기간 없는 쪽 ${empty}개`,
 );
+
+// ── 🔁 **기간 없던 쪽을 한 쪽씩 천천히 다시 본다** ─────────────────────────
+let 되살림 = 0;
+if (emptyCodes.length) {
+  console.log(`\n🔁 기간 없던 쪽 ${emptyCodes.length}개를 한 쪽씩 다시 두드린다 (0.8초 간격)`);
+  for (const code of emptyCodes) {
+    await new Promise((r) => setTimeout(r, 800));
+    try {
+      const r = await fetchHtml(URL_OF(code), { timeoutMs: 20000 });
+      if (r.status !== 200) continue;
+      const { ok, ended } = parse(code, r.html);
+      if (ok) { found.push(ok); 되살림++; }
+      else if (ended) { endedList.push(ended); 되살림++; }
+    } catch {
+      // 두 번째도 안 되면 정말 못 받는 쪽이다 — 조용히 넘기되 숫자로 남는다
+    }
+  }
+  empty -= 되살림;
+  console.log(`   ↳ 다시 받아 ${되살림}곳을 되살렸다 · 정말 기간 없는 쪽 ${empty}개`);
+}
 if (broke.length) {
   console.log(`\n⚠️ 못 읽은 쪽 ${broke.length}개 — 조용히 넘기지 않는다:`);
   for (const b of broke.slice(0, 15)) console.log(`   ${b}`);
