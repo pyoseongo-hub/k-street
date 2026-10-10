@@ -694,6 +694,48 @@ export const FESTIVALS_FROM_MAIL: Place[] = [
   { id: id(), gu: "중구", dong: "을지로7가", category: "festival", name: "서울디자인위크", startMonth: 10, endMonth: 10, addr: "서울특별시 중구 을지로 281 (DDP)", note: "DDP 전시·마켓 + 동대문·성수·연희·서촌·압구정 디자인 가게 150곳을 잇는 「서울 디자인로드」", officialUrl: "https://mediahub.seoul.go.kr/archives/2019559", monthSource: "서울시 소식지 「내손안에 서울」 제5773호(2026.10.06.) · 서울시 미디어허브 (2026 10.14–25, DDP 중심)", confirmed: true },
 ];
 
+/**
+ * 🎪 **펀서울에서 찾아 들인 축제** (2026-10-10).
+ *
+ * 사장님: *"네이버 안보는거야"* + festacode=542 — 짚어 준 뒤에 세어 봤더니,
+ * 펀서울(festival.seoul.go.kr, 서울시가 직접 올리는 축제 누리집)에서
+ * **기간이 적힌 올해 축제 149건**을 매일 받아 오면서 우리 자료에 붙는 것은
+ * **15곳**뿐이었다. 나머지는 「우리 이름과 안 맞는다」는 이유로 조용히 버려졌다.
+ * 그중 **아직 안 끝났고 우리에게 아예 없는 축제가 52개**였다.
+ *
+ * ✋ **52개를 다 넣지 않았다.** 이 앱은 외국인 손님이 본다 —
+ *    「장기요양기관 종사자 어울림 한마당」·「중장년 일자리박람회」·「임산부의 날 기념 행사」·
+ *    「서울투자서밋」·「핀테크 위크」 같은 **행정·직능 행사**는 손님과 상관이 없다.
+ *    달리기 대회(허준런·러너스 페스티벌·걷기대회)도 뺐다 — 참가 신청이 필요한 경기다.
+ * 🚫 **서울대공원 가을축제는 뺐다** — 서울대공원은 **경기 과천시**다. 이 앱은 서울이다.
+ * 🔁 **노원달빛산책은 안 넣었다** — 우리 `tour_2862358`(공공미술 빛조각축제
+ *    <노원 달빛산책>)과 **같은 축제**다. 이름이 달라 기계가 못 맞췄을 뿐이다.
+ *
+ * 🆔 **id 를 id() 로 매기지 않는다.** 여기 것은 `fs_<festacode>` 로 **직접 박는다** —
+ *    ① 자리에 기대지 않아 위에 한 줄이 끼어도 안 밀린다(사진·좌표가 떨어지는 사고의 뿌리),
+ *    ② 어디서 온 것인지 id 만 봐도 알 수 있다.
+ * 📅 **날짜는 여기 안 적는다.** 이름이 펀서울과 맞으므로 `fetch-funseoul-dates`(매일 아침)가
+ *    **저절로 붙여 준다.** 손으로 적으면 회차가 바뀔 때 아무도 안 고친다.
+ * 🚨 **한 줄로 적는다** — 줄을 나누면 scripts/fetch-coords.mjs 가 못 읽는다.
+ */
+export const FESTIVALS_FROM_FUNSEOUL: Place[] = [
+  { id: "fs_612", gu: "은평구", category: "festival", name: "국가무형유산 진관사 국행수륙재", startMonth: 9, endMonth: 10, addr: "서울특별시 은평구 진관길 73 (진관사)", note: "국가무형유산 수륙재 — 절에서 여는 의식, 무료", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=612", monthSource: "펀서울(서울시 축제 누리집) festacode=612 — 2026 9.6–10.25", confirmed: true },
+  { id: "fs_485", gu: "광진구", category: "festival", name: "서울어텀페스타", startMonth: 9, endMonth: 11, addr: "서울 전역 (공연장·한강공원·서울문화재단 대학로센터 등)", note: "가을 내내 서울 곳곳에서 이어지는 공연 묶음", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=485", monthSource: "펀서울 festacode=485 — 2026 9.18–11.29", confirmed: true },
+  { id: "fs_409", gu: "영등포구", category: "festival", name: "책읽는 한강공원", startMonth: 9, endMonth: 10, addr: "서울특별시 영등포구 여의동로 330 (여의도한강공원 멀티플라자·잔디한강 일대)", note: "한강 잔디밭 야외도서관 — 책과 빈백, 무료", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=409", monthSource: "펀서울 festacode=409 — 2026 9.12–10.31", confirmed: true },
+  { id: "fs_343", gu: "중구", dong: "을지로7가", category: "festival", name: "DDP디자인페어", startMonth: 10, endMonth: 10, addr: "서울특별시 중구 을지로 281 (DDP아트홀)", note: "DDP에서 여는 디자인 장터 — 같은 주 서울디자인위크와 이어진다", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=343", monthSource: "펀서울 festacode=343 — 2026 10.14–18", confirmed: true },
+  { id: "fs_191", gu: "성동구", category: "festival", name: "서울도시농업박람회", startMonth: 10, endMonth: 10, addr: "서울특별시 성동구 뚝섬로 273 (서울숲)", note: "서울숲에서 여는 도시 텃밭·농업 박람회", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=191", monthSource: "펀서울 festacode=191 — 2026 10.16–17", confirmed: true },
+  { id: "fs_820", gu: "영등포구", category: "festival", name: "한강페스티벌-가을", startMonth: 10, endMonth: 10, addr: "한강 수상 및 한강공원 일대 (잠원·강서 중심)", note: "서울시가 여는 한강 가을 축제 — 수상 프로그램", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=820", monthSource: "펀서울 festacode=820 — 2026 10.17–25", confirmed: true },
+  { id: "fs_668", gu: "성북구", category: "festival", name: "성북아트위크", startMonth: 10, endMonth: 11, addr: "서울특별시 성북구 성북로 134 (성북구립미술관) 및 성북구 일원", note: "미술관과 동네를 잇는 2주짜리 예술 주간", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=668", monthSource: "펀서울 festacode=668 — 2026 10.20–11.1", confirmed: true },
+  { id: "fs_303", gu: "노원구", category: "festival", name: "별빛축제", startMonth: 10, endMonth: 10, addr: "서울특별시 노원구 한글비석로 160 (서울시립과학관)", note: "과학관에서 여는 밤하늘 관측 행사", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=303", monthSource: "펀서울 festacode=303 — 2026 10.24–25", confirmed: true },
+  { id: "fs_279", gu: "용산구", category: "festival", name: "서울뮤직페스티벌", startMonth: 10, endMonth: 10, addr: "서울특별시 용산구 양녕로 445 (노들섬)", note: "노들섬에서 여는 하루짜리 음악 축제", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=279", monthSource: "펀서울 festacode=279 — 2026 10.24", confirmed: true },
+  { id: "fs_339", gu: "강남구", category: "festival", name: "서울뷰티트래블위크", startMonth: 10, endMonth: 11, addr: "서울특별시 강남구 봉은사로 531 (봉은사) 등 강남구 일대", note: "K-뷰티와 여행을 묶은 주간 행사 — 외국인 손님을 겨냥한다", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=339", monthSource: "펀서울 festacode=339 — 2026 10.29–11.4", confirmed: true },
+  { id: "fs_377", gu: "중구", category: "festival", name: "대한민국 성탄축제", startMonth: 11, endMonth: 11, addr: "서울특별시 중구 세종대로 110 (서울광장) · 덕수궁 일대", note: "서울광장 성탄 점등", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=377", monthSource: "펀서울 festacode=377 — 2026 11.16", confirmed: true },
+  { id: "fs_715", gu: "중구", dong: "을지로7가", category: "festival", name: "DDP 영 디자이너 페스티벌", startMonth: 12, endMonth: 12, addr: "서울특별시 중구 을지로 281 (DDP)", note: "신인 디자이너 전시·마켓", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=715", monthSource: "펀서울 festacode=715 — 2026 12.2–6", confirmed: true },
+  { id: "fs_309", gu: "종로구", category: "festival", name: "윈터페스타", startMonth: 12, endMonth: 1, addr: "서울특별시 종로구 세종대로 175 (광화문광장) 외 6곳", note: "겨울 두 달 동안 광화문 등 일곱 곳에서 이어진다", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=309", monthSource: "펀서울 festacode=309 — 2026 12.4–2027 1.31", confirmed: true },
+  { id: "fs_351", gu: "중구", dong: "을지로7가", category: "festival", name: "서울콘", startMonth: 12, endMonth: 1, addr: "서울특별시 중구 을지로 281 (DDP)", note: "DDP에서 여는 연말 크리에이터 축제 — 해넘이 카운트다운까지 이어진다", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=351", monthSource: "펀서울 festacode=351 — 2026 12.29–2027 1.1", confirmed: true },
+  { id: "fs_564", gu: "마포구", category: "festival", name: "2027 카운트다운", startMonth: 12, endMonth: 12, addr: "서울특별시 마포구 양화로 (홍대 레드로드 R5~R6)", note: "홍대 레드로드 해넘이 카운트다운", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=564", monthSource: "펀서울 festacode=564 — 2026 12.31", confirmed: true },
+];
+
 interface AutumnRow {
   번호: number;
   구: string;
@@ -734,6 +776,7 @@ const ALL_PLACES_RAW: Place[] = [
   ...VIEWS,
   // 📬 서울시 소식지에서 알게 된 행사. id() 를 쓰는 **진짜 마지막** 자리다.
   ...FESTIVALS_FROM_MAIL,
+  ...FESTIVALS_FROM_FUNSEOUL,
   // 🍁 단풍길은 id 를 따로 매기므로 순서에 영향을 주지 않는다.
   ...AUTUMN_ROADS,
   // 🌊 부산 202곳. id 가 관광공사 contentId 라 **순서에 영향을 주지 않는다**
@@ -1024,7 +1067,7 @@ export const ALL_FESTIVALS: Place[] = (() => {
   // 🆕 나중에 들인 축제(FESTIVALS_ADDED)도 여기 들어와야 계절·달 화면에 뜬다.
   //    ⚠️ 빼먹으면 **자료는 있는데 어느 화면에도 안 나온다** — 관광공사 축제 57곳이
   //       예전에 그랬다(이 함수 맨 위 주석). 같은 실수를 되풀이하지 않는다.
-  const merged = [...FESTIVALS, ...FESTIVALS_ADDED, ...FESTIVALS_FROM_MAIL].map((p) => {
+  const merged = [...FESTIVALS, ...FESTIVALS_ADDED, ...FESTIVALS_FROM_MAIL, ...FESTIVALS_FROM_FUNSEOUL].map((p) => {
     const t = findTourPlace(p.name) ?? byName.get(nameKey(p.name));
     if (!t || t.category !== "festival") return p;
     used.add(t.id);
