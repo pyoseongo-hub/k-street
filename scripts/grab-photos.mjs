@@ -39,7 +39,11 @@ if (!KEY) {
   process.exit(1);
 }
 
-const 곳들 = JSON.parse(readFileSync(GALLERY, "utf8"))["곳"] ?? {};
+// 🐞 이 파일은 **감싸는 칸이 없다** — 맨 위가 바로 「구|이름」 묶음이다
+//    (2026-10-10 첫 실행에서 `["곳"]` 로 찾다가 빈손으로 끝났다).
+//    다른 자료 파일들과 꼴이 달라서, 둘 다 받아 준다.
+const 원본 = JSON.parse(readFileSync(GALLERY, "utf8"));
+const 곳들 = 원본["곳"] ?? 원본;
 const 곳 = 곳들[KEY];
 if (!곳) {
   console.error(`❌ photo-gallery.json 에 「${KEY}」가 없다.`);
