@@ -96,7 +96,7 @@ const DATE_LINE = /^(\d{4}-\d{2}-\d{2})(?:\s*~\s*(\d{4}-\d{2}-\d{2}))?$/;
  * 그래서 「기간」이라고만 적힌 줄을 찾아 **그 다음 줄**에서 날짜를, **그 앞 줄**에서
  * 이름을 읽는다. 자리 이름(class)에 기대지 않는다 — 그건 서울시가 화면을 고치면 깨진다.
  */
-function parse(code: number, html: string): { ok?: Found; why?: string } {
+function parse(code: number, html: string): { ok?: Found; ended?: Found; why?: string } {
   const lines = htmlToText(html).split("\n").map((l) => l.trim());
   const blocks: Found[] = [];
   for (let i = 0; i < lines.length; i++) {
@@ -118,9 +118,13 @@ function parse(code: number, html: string): { ok?: Found; why?: string } {
     });
   }
   if (!blocks.length) return { why: "기간이 없다" };
-  // ⏳ 끝난 회차는 버린다 — 작년 페이지가 그대로 남아 있다.
+  // ⏳ 끝난 회차는 **날짜로는** 안 쓴다 — 작년 페이지가 그대로 남아 있다.
+  //    🚨 다만 **버리지는 않는다** (2026-10-09에 고쳤다). 사장님이 festacode=542 를
+  //       보여 줬다 — 「제15회 도봉한글잔치 2026-10-09 하루」. **어제 끝난 축제**다.
+  //       그런데 우리 앱은 그 축제를 아직 「10월 축제」로 띄우면서 날짜는 비워 뒀다.
+  //       끝난 것을 **알고 있었는데 버렸기 때문**이다. 손님이 헛걸음하는 쪽이 더 나쁘다.
   const live = blocks.filter((b) => (b.end ?? b.start) >= TODAY);
-  if (!live.length) return { why: `지난 회차 (${blocks[0].start})` };
+  if (!live.length) return { ended: blocks[blocks.length - 1], why: `지난 회차 (${blocks[0].start})` };
   // 🚨 올해 것이 여럿이면 기계가 못 가른다 → 사람에게 넘긴다.
   const uniq = new Map(live.map((b) => [`${b.title}|${b.start}|${b.end ?? ""}`, b]));
   if (uniq.size > 1) return { why: `기간이 ${uniq.size}개라 못 가른다` };
@@ -129,6 +133,8 @@ function parse(code: number, html: string): { ok?: Found; why?: string } {
 
 // ── 받아 온다 ────────────────────────────────────────────────────────────
 const found: Found[] = [];
+/** ⏳ 펀서울에 올라와 있지만 **이미 끝난** 회차. 날짜로는 안 쓰고, 「끝났다」는 사실로 쓴다. */
+const endedList: Found[] = [];
 let got = 0;
 let empty = 0;
 const broke: string[] = [];
@@ -138,8 +144,9 @@ async function one(code: number) {
     const r = await fetchHtml(URL_OF(code), { timeoutMs: 20000 });
     if (r.status !== 200) { broke.push(`${code} → HTTP ${r.status}`); return; }
     got++;
-    const { ok, why } = parse(code, r.html);
+    const { ok, ended, why } = parse(code, r.html);
     if (ok) found.push(ok);
+    else if (ended) endedList.push(ended);
     else if (why === "기간이 없다") empty++;
     else if (why?.startsWith("기간이")) broke.push(`${code} → ${why}`);
   } catch (e) {
@@ -241,6 +248,77 @@ for (const f of ALL_FESTIVALS) {
   };
 }
 
+// ── ⏳ **끝난 회차도 우리 축제에 맞춰 본다** (2026-10-09) ───────────────────
+//    날짜로 쓰지는 않는다. 「올해 것은 이미 끝났다」는 사실로 쓴다 —
+//    그걸 모르면 앱이 끝난 축제를 「이번 달 축제」로 계속 띄운다(도봉한글잔치가 그랬다).
+const endedByKey = new Map<string, Found[]>();
+for (const f of endedList) {
+  const k = key(f.title);
+  if (!k) continue;
+  (endedByKey.get(k) ?? endedByKey.set(k, []).get(k)!).push(f);
+}
+const endedHits: Record<string, { start: string; end?: string; title: string; page: string }> = {};
+for (const f of ALL_FESTIVALS) {
+  if (hits[f.id]) continue; // 올해 날짜가 있으면 그게 이긴다
+  const cands = endedByKey.get(key(f.name)) ?? [];
+  if (!cands.length) continue;
+  // 가장 **최근에 끝난** 회차를 쓴다
+  const last = cands.reduce((a, b) => ((b.end ?? b.start) > (a.end ?? a.start) ? b : a));
+  endedHits[f.id] = {
+    start: last.start,
+    ...(last.end && last.end !== last.start ? { end: last.end } : {}),
+    title: last.title,
+    page: URL_OF(last.code),
+  };
+}
+
+// ── 📦 **펀서울에서 본 것을 전부 남긴다** ───────────────────────────────────
+//    🚨 왜 (2026-10-09, 사장님: *"네이버 안보는거야"*) — 펀서울 낱장에서 **기간이
+//    적힌 올해 축제 147곳**을 보고도 우리 자료에 붙은 것은 **15곳**이었다.
+//    남은 132곳은 **보고도 안 되고 저장도 안 되고 조용히 사라졌다.** 사장님이 짚어 준
+//    festacode=542(도봉한글잔치)가 그 안에 있었다. 「봤다」와 「썼다」를 가려 적는다.
+const ALLOUT = join(ROOT, "src", "data", "funseoul-all.json");
+const 쓴코드 = new Set(Object.values(hits).map((h) => Number(h.page.split("=").pop())));
+const 안붙은것 = found.filter((f) => !쓴코드.has(f.code));
+const slim = (f: Found) => ({
+  code: f.code,
+  title: f.title,
+  ...(f.gu ? { gu: f.gu } : {}),
+  start: f.start,
+  ...(f.end ? { end: f.end } : {}),
+  ...(f.place ? { place: f.place } : {}),
+});
+if (APPLY) {
+  writeFileSync(
+    ALLOUT,
+    JSON.stringify(
+      {
+        _읽어보세요: [
+          "🎪 펀서울(festival.seoul.go.kr) 낱장에서 **기간이 적힌 축제를 전부** 적어 둔 것.",
+          "기계가 덮어쓴다 — 손으로 고치지 말 것.",
+          "",
+          "왜 전부 적나 (2026-10-09, 사장님: \"네이버 안보는거야\") —",
+          "예전에는 **우리 이름과 꼭 맞은 것만** 남기고 나머지는 그냥 버렸다.",
+          "그래서 「펀서울에 날짜가 있는데 우리 화면은 비어 있는 축제」가 보이지 않았다.",
+          "이제 본 것을 다 적는다. `올해`는 아직 안 끝난 회차, `끝남`은 이미 지난 회차다.",
+          "",
+          "✋ 이 파일은 **화면이 바로 읽는 자리가 아니다.** 사람이 짝을 확인한 뒤",
+          "   `festival-dates-manual.json` 에 적는다 — 이름이 다른 축제를 기계가",
+          "   맞췄다고 믿으면 남의 축제 날짜가 붙는다(이 저장소에서 여러 번 당했다).",
+        ],
+        받은날: TODAY,
+        센것: { 올해: found.length, 끝남: endedList.length, 우리것에붙음: Object.keys(hits).length },
+        올해: found.map(slim).sort((a, b) => a.start.localeCompare(b.start)),
+        끝남: endedList.map(slim).sort((a, b) => b.start.localeCompare(a.start)),
+      },
+      null,
+      2,
+    ) + "\n",
+    "utf8",
+  );
+  console.log(`\n📦 ${ALLOUT.replace(ROOT + "/", "")} — 올해 ${found.length}곳 · 끝남 ${endedList.length}곳`);
+}
+
 console.log(`\n✅ 우리 축제와 꼭 맞은 것 ${Object.keys(hits).length}곳`);
 for (const [id, h] of Object.entries(hits))
   console.log(`   ${h.gu.padEnd(5)} ${h.start}${h.end ? `~${h.end}` : ""}  ${h.title}  [id ${id}]`);
@@ -284,6 +362,27 @@ const REPORT = join(ROOT, "docs", "펀서울-축제-기간.md");
       `\`src/data/festival-dates-manual.json\` 에 손으로 적는다 — 이 스크립트는\n` +
       `\`name-aliases.json\` 을 읽지 않는다(그 표는 관광공사 이름을 잇는 자리다).\n\n` +
       (near.length ? "```\n" + near.join("\n") + "\n```" : "_없다._") +
+      `\n\n## 📦 펀서울엔 날짜가 있는데 우리 축제엔 안 붙은 것 (${안붙은것.length}곳)\n\n` +
+      `이름이 우리 것과 꼭 맞지 않아 그냥 지나간 것이다. **우리 자료에 아예 없는 축제**도 섞여 있다.\n` +
+      `전체 목록은 \`src/data/funseoul-all.json\` 에 있다.\n\n` +
+      (안붙은것.length
+        ? `| 기간 | 구 | 펀서울에 적힌 이름 | 쪽 |\n|---|---|---|---|\n` +
+          안붙은것
+            .slice()
+            .sort((a, b) => a.start.localeCompare(b.start))
+            .slice(0, 80)
+            .map((f) => `| ${f.start}${f.end ? ` ~ ${f.end}` : ""} | ${f.gu ?? ""} | ${f.title.replace(/\|/g, "/")} | [${f.code}](${URL_OF(f.code)}) |`)
+            .join("\n")
+        : "_없다._") +
+      `\n\n## ⏳ 우리 축제인데 **올해 회차가 이미 끝난 것** (${Object.keys(endedHits).length}곳)\n\n` +
+      `🚨 이게 제일 급하다 — 끝난 축제를 「이번 달 축제」로 띄우면 손님이 헛걸음한다.\n\n` +
+      (Object.keys(endedHits).length
+        ? `| 끝난 날 | 펀서울에 적힌 이름 | id | 쪽 |\n|---|---|---|---|\n` +
+          Object.entries(endedHits)
+            .sort((a, b) => (b[1].end ?? b[1].start).localeCompare(a[1].end ?? a[1].start))
+            .map(([id, h]) => `| ${h.end ?? h.start} | ${h.title.replace(/\|/g, "/")} | \`${id}\` | [쪽](${h.page}) |`)
+            .join("\n")
+        : "_없다._") +
       `\n\n## ⚠️ 구가 다른 것\n\n` +
       (guDiff.length
         ? "```\n" + guDiff.join("\n") + "\n```\n\n한강 축제처럼 여러 구에 걸친 행사라 그렇다. 엉뚱한 축제면 여기서 보인다."

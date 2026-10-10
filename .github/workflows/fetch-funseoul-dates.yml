@@ -86,7 +86,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # 표(docs/펀서울-축제-기간.md)는 맛보기로 돌린 날도 남는다 — 저장하기 전에
           # 먼저 볼 자리가 필요하기 때문이다(스크립트 주석 참고). 같이 커밋한다.
-          git add -A src/data/funseoul-dates.json "docs/펀서울-축제-기간.md"
+          # 📦 funseoul-all.json 도 함께 — 「봤지만 안 쓴 것」이 여기 남는다 (2026-10-09)
+          git add -A src/data/funseoul-dates.json src/data/funseoul-all.json "docs/펀서울-축제-기간.md"
           if git diff --cached --quiet; then
             echo "committed=no" >> "$GITHUB_OUTPUT"
             echo "🔕 바뀐 것이 없다"
