@@ -1,0 +1,54 @@
+name: Grab photos (인스타에 올릴 사진 내려받기)
+
+# 📥 사장님: "억새축제 사진 쓸 수 있는 거 수집 — 인스타 게시용" (2026-10-10).
+#
+# 🚦 **공공누리 제1유형만 받는다.** 2·3·4유형은 상업적 이용이나 변형이 막혀 있다.
+#    받아 두고 나중에 가리자는 것이 가장 위험하다 — 폴더에 있으면 쓰게 된다.
+# ⚠️ 작업 세션은 tong.visitkorea.or.kr 이 막혀 있어(프록시 403) 러너에서 돌린다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      key:
+        description: '어느 곳 — photo-gallery.json 의 열쇠. 예: 마포구|하늘공원'
+        required: true
+        default: "마포구|하늘공원"
+
+permissions:
+  contents: write
+
+jobs:
+  grab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10 # ⏱️ 천장이 없으면 느려진 것이 안 드러난다
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 내려받는다
+        run: |
+          set -o pipefail
+          node scripts/grab-photos.mjs --key "${{ inputs.key }}" 2>&1 | tee grab-log.txt
+
+      - name: 요약에 붙인다
+        if: always()
+        run: |
+          { echo "## 📥 받은 사진"; echo ""; echo '```'; \
+            cat grab-log.txt 2>/dev/null || echo "(로그 없음)"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 커밋
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # 🐞 `git diff` 는 새 파일을 못 본다 — add 를 먼저 하고 --cached 로 본다.
+          git add -A "docs/인스타-사진"
+          if git diff --cached --quiet; then echo "🔕 바뀐 것이 없다"; exit 0; fi
+          git commit -m "인스타에 올릴 사진 받기 (grab-photos) [skip render]"
+          for i in 1 2 3; do
+            git push && exit 0
+            git pull --rebase origin "$(git rev-parse --abbrev-ref HEAD)" || exit 1
+            sleep $((i * 3))
+          done
+          echo "❌ 세 번 다 밀렸다"; exit 1
