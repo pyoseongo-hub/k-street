@@ -19,7 +19,7 @@ import { openPlaceInfo, naverSearchUrl } from "../lib/mapLinks";
 import { placeName, translateText, hasTranslation } from "../lib/placeText";
 import { FESTIVAL_THEMES, THEME_ICON, themeOf, type FestivalTheme } from "../data/festivalThemes";
 import { pastEditionYear } from "../lib/pastEdition";
-import { guFestivalDate, guOfficialLink, formatRange } from "../lib/guFestival";
+import { guFestivalDate, guOfficialLink, formatRange, festivalEndedThisYear } from "../lib/guFestival";
 
 // 「봄 여름 가을 겨울 그리고 서울」 — 지도와 상관없이 **계절 · 달 · 테마**로
 // 축제를 고르는 화면이다(사용자 지시 2026-09-01: "이건 지도와상관없이 서울의
@@ -106,9 +106,23 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
   // 🏙️ **지금 보는 도시의 축제만.** 도시가 하나일 때는 예전과 같다.
   //    (이 줄이 없어서 부산을 골라도 서울 축제가 떴다 — usePlaces.ts 머리말 참고.)
   const festivalsHere = useFestivalsHere();
+  /**
+   * ⏳ **이번 달인데 올해 회차가 이미 끝난 축제는 뺀다** (2026-10-10).
+   *
+   * 사장님이 짚어 준 도봉한글잔치가 그랬다 — 어제(10/9) 끝났는데 「10월 축제」에
+   * 그대로 있었다. 손님이 보고 찾아가면 아무것도 없다.
+   *
+   * 🚫 **다른 달에서는 안 뺀다.** 축제는 내년에 또 열린다 — 5월을 보는 손님에게
+   *    「올해 5월 것은 끝났다」며 감추면, 내년 5월 계획을 짜는 길이 막힌다.
+   *    가리는 것은 **지금 달**뿐이다.
+   */
+  const 이번달 = new Date().getMonth() + 1;
   const inMonth = useMemo(
-    () => festivalsHere.filter((f) => opensIn(f, month)),
-    [festivalsHere, month]
+    () =>
+      festivalsHere.filter(
+        (f) => opensIn(f, month) && !(month === 이번달 && festivalEndedThisYear(f.id)),
+      ),
+    [festivalsHere, month, 이번달]
   );
 
   // 이 달에 실제로 있는 테마만 칩으로 띄운다. 눌러도 0곳인 칩을 보여주면

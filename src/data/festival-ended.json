@@ -1,0 +1,60 @@
+{
+  "_읽어보세요": [
+    "⏳ **올해 회차가 이미 끝난 축제.** 기계가 덮어쓴다 — 손으로 고치지 말 것.",
+    "",
+    "근거는 펀서울(festival.seoul.go.kr)이 올려 둔 그 축제의 기간이다.",
+    "scripts/build-festival-ended.ts 가 funseoul-all.json 의 `끝남` 을 우리 id 에 맞춰 적는다.",
+    "",
+    "무엇에 쓰나 — 달·계절 화면에서 **「올해는 끝났어요」로 내린다.**",
+    "끝난 축제를 「이번 달 축제」로 띄우면 손님이 헛걸음한다.",
+    "",
+    "✋ 지우지는 않는다. 그 축제는 **내년에 또 열린다** — 자리는 남기고 상태만 바꾼다."
+  ],
+  "받은날": "2026-10-10",
+  "곳": {
+    "ks_6": {
+      "start": "2026-08-29",
+      "title": "2026 광진 뮤직페스타",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=583"
+    },
+    "ks_7": {
+      "start": "2026-09-19",
+      "end": "2026-09-20",
+      "title": "2026 구로G페스티벌(아시아문화축제)",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=634"
+    },
+    "ks_b": {
+      "start": "2026-10-03",
+      "title": "2026 동대문페스티벌",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=740"
+    },
+    "ks_f": {
+      "start": "2026-08-29",
+      "end": "2026-08-30",
+      "title": "2026 서초뮤직앤아트페스티벌",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=676"
+    },
+    "ks_i": {
+      "start": "2026-06-07",
+      "title": "제18회 성북세계음식축제 누리마실",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=84"
+    },
+    "ks_54": {
+      "start": "2026-09-19",
+      "end": "2026-09-20",
+      "title": "서울거리예술축제 2026",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=223"
+    },
+    "ks_55": {
+      "start": "2026-09-25",
+      "end": "2026-09-27",
+      "title": "2026 남산골 추석축제 [남산달빛마당]",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=468"
+    },
+    "tour_3000221": {
+      "start": "2026-09-19",
+      "title": "2026 제4회 은평청년축제 [아무도 모르는 축제2]",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=650"
+    }
+  }
+}

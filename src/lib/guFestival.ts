@@ -29,6 +29,7 @@
 //   **대신 확정해 주는 앱이 아니라, 어디를 봐야 하는지 알려 주는 앱**이다.
 
 import guDates from "../data/gu-festival-dates.json";
+import endedDates from "../data/festival-ended.json";
 import manualDates from "../data/festival-dates-manual.json";
 import funseoulDates from "../data/funseoul-dates.json";
 import { isOfficialSite } from "./officialSite";
@@ -101,6 +102,25 @@ function todayYmd(): string {
  *    한 번 더 본다 — 손님 폰은 며칠씩 안 켜질 수 있고, 그 사이에 끝난다.
  *    잣대가 하나뿐이면 그 틈에 지난 날짜가 뜬다.
  */
+/**
+ * ⏳ **올해 회차가 이미 끝난 축제인가** (2026-10-10).
+ *
+ * 사장님이 festacode=542 를 보여 줬다 — 「제15회 도봉한글잔치 2026-10-09 하루」.
+ * **어제 끝난 축제**인데 우리 앱은 아직 「10월 축제」로 띄우고 있었다.
+ * 끝난 줄 몰라서가 아니라 **알고도 안 썼기 때문**이다 — 펀서울을 매일 받으면서
+ * 「지난 회차」를 그냥 지나쳤다. 이제 build-festival-ended.ts 가 적어 둔다.
+ *
+ * ✋ **지우지 않는다.** 그 축제는 내년에 또 열린다 — 다른 달을 보는 손님에게는
+ *    그대로 보여야 한다. 가리는 것은 **이번 달 목록**뿐이다(화면 쪽이 정한다).
+ */
+export function festivalEndedThisYear(id: string): { end: string; page: string } | undefined {
+  const d = (endedDates as { 곳?: Record<string, { start: string; end?: string; page: string }> })["곳"]?.[id];
+  if (!d) return undefined;
+  const end = d.end ?? d.start;
+  if (end.slice(0, 4) !== String(new Date().getFullYear())) return undefined;
+  return end < todayYmd() ? { end, page: d.page } : undefined;
+}
+
 export function guFestivalDate(id: string): GuFestivalDate | undefined {
   const d = RAW[id];
   if (!d?.start) return undefined;

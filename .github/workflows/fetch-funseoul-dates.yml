@@ -64,6 +64,13 @@ jobs:
             npm run funseoul-dates -- "--max=$MAXN" 2>&1 | tee funseoul-log.txt
           fi
 
+      # ⏳ **올해 회차가 이미 끝난 축제를 가려 적는다** (2026-10-10).
+      #    방금 받은 funseoul-all.json 의 「끝남」을 우리 축제 id 에 맞춘다.
+      #    화면은 이 파일을 보고 **이번 달 목록에서 끝난 축제를 내린다** —
+      #    끝난 축제를 「이번 달 축제」로 띄우면 손님이 헛걸음한다.
+      - name: 끝난 회차를 가려 적는다
+        run: npm run festival-ended
+
       # 🧨 **감사를 커밋 앞에서 돌린다.** 받은 자료가 화면을 깨면 커밋하지 않는다.
       #    번역 워크플로가 같은 순서다 — 잣대를 맞춘다.
       - name: 받은 자료로 화면이 깨지지 않나 본다
@@ -87,7 +94,7 @@ jobs:
           # 표(docs/펀서울-축제-기간.md)는 맛보기로 돌린 날도 남는다 — 저장하기 전에
           # 먼저 볼 자리가 필요하기 때문이다(스크립트 주석 참고). 같이 커밋한다.
           # 📦 funseoul-all.json 도 함께 — 「봤지만 안 쓴 것」이 여기 남는다 (2026-10-09)
-          git add -A src/data/funseoul-dates.json src/data/funseoul-all.json "docs/펀서울-축제-기간.md"
+          git add -A src/data/funseoul-dates.json src/data/funseoul-all.json src/data/festival-ended.json "docs/펀서울-축제-기간.md"
           if git diff --cached --quiet; then
             echo "committed=no" >> "$GITHUB_OUTPUT"
             echo "🔕 바뀐 것이 없다"
@@ -111,12 +118,13 @@ jobs:
               mkdir -p /tmp/funseoul-keep/src/data "/tmp/funseoul-keep/docs"
               cp src/data/funseoul-dates.json /tmp/funseoul-keep/src/data/ 2>/dev/null || true
               cp src/data/funseoul-all.json   /tmp/funseoul-keep/src/data/ 2>/dev/null || true
+              cp src/data/festival-ended.json /tmp/funseoul-keep/src/data/ 2>/dev/null || true
               cp "docs/펀서울-축제-기간.md"    "/tmp/funseoul-keep/docs/" 2>/dev/null || true
               git fetch origin "$(git rev-parse --abbrev-ref HEAD)" || exit 1
               git reset --hard FETCH_HEAD
               cp /tmp/funseoul-keep/src/data/*.json src/data/ 2>/dev/null || true
               cp "/tmp/funseoul-keep/docs/펀서울-축제-기간.md" docs/ 2>/dev/null || true
-              git add -A src/data/funseoul-dates.json src/data/funseoul-all.json "docs/펀서울-축제-기간.md"
+              git add -A src/data/funseoul-dates.json src/data/funseoul-all.json src/data/festival-ended.json "docs/펀서울-축제-기간.md"
               if git diff --cached --quiet; then
                 echo "   ↳ 원격이 이미 같다 — 올릴 것이 없다"
                 pushed=yes

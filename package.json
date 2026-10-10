@@ -17,6 +17,7 @@
     "check-place-pages": "node scripts/check-place-pages.mjs",
     "check-hub-strings": "vite build --ssr scripts/check-hub-strings.ts --outDir dist-ssr && node dist-ssr/check-hub-strings.js",
     "check-also-categories": "vite build --ssr scripts/check-also-categories.ts --outDir dist-ssr && node dist-ssr/check-also-categories.js",
+    "festival-ended": "vite build --ssr scripts/build-festival-ended.ts --outDir dist-ssr && node dist-ssr/build-festival-ended.js",
     "festival-dates": "vite build --ssr scripts/audit-festival-dates.ts --outDir dist-ssr && node dist-ssr/audit-festival-dates.js",
     "festival-freshness": "vite build --ssr scripts/audit-festival-freshness.ts --outDir dist-ssr && node dist-ssr/audit-festival-freshness.js",
     "gu-festival-dates": "vite build --ssr scripts/fetch-gu-festival-dates.ts --outDir dist-ssr && node dist-ssr/fetch-gu-festival-dates.js",
