@@ -6,18 +6,11 @@
   ],
   "받은날": "2026-10-10",
   "센것": {
-    "모르는것": 93,
-    "아는것": 18,
-    "못읽음": 5
+    "모르는것": 30,
+    "아는것": 1,
+    "못읽음": 3
   },
   "모르는것": [
-    {
-      "구": "서대문",
-      "자리": "서대문구 공지사항",
-      "제목": "[진로진학지원센터] 2026년 고교입시 박람회 개최 안내",
-      "link": "http://www.sdm.go.kr/news/news/notice.do?mode=view&amp;sdmBoardSeq=315745",
-      "날짜": "2026-10-07"
-    },
     {
       "구": "서대문",
       "자리": "서대문구 공지사항",
@@ -26,45 +19,11 @@
       "날짜": "2026-10-06"
     },
     {
-      "구": "서대문",
-      "자리": "서대문구 공지사항",
-      "제목": "서대문구 가족축제 다(多)가(家)가다(Go!) 참여자 모집",
-      "link": "http://www.sdm.go.kr/news/news/notice.do?mode=view&amp;sdmBoardSeq=315693",
-      "날짜": "2026-10-06"
-    },
-    {
-      "구": "노원",
-      "자리": "노원구청 공지사항",
-      "제목": "2026 노원구 청년마켓(10월) 개최 안내",
-      "link": "https://www.nowon.kr/www/user/bbs/BD_selectBbs.do?q_bbsCode=1001&amp;q_estnColumn1=11&amp;q_bbscttSn=20260930202353443",
-      "날짜": "2026-09-30"
-    },
-    {
-      "구": "노원",
-      "자리": "노원구청 공지사항",
-      "제목": "2026 노원구 청년마켓(10월) 셀러 선정 확정자 안내",
-      "link": "https://www.nowon.kr/www/user/bbs/BD_selectBbs.do?q_bbsCode=1001&amp;q_estnColumn1=11&amp;q_bbscttSn=20260930170105662",
-      "날짜": "2026-09-30"
-    },
-    {
-      "구": "노원",
-      "자리": "노원구청 공지사항",
-      "제목": "2026 노원구 청년마켓(10월) 셀러 선정자 안내",
-      "link": "https://www.nowon.kr/www/user/bbs/BD_selectBbs.do?q_bbsCode=1001&amp;q_estnColumn1=11&amp;q_bbscttSn=20260923170009806",
-      "날짜": "2026-09-23"
-    },
-    {
       "구": "노원",
       "자리": "노원구청 공지사항",
       "제목": "2026 불암산 유아숲 가족축제 개최 안내(2026. 10. 17. 불암산 유아숲체험장)",
       "link": "https://www.nowon.kr/www/user/bbs/BD_selectBbs.do?q_bbsCode=1001&amp;q_estnColumn1=11&amp;q_bbscttSn=20260916185906285",
       "날짜": "2026-09-16"
-    },
-    {
-      "구": "강남",
-      "자리": "강남구청 보도자료",
-      "제목": "양재천에서 만나는 음악과 문화… ‘개포2동 양재천 가을음악회’ 개최",
-      "link": "https://www.gangnam.go.kr/board/B_000031/1075459/view.do"
     },
     {
       "구": "강남",
@@ -77,6 +36,18 @@
       "자리": "강북구청 새소식",
       "제목": "2026 미사단길 가을축제 안내",
       "link": "/portal/bbs/B0000145/view.do?menuNo=&nttId=185564"
+    },
+    {
+      "구": "강북",
+      "자리": "강북구청 새소식",
+      "제목": "[국립4·19민주묘지] 가을밤 4·19 야외 영화 상영회 개최 안내",
+      "link": "/portal/bbs/B0000145/view.do?menuNo=&nttId=185541"
+    },
+    {
+      "구": "강북",
+      "자리": "강북구청 새소식",
+      "제목": "「2026년 하반기 야간 · 음식 문화 활성화 지원사업 」 백야 야시장(백년시장) 행사 안내",
+      "link": "/portal/bbs/B0000145/view.do?menuNo=&nttId=185479"
     },
     {
       "구": "강북",
@@ -97,22 +68,10 @@
       "link": "https://www.gwangjin.go.kr/portal/bbs/B0000002/view.do?nttId=6628753&menuNo=200191"
     },
     {
-      "구": "광진",
-      "자리": "광진구청 보도자료",
-      "제목": "[보도자료] 광진구, 제30회 노인의 날 기념, ‘어르신 행복 축제 한마당’성료",
-      "link": "https://www.gwangjin.go.kr/portal/bbs/B0000002/view.do?nttId=6626865&menuNo=200191"
-    },
-    {
       "구": "구로",
       "자리": "구로구청 새소식",
       "제목": "2026년 구로구 전통시장 및 상점가 야간·음식문화 축제 개최",
       "link": "http://www.guro.go.kr/www/selectBbsNttView.do?key=1790&bbsNo=662&nttNo=241129"
-    },
-    {
-      "구": "구로",
-      "자리": "구로구청 새소식",
-      "제목": "제11회 개웅산 단풍축제 개최 및 주민 장기자랑 참가자 모집",
-      "link": "http://www.guro.go.kr/www/selectBbsNttView.do?key=1790&bbsNo=662&nttNo=241126"
     },
     {
       "구": "금천",
@@ -133,106 +92,28 @@
       "link": "https://www.dobong.go.kr/bbs.asp?bmode=D&pcode=12746820&code=10008769"
     },
     {
-      "구": "도봉",
-      "자리": "도봉구 공지사항",
-      "제목": "「2026년 무수골 논 추수한마당」 참여가족 모집 안내",
-      "link": "https://www.dobong.go.kr/bbs.asp?bmode=D&pcode=12746704&code=10008769"
+      "구": "영등포",
+      "자리": "영등포구청 영등포소식",
+      "제목": "[영등포장애인복지관] 제11회 복지·문화축제 「휠더월드(Wheel The World)」 개최 안내",
+      "link": "https://www.ydp.go.kr:443/www/selectBbsNttView.do?key=2967&bbsNo=40&nttNo=420322"
     },
     {
-      "구": "도봉",
-      "자리": "도봉구 공지사항",
-      "제목": "2026 도봉구 진로진학박람회 개최 안내",
-      "link": "https://www.dobong.go.kr/bbs.asp?bmode=D&pcode=12746648&code=10008769"
-    },
-    {
-      "구": "도봉",
-      "자리": "도봉구 공지사항",
-      "제목": "도봉구 청년 진로&정책 박람회 ''제3회 청정모아'' 개최 안내(9.17.목)",
-      "link": "https://www.dobong.go.kr/bbs.asp?bmode=D&pcode=12745701&code=10008769"
-    },
-    {
-      "구": "도봉",
-      "자리": "도봉구 공지사항",
-      "제목": "★양성평등주간 기념★ \"최재천교수\" 명사특강 신청 안내",
-      "link": "https://www.dobong.go.kr/bbs.asp?bmode=D&pcode=12745243&code=10008769"
-    },
-    {
-      "구": "도봉",
-      "자리": "도봉구 공지사항",
-      "제목": "서울시 가계보탬 페이백 주간사업 안내",
-      "link": "https://www.dobong.go.kr/bbs.asp?bmode=D&pcode=12743949&code=10008769"
-    },
-    {
-      "구": "서초",
-      "자리": "서초구청 공지사항",
-      "제목": "지진안전주간 10월 1주차 이벤트",
-      "link": "https://www.seocho.go.kr/site/seocho/ex/bbs/View.do?cbIdx=57&bcIdx=411799"
-    },
-    {
-      "구": "은평",
-      "자리": "은평구청 강좌안내",
-      "제목": "은평한옥마을어울림터 <요즘한옥> 프로그램 및 동아리 참여자 모집",
-      "link": "https://www.ep.go.kr/www/selectBbsNttView.do?key=746&bbsNo=44&nttNo=319619"
+      "구": "영등포",
+      "자리": "영등포구청 영등포소식",
+      "제목": "「 2026 영등포 평생학습축제 함.성.소.리. 」 개최 안내",
+      "link": "https://www.ydp.go.kr:443/www/selectBbsNttView.do?key=2967&bbsNo=40&nttNo=420294"
     },
     {
       "구": "중구",
       "자리": "중구 공지사항",
-      "제목": "스마트라이프위크(SLW) 2026",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=147677426"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2026년 하반기 발달장애인 주간활동서비스 제공기관 지정 공모",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1469277974"
+      "제목": "충무로 '이순신 승전길 달빛 야시장' 행사가 펼쳐집니다!",
+      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1476939504"
     },
     {
       "구": "중구",
       "자리": "중구 공지사항",
       "제목": "제4회 충무로 골목형상점가 인쇄문화거리 축제 개최 안내",
       "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1469201582"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "양성평등주간 박지선 교수 초빙 주민특강 운영",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1466811323"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2026 어린이안전박람회 참가자 모집 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1444487843"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "기후변화 주간 홍보 및 친환경 생활 수칙 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1442696216"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "서울시립교향악단 <작은 음악회>",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1439271826"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2026년 소상공인 힘보탬박람회 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=143341147"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2026 이순신 축제 주민자원활동가 '순신지기' 모집",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1429244717"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2026 이순신 축제 먹거리존 참여 부스 모집",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1423154805"
     },
     {
       "구": "중구",
@@ -249,38 +130,8 @@
     {
       "구": "중구",
       "자리": "중구 공지사항",
-      "제목": "중구여성플라자 개관13주년 기념주간 운영(수강생 작품전시회 등)",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1402489502"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
       "제목": "'제3회 충무로 골목형상점가 인쇄문화거리 축제' 안내",
       "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1401764766"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2025 중구 뷰티·패션 페스타 사진공모전 개최",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1399893157"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "서소문성지 역사박물관 무료음악회 <2025 가을곁에, 서소문 : 가장 아름다운 노래> 개최 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1399145560"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2025 중구 해피투개더 반려동물 축제 개최 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1393978638"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2025 이순신 축제 먹거리 부스 운영자 모집",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1391342647"
     },
     {
       "구": "중구",
@@ -291,122 +142,8 @@
     {
       "구": "중구",
       "자리": "중구 공지사항",
-      "제목": "2025년 제8회 건어물 맥주 축제(9.3.~9.5.)",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1387993525"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "[취업특강]2025년 중구 일자리박람회 취업특강 수강생 모집(마감)",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1386926712"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2025년 양성평등주간 무료특강 및 체험프로그램 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1384003424"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "★2025년 사회적경제기업 홍보 박람회 참여 기관 모집",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1381767062"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2024 서울 저탄소 식생활 박람회",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1321475008"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "[이벤트 결과 안내] 2024 중구 일자리 박람회 사전신청 이벤트 “내편이 쏜다”",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1317478646"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "[일자리] 2024년 중구 일자리 박람회 개최",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1313711690"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2024 중구 도심산업 페스타 개최 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1313211075"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "[커피쿠폰 증정] \"내편이 쏜다\" 2024년 중구 일자리 박람회 사전신청 이벤트",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1313055291"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "[일자리] 2024년 중구 일자리 박람회 개최",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1312559473"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2024 남산자락 다산성곽길 예술문화제 개최에 따른 교통통제 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=131205332"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "서소문성지 역사박물관 무료시민음악회 '가을곁에, 서소문' 개최 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1312005637"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "(이순신 탄신지 중구) 2024 중구민 어울림 한마당 개최 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1311079577"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2024 도심산업페스타 축제 사전이벤트 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1309484355"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2024 중구 해피투개더 반려견 축제 개최(10.12.)",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1307562899"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2024 중구 해피투개더 반려견 축제 건강마일리지 이벤트 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1304587574"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "서울페스타 2024 명동페스티벌 개최 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=12741799"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "[탄생 오히려 좋아!] 지구의 날(4/22) 기념 2024 기후변화주간 운영 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1273429040"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
       "제목": "도심산업 페스타 개막식 -어반런웨이 패션쇼- 개최",
       "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1239911616"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "<2023 중구 도심산업 페스타> 개최 안내 (11.10~11/ DDP)",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1236335327"
     },
     {
       "구": "중구",
@@ -429,12 +166,6 @@
     {
       "구": "중구",
       "자리": "중구 공지사항",
-      "제목": "<2023 중구 도심산업 페스타> 참가업체 모집",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1233107059"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
       "제목": "반려견 축제와 함께하는 건강걷기 이벤트",
       "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1232596598"
     },
@@ -443,42 +174,6 @@
       "자리": "중구 공지사항",
       "제목": "제1회 중구 해피투개더 반려견 축제 개최 안내",
       "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1232551986"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2023 뚝섬 재사용장터(플리마켓) 운영_23.10.14.(토)",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1230647302"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "<2023 중구 도심산업 페스타 개최기념> 사전이벤트 실시",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1229532528"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2023 중구 일자리 박람회 개최",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1227484706"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "23년 하반기 너나들이 어울림장터 판매자 명단(30팀)",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1225918301"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2023 중구 일자리 박람회 개최",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1225831815"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "중구광장 8월호 <2023 정동 가을문화축제 초성퀴즈+기대평 이벤트> 당첨자 발표",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1222394154"
     },
     {
       "구": "중구",
@@ -495,196 +190,16 @@
     {
       "구": "중구",
       "자리": "중구 공지사항",
-      "제목": "2023 한양도성 다산성곽길 예술문화제 개최에 따른 교통통제 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=120903305"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "(소통과 화합의 대축제) 2023 중구민 어울림 한마당 개최",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=120862146"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "도심속 건강축제 ‘2023 서울헬스쇼’ 6월 13일 개최",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1208564159"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2023 한양도성 다산성곽길 예술문화제 개최",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1207088275"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "제43회 장애인의 날 기념 2023 동행서울 누리축제",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1200221104"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2023 부활절 퍼레이드에 따른 교통통제 및 시내버스 임시우회 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1198333425"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "11.19. ~ 11.25. 아동학대 예방 주간입니다.",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1172371350"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2022 을지로 디자인 위크 개최안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1166222140"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2022년 명동우주맥주페스티벌 개최안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1160456314"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2022 을지로 디자인 위크 참가자 모집",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1160425091"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "금쪽이마켓 판매자 명단 알림",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1157523763"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "[관광숙박시설]MICE(전시회·박람회, 국제회의·학술행사) 방역수칙 조정 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1116782239"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
       "제목": "(장소변경 재공지)동네를 이롭게 하는 지혜롭고 슬기로운 배움축제! 주민참여학교로 오세요.^^",
       "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1068729968"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2021년 서울 먹거리 문화축제 알림",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1060144980"
     }
   ],
   "아는것": [
     {
       "구": "중구",
       "자리": "중구 공지사항",
-      "제목": "2026 정동야행 청사초롱 그림 공모전 수상자 발표",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1479647823"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2026 정동야행 청사초롱 그림 공모전 수상작(예정) 공개검증",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1476552803"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2026 정동야행 자원활동가(야행지기) 모집",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=147148716"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2026 정동야행 청사초롱 그림 공모전",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1467816120"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2025년 정동야행 중구건강마일리지 이벤트 적립 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1364616608"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "[정동을 그리다] 정동야행 그림공모전 수상자 발표",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1358304830"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "「정동을 그리다」2025 정동야행 그림공모전 수상작(예정) 공개검증",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1355825"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "'2025 정동야행' 버스킹 공연팀 모집",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1353356230"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2025 정동야행 주민자원활동가(야행지기)모집",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1343664513"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "[정동을 그리다] 정동야행 그림 공모전",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1342519156"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "중구광장 5월호 < 2024 정동야행 포스터를 찾아라 > 이벤트 당첨자 발표",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1281941380"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
       "제목": "건강마일리지와 함께하는 정동야행 이벤트 안내",
       "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1279174853"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "중구광장 5월호 < 2024 정동야행 포스터를 찾아라 > 이벤트 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1276092721"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2024 정동야행 사진공모전 최종수상자 발표",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1274371948"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2023 정동야행 자원봉사자 모집 안내(~10/9)",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1230479051"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2023 정동야행(夜行) 개최 안내",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1230016850"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "'정동야행' 주민홍보영상 출연자 모집",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=122039422"
-    },
-    {
-      "구": "중구",
-      "자리": "중구 공지사항",
-      "제목": "2023 정동야행(夜行) 창작시 공모전",
-      "link": "https://www.junggu.seoul.kr/content.do?cmsid=14231&mode=view&cid=1219069798"
     }
   ]
 }
