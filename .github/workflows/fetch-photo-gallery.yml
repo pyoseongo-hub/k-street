@@ -31,6 +31,13 @@ on:
         description: "사진이 없는 곳만 찾는다 (켜면 빠르고 한도를 아낀다)"
         type: boolean
         default: false
+      names:
+        # 🔎 이름을 집어서 찾는다 (2026-10-11). 이미 사진이 있는 곳도 **더** 찾아 준다 —
+        #    `missing` 사냥은 사진이 한 장이라도 있으면 건너뛰기 때문이다.
+        description: "이름을 집어서 찾을까 (쉼표로 나눈다). 예: 서울억새축제,하늘공원 — 비우면 안 씀"
+        type: string
+        required: false
+        default: ""
       limit:
         # 🚨 "빈 칸이면 전체"로 만들 수 없다 — workflow_dispatch는 빈 값을 받으면
         #    여기 적힌 default로 되돌린다. 그래서 전체는 all이라고 적게 한다.
@@ -54,6 +61,7 @@ jobs:
       APPLY: ${{ inputs.apply || (github.event_name == 'schedule' && 'true') }}
       LIMIT: ${{ inputs.limit || (github.event_name == 'schedule' && '150') }}
       MISSING: ${{ inputs.missing || (github.event_name == 'schedule' && 'true') }}
+      NAMES: ${{ inputs.names }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -79,8 +87,12 @@ jobs:
           ARGS="links.json"
           if [ -n "$LIMIT" ] && [ "$LIMIT" != "all" ]; then ARGS="$ARGS --limit $LIMIT"; fi
           if [ "$MISSING" = "true" ]; then ARGS="$ARGS --missing"; fi
+          # 🔎 이름을 집었으면 그쪽이 이긴다(스크립트가 그렇게 고른다).
+          if [ -n "$NAMES" ]; then ARGS="$ARGS --names \"$NAMES\""; fi
           if [ "$APPLY" = "true" ]; then ARGS="$ARGS --apply"; fi
-          node scripts/fetch-photo-gallery.mjs $ARGS 2>&1 | tee gallery-log.txt
+          # 🐞 `$ARGS` 를 그냥 펼치면 `--names "가,나"` 의 따옴표가 안 먹어
+          #    낱말이 쪼개진다. eval 로 돌려 따옴표를 살린다.
+          eval node scripts/fetch-photo-gallery.mjs $ARGS 2>&1 | tee gallery-log.txt
 
       # 🚨 커밋 **앞에서** 감사를 돌린다. B11(http:// 사진 주소)이 여기서 걸린다.
       - name: 감사

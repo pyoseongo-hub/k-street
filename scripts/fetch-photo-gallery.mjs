@@ -111,7 +111,25 @@ for (const p of [...dump.festivals, ...dump.hidden, ...dump.rows]) {
 const MISSING_ONLY = process.argv.includes("--missing");
 const 사진있나 = (p) => Boolean(p.image || p.thumb);
 const 모두 = [...byKey.values()];
-const 고른것 = MISSING_ONLY ? 모두.filter((p) => !사진있나(p)) : 모두;
+/**
+ * 🔎 **이름을 집어서 찾는다** (2026-10-11).
+ *
+ * 사장님: "억새축제 사진 쓸 수 있는 거 수집" — 그런데 서울억새축제는 **이미 사진이 한 장 있어서**
+ * `--missing` 사냥에서 건너뛴다. 「더 찾아 줘」를 할 길이 없었다.
+ * 전부 돌리면 300곳이 넘어 50분이 걸리고 하루 한도를 다 쓴다.
+ * → 이름 몇 개만 집어서 부르는 길을 둔다.
+ *
+ *   node scripts/fetch-photo-gallery.mjs links.json --names "서울억새축제,하늘공원"
+ */
+const NAMES = (argVal("--names") ?? "")
+  .split(",")
+  .map((s) => s.trim().normalize("NFC"))
+  .filter(Boolean);
+const 고른것 = NAMES.length
+  ? 모두.filter((p) => NAMES.some((n) => (p.name ?? "").normalize("NFC").includes(n)))
+  : MISSING_ONLY
+    ? 모두.filter((p) => !사진있나(p))
+    : 모두;
 /**
  * 🔁 **날마다 다른 자리에서 시작한다** (2026-10-10).
  *
@@ -134,7 +152,9 @@ const targets = Number.isFinite(LIMIT)
   : 고른것;
 
 console.log(
-  MISSING_ONLY
+  NAMES.length
+    ? `**${고른것.length}곳**을 갤러리에서 찾아본다 (이름으로 집었다: ${NAMES.join(" · ")}).`
+    : MISSING_ONLY
     ? `**${고른것.length}곳**을 갤러리에서 찾아본다 (${모두.length}곳 중 **사진이 없는 곳만**).`
     : `**${byKey.size}곳**을 갤러리에서 찾아본다 (사진이 이미 있는 곳까지 전부).`,
 );
