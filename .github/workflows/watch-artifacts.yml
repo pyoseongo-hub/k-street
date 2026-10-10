@@ -22,7 +22,7 @@ on:
 
 permissions:
   actions: read
-  contents: read
+  contents: write # 📈 날마다 잰 값을 장부에 적는다 — 속도를 재려면 어제 값이 있어야 한다
 
 jobs:
   watch:
@@ -49,3 +49,20 @@ jobs:
           { echo "## 🗄️ 아티팩트 보관 용량"; echo ""; echo '```'; cat art.txt; echo '```'; } \
             >> "$GITHUB_STEP_SUMMARY"
           exit "$code"
+
+      # 📒 **잰 값을 남긴다.** 남기지 않으면 내일도 「오늘 몇 MB」밖에 모른다 —
+      #    이 저장소가 거듭 데인 자리가 바로 「속도를 안 쟀다」이다.
+      - name: 장부에 적는다
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/artifact-ledger.json 2>/dev/null || true
+          if git diff --cached --quiet; then echo "🔕 바뀐 것이 없다"; exit 0; fi
+          git commit -m "보관 용량 장부 갱신 (watch-artifacts) [skip render]"
+          for i in 1 2 3; do
+            git push && exit 0
+            git pull --rebase origin "$(git rev-parse --abbrev-ref HEAD)" || exit 1
+            sleep $((i * 3))
+          done
+          echo "❌ 세 번 다 밀렸다"; exit 1

@@ -64,10 +64,55 @@ for (const repo of REPOS) {
 }
 
 console.log(`\n🗄️ 합계 ${MB(총합).toFixed(0)}MB / 무료 ${LIMIT}MB`);
+
+// ── 📈 **잔량이 아니라 「며칠 뒤 터지나」를 본다** (2026-10-11) ──────────────
+//
+// 🚨 사장님: *"왜 자꾸 이런 일이 일어나는지 찾아서"* — 찾았다. 패턴이 하나다:
+//    **문턱은 고정값으로 걸고, 늘어나는 속도는 아무도 안 쟀다.**
+//      · 보관일 7일 — 하루 배포 10번 기준으로 괜찮았다. 오늘 **28번** 하니 깨졌다.
+//      · Audit seed — 의정부 242곳에서 1초였다. 19만 곳에서 **74분**이 됐다.
+//      · 대역폭 — 「정액 $5」로 적어 둬서 아무도 안 봤다. 9일에 **44.9GB** 였다.
+//    셋 다 **「한 번에 얼마」 × 「하루 몇 번」** 이 변했는데 문턱만 고정이었다.
+//
+// → 그래서 날마다 적고, **지금 속도면 며칠 뒤 한도에 닿는지**로 경보한다.
+//    "지금 70%" 는 안심하게 만들지만 "사흘 뒤 꽉 참" 은 움직이게 만든다.
+const { readFileSync: RF, writeFileSync: WF, mkdirSync: MD } = await import("node:fs");
+const { dirname: DN, join: JN } = await import("node:path");
+const 장부길 = JN(process.cwd(), "data", "artifact-ledger.json");
+let 장부 = { _읽어보세요: ["🗄️ 날마다 잰 보관 용량. 기계가 적는다 — 손으로 고치지 말 것.",
+  "보는 것은 잔량이 아니라 **늘어나는 속도**다. 지금 속도면 며칠 뒤 한도에 닿는지를 센다."], 날: {} };
+try { 장부 = JSON.parse(RF(장부길, "utf8")); 장부.날 ??= {}; } catch { /* 처음이면 새로 만든다 */ }
+const 오늘 = new Date().toISOString().slice(0, 10);
+장부.날[오늘] = Math.round(MB(총합));
+// 60일치만 남긴다 — 더 오래된 것은 판단에 안 쓰이고 파일만 불린다.
+for (const k of Object.keys(장부.날).sort().slice(0, -60)) delete 장부.날[k];
+MD(DN(장부길), { recursive: true });
+WF(장부길, JSON.stringify(장부, null, 2) + "\n");
+
+const 날들 = Object.keys(장부.날).sort();
+let 남은날 = null;
+if (날들.length >= 2) {
+  const 처음 = 날들[Math.max(0, 날들.length - 7)];
+  const 일수 = Math.max(1, (Date.parse(오늘) - Date.parse(처음)) / 86400000);
+  const 하루증가 = (장부.날[오늘] - 장부.날[처음]) / 일수;
+  console.log(`📈 최근 ${일수.toFixed(0)}일 동안 하루 ${하루증가 >= 0 ? "+" : ""}${하루증가.toFixed(0)}MB`);
+  if (하루증가 > 0) {
+    남은날 = (LIMIT - MB(총합)) / 하루증가;
+    console.log(`   이 속도면 한도까지 **${남은날 < 0 ? 0 : 남은날.toFixed(0)}일**`);
+  }
+} else {
+  console.log("📈 (아직 하루치뿐이라 속도를 못 잰다 — 내일부터 센다)");
+}
 console.log("\n무엇이 먹나 (상위 6):");
 for (const [k, v] of Object.entries(묶음).sort((a, b) => b[1] - a[1]).slice(0, 6))
   console.log(`   ${MB(v).toFixed(0).padStart(5)}MB  ${k}`);
 
+// 🚦 **터지기 전에 운다.** 이레 안에 닿을 속도면 지금이 줄일 때다 —
+//    꽉 찬 뒤에 우는 경보는 이미 돈이 나간 뒤다.
+if (남은날 !== null && 남은날 >= 0 && 남은날 <= 7 && MB(총합) <= LIMIT) {
+  console.log(`\n🚨 **이 속도면 ${남은날.toFixed(0)}일 뒤 한도에 닿는다.** 아직 안 넘었지만 지금 줄이는 게 싸다.`);
+  process.exit(1);
+}
 if (MB(총합) > LIMIT) {
   console.log(
     `\n🚨 **무료 한도를 넘었다** — 넘은 만큼 날마다 돈이 붙는다.\n` +
