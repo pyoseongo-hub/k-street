@@ -19,6 +19,7 @@ import { openPlaceInfo, naverSearchUrl } from "../lib/mapLinks";
 import { placeName, translateText, hasTranslation } from "../lib/placeText";
 import { FESTIVAL_THEMES, THEME_ICON, themeOf, type FestivalTheme } from "../data/festivalThemes";
 import { pastEditionYear } from "../lib/pastEdition";
+import { galleryOf } from "../lib/tourGallery";
 import { guFestivalDate, guOfficialLink, formatRange, festivalEndedThisYear } from "../lib/guFestival";
 
 // 「봄 여름 가을 겨울 그리고 서울」 — 지도와 상관없이 **계절 · 달 · 테마**로
@@ -47,9 +48,19 @@ const nowMonth = new Date().getMonth() + 1;
  *
  * 원본(image)을 썸네일(thumb)보다 먼저 쓴다 — 2026-09-01 "사진 화질이 안 좋아".
  */
-function festivalPhoto(f: (typeof ALL_FESTIVALS)[number]): string | undefined {
+function festivalPlace(f: (typeof ALL_FESTIVALS)[number]) {
+  // 옛 항목은 사진이 자료에 안 붙어 있고 id 를 열쇠로 따로 들어 있다.
   const legacy = getTourImage(f.id);
-  return f.image ?? f.thumb ?? legacy?.image ?? legacy?.thumb;
+  return { ...f, image: f.image ?? legacy?.image, thumb: f.thumb ?? legacy?.thumb };
+}
+
+function festivalPhoto(f: (typeof ALL_FESTIVALS)[number]): string | undefined {
+  // 🔑 **카드가 실제로 띄우는 첫 장을 그대로 묻는다** (2026-10-11에 고쳤다).
+  //    예전에는 여기서 `f.image ?? f.thumb` 만 봤는데, 카드 안의 PlacePhoto 는
+  //    `galleryOf()` 가 돌려주는 첫 장을 띄운다. **잣대가 둘**이었던 것이다.
+  //    그래서 장소에서 빌려 온 사진(galleryOf ④)이 있어도 이 문이 막아
+  //    카드가 아예 안 그려졌다 — 「이었는데 화면엔 그대로」가 될 뻔했다.
+  return galleryOf(festivalPlace(f))[0]?.url;
 }
 
 const hasPhoto = (f: (typeof ALL_FESTIVALS)[number]) => Boolean(festivalPhoto(f));
@@ -318,7 +329,7 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
                 {photoUrl && (
                   <div className="pr-photo-wrap">
                     <SaveButton place={f} className="save-btn save-btn--on-photo" />
-                    <PlacePhoto place={{ ...f, image: photoUrl }} />
+                    <PlacePhoto place={festivalPlace(f)} />
                   </div>
                 )}
                 <div className="fc-body">

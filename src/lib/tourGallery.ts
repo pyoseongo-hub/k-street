@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
-import type { Place } from "../data/seed";
+import { ALL_PLACES, type Place } from "../data/seed";
+import venueLinks from "../data/festival-venue.json";
 import { galleryShotsFor } from "./photoGallery";
 
 // 📷 한 곳에 딸린 사진 여러 장 (scripts/fetch-tour-gallery.mjs가 채운다).
@@ -18,6 +19,11 @@ export interface GalleryPhoto {
   url: string;
   thumb?: string;
   name?: string;
+  /**
+   * 📍 **이 사진은 그 축제가 열리는 「장소」 사진이다** (2026-10-11).
+   *    축제 사진인 척하면 안 되므로, 화면이 「📍 <장소> 사진」이라고 적는다.
+   */
+  venue?: string;
   /**
    * 이 **한 장**의 출처. 없으면 화면이 기본값(한국관광공사)으로 띄운다.
    *
@@ -146,6 +152,22 @@ export function galleryOf(place: Place): GalleryPhoto[] {
   push(place.image ? { url: place.image, thumb: place.thumb, credit: place.photoCredit } : undefined);
   // ③ 같은 곳에 딸린 관광공사 사진 여러 장(detailImage2).
   for (const p of photos) push(p);
+  // ④ 📍 **축제인데 제 사진이 하나도 없으면, 열리는 장소 사진을 빌린다** (2026-10-11).
+  //    사장님: "축제 장소 이어서 사진 붙여".
+  //    🚨 갤러리에는 「장소」 사진만 올라오고 「축제」 사진은 거의 없다 —
+  //       하늘공원은 5장인데 서울억새축제는 0장이다. 사진이 없는 게 아니라 못 잇고 있었다.
+  //    🚫 **축제 사진인 척하지 않는다.** venue 를 달아 화면이 「📍 <장소> 사진」이라고 적는다.
+  //    ✋ 빌리는 것은 **제 사진이 하나도 없을 때만**이다. 한 장이라도 있으면 그게 이긴다.
+  if (!out.length && place.category === "festival") {
+    const 이음 = (venueLinks as { 곳?: Record<string, { gu: string; place: string }> })["곳"]?.[place.id];
+    if (이음) {
+      const 장소 = ALL_PLACES.find((p) => p.gu === 이음.gu && p.name === 이음.place);
+      if (장소) {
+        for (const s of galleryShotsFor(장소.name, 장소.gu)) push({ url: s.url, venue: 장소.name });
+        if (장소.image) push({ url: 장소.image, thumb: 장소.thumb, venue: 장소.name, credit: 장소.photoCredit });
+      }
+    }
+  }
   return out;
 }
 

@@ -17,6 +17,7 @@ import SaveButton from "./SaveButton";
 import ShareButton from "./ShareButton";
 import { districtOrigin, rankByDistance, toBands } from "../lib/districtDistance";
 import { openPlaceInfo } from "../lib/mapLinks";
+import { galleryOf } from "../lib/tourGallery";
 import { getTourImage } from "../lib/tourImages";
 import { getMyDistrict, type MyDistrict } from "../lib/myDistrict";
 import { isNaverAuthFailed } from "../lib/naverMaps";
@@ -399,7 +400,11 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
             // 카드는 화면 폭을 꽉 채우는데 작은 쪽을 늘려 쓰니 뭉개져 보였다.
             // 265곳 중 249곳이 두 주소가 실제로 다르다 — 그만큼이 흐릿했던 것.
             const legacyPhoto = getTourImage(p.id);
-            const photoUrl = p.image ?? p.thumb ?? legacyPhoto?.image ?? legacyPhoto?.thumb;
+            // 🔑 **문과 화면이 같은 잣대를 쓴다** (2026-10-11). 아래 PlacePhoto 는
+            //    galleryOf() 의 첫 장을 띄우는데, 여기서만 `p.image` 를 보면
+            //    장소에서 빌려 온 축제 사진(galleryOf ④)이 문에서 막혀 카드가 안 그려진다.
+            const 사진용 = { ...p, image: p.image ?? legacyPhoto?.image, thumb: p.thumb ?? legacyPhoto?.thumb };
+            const photoUrl = galleryOf(사진용)[0]?.url;
             const meta = CATEGORY_META[p.category];
             // ⓘ 2026-09-01 오후에 사진 게이트가 생겨(seed.ts의 hasPhoto) 사진 없는 곳은
             // 아예 목록에 안 온다 — 그래서 아래 작은 카드는 지금은 실제로 안 그려진다.
@@ -417,7 +422,7 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
                     legacy 좌표·사진을 쓰는 예전 항목도 있어 image를 채워 넘긴다. */}
                 {photoUrl && (
                   <div className="pr-photo-wrap">
-                    <PlacePhoto place={{ ...p, image: photoUrl }} />
+                    <PlacePhoto place={사진용} />
                     {/* 🤍 사진 위에 얹는다. 사진이 없는 작은 카드에서는
                         아래 pr-top 줄 끝에 작게 붙는다. */}
                     <SaveButton place={p} className="save-btn save-btn--on-photo" />
