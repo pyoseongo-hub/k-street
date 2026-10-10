@@ -60,6 +60,10 @@ jobs:
         id: fresh
         continue-on-error: true
         run: npm run festival-freshness
+      - name: 📅 며칟날인지 모르는 축제
+        id: festdate
+        continue-on-error: true
+        run: npm run festival-dates
       - name: 🚇 역 사슬이 끊겼나
         id: station
         continue-on-error: true
@@ -166,6 +170,7 @@ jobs:
             echo "| 🔂 같은 곳 두 번 | $(ok '${{ steps.dup.outcome }}') |"
             echo "| 🎪 축제 빈칸 | $(ok '${{ steps.fest.outcome }}') |"
             echo "| ⏳ 축제 날짜 | $(ok '${{ steps.fresh.outcome }}') |"
+            echo "| 📅 축제 며칟날 | $(ok '${{ steps.festdate.outcome }}') |"
             echo "| 📍 좌표 | $(ok '${{ steps.coords.outcome }}') |"
             echo "| 🚇 역 사슬 | $(ok '${{ steps.station.outcome }}') |"
             echo "| 🔎 살아 있는 주소 | $(ok '${{ steps.live.outcome }}') |"
@@ -186,7 +191,8 @@ jobs:
         run: |
           BAD=""
           for s in "dup:${{ steps.dup.outcome }}" "fest:${{ steps.fest.outcome }}" \
-                   "fresh:${{ steps.fresh.outcome }}" "coords:${{ steps.coords.outcome }}" \
+                   "fresh:${{ steps.fresh.outcome }}" "festdate:${{ steps.festdate.outcome }}" \
+                   "coords:${{ steps.coords.outcome }}" \
                    "station:${{ steps.station.outcome }}" "live:${{ steps.live.outcome }}" \
                    "dns:${{ steps.dns.outcome }}" "links:${{ steps.links.outcome }}" \
                    "guide:${{ steps.guide.outcome }}" "phone:${{ steps.phone.outcome }}" \
