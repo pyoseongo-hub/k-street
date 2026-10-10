@@ -1,0 +1,51 @@
+name: Watch artifacts (보관 용량 감시)
+
+# 🗄️ 사장님: **"돈이 필요 이상 새는 거 감시해야 하는데"** (2026-10-11).
+#
+# 🚨 깃허브 계정 전체 **무료 보관은 0.5GB** 뿐이고, 넘으면 날마다 돈이 붙는다.
+#    10/03 에 100% 를 찍어 지우고 보관일을 걸었는데 **10/11 에 또 662MB** 였다 —
+#    배포 꾸러미(17MB)가 배포할 때마다 생겨 7일을 머물렀기 때문이다(29개 = 498MB).
+#    보관일을 걸어 둔 것만으로는 모자랐다. **재는 눈이 없었던 것이 진짜 구멍이다.**
+#
+# 요금 장부(Kfood 의 actions-spend)는 **돌아간 분**만 센다. 보관은 아무도 안 봤다.
+
+on:
+  # ⏰ 매일 07:10 KST = 22:10 UTC. 다른 예약과 안 겹치게 둔다.
+  schedule:
+    - cron: "10 22 * * *"
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "넘으면 빨간불 (MB, 기본 512 = 계정 무료 한도)"
+        required: false
+        default: "512"
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10 # ⏱️ 천장이 없으면 느려진 것이 안 드러난다
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 쌓인 양을 잰다
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LIMIT: ${{ inputs.limit }}
+        run: |
+          set -o pipefail
+          node scripts/watch-artifacts.mjs \
+            --repo "${{ github.repository }}" \
+            --limit "${LIMIT:-512}" 2>&1 | tee art.txt
+          # 🚨 `| tee` 뒤의 `$?` 는 tee 의 것이다 — 이 저장소가 그걸로 경보를
+          #    영영 못 울릴 뻔했다. 파이프 **바로 다음 줄**에서 PIPESTATUS 를 읽는다.
+          code=${PIPESTATUS[0]}
+          { echo "## 🗄️ 아티팩트 보관 용량"; echo ""; echo '```'; cat art.txt; echo '```'; } \
+            >> "$GITHUB_STEP_SUMMARY"
+          exit "$code"
