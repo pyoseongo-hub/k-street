@@ -1374,5 +1374,12 @@
     "source": "kakao",
     "for": "반포한강공원",
     "matchedName": "반포한강공원"
+  },
+  "ks_5g": {
+    "lat": 37.567179808191504,
+    "lng": 127.00990988140886,
+    "source": "kakao+naver",
+    "for": "서울디자인위크",
+    "matchedName": "2026 서울디자인위크"
   }
 }
