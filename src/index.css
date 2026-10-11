@@ -541,6 +541,53 @@ button {
   font-weight: 700;
 }
 
+/* ── 🚗 옆 지역(이웃 시·도) 축제 ──────────────────────
+   사장님 (2026-10-11): "지방은 축제 탭이 너무 비는데 합치거나 방법이 없을까"
+                       → "합쳐 내용은 남겨야해"
+   그래서 **내 지역 목록 아래에 잇는다.** 대신하지 않는다.
+   · 위쪽에 굵은 선을 둬서 **여기서부터 다른 지역**이라는 것을 눈으로 가른다.
+   · 카드마다 📍 시·도 꼬리표가 붙는다(.fc-nearby-tag) — 어디 것인지 못 읽으면
+     손님을 두 시간 떨어진 곳으로 보낸다. 그게 이 기능의 유일한 위험이다.
+   · <details> 라 접힌다. 내 지역이 3곳 미만인 달만 펼쳐서 연다(패널 쪽이 정한다).
+     서울 10월은 내 지역만 54곳인데 거기에 72곳을 펼쳐 붙이면 내 지역이 어디서
+     끝나는지 안 보인다 — 합치자는 뜻이 그게 아니다. */
+.nearby-festivals {
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 2px solid var(--border);
+}
+.nf-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+  cursor: pointer;
+  list-style: none;
+  padding: 4px 0;
+}
+/* 사파리는 ::marker 대신 이쪽을 쓴다 — 둘 다 꺼야 세모가 두 번 안 뜬다. */
+.nf-title::-webkit-details-marker { display: none; }
+.nf-title::before {
+  content: "▸";
+  display: inline-block;
+  width: 1.1em;
+  color: var(--text-muted);
+  transition: transform 0.15s ease;
+}
+.nearby-festivals[open] > .nf-title::before { transform: rotate(90deg); }
+.nearby-festivals .empty-note { margin: 2px 0 12px; }
+
+/* 📍 **이 카드는 옆 지역 것이다.** 날짜·이름보다 먼저 읽혀야 한다. */
+.fc-nearby-tag {
+  margin: 0;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--accent-strong);
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  border-bottom: 1px solid var(--border);
+}
+
 /* ── 🈳 날짜가 아직 안 적힌 축제 ──────────────────────
    달력 아래에 작게 모아 둔다. 사진도 날짜도 없는 것을 카드로 크게 그리면
    화면만 먹는다 — 한 줄짜리 목록이면 충분하다. 테두리를 점선으로 둬서

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { ALL_PLACES, ALL_FESTIVALS, type Place } from "../data/seed";
 import { useCity } from "./useCity";
+import { neighborsOf } from "../data/neighborCities";
 
 // 🏙️ **지금 보고 있는 도시의 곳만 고른다.**
 //
@@ -41,4 +42,27 @@ export function usePlacesHere(): Place[] {
 export function useFestivalsHere(): Place[] {
   const { cityKey } = useCity();
   return useMemo(() => placesInCity(cityKey, ALL_FESTIVALS), [cityKey]);
+}
+
+/**
+ * 🚗 **옆 지역(이웃 시·도) 축제.**
+ *
+ * 사장님 (2026-10-11): *"지방은 축제 탭이 너무 비는데 합치거나 방법이 없을까"* →
+ * *"합쳐 내용은 남겨야해"*.
+ *
+ * 지방은 달 칸의 37%가 비어 있었다(대구 8달·광주 9달·세종 12달). 이웃까지 함께
+ * 보여 주면 5%로 준다. 다만 **내 지역 것을 대신하지 않는다** — 화면 쪽이
+ * 내 지역을 먼저 다 보여 주고 그 아래에 이것을 잇는다.
+ *
+ * ⚠️ 이 목록에는 **내 지역 것이 한 곳도 안 들어온다.** 두 목록을 이어 붙일 때
+ *    같은 축제가 두 번 뜨면 손님이 "앱이 고장 났나" 한다.
+ */
+export function useNeighborFestivals(): Place[] {
+  const { cityKey } = useCity();
+  return useMemo(() => {
+    const 이웃 = neighborsOf(cityKey);
+    if (!이웃.length) return [];
+    const 집합 = new Set(이웃);
+    return ALL_FESTIVALS.filter((p) => 집합.has(cityOf(p)));
+  }, [cityKey]);
 }

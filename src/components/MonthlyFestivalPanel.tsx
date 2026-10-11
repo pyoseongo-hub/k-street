@@ -1,7 +1,8 @@
 import { useMemo, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
 import { useCityText } from "../lib/cityText";
-import { useFestivalsHere } from "../lib/usePlaces";
+import { useFestivalsHere, useNeighborFestivals, cityOf } from "../lib/usePlaces";
+import { CITY_BY_KEY, cityName } from "../data/cities";
 import SeasonPhotoHero from "./SeasonPhotoHero";
 import SeasonThemeBanner from "./SeasonThemeBanner";
 // 🚧 이 배너가 가리키는 단풍길·꽃길 107곳은 **서울시 자료**다 — 그 파일 머리말 참고.
@@ -117,6 +118,8 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
   // 🏙️ **지금 보는 도시의 축제만.** 도시가 하나일 때는 예전과 같다.
   //    (이 줄이 없어서 부산을 골라도 서울 축제가 떴다 — usePlaces.ts 머리말 참고.)
   const festivalsHere = useFestivalsHere();
+  // 🚗 옆 지역(이웃 시·도) 축제. 내 지역 것은 한 곳도 안 들어온다 — usePlaces.ts 참고.
+  const neighborFestivals = useNeighborFestivals();
   /**
    * ⏳ **올해 회차가 끝난 축제는 감추지 않는다 — 흑백으로 남긴다** (2026-10-10).
    *
@@ -185,6 +188,43 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
       );
   }, [inMonth, theme]);
 
+  /**
+   * 🚗 **옆 지역(이웃 시·도) 축제** — 내 지역 아래에 잇는다.
+   *
+   * 사장님 (2026-10-11): *"지방은 축제 탭이 너무 비는데 합치거나 방법이 없을까"* →
+   * *"합쳐 내용은 남겨야해"*. 그래서 **더하기만** 한다. 내 지역 목록은 그대로다.
+   *
+   * 고르는 잣대는 내 지역과 **똑같다** — 같은 달(opensIn) · 같은 테마 · 같은 정렬.
+   * 잣대를 따로 두면 "내 지역엔 없는데 옆 지역엔 있네" 같은 엉뚱한 차이가 생긴다.
+   */
+  const nearby = useMemo(() => {
+    const picked = neighborFestivals.filter((f) => opensIn(f, month));
+    const byTheme = theme ? picked.filter((f) => themeOf(f.name) === theme) : picked;
+    return byTheme
+      .slice()
+      .sort(
+        (a, b) =>
+          Number(Boolean(festivalEndedThisYear(a.id))) - Number(Boolean(festivalEndedThisYear(b.id))) ||
+          Number(hasPhoto(b)) - Number(hasPhoto(a)),
+      );
+  }, [neighborFestivals, month, theme]);
+
+  /**
+   * 📂 **내 지역이 허전할 때만 펼쳐 둔다.**
+   *
+   * 서울 10월은 내 지역만 54곳인데, 거기에 경기·인천 18곳을 펼쳐서 이어 붙이면
+   * **내 지역이 어디서 끝나는지 안 보인다** — 합치자는 뜻이 그게 아니다.
+   * 반대로 대구처럼 0곳인 달은 접어 두면 **아무것도 안 메운 것과 같다.**
+   *
+   * 📏 **여섯으로 정한 까닭** — 2026-10 을 실제로 세어서 금을 그었다.
+   *    서울 54 · 경기 13 … 여기는 접는다(이미 찬다).
+   *    인천 5 · 부산 5 · 경북 4 · 전남 4 · 강원 4 · 경남 3 · 충남 3 · 충북 2 ·
+   *    전북 2 · 울산 1 · 제주 1 · 대구 0 · 광주 0 · 대전 0 · 세종 0 → 펼친다.
+   *    처음에 셋으로 뒀더니 **경북(4곳)이 접혔다** — 사장님이 "너무 빈다"고 한 게
+   *    바로 그 정도 화면이라, 금이 잘못 그어진 것이었다.
+   */
+  const nearbyOpen = festivals.length < 6;
+
   const pickMonth = (m: number) => {
     setMonth(m);
     // 달을 바꾸면 테마를 푼다 — 안 그러면 그 달에 없는 테마가 걸린 채로 남아
@@ -192,109 +232,14 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
     setTheme(null);
   };
 
-  return (
-    <section className="panel monthly-festival-panel">
-      {/* 계절 사진을 이 화면의 표지로 크게 쓴다(5안 "계절 표지"). 예전에는 96px짜리
-          띠였는데, 계절이 주인공인 화면이라 제목을 얹을 만큼 키웠다. */}
-      <div className="mfp-cover">
-        <SeasonPhotoHero className="mfp-cover-art" season={season} seed={rotatingSeed} />
-        {/* 🎨 제목을 두 줄로 나누고 계절 넷에 각각 그 계절의 색을 준다
-            (사용자 지시 2026-09-01: "겨울까지 다 윗줄 / 그리고 서울 아래 /
-             그리고 서울 강조 / 아니면 봄 여름 가을 겨울을 계절에 맞게").
-            둘 다 한다 — 윗줄은 계절 색, 아랫줄은 크고 굵게.
-
-            ⚠️ 기울임(이탤릭)은 쓰지 않는다. 한글 글꼴에는 진짜 이탤릭이 없어서
-            브라우저가 글자를 억지로 비스듬히 눕히는데, 획이 뭉개져 오히려 싸구려로
-            보인다. 대신 **크기 · 굵기 · 색**으로 강조한다.
-
-            윗줄은 seasonNames를 그대로 쓰므로 12개 언어에서 저절로 맞는다 —
-            새 문구를 언어마다 또 만들지 않아도 된다. */}
-        <div className="mfp-cover-text">
-          <h2>
-            <span className="mfp-seasons">
-              {SEASONS.map((s) => (
-                <span key={s.key} className={"mfp-season mfp-" + s.key}>
-                  {t.seasonNames[s.key]}
-                </span>
-              ))}
-            </span>
-            <span className="mfp-and">{withCity(t.seasonTitleAnd)}</span>
-          </h2>
-          <p>{t.seasonSubtitle(t.seasonNames[season], t.months[month], inMonth.length)}</p>
-        </div>
-      </div>
-
-      <div className="panel-inner">
-        {/* 🍁 **맨 윗칸 — 광고 자리** (사장님 지시 2026-09-14:
-            "테마 페이지에는 광고처럼 맨 윗칸에 계절에 맞춰서 … 사진 걸고
-             클릭하면 동네 섹션 가을단풍으로 넘어가게").
-
-            계절 칩보다도 위다. 손님이 이 화면에서 맨 처음 보는 것이 이 칸이고,
-            누르면 **길찾기가 붙은 동네 화면**으로 바로 넘어간다.
-            여름·겨울에는 자료가 없어 칸이 통째로 안 그려진다. */}
-        {/* 🚧 서울에서만 — 부산에는 같은 자료가 없다. 빈 칸을 보여 주는 것보다
-            아예 안 그리는 쪽이 낫다(src/lib/seoulOnly.ts). */}
-        {isSeoul && <SeasonThemeBanner season={season} onGo={() => onGoRoads?.()} />}
-
-        <div className="season-row">
-          {SEASONS.map((s) => (
-            <button
-              key={s.key}
-              className={"season-chip" + (s.key === season ? " active" : "")}
-              onClick={() => pickMonth(s.months[0])}
-            >
-              {s.icon} {t.seasonNames[s.key]}
-            </button>
-          ))}
-        </div>
-
-        {/* 그 계절의 석 달만 띄운다. 예전에는 12개가 한 줄로 늘어서서 가로로
-            밀어야 했고, 계절 칩과 달 칩이 무슨 관계인지도 안 보였다. */}
-        <div className="month-strip">
-          {seasonMonths.map((m) => (
-            <button
-              key={m}
-              className={"month-chip" + (m === month ? " active" : "")}
-              onClick={() => pickMonth(m)}
-            >
-              {t.months[m]}
-            </button>
-          ))}
-        </div>
-
-        {themesHere.length > 0 && (
-          <div className="theme-row">
-            <button
-              className={"theme-chip" + (theme === null ? " active" : "")}
-              onClick={() => setTheme(null)}
-            >
-              {t.themeAll}
-            </button>
-            {themesHere.map((k) => (
-              <button
-                key={k}
-                className={"theme-chip" + (theme === k ? " active" : "")}
-                onClick={() => setTheme(theme === k ? null : k)}
-              >
-                <span aria-hidden="true">{THEME_ICON[k]}</span> {t.themeLabels[k]}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* 🚨 정확한 날짜를 안 적는 이유를 화면에도 적는다 — 우리가 아는 것은
-            '어느 철에 열리나'까지다. 다만 **작게** 적는다(사용자 지시 2026-09-02:
-            "달라질수있다 작게적어") — 카드마다 「날짜 확인」 링크가 따로 붙으므로
-            여기서 길게 늘어놓으면 목록만 밀려난다. */}
-        <p className="map-disclaimer map-disclaimer--fine">
-          {t.festivalDateDisclaimer} {t.mapAppNote}
-        </p>
-
-        <div className="festival-cards">
-          {festivals.length === 0 && (
-            <p className="empty-note">{t.noFestivalsMessage(month)}</p>
-          )}
-          {festivals.map((f) => {
+  /**
+   * 🎴 **축제 카드 한 장.**
+   *
+   * 내 지역 목록과 「옆 지역에서도」 목록이 **이 함수 하나**를 같이 쓴다.
+   * @param 옆동네 옆 지역 축제일 때 그 시·도 이름(「경남」). 내 지역이면 비운다 —
+   *              카드에 꼬리표가 붙어 **어디 것인지 한눈에** 갈린다.
+   */
+  const 축제카드 = (f: (typeof ALL_FESTIVALS)[number], 옆동네?: string) => {
             const legacy = getTourImage(f.id);
             // 위 정렬과 **같은 함수**를 쓴다 — 잣대가 둘이면 "사진 있다"고 위로
             // 올려 놓고 빈 카드를 그리는 일이 생긴다.
@@ -320,9 +265,15 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
             const ended = festivalEndedThisYear(f.id);
             return (
               <div
-                className={"festival-card" + (compact ? " fc-compact" : "") + (ended ? " fc-ended" : "")}
+                className={
+                  "festival-card" + (compact ? " fc-compact" : "") + (ended ? " fc-ended" : "") +
+                  (옆동네 ? " fc-nearby" : "")
+                }
                 key={f.id}
               >
+                {/* 📍 **어디 것인지 먼저 말한다.** 옆 지역 카드가 내 지역 것처럼 읽히면
+                    손님을 두 시간 떨어진 곳으로 보낸다 — 그게 이 기능의 유일한 위험이다. */}
+                {옆동네 && <p className="fc-nearby-tag">📍 {옆동네}</p>}
                 {ended && <p className="fc-ended-tag">⏳ {t.festivalEndedThisYearLabel}</p>}
                 {/* 🤍 저장 단추는 사진 위에 얹는다. 사진이 없는 작은 카드에서는
                     아래 fc-top 줄 끝에 작게 붙는다 — 자리가 하나뿐이라 헷갈리지 않는다. */}
@@ -495,8 +446,128 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
                 </div>
               </div>
             );
-          })}
+  };
+
+  return (
+    <section className="panel monthly-festival-panel">
+      {/* 계절 사진을 이 화면의 표지로 크게 쓴다(5안 "계절 표지"). 예전에는 96px짜리
+          띠였는데, 계절이 주인공인 화면이라 제목을 얹을 만큼 키웠다. */}
+      <div className="mfp-cover">
+        <SeasonPhotoHero className="mfp-cover-art" season={season} seed={rotatingSeed} />
+        {/* 🎨 제목을 두 줄로 나누고 계절 넷에 각각 그 계절의 색을 준다
+            (사용자 지시 2026-09-01: "겨울까지 다 윗줄 / 그리고 서울 아래 /
+             그리고 서울 강조 / 아니면 봄 여름 가을 겨울을 계절에 맞게").
+            둘 다 한다 — 윗줄은 계절 색, 아랫줄은 크고 굵게.
+
+            ⚠️ 기울임(이탤릭)은 쓰지 않는다. 한글 글꼴에는 진짜 이탤릭이 없어서
+            브라우저가 글자를 억지로 비스듬히 눕히는데, 획이 뭉개져 오히려 싸구려로
+            보인다. 대신 **크기 · 굵기 · 색**으로 강조한다.
+
+            윗줄은 seasonNames를 그대로 쓰므로 12개 언어에서 저절로 맞는다 —
+            새 문구를 언어마다 또 만들지 않아도 된다. */}
+        <div className="mfp-cover-text">
+          <h2>
+            <span className="mfp-seasons">
+              {SEASONS.map((s) => (
+                <span key={s.key} className={"mfp-season mfp-" + s.key}>
+                  {t.seasonNames[s.key]}
+                </span>
+              ))}
+            </span>
+            <span className="mfp-and">{withCity(t.seasonTitleAnd)}</span>
+          </h2>
+          <p>{t.seasonSubtitle(t.seasonNames[season], t.months[month], inMonth.length)}</p>
         </div>
+      </div>
+
+      <div className="panel-inner">
+        {/* 🍁 **맨 윗칸 — 광고 자리** (사장님 지시 2026-09-14:
+            "테마 페이지에는 광고처럼 맨 윗칸에 계절에 맞춰서 … 사진 걸고
+             클릭하면 동네 섹션 가을단풍으로 넘어가게").
+
+            계절 칩보다도 위다. 손님이 이 화면에서 맨 처음 보는 것이 이 칸이고,
+            누르면 **길찾기가 붙은 동네 화면**으로 바로 넘어간다.
+            여름·겨울에는 자료가 없어 칸이 통째로 안 그려진다. */}
+        {/* 🚧 서울에서만 — 부산에는 같은 자료가 없다. 빈 칸을 보여 주는 것보다
+            아예 안 그리는 쪽이 낫다(src/lib/seoulOnly.ts). */}
+        {isSeoul && <SeasonThemeBanner season={season} onGo={() => onGoRoads?.()} />}
+
+        <div className="season-row">
+          {SEASONS.map((s) => (
+            <button
+              key={s.key}
+              className={"season-chip" + (s.key === season ? " active" : "")}
+              onClick={() => pickMonth(s.months[0])}
+            >
+              {s.icon} {t.seasonNames[s.key]}
+            </button>
+          ))}
+        </div>
+
+        {/* 그 계절의 석 달만 띄운다. 예전에는 12개가 한 줄로 늘어서서 가로로
+            밀어야 했고, 계절 칩과 달 칩이 무슨 관계인지도 안 보였다. */}
+        <div className="month-strip">
+          {seasonMonths.map((m) => (
+            <button
+              key={m}
+              className={"month-chip" + (m === month ? " active" : "")}
+              onClick={() => pickMonth(m)}
+            >
+              {t.months[m]}
+            </button>
+          ))}
+        </div>
+
+        {themesHere.length > 0 && (
+          <div className="theme-row">
+            <button
+              className={"theme-chip" + (theme === null ? " active" : "")}
+              onClick={() => setTheme(null)}
+            >
+              {t.themeAll}
+            </button>
+            {themesHere.map((k) => (
+              <button
+                key={k}
+                className={"theme-chip" + (theme === k ? " active" : "")}
+                onClick={() => setTheme(theme === k ? null : k)}
+              >
+                <span aria-hidden="true">{THEME_ICON[k]}</span> {t.themeLabels[k]}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* 🚨 정확한 날짜를 안 적는 이유를 화면에도 적는다 — 우리가 아는 것은
+            '어느 철에 열리나'까지다. 다만 **작게** 적는다(사용자 지시 2026-09-02:
+            "달라질수있다 작게적어") — 카드마다 「날짜 확인」 링크가 따로 붙으므로
+            여기서 길게 늘어놓으면 목록만 밀려난다. */}
+        <p className="map-disclaimer map-disclaimer--fine">
+          {t.festivalDateDisclaimer} {t.mapAppNote}
+        </p>
+
+        <div className="festival-cards">
+          {festivals.length === 0 && (
+            <p className="empty-note">{t.noFestivalsMessage(month)}</p>
+          )}
+          {/* 🧩 **카드 한 장을 그리는 자리는 하나다.** 내 지역과 옆 지역이 같은 함수를
+              쓴다 — 잣대가 둘이면 한쪽만 고쳐지고, 그 반쪽은 **화면을 열어 봐도
+              티가 안 난다**(이 저장소에서 여러 번 당한 꼴이다). */}
+          {festivals.map((f) => 축제카드(f))}
+        </div>
+
+        {/* 🚗 **옆 지역에서도** — 내 지역 목록 **아래에** 잇는다.
+            사장님: *"합쳐 내용은 남겨야해"*. 내 지역 것을 대신하지 않는다.
+            구분선을 두고, 카드마다 시·도 꼬리표를 달아 어디 것인지 분명히 한다. */}
+        {nearby.length > 0 && (
+          <details className="nearby-festivals" open={nearbyOpen}>
+            <summary className="nf-title">{t.nearbyFestivalsTitle(nearby.length)}</summary>
+            <p className="empty-note">{t.nearbyFestivalsNote}</p>
+            <div className="festival-cards">
+              {nearby.map((f) => 축제카드(f, cityName(CITY_BY_KEY.get(cityOf(f)), language)))}
+            </div>
+          </details>
+        )}
 
         {/* 🈳 **날짜가 아직 안 적힌 축제.**
             열리는 것은 맞는데 올해 날짜를 못 확인한 곳들이다. 달이 없으면
