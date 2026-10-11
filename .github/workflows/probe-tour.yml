@@ -1,0 +1,33 @@
+name: Probe TourAPI (관광공사가 축제를 몇 개 주나)
+
+# 🔎 사장님: "경주같은데는 축제가 없나" (2026-10-11) — 세어 보니 **0곳**이었다.
+#    우리 자료 126곳 중 2026 날짜가 **2곳**뿐인데 매일 초록불로 돈다.
+#    **받는 쪽 문제인지 주는 쪽 문제인지** 가르려고 직접 물어본다.
+# 🚫 아무것도 저장하지 않는다 — 묻고 세기만 한다.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 물어본다
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/probe-tour-festivals.mjs 2>&1 | tee probe.txt
+      - name: 요약에 붙인다
+        if: always()
+        run: |
+          { echo "## 🔎 관광공사가 주는 축제 수"; echo ""; echo '```'; \
+            cat probe.txt 2>/dev/null || echo "(로그 없음)"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
