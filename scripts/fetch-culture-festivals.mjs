@@ -92,14 +92,13 @@ async function 한장(길, 칸, 쪽, 수 = 100) {
 
 if (맛보기) {
   console.log(`🧪 맛보기 — 아무것도 저장하지 않는다. ${ymd(오늘)} ~ ${ymd(끝날)}\n`);
-  // 🧭 **지역 이름은 짧은 쪽이다.** 돌아온 자료의 area 칸이 「경기」·「서울」이었다.
-  //    「경상북도」로 물으면 0건이 온다 — 없는 게 아니라 **이름이 안 맞는 것**이다.
-  //    0을 보고 "축제가 없네" 하면 안 된다. 그래서 둘을 나란히 물어 본다.
+  // 🚪 **창구를 적게 두드린다.** 포털은 한 번 돌 때마다 10분쯤 쉬어 줘야 한다 —
+  //    안 쉬면 연결 자체를 안 받는다(UND_ERR_CONNECT_TIMEOUT). 그래서 확인용 호출을 없앴다.
+  //    지역별로 몇 건인지는 **받아 적은 파일의 area 칸을 세면 된다** — 호출이 필요 없다.
+  //    (area2 로 「경상북도」를 물으면 0건이 온다. 자료의 area 는 「경북」처럼 짧은 이름이다.
+  //     0 을 보고 "축제가 없네" 하면 경주를 또 비워 둔 채 끝난다. 그 함정은 여기 적어만 둔다.)
   for (const [길, 칸] of [
     ["realm2", { from: ymd(오늘), to: ymd(끝날), realmCode: "F000", sortStdr: "1" }],
-    ["area2", { from: ymd(오늘), to: ymd(끝날), serviceTp: "B", sido: "경북" }],
-    ["area2", { from: ymd(오늘), to: ymd(끝날), serviceTp: "B", sido: "경북", sigungu: "경주시" }],
-    ["area2", { from: ymd(오늘), to: ymd(끝날), serviceTp: "B", sido: "경상북도" }],
   ]) {
     const 이름 = `${길} ${Object.entries(칸).filter(([k]) => k !== "from" && k !== "to").map(([k, v]) => `${k}=${v}`).join(" ")}`;
     try {
@@ -181,5 +180,9 @@ writeFileSync(나올곳, JSON.stringify({
   출처: "한국문화정보원_한눈에보는문화정보조회서비스 (공공데이터포털)",
   곳: 적을것,
 }, null, 2) + "\n", "utf8");
+const 경북 = 적을것.filter((x) => x.area === "경북");
+console.log(`🏯 경북 ${경북.length}건 · 그중 경주 ${경북.filter((x) => x.sigungu === "경주시").length}건` +
+  (경북.length ? ` — ${경북.slice(0, 5).map((x) => `${x.sigungu ?? ""} ${x.title}`).join(" · ")}` : ""));
+
 console.log(`\n✅ ${나올곳} 에 ${적을것.length}건을 적었다.`);
 console.log("🧭 적기만 했다. 화면에 붙이는 일은 따로 한다 — 상호·지역을 대조한 뒤에.");
