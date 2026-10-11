@@ -25,6 +25,19 @@ const 후보 = [
     메모: "전국 공연·전시·축제. 서울 밖을 메울 가장 큰 후보",
   },
   {
+    // 🔑 **열쇠를 두 번 싸는 실수를 가른다.** 포털은 「인코딩 열쇠」와 「디코딩 열쇠」를
+    //    두 가지로 준다. 디코딩 열쇠에는 `+` `=` 가 들어 있어 그대로 주소에 붙이면 깨진다.
+    //    같은 주소를 **열쇠만 감싸서** 한 번 더 불러 본다 — 이쪽만 되면 범인은 열쇠 표기다.
+    이름: "한국문화정보원 공연전시정보 (period · 열쇠를 감싸서)",
+    url: `https://apis.data.go.kr/B553457/nopenapi/rest/publicperformancedisplays/period?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10`,
+    메모: "열쇠만 URL 로 감싼 같은 주소. 이쪽만 되면 열쇠 표기가 범인이다",
+  },
+  {
+    이름: "한국문화정보원 공연전시정보 (area 경상북도)",
+    url: `https://apis.data.go.kr/B553457/nopenapi/rest/publicperformancedisplays/area?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10&sido=${encodeURIComponent("경상북도")}`,
+    메모: "지역으로 좁혀 부르는 길. 경주를 바로 확인할 수 있다",
+  },
+  {
     이름: "한국문화정보원 공연전시정보 (realm 축제)",
     url: `https://apis.data.go.kr/B553457/nopenapi/rest/publicperformancedisplays/realm?serviceKey=${KEY}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10&realmCode=D000`,
     메모: "갈래를 「축제」로 좁혀 부르는 길",
@@ -47,6 +60,13 @@ const 후보 = [
     url: `https://apis.data.go.kr/B551011/KorService2/searchFestival2?serviceKey=${KEY}&MobileOS=ETC&MobileApp=KStreet&_type=json&areaCode=35&eventStartDate=20260101&numOfRows=5&pageNo=1`,
     메모: "이게 되면 열쇠 자체는 멀쩡한 것이다",
   },
+  {
+    // 🏯 **경주 시군구 번호를 짐작하지 않는다.** 0건이 나온 게 「축제가 없어서」인지
+    //    「번호가 틀려서」인지 가른다 — 번호표를 직접 받아 본다.
+    이름: "★ 관광공사 — 경북(35) 시군구 번호표",
+    url: `https://apis.data.go.kr/B551011/KorService2/areaCode2?serviceKey=${KEY}&MobileOS=ETC&MobileApp=KStreet&_type=json&areaCode=35&numOfRows=30&pageNo=1`,
+    메모: "경주가 몇 번인지 눈으로 본다. 0건의 원인을 가른다",
+  },
 ];
 
 for (const c of 후보) {
@@ -58,7 +78,22 @@ for (const c of 후보) {
     console.log(`   상태 ${r.status} · 받은 글 ${t.length}자`);
     // 🚦 공공데이터포털은 **실패도 200 으로 돌려준다.** 글을 봐야 안다.
     const 막힘 = t.match(/SERVICE_KEY_IS_NOT_REGISTERED|NOT_REGISTERED_ERROR|SERVICE ERROR|등록되지\s*않은|<errMsg>([^<]*)/i);
-    if (막힘) { console.log(`   ❌ 열쇠가 안 먹는다 — ${막힘[0].slice(0, 60)}`); continue; }
+    if (막힘) {
+      // 🔎 **왜 막혔는지를 가른다.** 포털이 주는 숫자가 원인을 말해 준다 —
+      //    30 = 열쇠가 이 서비스에 등록 안 됨(활용신청 필요/반영 전)
+      //    12 = 그런 서비스가 없음(주소가 틀렸거나 폐기됨)
+      //    22/ 4 = 하루 한도 초과
+      const 코드 = t.match(/<returnReasonCode>(\d+)<\/returnReasonCode>/)?.[1]
+        ?? t.match(/"returnReasonCode"\s*:\s*"?(\d+)/)?.[1];
+      const 뜻 = { "30": "열쇠가 이 서비스에 아직 등록 안 됐다 (활용신청 또는 반영 대기)",
+                   "12": "그런 서비스가 없다 — **주소가 틀렸다**",
+                   "22": "하루 한도 초과", "4": "하루 한도 초과",
+                   "31": "기간 만료", "20": "접근 거부" }[코드] ?? "뜻을 모르는 코드";
+      console.log(`   ❌ 막혔다 — ${막힘[0].slice(0, 60)}`);
+      console.log(`      원인코드 ${코드 ?? "없음"} → ${뜻}`);
+      console.log(`      받은 글 전부: ${t.replace(/\s+/g, " ").slice(0, 600)}`);
+      continue;
+    }
     const 건수 = t.match(/<totalCount>(\d+)<\/totalCount>/)?.[1]
       ?? t.match(/"totalCount"\s*:\s*"?(\d+)/)?.[1];
     if (건수 != null) console.log(`   ✅ 된다 — 총 ${건수}건`);
