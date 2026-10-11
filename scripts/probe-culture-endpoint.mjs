@@ -57,6 +57,21 @@ for (const z of 자료) {
       }
     }
 
+    // 1-3) 🎯 **설명서를 통째로 읽는다.** 이 페이지 안에는 API 설명서(Swagger) 가
+    //      JSON 으로 박혀 있다. 글을 눈으로 훑지 말고 **그걸 파서** 길과 요청변수를
+    //      이름 그대로 뽑는다 — 「PageNo 인가 pageNo 인가」로 또 돌리지 않으려면 이게 유일한 길이다.
+    const 설명서 = 스웨거찾기(html);
+    if (설명서) {
+      console.log(`   🎯 설명서를 찾았다 — host: ${설명서.host}${설명서.basePath ?? ""}`);
+      for (const [길, 몸] of Object.entries(설명서.paths ?? {})) {
+        const get = 몸.get ?? {};
+        console.log(`      ${길}   「${get.summary ?? "?"}」`);
+        for (const v of 몸.parameters ?? get.parameters ?? []) {
+          console.log(`         · ${v.name}${v.required ? " (필수)" : ""} — ${v.description ?? ""}`);
+        }
+      }
+    }
+
     // 2) 상세기능(오퍼레이션) 이름도 같이 본다 — 어느 길을 불러야 하는지 가린다.
     const 기능 = new Set();
     for (const m of html.matchAll(/(?:상세기능|오퍼레이션)[^<]{0,40}<\/[^>]+>\s*<[^>]+>([^<]{2,60})</g)) 기능.add(m[1].trim());
@@ -67,3 +82,37 @@ for (const z of 자료) {
   }
 }
 console.log("\n🧭 위에 나온 주소를 그대로 써야 한다. 여기서 안 나오면 사장님께 자료 페이지의 「상세기능」 화면을 부탁한다.");
+
+// 📦 페이지 글 속에 박힌 설명서(JSON) 를 떠낸다.
+//    `"swagger":"2.0"` 자리에서 시작해 **괄호 수를 세어** 짝이 맞는 데까지 자른다 —
+//    정규식으로는 중첩된 괄호를 못 센다.
+function 스웨거찾기(html) {
+  const 시작표 = ['{"swagger"', '{ "swagger"'];
+  let i = -1;
+  for (const t of 시작표) { i = html.indexOf(t); if (i >= 0) break; }
+  if (i < 0) {
+    const k = html.indexOf('"swagger"');
+    if (k < 0) return null;
+    i = html.lastIndexOf("{", k);
+    if (i < 0) return null;
+  }
+  let 깊이 = 0, 글속 = false, 피함 = false;
+  for (let j = i; j < html.length; j++) {
+    const c = html[j];
+    if (글속) {
+      if (피함) { 피함 = false; }
+      else if (c === "\\") 피함 = true;
+      else if (c === '"') 글속 = false;
+      continue;
+    }
+    if (c === '"') { 글속 = true; continue; }
+    if (c === "{") 깊이++;
+    else if (c === "}") {
+      깊이--;
+      if (깊이 === 0) {
+        try { return JSON.parse(html.slice(i, j + 1)); } catch (e) { return null; }
+      }
+    }
+  }
+  return null;
+}

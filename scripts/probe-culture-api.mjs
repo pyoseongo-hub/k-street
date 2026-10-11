@@ -36,6 +36,13 @@ const 후보 = [
     메모: "끝에 /request 가 없는 모양",
   },
   {
+    // 🎯 설명서(Swagger)에서 그대로 읽어 온 모양. **PageNo 는 대문자 P 다.**
+    //    serviceTp 는 분야 — A:공연/전시 · **B:행사/축제** · C:교육/체험.
+    이름: "★ 문화정보 period2 — 설명서대로 (행사/축제만)",
+    url: `https://apis.data.go.kr/B553457/cultureinfo/period2?serviceKey=${encodeURIComponent(KEY)}&PageNo=1&numOfRows=10&from=${ymd(오늘)}&to=${ymd(한달뒤)}&serviceTp=B`,
+    메모: "이게 되면 전국 축제 창구가 열린다",
+  },
+  {
     이름: "문화정보 realm 축제 (…/cultureinfo/realm/request)",
     url: `https://apis.data.go.kr/B553457/cultureinfo/realm/request?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10&realmCode=D000`,
     메모: "갈래를 「축제」로 좁혀 부르는 길",
