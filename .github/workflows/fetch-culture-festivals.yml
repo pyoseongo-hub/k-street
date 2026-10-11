@@ -11,8 +11,11 @@ on:
         type: boolean
         default: false
       days:
-        description: "오늘부터 며칠치를 볼까"
+        description: "시작일부터 며칠치를 볼까"
         default: "120"
+      from:
+        description: "언제부터 (YYYYMMDD · 비우면 오늘). 끝난 축제까지 보려면 올해 1월로"
+        default: ""
 
 permissions:
   contents: write
@@ -33,6 +36,7 @@ jobs:
           set -o pipefail
           node scripts/fetch-culture-festivals.mjs \
             --days=${{ inputs.days }} \
+            ${{ inputs.from && format('--from={0}', inputs.from) || '' }} \
             ${{ inputs.apply && '--apply' || '--dry' }} 2>&1 | tee out.txt
       - name: 적은 것 커밋
         if: ${{ inputs.apply }}

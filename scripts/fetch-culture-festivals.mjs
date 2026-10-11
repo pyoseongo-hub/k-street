@@ -27,10 +27,17 @@ if (!KEY) { console.error("TOUR_API_KEY 가 없다"); process.exit(1); }
 const 인자 = new Set(process.argv.slice(2));
 const 맛보기 = !인자.has("--apply");
 const 날수 = Number(process.argv.find((a) => a.startsWith("--days="))?.slice(7)) || 120;
+// 📅 **시작일을 뒤로 물릴 수 있게 한다** (2026-10-11에 필요해졌다).
+//    「오늘부터」만 받으면 **이미 끝난 축제가 안 보인다.** 경주가 0곳이었는데,
+//    없는 것인지 끝난 것인지 가르려면 올해 1월부터 받아 봐야 한다.
+//    끝난 축제도 지울 게 아니다 — 회색으로 「내년에 또 열립니다」로 보여 준다(사장님 지시).
+const 시작글 = process.argv.find((a) => a.startsWith("--from="))?.slice(7);
 
 const 뿌리 = "https://apis.data.go.kr/B553457/cultureinfo";
 const ymd = (d) => `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, "0")}${String(d.getDate()).padStart(2, "0")}`;
-const 오늘 = new Date();
+const 오늘 = 시작글 && /^\d{8}$/.test(시작글)
+  ? new Date(Number(시작글.slice(0, 4)), Number(시작글.slice(4, 6)) - 1, Number(시작글.slice(6)))
+  : new Date();
 const 끝날 = new Date(오늘.getTime() + 날수 * 86400000);
 
 // 🔁 끊겨도 한 번에 포기하지 않는다. 다만 무한정 두드리지도 않는다 — **두드리면 더 막힌다.**
@@ -124,18 +131,29 @@ if (맛보기) {
 console.log(`💾 받는다 — ${ymd(오늘)} ~ ${ymd(끝날)} · 행사/축제(F000)\n`);
 
 const 모음 = new Map();   // seq → 한 건
-let 쪽 = 1, 총 = null;
-while (true) {
-  const xml = await 한장("realm2", { from: ymd(오늘), to: ymd(끝날), realmCode: "F000", sortStdr: "1" }, 쪽, 100);
-  if (총 === null) { 총 = 총건수(xml); console.log(`   포털이 말하는 전체: ${총}건`); }
-  const 것들 = 항목들(xml);
-  for (const it of 것들) if (it.seq) 모음.set(it.seq, it);
-  console.log(`   ${쪽}쪽 — ${것들.length}개 (모은 것 ${모음.size})`);
-  // 🛑 **끝을 두 가지로 본다.** 빈 장이 오거나, 포털이 말한 전체 수를 넘겼을 때.
-  //    한 가지만 보면 포털이 totalCount 를 틀리게 줄 때 영원히 돈다.
-  if (것들.length === 0 || 모음.size >= 총 || 쪽 > 60) break;
-  쪽++;
-  await new Promise((r) => setTimeout(r, 400));   // 포털을 몰아치지 않는다
+
+// 🔀 **두 길을 합친다.** 같은 포털인데 거르는 기준이 다르다 —
+//    realm2 는 분류코드(F000=행사/축제), period2 는 분야구분(B=행사/축제).
+//    한쪽에만 올라온 것이 있어서, 합치면 빠지는 게 줄어든다. seq 로 겹치는 것은 하나로 센다.
+for (const [길, 거르개] of [
+  ["realm2", { realmCode: "F000", sortStdr: "1" }],
+  ["period2", { serviceTp: "B" }],
+]) {
+  let 쪽 = 1, 총 = null, 이길 = 0;
+  while (true) {
+    const xml = await 한장(길, { from: ymd(오늘), to: ymd(끝날), ...거르개 }, 쪽, 100);
+    if (총 === null) { 총 = 총건수(xml); console.log(`── ${길}: 포털이 말하는 전체 ${총}건`); }
+    const 것들 = 항목들(xml);
+    이길 += 것들.length;
+    for (const it of 것들) if (it.seq) 모음.set(it.seq, it);
+    console.log(`   ${쪽}쪽 — ${것들.length}개 (이 길 ${이길} · 합쳐서 ${모음.size})`);
+    // 🛑 **끝을 두 가지로 본다.** 빈 장이 오거나, 포털이 말한 전체 수를 넘겼을 때.
+    //    한 가지만 보면 포털이 totalCount 를 틀리게 줄 때 영원히 돈다.
+    if (것들.length === 0 || 이길 >= 총 || 쪽 > 60) break;
+    쪽++;
+    await new Promise((r) => setTimeout(r, 600));   // 포털을 몰아치지 않는다
+  }
+  await new Promise((r) => setTimeout(r, 1500));
 }
 
 // 🔤 포털이 글자를 **두 번 싸서** 준다 — `&amp;lt;` 는 `&lt;` 가 아니라 `<` 다.
@@ -180,6 +198,10 @@ writeFileSync(나올곳, JSON.stringify({
   출처: "한국문화정보원_한눈에보는문화정보조회서비스 (공공데이터포털)",
   곳: 적을것,
 }, null, 2) + "\n", "utf8");
+const 오늘글 = new Date().toISOString().slice(0, 10);
+const 끝난것 = 적을것.filter((x) => (x.end ?? x.start) < 오늘글);
+console.log(`   이미 끝난 것 ${끝난것.length}건 — 지우지 않는다. 회색으로 「내년에 또」로 보여 줄 것들이다`);
+
 const 경북 = 적을것.filter((x) => x.area === "경북");
 console.log(`🏯 경북 ${경북.length}건 · 그중 경주 ${경북.filter((x) => x.sigungu === "경주시").length}건` +
   (경북.length ? ` — ${경북.slice(0, 5).map((x) => `${x.sigungu ?? ""} ${x.title}`).join(" · ")}` : ""));
