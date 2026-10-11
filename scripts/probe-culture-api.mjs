@@ -100,6 +100,11 @@ for (const c of 후보) {
     const 이름들 = [...t.matchAll(/<title>([^<]{2,40})<\/title>|"title"\s*:\s*"([^"]{2,40})"/g)]
       .map((m) => m[1] ?? m[2]).filter(Boolean).slice(0, 5);
     if (이름들.length) console.log(`   보기: ${이름들.join(" · ")}`);
+    // 📋 **되면 받은 글의 앞부분을 그대로 남긴다.** 칸 이름을 알아야 받아 적을 수 있다 —
+    //    「제목이 title 인가 subTitle 인가」로 또 한 판을 돌리지 않으려면 지금 봐 둬야 한다.
+    if (c.이름.startsWith("★")) {
+      console.log(`   📋 받은 글 앞부분: ${t.replace(/\s+/g, " ").slice(0, 900)}`);
+    }
   } catch (e) {
     console.log(`   ❌ ${e?.message ?? "알 수 없는 오류"}`);
   }
