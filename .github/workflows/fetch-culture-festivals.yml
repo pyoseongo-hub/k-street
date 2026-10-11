@@ -1,0 +1,41 @@
+name: Fetch culture festivals (전국 축제 받아 오기)
+
+# 🎪 서울 밖 축제를 메우는 창구. 왜 이걸 붙였는지는 scripts/fetch-culture-festivals.mjs 머리에 있다.
+# 🚦 **맛보기가 기본이다.** apply 를 켜야 저장한다 — 켜기 전에 끈 채로 먼저 본다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "저장까지 한다 (끄면 맛보기만)"
+        type: boolean
+        default: false
+      days:
+        description: "오늘부터 며칠치를 볼까"
+        default: "120"
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 받아 온다
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/fetch-culture-festivals.mjs \
+            --days=${{ inputs.days }} \
+            ${{ inputs.apply && '--apply' || '--dry' }} 2>&1 | tee out.txt
+      - name: 요약에 붙인다
+        if: always()
+        run: |
+          { echo "## 🎪 전국 축제"; echo ""; echo '```'; \
+            cat out.txt 2>/dev/null || echo "(로그 없음)"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
