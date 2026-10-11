@@ -33,13 +33,19 @@ const ymd = (d) => `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, "0"
 const 오늘 = new Date();
 const 끝날 = new Date(오늘.getTime() + 날수 * 86400000);
 
-// 🔁 끊겨도 한 번에 포기하지 않는다. 다만 무한정 두드리지도 않는다 — 두드리면 더 막힌다.
+// 🔁 끊겨도 한 번에 포기하지 않는다. 다만 무한정 두드리지도 않는다 — **두드리면 더 막힌다.**
+//    2026-10-11 에 25분 동안 여덟 번 돌렸더니 포털이 연결 자체를 끊었다(UND_ERR_CONNECT_TIMEOUT).
+//    그때 로그에 남은 건 「fetch failed」 한 줄뿐이라 **원인을 몰랐다.** 그래서 속을 꺼내 적는다.
 async function 받기(url, 횟수 = 3) {
   let 마지막;
   for (let i = 0; i < 횟수; i++) {
-    if (i > 0) await new Promise((r) => setTimeout(r, 4000 * i));
+    if (i > 0) {
+      const 쉼 = 10000 * i;
+      console.log(`      ⏳ ${쉼 / 1000}초 쉬고 다시 (${i + 1}/${횟수})`);
+      await new Promise((r) => setTimeout(r, 쉼));
+    }
     try {
-      const r = await fetch(url, { signal: AbortSignal.timeout(30000) });
+      const r = await fetch(url, { signal: AbortSignal.timeout(40000) });
       const t = await r.text();
       const 막힘 = t.match(/<returnReasonCode>(\d+)<\/returnReasonCode>/);
       if (막힘) throw new Error(`포털 원인코드 ${막힘[1]} — ${t.match(/<returnAuthMsg>([^<]*)/)?.[1] ?? ""}`);
@@ -47,6 +53,22 @@ async function 받기(url, 횟수 = 3) {
     } catch (e) { 마지막 = e; }
   }
   throw 마지막;
+}
+
+// 🧾 **왜 끊겼는지를 글로 남긴다.** fetch 는 겉을 「fetch failed」로만 말하고
+//    진짜 이유를 cause 안에 숨긴다. 그걸 안 꺼내면 포털이 막은 것인지, 주소가 틀린 것인지,
+//    우리 쪽이 느린 것인지 **가를 수가 없다.**
+function 왜(e) {
+  const 속 = e?.cause;
+  const 코드 = 속?.code ?? e?.code;
+  const 뜻 = {
+    UND_ERR_CONNECT_TIMEOUT: "포털이 연결을 안 받아 준다 — 너무 자주 두드렸을 때 이렇게 된다. 쉬었다 다시",
+    ETIMEDOUT: "응답이 안 온다 — 위와 같다",
+    ECONNRESET: "포털이 연결을 끊었다",
+    ENOTFOUND: "주소(호스트)를 못 찾는다",
+    UND_ERR_HEADERS_TIMEOUT: "연결은 됐는데 대답이 안 온다",
+  }[코드];
+  return [e?.message, 코드 && `(${코드})`, 뜻 && `→ ${뜻}`].filter(Boolean).join(" ");
 }
 
 // 📦 XML 한 덩이를 칸 이름 그대로 뜬다. **칸 이름을 짐작하지 않는다** —
@@ -86,7 +108,7 @@ if (맛보기) {
         for (const [k, v] of Object.entries(것들[0])) console.log(`      ${k} = ${String(v).slice(0, 70)}`);
       }
     } catch (e) {
-      console.log(`── ${이름}\n   ❌ ${e?.message ?? e}`);
+      console.log(`── ${이름}\n   ❌ ${왜(e)}`);
     }
     console.log("");
   }
