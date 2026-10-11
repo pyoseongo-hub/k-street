@@ -19,28 +19,36 @@ const 한달뒤 = new Date(오늘.getTime() + 30 * 86400000);
 // 후보 창구들. 전부 **공공데이터포털(data.go.kr)** 이라 같은 「일반 인증키」를 쓴다 —
 // 다만 서비스마다 **활용신청**이 따로라, 승인 안 된 것은 열쇠가 안 먹는다.
 const 후보 = [
+  // 🏷️ **주소의 뿌리를 포털 안내문에서 긁어 왔다** (2026-10-11).
+  //    내가 쓰던 `/B553457/nopenapi/rest/publicperformancedisplays/...` 는 **없는 길**이었다
+  //    (원인코드 12). 자료 페이지에 박힌 진짜 뿌리는 **`/B553457/cultureinfo`** 고,
+  //    기능 이름은 `period2` · `realm` · `livelihood` 였다.
+  //    끝 모양(`/request` 가 붙나)은 아직 모르니 **몇 가지를 한 번에 시험한다** —
+  //    한 줄씩 짐작해 돌리면 한 번에 2분씩 태운다.
   {
-    이름: "한국문화정보원 공연전시정보 (period)",
-    url: `https://apis.data.go.kr/B553457/nopenapi/rest/publicperformancedisplays/period?serviceKey=${KEY}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10`,
+    이름: "문화정보 period2 (…/cultureinfo/period2/request)",
+    url: `https://apis.data.go.kr/B553457/cultureinfo/period2/request?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10`,
     메모: "전국 공연·전시·축제. 서울 밖을 메울 가장 큰 후보",
   },
   {
-    // 🔑 **열쇠를 두 번 싸는 실수를 가른다.** 포털은 「인코딩 열쇠」와 「디코딩 열쇠」를
-    //    두 가지로 준다. 디코딩 열쇠에는 `+` `=` 가 들어 있어 그대로 주소에 붙이면 깨진다.
-    //    같은 주소를 **열쇠만 감싸서** 한 번 더 불러 본다 — 이쪽만 되면 범인은 열쇠 표기다.
-    이름: "한국문화정보원 공연전시정보 (period · 열쇠를 감싸서)",
-    url: `https://apis.data.go.kr/B553457/nopenapi/rest/publicperformancedisplays/period?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10`,
-    메모: "열쇠만 URL 로 감싼 같은 주소. 이쪽만 되면 열쇠 표기가 범인이다",
+    이름: "문화정보 period2 (…/cultureinfo/period2)",
+    url: `https://apis.data.go.kr/B553457/cultureinfo/period2?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10`,
+    메모: "끝에 /request 가 없는 모양",
   },
   {
-    이름: "한국문화정보원 공연전시정보 (area 경상북도)",
-    url: `https://apis.data.go.kr/B553457/nopenapi/rest/publicperformancedisplays/area?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10&sido=${encodeURIComponent("경상북도")}`,
+    이름: "문화정보 realm 축제 (…/cultureinfo/realm/request)",
+    url: `https://apis.data.go.kr/B553457/cultureinfo/realm/request?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10&realmCode=D000`,
+    메모: "갈래를 「축제」로 좁혀 부르는 길",
+  },
+  {
+    이름: "문화정보 area2 경상북도 (…/cultureinfo/area2/request)",
+    url: `https://apis.data.go.kr/B553457/cultureinfo/area2/request?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10&sido=${encodeURIComponent("경상북도")}`,
     메모: "지역으로 좁혀 부르는 길. 경주를 바로 확인할 수 있다",
   },
   {
-    이름: "한국문화정보원 공연전시정보 (realm 축제)",
-    url: `https://apis.data.go.kr/B553457/nopenapi/rest/publicperformancedisplays/realm?serviceKey=${KEY}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10&realmCode=D000`,
-    메모: "갈래를 「축제」로 좁혀 부르는 길",
+    이름: "문화정보 livelihood (…/cultureinfo/livelihood/request)",
+    url: `https://apis.data.go.kr/B553457/cultureinfo/livelihood/request?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10`,
+    메모: "문화달력. 축제가 여기 들어 있을 수도 있다",
   },
   {
     // 🔑 **열쇠를 새로 안 받아도 되는 길.** searchFestival2 는 「행사 날짜가 등록된 것」만

@@ -45,6 +45,18 @@ for (const z of 자료) {
       console.log("   ⚠️ 주소를 못 찾았다 — 페이지가 자바스크립트로 그려지는 것일 수 있다");
     }
 
+    // 1-2) **길의 끝까지 본다.** 뿌리만 잡히면(`/B553457/cultureinfo`) 그 뒤가 빠진다.
+    //      그래서 그 말이 나온 자리를 **글 그대로** 앞뒤로 떠서 보여 준다 —
+    //      여기에 전체 경로와 요청변수 이름이 같이 들어 있다.
+    for (const 말 of ["cultureinfo", "period2"]) {
+      const 자리 = [...html.matchAll(new RegExp(말, "g"))].slice(0, 3);
+      for (const m of 자리) {
+        const 앞 = Math.max(0, m.index - 160);
+        const 토막 = html.slice(앞, m.index + 260).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+        console.log(`   📄 「${말}」 자리: ${토막}`);
+      }
+    }
+
     // 2) 상세기능(오퍼레이션) 이름도 같이 본다 — 어느 길을 불러야 하는지 가린다.
     const 기능 = new Set();
     for (const m of html.matchAll(/(?:상세기능|오퍼레이션)[^<]{0,40}<\/[^>]+>\s*<[^>]+>([^<]{2,60})</g)) 기능.add(m[1].trim());
