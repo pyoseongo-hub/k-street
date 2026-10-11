@@ -87,6 +87,13 @@ function 어느시도(area?: string, sigungu?: string): string | undefined {
   return undefined;   // 못 가르면 버린다. 억지로 끼워 넣지 않는다
 }
 
+// 🚫 **축제가 아닌 것을 거른다.** 포털의 「행사/축제」 칸에는 손님이 갈 수 없는 것도 섞인다 —
+//    「워케이션 박람회 참여기업 모집공고」·「디지털출판 세미나」·「서예 학술대회」.
+//    이건 업계 사람 몫이지 여행 온 손님 몫이 아니다. 축제 목록에 끼면 **목록 전체가 싸구려가 된다.**
+//    (펀서울에서 15곳을 고를 때도 같은 잣대로 행정·직능 행사를 뺐다 — 잣대를 하나로 둔다.)
+const 축제아님 =
+  /모집\s*공고|참가자\s*모집|참여\s*기업|참여기업|공모전|입찰|용역|낙찰|설명회|간담회|워크숍|워크샵|세미나|학술\s*대회|포럼|심포지엄|수상자|당첨자|결과\s*발표|선정\s*결과|자원봉사|교육생|수강생|아카데미|자격\s*시험|채용/;
+
 const 올해 = new Date().getFullYear();
 const 버린이유 = new Map<string, number>();
 const 버린다 = (왜: string) => 버린이유.set(왜, (버린이유.get(왜) ?? 0) + 1);
@@ -122,12 +129,17 @@ for (const it of 곳들) {
   const 끝 = it.end ?? it.start;
   if (Number(끝.slice(0, 4)) < 올해) { 버린다("작년 이전에 끝났다"); continue; }
   if (이미있는것.has(`${gu}|${뼈대(it.title)}`)) { 버린다("이미 아는 축제다"); continue; }
+  if (축제아님.test(it.title)) { 버린다("축제가 아니다 (모집·세미나·공고 따위)"); continue; }
 
   const id = `cf_${it.seq}`;
   곳결과.push({
     id, city, gu,
     category: "festival",
     name: it.title,
+    // ✅ **이름과 자리는 확인된 것이다.** 포털(한국문화정보원)이 주최 측 등록을 받아
+    //    올려 둔 자리고, 낱장 주소(page)까지 같이 온다 — 관광공사 자료와 같은 등급이다.
+    //    이 칸을 비우면 감사 ❌B5 가 막는다("값처럼 보이는데 확인 안 됐다고 표시").
+    confirmed: true,
     // 📝 사진도 소개 글도 없다. 지어내지 않고 빈 칸으로 두되, 카드에 안내가 뜨게 한다.
     nameOnly: true,
     ...(it.lat && it.lng ? { lat: it.lat, lng: it.lng } : {}),
