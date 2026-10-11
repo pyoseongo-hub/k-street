@@ -20,6 +20,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: 전국 창구 열쇠가 먹히나 본다
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        run: |
+          set -o pipefail
+          node scripts/probe-culture-api.mjs 2>&1 | tee key.txt
+
       - name: 물어본다
         env:
           TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
@@ -29,5 +36,7 @@ jobs:
       - name: 요약에 붙인다
         if: always()
         run: |
-          { echo "## 🔎 관광공사가 주는 축제 수"; echo ""; echo '```'; \
+          { echo "## 🔑 전국 창구 열쇠"; echo ""; echo '```'; \
+            cat key.txt 2>/dev/null || echo "(로그 없음)"; echo '```'; echo ""; \
+            echo "## 🔎 관광공사가 주는 축제 수"; echo ""; echo '```'; \
             cat probe.txt 2>/dev/null || echo "(로그 없음)"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
