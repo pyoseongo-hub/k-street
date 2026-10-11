@@ -27,17 +27,24 @@ const 후보 = [
   //    ⚠️ 내가 처음 쓴 /nopenapi/rest/publicperformancedisplays/... 는 **없는 길**이었다(원인코드 12).
   {
     이름: "★ 문화정보 realm2 — 행사/축제(F000) 전국",
-    url: `https://apis.data.go.kr/B553457/cultureinfo/realm2?serviceKey=${encodeURIComponent(KEY)}&PageNo=1&numOfrows=10&realmCode=F000&from=${ymd(오늘)}&to=${ymd(한달뒤)}&sortStdr=1`,
+    url: `https://apis.data.go.kr/B553457/cultureinfo/realm2?serviceKey=${KEY}&PageNo=1&numOfrows=10&realmCode=F000&from=${ymd(오늘)}&to=${ymd(한달뒤)}&sortStdr=1`,
     메모: "이게 되면 전국 축제 창구가 열린다",
   },
   {
     이름: "★ 문화정보 area2 — 경상북도 행사/축제",
-    url: `https://apis.data.go.kr/B553457/cultureinfo/area2?serviceKey=${encodeURIComponent(KEY)}&PageNo=1&numOfrows=10&sido=${encodeURIComponent("경상북도")}&sigungu=${encodeURIComponent("경주시")}&serviceTp=B&from=${ymd(오늘)}&to=${ymd(한달뒤)}`,
+    url: `https://apis.data.go.kr/B553457/cultureinfo/area2?serviceKey=${KEY}&PageNo=1&numOfrows=10&sido=${encodeURIComponent("경상북도")}&sigungu=${encodeURIComponent("경주시")}&serviceTp=B&from=${ymd(오늘)}&to=${ymd(한달뒤)}`,
     메모: "경주를 바로 확인한다. 시군구까지 넣을 수 있다",
   },
   {
+    // 🧪 **범인 확인용.** 아래 realm2 와 똑같은데 **열쇠만 한 번 더 감쌌다.**
+    //    이쪽만 ❌ 30 이면 범인은 두 번 감싼 것이고, 둘 다 ❌ 면 아직 반영 전이다.
+    이름: "(대조군) realm2 — 열쇠를 한 번 더 감싸서",
+    url: `https://apis.data.go.kr/B553457/cultureinfo/realm2?serviceKey=${encodeURIComponent(KEY)}&PageNo=1&numOfrows=10&realmCode=F000&from=${ymd(오늘)}&to=${ymd(한달뒤)}&sortStdr=1`,
+    메모: "두 번 감싸면 %2B 가 %252B 가 된다 — 「등록되지 않은 서비스키」로 보인다",
+  },
+  {
     이름: "문화정보 period2 — 기간별 행사/축제",
-    url: `https://apis.data.go.kr/B553457/cultureinfo/period2?serviceKey=${encodeURIComponent(KEY)}&PageNo=1&numOfrows=10&from=${ymd(오늘)}&to=${ymd(한달뒤)}&serviceTp=B`,
+    url: `https://apis.data.go.kr/B553457/cultureinfo/period2?serviceKey=${KEY}&PageNo=1&numOfrows=10&from=${ymd(오늘)}&to=${ymd(한달뒤)}&serviceTp=B`,
     메모: "날짜로 훑는 길. 달마다 돌릴 때 쓴다",
   },
   {
