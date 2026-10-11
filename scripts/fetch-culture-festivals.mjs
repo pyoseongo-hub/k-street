@@ -92,11 +92,14 @@ async function 한장(길, 칸, 쪽, 수 = 100) {
 
 if (맛보기) {
   console.log(`🧪 맛보기 — 아무것도 저장하지 않는다. ${ymd(오늘)} ~ ${ymd(끝날)}\n`);
+  // 🧭 **지역 이름은 짧은 쪽이다.** 돌아온 자료의 area 칸이 「경기」·「서울」이었다.
+  //    「경상북도」로 물으면 0건이 온다 — 없는 게 아니라 **이름이 안 맞는 것**이다.
+  //    0을 보고 "축제가 없네" 하면 안 된다. 그래서 둘을 나란히 물어 본다.
   for (const [길, 칸] of [
-    ["period2", { from: ymd(오늘), to: ymd(끝날), serviceTp: "B" }],
     ["realm2", { from: ymd(오늘), to: ymd(끝날), realmCode: "F000", sortStdr: "1" }],
+    ["area2", { from: ymd(오늘), to: ymd(끝날), serviceTp: "B", sido: "경북" }],
+    ["area2", { from: ymd(오늘), to: ymd(끝날), serviceTp: "B", sido: "경북", sigungu: "경주시" }],
     ["area2", { from: ymd(오늘), to: ymd(끝날), serviceTp: "B", sido: "경상북도" }],
-    ["area2", { from: ymd(오늘), to: ymd(끝날), serviceTp: "B", sido: "경상북도", sigungu: "경주시" }],
   ]) {
     const 이름 = `${길} ${Object.entries(칸).filter(([k]) => k !== "from" && k !== "to").map(([k, v]) => `${k}=${v}`).join(" ")}`;
     try {
@@ -116,5 +119,67 @@ if (맛보기) {
   process.exit(0);
 }
 
-console.error("아직 --apply 는 막아 뒀다. 칸 이름을 확인한 뒤에 연다.");
-process.exit(1);
+// ─────────────────────────────────────────────────────────────────────────
+// 💾 저장 — **받아 적기만 한다.** 화면에 붙일지 말지는 여기서 정하지 않는다.
+// ─────────────────────────────────────────────────────────────────────────
+console.log(`💾 받는다 — ${ymd(오늘)} ~ ${ymd(끝날)} · 행사/축제(F000)\n`);
+
+const 모음 = new Map();   // seq → 한 건
+let 쪽 = 1, 총 = null;
+while (true) {
+  const xml = await 한장("realm2", { from: ymd(오늘), to: ymd(끝날), realmCode: "F000", sortStdr: "1" }, 쪽, 100);
+  if (총 === null) { 총 = 총건수(xml); console.log(`   포털이 말하는 전체: ${총}건`); }
+  const 것들 = 항목들(xml);
+  for (const it of 것들) if (it.seq) 모음.set(it.seq, it);
+  console.log(`   ${쪽}쪽 — ${것들.length}개 (모은 것 ${모음.size})`);
+  // 🛑 **끝을 두 가지로 본다.** 빈 장이 오거나, 포털이 말한 전체 수를 넘겼을 때.
+  //    한 가지만 보면 포털이 totalCount 를 틀리게 줄 때 영원히 돈다.
+  if (것들.length === 0 || 모음.size >= 총 || 쪽 > 60) break;
+  쪽++;
+  await new Promise((r) => setTimeout(r, 400));   // 포털을 몰아치지 않는다
+}
+
+// 🔤 포털이 글자를 **두 번 싸서** 준다 — `&amp;lt;` 는 `&lt;` 가 아니라 `<` 다.
+//    한 번만 풀면 화면에 `&lt;` 가 그대로 뜬다. 두 번까지 푼다.
+function 글자풀기(t) {
+  let v = String(t ?? "");
+  for (let i = 0; i < 2; i++) {
+    v = v.replace(/&(amp|lt|gt|quot|#39|apos|nbsp);/g, (_, k) =>
+      ({ amp: "&", lt: "<", gt: ">", quot: '"', "#39": "'", apos: "'", nbsp: " " })[k]);
+  }
+  return v.replace(/\s+/g, " ").trim();
+}
+const 날풀기 = (d) => (/^\d{8}$/.test(String(d ?? "")) ? `${d.slice(0, 4)}-${d.slice(4, 6)}-${d.slice(6)}` : undefined);
+const 수풀기 = (v) => { const n = Number(v); return Number.isFinite(n) && n !== 0 ? n : undefined; };
+
+const 적을것 = [...모음.values()].map((it) => ({
+  seq: it.seq,
+  title: 글자풀기(it.title),
+  start: 날풀기(it.startDate),
+  end: 날풀기(it.endDate),
+  place: 글자풀기(it.place) || undefined,
+  area: 글자풀기(it.area) || undefined,          // 「경기」·「서울」 — 짧은 이름이다
+  sigungu: 글자풀기(it.sigungu) || undefined,
+  realm: 글자풀기(it.realmName) || undefined,
+  thumb: it.thumbnail || undefined,
+  lat: 수풀기(it.gpsY),                           // ⚠️ gpsY 가 **위도**다. 뒤집으면 바다로 보낸다
+  lng: 수풀기(it.gpsX),
+  // 🔗 근거를 늘 같이 둔다 — 우리가 틀렸을 때 손님이 확인할 길이 있어야 한다
+  page: it.seq ? `https://www.culture.go.kr/wday/detailView.do?seq=${it.seq}` : undefined,
+})).filter((x) => x.title && x.start)
+  .sort((a, b) => (a.start < b.start ? -1 : a.start > b.start ? 1 : a.title.localeCompare(b.title, "ko")));
+
+const 날짜별 = {};
+for (const x of 적을것) 날짜별[x.area ?? "(지역없음)"] = (날짜별[x.area ?? "(지역없음)"] ?? 0) + 1;
+console.log(`\n📊 지역별: ${Object.entries(날짜별).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(" · ")}`);
+console.log(`   좌표 있는 것 ${적을것.filter((x) => x.lat && x.lng).length}건 · 사진 있는 것 ${적을것.filter((x) => x.thumb).length}건`);
+
+const 나올곳 = "src/data/culture-festivals.json";
+writeFileSync(나올곳, JSON.stringify({
+  받은날: new Date().toISOString().slice(0, 10),
+  기간: { 부터: 날풀기(ymd(오늘)), 까지: 날풀기(ymd(끝날)) },
+  출처: "한국문화정보원_한눈에보는문화정보조회서비스 (공공데이터포털)",
+  곳: 적을것,
+}, null, 2) + "\n", "utf8");
+console.log(`\n✅ ${나올곳} 에 ${적을것.length}건을 적었다.`);
+console.log("🧭 적기만 했다. 화면에 붙이는 일은 따로 한다 — 상호·지역을 대조한 뒤에.");
