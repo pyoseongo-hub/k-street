@@ -19,43 +19,26 @@ const 한달뒤 = new Date(오늘.getTime() + 30 * 86400000);
 // 후보 창구들. 전부 **공공데이터포털(data.go.kr)** 이라 같은 「일반 인증키」를 쓴다 —
 // 다만 서비스마다 **활용신청**이 따로라, 승인 안 된 것은 열쇠가 안 먹는다.
 const 후보 = [
-  // 🏷️ **주소의 뿌리를 포털 안내문에서 긁어 왔다** (2026-10-11).
-  //    내가 쓰던 `/B553457/nopenapi/rest/publicperformancedisplays/...` 는 **없는 길**이었다
-  //    (원인코드 12). 자료 페이지에 박힌 진짜 뿌리는 **`/B553457/cultureinfo`** 고,
-  //    기능 이름은 `period2` · `realm` · `livelihood` 였다.
-  //    끝 모양(`/request` 가 붙나)은 아직 모르니 **몇 가지를 한 번에 시험한다** —
-  //    한 줄씩 짐작해 돌리면 한 번에 2분씩 태운다.
+  // 🏷️ **설명서(Swagger)를 끝까지 읽어서 적었다** (2026-10-11). 짐작한 데가 한 자도 없다.
+  //    뿌리  apis.data.go.kr/B553457/cultureinfo
+  //    길    /period2(기간별) · /area2(지역별) · /realm2(분야별) · /detail2(상세) · /livelihood2(달력)
+  //    필수  serviceKey · PageNo · **numOfrows** ← 「rows」의 r 이 **소문자**다. 여기서 많이 틀린다.
+  //    축제  realmCode=**F000** (행사/축제) · 또는 serviceTp=**B** (행사/축제)
+  //    ⚠️ 내가 처음 쓴 /nopenapi/rest/publicperformancedisplays/... 는 **없는 길**이었다(원인코드 12).
   {
-    이름: "문화정보 period2 (…/cultureinfo/period2/request)",
-    url: `https://apis.data.go.kr/B553457/cultureinfo/period2/request?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10`,
-    메모: "전국 공연·전시·축제. 서울 밖을 메울 가장 큰 후보",
-  },
-  {
-    이름: "문화정보 period2 (…/cultureinfo/period2)",
-    url: `https://apis.data.go.kr/B553457/cultureinfo/period2?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10`,
-    메모: "끝에 /request 가 없는 모양",
-  },
-  {
-    // 🎯 설명서(Swagger)에서 그대로 읽어 온 모양. **PageNo 는 대문자 P 다.**
-    //    serviceTp 는 분야 — A:공연/전시 · **B:행사/축제** · C:교육/체험.
-    이름: "★ 문화정보 period2 — 설명서대로 (행사/축제만)",
-    url: `https://apis.data.go.kr/B553457/cultureinfo/period2?serviceKey=${encodeURIComponent(KEY)}&PageNo=1&numOfRows=10&from=${ymd(오늘)}&to=${ymd(한달뒤)}&serviceTp=B`,
+    이름: "★ 문화정보 realm2 — 행사/축제(F000) 전국",
+    url: `https://apis.data.go.kr/B553457/cultureinfo/realm2?serviceKey=${encodeURIComponent(KEY)}&PageNo=1&numOfrows=10&realmCode=F000&from=${ymd(오늘)}&to=${ymd(한달뒤)}&sortStdr=1`,
     메모: "이게 되면 전국 축제 창구가 열린다",
   },
   {
-    이름: "문화정보 realm 축제 (…/cultureinfo/realm/request)",
-    url: `https://apis.data.go.kr/B553457/cultureinfo/realm/request?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10&realmCode=D000`,
-    메모: "갈래를 「축제」로 좁혀 부르는 길",
+    이름: "★ 문화정보 area2 — 경상북도 행사/축제",
+    url: `https://apis.data.go.kr/B553457/cultureinfo/area2?serviceKey=${encodeURIComponent(KEY)}&PageNo=1&numOfrows=10&sido=${encodeURIComponent("경상북도")}&sigungu=${encodeURIComponent("경주시")}&serviceTp=B&from=${ymd(오늘)}&to=${ymd(한달뒤)}`,
+    메모: "경주를 바로 확인한다. 시군구까지 넣을 수 있다",
   },
   {
-    이름: "문화정보 area2 경상북도 (…/cultureinfo/area2/request)",
-    url: `https://apis.data.go.kr/B553457/cultureinfo/area2/request?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10&sido=${encodeURIComponent("경상북도")}`,
-    메모: "지역으로 좁혀 부르는 길. 경주를 바로 확인할 수 있다",
-  },
-  {
-    이름: "문화정보 livelihood (…/cultureinfo/livelihood/request)",
-    url: `https://apis.data.go.kr/B553457/cultureinfo/livelihood/request?serviceKey=${encodeURIComponent(KEY)}&from=${ymd(오늘)}&to=${ymd(한달뒤)}&cPage=1&rows=10`,
-    메모: "문화달력. 축제가 여기 들어 있을 수도 있다",
+    이름: "문화정보 period2 — 기간별 행사/축제",
+    url: `https://apis.data.go.kr/B553457/cultureinfo/period2?serviceKey=${encodeURIComponent(KEY)}&PageNo=1&numOfrows=10&from=${ymd(오늘)}&to=${ymd(한달뒤)}&serviceTp=B`,
+    메모: "날짜로 훑는 길. 달마다 돌릴 때 쓴다",
   },
   {
     // 🔑 **열쇠를 새로 안 받아도 되는 길.** searchFestival2 는 「행사 날짜가 등록된 것」만
