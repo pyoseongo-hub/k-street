@@ -30,6 +30,19 @@ const 후보 = [
     메모: "갈래를 「축제」로 좁혀 부르는 길",
   },
   {
+    // 🔑 **열쇠를 새로 안 받아도 되는 길.** searchFestival2 는 「행사 날짜가 등록된 것」만
+    //    주는데, areaBasedList2(contentTypeId=15 = 축제·공연·행사)는 **그 갈래의 곳을 전부** 준다.
+    //    날짜는 detailIntro2 로 따로 물으면 된다. 되면 신청서가 필요 없다.
+    이름: "★ 관광공사 지역기반 목록 — 축제갈래 전부 (경북)",
+    url: `https://apis.data.go.kr/B551011/KorService2/areaBasedList2?serviceKey=${KEY}&MobileOS=ETC&MobileApp=KStreet&_type=json&areaCode=35&contentTypeId=15&numOfRows=10&pageNo=1&arrange=A`,
+    메모: "열쇠를 새로 안 받아도 되는 길. 이게 많이 나오면 신청서가 필요 없다",
+  },
+  {
+    이름: "★ 같은 길 — 경주(시군구 2)만",
+    url: `https://apis.data.go.kr/B551011/KorService2/areaBasedList2?serviceKey=${KEY}&MobileOS=ETC&MobileApp=KStreet&_type=json&areaCode=35&sigunguCode=2&contentTypeId=15&numOfRows=10&pageNo=1&arrange=A`,
+    메모: "경북(35) 안에서 경주 시군구 번호로 좁혀 본다",
+  },
+  {
     이름: "한국관광공사 지역기반 (지금 쓰는 열쇠가 맞나 확인용)",
     url: `https://apis.data.go.kr/B551011/KorService2/searchFestival2?serviceKey=${KEY}&MobileOS=ETC&MobileApp=KStreet&_type=json&areaCode=35&eventStartDate=20260101&numOfRows=5&pageNo=1`,
     메모: "이게 되면 열쇠 자체는 멀쩡한 것이다",
