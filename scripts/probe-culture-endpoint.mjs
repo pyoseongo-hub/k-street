@@ -45,18 +45,6 @@ for (const z of 자료) {
       console.log("   ⚠️ 주소를 못 찾았다 — 페이지가 자바스크립트로 그려지는 것일 수 있다");
     }
 
-    // 1-2) **길의 끝까지 본다.** 뿌리만 잡히면(`/B553457/cultureinfo`) 그 뒤가 빠진다.
-    //      그래서 그 말이 나온 자리를 **글 그대로** 앞뒤로 떠서 보여 준다 —
-    //      여기에 전체 경로와 요청변수 이름이 같이 들어 있다.
-    for (const 말 of ["cultureinfo", "period2"]) {
-      const 자리 = [...html.matchAll(new RegExp(말, "g"))].slice(0, 3);
-      for (const m of 자리) {
-        const 앞 = Math.max(0, m.index - 160);
-        const 토막 = html.slice(앞, m.index + 260).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
-        console.log(`   📄 「${말}」 자리: ${토막}`);
-      }
-    }
-
     // 1-3) 🎯 **설명서를 통째로 읽는다.** 이 페이지 안에는 API 설명서(Swagger) 가
     //      JSON 으로 박혀 있다. 글을 눈으로 훑지 말고 **그걸 파서** 길과 요청변수를
     //      이름 그대로 뽑는다 — 「PageNo 인가 pageNo 인가」로 또 돌리지 않으려면 이게 유일한 길이다.
