@@ -33,7 +33,31 @@ interface 한건 {
   place?: string; area?: string; sigungu?: string; realm?: string;
   thumb?: string; lat?: number; lng?: number; page?: string;
 }
-const 곳들 = (받은것 as { 곳: 한건[] }).곳 ?? [];
+// 🔤 **여기서도 한 번 더 푼다.** 받는 쪽(fetch-culture-festivals.mjs)이 푸는 게 본래 자리지만,
+//    이름표가 빠져 안 풀린 글자가 이미 파일에 들어 있을 수 있다. 그걸 고치자고 포털을
+//    다시 두드리지 않는다 — 포털은 몰아서 부르면 연결을 끊는다.
+const 이름표: Record<string, string> = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ",
+  laquo: "«", raquo: "»", lsquo: "\u2018", rsquo: "\u2019", ldquo: "\u201c", rdquo: "\u201d",
+  middot: "·", hellip: "…", ndash: "–", mdash: "—" };
+function 글자풀기(t?: string): string {
+  let v = String(t ?? "");
+  for (let i = 0; i < 3; i++) {
+    const 전 = v;
+    v = v.replace(/&([a-zA-Z]+|#\d{1,6}|#[xX][0-9a-fA-F]{1,5});/g, (whole, k: string) => {
+      if (k[0] === "#") {
+        const n = k[1] === "x" || k[1] === "X" ? parseInt(k.slice(2), 16) : Number(k.slice(1));
+        return Number.isFinite(n) && n > 0 && n < 0x110000 ? String.fromCodePoint(n) : whole;
+      }
+      return 이름표[k] ?? whole;   // 모르는 이름은 건드리지 않는다
+    });
+    if (v === 전) break;
+  }
+  return v.replace(/\s+/g, " ").trim();
+}
+
+const 곳들 = ((받은것 as { 곳: 한건[] }).곳 ?? []).map((it) => ({
+  ...it, title: 글자풀기(it.title), place: 글자풀기(it.place) || undefined,
+}));
 
 // 🗺️ 포털이 쓰는 지역 이름 → 우리 열쇠. 명부에서 만든다 — **손으로 베끼지 않는다.**
 //    베끼면 명부가 바뀔 때 둘이 어긋나고, 어긋난 쪽은 조용히 버려진다.
@@ -93,6 +117,10 @@ function 어느시도(area?: string, sigungu?: string): string | undefined {
 //    (펀서울에서 15곳을 고를 때도 같은 잣대로 행정·직능 행사를 뺐다 — 잣대를 하나로 둔다.)
 const 축제아님 =
   /모집\s*공고|참가자\s*모집|참여\s*기업|참여기업|공모전|입찰|용역|낙찰|설명회|간담회|워크숍|워크샵|세미나|학술\s*대회|포럼|심포지엄|수상자|당첨자|결과\s*발표|선정\s*결과|자원봉사|교육생|수강생|아카데미|자격\s*시험|채용/;
+// 🚫 **손님이 「가는 곳」이 아닌 것도 거른다** (2026-10-11, 올라간 목록을 읽다가 찾았다).
+//    「서울영화센터 단체관람 할인 안내」가 중구 축제 목록에 끼어 있었다 — 그건 공지지 축제가 아니다.
+//    출간회·북토크·강연도 같다. 검사가 막아 준 덕에 눈으로 읽게 돼서 찾았다.
+const 축제아님2 = /할인\s*안내|이용\s*안내|휴관|운영\s*시간|출간회|북토크|강연회?|특강|상영회|접수\s*안내|신청\s*안내|안내$/;
 
 const 올해 = new Date().getFullYear();
 const 버린이유 = new Map<string, number>();
@@ -130,6 +158,7 @@ for (const it of 곳들) {
   if (Number(끝.slice(0, 4)) < 올해) { 버린다("작년 이전에 끝났다"); continue; }
   if (이미있는것.has(`${gu}|${뼈대(it.title)}`)) { 버린다("이미 아는 축제다"); continue; }
   if (축제아님.test(it.title)) { 버린다("축제가 아니다 (모집·세미나·공고 따위)"); continue; }
+  if (축제아님2.test(it.title)) { 버린다("축제가 아니다 (안내·할인·출간회 따위)"); continue; }
 
   const id = `cf_${it.seq}`;
   곳결과.push({

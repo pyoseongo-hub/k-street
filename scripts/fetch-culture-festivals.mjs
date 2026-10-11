@@ -159,10 +159,24 @@ for (const [길, 거르개] of [
 // 🔤 포털이 글자를 **두 번 싸서** 준다 — `&amp;lt;` 는 `&lt;` 가 아니라 `<` 다.
 //    한 번만 풀면 화면에 `&lt;` 가 그대로 뜬다. 두 번까지 푼다.
 function 글자풀기(t) {
+  // 🚨 **이름을 다 적어 두면 빠진 것이 화면에 그대로 뜬다** (2026-10-11에 당했다).
+  //    `&laquo;`·`&raquo;` 를 안 적어 둬서 「축구와 그 이야기 &laquo;Metegol&raquo;」이
+  //    그 글자 그대로 올라갔다. 그래서 **숫자 꼴(&#171;)까지 통째로** 푼다.
+  const 이름표 = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ",
+    laquo: "«", raquo: "»", lsquo: "‘", rsquo: "’", ldquo: "“", rdquo: "”",
+    middot: "·", hellip: "…", ndash: "–", mdash: "—" };
   let v = String(t ?? "");
-  for (let i = 0; i < 2; i++) {
-    v = v.replace(/&(amp|lt|gt|quot|#39|apos|nbsp);/g, (_, k) =>
-      ({ amp: "&", lt: "<", gt: ">", quot: '"', "#39": "'", apos: "'", nbsp: " " })[k]);
+  // 세 번까지 — 포털이 두 번 싸서 주는데, 두 번만 풀면 세 겹일 때 한 겹이 남는다.
+  for (let i = 0; i < 3; i++) {
+    const 전 = v;
+    v = v.replace(/&([a-zA-Z]+|#\d{1,6}|#[xX][0-9a-fA-F]{1,5});/g, (whole, k) => {
+      if (k[0] === "#") {
+        const n = k[1] === "x" || k[1] === "X" ? parseInt(k.slice(2), 16) : Number(k.slice(1));
+        return Number.isFinite(n) && n > 0 && n < 0x110000 ? String.fromCodePoint(n) : whole;
+      }
+      return 이름표[k] ?? whole;   // 모르는 이름은 **건드리지 않는다**
+    });
+    if (v === 전) break;
   }
   return v.replace(/\s+/g, " ").trim();
 }

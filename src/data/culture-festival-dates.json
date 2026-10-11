@@ -603,15 +603,6 @@
       "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
       "fetchedAt": "2026-10-11"
     },
-    "cf_373322": {
-      "start": "2026-03-27",
-      "title": "도록 출간회 『Layered Dialogues: We Are in Open Circuits』 & 『교차하는 서사: 근접한 세계』",
-      "gu": "중구",
-      "place": "서울시립미술관 서소문본관 세마홀",
-      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373322",
-      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
-      "fetchedAt": "2026-10-11"
-    },
     "cf_370313": {
       "start": "2026-03-27",
       "end": "2026-04-05",
@@ -928,7 +919,7 @@
     "cf_373906": {
       "start": "2026-04-24",
       "end": "2026-04-26",
-      "title": "2026 청주 국가유산 야행 <압각수의 사계(四季&middot;史計), 천년의 헤아림>",
+      "title": "2026 청주 국가유산 야행 <압각수의 사계(四季·史計), 천년의 헤아림>",
       "gu": "청주시",
       "place": "청주중앙공원, 용두사지철당간, 충북도청, 성안길중앙공원, 용두사지철당간, 충북도청, 성안길",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=373906",
@@ -1093,7 +1084,7 @@
     },
     "cf_376513": {
       "start": "2026-05-05",
-      "title": "2026 부평키즈페스티벌 &times; 굴포천천히 &lsquo;초록초록 놀이터&rsquo;",
+      "title": "2026 부평키즈페스티벌 &times; 굴포천천히 ‘초록초록 놀이터’",
       "gu": "부평구",
       "place": "부평아트센터 야외광장",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=376513",
@@ -1365,16 +1356,6 @@
       "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
       "fetchedAt": "2026-10-11"
     },
-    "cf_384565": {
-      "start": "2026-06-01",
-      "end": "2026-12-31",
-      "title": "서울영화센터 단체관람 할인 안내",
-      "gu": "중구",
-      "place": "서울영화센터 상영관",
-      "page": "https://www.culture.go.kr/wday/detailView.do?seq=384565",
-      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
-      "fetchedAt": "2026-10-11"
-    },
     "cf_380614": {
       "start": "2026-06-05",
       "end": "2026-06-06",
@@ -1397,7 +1378,7 @@
     "cf_383257": {
       "start": "2026-06-09",
       "end": "2026-06-15",
-      "title": "축구와 그 이야기 &laquo;Golpe de estadio&raquo;",
+      "title": "축구와 그 이야기 «Golpe de estadio»",
       "gu": "중구",
       "place": "주한 세르반테스 스페인 문화원",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=383257",
@@ -1407,7 +1388,7 @@
     "cf_383274": {
       "start": "2026-06-09",
       "end": "2026-06-18",
-      "title": "축구와 그 이야기 &laquo;Metegol&raquo;",
+      "title": "축구와 그 이야기 «Metegol»",
       "gu": "중구",
       "place": "주한 세르반테스 스페인 문화원",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=383274",
@@ -1517,7 +1498,7 @@
       "end": "2026-06-28",
       "title": "2026 공예주간 (Korea Craft Week 2026)",
       "gu": "부여군",
-      "place": "거점도시 부여 / 권역별 도시 세종&middot;공주, 전주&middot;고창, 칠곡&middot;구미, 울산&middot;부산, 제주&middot;서귀포 / 전국 공예주간 프렌즈 참여 지역",
+      "place": "거점도시 부여 / 권역별 도시 세종·공주, 전주·고창, 칠곡·구미, 울산·부산, 제주·서귀포 / 전국 공예주간 프렌즈 참여 지역",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=382435",
       "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
       "fetchedAt": "2026-10-11"
@@ -1838,7 +1819,7 @@
     "cf_388107": {
       "start": "2026-07-25",
       "end": "2026-08-02",
-      "title": "제11회 한강&middot;낙동강 발원지 축제",
+      "title": "제11회 한강·낙동강 발원지 축제",
       "gu": "태백시",
       "place": "황지연못 일원",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=388107",
@@ -2492,7 +2473,7 @@
       "end": "2026-09-13",
       "title": "제43회 순천팔마문화제",
       "gu": "순천시",
-      "place": "남문터광장&middot;문화의 거리 일원",
+      "place": "남문터광장·문화의 거리 일원",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=397098",
       "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
       "fetchedAt": "2026-10-11"
@@ -2552,15 +2533,6 @@
       "gu": "부천시",
       "place": "한국만화박물관 일대",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=397093",
-      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
-      "fetchedAt": "2026-10-11"
-    },
-    "cf_392695": {
-      "start": "2026-09-18",
-      "title": "2026년 모두의 말뭉치 전문가 지식 강연회",
-      "gu": "강남구",
-      "place": "코엑스 스튜디오 159",
-      "page": "https://www.culture.go.kr/wday/detailView.do?seq=392695",
       "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
       "fetchedAt": "2026-10-11"
     },
@@ -2999,7 +2971,7 @@
     "cf_401158": {
       "start": "2026-10-07",
       "end": "2026-11-28",
-      "title": "[인천오리지널탐방] 인천 구석구석을 각 분야의 &lsquo;인천잘알&rsquo; 전문가들과 함께 탐방합니다.",
+      "title": "[인천오리지널탐방] 인천 구석구석을 각 분야의 ‘인천잘알’ 전문가들과 함께 탐방합니다.",
       "gu": "제물포구",
       "place": "프로그램별 장소 상이",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401158",
