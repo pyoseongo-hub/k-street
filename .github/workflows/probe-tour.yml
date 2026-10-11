@@ -21,6 +21,10 @@ jobs:
         with:
           node-version: 22
       - name: 전국 창구 열쇠가 먹히나 본다
+        # 🧯 **한 단계가 끊겨도 나머지는 남긴다.** 포털이 잠깐 막으면 fetch 가 통째로
+        #    시간 초과되는데, 그러면 뒤 단계가 안 돌아 **아무 단서도 못 건진다**.
+        #    2026-10-11 에 그렇게 한 번을 통째로 버렸다.
+        continue-on-error: true
         env:
           TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
         run: |
@@ -28,11 +32,13 @@ jobs:
           node scripts/probe-culture-api.mjs 2>&1 | tee key.txt
 
       - name: 포털 안내문에서 주소를 긁어 온다
+        continue-on-error: true
         run: |
           set -o pipefail
           node scripts/probe-culture-endpoint.mjs 2>&1 | tee addr.txt
 
       - name: 물어본다
+        continue-on-error: true
         env:
           TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
         run: |

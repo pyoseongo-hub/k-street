@@ -29,7 +29,7 @@ for (const z of 자료) {
   console.log(`\n── ${z.이름}  (자료번호 ${z.id})`);
   const url = `https://www.data.go.kr/data/${z.id}/openapi.do`;
   try {
-    const r = await fetch(url, { headers: 머리, signal: AbortSignal.timeout(30000) });
+    const r = await 다시부르기(url);
     const html = await r.text();
     console.log(`   상태 ${r.status} · 받은 글 ${html.length}자`);
     if (!r.ok) { console.log("   ❌ 페이지를 못 받았다"); continue; }
@@ -115,4 +115,22 @@ function 스웨거찾기(html) {
     }
   }
   return null;
+}
+
+// 🔁 **한 번 끊겼다고 포기하지 않는다.** 포털이 잠깐 막으면 fetch 가 통째로 시간 초과된다.
+//    2026-10-11 에 세 자료가 전부 그렇게 끊겨 **한 번을 통째로 버렸다.**
+//    그렇다고 무한정 두드리지도 않는다 — 두드리면 더 막힌다. 세 번, 간격을 늘려 가며.
+async function 다시부르기(url, 횟수 = 3) {
+  let 마지막;
+  for (let i = 0; i < 횟수; i++) {
+    if (i > 0) {
+      const 쉼 = 5000 * i;
+      console.log(`   ⏳ ${쉼 / 1000}초 쉬고 다시 부른다 (${i + 1}/${횟수})`);
+      await new Promise((r) => setTimeout(r, 쉼));
+    }
+    try {
+      return await fetch(url, { headers: 머리, signal: AbortSignal.timeout(30000) });
+    } catch (e) { 마지막 = e; }
+  }
+  throw 마지막;
 }
