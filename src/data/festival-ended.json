@@ -10,7 +10,7 @@
     "",
     "✋ 지우지는 않는다. 그 축제는 **내년에 또 열린다** — 자리는 남기고 상태만 바꾼다."
   ],
-  "받은날": "2026-10-10",
+  "받은날": "2026-10-11",
   "곳": {
     "ks_6": {
       "start": "2026-08-29",
@@ -50,6 +50,11 @@
       "end": "2026-09-27",
       "title": "2026 남산골 추석축제 [남산달빛마당]",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=468"
+    },
+    "tour_2601242": {
+      "start": "2026-10-09",
+      "title": "제15회 도봉한글잔치",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=444"
     },
     "tour_3000221": {
       "start": "2026-09-19",
