@@ -32,6 +32,7 @@ import guDates from "../data/gu-festival-dates.json";
 import endedDates from "../data/festival-ended.json";
 import manualDates from "../data/festival-dates-manual.json";
 import funseoulDates from "../data/funseoul-dates.json";
+import cultureDates from "../data/culture-festival-dates.json";
 import { isOfficialSite } from "./officialSite";
 
 export interface GuFestivalDate {
@@ -82,11 +83,24 @@ const BY_HAND = (manualDates as { 곳?: Record<string, GuFestivalDate> })["곳"]
 const FROM_FUNSEOUL = (funseoulDates as { 곳?: Record<string, GuFestivalDate> })["곳"] ?? {};
 const FROM_PORTAL = (guDates as { 곳?: Record<string, GuFestivalDate> })["곳"] ?? {};
 /**
- * 뒤에 오는 것이 이긴다 — **사람 → 펀서울 → 문화포털**.
+ * 🎪 **전국 축제** — 한국문화정보원 「한눈에보는문화정보」(공공데이터포털).
+ *
+ * 사장님 (2026-10-11): *"경주같은데는 축제가 없나"* — 세어 보니 **경주 0곳**이었다.
+ * 받아 보니 있었다. 없는 게 아니라 **끝난 것**이었다.
+ *
+ * 🔑 **서울 밖을 메우는 자리다.** 서울은 구청(문화포털)·펀서울이 더 앞선 사실이라
+ *    그쪽이 이긴다 — 그래서 이것을 **맨 아래에 깐다.** 여기 있는 id 는
+ *    `cf_…` 라 서울 축제(`ks_…`·`tour_…`)와 부딪히지도 않지만, 순서는 뜻이 있어야 한다.
+ */
+const FROM_CULTURE = (cultureDates as { 곳?: Record<string, GuFestivalDate> })["곳"] ?? {};
+/**
+ * 뒤에 오는 것이 이긴다 — **전국 문화정보 → 사람 → 펀서울 → 서울 문화포털**.
  * 문화포털을 맨 위에 두는 이유: 주최 측(구청·구 문화재단)이 **자기 손으로** 올린
  * 자리라 가장 앞선 사실이다. 펀서울은 서울시가 모아 두는 자리라 한 다리 건너다.
  */
-const RAW: Record<string, GuFestivalDate> = { ...BY_HAND, ...FROM_FUNSEOUL, ...FROM_PORTAL };
+const RAW: Record<string, GuFestivalDate> = {
+  ...FROM_CULTURE, ...BY_HAND, ...FROM_FUNSEOUL, ...FROM_PORTAL,
+};
 
 /** 오늘(현지 시각) YYYY-MM-DD. 서울에서 보는 앱이라 UTC 로 자르면 하루가 밀린다. */
 function todayYmd(): string {

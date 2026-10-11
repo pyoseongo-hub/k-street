@@ -1,0 +1,3485 @@
+{
+  "_읽어보세요": [
+    "🎪 **전국 축제의 확정 일정** — 한국문화정보원 「한눈에보는문화정보」.",
+    "기계가 덮어쓴다 — 손으로 고치지 말 것.",
+    "받기: scripts/fetch-culture-festivals.mjs · 앉히기: scripts/build-culture-places.ts",
+    "서울은 구청·펀서울 쪽이 더 앞선 사실이라 그쪽이 이긴다 (src/lib/guFestival.ts)."
+  ],
+  "곳": {
+    "cf_342776": {
+      "start": "2025-10-11",
+      "end": "2026-02-07",
+      "title": "2025년 하반기 희귀필름컬렉션",
+      "gu": "성북구",
+      "place": "한국예술종합학교 예술정보관 5층 케이시네",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=342776",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_350954": {
+      "start": "2025-10-13",
+      "end": "2026-02-14",
+      "title": "2025 서면 빛 축제",
+      "gu": "부산진구",
+      "place": "서면일번가 사거리",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=350954",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_359654": {
+      "start": "2025-10-31",
+      "end": "2026-01-31",
+      "title": "2025 영종하늘도시 <밤하늘 빛담길 산책>",
+      "gu": "영종구",
+      "place": "영종하늘체육공원 입구 (만국기 거리)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=359654",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_359656": {
+      "start": "2025-11-15",
+      "end": "2026-01-31",
+      "title": "2025 크리스마스 트리축제 점등행사",
+      "gu": "제물포구",
+      "place": "신포 문화의거리",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=359656",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_359657": {
+      "start": "2025-11-15",
+      "end": "2026-01-31",
+      "title": "2025 크리스마스 트리축제 점등행사(영종)",
+      "gu": "영종구",
+      "place": "영종하늘도시 별빛광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=359657",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_364755": {
+      "start": "2025-11-28",
+      "end": "2026-01-11",
+      "title": "2025 함평 겨울빛축제",
+      "gu": "함평군",
+      "place": "함평 엑스포공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=364755",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_363397": {
+      "start": "2025-12-12",
+      "end": "2026-01-18",
+      "title": "2025 서울빛초롱축제",
+      "gu": "종로구",
+      "place": "청계천, 우이천일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=363397",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_357746": {
+      "start": "2025-12-12",
+      "end": "2026-01-04",
+      "title": "2025 서울윈터페스타 SEOUL WINTER FESTA",
+      "gu": "종로구",
+      "place": "광화문, 광화문 광장, DDP, 서울광장, 청계천, 우이천, 보신각 등",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=357746",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_361807": {
+      "start": "2025-12-13",
+      "end": "2026-01-01",
+      "title": "강릉 하슬라아트월드 연말연시 특별 행사 [Winter Greeting:기억을 기록하며]",
+      "gu": "강릉시",
+      "place": "하슬라아트월드",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=361807",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_359173": {
+      "start": "2025-12-14",
+      "end": "2026-01-25",
+      "title": "제13회 거창크리스마스 트리문화축제",
+      "gu": "거창군",
+      "place": "거창군청 앞 광장 및 상상문화센터",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=359173",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_363860": {
+      "start": "2025-12-24",
+      "end": "2026-01-27",
+      "title": "2026 인천수봉문화회관 기획공연 & 기획전시 공모",
+      "gu": "미추홀구",
+      "place": "인천수봉문화회관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=363860",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_357252": {
+      "start": "2025-12-26",
+      "end": "2026-01-04",
+      "title": "제22회 서울 아시테지 겨울축제",
+      "gu": "종로구",
+      "place": "대학로극장 쿼드, 종로 아이들극장, NC문화재단, 한예극장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=357252",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_364629": {
+      "start": "2026-01-07",
+      "title": "2026년 문화 예술 공모 지원사업 <용인 예술 창작 지원 사업 설명회>",
+      "gu": "용인시",
+      "place": "문화예술원 마루홀",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=364629",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_364397": {
+      "start": "2026-01-09",
+      "end": "2026-02-09",
+      "title": "2026 평창송어축제",
+      "gu": "평창군",
+      "place": "평창송어축제장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=364397",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_364398": {
+      "start": "2026-01-10",
+      "end": "2026-02-01",
+      "title": "2026 얼음나라화천 산천어축제",
+      "gu": "화천군",
+      "place": "화천군 화천읍 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=364398",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_365387": {
+      "start": "2026-01-16",
+      "end": "2026-01-18",
+      "title": "제10회 지리산 함양고종시 곶감축제",
+      "gu": "함양군",
+      "place": "경남 함양군 천년의 숲 상림공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=365387",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_364393": {
+      "start": "2026-01-17",
+      "end": "2026-01-25",
+      "title": "2026 안동 암산얼음축제",
+      "gu": "안동시",
+      "place": "안동 암산유원지 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=364393",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_364394": {
+      "start": "2026-01-30",
+      "end": "2026-02-01",
+      "title": "2026 영동곶감축제",
+      "gu": "영동군",
+      "place": "영동천 하상주차장 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=364394",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_366780": {
+      "start": "2026-01-31",
+      "title": "[순천] 광장생활 겨울놀이 3회차, 시즌2 OPEN",
+      "gu": "순천시",
+      "place": "순천부 읍성 남문터광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=366780",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_364875": {
+      "start": "2026-01-31",
+      "title": "2026 국립경찰박물관 겨울방학 문화행사 '온 가족이 함께하는 드로잉 서커스쇼'",
+      "gu": "종로구",
+      "place": "경찰박물관 4층 폴리스홀",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=364875",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_366783": {
+      "start": "2026-01-31",
+      "end": "2026-02-08",
+      "title": "제33회 태백산 눈축제",
+      "gu": "태백시",
+      "place": "태백산국립공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=366783",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_365390": {
+      "start": "2026-02-04",
+      "end": "2026-02-08",
+      "title": "2026 제9회 겨울공주 군밤축제",
+      "gu": "공주시",
+      "place": "금강신관공원 및 미르섬 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=365390",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_367090": {
+      "start": "2026-02-05",
+      "end": "2026-03-12",
+      "title": "국립완주문화유산연구소 학술행사「연구소 돋보기, 전북의 문화유산 자세히 보기」",
+      "gu": "완주군",
+      "place": "국립완주문화유산연구소 세미나실",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=367090",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_366782": {
+      "start": "2026-02-06",
+      "title": "2026년 포천문화관광재단 공모지원사업 통합설명회",
+      "gu": "포천시",
+      "place": "포천반월아트홀 소극장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=366782",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_366504": {
+      "start": "2026-02-07",
+      "end": "2026-02-08",
+      "title": "2026 몰랑하우스 오픈 - [작가와의 만남]",
+      "gu": "순천시",
+      "place": "몰랑하우스 2층",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=366504",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_365391": {
+      "start": "2026-02-13",
+      "end": "2026-02-22",
+      "title": "2026 대관령 눈꽃축제",
+      "gu": "평창군",
+      "place": "대관령면 눈꽃축제장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=365391",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_367087": {
+      "start": "2026-02-14",
+      "end": "2026-02-18",
+      "title": "2026 국립대구박물관 설맞이 문화행사",
+      "gu": "수성구",
+      "place": "국립대구박물관 문화사랑방,해솔관로비, 중앙광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=367087",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_367910": {
+      "start": "2026-02-14",
+      "title": "2026 도민의 집 '도민의 집에서 설레는 설날'",
+      "gu": "창원시",
+      "place": "경남도민의 집 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=367910",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_367108": {
+      "start": "2026-02-14",
+      "title": "2026 설맞이 특별행사 '설'레는 상상, 가득한 福",
+      "gu": "용인시",
+      "place": "용인어린이상상의숲, 공생광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=367108",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_367109": {
+      "start": "2026-02-14",
+      "end": "2026-02-18",
+      "title": "2026 설맞이 특별행사 '설레는 과학놀이 한마당'",
+      "gu": "북구",
+      "place": "국립광주과학관 본관 상설전시관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=367109",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_367699": {
+      "start": "2026-02-14",
+      "end": "2026-02-18",
+      "title": "2026년 국립익산박물관 설날 문화행사",
+      "gu": "익산시",
+      "place": "국립익산박물관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=367699",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_367086": {
+      "start": "2026-02-14",
+      "title": "2026년 국립춘천박물관 설맞이 문화행사",
+      "gu": "춘천시",
+      "place": "국립춘천박물관 본관 2층",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=367086",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_367923": {
+      "start": "2026-02-14",
+      "end": "2026-02-15",
+      "title": "국립김해박물관 2026년 설맞이 전통문화행사",
+      "gu": "김해시",
+      "place": "국립김해박물관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=367923",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_367931": {
+      "start": "2026-02-14",
+      "end": "2026-02-18",
+      "title": "완산벙커 더 스페이스 설 명절 특별 프로그램",
+      "gu": "전주시",
+      "place": "완산벙커 더 스페이스",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=367931",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369500": {
+      "start": "2026-02-25",
+      "end": "2026-03-08",
+      "title": "2026 베니스 인 서울",
+      "gu": "중구",
+      "place": "서울아트시네마",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369500",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_368394": {
+      "start": "2026-02-26",
+      "title": "2026 평택 풍어제",
+      "gu": "평택시",
+      "place": "평택시 권관항",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=368394",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369848": {
+      "start": "2026-02-27",
+      "title": "2026 문화도시 국제 콘퍼런스",
+      "gu": "용산구",
+      "place": "서울드래곤시티 그랜드볼룸 한라 3",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369848",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369560": {
+      "start": "2026-02-27",
+      "end": "2026-03-02",
+      "title": "2026 울진대게와 붉은대게 축제",
+      "gu": "울진군",
+      "place": "경북 울진군 후포면 왕돌초광장 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369560",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_367156": {
+      "start": "2026-02-28",
+      "end": "2026-03-01",
+      "title": "2026 양양 낙산해변 달빛 모닥불 축제",
+      "gu": "양양군",
+      "place": "양양 낙산해변",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=367156",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369789": {
+      "start": "2026-02-28",
+      "title": "2026 이천시 정월대보름 민속축제",
+      "gu": "이천시",
+      "place": "예스파크 대공연장 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369789",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_368430": {
+      "start": "2026-02-28",
+      "title": "2026 평택 달맞이 축제",
+      "gu": "평택시",
+      "place": "매상마을 달맞이광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=368430",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369566": {
+      "start": "2026-02-28",
+      "end": "2026-03-01",
+      "title": "제107주년 삼일절 기념행사 '1919 서대문, 그날의 함성 축제'",
+      "gu": "서대문구",
+      "place": "서대문독립공원, 서대문형무소역사관, 감리교신학대학교 웨슬리채플관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369566",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369562": {
+      "start": "2026-02-28",
+      "end": "2026-03-02",
+      "title": "제2회 제천빨간오뎅축제",
+      "gu": "제천시",
+      "place": "제천역 광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369562",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369568": {
+      "start": "2026-02-28",
+      "end": "2026-03-02",
+      "title": "제43회 고싸움놀이축제",
+      "gu": "남구",
+      "place": "고싸움놀이테마파크 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369568",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369802": {
+      "start": "2026-03-02",
+      "title": "2026 남산골한옥마을 정월대보름",
+      "gu": "중구",
+      "place": "남산골한옥마을",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369802",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369803": {
+      "start": "2026-03-02",
+      "title": "2026 병오년 정월대보름 한마당 세시행사",
+      "gu": "종로구",
+      "place": "국립민속박물관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369803",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369786": {
+      "start": "2026-03-02",
+      "title": "2026년 정월대보름 행사 - 소원지 태우기",
+      "gu": "양평군",
+      "place": "황순원문학촌 소나기마을",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369786",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_368949": {
+      "start": "2026-03-03",
+      "end": "2026-03-08",
+      "title": "[부천펄벅기념관] 2026 펄 벅 서거 53주기 추모",
+      "gu": "부천시",
+      "place": "부천펄벅기념관 야외공원 펄 벅 동상 앞",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=368949",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369565": {
+      "start": "2026-03-06",
+      "end": "2026-03-08",
+      "title": "제24회 완주삼례딸기대축제",
+      "gu": "완주군",
+      "place": "삼례농협 뒤 공영주차장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369565",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_370106": {
+      "start": "2026-03-07",
+      "end": "2026-08-01",
+      "title": "한국예술종합학교 2026년 상반기 희귀필름컬렉션",
+      "gu": "성북구",
+      "place": "한국예술종합학교 예술정보관 5층 케이시네",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=370106",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369561": {
+      "start": "2026-03-09",
+      "end": "2026-03-14",
+      "title": "2026 제주들불축제",
+      "gu": "제주시",
+      "place": "제주시 애월읍 봉성리 새별오름일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369561",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_372014": {
+      "start": "2026-03-12",
+      "end": "2026-10-16",
+      "title": "제4회 면사랑 어린이 동요사랑 합창제",
+      "gu": "종로구",
+      "place": "서울아트센터 도암 도암홀",
+      "lat": 37.6060468541929,
+      "lng": 126.96925546303501,
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=372014",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_370314": {
+      "start": "2026-03-13",
+      "end": "2026-03-22",
+      "title": "제25회 광양매화축제",
+      "gu": "광양시",
+      "place": "다압면 매화마을 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=370314",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369567": {
+      "start": "2026-03-14",
+      "end": "2026-03-15",
+      "title": "제22회 진안고원 운장산 고로쇠축제",
+      "gu": "진안군",
+      "place": "주천 운일암반일암 삼거광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369567",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369571": {
+      "start": "2026-03-14",
+      "end": "2026-03-22",
+      "title": "제27회 구례 산수유꽃 축제",
+      "gu": "구례군",
+      "place": "지리산온천 관광지 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369571",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_371261": {
+      "start": "2026-03-16",
+      "title": "2026 경남문화예술진흥원 3월 만남의 날",
+      "gu": "통영시",
+      "place": "통영 12공방 전통공예품 전시판매자 2층 다목적회의실",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=371261",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_371260": {
+      "start": "2026-03-20",
+      "title": "2026년 제1회 국악사전 월례 토론회",
+      "gu": "서초구",
+      "place": "국립국악원 국악누리동 대회의실",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=371260",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_371262": {
+      "start": "2026-03-21",
+      "title": "2026년 영덕문화관광재단 주민주주총회",
+      "gu": "영덕군",
+      "place": "예주문화예술회관 대극장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=371262",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_369564": {
+      "start": "2026-03-21",
+      "end": "2026-04-05",
+      "title": "제24회 2026 서천 동백꽃 주꾸미 축제",
+      "gu": "서천군",
+      "place": "서천군 마량진항",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=369564",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_371764": {
+      "start": "2026-03-23",
+      "end": "2026-04-30",
+      "title": "\"충북도청이 새롭게 태어납니다\" 「그림책정원1937」 곧 문 열어요!",
+      "gu": "청주시",
+      "place": "그림책정원1937(옛 충북도청 본관)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=371764",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_370250": {
+      "start": "2026-03-26",
+      "end": "2026-03-29",
+      "title": "2026 제28회 논산딸기축제",
+      "gu": "논산시",
+      "place": "논산시민가족공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=370250",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_372788": {
+      "start": "2026-03-26",
+      "end": "2026-03-29",
+      "title": "제2회 김해한우축제",
+      "gu": "김해시",
+      "place": "롯데프리미엄아울렛 김해점 테마파크 주차장 및 롯데가든파크",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=372788",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_370251": {
+      "start": "2026-03-27",
+      "end": "2026-03-29",
+      "title": "2026 고령대가야축제 - 다시 시작되는 대가야 RE-BORN",
+      "gu": "고령군",
+      "place": "대가야역사테마관광지 및 대가야박물관 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=370251",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373322": {
+      "start": "2026-03-27",
+      "title": "도록 출간회 『Layered Dialogues: We Are in Open Circuits』 & 『교차하는 서사: 근접한 세계』",
+      "gu": "중구",
+      "place": "서울시립미술관 서소문본관 세마홀",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373322",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_370313": {
+      "start": "2026-03-27",
+      "end": "2026-04-05",
+      "title": "제64회 진해군항제",
+      "gu": "창원시",
+      "place": "창원시 진해구 중원로터리 및 진해루 등 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=370313",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_370989": {
+      "start": "2026-03-28",
+      "end": "2026-04-18",
+      "title": "2026 도민의 집 '주말 예술 캠프' 행사",
+      "gu": "창원시",
+      "place": "경남 도민의 집 앞뜰",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=370989",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_371788": {
+      "start": "2026-03-28",
+      "end": "2026-03-29",
+      "title": "2026 새봄맞이 연수 한마음축제",
+      "gu": "연수구",
+      "place": "연수한마음공원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=371788",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_372299": {
+      "start": "2026-03-28",
+      "end": "2026-03-29",
+      "title": "제34회 여수 영취산 진달래축제",
+      "gu": "여수시",
+      "place": "흥국사 산림공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=372299",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_368284": {
+      "start": "2026-03-29",
+      "end": "2026-04-12",
+      "title": "2026 제6회 퇴계선생 마지막 귀향길 재현행사",
+      "gu": "안동시",
+      "place": "서울 경복궁 ~ 안동 도산서원(도보 246km)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=368284",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373025": {
+      "start": "2026-03-30",
+      "end": "2026-04-19",
+      "title": "[서초문화원] 2026년도 제8회 양재천 벚꽃 등(燈) 축제",
+      "gu": "서초구",
+      "place": "양재천 영동1교 ~ 영동2교 방면",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373025",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373662": {
+      "start": "2026-03-30",
+      "end": "2026-04-04",
+      "title": "2026 강서봄빛페스타",
+      "gu": "강서구",
+      "place": "방화근린공원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373662",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373563": {
+      "start": "2026-03-30",
+      "title": "악기를 빌리고, 문화를 나누는 <부천악기은행 개소식>",
+      "gu": "부천시",
+      "place": "복사골문화센터 4층 부천악기은행",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373563",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373644": {
+      "start": "2026-04-01",
+      "end": "2026-04-10",
+      "title": "2026 김천 연화지 벚꽃축제",
+      "gu": "김천시",
+      "place": "김천시 연화지 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373644",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373641": {
+      "start": "2026-04-01",
+      "end": "2026-05-06",
+      "title": "2026 태안세계튤립꽃박람회",
+      "gu": "태안군",
+      "place": "네이처월드",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373641",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_357519": {
+      "start": "2026-04-01",
+      "end": "2026-04-04",
+      "title": "2026 해양레저관광 박람회",
+      "gu": "연수구",
+      "place": "송도컨벤시아 전시홀",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=357519",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_371544": {
+      "start": "2026-04-02",
+      "title": "2026 인터넷서비스 트렌드 컨퍼런스",
+      "gu": "강남구",
+      "place": "포스코타워 역삼 이벤트홀(3F)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=371544",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_372420": {
+      "start": "2026-04-03",
+      "end": "2026-04-05",
+      "title": "2026 경주 대릉원돌담길 축제",
+      "gu": "경주시",
+      "place": "경주 대릉원돌담길",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=372420",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_372298": {
+      "start": "2026-04-03",
+      "end": "2026-04-12",
+      "title": "2026 보은 벚꽃길 축제",
+      "gu": "보은군",
+      "place": "보은군 이음센터 및 보청천 벚꽃길 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=372298",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373646": {
+      "start": "2026-04-03",
+      "end": "2026-04-05",
+      "title": "2026년 김제 꽃빛드리축제",
+      "gu": "김제시",
+      "place": "김제시민문화체육공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373646",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373660": {
+      "start": "2026-04-03",
+      "end": "2026-04-19",
+      "title": "제22회 삼척 맹방 유채꽃 축제",
+      "gu": "삼척시",
+      "place": "삼척시 근덕면 상맹방리 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373660",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_372892": {
+      "start": "2026-04-04",
+      "end": "2026-04-05",
+      "title": "2026 양양 남대천 벚꽃축제",
+      "gu": "양양군",
+      "place": "양양 송이조각공원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=372892",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373645": {
+      "start": "2026-04-04",
+      "end": "2026-04-12",
+      "title": "2026 영암왕인문화축제",
+      "gu": "영암군",
+      "place": "왕인박사 유적지",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373645",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_372300": {
+      "start": "2026-04-04",
+      "end": "2026-04-05",
+      "title": "제23회 양평산수유한우축제",
+      "gu": "양평군",
+      "place": "개군면 시가지 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=372300",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_374330": {
+      "start": "2026-04-07",
+      "title": "2026 관광기업지원센터(서울) 기업 역량강화 교육",
+      "gu": "중구",
+      "place": "한국관광공사 서울센터 7층 중강의실",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=374330",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_370249": {
+      "start": "2026-04-09",
+      "end": "2026-04-12",
+      "title": "2026 기지시 줄다리기 축제",
+      "gu": "당진시",
+      "place": "기지시줄다리기박물관 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=370249",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373405": {
+      "start": "2026-04-09",
+      "end": "2026-06-14",
+      "title": "2026 서울사진축제 《컴백홈》",
+      "gu": "도봉구",
+      "place": "서울시립 사진미술관 전관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373405",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_374328": {
+      "start": "2026-04-09",
+      "title": "충남 트래블 페스타 2026 사업설명회",
+      "gu": "중구",
+      "place": "커뮤니티하우스 마실",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=374328",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_374794": {
+      "start": "2026-04-11",
+      "title": "2026 대한민국 문화도시 통영 뮤직웨이브 '리베란테'",
+      "gu": "통영시",
+      "place": "통영 강구안 해상무대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=374794",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_374105": {
+      "start": "2026-04-11",
+      "end": "2026-04-12",
+      "title": "2026 KT&G 상상실현 페스티벌",
+      "gu": "춘천시",
+      "place": "KT&G 상상마당 춘천",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=374105",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_374560": {
+      "start": "2026-04-14",
+      "title": "2025년 권역별 선도서점 육성 사업 성과공유회",
+      "gu": "서초구",
+      "place": "국립중앙도서관 국제회의장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=374560",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_374181": {
+      "start": "2026-04-15",
+      "title": "광명문화재단 기획 전시 근현대미술 거장展 《그리움은 선이 되고, 마음은 빛이 되어》 연계 프로그램 참여자 모집",
+      "gu": "광명시",
+      "place": "광명시민회관 1층 리허설룸",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=374181",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_380578": {
+      "start": "2026-04-16",
+      "end": "2026-05-31",
+      "title": "2026년 창덕궁 달빛기행 (상반기)",
+      "gu": "종로구",
+      "place": "창덕궁",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=380578",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_372301": {
+      "start": "2026-04-17",
+      "end": "2026-04-19",
+      "title": "2026 부여세도 방울토마토 유채꽃 축제",
+      "gu": "부여군",
+      "place": "금강 황산대교 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=372301",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_375826": {
+      "start": "2026-04-18",
+      "end": "2026-06-27",
+      "title": "2026 상반기 통제영 주말 상설 프로그램",
+      "gu": "통영시",
+      "place": "통영 삼도수군통제영",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=375826",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_376251": {
+      "start": "2026-04-18",
+      "end": "2026-05-24",
+      "title": "2026년 차이나타운 문화행사 <차이나는 문화 공연>",
+      "gu": "제물포구",
+      "place": "인천 차이나타운 일대 (한중원, 황제계단, 동화마을 입구)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=376251",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373559": {
+      "start": "2026-04-18",
+      "title": "제5회 HAPPY 북구 BOOK 페스티벌",
+      "gu": "북구",
+      "place": "구수산도서관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373559",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373640": {
+      "start": "2026-04-24",
+      "end": "2026-05-10",
+      "title": "2026 고양국제꽃박람회",
+      "gu": "고양시",
+      "place": "일산호수공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373640",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373906": {
+      "start": "2026-04-24",
+      "end": "2026-04-26",
+      "title": "2026 청주 국가유산 야행 <압각수의 사계(四季&middot;史計), 천년의 헤아림>",
+      "gu": "청주시",
+      "place": "청주중앙공원, 용두사지철당간, 충북도청, 성안길중앙공원, 용두사지철당간, 충북도청, 성안길",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373906",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_372421": {
+      "start": "2026-04-24",
+      "end": "2026-05-05",
+      "title": "제28회 함평나비대축제",
+      "gu": "함평군",
+      "place": "함평 엑스포공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=372421",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_377012": {
+      "start": "2026-04-25",
+      "title": "2026 도민의 집 '주말 예술 캠프'",
+      "gu": "창원시",
+      "place": "경남 도민의 집 앞뜰",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=377012",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373661": {
+      "start": "2026-04-25",
+      "end": "2026-05-24",
+      "title": "2026 태안국제원예치유박람회",
+      "gu": "태안군",
+      "place": "태안군 안면도 꽃지해안공원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373661",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_379747": {
+      "start": "2026-04-26",
+      "end": "2026-06-14",
+      "title": "2026 차 없는 잠수교 뚜벅뚜벅 축제",
+      "gu": "서초구",
+      "place": "잠수교 및 반포한강공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=379747",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_378369": {
+      "start": "2026-04-27",
+      "end": "2026-09-06",
+      "title": "제32회 전국한지공예대전 공모",
+      "gu": "전주시",
+      "place": "한국전통문화전당 3층 기획전시실",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=378369",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_378373": {
+      "start": "2026-04-29",
+      "end": "2026-05-08",
+      "title": "제27회 전주국제영화제 The 27th JEONJU International Film Festival",
+      "gu": "전주시",
+      "place": "전주시네마타운 및 전주시 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=378373",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373565": {
+      "start": "2026-05-01",
+      "end": "2026-05-02",
+      "title": "2026 과천재즈피크닉",
+      "gu": "과천시",
+      "place": "과천시민광장(과천시민회관 옆 잔디마당)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373565",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_377815": {
+      "start": "2026-05-01",
+      "end": "2026-05-05",
+      "title": "2026 몰랑하우스 5월 가정의달 기념 어린이날 행사",
+      "gu": "순천시",
+      "place": "몰랑하우스",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=377815",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_387195": {
+      "start": "2026-05-01",
+      "end": "2026-10-31",
+      "title": "2026 새빛문화예술클럽 <시민의 메아리>",
+      "gu": "수원시",
+      "place": "정조테마공연장 어울무대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=387195",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_377708": {
+      "start": "2026-05-01",
+      "end": "2026-05-05",
+      "title": "2026 차전장군노국공주축제",
+      "gu": "안동시",
+      "place": "중앙선1942안동역, 탈춤공원, 안동 원도심 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=377708",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_387490": {
+      "start": "2026-05-01",
+      "end": "2026-11-01",
+      "title": "2026 화성행궁 야간개장",
+      "gu": "수원시",
+      "place": "화성행궁",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=387490",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_377814": {
+      "start": "2026-05-01",
+      "end": "2026-05-05",
+      "title": "2026년 국립익산박물관 어린이날 문화행사",
+      "gu": "익산시",
+      "place": "국립익산박물관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=377814",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_374799": {
+      "start": "2026-05-01",
+      "end": "2026-05-03",
+      "title": "제8회 홍천 산나물축제",
+      "gu": "홍천군",
+      "place": "도시산림공원 토리숲 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=374799",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_376499": {
+      "start": "2026-05-02",
+      "title": "2026 서울재즈페스타",
+      "gu": "영등포구",
+      "place": "여의도 한강공원 물빛광장 특설무대 '윈더스테이지'",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=376499",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_376569": {
+      "start": "2026-05-02",
+      "title": "어린이날 행사 <송파 아이 상상 업>",
+      "gu": "송파구",
+      "place": "송파근린공원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=376569",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_378415": {
+      "start": "2026-05-05",
+      "title": "[양양] 제104회 어린이날 기념행사",
+      "gu": "양양군",
+      "place": "양양송이공원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=378415",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_376513": {
+      "start": "2026-05-05",
+      "title": "2026 부평키즈페스티벌 &times; 굴포천천히 &lsquo;초록초록 놀이터&rsquo;",
+      "gu": "부평구",
+      "place": "부평아트센터 야외광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=376513",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_377711": {
+      "start": "2026-05-05",
+      "title": "2026 생물사랑 어린이 축제",
+      "gu": "서해구",
+      "place": "국립생물자원관 생생채움",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=377711",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_377242": {
+      "start": "2026-05-05",
+      "title": "2026 어린이날 아트페스타 'ON'",
+      "gu": "제주시",
+      "place": "제주아트플랫폼, 예술공간이아, 서귀포꿈꾸는예술터",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=377242",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_377637": {
+      "start": "2026-05-05",
+      "title": "2026 포항 어린이날 큰잔치",
+      "gu": "포항시",
+      "place": "포항 만인당 잔디광장(포항 수영장 옆)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=377637",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_376496": {
+      "start": "2026-05-05",
+      "title": "2026년 국립경찰박물관 어린이날 행사",
+      "gu": "종로구",
+      "place": "국립경찰박물관 전역",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=376496",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_377710": {
+      "start": "2026-05-05",
+      "title": "2026년 의정부시 어린이날 기념행사",
+      "gu": "의정부시",
+      "place": "의정부시청 앞 평화의 광장 및 도로 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=377710",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_377636": {
+      "start": "2026-05-05",
+      "title": "국립등대박물관 어린이날",
+      "gu": "포항시",
+      "place": "국립등대박물관 전시관 2층 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=377636",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_374627": {
+      "start": "2026-05-07",
+      "end": "2026-05-10",
+      "title": "제68회 밀양 아리랑 대축제",
+      "gu": "밀양시",
+      "place": "영남루 및 밀양강변, 남천강변로, 내일동 상가 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=374627",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_374576": {
+      "start": "2026-05-08",
+      "end": "2026-05-09",
+      "title": "제7회 밀양아리랑 농악 경연대회",
+      "gu": "밀양시",
+      "place": "밀양아리랑대축제 무형유산 특설공연장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=374576",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_377854": {
+      "start": "2026-05-09",
+      "title": "2026 마포아트센터 광장문화축제 <무대위의 책방>",
+      "gu": "마포구",
+      "place": "마포아트센터 앞 광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=377854",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_377013": {
+      "start": "2026-05-09",
+      "end": "2026-05-17",
+      "title": "제25회 의정부음악극축제",
+      "gu": "의정부시",
+      "place": "의정부예술의전당 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=377013",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_377527": {
+      "start": "2026-05-10",
+      "title": "2026 국립경찰박물관 5월 문화행사",
+      "gu": "종로구",
+      "place": "국립경찰박물관 4층 폴리스홀",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=377527",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_378597": {
+      "start": "2026-05-14",
+      "title": "2026년 제3회 청소년 도박문제 예방주간 기념행사",
+      "gu": "광진구",
+      "place": "뚝섬 한강공원 청담대교 하부",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=378597",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_379675": {
+      "start": "2026-05-15",
+      "title": "629돌 세종대왕 나신 날, <여민락, 세상과 함께 즐기다>",
+      "gu": "종로구",
+      "place": "경복궁 흥례문 광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=379675",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_379919": {
+      "start": "2026-05-15",
+      "end": "2026-05-23",
+      "title": "제18회 중랑 서울장미축제",
+      "gu": "중랑구",
+      "place": "중랑장미공원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=379919",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_379900": {
+      "start": "2026-05-16",
+      "end": "2026-05-17",
+      "title": "2026 국토발전전시관 가정의 달 행사 - 출동! 가족탐험대",
+      "gu": "중구",
+      "place": "국토발전전시관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=379900",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_378413": {
+      "start": "2026-05-16",
+      "title": "2026 남해바래길 월정기걷기 '작은 소풍' 5월",
+      "gu": "남해군",
+      "place": "본선 3코스 동대만길",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=378413",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_379371": {
+      "start": "2026-05-16",
+      "end": "2026-05-17",
+      "title": "2026 D.FESTA 거리공연축제",
+      "gu": "종로구",
+      "place": "마로니에공원 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=379371",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_379528": {
+      "start": "2026-05-16",
+      "title": "국립익산박물관 월간 버스킹 <박물관 속 음악산책>",
+      "gu": "익산시",
+      "place": "국립익산박물관 '역사의 거울' 야외공간",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=379528",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_387906": {
+      "start": "2026-05-17",
+      "end": "2026-08-02",
+      "title": "국립세계문자박물관 특별전시 연계 <작가와의 대화>",
+      "gu": "연수구",
+      "place": "국립세계문자박물관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=387906",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_379353": {
+      "start": "2026-05-20",
+      "title": "2026 <내가Green양양> 에코 웨이브 페스티벌",
+      "gu": "양양군",
+      "place": "웨이브웍스",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=379353",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_374795": {
+      "start": "2026-05-20",
+      "end": "2026-05-21",
+      "title": "2026 관광 미니 잡페어",
+      "gu": "중구",
+      "place": "한국관광공사 서울센터 15층 관광미래인재교육센터",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=374795",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_379746": {
+      "start": "2026-05-22",
+      "end": "2026-05-24",
+      "title": "2026 괴산 빨간맛 페스티벌",
+      "gu": "괴산군",
+      "place": "괴산유기농엑스포광장 및 동진천변 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=379746",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_380575": {
+      "start": "2026-05-22",
+      "end": "2026-05-25",
+      "title": "2026 빵 터지는 강릉 빵 페스타",
+      "gu": "강릉시",
+      "place": "강릉 대도호부관아 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=380575",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_379920": {
+      "start": "2026-05-22",
+      "end": "2026-05-31",
+      "title": "제16회 곡성세계장미축제",
+      "gu": "곡성군",
+      "place": "곡성 섬진강기차마을",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=379920",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_377813": {
+      "start": "2026-05-22",
+      "end": "2026-05-25",
+      "title": "천배만배 제16회 화성 뱃놀이 축제",
+      "gu": "화성시",
+      "place": "서신면 전곡항, 궁평리, 백미리 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=377813",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_380185": {
+      "start": "2026-05-23",
+      "title": "2026 국립극장 쏙쏙들이 페스티벌 - 봄축제",
+      "gu": "파주시",
+      "place": "1층 실내무대 및 야외광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=380185",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_380580": {
+      "start": "2026-05-29",
+      "end": "2026-06-07",
+      "title": "제16회 장항항 수산물 꼴갑축제",
+      "gu": "서천군",
+      "place": "서천군 장항항 물양장 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=380580",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_380581": {
+      "start": "2026-05-30",
+      "title": "평화체험축제 '동탄에 평화온:담'",
+      "gu": "화성시",
+      "place": "동탄호수공원 운답원 잔디마당",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=380581",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_384565": {
+      "start": "2026-06-01",
+      "end": "2026-12-31",
+      "title": "서울영화센터 단체관람 할인 안내",
+      "gu": "중구",
+      "place": "서울영화센터 상영관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=384565",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_380614": {
+      "start": "2026-06-05",
+      "end": "2026-06-06",
+      "title": "2026 전주국가유산야행",
+      "gu": "전주시",
+      "place": "전주 한옥마을, 경기전, 향교, 풍남문, 전라감영",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=380614",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_380579": {
+      "start": "2026-06-07",
+      "title": "제18회 성북세계음식축제 누리마실 <지구맛대로>",
+      "gu": "성북구",
+      "place": "성북로 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=380579",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_383257": {
+      "start": "2026-06-09",
+      "end": "2026-06-15",
+      "title": "축구와 그 이야기 &laquo;Golpe de estadio&raquo;",
+      "gu": "중구",
+      "place": "주한 세르반테스 스페인 문화원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=383257",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_383274": {
+      "start": "2026-06-09",
+      "end": "2026-06-18",
+      "title": "축구와 그 이야기 &laquo;Metegol&raquo;",
+      "gu": "중구",
+      "place": "주한 세르반테스 스페인 문화원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=383274",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_382166": {
+      "start": "2026-06-12",
+      "end": "2026-06-14",
+      "title": "〈영희 페스티벌〉",
+      "gu": "마포구",
+      "place": "마포아트센터 아트홀맥, 플레이맥, 갤러리맥, 스튜디오3, 야외광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=382166",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_381753": {
+      "start": "2026-06-12",
+      "end": "2026-06-14",
+      "title": "2026 광안리어방축제",
+      "gu": "수영구",
+      "place": "광안리해변 및 수영사적공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=381753",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_381750": {
+      "start": "2026-06-12",
+      "end": "2026-06-14",
+      "title": "제7회 횡성호수길축제",
+      "gu": "횡성군",
+      "place": "망향의동산 및 횡성호수길 5구간 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=381750",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_383005": {
+      "start": "2026-06-13",
+      "title": "2026 가로수길 디자인 위크",
+      "gu": "강남구",
+      "place": "신사동 가로수길 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=383005",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_383004": {
+      "start": "2026-06-13",
+      "title": "2026 강남 피크닉 콘서트",
+      "gu": "강남구",
+      "place": "한강공원 신사잠원지구 다목적운동장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=383004",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_381768": {
+      "start": "2026-06-13",
+      "end": "2026-06-14",
+      "title": "2026 제4회 양평밀축제",
+      "gu": "양평군",
+      "place": "양평우리밀경관단지 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=381768",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_382818": {
+      "start": "2026-06-13",
+      "end": "2026-06-28",
+      "title": "2026 평화문화진지 호국보훈 문화제 [RE:MEMORY-기억을 잇고, 평화를 만들다]",
+      "gu": "도봉구",
+      "place": "평화문화진지",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=382818",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_377865": {
+      "start": "2026-06-13",
+      "end": "2026-06-14",
+      "title": "제38회 고양행주문화제",
+      "gu": "고양시",
+      "place": "행주산성 및 행주산성 역사공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=377865",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_380475": {
+      "start": "2026-06-17",
+      "end": "2026-06-28",
+      "title": "2026 서울시 민간축제 지원 및 육성사업 <2026 보훈무용제>",
+      "gu": "광진구",
+      "place": "나루아트센터 대, 소공연장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=380475",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_379724": {
+      "start": "2026-06-18",
+      "end": "2026-06-21",
+      "title": "제9회 국제해양영화제",
+      "gu": "해운대구",
+      "place": "영화의전당",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=379724",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_382435": {
+      "start": "2026-06-19",
+      "end": "2026-06-28",
+      "title": "2026 공예주간 (Korea Craft Week 2026)",
+      "gu": "부여군",
+      "place": "거점도시 부여 / 권역별 도시 세종&middot;공주, 전주&middot;고창, 칠곡&middot;구미, 울산&middot;부산, 제주&middot;서귀포 / 전국 공예주간 프렌즈 참여 지역",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=382435",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_380741": {
+      "start": "2026-06-19",
+      "end": "2026-06-21",
+      "title": "제24회 퇴촌토마토거리축제",
+      "gu": "광주시",
+      "place": "퇴촌면 광동로 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=380741",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_384236": {
+      "start": "2026-06-20",
+      "end": "2026-10-24",
+      "title": "2026 경기전 왕과의 산책",
+      "gu": "전주시",
+      "place": "전주 경기전",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=384236",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_382603": {
+      "start": "2026-06-23",
+      "title": "2026 보훈무용제 부대행사 <보훈무용제 학술심포지엄>",
+      "gu": "광진구",
+      "place": "나루아트센터 소공연장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=382603",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_385158": {
+      "start": "2026-06-24",
+      "title": "2026년 시군예술인 통합지원 간담회",
+      "gu": "홍천군",
+      "place": "홍천군 종합사회복지관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=385158",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_385734": {
+      "start": "2026-06-26",
+      "end": "2026-06-28",
+      "title": "2026 제4회 강진 수국길축제",
+      "gu": "강진군",
+      "place": "보은산 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=385734",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_385733": {
+      "start": "2026-06-26",
+      "end": "2026-06-28",
+      "title": "제29회 무안연꽃축제 - 여름이 켜지는 순간, 무안에서",
+      "gu": "무안군",
+      "place": "무안군 회산백련지 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=385733",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_383422": {
+      "start": "2026-06-27",
+      "title": "[영등포아트스퀘어] 배우 문정희 북콘서트 '금빛 동행, 마누 이야기'",
+      "gu": "영등포구",
+      "place": "영등포아트스퀘어 스퀘어A",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=383422",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_385735": {
+      "start": "2026-06-27",
+      "end": "2026-06-28",
+      "title": "2026 경산 카페 축제",
+      "gu": "경산시",
+      "place": "경산 남천둔치",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=385735",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_384470": {
+      "start": "2026-06-27",
+      "title": "가족이 좋아서(書)&times;쉼표가 있는 책마당",
+      "gu": "파주시",
+      "place": "파주 아시아출판문화정보센터 다목적홀(지혜의숲)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=384470",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_384409": {
+      "start": "2026-06-27",
+      "title": "맞추랑께 그리랑께",
+      "gu": "전주시",
+      "place": "전라감영",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=384409",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_384195": {
+      "start": "2026-06-27",
+      "end": "2026-06-28",
+      "title": "춘천예술촌 야외 공간 활성화 <플리플라 아트 파크>",
+      "gu": "춘천시",
+      "place": "춘천예술촌 야외 잔디마당",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=384195",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_380637": {
+      "start": "2026-06-28",
+      "end": "2026-07-03",
+      "title": "제9회 아츠인탱크 무용축제 인코리아",
+      "gu": "마포구",
+      "place": "문화비축기지 탱크1, 탱크2실내, 탱크2야외무대, 탱크6",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=380637",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_383854": {
+      "start": "2026-07-01",
+      "end": "2026-07-03",
+      "title": "2026 글로벌 문학 포럼 &lsquo;한국문학, 끌림과 울림&rsquo;",
+      "gu": "중구",
+      "place": "호텔코리아나 그랜드볼룸",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=383854",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_382377": {
+      "start": "2026-07-02",
+      "end": "2026-07-23",
+      "title": "제17회 대한민국 국공립극단 페스티벌 in 경주",
+      "gu": "경주시",
+      "place": "경주예술의전당",
+      "lat": 35.86258808813555,
+      "lng": 129.2061643824664,
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=382377",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_382213": {
+      "start": "2026-07-03",
+      "end": "2026-07-05",
+      "title": "2026년 제24회 부여서동연꽃축제",
+      "gu": "부여군",
+      "place": "부여군 서동공원(궁남지) 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=382213",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_385760": {
+      "start": "2026-07-04",
+      "end": "2026-07-05",
+      "title": "2026 대구앞산축제",
+      "gu": "남구",
+      "place": "남구구민체육광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=385760",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_381407": {
+      "start": "2026-07-04",
+      "title": "2026 부천문화재단 어린이축제 <들썩들썩 연희놀이터>",
+      "gu": "부천시",
+      "place": "판타지아 극장, 연희마당, 복사골문화센터 아트홀",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=381407",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_385351": {
+      "start": "2026-07-06",
+      "end": "2026-07-12",
+      "title": "2026 백제문화유산주간",
+      "gu": "공주시",
+      "place": "국립공주박물관, 국립익산박물관, 국립부여박물관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=385351",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_385305": {
+      "start": "2026-07-08",
+      "end": "2026-07-11",
+      "title": "2026 백제문화유산 녹턴",
+      "gu": "공주시",
+      "place": "국립공주박물관, 국립익산박물관, 국립부여박물관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=385305",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_385144": {
+      "start": "2026-07-11",
+      "title": "[서울남산국악당] 동해안별신굿 <굿도 보고 떡도 먹고>",
+      "gu": "중구",
+      "place": "서울남산국악당 크라운해태홀",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=385144",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_381738": {
+      "start": "2026-07-11",
+      "end": "2026-07-12",
+      "title": "2026 칠곡 꿀맥 페스티벌",
+      "gu": "칠곡군",
+      "place": "칠곡평화분수",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=381738",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_386794": {
+      "start": "2026-07-13",
+      "title": "두 세계를 잇는 실",
+      "gu": "중구",
+      "place": "유네스코회관 7층",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=386794",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_387521": {
+      "start": "2026-07-15",
+      "title": "제4회 지속가능한 마이스&middot;관광 울산포럼",
+      "gu": "울주군",
+      "place": "UECO 컨벤션홀",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=387521",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_388209": {
+      "start": "2026-07-18",
+      "title": "2026 남문터 광장 문화 콘서트 - 광장생활 워터파크 2회차",
+      "gu": "순천시",
+      "place": "순천부 읍성 남문터광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=388209",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_388051": {
+      "start": "2026-07-20",
+      "end": "2026-08-09",
+      "title": "2026 서울썸머비치",
+      "gu": "종로구",
+      "place": "광화문광장 및 세종로공원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=388051",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_384984": {
+      "start": "2026-07-20",
+      "end": "2026-07-29",
+      "title": "무형유산축제 in 부산",
+      "gu": "해운대구",
+      "place": "제 1전시장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=384984",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_385434": {
+      "start": "2026-07-20",
+      "end": "2026-07-25",
+      "title": "제21회 대한민국천연염색문화상품대전 공모 요강",
+      "gu": "나주시",
+      "place": "한국천연염색박물관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=385434",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_387488": {
+      "start": "2026-07-22",
+      "end": "2026-07-25",
+      "title": "2026 남대천 윤슬싸롱",
+      "gu": "양양군",
+      "place": "남대천 샛강 테라스 잔디광장 앞",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=387488",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_386842": {
+      "start": "2026-07-23",
+      "end": "2026-08-02",
+      "title": "2026 아시테지 국제여름축제",
+      "gu": "종로구",
+      "place": "아르코예술극장, 아르코꿈밭극장, 종로아이들극장, 서울연극창작센터, 모두예술극장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=386842",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_388106": {
+      "start": "2026-07-24",
+      "end": "2026-07-26",
+      "title": "2026 울산조선해양축제",
+      "gu": "동구",
+      "place": "일산해수욕장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=388106",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_388052": {
+      "start": "2026-07-24",
+      "end": "2026-07-25",
+      "title": "2026 피란수도 부산 국가유산 야행",
+      "gu": "중구",
+      "place": "영도다리(유라리광장) 등 피란수도 부산유산 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=388052",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_387673": {
+      "start": "2026-07-24",
+      "title": "2026년 제5회 국악사전 월례 토론회",
+      "gu": "서초구",
+      "place": "국립국악원 국악누리동 대회의실",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=387673",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_388546": {
+      "start": "2026-07-25",
+      "end": "2026-07-26",
+      "title": "2026 거제여름해양축제",
+      "gu": "거제시",
+      "place": "지세포항 수변공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=388546",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_389538": {
+      "start": "2026-07-25",
+      "end": "2026-08-09",
+      "title": "2026 제10회 성북문화바캉스",
+      "gu": "성북구",
+      "place": "서울숭덕초등학교, 우이천다목적광장, 길음동유휴부지",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=389538",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_394086": {
+      "start": "2026-07-25",
+      "end": "2026-12-19",
+      "title": "발코니 뮤직쇼 앤 스트릿 페스타",
+      "gu": "중구",
+      "place": "부산 중구 광복로 차 없는 거리",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=394086",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_389444": {
+      "start": "2026-07-25",
+      "title": "슬도 아트마켓 - 초화단지로 간 아트마켓",
+      "gu": "동구",
+      "place": "슬도아트에서 성끝마을입구까지",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=389444",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_388107": {
+      "start": "2026-07-25",
+      "end": "2026-08-02",
+      "title": "제11회 한강&middot;낙동강 발원지 축제",
+      "gu": "태백시",
+      "place": "황지연못 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=388107",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_388944": {
+      "start": "2026-07-29",
+      "end": "2026-08-02",
+      "title": "서울시립과학관 썸머 페스티벌 [2026 한여름의 과학관]",
+      "gu": "노원구",
+      "place": "서울시립과학관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=388944",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_389396": {
+      "start": "2026-07-30",
+      "end": "2026-08-01",
+      "title": "2026 국제수면치유박람회 (Sleep & Wellness Festa)",
+      "gu": "강남구",
+      "place": "코엑스 1층 B홀 전관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=389396",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_381549": {
+      "start": "2026-07-30",
+      "end": "2026-08-02",
+      "title": "어반브레이크 & 토이콘 서울 2026",
+      "gu": "강남구",
+      "place": "코엑스 D홀",
+      "lat": 37.5114080542627,
+      "lng": 127.06066767364095,
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=381549",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_388531": {
+      "start": "2026-07-31",
+      "end": "2026-08-01",
+      "title": "2026 양양 서머 페스티벌",
+      "gu": "양양군",
+      "place": "낙산해수욕장 야외특설무대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=388531",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_381767": {
+      "start": "2026-07-31",
+      "end": "2026-08-09",
+      "title": "제36회 거창국제연극제",
+      "gu": "거창군",
+      "place": "거창군 수승대 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=381767",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_389964": {
+      "start": "2026-07-31",
+      "end": "2026-08-02",
+      "title": "DDP 바캉스: 뮤직페스티벌",
+      "gu": "중구",
+      "place": "동대문 디자인 프라자",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=389964",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_394120": {
+      "start": "2026-08-01",
+      "end": "2026-12-31",
+      "title": "2026 별바다부산 나이트페스타",
+      "gu": "해운대구",
+      "place": "apec나루공원 외",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=394120",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_389504": {
+      "start": "2026-08-01",
+      "end": "2026-08-02",
+      "title": "2026 제천 열대야 페스타",
+      "gu": "제천시",
+      "place": "의림지 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=389504",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_391327": {
+      "start": "2026-08-03",
+      "end": "2026-09-07",
+      "title": "결과만 보는 평가? No. 과정까지 평가하는 진짜 오디션!",
+      "gu": "종로구",
+      "place": "서울 클래식 공연홀에서 진행되는 실전 협연",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=391327",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_390179": {
+      "start": "2026-08-06",
+      "end": "2026-09-13",
+      "title": "제11회 여성연극제 기획전 <이민선>",
+      "gu": "성북구",
+      "place": "서울연극창작센터 서울씨어터 202",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=390179",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_389352": {
+      "start": "2026-08-09",
+      "title": "2026 국립경찰박물관 8월 문화행사 '빛과 모래로 들려주는 샌드아트 공연'",
+      "gu": "종로구",
+      "place": "국립경찰박물관 4층 폴리스홀",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=389352",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_390620": {
+      "start": "2026-08-10",
+      "end": "2026-08-13",
+      "title": "2026년 부산 세계도서관정보대회",
+      "gu": "해운대구",
+      "place": "벡스코(BEXCO)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=390620",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_389989": {
+      "start": "2026-08-11",
+      "end": "2026-08-15",
+      "title": "2026 춘천공연예술제",
+      "gu": "춘천시",
+      "place": "축제극장몸짓, 성암예배당, 봄내극장, 담작은도서관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=389989",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_390644": {
+      "start": "2026-08-12",
+      "end": "2026-08-16",
+      "title": "제65회 통영한산대첩축제 - 장군의 바다, 눈물의 난중일기",
+      "gu": "통영시",
+      "place": "통영시 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=390644",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_391365": {
+      "start": "2026-08-13",
+      "title": "2026 관광기업 HR 컨퍼런스 [인사담당자 교육]",
+      "gu": "중구",
+      "place": "한국관광공사 서울센터 관광미래인재교육센터 대강의실",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=391365",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_393149": {
+      "start": "2026-08-15",
+      "end": "2026-08-17",
+      "title": "제2회 대전꿈돌이영화제",
+      "gu": "대덕구",
+      "place": "대전 소소아트시네마",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=393149",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_391781": {
+      "start": "2026-08-19",
+      "title": "2026 차세대전문예술활동지원 <내일의 예술가> 아티스트 프레젠테이션",
+      "gu": "부천시",
+      "place": "복사골문화센터 판타지아극장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=391781",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_394532": {
+      "start": "2026-08-20",
+      "end": "2026-08-26",
+      "title": "28회 서울국제여성영화제",
+      "gu": "마포구",
+      "place": "메가박스 신촌, 한국영상자료원 시네마테크 KOFA",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=394532",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_394382": {
+      "start": "2026-08-21",
+      "end": "2026-08-22",
+      "title": "2026 고양돗자리영화제",
+      "gu": "고양시",
+      "place": "고양어울림누리 어울림광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=394382",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_387902": {
+      "start": "2026-08-22",
+      "end": "2026-08-23",
+      "title": "2026 청소년스포츠한마당 댄스스포츠 대회",
+      "gu": "강릉시",
+      "place": "체육관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=387902",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_393110": {
+      "start": "2026-08-22",
+      "title": "남해바래길, 노을에서 달빛까지(야간 걷기)",
+      "gu": "남해군",
+      "place": "설리스카이워크",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=393110",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_393223": {
+      "start": "2026-08-22",
+      "title": "항구로 간 아트마켓&포차 '동진항 아트포차'",
+      "gu": "동구",
+      "place": "울산시 동구 성끝길 74 커피명가 뒤편 주차장 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=393223",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_391490": {
+      "start": "2026-08-25",
+      "end": "2026-08-27",
+      "title": "2026 서울 국제 시각장애예술인 뮤직페스티벌(SIMB)",
+      "gu": "관악구",
+      "place": "서울대학교 음악대학",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=391490",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_392693": {
+      "start": "2026-08-26",
+      "title": "2026년 청소년 도박문제 포럼",
+      "gu": "영등포구",
+      "place": "국회도서관 대강당(B105호)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=392693",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_395609": {
+      "start": "2026-08-27",
+      "end": "2026-09-06",
+      "title": "2026 신촌글로벌대학문화축제 [외국인 유학생 가요제]",
+      "gu": "서대문구",
+      "place": "신촌 U-PLEX 앞 메인무대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=395609",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_391513": {
+      "start": "2026-08-27",
+      "title": "2026년 「제2회 요즘, 한국관광 데이터 세미나」",
+      "gu": "중구",
+      "place": "더플라자호텔 서울 그랜드볼룸",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=391513",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_388784": {
+      "start": "2026-08-27",
+      "end": "2026-11-05",
+      "title": "수림뉴웨이브 2026",
+      "gu": "동대문구",
+      "place": "김희수아트센터",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=388784",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_395952": {
+      "start": "2026-08-28",
+      "end": "2026-09-05",
+      "title": "2026 강경 국가유산야행",
+      "gu": "논산시",
+      "place": "강경근대역사문화거리 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=395952",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_390614": {
+      "start": "2026-08-28",
+      "title": "2026 세계번역가대회",
+      "gu": "강남구",
+      "place": "그랜드 머큐어 임피리얼 팰리스 서울 강남 메라크홀(2F)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=390614",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_395831": {
+      "start": "2026-08-28",
+      "end": "2026-08-30",
+      "title": "2026 stayfoolish_with",
+      "gu": "전주시",
+      "place": "로컬공판장 모이장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=395831",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_393386": {
+      "start": "2026-08-28",
+      "end": "2026-08-30",
+      "title": "2026년 사회적경제 단기기획전 <더 좋은 소비 페스타 in 하남>",
+      "gu": "하남시",
+      "place": "스타필드 하남 센트럴 아트리움",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=393386",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_391167": {
+      "start": "2026-08-28",
+      "end": "2026-08-31",
+      "title": "청년 대상 체류형 관광 프로그램 <문득, 서천>",
+      "gu": "서천군",
+      "place": "서천군 일대(장항송림자연휴양림, 송석항 등)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=391167",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_391810": {
+      "start": "2026-08-29",
+      "title": "2026 글로벌 스포츠 네트워크 포럼",
+      "gu": "송파구",
+      "place": "서울올림픽파크텔 올림피아홀",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=391810",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_389632": {
+      "start": "2026-08-29",
+      "title": "2026 뮤직 플로우 페스티벌 MUSIC FLOW FESTIVAL",
+      "gu": "부평구",
+      "place": "부평아트센터 야외광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=389632",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_395590": {
+      "start": "2026-08-29",
+      "end": "2026-08-30",
+      "title": "2026 아시아 양금 축제",
+      "gu": "마포구",
+      "place": "서울생활문화센터 서교 서교스퀘어",
+      "lat": 37.5508021700653,
+      "lng": 126.916715922466,
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=395590",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_395951": {
+      "start": "2026-08-29",
+      "end": "2026-09-06",
+      "title": "제12회 무안황토갯벌축제",
+      "gu": "무안군",
+      "place": "무안군 해제면 무안황토갯벌랜드 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=395951",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_394950": {
+      "start": "2026-08-30",
+      "title": "이주선 워크숍: 서로에게 닿는 방식",
+      "gu": "금정구",
+      "place": "복합문화예술공간MERGE",
+      "lat": 35.2335553081098,
+      "lng": 129.086382076306,
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=394950",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_393385": {
+      "start": "2026-09-01",
+      "end": "2026-09-07",
+      "title": "2026 양성평등주간 기념행사",
+      "gu": "송파구",
+      "place": "송파구청 및 송파여성문화회관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=393385",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_393218": {
+      "start": "2026-09-01",
+      "end": "2026-09-04",
+      "title": "동대문 무장애 문화향유주간 <DADA:예술로>",
+      "gu": "동대문구",
+      "place": "동대문구 아르코",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=393218",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396041": {
+      "start": "2026-09-02",
+      "end": "2026-10-24",
+      "title": "2026년 경복궁 별빛야행",
+      "gu": "종로구",
+      "place": "경복궁 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396041",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396042": {
+      "start": "2026-09-03",
+      "end": "2026-09-06",
+      "title": "2026 진주국가유산야행 「암행어사 야(夜)밤에 진주성 출두야」",
+      "gu": "진주시",
+      "place": "진주성 및 원도심(로데오거리) 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396042",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_390130": {
+      "start": "2026-09-03",
+      "end": "2026-09-26",
+      "title": "2026 창극 중심 세계음악극축제",
+      "gu": "중구",
+      "place": "국립극장 해오름극장, 달오름극장, 하늘극장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=390130",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396044": {
+      "start": "2026-09-03",
+      "end": "2026-09-13",
+      "title": "서울라이트 DDP 2026 가을",
+      "gu": "중구",
+      "place": "동대문디자인플라자(DDP) 전면부 및 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396044",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_395953": {
+      "start": "2026-09-04",
+      "end": "2026-09-05",
+      "title": "2026 강화별밤야행 - 별빛 따라 만나는 강화의 밤",
+      "gu": "강화군",
+      "place": "용흥궁공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=395953",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_395600": {
+      "start": "2026-09-04",
+      "end": "2026-09-27",
+      "title": "2026 국가유산미디어아트 익산 미륵사지",
+      "gu": "익산시",
+      "place": "익산 미륵사지 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=395600",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396282": {
+      "start": "2026-09-04",
+      "end": "2026-09-05",
+      "title": "2026 예천 금당야행 - 인생 한바퀴 금당실 밤마실",
+      "gu": "예천군",
+      "place": "예천군 용문면 금당실마을 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396282",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397095": {
+      "start": "2026-09-04",
+      "end": "2026-09-13",
+      "title": "2026 평창효석문화제",
+      "gu": "평창군",
+      "place": "이효석문화마을 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397095",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_395440": {
+      "start": "2026-09-04",
+      "title": "2026년 태권도의 날 기념식",
+      "gu": "무주군",
+      "place": "태권도원 도약센터 3층 대강당",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=395440",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397094": {
+      "start": "2026-09-04",
+      "end": "2026-09-12",
+      "title": "제30회 무주반딧불축제 - 반디의 빛, 세계를 만나다",
+      "gu": "무주군",
+      "place": "무주군 일원(등나무 운동장, 지남공원, 남대천 등)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397094",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396677": {
+      "start": "2026-09-05",
+      "title": "[서초문화재단] 2026 서리풀뮤직페스티벌 「터치 더 피아노」 OPEN PIANO",
+      "gu": "서초구",
+      "place": "강남역 10번 출구 부근 love in seocho 조형물 앞",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396677",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_394920": {
+      "start": "2026-09-05",
+      "end": "2026-09-13",
+      "title": "2026 국중박 분장놀이 전국편 본선",
+      "gu": "춘천시",
+      "place": "국립춘천박물관, 국립공주박물관, 국립대구박물관, 국립전주박물관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=394920",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_395949": {
+      "start": "2026-09-05",
+      "end": "2026-11-04",
+      "title": "2026 여수세계섬박람회 - 섬, 바다와 미래를 잇다",
+      "gu": "여수시",
+      "place": "여수 돌산 진모지구, 개도, 금오도, 여수세계박람회장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=395949",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397963": {
+      "start": "2026-09-05",
+      "end": "2026-09-26",
+      "title": "9월 양재천수변문화쉼터 토요콘텐츠",
+      "gu": "강남구",
+      "place": "양재천수변문화쉼터 1층 라운지",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397963",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397096": {
+      "start": "2026-09-07",
+      "end": "2026-09-27",
+      "title": "2026 국가유산 미디어아트 사비박사 부여 정림사지",
+      "gu": "부여군",
+      "place": "부여 정림사지 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397096",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_393108": {
+      "start": "2026-09-07",
+      "end": "2026-09-10",
+      "title": "2026 해외 출판인 초청사업(K-Literature Fellowship)",
+      "gu": "강남구",
+      "place": "코엑스",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=393108",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397962": {
+      "start": "2026-09-07",
+      "end": "2026-09-19",
+      "title": "즐거운 명절 만들기 사랑으로 빚는 한가위 행사",
+      "gu": "진주시",
+      "place": "호탄동 남강둔치 야외공연장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397962",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_392970": {
+      "start": "2026-09-08",
+      "title": "궁능 관람료 대국민 공개토론회",
+      "gu": "종로구",
+      "place": "국립고궁박물관 별관 강당",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=392970",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_395428": {
+      "start": "2026-09-09",
+      "title": "[국립해양박물관] 나의 시, 나의 무대: 장애인 시낭송포럼",
+      "gu": "영도구",
+      "place": "국립해양박물관 1층 대강당",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=395428",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_392886": {
+      "start": "2026-09-09",
+      "end": "2026-09-11",
+      "title": "[사전등록 오픈!] 2026 월드 스마트시티 엑스포",
+      "gu": "해운대구",
+      "place": "부산 벡스코 제1전시장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=392886",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398013": {
+      "start": "2026-09-10",
+      "end": "2026-09-28",
+      "title": "[마포문화재단] 별★걸 다 파는 마포 주민 아트 마켓 <2026 궁금한 시장> 참여 셀러 모집",
+      "gu": "마포구",
+      "place": "마포아트센터 앞 광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398013",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397256": {
+      "start": "2026-09-10",
+      "end": "2026-09-13",
+      "title": "2026 전국문화도시 박람회",
+      "gu": "밀양시",
+      "place": "삼문동 밀양강변 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397256",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_391526": {
+      "start": "2026-09-10",
+      "end": "2026-09-15",
+      "title": "제14회 서울국제어린이영화제 14th Seoul Int'l Children's Film Festival",
+      "gu": "은평구",
+      "place": "롯데시네마 은평, 은평문화예술회관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=391526",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397504": {
+      "start": "2026-09-11",
+      "end": "2026-09-13",
+      "title": "2026 경기상상캠퍼스 개관 10주년 프로젝트 <샘 스쿨 SAM School>",
+      "gu": "수원시",
+      "place": "경기상상캠퍼스 공간1986",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397504",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_394970": {
+      "start": "2026-09-11",
+      "end": "2026-09-12",
+      "title": "2026 김창조 산조 페스티벌",
+      "gu": "영암군",
+      "place": "가야금산조테마공원 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=394970",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_393098": {
+      "start": "2026-09-11",
+      "end": "2026-09-16",
+      "title": "2026 서울국제작가축제 - 누구세요 Who are we?",
+      "gu": "종로구",
+      "place": "아라아트센터",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=393098",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396676": {
+      "start": "2026-09-11",
+      "title": "2026 성북라이브 행사",
+      "gu": "성북구",
+      "place": "월곡오거리 달빛광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396676",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396315": {
+      "start": "2026-09-11",
+      "end": "2026-09-12",
+      "title": "2026 종로한복축제",
+      "gu": "종로구",
+      "place": "광화문광장 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396315",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_389965": {
+      "start": "2026-09-11",
+      "end": "2026-09-13",
+      "title": "2026 청송백자축제",
+      "gu": "청송군",
+      "place": "주왕산관광지 내 청송백자도예촌 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=389965",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396304": {
+      "start": "2026-09-11",
+      "end": "2026-09-17",
+      "title": "제31회 서곶문화예술제",
+      "gu": "서해구",
+      "place": "인천서해구문화회관, 가정생활문화센터",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396304",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396299": {
+      "start": "2026-09-12",
+      "title": "2026 평택호 물빛 축제",
+      "gu": "평택시",
+      "place": "평택호 관광단지 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396299",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397098": {
+      "start": "2026-09-12",
+      "end": "2026-09-13",
+      "title": "제43회 순천팔마문화제",
+      "gu": "순천시",
+      "place": "남문터광장&middot;문화의 거리 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397098",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397255": {
+      "start": "2026-09-17",
+      "title": "2026 순천창작예술촌 ｢가을날의 피날레｣ - 김혜순 한복공방의 음악이야기",
+      "gu": "순천시",
+      "place": "순천부 읍성 남문터광장 야외광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397255",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_395602": {
+      "start": "2026-09-17",
+      "title": "제18회 도박중독 추방의날 기념식",
+      "gu": "서초구",
+      "place": "국립중앙도서관 국제회의장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=395602",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398291": {
+      "start": "2026-09-18",
+      "end": "2026-09-20",
+      "title": "2026 고양호수예술축제 - 예술, 거리에서 놀다! Rhythm of the Street",
+      "gu": "고양시",
+      "place": "일산호수공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398291",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396152": {
+      "start": "2026-09-18",
+      "end": "2026-10-11",
+      "title": "2026 국가유산 미디어아트 통영 삼도수군통제영",
+      "gu": "통영시",
+      "place": "삼도수군통제영",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396152",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400084": {
+      "start": "2026-09-18",
+      "end": "2026-11-29",
+      "title": "2026 서울어텀페스타 Seoul Autumn Festa 서울의 가을, 도시가 예술이 되다",
+      "gu": "종로구",
+      "place": "서울 전역 공연장 등",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400084",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397093": {
+      "start": "2026-09-18",
+      "end": "2026-09-20",
+      "title": "2026 제29회 부천국제만화축제",
+      "gu": "부천시",
+      "place": "한국만화박물관 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397093",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_392695": {
+      "start": "2026-09-18",
+      "title": "2026년 모두의 말뭉치 전문가 지식 강연회",
+      "gu": "강남구",
+      "place": "코엑스 스튜디오 159",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=392695",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398546": {
+      "start": "2026-09-18",
+      "end": "2026-09-19",
+      "title": "꽃바위 바다광장 아트마켓",
+      "gu": "동구",
+      "place": "꽃바위 바다광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398546",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396306": {
+      "start": "2026-09-18",
+      "end": "2026-09-20",
+      "title": "오션빌리지",
+      "gu": "거제시",
+      "place": "거제시 장승포항 수변공원 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396306",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397248": {
+      "start": "2026-09-18",
+      "end": "2026-09-20",
+      "title": "제14회 자문밖문화축제: Art Passages 예술적 여정",
+      "gu": "종로구",
+      "place": "자문밖 일대 (프로그램별 상이함)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397248",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397254": {
+      "start": "2026-09-18",
+      "title": "제1회 2026 출판 데이터 마케팅 포럼 <데이터로 읽는 출판시장>",
+      "gu": "서대문구",
+      "place": "한빛미디어 L60",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397254",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_373174": {
+      "start": "2026-09-18",
+      "title": "제4회 싱어송라이터 경연대회 히든스테이지",
+      "gu": "동대문구",
+      "place": "콘텐츠문화광장 스테이지66",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=373174",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398628": {
+      "start": "2026-09-19",
+      "title": "2026 금호강 한마음 축제",
+      "gu": "북구",
+      "place": "금호강 산격대교 하단일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398628",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399341": {
+      "start": "2026-09-19",
+      "end": "2026-10-11",
+      "title": "2026 부산바다도서관 Vol.3",
+      "gu": "사하구",
+      "place": "다대포해변공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399341",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399308": {
+      "start": "2026-09-19",
+      "end": "2026-10-06",
+      "title": "2026 수원화성 미디어아트 - 새빛동락(同樂): 수원화성(華城), 빛으로 피어나다",
+      "gu": "수원시",
+      "place": "화서문, 장안공원, 장안문 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399308",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_393010": {
+      "start": "2026-09-19",
+      "title": "2026 시민창작예술축제 - 제13회 학산마당극놀래",
+      "gu": "미추홀구",
+      "place": "수봉공원 인공폭포 야외공연장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=393010",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398727": {
+      "start": "2026-09-19",
+      "title": "2026 청주 스크린 밖 페스티벌",
+      "gu": "청주시",
+      "place": "청주 동부창고 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398727",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396147": {
+      "start": "2026-09-19",
+      "title": "2026 추석맞이 민속놀이터 및 윷놀이 대회",
+      "gu": "전주시",
+      "place": "국립무형유산원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396147",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397166": {
+      "start": "2026-09-19",
+      "title": "2026 BMA 미래미술관 포럼 <공명하는 미술관 - 다감각적 공간, 다성적 공공>",
+      "gu": "해운대구",
+      "place": "부산시립미술관 1층 다목적홀",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397166",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_391138": {
+      "start": "2026-09-19",
+      "title": "귤섭컬 페스타 STARTLINE",
+      "gu": "제주시",
+      "place": "제주 콘텐츠진흥원 Be IN;",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=391138",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_388930": {
+      "start": "2026-09-19",
+      "end": "2026-09-20",
+      "title": "메이커 페어 서울 (Maker Faire Seoul) 2026",
+      "gu": "중구",
+      "place": "동대문디자인플라자 DDP 미래로 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=388930",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397997": {
+      "start": "2026-09-19",
+      "title": "인천시립미술관 사전프로젝트 미술축제 <인천을 색칠하다>",
+      "gu": "남동구",
+      "place": "인천시청 애뜰광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397997",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_392525": {
+      "start": "2026-09-20",
+      "title": "2026 다름다움 페스티벌 - 약자와의 동행, 함께 만드는 축제",
+      "gu": "서초구",
+      "place": "반포한강공원 예빛섬 야외무대 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=392525",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396785": {
+      "start": "2026-09-20",
+      "title": "회복의 섬 남해, 바래길 걷기",
+      "gu": "남해군",
+      "place": "남해바래길 2코스 중 일부(에코촌, 강진만, 비자림)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396785",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399394": {
+      "start": "2026-09-21",
+      "end": "2026-11-10",
+      "title": "결과만 보는 평가? No. 과정까지 평가하는 진짜 오디션! 제2회 코리아 프롬스",
+      "gu": "강남구",
+      "place": "서울 클래식 공연홀에서 진행되는 실전 협연",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399394",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_393280": {
+      "start": "2026-09-21",
+      "end": "2026-09-23",
+      "title": "제9회 서울국제댄스페스티벌 인 탱크",
+      "gu": "마포구",
+      "place": "서울 문화비축기지 탱크1, 탱크2실내, 탱크2야외",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=393280",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398480": {
+      "start": "2026-09-24",
+      "end": "2026-09-27",
+      "title": "2026 국립대구박물관 추석 맞이 문화행사",
+      "gu": "수성구",
+      "place": "국립대구박물관 해솔관 마당, 중앙광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398480",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398481": {
+      "start": "2026-09-24",
+      "end": "2026-09-27",
+      "title": "2026 국립익산박물관 추석 문화행사",
+      "gu": "익산시",
+      "place": "국립익산박물관 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398481",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398483": {
+      "start": "2026-09-24",
+      "end": "2026-09-27",
+      "title": "2026 국립진주박물관 추석맞이 문화 한마당",
+      "gu": "진주시",
+      "place": "국립진주박물관 앞마당, 로비",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398483",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397165": {
+      "start": "2026-09-24",
+      "end": "2026-09-27",
+      "title": "2026 어린이문화원 추석 한마당 <보름달 아시아>",
+      "gu": "동구",
+      "place": "국립아시아문화전당 어린이문화원 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397165",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398422": {
+      "start": "2026-09-24",
+      "end": "2026-09-26",
+      "title": "국립김해박물관 2026년 추석맞이 민속놀이 행사",
+      "gu": "김해시",
+      "place": "국립김해박물관 야외광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398422",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398427": {
+      "start": "2026-09-24",
+      "end": "2026-09-27",
+      "title": "국립전주박물관 2026년 한가위 민속놀이마당",
+      "gu": "전주시",
+      "place": "국립전주박물관 옥외뜨락, 세미나실",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398427",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398567": {
+      "start": "2026-09-25",
+      "end": "2026-09-27",
+      "title": "[남산골한옥마을] 2026 남산골 추석축제 <남산달빛마당>",
+      "gu": "중구",
+      "place": "남산골한옥마을 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398567",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396285": {
+      "start": "2026-09-25",
+      "end": "2026-09-27",
+      "title": "2026 예천 삼강나루주막축제",
+      "gu": "예천군",
+      "place": "예천 삼강문화단지 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396285",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398424": {
+      "start": "2026-09-26",
+      "end": "2026-09-27",
+      "title": "국립청주박물관 2026년 추석맞이 문화행사 「추석 한마당」",
+      "gu": "청주시",
+      "place": "국립청주박물관 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398424",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400333": {
+      "start": "2026-09-28",
+      "end": "2026-10-05",
+      "title": "YONSEI ARTS WEEK 연세아츠위크 Page & Stage",
+      "gu": "원주시",
+      "place": "연세대학교 미래캠퍼스 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400333",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400427": {
+      "start": "2026-09-30",
+      "end": "2026-10-26",
+      "title": "2026 율곡문화제",
+      "gu": "파주시",
+      "place": "파주 이이유적",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400427",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_380615": {
+      "start": "2026-10-01",
+      "end": "2026-10-04",
+      "title": "제51회 정선아리랑제",
+      "gu": "정선군",
+      "place": "정선공설운동장 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=380615",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398418": {
+      "start": "2026-10-02",
+      "end": "2026-10-03",
+      "title": "2026 전주국가유산야행",
+      "gu": "전주시",
+      "place": "전주 한옥마을, 경기전, 풍남문, 전라감영",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398418",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400268": {
+      "start": "2026-10-03",
+      "end": "2026-10-31",
+      "title": "2026 상2동 예술마켓",
+      "gu": "부천시",
+      "place": "상2동 카페거리",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400268",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397104": {
+      "start": "2026-10-03",
+      "end": "2026-10-04",
+      "title": "2026 장위공 서희 외교문화제 <서희, K-외교를 말하다>",
+      "gu": "이천시",
+      "place": "서희테마파크 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397104",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400283": {
+      "start": "2026-10-03",
+      "end": "2026-10-24",
+      "title": "2026 청주 국가유산 미디어아트 '빛으로 여는 청주의 보물'",
+      "gu": "청주시",
+      "place": "청주 원도심 일원(철당간, 망선루, 압각수, 충청도병마절도사영문)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400283",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_392956": {
+      "start": "2026-10-03",
+      "end": "2026-10-04",
+      "title": "2026 K-Wave Dance Festival",
+      "gu": "용산구",
+      "place": "이태원로(이태원(6호선)부터녹사평역(6호선)사이 약 400m 구간)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=392956",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400278": {
+      "start": "2026-10-03",
+      "end": "2026-10-04",
+      "title": "2026년 고양시 전국 막걸리축제",
+      "gu": "고양시",
+      "place": "일산문화광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400278",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399318": {
+      "start": "2026-10-03",
+      "end": "2026-10-11",
+      "title": "제72회 공주백제문화제",
+      "gu": "공주시",
+      "place": "금강신관공원, 공산성, 왕도심 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399318",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399780": {
+      "start": "2026-10-03",
+      "end": "2026-10-11",
+      "title": "제72회 백제문화제 - 아름다운 백제, 빛나는 사비",
+      "gu": "부여군",
+      "place": "부여 시가지 일원(정림사지, 석탑로, 관북리유적)",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399780",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400213": {
+      "start": "2026-10-04",
+      "title": "2026 금천시흥행궁문화제",
+      "gu": "금천구",
+      "place": "금천구 은행나무로 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400213",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397172": {
+      "start": "2026-10-04",
+      "end": "2026-10-06",
+      "title": "2026 힐링발레축제(Healing Ballet Festival)",
+      "gu": "송파구",
+      "place": "송파문화예술회관 송파아트홀",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397172",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399329": {
+      "start": "2026-10-04",
+      "end": "2026-10-11",
+      "title": "제63회 수원화성문화제 '새빛홍민'",
+      "gu": "수원시",
+      "place": "수원화성 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399329",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398030": {
+      "start": "2026-10-05",
+      "end": "2026-10-11",
+      "title": "2026 크리에이티브X성수 '필름성수' 제7회 다양성洞 영화제",
+      "gu": "성동구",
+      "place": "성수아트홀, 서울숲 야외무대, (온라인 상영) 퍼플레이",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398030",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400207": {
+      "start": "2026-10-05",
+      "end": "2026-10-06",
+      "title": "옥상으로 따라와 in 여주",
+      "gu": "여주시",
+      "place": "늘푸른자연학교",
+      "lat": 37.1845144035885,
+      "lng": 127.683019313267,
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400207",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_401152": {
+      "start": "2026-10-06",
+      "end": "2026-10-22",
+      "title": "2026 영등포 어린이 미술대전 참가신청 모집",
+      "gu": "영등포구",
+      "place": "선유도공원 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401152",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400644": {
+      "start": "2026-10-06",
+      "end": "2026-10-15",
+      "title": "제31회 부산국제영화제 BIFF",
+      "gu": "해운대구",
+      "place": "영화의전당, CGV센텀시티, 롯데시네마 센텀시티, 영화진흥위원회 표준시사실, 소향씨어터 우리은행홀, 부산시청자미디어센터 공개홀",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400644",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_401158": {
+      "start": "2026-10-07",
+      "end": "2026-11-28",
+      "title": "[인천오리지널탐방] 인천 구석구석을 각 분야의 &lsquo;인천잘알&rsquo; 전문가들과 함께 탐방합니다.",
+      "gu": "제물포구",
+      "place": "프로그램별 장소 상이",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401158",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399266": {
+      "start": "2026-10-08",
+      "end": "2026-10-11",
+      "title": "제33회 증평인삼골축제",
+      "gu": "증평군",
+      "place": "보강천 체육공원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399266",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_397983": {
+      "start": "2026-10-09",
+      "end": "2026-10-17",
+      "title": "2026 은평에브리바디페스티벌(EEBF)",
+      "gu": "은평구",
+      "place": "은평문화예술회관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=397983",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399811": {
+      "start": "2026-10-09",
+      "end": "2026-10-11",
+      "title": "2026 제18회 강화도새우젓축제",
+      "gu": "강화군",
+      "place": "강화군 내가면 외포항 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399811",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399270": {
+      "start": "2026-10-09",
+      "title": "2026 제3회 여민락 문화교류축제 「인사 in Seoul」",
+      "gu": "종로구",
+      "place": "남인사마당 야외무대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399270",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400276": {
+      "start": "2026-10-09",
+      "end": "2026-10-18",
+      "title": "2026 행주가 예술이야",
+      "gu": "고양시",
+      "place": "고양 행주산성 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400276",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398748": {
+      "start": "2026-10-09",
+      "end": "2026-10-10",
+      "title": "담양국가유산야행",
+      "gu": "담양군",
+      "place": "관방제림, 객사리 석당간, 남산리 오층석탑",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398748",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400031": {
+      "start": "2026-10-09",
+      "end": "2026-10-10",
+      "title": "제3회 영암숲숲환경영화제",
+      "gu": "영암군",
+      "place": "영암도기박물관 및 기찬시네마",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400031",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_398899": {
+      "start": "2026-10-10",
+      "title": "[마포문화재단] 마포 공방 작가들과 함께하는 2026년 제1회 <공방전>",
+      "gu": "마포구",
+      "place": "마포아트센터 앞 광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=398899",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400672": {
+      "start": "2026-10-10",
+      "title": "2026 남양주 부침개 축제",
+      "gu": "남양주시",
+      "place": "왕숙천 경관광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400672",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399646": {
+      "start": "2026-10-10",
+      "end": "2026-10-11",
+      "title": "2026 문화가 있는 날 청춘마이크 수도&bull;강원권 스핀오프 '청춘들의 보물섬' 기획공연",
+      "gu": "옹진군",
+      "place": "신시모도 삼형제 보물섬",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399646",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400216": {
+      "start": "2026-10-12",
+      "end": "2026-11-29",
+      "title": "DMZ OPEN Festival",
+      "gu": "파주시",
+      "place": "경기도 DMZ 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400216",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_401018": {
+      "start": "2026-10-13",
+      "end": "2026-10-18",
+      "title": "제7회 수려한합천영화제",
+      "gu": "합천군",
+      "place": "합천영상테마파크",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401018",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_391144": {
+      "start": "2026-10-15",
+      "end": "2026-10-18",
+      "title": "제13회 칠곡낙동강평화축제",
+      "gu": "칠곡군",
+      "place": "칠곡보생태공원, 칠곡보오토캠핑장 및 왜관읍중앙로 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=391144",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400366": {
+      "start": "2026-10-15",
+      "title": "제31회 부산국제영화제 동네방네비프와 함께 하는 10월 국회문화극장 「사람과 고기」",
+      "gu": "영등포구",
+      "place": "국회의원회관",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400366",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_401382": {
+      "start": "2026-10-16",
+      "title": "[국립한글박물관] 2026년 제4회 국제박물관포럼 사전 신청 안내",
+      "gu": "중구",
+      "place": "한국프레스센터 20층 국제회의장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401382",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_388049": {
+      "start": "2026-10-16",
+      "end": "2026-10-18",
+      "title": "2026 양양송이연어축제",
+      "gu": "양양군",
+      "place": "남대천 둔치 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=388049",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400281": {
+      "start": "2026-10-16",
+      "end": "2026-10-18",
+      "title": "영덕 웰니스페스타 2026",
+      "gu": "영덕군",
+      "place": "영덕고래불국민야영장 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400281",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400270": {
+      "start": "2026-10-16",
+      "title": "전문가 포럼 '설악에서 DMZ까지, 사람과 자연이 함께 여는 미래'",
+      "gu": "고성군",
+      "place": "국회고성연수원 2층 중강의실",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400270",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399812": {
+      "start": "2026-10-16",
+      "end": "2026-10-18",
+      "title": "제19회 마포나루 새우젓축제",
+      "gu": "마포구",
+      "place": "월드컵공원 평화의광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399812",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_401421": {
+      "start": "2026-10-17",
+      "title": "2026 도시숲 예술치유 축제 「숲에서 숨으로」",
+      "gu": "순천시",
+      "place": "순천만국가정원 스페이스 허브 일대",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401421",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_401159": {
+      "start": "2026-10-17",
+      "title": "남해의 가을밤, 야외에서 즐기는 영화 한 편 'GKL과 함께하는 우리동네 문화탐방'",
+      "gu": "남해군",
+      "place": "남해대교 웰컴센터 야외광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401159",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400758": {
+      "start": "2026-10-17",
+      "title": "중진으로 간 아트마켓",
+      "gu": "동구",
+      "place": "문화공장 방어진",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400758",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399957": {
+      "start": "2026-10-18",
+      "title": "제21회 포천 운악산 단풍축제",
+      "gu": "포천시",
+      "place": "포천 운악산 광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399957",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400699": {
+      "start": "2026-10-21",
+      "end": "2026-10-25",
+      "title": "2026 제18회 강릉커피축제 Coffeeful Gangneung",
+      "gu": "강릉시",
+      "place": "강릉커피거리 및 강릉시 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400699",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399752": {
+      "start": "2026-10-22",
+      "end": "2026-10-25",
+      "title": "제10회 예산장터 삼국축제",
+      "gu": "예산군",
+      "place": "예산상설시장 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399752",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_401175": {
+      "start": "2026-10-23",
+      "end": "2026-10-30",
+      "title": "2026 김만덕주간 '마음을 잇다, 세상을 밝히다'",
+      "gu": "제주시",
+      "place": "김만덕기념관 만덕홀 및 모충사 경내 김만덕묘탑",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401175",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_400641": {
+      "start": "2026-10-23",
+      "end": "2026-10-25",
+      "title": "2026 김천김밥축제",
+      "gu": "김천시",
+      "place": "김천시 직지문화공원 및 사명대사공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=400641",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_392490": {
+      "start": "2026-10-23",
+      "end": "2026-10-25",
+      "title": "인천 영화 주간 2026",
+      "gu": "연수구",
+      "place": "CGV인천연수",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=392490",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_401387": {
+      "start": "2026-10-24",
+      "title": "별★걸 다 파는 마포 주민 아트 마켓 <2026 궁금한 시장>",
+      "gu": "마포구",
+      "place": "마포아트센터 앞 광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401387",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_396657": {
+      "start": "2026-10-29",
+      "title": "대전광역시 서예진흥원 <2026 서예 학술대회>",
+      "gu": "중구",
+      "place": "대전광역시 서예진흥원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=396657",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399317": {
+      "start": "2026-10-30",
+      "end": "2026-11-01",
+      "title": "2026 예천활축제 - 활로 잇는 예천, 미래를 쏘다",
+      "gu": "예천군",
+      "place": "한천체육공원 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399317",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_401031": {
+      "start": "2026-10-30",
+      "title": "2026년 제2회 디지털출판 세미나 <출판사의 디지털 전환과 새로운 비즈니스 기회>",
+      "gu": "마포구",
+      "place": "창비서교빌딩 B2 50주년 기념홀",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401031",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399615": {
+      "start": "2026-11-04",
+      "end": "2026-11-06",
+      "title": "『2026 대한민국 워케이션 박람회』 팸투어 참여기업 모집공고",
+      "gu": "순천시",
+      "place": "순천시 정원워케이션",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399615",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399616": {
+      "start": "2026-11-04",
+      "end": "2026-11-06",
+      "title": "『2026 대한민국 워케이션 박람회』 홍보부스 참여기업 모집 공고",
+      "gu": "순천시",
+      "place": "순천시 정원워케이션",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399616",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_391358": {
+      "start": "2026-11-04",
+      "title": "DDPlay X 스윙팍 with 스윙제리",
+      "gu": "중구",
+      "place": "DDP 어울림광장",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=391358",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    },
+    "cf_399624": {
+      "start": "2026-11-07",
+      "end": "2026-11-08",
+      "title": "2026 청주 원도심 골목길축제 <가을 : 잔치집,대성>",
+      "gu": "청주시",
+      "place": "대성로 122번길 일원",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=399624",
+      "source": "한국문화정보원 한눈에보는문화정보 (공공데이터포털)",
+      "fetchedAt": "2026-10-11"
+    }
+  }
+}

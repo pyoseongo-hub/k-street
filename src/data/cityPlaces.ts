@@ -66,3 +66,16 @@ export const CITY_PLACES_2026_10_05: Place[] = [
   ...(jeonnam as Place[]),
   ...(chungnam as Place[]),
 ];
+
+// 🎪 **전국 축제** (2026-10-11). 사장님: *"경주같은데는 축제가 없나"* — 0곳이었다.
+//    한국문화정보원 「한눈에보는문화정보」에서 받아(fetch-culture-festivals.mjs)
+//    우리 틀에 앉힌 것(build-culture-places.ts)이다. 손으로 고치지 말 것 — 기계가 덮어쓴다.
+//
+//    ⏳ **대부분 올해 회차가 이미 끝났다.** 지우지 않는다 — 회색으로
+//       「내년에 또 열립니다」로 보여 준다(사장님 지시 2026-10-11).
+//       경주가 0곳이었던 것도 **없어서가 아니라 끝나서**였다.
+//    📝 사진·소개 글은 없다(nameOnly). 문화포털 사진의 이용 조건을 확인하지 못했다 —
+//       저작권은 틀리면 되돌릴 수 없어 빈 칸으로 둔다.
+import cultureFestivals from "./culture-festival-spots.json";
+
+export const CULTURE_FESTIVAL_PLACES: Place[] = cultureFestivals as Place[];
