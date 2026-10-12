@@ -1,6 +1,6 @@
 {
  "설명": "구청·구 문화재단이 서울시 문화포털에 직접 올린 축제 확정 날짜. scripts/fetch-gu-festival-dates.ts 가 받는다. 손으로 고치지 말 것.",
- "받은날": "2026-10-11",
+ "받은날": "2026-10-12",
  "곳": {
   "ks_57": {
    "start": "2026-10-24",
@@ -16,23 +16,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159406&menuNo=200010",
    "registered": "2026-09-08",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-11"
-  },
-  "tour_3012095": {
-   "start": "2026-10-02",
-   "end": "2026-10-11",
-   "title": "[서울시청] 2026 서울라이트 한강 빛섬축제 ",
-   "gu": "용산구",
-   "place": "노들섬",
-   "lat": 37.5176638307111,
-   "lng": 126.958036465507,
-   "time": "18:30~22:30",
-   "org": "서울시청",
-   "orgLink": "https://bitseomfestival.com",
-   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159242&menuNo=200010",
-   "registered": "2026-08-27",
-   "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-11"
+   "fetchedAt": "2026-10-12"
   },
   "ks_59": {
    "start": "2026-05-01",
@@ -48,7 +32,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=156916&menuNo=200010",
    "registered": "2026-03-04",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-11"
+   "fetchedAt": "2026-10-12"
   },
   "ks_5a": {
    "start": "2026-08-04",
@@ -64,7 +48,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158941&menuNo=200010",
    "registered": "2026-08-03",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-11"
+   "fetchedAt": "2026-10-12"
   },
   "ks_5b": {
    "start": "2026-08-29",
@@ -80,7 +64,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158899&menuNo=200010",
    "registered": "2026-07-30",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-11"
+   "fetchedAt": "2026-10-12"
   },
   "ks_5c": {
    "start": "2026-05-09",
@@ -96,23 +80,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=157783&menuNo=200010",
    "registered": "2026-05-08",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-11"
-  },
-  "ks_4": {
-   "start": "2026-10-10",
-   "end": "2026-10-11",
-   "title": "[강서구] 제24회 허준축제",
-   "gu": "강서구",
-   "place": "서울식물원, 마곡광장, 마곡중앙로 일대",
-   "lat": 37.569657094189104,
-   "lng": 126.83500723721524,
-   "time": "11:00~21:00",
-   "org": "강서구청",
-   "orgLink": "https://www.허준축제.com",
-   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159221&menuNo=200010",
-   "registered": "2026-08-27",
-   "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-11"
+   "fetchedAt": "2026-10-12"
   },
   "ks_8": {
    "start": "2026-10-17",
@@ -128,7 +96,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159256&menuNo=200010",
    "registered": "2026-08-27",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-11"
+   "fetchedAt": "2026-10-12"
   },
   "ks_j": {
    "start": "2026-10-31",
@@ -152,7 +120,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159653&menuNo=200010",
    "registered": "2026-09-27",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-11"
+   "fetchedAt": "2026-10-12"
   },
   "ks_5": {
    "start": "2026-10-16",
@@ -179,7 +147,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159120&menuNo=200010",
    "registered": "2026-08-19",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-11"
+   "fetchedAt": "2026-10-12"
   },
   "fs_343": {
    "start": "2026-10-14",
@@ -195,7 +163,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159626&menuNo=200009",
    "registered": "2026-09-23",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-11"
+   "fetchedAt": "2026-10-12"
   },
   "fs_191": {
    "start": "2026-10-16",
@@ -211,7 +179,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159076&menuNo=200010",
    "registered": "2026-08-14",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-11"
+   "fetchedAt": "2026-10-12"
   },
   "fs_820": {
    "start": "2026-10-17",
@@ -227,7 +195,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159236&menuNo=200010",
    "registered": "2026-08-27",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-11"
+   "fetchedAt": "2026-10-12"
   },
   "fs_279": {
    "start": "2026-10-24",
@@ -242,7 +210,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159493&menuNo=200010",
    "registered": "2026-09-15",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-11"
+   "fetchedAt": "2026-10-12"
   }
  }
 }
