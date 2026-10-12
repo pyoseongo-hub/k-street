@@ -1,4 +1,4 @@
-name: Todo board (오늘 결정할 것)
+name: Todo board (오늘 전달사항)
 
 # 📋 사장님 (2026-10-12): "돌기만 하면 무슨 필요가 있나 / 내용 필요한 거면 서로 전달하거나 /
 #                        실행할 수 있게 못해?"
@@ -41,9 +41,9 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # 🚨 처음 생기는 파일은 `git diff` 가 못 본다 — 먼저 add 하고 --cached 로 본다.
-          git add docs/오늘-결정할-것.md
+          git add docs/오늘-전달사항.md
           if git diff --cached --quiet; then echo "🔕 어제와 같다"; exit 0; fi
-          git commit -m "오늘 결정할 것 갱신 (todo-board) [skip render]"
+          git commit -m "오늘 전달사항 갱신 (todo-board) [skip render]"
           for i in 1 2 3; do
             git push && exit 0
             git pull --rebase origin "$(git rev-parse --abbrev-ref HEAD)" || exit 1
@@ -54,6 +54,6 @@ jobs:
       - name: 요약에 붙인다
         if: always()
         run: |
-          { echo "## 📋 오늘 결정할 것"; echo ""; echo '```'; \
+          { echo "## 📋 오늘 전달사항"; echo ""; echo '```'; \
             cat board.txt 2>/dev/null || echo "(로그 없음)"; echo '```'; echo ""; \
-            cat "docs/오늘-결정할-것.md" 2>/dev/null | head -30; } >> "$GITHUB_STEP_SUMMARY"
+            cat "docs/오늘-전달사항.md" 2>/dev/null | head -30; } >> "$GITHUB_STEP_SUMMARY"

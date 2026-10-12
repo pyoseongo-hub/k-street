@@ -36,13 +36,14 @@ const 읽기 = (p: string) => { try { return readFileSync(p, "utf8"); } catch { 
 const 제이슨 = (p: string) => { try { return JSON.parse(readFileSync(p, "utf8")); } catch { return null; } };
 
 const 줄: string[] = [];
-줄.push(`# 📋 오늘 결정할 것 — ${오늘}`);
+줄.push(`# 📋 오늘 전달사항 — K-Street · ${오늘}`);
 줄.push("");
 줄.push("> 🤖 **기계가 날마다 다시 만든다. 손으로 고치지 말 것** — 다음 판에 덮어쓴다.");
 줄.push("> 만드는 곳: `scripts/build-todo-board.ts` · 날마다 `todo-board` 워크플로가 돌린다.");
 줄.push(">");
 줄.push("> 왜 있나 — 루틴은 돌고 나면 **말만 남기고 사라진다.** 그래서 같은 일을 두 번 했다.");
 줄.push("> 이 한 장은 **안 사라지는 자리**다. 루틴도 사람도 여기부터 읽으면 된다.");
+  줄.push("> 짝: Kfood 의 `docs/오늘-전달사항.md` — **두 저장소가 같은 이름**을 쓴다.");
 줄.push("");
 
 // ── ① 감시: 날마다 채워져야 하는 자리가 조용하지 않나 ────────────────────
@@ -135,7 +136,7 @@ for (const p of 쓸만한것.slice(0, 5)) {
 줄.push("넣고 빼는 것은 사람이 한다. 빈 칸이 틀린 정보보다 낫다.");
 줄.push("");
 
-const 나올곳 = "docs/오늘-결정할-것.md";
+const 나올곳 = "docs/오늘-전달사항.md";
 writeFileSync(나올곳, 줄.join("\n") + "\n", "utf8");
 console.log(`✅ ${나올곳}`);
 console.log(`   조용한 자리 ${조용한곳} · 구청 후보 ${모르는것.length}건 · 날짜 없는 축제 ${달없음.length}곳`);
