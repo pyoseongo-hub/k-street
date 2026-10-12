@@ -35,6 +35,8 @@ if (!REPOS.length || !TOKEN) {
 const MB = (n) => n / 1048576;
 let 총합 = 0;
 const 묶음 = {};
+/** ⏳ 살아 있는 꾸러미가 **언제 저절로 빠지는지**. 보관일이 걸려 있어 날짜가 정해져 있다. */
+const 만료표 = [];
 
 for (const repo of REPOS) {
   let page = 1;
@@ -54,6 +56,9 @@ for (const repo of REPOS) {
       if (a.expired) continue; // 만료된 것은 자리를 안 먹는다
       repoSum += a.size_in_bytes;
       묶음[`${repo} · ${a.name}`] = (묶음[`${repo} · ${a.name}`] ?? 0) + a.size_in_bytes;
+      // ⏳ **언제 저절로 빠지는지 같이 적어 둔다.** 아래에서 「쌓이는 속도」에서 뺀다.
+      const 만료 = Date.parse(a.expires_at ?? "");
+      if (Number.isFinite(만료)) 만료표.push({ 때: 만료, 크기: a.size_in_bytes });
     }
     if (list.length < 100) break;
     page++;
@@ -89,16 +94,40 @@ for (const k of Object.keys(장부.날).sort().slice(0, -60)) delete 장부.날[
 MD(DN(장부길), { recursive: true });
 WF(장부길, JSON.stringify(장부, null, 2) + "\n");
 
+// ⏳ **빠지는 쪽도 센다** (2026-10-12 에 고쳤다).
+//
+// 🐞 **하루에 몰린 것과 계속 느는 것을 못 갈랐다.** 10/11 에 K-Street 로 열아홉 번
+//    푸시했더니 배포 꾸러미가 하루에 19개(337MB) 쌓였다. 이틀치로 속도를 재니
+//    「하루 +205MB → 이레 안에 터짐」이 되어 **빨간불이 떴는데, 실제로는 그 19개가
+//    모두 24시간 안에 만료**돼 다음 날이면 55MB로 돌아갈 참이었다.
+//    꺼야 할 경보를 켠 것이다 — 그런 경보는 몇 번 겪으면 **안 보게 된다.**
+//
+// 👉 고친 방법은 짐작이 아니다. 꾸러미마다 **만료 시각이 이미 적혀 있다**(expires_at).
+//    쌓이는 속도에서 **24시간 안에 빠질 양**을 빼고 **순증**으로 본다.
+//    · 순증이 0 이하면 줄고 있는 것이다 — 경보하지 않는다.
+//    · 배포가 계속 잦아도 빠지는 양이 같이 커지므로 제자리걸음으로 잡힌다. 맞는 판단이다.
+//    · 보관일이 긴 꾸러미가 진짜로 쌓이면 빠지는 양이 적어 순증이 남는다 — 그때는 운다.
+const 지금 = Date.now();
+const 빠질24 = MB(만료표.filter((x) => x.때 - 지금 <= 86400000).reduce((a, b) => a + b.크기, 0));
+const 내일남음 = MB(총합) - 빠질24;
+if (빠질24 >= 1) {
+  console.log(`⏳ 24시간 안에 저절로 빠질 것 ${빠질24.toFixed(0)}MB → 내일 이맘때 약 ${내일남음.toFixed(0)}MB`);
+}
+
 const 날들 = Object.keys(장부.날).sort();
 let 남은날 = null;
 if (날들.length >= 2) {
   const 처음 = 날들[Math.max(0, 날들.length - 7)];
   const 일수 = Math.max(1, (Date.parse(오늘) - Date.parse(처음)) / 86400000);
   const 하루증가 = (장부.날[오늘] - 장부.날[처음]) / 일수;
-  console.log(`📈 최근 ${일수.toFixed(0)}일 동안 하루 ${하루증가 >= 0 ? "+" : ""}${하루증가.toFixed(0)}MB`);
-  if (하루증가 > 0) {
-    남은날 = (LIMIT - MB(총합)) / 하루증가;
+  const 순증 = 하루증가 - 빠질24;
+  console.log(`📈 최근 ${일수.toFixed(0)}일 동안 하루 ${하루증가 >= 0 ? "+" : ""}${하루증가.toFixed(0)}MB` +
+    ` · 빠지는 것까지 셈하면 하루 ${순증 >= 0 ? "+" : ""}${순증.toFixed(0)}MB`);
+  if (순증 > 0) {
+    남은날 = (LIMIT - MB(총합)) / 순증;
     console.log(`   이 속도면 한도까지 **${남은날 < 0 ? 0 : 남은날.toFixed(0)}일**`);
+  } else {
+    console.log(`   쌓이는 것보다 빠지는 것이 많다 — 줄고 있다. 경보하지 않는다.`);
   }
 } else {
   console.log("📈 (아직 하루치뿐이라 속도를 못 잰다 — 내일부터 센다)");
@@ -121,7 +150,12 @@ if (MB(총합) > LIMIT) {
   process.exit(1);
 }
 if (MB(총합) > WARN) {
-  console.log(`\n⚠️ ${WARN}MB 를 넘었다 — 한도(${LIMIT}MB)가 가깝다. 지금 줄여 두는 게 싸다.`);
+  // 🧯 **「저절로 빠질 양」을 같이 말한다.** 안 그러면 놀라서 손으로 지우게 되는데,
+  //    오늘 안에 빠질 것을 지우는 것은 헛일이다.
+  const 덧 = 내일남음 <= WARN
+    ? ` 다만 ${빠질24.toFixed(0)}MB 가 24시간 안에 저절로 빠져 **내일이면 약 ${내일남음.toFixed(0)}MB** 다 — 손댈 것 없다.`
+    : "";
+  console.log(`\n⚠️ ${WARN}MB 를 넘었다 — 한도(${LIMIT}MB)가 가깝다.${덧 || " 지금 줄여 두는 게 싸다."}`);
   process.exit(0);
 }
 console.log("\n✅ 넉넉하다.");
