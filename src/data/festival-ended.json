@@ -10,7 +10,7 @@
     "",
     "✋ 지우지는 않는다. 그 축제는 **내년에 또 열린다** — 자리는 남기고 상태만 바꾼다."
   ],
-  "받은날": "2026-10-11",
+  "받은날": "2026-10-12",
   "곳": {
     "ks_6": {
       "start": "2026-08-29",
@@ -60,6 +60,12 @@
       "start": "2026-09-19",
       "title": "2026 제4회 은평청년축제 [아무도 모르는 축제2]",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=650"
+    },
+    "tour_3546110": {
+      "start": "2026-10-02",
+      "end": "2026-10-11",
+      "title": "2026 서울한옥위크",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=199"
     }
   }
 }
