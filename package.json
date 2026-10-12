@@ -33,7 +33,8 @@
     "check-hex-maps": "node scripts/check-hex-maps.mjs",
     "check-cjk-names": "node scripts/check-cjk-names.mjs",
     "check-nearby-course": "vite build --ssr scripts/check-nearby-course.ts --outDir dist-ssr && node dist-ssr/check-nearby-course.js",
-    "culture-places": "vite build --ssr scripts/build-culture-places.ts --outDir dist-ssr && node dist-ssr/build-culture-places.js"
+    "culture-places": "vite build --ssr scripts/build-culture-places.ts --outDir dist-ssr && node dist-ssr/build-culture-places.js",
+    "todo-board": "vite build --ssr scripts/build-todo-board.ts --outDir dist-ssr && node dist-ssr/build-todo-board.js"
   },
   "dependencies": {
     "react": "^19.2.8",

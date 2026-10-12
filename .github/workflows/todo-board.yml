@@ -1,0 +1,59 @@
+name: Todo board (오늘 결정할 것)
+
+# 📋 사장님 (2026-10-12): "돌기만 하면 무슨 필요가 있나 / 내용 필요한 거면 서로 전달하거나 /
+#                        실행할 수 있게 못해?"
+#
+# 🐞 루틴(AI 세션)은 돌고 나면 **아무 흔적도 안 남는다.** 그 세션이 끝나면 사라진다.
+#    그래서 10/12 에 사람이 메일을 처음부터 다시 확인했다 — 루틴이 두 시간 전에
+#    같은 일을 하고 「성공」으로 끝났는데도.
+#
+# 🧰 이 워크플로는 **기계가 쌓아 둔 것들을 한 장으로 묶는다.** 기계는 쓰기 권한이 있고
+#    파일은 안 사라진다. 루틴도 사람도 그 한 장만 읽으면 된다 — 두 번 일하지 않는다.
+
+on:
+  # ⏰ 매일 11:40 KST = 02:40 UTC.
+  #    🔑 **자료를 받는 작업들보다 뒤에 둔다.** 앞에 두면 어제 자료로 만든 판을 본다
+  #       (구청 00:20 · 구청새소식 00:37 · 전국축제 02:22 — 그 다음이다).
+  schedule:
+    - cron: "40 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  board:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10 # ⏱️ 천장이 없으면 느려진 것이 안 드러난다
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: 한 장으로 묶는다
+        run: |
+          set -o pipefail
+          npm run todo-board 2>&1 | tee board.txt
+
+      - name: 적은 것 커밋
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # 🚨 처음 생기는 파일은 `git diff` 가 못 본다 — 먼저 add 하고 --cached 로 본다.
+          git add docs/오늘-결정할-것.md
+          if git diff --cached --quiet; then echo "🔕 어제와 같다"; exit 0; fi
+          git commit -m "오늘 결정할 것 갱신 (todo-board) [skip render]"
+          for i in 1 2 3; do
+            git push && exit 0
+            git pull --rebase origin "$(git rev-parse --abbrev-ref HEAD)" || exit 1
+            sleep $((i * 3))
+          done
+          echo "❌ 세 번 다 밀렸다"; exit 1
+
+      - name: 요약에 붙인다
+        if: always()
+        run: |
+          { echo "## 📋 오늘 결정할 것"; echo ""; echo '```'; \
+            cat board.txt 2>/dev/null || echo "(로그 없음)"; echo '```'; echo ""; \
+            cat "docs/오늘-결정할-것.md" 2>/dev/null | head -30; } >> "$GITHUB_STEP_SUMMARY"
