@@ -4,19 +4,26 @@
     "사람이 글을 열어 확인한 뒤 festival-dates-manual.json 에 적는다.",
     "이 파일은 화면이 읽지 않는다. 사람이 볼 목록이다."
   ],
-  "받은날": "2026-10-12",
+  "받은날": "2026-10-13",
   "센것": {
-    "모르는것": 30,
+    "모르는것": 32,
     "아는것": 3,
-    "못읽음": 5
+    "못읽음": 3
   },
   "모르는것": [
     {
       "구": "서대문",
       "자리": "서대문구 공지사항",
-      "제목": "2026 서대문구 청소년상담복지센터 솔리언 또래상담 연합 축제 애플데이 행사 안내",
-      "link": "http://www.sdm.go.kr/news/news/notice.do?mode=view&amp;sdmBoardSeq=315696",
-      "날짜": "2026-10-06"
+      "제목": "축제 개최에 따른 서대문15번 마을버스 우회 알림(10.17.토)",
+      "link": "http://www.sdm.go.kr/news/news/notice.do?mode=view&amp;sdmBoardSeq=315843",
+      "날짜": "2026-10-13"
+    },
+    {
+      "구": "노원",
+      "자리": "노원구청 공지사항",
+      "제목": "[2026년 노원 반려동물 문화축제] 10월 31일(토) 10시 개최",
+      "link": "https://www.nowon.kr/www/user/bbs/BD_selectBbs.do?q_bbsCode=1001&amp;q_estnColumn1=11&amp;q_bbscttSn=20261012124845138",
+      "날짜": "2026-10-12"
     },
     {
       "구": "노원",
@@ -36,12 +43,6 @@
       "자리": "강남구청 보도자료",
       "제목": "가을밤 시장이 맛있어진다…강남구, 야간 음식문화축제 개최",
       "link": "https://www.gangnam.go.kr/board/B_000031/1075462/view.do"
-    },
-    {
-      "구": "강남",
-      "자리": "강남구청 보도자료",
-      "제목": "가을날 낭만 가득한 ‘제3회 역삼2동 문화한마당’ 개최… 금난새 지휘 오케스트라 공연",
-      "link": "https://www.gangnam.go.kr/board/B_000031/1075455/view.do"
     },
     {
       "구": "강북",
@@ -70,14 +71,14 @@
     {
       "구": "광진",
       "자리": "광진구청 보도자료",
-      "제목": "[보도자료] 광진구, 오는 10일 온 가족이 즐기는 ‘2026 광진가족페스티벌’ 개최",
-      "link": "https://www.gwangjin.go.kr/portal/bbs/B0000002/view.do?nttId=6628753&menuNo=200191"
+      "제목": "[우리동네소식] 중곡2동, 10년째 이어온 어린이 알뜰한마당…나눔과 자원순환 배워요 외 2건",
+      "link": "https://www.gwangjin.go.kr/portal/bbs/B0000002/view.do?nttId=6630273&menuNo=200191"
     },
     {
-      "구": "구로",
-      "자리": "구로구청 새소식",
-      "제목": "2026년 구로구 전통시장 및 상점가 야간·음식문화 축제 개최",
-      "link": "http://www.guro.go.kr/www/selectBbsNttView.do?key=1790&bbsNo=662&nttNo=241129"
+      "구": "광진",
+      "자리": "광진구청 보도자료",
+      "제목": "[보도자료] 광진구, 오는 10일 온 가족이 즐기는 ‘2026 광진가족페스티벌’ 개최",
+      "link": "https://www.gwangjin.go.kr/portal/bbs/B0000002/view.do?nttId=6628753&menuNo=200191"
     },
     {
       "구": "금천",
@@ -100,8 +101,20 @@
     {
       "구": "서초",
       "자리": "서초구청 공지사항",
+      "제목": "🎶🦄 제9회 양재 말죽거리축제 개최 안내🕺💃",
+      "link": "https://www.seocho.go.kr/site/seocho/ex/bbs/View.do?cbIdx=57&bcIdx=411834"
+    },
+    {
+      "구": "서초",
+      "자리": "서초구청 공지사항",
       "제목": "🎶제5회 2026 방배 페스티벌🎶 개최 안내",
       "link": "https://www.seocho.go.kr/site/seocho/ex/bbs/View.do?cbIdx=57&bcIdx=411810"
+    },
+    {
+      "구": "영등포",
+      "자리": "영등포구청 영등포소식",
+      "제목": "2026 영등포구 미래인재 과학축제 개최",
+      "link": "https://www.ydp.go.kr:443/www/selectBbsNttView.do?key=2967&bbsNo=40&nttNo=420393"
     },
     {
       "구": "중구",
