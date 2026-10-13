@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-10-12",
+  "받은날": "2026-10-13",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -4136,6 +4136,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401018"
     },
     {
+      "seq": "401844",
+      "title": "2026년 제30회 울산고래축제",
+      "start": "2026-10-15",
+      "end": "2026-10-18",
+      "place": "장생포 고래문화특구 일원",
+      "area": "울산",
+      "sigungu": "남구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/e1fed1b74fc544599aa6d9ddcaa61a69.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401844"
+    },
+    {
       "seq": "391144",
       "title": "제13회 칠곡낙동강평화축제",
       "start": "2026-10-15",
@@ -4220,6 +4232,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=399812"
     },
     {
+      "seq": "401816",
+      "title": "2026 국립경찰박물관 제81주년 경찰의 날 기념 문화행사",
+      "start": "2026-10-17",
+      "end": "2026-10-17",
+      "place": "경찰박물관",
+      "area": "서울",
+      "sigungu": "종로구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/036472d85fd541269545923a7b9567c8.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401816"
+    },
+    {
       "seq": "401421",
       "title": "2026 도시숲 예술치유 축제 「숲에서 숨으로」",
       "start": "2026-10-17",
@@ -4232,6 +4256,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401421"
     },
     {
+      "seq": "401842",
+      "title": "2026 미래문화축제 팔복 : 상상 과부하",
+      "start": "2026-10-17",
+      "end": "2026-10-18",
+      "place": "팔복예술공장",
+      "area": "전북특별자치도",
+      "sigungu": "전주시 덕진구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/58261543505747bf8ce256ce4b7e3b63.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401842"
+    },
+    {
       "seq": "401159",
       "title": "남해의 가을밤, 야외에서 즐기는 영화 한 편 'GKL과 함께하는 우리동네 문화탐방'",
       "start": "2026-10-17",
@@ -4242,6 +4278,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/5465b0de9a6e4a6cb83f0f64152b4b4c.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401159"
+    },
+    {
+      "seq": "401783",
+      "title": "모이랑께 가보장께",
+      "start": "2026-10-17",
+      "end": "2026-10-17",
+      "place": "전주 한옥마을, 풍남문, 전라감영",
+      "area": "전북특별자치도",
+      "sigungu": "전주시 완산구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/49a40424ef234d409818bde0230d1e85.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401783"
     },
     {
       "seq": "400758",
@@ -4268,6 +4316,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=399957"
     },
     {
+      "seq": "401817",
+      "title": "2026 천안독립영화상영회",
+      "start": "2026-10-20",
+      "end": "2026-10-31",
+      "place": "인디플러스천안",
+      "area": "충남",
+      "sigungu": "천안시 동남구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/7f49fc43c92c44409afb4fad1f44b5a9.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401817"
+    },
+    {
       "seq": "400699",
       "title": "2026 제18회 강릉커피축제 Coffeeful Gangneung",
       "start": "2026-10-21",
@@ -4290,6 +4350,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202609/8e46897b3d3a4370851dd1343ad407ca.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=399752"
+    },
+    {
+      "seq": "401919",
+      "title": "제2회 성북뮤지엄포럼 《문화예술인 가옥의 보존과 활용》",
+      "start": "2026-10-22",
+      "end": "2026-10-22",
+      "place": "고려대학교 SK미래관 최종현홀",
+      "area": "서울",
+      "sigungu": "성북구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/e60f2f6a72e04e7387c9a109eae5088e.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401919"
     },
     {
       "seq": "401175",
@@ -4316,6 +4388,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=400641"
     },
     {
+      "seq": "401822",
+      "title": "2026 여주오곡나루축제",
+      "start": "2026-10-23",
+      "end": "2026-10-25",
+      "place": "신륵사 관광지 일원",
+      "area": "경기",
+      "sigungu": "여주시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/efe79319f0a74168b8e35b180d35f042.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401822"
+    },
+    {
       "seq": "392490",
       "title": "인천 영화 주간 2026",
       "start": "2026-10-23",
@@ -4326,6 +4410,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202608/3db55f6a992b4cfd9df6c3c22011b80c.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=392490"
+    },
+    {
+      "seq": "401794",
+      "title": "[서울시립과학관 x 노원천문우주과학관] 2026년 별빛축제",
+      "start": "2026-10-24",
+      "end": "2026-10-25",
+      "place": "서울시립과학관",
+      "area": "서울",
+      "sigungu": "노원구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/64e16b466b8e4768a4db86e800813a5d.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401794"
     },
     {
       "seq": "401387",

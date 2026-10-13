@@ -4118,6 +4118,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401018"
   },
   {
+    "id": "cf_401844",
+    "city": "ulsan",
+    "gu": "남구",
+    "category": "festival",
+    "name": "2026년 제30회 울산고래축제",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401844"
+  },
+  {
     "id": "cf_391144",
     "city": "gyeongbuk",
     "gu": "칠곡군",
@@ -4183,6 +4196,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=399812"
   },
   {
+    "id": "cf_401816",
+    "city": "seoul",
+    "gu": "종로구",
+    "category": "festival",
+    "name": "2026 국립경찰박물관 제81주년 경찰의 날 기념 문화행사",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401816"
+  },
+  {
     "id": "cf_401421",
     "city": "jeonnam",
     "gu": "순천시",
@@ -4196,6 +4222,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401421"
   },
   {
+    "id": "cf_401842",
+    "city": "jeonbuk",
+    "gu": "전주시",
+    "category": "festival",
+    "name": "2026 미래문화축제 팔복 : 상상 과부하",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401842"
+  },
+  {
     "id": "cf_401159",
     "city": "gyeongnam",
     "gu": "남해군",
@@ -4207,6 +4246,19 @@
     "endMonth": 10,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401159"
+  },
+  {
+    "id": "cf_401783",
+    "city": "jeonbuk",
+    "gu": "전주시",
+    "category": "festival",
+    "name": "모이랑께 가보장께",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401783"
   },
   {
     "id": "cf_400758",
@@ -4287,6 +4339,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=400641"
   },
   {
+    "id": "cf_401822",
+    "city": "gyeonggi",
+    "gu": "여주시",
+    "category": "festival",
+    "name": "2026 여주오곡나루축제",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401822"
+  },
+  {
     "id": "cf_392490",
     "city": "incheon",
     "gu": "연수구",
@@ -4298,6 +4363,19 @@
     "endMonth": 10,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=392490"
+  },
+  {
+    "id": "cf_401794",
+    "city": "seoul",
+    "gu": "노원구",
+    "category": "festival",
+    "name": "[서울시립과학관 x 노원천문우주과학관] 2026년 별빛축제",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401794"
   },
   {
     "id": "cf_401387",
