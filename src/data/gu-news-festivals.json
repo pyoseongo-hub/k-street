@@ -4,7 +4,7 @@
     "사람이 글을 열어 확인한 뒤 festival-dates-manual.json 에 적는다.",
     "이 파일은 화면이 읽지 않는다. 사람이 볼 목록이다."
   ],
-  "받은날": "2026-10-13",
+  "받은날": "2026-10-14",
   "센것": {
     "모르는것": 32,
     "아는것": 3,
@@ -35,6 +35,12 @@
     {
       "구": "강남",
       "자리": "강남구청 보도자료",
+      "제목": "도심 속 세계유산의 변신…‘유네스코 선정릉 문화거리 축제’ 17일 개막",
+      "link": "https://www.gangnam.go.kr/board/B_000031/1075468/view.do"
+    },
+    {
+      "구": "강남",
+      "자리": "강남구청 보도자료",
       "제목": "대모산 가을숲이 놀이터로 변신! 강남구, 유아숲 가족축제 개최",
       "link": "https://www.gangnam.go.kr/board/B_000031/1075463/view.do"
     },
@@ -43,6 +49,12 @@
       "자리": "강남구청 보도자료",
       "제목": "가을밤 시장이 맛있어진다…강남구, 야간 음식문화축제 개최",
       "link": "https://www.gangnam.go.kr/board/B_000031/1075462/view.do"
+    },
+    {
+      "구": "강북",
+      "자리": "강북구청 새소식",
+      "제목": "강북구 도시농업 축제 「가을 팜(Farm)크닉」 개최",
+      "link": "/portal/bbs/B0000145/view.do?menuNo=&nttId=185677"
     },
     {
       "구": "강북",
@@ -57,10 +69,10 @@
       "link": "/portal/bbs/B0000145/view.do?menuNo=&nttId=185541"
     },
     {
-      "구": "강북",
-      "자리": "강북구청 새소식",
-      "제목": "「2026년 하반기 야간 · 음식 문화 활성화 지원사업 」 백야 야시장(백년시장) 행사 안내",
-      "link": "/portal/bbs/B0000145/view.do?menuNo=&nttId=185479"
+      "구": "관악",
+      "자리": "관악구청 새소식",
+      "제목": "청년정책페스타 「뜬구름 발전소」 공모 참여 안내",
+      "link": "http://www.gwanak.go.kr/site/gwanak/ex/bbs/View.do?cbIdx=239&bcIdx=210287&parentSeq=210287"
     },
     {
       "구": "관악",
@@ -75,22 +87,10 @@
       "link": "https://www.gwangjin.go.kr/portal/bbs/B0000002/view.do?nttId=6630273&menuNo=200191"
     },
     {
-      "구": "광진",
-      "자리": "광진구청 보도자료",
-      "제목": "[보도자료] 광진구, 오는 10일 온 가족이 즐기는 ‘2026 광진가족페스티벌’ 개최",
-      "link": "https://www.gwangjin.go.kr/portal/bbs/B0000002/view.do?nttId=6628753&menuNo=200191"
-    },
-    {
       "구": "금천",
       "자리": "금천구청 보도자료",
-      "제목": "금천구, 주민이 함께 만들어 더 정다운 ‘가산 정다운 마을축제’",
-      "link": "https://www.geumcheon.go.kr/portal/selectBbsNttView.do?key=297&amp;bbsNo=8&amp;nttNo=271277"
-    },
-    {
-      "구": "금천",
-      "자리": "금천구청 보도자료",
-      "제목": "빛과 음악으로 되살아나는 시흥행궁…금천구, ‘금천시흥행궁문화제’ 개최",
-      "link": "https://www.geumcheon.go.kr/portal/selectBbsNttView.do?key=297&amp;bbsNo=8&amp;nttNo=271185"
+      "제목": "가을밤, 금천에 다정한 공연이 찾아온다…‘금천라이브 플러스’",
+      "link": "https://www.geumcheon.go.kr/portal/selectBbsNttView.do?key=297&amp;bbsNo=8&amp;nttNo=271361"
     },
     {
       "구": "도봉",
