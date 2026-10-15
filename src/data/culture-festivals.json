@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-10-13",
+  "받은날": "2026-10-15",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -3956,18 +3956,6 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=400207"
     },
     {
-      "seq": "401152",
-      "title": "2026 영등포 어린이 미술대전 참가신청 모집",
-      "start": "2026-10-06",
-      "end": "2026-10-22",
-      "place": "선유도공원 일대",
-      "area": "서울",
-      "sigungu": "영등포구",
-      "realm": "행사/축제",
-      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/c2b479a9a5434509a2709e391975bf01.jpg",
-      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401152"
-    },
-    {
       "seq": "400644",
       "title": "제31회 부산국제영화제 BIFF",
       "start": "2026-10-06",
@@ -4268,6 +4256,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401842"
     },
     {
+      "seq": "402234",
+      "title": "2026 세계유산 조선왕릉축전",
+      "start": "2026-10-17",
+      "end": "2026-10-25",
+      "place": "융릉과 건릉",
+      "area": "경기",
+      "sigungu": "화성시 병점구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/b82eb1d80b964c13a1626143ae6745b5.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=402234"
+    },
+    {
       "seq": "401159",
       "title": "남해의 가을밤, 야외에서 즐기는 영화 한 편 'GKL과 함께하는 우리동네 문화탐방'",
       "start": "2026-10-17",
@@ -4304,6 +4304,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=400758"
     },
     {
+      "seq": "401961",
+      "title": "전라관찰사의 탄생",
+      "start": "2026-10-18",
+      "end": "2026-11-29",
+      "place": "전라감영",
+      "area": "전북특별자치도",
+      "sigungu": "전주시 완산구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/9dc517eea52b4c648deec3f20ce3cf17.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401961"
+    },
+    {
       "seq": "399957",
       "title": "제21회 포천 운악산 단풍축제",
       "start": "2026-10-18",
@@ -4338,6 +4350,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/a07b64a4c6544c0ca74633b936c09541.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=400699"
+    },
+    {
+      "seq": "402210",
+      "title": "2026 문화다양성 컨퍼런스 - 다르게 보고, 새롭게 연결하다",
+      "start": "2026-10-22",
+      "end": "2026-10-23",
+      "place": "페럼타워 3층 페럼홀",
+      "area": "서울",
+      "sigungu": "중구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/2548f6fd54984fc899a547ffefada22a.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=402210"
     },
     {
       "seq": "399752",
@@ -4434,6 +4458,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/0cedad4743d04e08bcc4d810be71e1f8.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401387"
+    },
+    {
+      "seq": "401152",
+      "title": "2026 영등포 어린이 미술대전",
+      "start": "2026-10-25",
+      "end": "2026-10-25",
+      "place": "선유도공원 일대",
+      "area": "서울",
+      "sigungu": "영등포구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/c2b479a9a5434509a2709e391975bf01.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=401152"
     },
     {
       "seq": "396657",

@@ -3923,19 +3923,6 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=400207"
   },
   {
-    "id": "cf_401152",
-    "city": "seoul",
-    "gu": "영등포구",
-    "category": "festival",
-    "name": "2026 영등포 어린이 미술대전 참가신청 모집",
-    "confirmed": true,
-    "nameOnly": true,
-    "startMonth": 10,
-    "endMonth": 10,
-    "monthSource": "한국문화정보원 문화정보 창구",
-    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401152"
-  },
-  {
     "id": "cf_400644",
     "city": "busan",
     "gu": "해운대구",
@@ -4235,6 +4222,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401842"
   },
   {
+    "id": "cf_402234",
+    "city": "gyeonggi",
+    "gu": "화성시",
+    "category": "festival",
+    "name": "2026 세계유산 조선왕릉축전",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402234"
+  },
+  {
     "id": "cf_401159",
     "city": "gyeongnam",
     "gu": "남해군",
@@ -4274,6 +4274,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=400758"
   },
   {
+    "id": "cf_401961",
+    "city": "jeonbuk",
+    "gu": "전주시",
+    "category": "festival",
+    "name": "전라관찰사의 탄생",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401961"
+  },
+  {
     "id": "cf_399957",
     "city": "gyeonggi",
     "gu": "포천시",
@@ -4298,6 +4311,19 @@
     "endMonth": 10,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=400699"
+  },
+  {
+    "id": "cf_402210",
+    "city": "seoul",
+    "gu": "중구",
+    "category": "festival",
+    "name": "2026 문화다양성 컨퍼런스 - 다르게 보고, 새롭게 연결하다",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402210"
   },
   {
     "id": "cf_399752",
@@ -4389,6 +4415,19 @@
     "endMonth": 10,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401387"
+  },
+  {
+    "id": "cf_401152",
+    "city": "seoul",
+    "gu": "영등포구",
+    "category": "festival",
+    "name": "2026 영등포 어린이 미술대전",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401152"
   },
   {
     "id": "cf_399317",
