@@ -1,0 +1,45 @@
+name: Probe hiking (등산 창구 주소 긁기)
+
+# 🥾 **등산 자료 창구의 주소를 포털 안내문에서 긁어온다.**
+#
+#    왜 — 사장님(2026-10-16): *"등산에 관한 외국인 을 위한 서비스가 늘었다는데
+#    찾아보고 어떻게 적용할지 생각해"*. 수요는 숫자로 확인됐다(클룩 +22%,
+#    북한산 반일 투어 유럽 +83%). 붙일 수 있는 창구가 있는지가 다음 갈림이다.
+#
+# 🚫 아무것도 커밋하지 않는다. 주소만 읽어 요약에 적는다.
+# 📞 호출은 **3번**이다 (ONLY 로 세 자료만 고른다). 포털은 빠른 호출 5~8번이면
+#    막히고 10분쯤 쉬어야 한다 — 축제 쪽 무거운 검사와 **일부러 갈라 뒀다.**
+
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "긁을 자료번호 (쉼표로). 비우면 등산 3개"
+        type: string
+        default: "15029184,15029183,15125127"
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6 # ⏱️ 천장이 없으면 느려진 것이 안 드러난다
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 주소를 긁는다
+        # 🧯 끊겨도 요약은 남긴다. 단서를 하나도 못 건지는 쪽이 더 나쁘다.
+        continue-on-error: true
+        env:
+          ONLY: ${{ inputs.only }}
+        # pipefail 이 없으면 node 가 죽어도 tee 가 성공해 이 단계가 초록색이 된다.
+        run: |
+          set -o pipefail
+          node scripts/probe-culture-endpoint.mjs 2>&1 | tee hike.txt
+
+      - name: 요약에 붙인다
+        if: always()
+        run: |
+          { echo "## 🥾 등산 창구 주소"; echo ""; echo '```'; \
+            cat hike.txt 2>/dev/null || echo "(로그 없음)"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
