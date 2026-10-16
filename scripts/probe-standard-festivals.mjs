@@ -65,7 +65,10 @@ for (const c of 창구) {
   const 글 = await r.text();
   console.log(`   상태 ${r.status} · 받은 글 ${글.length}자`);
 
-  const 코드 = 글.match(/<returnReasonCode>(\d+)<\/returnReasonCode>/)?.[1]
+  // ⚠️ 포털은 **XML 과 JSON 두 꼴로** 오류를 준다. JSON 쪽은 `"returnReasonCode": "30"`
+  //    처럼 따옴표와 빈칸이 끼어 XML 잣대로는 안 잡힌다 — 2026-10-16에 「원인코드 ?」로
+  //    나와서 알았다. 두 꼴을 **한 잣대**로 읽는다.
+  const 코드 = 글.match(/["<]returnReasonCode["<>:\s]+"?(\d+)/)?.[1]
     ?? 글.match(/"resultCode"\s*:\s*"?(\d+)"?/)?.[1];
   if (/NOT_REGISTERED|NO_OPENAPI|LIMITED_NUMBER|errMsg/.test(글)) {
     console.log(`   ❌ 막혔다 — 원인코드 ${코드 ?? "?"} · ${원인[코드] ?? "알 수 없다"}`);
