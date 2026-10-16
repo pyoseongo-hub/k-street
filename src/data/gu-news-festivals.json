@@ -4,13 +4,34 @@
     "사람이 글을 열어 확인한 뒤 festival-dates-manual.json 에 적는다.",
     "이 파일은 화면이 읽지 않는다. 사람이 볼 목록이다."
   ],
-  "받은날": "2026-10-15",
+  "받은날": "2026-10-16",
   "센것": {
-    "모르는것": 36,
-    "아는것": 4,
-    "못읽음": 4
+    "모르는것": 35,
+    "아는것": 2,
+    "못읽음": 3
   },
   "모르는것": [
+    {
+      "구": "노원",
+      "자리": "노원구청 공지사항",
+      "제목": "노원놀이마당 「조롱박 한마당」행사 안내",
+      "link": "https://www.nowon.kr/www/user/bbs/BD_selectBbs.do?q_bbsCode=1001&amp;q_estnColumn1=11&amp;q_bbscttSn=20261016160947443",
+      "날짜": "2026-10-16"
+    },
+    {
+      "구": "동작",
+      "자리": "동작구청 알려드립니다",
+      "제목": "동작 빵도동 축제 쇼츠 챌린지 안내",
+      "link": "https://www.dongjak.go.kr/portal//bbs/B0000022/view.do?nttId=10757641&menuNo=200641",
+      "날짜": "2026-10-16"
+    },
+    {
+      "구": "동작",
+      "자리": "동작구청 알려드립니다",
+      "제목": "2026 동작미래과학페스티벌 안내",
+      "link": "https://www.dongjak.go.kr/portal//bbs/B0000022/view.do?nttId=10757640&menuNo=200641",
+      "날짜": "2026-10-16"
+    },
     {
       "구": "서대문",
       "자리": "서대문구 공지사항",
@@ -42,20 +63,14 @@
     {
       "구": "강남",
       "자리": "강남구청 보도자료",
+      "제목": "강남구, 외국인 관광객 핫플 강남역서 ‘강남 글로벌 페스타’ 연다",
+      "link": "https://www.gangnam.go.kr/board/B_000031/1075481/view.do"
+    },
+    {
+      "구": "강남",
+      "자리": "강남구청 보도자료",
       "제목": "도곡1동, 주민과 함께하는 ‘도곡1 가을 행복축제’ 개최",
       "link": "https://www.gangnam.go.kr/board/B_000031/1075477/view.do"
-    },
-    {
-      "구": "강남",
-      "자리": "강남구청 보도자료",
-      "제목": "대치1동, 주민과 함께하는 복합 문화 축제 ‘제3회 한티문화제’ 개최",
-      "link": "https://www.gangnam.go.kr/board/B_000031/1075469/view.do"
-    },
-    {
-      "구": "강남",
-      "자리": "강남구청 보도자료",
-      "제목": "도심 속 세계유산의 변신…‘유네스코 선정릉 문화거리 축제’ 17일 개막",
-      "link": "https://www.gangnam.go.kr/board/B_000031/1075468/view.do"
     },
     {
       "구": "강동",
@@ -74,12 +89,6 @@
       "자리": "강북구청 새소식",
       "제목": "강북구 도시농업 축제 「가을 팜(Farm)크닉」 개최",
       "link": "/portal/bbs/B0000145/view.do?menuNo=&nttId=185677"
-    },
-    {
-      "구": "강북",
-      "자리": "강북구청 새소식",
-      "제목": "2026 미사단길 가을축제 안내",
-      "link": "/portal/bbs/B0000145/view.do?menuNo=&nttId=185564"
     },
     {
       "구": "관악",
@@ -102,14 +111,14 @@
     {
       "구": "광진",
       "자리": "광진구청 보도자료",
-      "제목": "[우리동네소식] 중곡2동, 10년째 이어온 어린이 알뜰한마당…나눔과 자원순환 배워요 외 2건",
-      "link": "https://www.gwangjin.go.kr/portal/bbs/B0000002/view.do?nttId=6630273&menuNo=200191"
+      "제목": "[보도자료] 광진구, “꿈을 잇다, 중곡을 잇다”… ‘제12회 간뎃골 축제’ 개최",
+      "link": "https://www.gwangjin.go.kr/portal/bbs/B0000002/view.do?nttId=6631813&menuNo=200191"
     },
     {
       "구": "금천",
       "자리": "금천구청 보도자료",
-      "제목": "가을밤, 금천에 다정한 공연이 찾아온다…‘금천라이브 플러스’",
-      "link": "https://www.geumcheon.go.kr/portal/selectBbsNttView.do?key=297&amp;bbsNo=8&amp;nttNo=271361"
+      "제목": "“별빛 아래 차려진 시장식탁” 금천구 별빛남문시장, 9일 축제",
+      "link": "https://www.geumcheon.go.kr/portal/selectBbsNttView.do?key=297&amp;bbsNo=8&amp;nttNo=271397"
     },
     {
       "구": "도봉",
@@ -122,18 +131,6 @@
       "자리": "도봉구 공지사항",
       "제목": "2026년 도봉구 「환경교육 한마당」 행사 안내",
       "link": "https://www.dobong.go.kr/bbs.asp?bmode=D&pcode=12746820&code=10008769"
-    },
-    {
-      "구": "서초",
-      "자리": "서초구청 공지사항",
-      "제목": "🎶🦄 제9회 양재 말죽거리축제 개최 안내🕺💃",
-      "link": "https://www.seocho.go.kr/site/seocho/ex/bbs/View.do?cbIdx=57&bcIdx=411834"
-    },
-    {
-      "구": "서초",
-      "자리": "서초구청 공지사항",
-      "제목": "🎶제5회 2026 방배 페스티벌🎶 개최 안내",
-      "link": "https://www.seocho.go.kr/site/seocho/ex/bbs/View.do?cbIdx=57&bcIdx=411810"
     },
     {
       "구": "영등포",
@@ -239,18 +236,6 @@
       "제목": "[노원천문우주과학관 별빛축제] 천체관측회 개최 및 '별빛초대석' 프로그램 안내",
       "link": "https://www.nowon.kr/www/user/bbs/BD_selectBbs.do?q_bbsCode=1001&amp;q_estnColumn1=11&amp;q_bbscttSn=20261011132302155",
       "날짜": "2026-10-11"
-    },
-    {
-      "구": "강남",
-      "자리": "강남구청 보도자료",
-      "제목": "강남 곳곳이 축제장으로…강남페스티벌 16만 6천 명 다녀갔다",
-      "link": "https://www.gangnam.go.kr/board/B_000031/1075470/view.do"
-    },
-    {
-      "구": "영등포",
-      "자리": "영등포구청 영등포소식",
-      "제목": "2026 영등포선유도원축제 개최(10/24~10/25)",
-      "link": "https://www.ydp.go.kr:443/www/selectBbsNttView.do?key=2967&bbsNo=40&nttNo=420456"
     },
     {
       "구": "중구",
