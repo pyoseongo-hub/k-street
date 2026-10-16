@@ -1,0 +1,39 @@
+name: Probe standard festivals (표준데이터 축제 창구가 열리나)
+
+# 🔎 **전국 「표준데이터」 축제 창구 두 곳을 두드려만 본다.**
+#
+#    서울 밖 대도시가 비는 것을 때릴 수 있는 창구다. 자세한 까닭은
+#    scripts/probe-standard-festivals.mjs 머리말에 적어 뒀다.
+#
+# 🚫 아무것도 커밋하지 않는다. 묻고 세기만 한다.
+# 📞 호출은 **딱 2번**이다. 포털은 빠른 호출 5~8번이면 막히고 10분쯤 쉬어야 한다 —
+#    그래서 주소 긁는 무거운 검사(Probe TourAPI)와 **일부러 갈라 뒀다.**
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5 # ⏱️ 천장이 없으면 느려진 것이 안 드러난다
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 두드려 본다
+        # 🧯 끊겨도 요약은 남긴다. 단서를 하나도 못 건지는 쪽이 더 나쁘다.
+        continue-on-error: true
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+        # pipefail 이 없으면 node 가 죽어도 tee 가 성공해 이 단계가 초록색이 된다.
+        run: |
+          set -o pipefail
+          node scripts/probe-standard-festivals.mjs 2>&1 | tee std.txt
+
+      - name: 요약에 붙인다
+        if: always()
+        run: |
+          { echo "## 🎪 표준데이터 축제 창구"; echo ""; echo '```'; \
+            cat std.txt 2>/dev/null || echo "(로그 없음)"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
