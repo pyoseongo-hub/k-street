@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-10-15",
+  "받은날": "2026-10-16",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -4340,6 +4340,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401817"
     },
     {
+      "seq": "402369",
+      "title": "2026 공예현장 라운드테이블",
+      "start": "2026-10-21",
+      "end": "2026-10-23",
+      "place": "KCDF갤러리 지하2층 다목적홀",
+      "area": "서울",
+      "sigungu": "종로구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/d3d71433c8da451583da9ef24196d40f.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=402369"
+    },
+    {
       "seq": "400699",
       "title": "2026 제18회 강릉커피축제 Coffeeful Gangneung",
       "start": "2026-10-21",
@@ -4436,6 +4448,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=392490"
     },
     {
+      "seq": "402393",
+      "title": "[국립극장 무대예술지원센터] 쏙쏙들이 페스티벌 가을축제 <가을 쏙!, 낭만 쏙!>",
+      "start": "2026-10-24",
+      "end": "2026-10-24",
+      "place": "국립극장 무대예술지원센터 야외광장",
+      "area": "경기",
+      "sigungu": "파주시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/108beec6086a4de1b832f0609b0caac8.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=402393"
+    },
+    {
       "seq": "401794",
       "title": "[서울시립과학관 x 노원천문우주과학관] 2026년 별빛축제",
       "start": "2026-10-24",
@@ -4516,7 +4540,7 @@
       "area": "전남광주통합",
       "sigungu": "순천시",
       "realm": "행사/축제",
-      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202609/52e8849c86224812aa7c0f264f08eec4.png",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/097b8831aa4c4c799e22de6e3a9bd3a9.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=399615"
     },
     {

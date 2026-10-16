@@ -4300,6 +4300,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=399957"
   },
   {
+    "id": "cf_402369",
+    "city": "seoul",
+    "gu": "종로구",
+    "category": "festival",
+    "name": "2026 공예현장 라운드테이블",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402369"
+  },
+  {
     "id": "cf_400699",
     "city": "gangwon",
     "gu": "강릉시",
@@ -4389,6 +4402,19 @@
     "endMonth": 10,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=392490"
+  },
+  {
+    "id": "cf_402393",
+    "city": "gyeonggi",
+    "gu": "파주시",
+    "category": "festival",
+    "name": "[국립극장 무대예술지원센터] 쏙쏙들이 페스티벌 가을축제 <가을 쏙!, 낭만 쏙!>",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402393"
   },
   {
     "id": "cf_401794",
