@@ -31,6 +31,7 @@ export type 배너갈래 =
 export const 있는배너: ReadonlySet<string> = new Set<배너갈래>([
   "festival-day-1",
   "festival-day-2",
+  "festival-day-3",
 ]);
 
 // 축제 갈래를 가르는 낱말. **위에 있는 것이 이긴다.**
