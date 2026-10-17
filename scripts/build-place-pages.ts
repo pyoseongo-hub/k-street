@@ -628,6 +628,11 @@ function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
     (lang === "en" ? CATEGORY_EN[p.category] : T.categoryLabels[p.category]) ??
     CATEGORY_EN[p.category] ??
     "Place";
+  // 🔒 **AI 배너(placeBanner.ts)는 여기 넣지 않는다** (2026-10-17).
+  //    이 값이 og:image 로 나가면 카톡·페북·구글·ChatGPT 가 「그 곳 사진」으로 보여 주는데,
+  //    카드에 붙는 「AI 제작 이미지」 표시는 **공유 카드로 안 따라간다**(1.91:1 로 잘린다).
+  //    배너가 없는 곳은 아래에서 share-card.png 로 떨어진다 — 그게 맞다.
+  //    npm run ai-banner 가 지킨다.
   const photo = p.image ?? p.thumb ?? galleryShotsFor(p.name, p.gu)[0]?.url;
   const [kakao, naver] = getMapLinks(p);
   // 🍚 밥집 — 손님 언어를 그대로 넘긴다(대만은 zhTW 로 갈아 끼운다).

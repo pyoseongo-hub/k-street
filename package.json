@@ -38,7 +38,10 @@
     "hike-gaps": "vite build --ssr scripts/audit-hike-gaps.ts --outDir dist-ssr && node dist-ssr/audit-hike-gaps.js",
     "launch-scope": "node scripts/check-launch-scope.mjs",
     "free-claim": "node scripts/check-free-claim.mjs",
-    "no-photo": "vite build --ssr scripts/audit-no-photo.ts --outDir dist-ssr && node dist-ssr/audit-no-photo.js"
+    "no-photo": "vite build --ssr scripts/audit-no-photo.ts --outDir dist-ssr && node dist-ssr/audit-no-photo.js",
+    "banner-bucket": "vite build --ssr scripts/audit-banner-bucket.ts --outDir dist-ssr && node dist-ssr/audit-banner-bucket.js",
+    "no-photo-city": "vite build --ssr scripts/audit-no-photo-city.ts --outDir dist-ssr && node dist-ssr/audit-no-photo-city.js",
+    "ai-banner": "node scripts/check-ai-banner.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

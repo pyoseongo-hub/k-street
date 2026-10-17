@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { Place } from "../data/seed";
 import { galleryOf, ensureTourGallery, useTourGallery } from "../lib/tourGallery";
 import { useLanguage } from "../lib/useLanguage";
+import { bannerOf } from "../lib/placeBanner";
 
 // 📷 카드 위의 사진 한 자리. 사진이 여러 장이면 **넘겨 볼 수 있게** 한다
 // (2026-09-02 사용자 지시: "사진 이쁜걸로 교체 / 전수조사").
@@ -30,7 +31,21 @@ export default function PlacePhoto({ place, className = "fc-art fc-art-photo" }:
   const photos = galleryOf(place);
   const [idx, setIdx] = useState(0);
 
-  if (!photos.length) return null;
+  // 🖼️ **사진이 없으면 갈래 그림을 띄운다** (2026-10-17). 아무것도 없이 이름만 두면
+  //    손님은 「앱이 부실하다」고 읽는다. 다만 **그 곳의 사진이 아니므로**
+  //    「AI 제작 이미지」를 반드시 함께 띄운다 — 사진 출처와 같은 칩을 쓴다.
+  //    사진이 생기면 photos 가 차서 이 자리는 저절로 사라진다.
+  if (!photos.length) {
+    const 그림 = bannerOf(place);
+    if (!그림) return null;
+    return (
+      <div className={className} style={{ position: "relative" }}>
+        <img src={그림} alt="" loading="lazy" decoding="async"
+          style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        <span className="fc-photo-credit">{t.aiImageNote}</span>
+      </div>
+    );
+  }
 
   const many = photos.length > 1;
   const current = photos[Math.min(idx, photos.length - 1)];
