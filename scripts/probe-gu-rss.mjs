@@ -47,11 +47,38 @@ for (const [구, v] of Object.entries(구목록)) {
   if (u) try { 호스트[구] = new URL(u).host; } catch { /* 주소가 아니면 넘긴다 */ }
 }
 
+// 🏠 **RSS 가 아예 없는 구**는 호스트를 뽑을 데가 없다. 누리집 주소 후보를 적어 둔다.
+//    ⚠️ 이것도 **짐작이다.** 그래서 자료에 적지 않고 **열어 보고 되는 것만** 보고한다.
+const 후보호스트 = { 동대문: ["www.ddm.go.kr"], 용산: ["www.yongsan.go.kr"], 송파: ["www.songpa.go.kr"] };
+
+// 🔎 **틀을 짐작하는 대신 누리집에서 RSS 링크를 직접 읽는다.**
+//    2026-10-17 첫 실행에서 틀 네 개를 두드려 7곳 중 **1곳(마포)** 만 맞췄다.
+//    강서는 모두 500, 은평·종로는 모두 404 였다 — 틀이 구마다 다르다는 뜻이다.
+//    누리집 머리에 <link rel="alternate" type="application/rss+xml"> 가 있거나
+//    본문에 rss 가 든 주소가 있다. 그걸 긁는 쪽이 짐작보다 낫다.
+async function 누리집에서찾기(host) {
+  let r;
+  try { r = await fetchHtml(`https://${host}/`, { timeoutMs: 15000 }); } catch { return []; }
+  const 글 = r?.html ?? "";
+  const 찾음 = new Set();
+  for (const m of 글.matchAll(/<link[^>]+type=["']application\/(?:rss|atom)\+xml["'][^>]*>/gi)) {
+    const u = m[0].match(/href=["']([^"']+)["']/i)?.[1];
+    if (u) 찾음.add(new URL(u, `https://${host}/`).href);
+  }
+  for (const m of 글.matchAll(/href=["']([^"']*rss[^"']*)["']/gi)) {
+    try { 찾음.add(new URL(m[1], `https://${host}/`).href); } catch { /* 주소가 아니면 넘긴다 */ }
+  }
+  return [...찾음].slice(0, 6);
+}
+
 console.log("\n── 두드려 본다 (200 이고 <item> 이 있으면 ✅)\n");
 for (const [구] of 볼구) {
-  const h = 호스트[구];
-  if (!h) { console.log(`   ${구} — 호스트를 모른다 (RSS 가 없어서 뽑을 데가 없다). 사람이 찾아야 한다`); continue; }
-  for (const f of 틀(h)) {
+  const h = 호스트[구] ?? 후보호스트[구]?.[0];
+  if (!h) { console.log(`   ${구} — 호스트를 모른다. 사람이 찾아야 한다`); continue; }
+  // 누리집에서 실제로 걸려 있는 RSS 주소를 먼저 찾고, 그다음에 틀을 두드린다
+  const 누리집것 = (await 누리집에서찾기(h)).map((u, i) => ({ 이름: `누리집에 걸린 RSS ${i + 1}`, url: u }));
+  if (누리집것.length) console.log(`   🏠 ${구} — 누리집에서 RSS 주소 ${누리집것.length}개를 찾았다`);
+  for (const f of [...누리집것, ...틀(h)]) {
     // ⚠️ fetchHtml 은 **글자가 아니라 `{ status, final, html }`** 를 준다.
     //    2026-10-17 첫 실행에서 이걸 글자처럼 써서 첫 호출에 터졌다.
     let r;
