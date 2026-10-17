@@ -30,6 +30,7 @@ export type 배너갈래 =
 //    그림이 오면 여기에 한 줄 더하면 끝이다 — 다른 코드는 안 건드린다.
 export const 있는배너: ReadonlySet<string> = new Set<배너갈래>([
   "festival-day-1",
+  "festival-day-2",
 ]);
 
 // 축제 갈래를 가르는 낱말. **위에 있는 것이 이긴다.**
