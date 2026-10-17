@@ -489,6 +489,16 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
                       서울시 관광거리 128곳이 여기 걸린다. 사진·소개 글이 붙으면
                       그 곳의 `nameOnly` 를 지우면 이 줄도 같이 사라진다. */}
                   {p.nameOnly && <div className="pr-note">{t.nameOnlyNote}</div>}
+                  {/* 🥾 **등산인데 거리·시간·난이도가 없는 곳** — 사장님 지시 2026-10-17:
+                      *"추측없고 사실만 모르면 표기안하고 안내문구"*.
+                      408곳 중 note 가 있는 곳은 **1곳**이다(audit-hike-gaps). 나머지는
+                      이름뿐인데 아무 말도 없어서 손님은 "앱이 부실하다"고 읽는다.
+                      ⚠️ 위 `nameOnlyNote` 를 돌려쓰지 않는다 — 그 줄은 "서울시에 등록된"
+                         이라고 **출처를 말한다.** 부산 금정산에 붙이면 없는 출처를 적는 셈이다.
+                      note(거리·시간이 적힌 글)가 붙으면 이 줄은 저절로 사라진다. */}
+                  {p.category === "hike" && !p.note && !p.nameOnly && (
+                    <div className="pr-note">{t.hikeNoDetailNote}</div>
+                  )}
                   {/* 주소는 관광공사에서 받은 곳만 있다. 사진이 없는 작은 카드일수록
                       글로 줄 수 있는 정보가 하나라도 더 있는 게 낫다. */}
                   {p.addr && <div className="pr-addr">{p.addr}</div>}

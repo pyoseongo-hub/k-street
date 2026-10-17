@@ -194,6 +194,22 @@ export interface Translations {
    */
   nameOnlyNote: string;
   /**
+   * 🥾 **등산·산에 붙는 한 줄** (사장님 지시 2026-10-17: *"추측없고 사실만
+   * 모르면 표기안하고 안내문구"*).
+   *
+   * 왜 `nameOnlyNote` 를 그대로 못 쓰는가 — 그 줄은 **"서울시에 등록된"**이라고
+   * 출처를 말한다. 서울시 관광거리 114곳에는 맞지만, 등산 408곳에는 **부산 금정산·
+   * 가덕도 연대봉처럼 서울시와 무관한 곳**이 섞여 있다. 그 줄을 붙이면
+   * **없는 출처를 적는 셈**이다 — 값이 틀린 것보다 나쁜 자리다.
+   *
+   * 🚨 **등산은 틀리면 사람이 위험하다.** 거리·소요시간·난이도를 짐작으로 적으면
+   * 두 시간짜리로 알고 올라간 손님이 해 질 때까지 산에 있는다. 그래서 확인된
+   * 자료가 없으면 **빈 칸으로 두고 이 줄을 띄운다.**
+   *
+   * 끝은 늘 **다음 행동**으로 — 변명이 아니다(`festivalNoPhoto`·`nameOnlyNote` 와 같은 결).
+   */
+  hikeNoDetailNote: string;
+  /**
    * ✉️ **문의 메일** (사장님 지시 2026-10-03: *"사용자가 문의 메일 보낼수 있게 해"*).
    *
    * 화면 맨 아래 소개 줄(.app-note) 옆에 작게 붙는다. 서버가 없는 앱이라
@@ -499,6 +515,7 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `${org} 확정 일정입니다`,
     festivalNoPhoto: '사진은 사용 권한이 없어 싣지 못했습니다. 이름을 누르면 공식 안내로 갑니다.',
     nameOnlyNote: '서울시에 등록된 이름과 자리만 있습니다. 이름을 누르면 더 찾아볼 수 있습니다.',
+    hikeNoDetailNote: '거리·소요시간·난이도는 확인된 자료가 없어 적지 않았습니다. 이름을 누르면 공식 안내를 찾아볼 수 있습니다.',
     contactLabel: '문의하기',
     contactSubject: '[K-Street] 문의',
     contactBodyHint: '안녕하세요. 아래에 문의 내용을 적어 주세요.',
@@ -676,6 +693,7 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `Dates confirmed by ${org}`,
     festivalNoPhoto: 'No photo — we don’t have the image rights. Tap the name for the official page.',
     nameOnlyNote: 'Only the name and location, as registered by Seoul city. Tap the name to look it up.',
+    hikeNoDetailNote: 'Distance, duration and difficulty are left blank — we have no confirmed source. Tap the name to find the official guide.',
     contactLabel: 'Contact us',
     contactSubject: '[K-Street] Inquiry',
     contactBodyHint: 'Hello. Please write your question below.',
@@ -853,6 +871,7 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `${org}が登録した確定日程です`,
     festivalNoPhoto: '写真は使用許諾がないため掲載していません。名前をタップすると公式案内に移動します。',
     nameOnlyNote: 'ソウル市に登録された名称と場所のみです。名前をタップすると詳しく調べられます。',
+    hikeNoDetailNote: '距離・所要時間・難易度は確認できる資料がないため記載していません。名前をタップすると公式案内を探せます。',
     contactLabel: 'お問い合わせ',
     contactSubject: '[K-Street] お問い合わせ',
     contactBodyHint: 'こんにちは。下にご質問をお書きください。',
@@ -1030,6 +1049,7 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `由${org}发布的确定日程`,
     festivalNoPhoto: '因图片使用权未获授权，暂不提供照片。点击名称可前往官方介绍页。',
     nameOnlyNote: '仅有首尔市登记的名称和位置。点击名称可进一步查询。',
+    hikeNoDetailNote: '距离、所需时间和难度因无确认资料而未标注。点击名称可查找官方指南。',
     contactLabel: '联系我们',
     contactSubject: '[K-Street] 咨询',
     contactBodyHint: '您好。请在下面写下您的问题。',
@@ -1207,6 +1227,7 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `由${org}發布的確定日程`,
     festivalNoPhoto: '因圖片使用權未取得授權，暫不提供照片。點擊名稱可前往官方介紹頁。',
     nameOnlyNote: '僅有首爾市登記的名稱和位置。點擊名稱可進一步查詢。',
+    hikeNoDetailNote: '距離、所需時間和難度因無確認資料而未標註。點擊名稱可查找官方指南。',
     contactLabel: '聯絡我們',
     contactSubject: '[K-Street] 諮詢',
     contactBodyHint: '您好。請在下面寫下您的問題。',
@@ -1384,6 +1405,7 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `Lịch đã được ${org} xác nhận`,
     festivalNoPhoto: 'Không có ảnh vì chưa có bản quyền sử dụng. Nhấn vào tên để mở trang chính thức.',
     nameOnlyNote: 'Chỉ có tên và vị trí do thành phố Seoul đăng ký. Nhấn vào tên để tìm hiểu thêm.',
+    hikeNoDetailNote: 'Khoảng cách, thời gian và độ khó để trống vì chưa có nguồn xác thực. Nhấn vào tên để tìm hướng dẫn chính thức.',
     contactLabel: 'Liên hệ',
     contactSubject: '[K-Street] Liên hệ',
     contactBodyHint: 'Xin chào. Vui lòng viết câu hỏi của bạn bên dưới.',
@@ -1561,6 +1583,7 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `Fechas confirmadas por ${org}`,
     festivalNoPhoto: 'Sin foto: no tenemos los derechos de imagen. Toca el nombre para ver la página oficial.',
     nameOnlyNote: 'Solo el nombre y la ubicación registrados por la ciudad de Seúl. Toca el nombre para buscar más.',
+    hikeNoDetailNote: 'Dejamos en blanco distancia, duración y dificultad: no tenemos una fuente confirmada. Toca el nombre para ver la guía oficial.',
     contactLabel: 'Contacto',
     contactSubject: '[K-Street] Consulta',
     contactBodyHint: 'Hola. Escriba su pregunta a continuación.',
@@ -1738,6 +1761,7 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `Dates confirmées par ${org}`,
     festivalNoPhoto: 'Pas de photo : nous n’avons pas les droits d’image. Appuyez sur le nom pour la page officielle.',
     nameOnlyNote: 'Seuls le nom et le lieu enregistrés par la ville de Séoul. Appuyez sur le nom pour en savoir plus.',
+    hikeNoDetailNote: 'Distance, durée et difficulté sont laissées vides : aucune source confirmée. Appuyez sur le nom pour la notice officielle.',
     contactLabel: 'Nous contacter',
     contactSubject: '[K-Street] Question',
     contactBodyHint: 'Bonjour. Veuillez écrire votre question ci-dessous.',
@@ -1915,6 +1939,7 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `Termine bestätigt von ${org}`,
     festivalNoPhoto: 'Kein Foto – die Bildrechte liegen uns nicht vor. Tippen Sie auf den Namen für die offizielle Seite.',
     nameOnlyNote: 'Nur Name und Lage, wie von der Stadt Seoul erfasst. Tippen Sie auf den Namen, um mehr zu finden.',
+    hikeNoDetailNote: 'Entfernung, Dauer und Schwierigkeit bleiben leer — keine bestätigte Quelle. Tippen Sie auf den Namen für die offizielle Auskunft.',
     contactLabel: 'Kontakt',
     contactSubject: '[K-Street] Anfrage',
     contactBodyHint: 'Hallo. Bitte schreiben Sie Ihre Frage unten.',
@@ -2092,6 +2117,7 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `Даты подтверждены: ${org}`,
     festivalNoPhoto: 'Фото нет — у нас нет прав на изображение. Нажмите на название, чтобы открыть официальную страницу.',
     nameOnlyNote: 'Только название и место по данным города Сеула. Нажмите на название, чтобы узнать больше.',
+    hikeNoDetailNote: 'Расстояние, время и сложность не указаны — нет подтверждённого источника. Нажмите на название, чтобы найти официальную информацию.',
     contactLabel: 'Связаться с нами',
     contactSubject: '[K-Street] Вопрос',
     contactBodyHint: 'Здравствуйте. Напишите ваш вопрос ниже.',
@@ -2269,6 +2295,7 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `Tanggal dikonfirmasi oleh ${org}`,
     festivalNoPhoto: 'Tidak ada foto karena hak gambar belum diperoleh. Ketuk nama untuk membuka halaman resmi.',
     nameOnlyNote: 'Hanya nama dan lokasi yang terdaftar di kota Seoul. Ketuk nama untuk mencari lebih lanjut.',
+    hikeNoDetailNote: 'Jarak, durasi, dan tingkat kesulitan dibiarkan kosong karena tidak ada sumber terverifikasi. Ketuk nama untuk panduan resmi.',
     contactLabel: 'Hubungi kami',
     contactSubject: '[K-Street] Pertanyaan',
     contactBodyHint: 'Halo. Silakan tulis pertanyaan Anda di bawah ini.',
@@ -2446,6 +2473,7 @@ const translations: Record<Language, Translations> = {
     festivalConfirmedBy: (org) => `กำหนดการยืนยันโดย ${org}`,
     festivalNoPhoto: 'ไม่มีรูปภาพเนื่องจากยังไม่ได้รับสิทธิ์ใช้ภาพ แตะที่ชื่อเพื่อไปยังหน้าทางการ',
     nameOnlyNote: 'มีเฉพาะชื่อและตำแหน่งที่กรุงโซลขึ้นทะเบียนไว้ แตะที่ชื่อเพื่อค้นหาเพิ่มเติม',
+    hikeNoDetailNote: 'ไม่ได้ระบุระยะทาง เวลา และระดับความยาก เพราะไม่มีแหล่งข้อมูลที่ยืนยันได้ แตะที่ชื่อเพื่อดูคำแนะนำอย่างเป็นทางการ',
     contactLabel: 'ติดต่อเรา',
     contactSubject: '[K-Street] สอบถาม',
     contactBodyHint: 'สวัสดีค่ะ กรุณาเขียนคำถามของคุณด้านล่าง',
