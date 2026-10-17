@@ -123,7 +123,16 @@ export default defineConfig({
         //       **2,276KB → 1,458KB**, 미리 받는 양이 **2,701KB → 1,715KB** 로 줄었다.
         //       그래서 이 한도는 지금 여유가 많다 — 도시를 몇 개 더 열어도 괜찮다.
         //       ⏳ 다음으로 큰 것은 tour-gallery.json(440KB)이다. 또 넘으면 거기를 본다.
-        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+        // 📈 **4 → 5 MiB 로 올렸다** (2026-10-17). 축제 9곳을 넣었더니 번들이
+        //    **4.00MB → 4.2MB** 가 되어 빌드가 멈췄다. 한도 코앞에 서 있었던 것이다.
+        //    ⚠️ **한도를 올린 건 해결이 아니라 미룬 것이다.** 다음에 또 넘으면 올리지 말고
+        //       아래를 먼저 꺼낼 것 —
+        //       🎯 `place-intro.json` 이 **1,025KB** 로 번들의 약 **24%** 다.
+        //          `src/lib/sells.ts` 가 `import INTRO from "../data/place-intro.json"` 로
+        //          **통째로 정적 import** 한다. 곳마다 판매품목 한 줄인데, 손님은 자기가 연
+        //          곳 하나만 본다 — place-translations 처럼 **나중에 받게** 하면 1MB 가 빠진다.
+        //       · survey-*.json(1.2MB 등)은 주석에만 나오고 번들에 없다 — 거기 아니다.
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
 
         // 🐞 **여기가 곳 페이지 307장을 통째로 죽일 뻔한 자리다** (2026-09-05에 찾음).
         //

@@ -763,6 +763,48 @@ export const AUTUMN_ROADS: Place[] = (autumnRoads.길 as AutumnRow[])
     confirmed: true,
   }));
 
+/**
+ * 🌙 **전통시장 야간·먹거리 축제** (2026-10-17).
+ *
+ * 사장님이 인스타 「10월 야간축제 달력」 화면 두 장을 보내 주셨다. 대조해 보니
+ * **17곳 중 0곳**이 우리에게 있었다 — 우리 축제 533개 중 하나도 없었다.
+ *
+ * 🧭 왜 하나도 없었나 — **주최가 다르다.** 이건 **시장 상인회**가 여는 것이라
+ *    우리 창구 넷(문화포털·펀서울·구청 보도자료 RSS·손으로)에 안 올라온다.
+ *    구청 수집기는 같은 날에도 35건을 잡았는데 이 17개는 하나도 없었다.
+ *    공공데이터포털에도 **전통시장 '행사 일정' 창구는 없다** — 시장 현황(위치·점포)뿐이다.
+ *
+ * 📌 근거는 **서울시 보도자료**다(2026-09-29, 「전통시장 야간·음식문화 활성화 지원사업」,
+ *    12개 자치구 23곳). 그 보도자료를 **복수 매체가 같이 전한 것**을 근거로 적었다.
+ *    ⚠️ 서울시 원문(mediahub.seoul.go.kr)은 **이 작업 환경에서 안 열린다**(DNS).
+ *       그래서 원문을 직접 읽지는 못했다 — 기사 쪽을 근거로 적었다는 뜻이다.
+ *
+ * 🚫 **인스타 게시물은 근거로 쓰지 않았다.** 집계 계정이라 근거 등급이 블로그와 같다.
+ *    단서로만 쓰고, 날짜·장소는 기사에서 다시 확인했다. 사진도 쓰지 않는다(저작권).
+ *    · 실제로 **인스타와 기사가 엇갈린 것이 있다** — 인스타 「까맥축제 10/30~31」 ↔
+ *      기사 「까치산시장 10/29~31」. **이름이 갈려서 인스타 이름은 안 썼다.**
+ *
+ * 🔢 **id 를 `nm_` 로 따로 매긴다.** `id()` 는 정의 순서로 번호를 주므로 여기서 쓰면
+ *    뒤에 오는 자리의 번호가 밀린다. 번호가 밀리면 blog·photos·날짜 파일이 **남의
+ *    항목을 물려받는다**(CLAUDE.md 🔀). 따로 매기면 그 위험이 아예 없다.
+ *
+ * 🏷️ **이름은 기사가 쓴 대로 「시장 이름 + 야시장」이다.** 강서 6곳은 기사가
+ *    시장 이름만 주고 행사 제목은 안 줬다 — 없는 제목을 지어내지 않는다.
+ */
+export const FESTIVALS_NIGHT_MARKET: Place[] = [
+  // ── 강서구 릴레이 야시장 6곳 (한 달에 걸쳐 차례로 연다)
+  { id: "nm_1", gu: "강서구", category: "festival", name: "남부골목시장 야시장", startMonth: 10, endMonth: 10, note: "서울시 전통시장 야간·음식문화 축제", monthSource: "서울시 보도자료(2026-09-29) — 강서경제신문·한국사회복지저널·국제뉴스가 같이 전함", confirmed: true },
+  { id: "nm_2", gu: "강서구", category: "festival", name: "화곡본동시장 야시장", startMonth: 10, endMonth: 10, note: "서울시 전통시장 야간·음식문화 축제", monthSource: "서울시 보도자료(2026-09-29) — 복수 매체", confirmed: true },
+  { id: "nm_3", gu: "강서구", category: "festival", name: "송화벽화시장 야시장", startMonth: 10, endMonth: 10, note: "서울시 전통시장 야간·음식문화 축제", monthSource: "서울시 보도자료(2026-09-29) — 복수 매체", confirmed: true },
+  { id: "nm_4", gu: "강서구", category: "festival", name: "방신전통시장 야시장", startMonth: 10, endMonth: 10, note: "서울시 전통시장 야간·음식문화 축제", monthSource: "서울시 보도자료(2026-09-29) — 복수 매체", confirmed: true },
+  { id: "nm_5", gu: "강서구", category: "festival", name: "화곡중앙시장 야시장", startMonth: 10, endMonth: 10, note: "서울시 전통시장 야간·음식문화 축제", monthSource: "서울시 보도자료(2026-09-29) — 복수 매체", confirmed: true },
+  { id: "nm_6", gu: "강서구", category: "festival", name: "까치산시장 야시장", startMonth: 10, endMonth: 10, note: "서울시 전통시장 야간·음식문화 축제", monthSource: "서울시 보도자료(2026-09-29) — 복수 매체. ⚠️ 인스타 집계에는 「까맥축제 10/30~31」로 적혀 있었는데 이름·날짜가 갈려 기사 쪽을 따랐다", confirmed: true },
+  // ── 그 밖의 구
+  { id: "nm_7", gu: "노원구", category: "festival", name: "상계중앙시장 야시장", startMonth: 10, endMonth: 10, note: "당현천 공공미술축제 「노원달빛산책」과 연계. 시장 먹거리·문화공연·체험", monthSource: "서울시 보도자료(2026-09-29) — 국제뉴스·파이낸셜뉴스", confirmed: true },
+  { id: "nm_8", gu: "동작구", category: "festival", name: "잘~돼지 냉수육 축제", startMonth: 10, endMonth: 10, note: "남성역골목시장. 냉수육 먹거리존, 냉수육·수제 소스 만들기 체험", monthSource: "서울시 보도자료(2026-09-29) — 국제뉴스·파이낸셜뉴스", confirmed: true },
+  { id: "nm_9", gu: "구로구", category: "festival", name: "개봉중앙골목시장 야식축제", startMonth: 10, endMonth: 10, note: "제3회. 개봉중앙 골목형상점가, 16~20시. 공연·체험·먹거리", monthSource: "구로구 보도자료 — 웹이코노미·산경일보·G밸리타임스가 같이 전함", confirmed: true },
+];
+
 const ALL_PLACES_RAW: Place[] = [
   ...FESTIVALS,
   ...MARKETS,
@@ -777,6 +819,8 @@ const ALL_PLACES_RAW: Place[] = [
   // 📬 서울시 소식지에서 알게 된 행사. id() 를 쓰는 **진짜 마지막** 자리다.
   ...FESTIVALS_FROM_MAIL,
   ...FESTIVALS_FROM_FUNSEOUL,
+  // 🌙 전통시장 야간·먹거리 축제. id 를 `nm_` 로 따로 매기므로 순서에 영향을 주지 않는다.
+  ...FESTIVALS_NIGHT_MARKET,
   // 🍁 단풍길은 id 를 따로 매기므로 순서에 영향을 주지 않는다.
   ...AUTUMN_ROADS,
   // 🌊 부산 202곳. id 가 관광공사 contentId 라 **순서에 영향을 주지 않는다**
