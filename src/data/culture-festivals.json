@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-10-16",
+  "받은날": "2026-10-17",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -4268,6 +4268,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=402234"
     },
     {
+      "seq": "402550",
+      "title": "2026 송파 낭만페스타",
+      "start": "2026-10-17",
+      "end": "2026-10-17",
+      "place": "석촌호수 동호무대 및 주변",
+      "area": "서울",
+      "sigungu": "송파구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/953ec83a0519416b8248b8e7729bcfc4.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=402550"
+    },
+    {
       "seq": "401159",
       "title": "남해의 가을밤, 야외에서 즐기는 영화 한 편 'GKL과 함께하는 우리동네 문화탐방'",
       "start": "2026-10-17",
@@ -4472,6 +4484,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401794"
     },
     {
+      "seq": "402551",
+      "title": "남문터 광장 문화 콘서트 - 광장생활 가을 운동회",
+      "start": "2026-10-24",
+      "end": "2026-10-25",
+      "place": "순천부 읍성 남문터 야외광장",
+      "area": "전남광주통합",
+      "sigungu": "순천시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/a78277949e33455686e08152c588022d.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=402551"
+    },
+    {
       "seq": "401387",
       "title": "별★걸 다 파는 마포 주민 아트 마켓 <2026 궁금한 시장>",
       "start": "2026-10-24",
@@ -4532,6 +4556,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401031"
     },
     {
+      "seq": "402555",
+      "title": "2026년 제24회 추사문화예술제",
+      "start": "2026-10-31",
+      "end": "2026-10-31",
+      "place": "김정희유배지일원",
+      "area": "제주",
+      "sigungu": "서귀포시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/d164b26cde5640b484b7189b3e57e77f.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=402555"
+    },
+    {
       "seq": "399615",
       "title": "『2026 대한민국 워케이션 박람회』 팸투어 참여기업 모집공고",
       "start": "2026-11-04",
@@ -4556,6 +4592,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=399616"
     },
     {
+      "seq": "402527",
+      "title": "2026 상도어울마당 아트홀 개관 3주년 기획 프로그램 <상도 놀이터>",
+      "start": "2026-11-04",
+      "end": "2026-11-18",
+      "place": "상도어울마당 아트홀",
+      "area": "서울",
+      "sigungu": "동작구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/77cb0c53f6a4431cb7ed08f43b5af5e7.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=402527"
+    },
+    {
       "seq": "391358",
       "title": "DDPlay X 스윙팍 with 스윙제리",
       "start": "2026-11-04",
@@ -4566,6 +4614,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202608/ba282ceb51f34f13b964b9d9c8d5461b.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=391358"
+    },
+    {
+      "seq": "402552",
+      "title": "시민문화ON페스타 <2026 부천 미디어 페스티벌>",
+      "start": "2026-11-05",
+      "end": "2026-11-07",
+      "place": "부천시민미디어센터",
+      "area": "경기",
+      "sigungu": "부천시 원미구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/ae320040a457444da2c7a66d007cad70.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=402552"
     },
     {
       "seq": "399624",

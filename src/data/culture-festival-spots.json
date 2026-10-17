@@ -4235,6 +4235,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402234"
   },
   {
+    "id": "cf_402550",
+    "city": "seoul",
+    "gu": "송파구",
+    "category": "festival",
+    "name": "2026 송파 낭만페스타",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402550"
+  },
+  {
     "id": "cf_401159",
     "city": "gyeongnam",
     "gu": "남해군",
@@ -4430,6 +4443,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401794"
   },
   {
+    "id": "cf_402551",
+    "city": "jeonnam",
+    "gu": "순천시",
+    "category": "festival",
+    "name": "남문터 광장 문화 콘서트 - 광장생활 가을 운동회",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402551"
+  },
+  {
     "id": "cf_401387",
     "city": "seoul",
     "gu": "마포구",
@@ -4469,6 +4495,32 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=399317"
   },
   {
+    "id": "cf_402555",
+    "city": "jeju",
+    "gu": "서귀포시",
+    "category": "festival",
+    "name": "2026년 제24회 추사문화예술제",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402555"
+  },
+  {
+    "id": "cf_402527",
+    "city": "seoul",
+    "gu": "동작구",
+    "category": "festival",
+    "name": "2026 상도어울마당 아트홀 개관 3주년 기획 프로그램 <상도 놀이터>",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402527"
+  },
+  {
     "id": "cf_391358",
     "city": "seoul",
     "gu": "중구",
@@ -4480,6 +4532,19 @@
     "endMonth": 11,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=391358"
+  },
+  {
+    "id": "cf_402552",
+    "city": "gyeonggi",
+    "gu": "부천시",
+    "category": "festival",
+    "name": "시민문화ON페스타 <2026 부천 미디어 페스티벌>",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402552"
   },
   {
     "id": "cf_399624",
