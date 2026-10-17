@@ -1,6 +1,6 @@
 {
  "설명": "구청·구 문화재단이 서울시 문화포털에 직접 올린 축제 확정 날짜. scripts/fetch-gu-festival-dates.ts 가 받는다. 손으로 고치지 말 것.",
- "받은날": "2026-10-16",
+ "받은날": "2026-10-17",
  "곳": {
   "ks_57": {
    "start": "2026-10-24",
@@ -16,7 +16,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159406&menuNo=200010",
    "registered": "2026-09-08",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-16"
+   "fetchedAt": "2026-10-17"
   },
   "ks_59": {
    "start": "2026-05-01",
@@ -32,7 +32,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=156916&menuNo=200010",
    "registered": "2026-03-04",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-16"
+   "fetchedAt": "2026-10-17"
   },
   "ks_5a": {
    "start": "2026-08-04",
@@ -48,7 +48,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158941&menuNo=200010",
    "registered": "2026-08-03",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-16"
+   "fetchedAt": "2026-10-17"
   },
   "ks_5b": {
    "start": "2026-08-29",
@@ -64,7 +64,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158899&menuNo=200010",
    "registered": "2026-07-30",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-16"
+   "fetchedAt": "2026-10-17"
   },
   "ks_5c": {
    "start": "2026-05-09",
@@ -80,7 +80,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=157783&menuNo=200010",
    "registered": "2026-05-08",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-16"
+   "fetchedAt": "2026-10-17"
   },
   "ks_8": {
    "start": "2026-10-17",
@@ -96,7 +96,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159256&menuNo=200010",
    "registered": "2026-08-27",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-16"
+   "fetchedAt": "2026-10-17"
   },
   "ks_j": {
    "start": "2026-10-31",
@@ -120,7 +120,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159653&menuNo=200010",
    "registered": "2026-09-27",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-16"
+   "fetchedAt": "2026-10-17"
   },
   "ks_5": {
    "start": "2026-10-16",
@@ -147,7 +147,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159120&menuNo=200010",
    "registered": "2026-08-19",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-16"
+   "fetchedAt": "2026-10-17"
   },
   "fs_343": {
    "start": "2026-10-14",
@@ -163,7 +163,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159626&menuNo=200009",
    "registered": "2026-09-23",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-16"
+   "fetchedAt": "2026-10-17"
   },
   "fs_191": {
    "start": "2026-10-16",
@@ -179,7 +179,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159076&menuNo=200010",
    "registered": "2026-08-14",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-16"
+   "fetchedAt": "2026-10-17"
   },
   "fs_820": {
    "start": "2026-10-17",
@@ -195,7 +195,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159236&menuNo=200010",
    "registered": "2026-08-27",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-16"
+   "fetchedAt": "2026-10-17"
   },
   "fs_279": {
    "start": "2026-10-24",
@@ -210,7 +210,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159493&menuNo=200010",
    "registered": "2026-09-15",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-16"
+   "fetchedAt": "2026-10-17"
   },
   "ks_r": {
    "start": "2026-10-30",
@@ -226,7 +226,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159663&menuNo=200010",
    "registered": "2026-09-28",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-16"
+   "fetchedAt": "2026-10-17"
   }
  }
 }
