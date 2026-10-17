@@ -13,7 +13,21 @@ export interface Translations {
   savedEmptyTitle: string;
   savedEmptyBody: string;
   savedOnThisPhone: string;
-  freeNoSignup: string;
+  /**
+   * 🪪 **가입이 필요 없다는 안심 신호** — 화면 맨 아래 소개 한 줄(.app-note).
+   *
+   * 💸 **「평생 무료」를 2026-10-17에 떼어 냈다** (사장님: *"5번은 가입없음 만해"*).
+   *    점검서가 짚은 자리다 — 앱이 무료라는 말이 **행사·장소도 다 무료**라는 뜻으로
+   *    읽힌다. 실제로는 입장료가 있는 곳이 섞여 있다(seed.ts 의 note 에 곳마다
+   *    「무료」가 따로 적혀 있는 이유가 그것이다).
+   *    · 🚨 **정책이 바뀐 게 아니다.** 앱은 여전히 평생 무료·가입 없음·결제 없음이다
+   *      (2026-09-04 사장님 결정). **화면에서 말하지 않기로 한 것**이다.
+   *    · 사장님은 2026-09-05에도 *"대표 이름 있는데 평생 무료 이런 것도 별로야"* 라고
+   *      하신 적이 있다 — 같은 결이다.
+   *    · 열쇠 이름도 `freeNoSignup` → `noSignup` 으로 바꿨다. 이름에 free 가 남아 있으면
+   *      다음 사람이 또 무료라고 적는다.
+   */
+  noSignup: string;
 
   // 🗺️ 도시 고르는 칸 (CityPicker.tsx)
   //    도시 **이름 자체**는 여기 안 넣는다 — cities.ts 의 ko/en 을 쓴다.
@@ -451,7 +465,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: '아직 저장한 곳이 없어요',
     savedEmptyBody: '마음에 드는 곳의 🤍 를 누르면 여기에 모입니다.',
     savedOnThisPhone: '저장한 곳은 이 기기에만 남습니다.',
-    freeNoSignup: '평생 무료 · 가입 없음',
+    noSignup: '가입 없음',
     cityPickerTitle: '한국, 어디로 가세요?',
     cityCardLabel: '위치 선택',
     cityPickerNote: '도시를 하나씩 늘려 갑니다.',
@@ -629,7 +643,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'Nothing saved yet',
     savedEmptyBody: 'Tap 🤍 on any place and it shows up here.',
     savedOnThisPhone: 'Saved places stay on this device only.',
-    freeNoSignup: 'Free forever · No sign-up',
+    noSignup: 'No sign-up',
     cityPickerTitle: 'Where in Korea?',
     cityCardLabel: 'Choose city',
     cityPickerNote: 'We add cities one at a time.',
@@ -807,7 +821,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'まだ保存した場所がありません',
     savedEmptyBody: '気になる場所の 🤍 を押すと、ここに集まります。',
     savedOnThisPhone: '保存した場所はこの端末にのみ残ります。',
-    freeNoSignup: 'ずっと無料 · 登録不要',
+    noSignup: '登録不要',
     cityPickerTitle: '韓国、どこへ行きますか？',
     cityCardLabel: '都市を選ぶ',
     cityPickerNote: '都市を一つずつ増やしていきます。',
@@ -985,7 +999,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: '还没有收藏的地方',
     savedEmptyBody: '点一下喜欢的地方的 🤍，就会出现在这里。',
     savedOnThisPhone: '收藏内容仅保存在本设备上。',
-    freeNoSignup: '永久免费 · 无需注册',
+    noSignup: '无需注册',
     cityPickerTitle: '韩国，你要去哪里？',
     cityCardLabel: '选择城市',
     cityPickerNote: '我们会一座城市一座城市地增加。',
@@ -1163,7 +1177,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: '還沒有收藏的地方',
     savedEmptyBody: '點一下喜歡的地方的 🤍，就會出現在這裡。',
     savedOnThisPhone: '收藏內容僅保存在本裝置上。',
-    freeNoSignup: '永久免費 · 無需註冊',
+    noSignup: '無需註冊',
     cityPickerTitle: '韓國，你要去哪裡？',
     cityCardLabel: '選擇城市',
     cityPickerNote: '我們會一座城市一座城市地增加。',
@@ -1341,7 +1355,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'Chưa lưu địa điểm nào',
     savedEmptyBody: 'Nhấn 🤍 ở địa điểm bạn thích, nó sẽ hiện ở đây.',
     savedOnThisPhone: 'Địa điểm đã lưu chỉ nằm trên thiết bị này.',
-    freeNoSignup: 'Miễn phí mãi mãi · Không cần đăng ký',
+    noSignup: 'Không cần đăng ký',
     cityPickerTitle: 'Bạn đi đâu ở Hàn Quốc?',
     cityCardLabel: 'Chọn thành phố',
     cityPickerNote: 'Chúng tôi thêm từng thành phố một.',
@@ -1519,7 +1533,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'Aún no has guardado nada',
     savedEmptyBody: 'Toca 🤍 en cualquier lugar y aparecerá aquí.',
     savedOnThisPhone: 'Los lugares guardados solo quedan en este dispositivo.',
-    freeNoSignup: 'Gratis para siempre · Sin registro',
+    noSignup: 'Sin registro',
     cityPickerTitle: '¿A dónde vas en Corea?',
     cityCardLabel: 'Elegir ciudad',
     cityPickerNote: 'Añadimos ciudades una a una.',
@@ -1697,7 +1711,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'Rien d\'enregistré pour l\'instant',
     savedEmptyBody: 'Touchez 🤍 sur un lieu et il apparaîtra ici.',
     savedOnThisPhone: 'Les lieux enregistrés restent sur cet appareil uniquement.',
-    freeNoSignup: 'Gratuit à vie · Sans inscription',
+    noSignup: 'Sans inscription',
     cityPickerTitle: 'Où allez-vous en Corée ?',
     cityCardLabel: 'Choisir la ville',
     cityPickerNote: 'Nous ajoutons les villes une par une.',
@@ -1875,7 +1889,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'Noch nichts gespeichert',
     savedEmptyBody: 'Tippe bei einem Ort auf 🤍 – er erscheint dann hier.',
     savedOnThisPhone: 'Gespeicherte Orte bleiben nur auf diesem Gerät.',
-    freeNoSignup: 'Für immer kostenlos · Ohne Anmeldung',
+    noSignup: 'Ohne Anmeldung',
     cityPickerTitle: 'Wohin in Korea?',
     cityCardLabel: 'Stadt wählen',
     cityPickerNote: 'Weitere Städte kommen nach und nach dazu.',
@@ -2053,7 +2067,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'Пока ничего не сохранено',
     savedEmptyBody: 'Нажмите 🤍 у любого места — оно появится здесь.',
     savedOnThisPhone: 'Сохранённые места остаются только на этом устройстве.',
-    freeNoSignup: 'Навсегда бесплатно · Без регистрации',
+    noSignup: 'Без регистрации',
     cityPickerTitle: 'Куда в Корее?',
     cityCardLabel: 'Выбрать город',
     cityPickerNote: 'Города добавляем по одному.',
@@ -2231,7 +2245,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'Belum ada yang disimpan',
     savedEmptyBody: 'Ketuk 🤍 pada tempat yang kamu suka, nanti muncul di sini.',
     savedOnThisPhone: 'Tempat yang disimpan hanya tersimpan di perangkat ini.',
-    freeNoSignup: 'Gratis selamanya · Tanpa daftar',
+    noSignup: 'Tanpa daftar',
     cityPickerTitle: 'Mau ke mana di Korea?',
     cityCardLabel: 'Pilih kota',
     cityPickerNote: 'Kami menambah kota satu per satu.',
@@ -2409,7 +2423,7 @@ const translations: Record<Language, Translations> = {
     savedEmptyTitle: 'ยังไม่มีที่บันทึกไว้',
     savedEmptyBody: 'แตะ 🤍 ที่สถานที่ที่ชอบ แล้วจะมาอยู่ตรงนี้',
     savedOnThisPhone: 'ที่บันทึกไว้จะอยู่บนเครื่องนี้เท่านั้น',
-    freeNoSignup: 'ฟรีตลอดไป · ไม่ต้องสมัคร',
+    noSignup: 'ไม่ต้องสมัคร',
     cityPickerTitle: 'ไปที่ไหนในเกาหลี',
     cityCardLabel: 'เลือกเมือง',
     cityPickerNote: 'เราจะเพิ่มเมืองทีละแห่ง',

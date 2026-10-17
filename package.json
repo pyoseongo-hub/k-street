@@ -36,7 +36,8 @@
     "culture-places": "vite build --ssr scripts/build-culture-places.ts --outDir dist-ssr && node dist-ssr/build-culture-places.js",
     "todo-board": "vite build --ssr scripts/build-todo-board.ts --outDir dist-ssr && node dist-ssr/build-todo-board.js",
     "hike-gaps": "vite build --ssr scripts/audit-hike-gaps.ts --outDir dist-ssr && node dist-ssr/audit-hike-gaps.js",
-    "launch-scope": "node scripts/check-launch-scope.mjs"
+    "launch-scope": "node scripts/check-launch-scope.mjs",
+    "free-claim": "node scripts/check-free-claim.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

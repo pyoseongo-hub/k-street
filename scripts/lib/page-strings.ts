@@ -114,7 +114,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     stationLine: (st, m) => `${st} · ${m}m`,
     stationLocker: "대부분의 역에 물품보관함(또타라커)이 있습니다. 지금 빈 칸이 몇 개인지는 앱 지도에 나옵니다.",
     stationNone: "1.5km 안에 지하철역이 없습니다. 짐이 있으시면 오시기 전에 맡기고 오세요.",
-    footerAbout: "K-Street — 서울 동네를 12개 언어로 안내합니다. 평생 무료, 가입 없음.",
+    footerAbout: "K-Street — 서울 동네를 12개 언어로 안내합니다. 가입 없음.",
     footerData: "자료: 한국관광공사. 사진: 한국관광공사(공공누리 제1유형).",
   },
   en: {
@@ -139,7 +139,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     stationLocker: "Most stations have coin lockers (T-Locker). The app's map shows how many are free right now.",
     stationNone: "No subway station within 1.5 km. If you are carrying bags, leave them before you come.",
     footerAbout:
-      "K-Street — a free, no-sign-up guide to Seoul's neighbourhoods in 12 languages.",
+      "K-Street — a no-sign-up guide to Seoul's neighbourhoods in 12 languages.",
     footerData:
       "Place data from the Korea Tourism Organization. Photos: Korea Tourism Organization (KOGL Type 1).",
   },
@@ -164,7 +164,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     stationLine: (st, m) => `${st} ・ ${m}m`,
     stationLocker: "多くの駅にコインロッカー（T-Locker）があります。今いくつ空いているかはアプリの地図でわかります。",
     stationNone: "1.5km以内に地下鉄駅がありません。荷物がある場合は、来る前に預けておいてください。",
-    footerAbout: "K-Street — ソウルの街を12言語で案内します。ずっと無料、登録不要。",
+    footerAbout: "K-Street — ソウルの街を12言語で案内します。登録不要。",
     footerData: "データ：韓国観光公社。写真：韓国観光公社（KOGL 第1類型）。",
   },
   zh: {
@@ -188,7 +188,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     stationLine: (st, m) => `${st} · ${m} 米`,
     stationLocker: "多数车站设有自助储物柜（T-Locker）。现在还剩几个空柜，可以在应用的地图上查看。",
     stationNone: "1.5 公里内没有地铁站。如果带着行李，请先寄存再过来。",
-    footerAbout: "K-Street — 用12种语言介绍首尔的街区。永久免费，无需注册。",
+    footerAbout: "K-Street — 用12种语言介绍首尔的街区。无需注册。",
     footerData: "地点数据：韩国观光公社。照片：韩国观光公社（KOGL 第1类型）。",
   },
   "zh-TW": {
@@ -212,7 +212,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     stationLine: (st, m) => `${st} · ${m} 公尺`,
     stationLocker: "多數車站設有自助置物櫃（T-Locker）。現在還剩幾個空櫃，可以在應用程式的地圖上查看。",
     stationNone: "1.5 公里內沒有地鐵站。如果帶著行李，請先寄放再過來。",
-    footerAbout: "K-Street — 用12種語言介紹首爾的街區。永久免費，無需註冊。",
+    footerAbout: "K-Street — 用12種語言介紹首爾的街區。無需註冊。",
     footerData: "地點資料：韓國觀光公社。照片：韓國觀光公社（KOGL 第1類型）。",
   },
   vi: {
@@ -237,7 +237,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     stationLocker: "Phần lớn các ga có tủ khoá tự động (T-Locker). Bản đồ trong ứng dụng cho biết hiện còn bao nhiêu tủ trống.",
     stationNone: "Không có ga tàu điện ngầm trong vòng 1,5 km. Nếu mang hành lý, hãy gửi trước khi đến.",
     footerAbout:
-      "K-Street — hướng dẫn các khu phố Seoul bằng 12 ngôn ngữ. Miễn phí mãi mãi, không cần đăng ký.",
+      "K-Street — hướng dẫn các khu phố Seoul bằng 12 ngôn ngữ. Không cần đăng ký.",
     footerData:
       "Dữ liệu địa điểm: Tổng cục Du lịch Hàn Quốc. Ảnh: Tổng cục Du lịch Hàn Quốc (KOGL loại 1).",
   },
@@ -263,7 +263,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     stationLocker: "La mayoría de las estaciones tienen taquillas (T-Locker). El mapa de la aplicación muestra cuántas están libres ahora.",
     stationNone: "No hay estación de metro a menos de 1,5 km. Si lleva equipaje, déjelo antes de venir.",
     footerAbout:
-      "K-Street — guía gratuita de los barrios de Seúl en 12 idiomas. Sin registro.",
+      "K-Street — guía de los barrios de Seúl en 12 idiomas. Sin registro.",
     footerData:
       "Datos: Organización de Turismo de Corea. Fotos: Organización de Turismo de Corea (KOGL tipo 1).",
   },
@@ -289,7 +289,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     stationLocker: "La plupart des stations ont des casiers (T-Locker). La carte de l'application indique combien sont libres en ce moment.",
     stationNone: "Pas de station de métro à moins de 1,5 km. Si vous avez des bagages, déposez-les avant de venir.",
     footerAbout:
-      "K-Street — guide gratuit des quartiers de Séoul en 12 langues. Sans inscription.",
+      "K-Street — guide des quartiers de Séoul en 12 langues. Sans inscription.",
     footerData:
       "Données : Organisation du tourisme coréen. Photos : Organisation du tourisme coréen (KOGL type 1).",
   },
@@ -315,7 +315,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     stationLocker: "Die meisten Stationen haben Schließfächer (T-Locker). Die Karte der App zeigt, wie viele gerade frei sind.",
     stationNone: "Keine U-Bahn-Station im Umkreis von 1,5 km. Mit Gepäck: geben Sie es ab, bevor Sie herkommen.",
     footerAbout:
-      "K-Street — kostenloser Führer durch Seouls Viertel in 12 Sprachen. Ohne Anmeldung.",
+      "K-Street — Führer durch Seouls Viertel in 12 Sprachen. Ohne Anmeldung.",
     footerData:
       "Ortsdaten: Korea Tourism Organization. Fotos: Korea Tourism Organization (KOGL Typ 1).",
   },
@@ -341,7 +341,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     stationLocker: "На большинстве станций есть камеры хранения (T-Locker). На карте в приложении видно, сколько ячеек свободно сейчас.",
     stationNone: "Станции метро нет в радиусе 1,5 км. Если у вас багаж, сдайте его заранее.",
     footerAbout:
-      "K-Street — бесплатный гид по районам Сеула на 12 языках. Без регистрации.",
+      "K-Street — гид по районам Сеула на 12 языках. Без регистрации.",
     footerData:
       "Данные о местах: Korea Tourism Organization. Фото: Korea Tourism Organization (KOGL тип 1).",
   },
@@ -367,7 +367,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     stationLocker: "Sebagian besar stasiun punya loker (T-Locker). Peta di aplikasi menunjukkan berapa yang kosong saat ini.",
     stationNone: "Tidak ada stasiun dalam radius 1,5 km. Jika membawa barang, titipkan dulu sebelum datang.",
     footerAbout:
-      "K-Street — panduan gratis lingkungan Seoul dalam 12 bahasa. Tanpa pendaftaran.",
+      "K-Street — panduan lingkungan Seoul dalam 12 bahasa. Tanpa pendaftaran.",
     footerData:
       "Data tempat: Korea Tourism Organization. Foto: Korea Tourism Organization (KOGL Tipe 1).",
   },
@@ -393,7 +393,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     stationLocker: "สถานีส่วนใหญ่มีตู้ล็อกเกอร์ (T-Locker) แผนที่ในแอปจะบอกว่าตอนนี้มีตู้ว่างกี่ตู้",
     stationNone: "ไม่มีสถานีรถไฟใต้ดินในระยะ 1.5 กม. หากมีสัมภาระ กรุณาฝากไว้ก่อนเดินทางมา",
     footerAbout:
-      "K-Street — คู่มือย่านต่าง ๆ ในโซล 12 ภาษา ฟรีตลอดไป ไม่ต้องสมัคร",
+      "K-Street — คู่มือย่านต่าง ๆ ในโซล 12 ภาษา ไม่ต้องสมัคร",
     footerData:
       "ข้อมูลสถานที่: องค์การส่งเสริมการท่องเที่ยวเกาหลี ภาพ: องค์การส่งเสริมการท่องเที่ยวเกาหลี (KOGL ประเภท 1)",
   },
@@ -686,7 +686,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     indexTitle: (n) => `Seoul by District, Month and Kind — ${n} places | K-Street`,
     indexLead: (n, gus, kinds) =>
       `${en(n, "place")} in ${en(gus, "district")} of Seoul: ${kinds}. ` +
-      `Pick a district, a month, or a kind of place. Everything here is free, needs no sign-up, and comes with Korean names for taxis and shops.`,
+      `Pick a district, a month, or a kind of place. No sign-up needed, and comes with Korean names for taxis and shops.`,
     indexDesc: (kinds, gus) =>
       `All of Seoul in K-Street: ${kinds} across ${en(gus, "district")} — browse by district, by month, or by kind.`,
     theme: "Theme",
@@ -696,7 +696,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `${en(n, "place")} in ${en(gus, "district")} of Seoul — either fully indoors, or a market with a covered main aisle. ` +
       `Every one is within 600 m of a subway station. Distances are straight-line, so the walk is a little longer.`,
     rainyDesc: (n) =>
-      `${en(n, "indoor place")} in Seoul for a rainy day — sorted by how close they are to a station. Free, no sign-up, 12 languages.`,
+      `${en(n, "indoor place")} in Seoul for a rainy day — sorted by how close they are to a station. No sign-up, 12 languages.`,
     rainyNear: "Within 300 m of a station — about a 3-minute walk",
     rainyFar: "300–600 m from a station — about 5 minutes",
     rainyMissing:
@@ -759,7 +759,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     indexTitle: (n) => `ソウルをエリア・月・種類から — ${n}か所 | K-Street`,
     indexLead: (n, gus, kinds) =>
       `ソウル${gus}区の${n}か所：${kinds}。` +
-      `エリア、月、種類のどれからでも探せます。すべて無料・登録不要で、タクシーやお店で見せる韓国語名が付いています。`,
+      `エリア、月、種類のどれからでも探せます。登録不要で、タクシーやお店で見せる韓国語名が付いています。`,
     indexDesc: (kinds, gus) =>
       `K-Street のソウル全体：${gus}区の${kinds} — エリア・月・種類から探せます。`,
     theme: "テーマ",
@@ -769,7 +769,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `ソウル${gus}区の${n}件です — 建物の中か、中央通路に屋根がある市場です。` +
       `いずれも地下鉄駅から600m以内。距離は直線距離なので、実際に歩く道のりは少し長くなります。`,
     rainyDesc: (n) =>
-      `雨の日のソウルで行ける屋内スポット${n}件 — 駅から近い順。無料・登録不要・12言語。`,
+      `雨の日のソウルで行ける屋内スポット${n}件 — 駅から近い順。登録不要・12言語。`,
     rainyNear: "駅から300m以内 — 傘をさして3分ほど",
     rainyFar: "駅から300〜600m — 5分ほど",
     rainyMissing:
@@ -832,7 +832,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     indexTitle: (n) => `按区域、月份和类型浏览首尔 — ${n}个地点 | K-Street`,
     indexLead: (n, gus, kinds) =>
       `首尔${gus}个区的${n}个地点：${kinds}。` +
-      `可以按区域、月份或类型来找。全部免费、无需注册，并附有可给出租车和店家看的韩语名称。`,
+      `可以按区域、月份或类型来找。无需注册，并附有可给出租车和店家看的韩语名称。`,
     indexDesc: (kinds, gus) =>
       `K-Street 的首尔全部：${gus}个区的${kinds} — 可按区域、月份或类型浏览。`,
     theme: "主题",
@@ -842,7 +842,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `首尔${gus}个区的${n}处 — 或在建筑内，或是中央通道有顶棚的市场。` +
       `都在地铁站600米以内。距离为直线距离，实际步行会稍远一些。`,
     rainyDesc: (n) =>
-      `下雨天在首尔可去的${n}处室内去处 — 按距地铁站远近排列。免费、免注册、12种语言。`,
+      `下雨天在首尔可去的${n}处室内去处 — 按距地铁站远近排列。免注册、12种语言。`,
     rainyNear: "距车站300米以内 — 撑伞约3分钟",
     rainyFar: "距车站300~600米 — 约5分钟",
     rainyMissing:
@@ -905,7 +905,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     indexTitle: (n) => `按區域、月份和類型瀏覽首爾 — ${n}個地點 | K-Street`,
     indexLead: (n, gus, kinds) =>
       `首爾${gus}個區的${n}個地點：${kinds}。` +
-      `可以按區域、月份或類型來找。全部免費、無需註冊，並附有可給計程車和店家看的韓語名稱。`,
+      `可以按區域、月份或類型來找。無需註冊，並附有可給計程車和店家看的韓語名稱。`,
     indexDesc: (kinds, gus) =>
       `K-Street 的首爾全部：${gus}個區的${kinds} — 可按區域、月份或類型瀏覽。`,
     theme: "主題",
@@ -915,7 +915,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `首爾${gus}個區的${n}處 — 或在建築內，或是中央通道有頂棚的市場。` +
       `都在地鐵站600公尺以內。距離為直線距離，實際步行會稍遠一些。`,
     rainyDesc: (n) =>
-      `下雨天在首爾可去的${n}處室內去處 — 依距地鐵站遠近排列。免費、免註冊、12種語言。`,
+      `下雨天在首爾可去的${n}處室內去處 — 依距地鐵站遠近排列。免註冊、12種語言。`,
     rainyNear: "距車站300公尺以內 — 撐傘約3分鐘",
     rainyFar: "距車站300~600公尺 — 約5分鐘",
     rainyMissing:
@@ -980,7 +980,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     indexTitle: (n) => `구·달·갈래로 보는 서울 — ${n}곳 | K-Street`,
     indexLead: (n, gus, kinds) =>
       `서울 ${gus}개 구의 ${n}곳입니다: ${kinds}. ` +
-      `구, 달, 갈래 어느 쪽으로나 찾아보세요. 전부 무료고 가입이 필요 없습니다.`,
+      `구, 달, 갈래 어느 쪽으로나 찾아보세요. 가입이 필요 없습니다.`,
     indexDesc: (kinds, gus) =>
       `K-Street의 서울 전체: ${gus}개 구의 ${kinds} — 구·달·갈래로 찾아보세요.`,
     theme: "테마",
@@ -990,7 +990,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `서울 ${gus}개 구의 ${n}곳입니다 — 건물 안이거나, 중앙 통로에 지붕이 있는 시장입니다. ` +
       `모두 지하철역에서 600m 안입니다. 거리는 직선거리라 실제로 걷는 길은 조금 더 깁니다.`,
     rainyDesc: (n) =>
-      `비 오는 날 서울에서 갈 만한 실내 ${n}곳 — 역에서 가까운 순. 무료, 가입 없음, 12개 언어.`,
+      `비 오는 날 서울에서 갈 만한 실내 ${n}곳 — 역에서 가까운 순. 가입 없음, 12개 언어.`,
     rainyNear: "역에서 300m 안 — 우산 쓰고 3분쯤",
     rainyFar: "역에서 300~600m — 5분쯤",
     rainyMissing:
@@ -1055,7 +1055,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     indexTitle: (n) => `Seoul theo quận, tháng và loại — ${n} địa điểm | K-Street`,
     indexLead: (n, gus, kinds) =>
       `${n} địa điểm tại ${gus} quận của Seoul: ${kinds}. ` +
-      `Chọn một quận, một tháng, hoặc một loại địa điểm. Tất cả đều miễn phí, không cần đăng ký, và có tên tiếng Hàn để dùng khi đi taxi hay vào cửa hàng.`,
+      `Chọn một quận, một tháng, hoặc một loại địa điểm. Không cần đăng ký, và có tên tiếng Hàn để dùng khi đi taxi hay vào cửa hàng.`,
     indexDesc: (kinds, gus) =>
       `Toàn bộ Seoul trong K-Street: ${kinds} tại ${gus} quận — xem theo quận, theo tháng, hoặc theo loại.`,
     theme: "Chủ đề",
@@ -1065,7 +1065,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `${n} điểm ở ${gus} quận của Seoul — hoặc nằm hẳn trong nhà, hoặc là chợ có mái che ở lối đi chính. ` +
       `Tất cả đều cách ga tàu điện ngầm dưới 600 m. Khoảng cách tính theo đường chim bay nên quãng đi bộ thực tế dài hơn một chút.`,
     rainyDesc: (n) =>
-      `${n} điểm trong nhà ở Seoul cho ngày mưa — xếp theo khoảng cách tới ga. Miễn phí, không cần đăng ký, 12 ngôn ngữ.`,
+      `${n} điểm trong nhà ở Seoul cho ngày mưa — xếp theo khoảng cách tới ga. Không cần đăng ký, 12 ngôn ngữ.`,
     rainyNear: "Cách ga dưới 300 m — đi bộ khoảng 3 phút",
     rainyFar: "Cách ga 300–600 m — khoảng 5 phút",
     rainyMissing:
@@ -1131,7 +1131,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     indexTitle: (n) => `โซลตามเขต เดือน และประเภท — ${n} แห่ง | K-Street`,
     indexLead: (n, gus, kinds) =>
       `${n} แห่งใน ${gus} เขตของโซล: ${kinds} ` +
-      `เลือกจากเขต เดือน หรือประเภทก็ได้ ทั้งหมดฟรี ไม่ต้องสมัคร และมีชื่อภาษาเกาหลีสำหรับใช้กับแท็กซี่และร้านค้า`,
+      `เลือกจากเขต เดือน หรือประเภทก็ได้ ไม่ต้องสมัคร และมีชื่อภาษาเกาหลีสำหรับใช้กับแท็กซี่และร้านค้า`,
     indexDesc: (kinds, gus) =>
       `โซลทั้งหมดใน K-Street: ${kinds} ใน ${gus} เขต — ดูตามเขต เดือน หรือประเภท`,
     theme: "ธีม",
@@ -1141,7 +1141,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `${n} จุดใน ${gus} เขตของโซล — อยู่ในอาคาร หรือเป็นตลาดที่มีหลังคาคลุมทางเดินกลาง ` +
       `ทั้งหมดอยู่ห่างจากสถานีรถไฟใต้ดินไม่เกิน 600 เมตร ระยะทางเป็นเส้นตรง ทางเดินจริงจึงไกลกว่าเล็กน้อย`,
     rainyDesc: (n) =>
-      `${n} จุดในร่มในโซลสำหรับวันฝนตก — เรียงตามระยะห่างจากสถานี ฟรี ไม่ต้องสมัคร 12 ภาษา`,
+      `${n} จุดในร่มในโซลสำหรับวันฝนตก — เรียงตามระยะห่างจากสถานี ไม่ต้องสมัคร 12 ภาษา`,
     rainyNear: "ห่างจากสถานีไม่เกิน 300 ม. — เดินราว 3 นาที",
     rainyFar: "ห่างจากสถานี 300–600 ม. — ราว 5 นาที",
     rainyMissing:
@@ -1205,7 +1205,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     indexTitle: (n) => `Seoul menurut distrik, bulan, dan jenis — ${n} tempat | K-Street`,
     indexLead: (n, gus, kinds) =>
       `${n} tempat di ${gus} distrik Seoul: ${kinds}. ` +
-      `Pilih distrik, bulan, atau jenis tempat. Semuanya gratis, tanpa pendaftaran, dan dilengkapi nama Korea untuk taksi dan toko.`,
+      `Pilih distrik, bulan, atau jenis tempat. Tanpa pendaftaran, dan dilengkapi nama Korea untuk taksi dan toko.`,
     indexDesc: (kinds, gus) =>
       `Seluruh Seoul di K-Street: ${kinds} di ${gus} distrik — telusuri menurut distrik, bulan, atau jenis.`,
     theme: "Tema",
@@ -1215,7 +1215,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `${n} tempat di ${gus} distrik Seoul — sepenuhnya di dalam ruangan, atau pasar dengan lorong utama beratap. ` +
       `Semuanya dalam 600 m dari stasiun kereta bawah tanah. Jarak dihitung garis lurus, jadi jalan kakinya sedikit lebih jauh.`,
     rainyDesc: (n) =>
-      `${n} tempat indoor di Seoul untuk hari hujan — diurutkan dari yang terdekat ke stasiun. Gratis, tanpa daftar, 12 bahasa.`,
+      `${n} tempat indoor di Seoul untuk hari hujan — diurutkan dari yang terdekat ke stasiun. Tanpa daftar, 12 bahasa.`,
     rainyNear: "Dalam 300 m dari stasiun — sekitar 3 menit jalan kaki",
     rainyFar: "300–600 m dari stasiun — sekitar 5 menit",
     rainyMissing:
@@ -1286,7 +1286,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     indexTitle: (n) => `Seúl por distrito, mes y tipo — ${n} lugares | K-Street`,
     indexLead: (n, gus, kinds) =>
       `${n} ${n === 1 ? "lugar" : "lugares"} en ${gus} ${gus === 1 ? "distrito" : "distritos"} de Seúl: ${kinds}. ` +
-      `Elige un distrito, un mes o un tipo de lugar. Todo es gratis, sin registro, y viene con nombres en coreano para taxis y tiendas.`,
+      `Elige un distrito, un mes o un tipo de lugar. Sin registro, y viene con nombres en coreano para taxis y tiendas.`,
     indexDesc: (kinds, gus) =>
       `Todo Seúl en K-Street: ${kinds} en ${gus} ${gus === 1 ? "distrito" : "distritos"} — explora por distrito, por mes o por tipo.`,
     theme: "Tema",
@@ -1296,7 +1296,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `${n} lugares en ${gus} distritos de Seúl: o bien bajo techo por completo, o mercados con el pasillo central cubierto. ` +
       `Todos están a menos de 600 m de una estación de metro. Las distancias son en línea recta, así que el camino a pie es algo más largo.`,
     rainyDesc: (n) =>
-      `${n} lugares cubiertos en Seúl para un día de lluvia — ordenados por cercanía al metro. Gratis, sin registro, 12 idiomas.`,
+      `${n} lugares cubiertos en Seúl para un día de lluvia — ordenados por cercanía al metro. Sin registro, 12 idiomas.`,
     rainyNear: "A menos de 300 m de una estación — unos 3 minutos a pie",
     rainyFar: "De 300 a 600 m de una estación — unos 5 minutos",
     rainyMissing:
@@ -1360,7 +1360,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     indexTitle: (n) => `Séoul par quartier, mois et type — ${n} lieux | K-Street`,
     indexLead: (n, gus, kinds) =>
       `${n} ${n === 1 ? "lieu" : "lieux"} dans ${gus} ${gus === 1 ? "quartier" : "quartiers"} de Séoul : ${kinds}. ` +
-      `Choisissez un quartier, un mois ou un type de lieu. Tout est gratuit, sans inscription, avec les noms coréens pour les taxis et les commerces.`,
+      `Choisissez un quartier, un mois ou un type de lieu. Sans inscription, avec les noms coréens pour les taxis et les commerces.`,
     indexDesc: (kinds, gus) =>
       `Tout Séoul dans K-Street : ${kinds} dans ${gus} ${gus === 1 ? "quartier" : "quartiers"} — parcourez par quartier, par mois ou par type.`,
     theme: "Thème",
@@ -1370,7 +1370,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `${n} lieux dans ${gus} quartiers de Séoul : soit entièrement à l'intérieur, soit des marchés dont l'allée centrale est couverte. ` +
       `Tous sont à moins de 600 m d'une station de métro. Les distances sont à vol d'oiseau : le trajet à pied est un peu plus long.`,
     rainyDesc: (n) =>
-      `${n} lieux couverts à Séoul pour un jour de pluie — classés par proximité du métro. Gratuit, sans inscription, 12 langues.`,
+      `${n} lieux couverts à Séoul pour un jour de pluie — classés par proximité du métro. Sans inscription, 12 langues.`,
     rainyNear: "À moins de 300 m d'une station — environ 3 minutes à pied",
     rainyFar: "De 300 à 600 m d'une station — environ 5 minutes",
     rainyMissing:
@@ -1441,7 +1441,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     indexTitle: (n) => `Seoul nach Stadtteil, Monat und Art — ${n} Orte | K-Street`,
     indexLead: (n, gus, kinds) =>
       `${n} ${n === 1 ? "Ort" : "Orte"} in ${deIn(gus)} von Seoul: ${kinds}. ` +
-      `Wählen Sie einen Stadtteil, einen Monat oder eine Art von Ort. Alles ist kostenlos, ohne Anmeldung, und mit koreanischen Namen für Taxi und Geschäfte.`,
+      `Wählen Sie einen Stadtteil, einen Monat oder eine Art von Ort. Ohne Anmeldung, und mit koreanischen Namen für Taxi und Geschäfte.`,
     indexDesc: (kinds, gus) =>
       `Ganz Seoul in K-Street: ${kinds} in ${deIn(gus)} — nach Stadtteil, Monat oder Art durchsuchen.`,
     theme: "Thema",
@@ -1451,7 +1451,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `${n} Orte in ${deIn(gus)} von Seoul — entweder ganz im Gebäude oder Märkte mit überdachtem Hauptgang. ` +
       `Alle höchstens 600 m von einer U-Bahn-Station entfernt. Die Entfernungen sind Luftlinie, der Fußweg ist also etwas länger.`,
     rainyDesc: (n) =>
-      `${n} überdachte Orte in Seoul für einen Regentag — nach Nähe zur U-Bahn sortiert. Kostenlos, ohne Anmeldung, 12 Sprachen.`,
+      `${n} überdachte Orte in Seoul für einen Regentag — nach Nähe zur U-Bahn sortiert. Ohne Anmeldung, 12 Sprachen.`,
     rainyNear: "Höchstens 300 m bis zur Station — etwa 3 Minuten zu Fuß",
     rainyFar: "300–600 m bis zur Station — etwa 5 Minuten",
     rainyMissing:
@@ -1526,7 +1526,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
     indexTitle: (n) => `Сеул по районам, месяцам и типам — ${ru3(n, "место", "места", "мест")} | K-Street`,
     indexLead: (n, gus, kinds) =>
       `${ru3(n, "место", "места", "мест")} ${ruDistrictsIn(gus)} Сеула: ${kinds}. ` +
-      `Выберите район, месяц или тип места. Всё бесплатно, без регистрации, с корейскими названиями для такси и магазинов.`,
+      `Выберите район, месяц или тип места. Без регистрации, с корейскими названиями для такси и магазинов.`,
     indexDesc: (kinds, gus) =>
       `Весь Сеул в K-Street: ${kinds} ${ruDistrictsIn(gus)} — смотрите по районам, месяцам или типам.`,
     theme: "Тема",
@@ -1536,7 +1536,7 @@ export const HUB_STRINGS: Partial<Record<Language, HubStrings>> = {
       `${n} мест в Сеуле (районов: ${gus}) — либо полностью под крышей, либо рынки с крытым центральным проходом. ` +
       `Все не дальше 600 м от станции метро. Расстояния по прямой, поэтому пешком получится чуть дольше.`,
     rainyDesc: (n) =>
-      `${ru3(n, "место", "места", "мест")} под крышей в Сеуле на дождливый день — по близости к метро. Бесплатно, без регистрации, 12 языков.`,
+      `${ru3(n, "место", "места", "мест")} под крышей в Сеуле на дождливый день — по близости к метро. Без регистрации, 12 языков.`,
     rainyNear: "Не дальше 300 м от станции — около 3 минут пешком",
     rainyFar: "300–600 м от станции — около 5 минут",
     rainyMissing:
