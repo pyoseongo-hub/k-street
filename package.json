@@ -35,7 +35,8 @@
     "check-nearby-course": "vite build --ssr scripts/check-nearby-course.ts --outDir dist-ssr && node dist-ssr/check-nearby-course.js",
     "culture-places": "vite build --ssr scripts/build-culture-places.ts --outDir dist-ssr && node dist-ssr/build-culture-places.js",
     "todo-board": "vite build --ssr scripts/build-todo-board.ts --outDir dist-ssr && node dist-ssr/build-todo-board.js",
-    "hike-gaps": "vite build --ssr scripts/audit-hike-gaps.ts --outDir dist-ssr && node dist-ssr/audit-hike-gaps.js"
+    "hike-gaps": "vite build --ssr scripts/audit-hike-gaps.ts --outDir dist-ssr && node dist-ssr/audit-hike-gaps.js",
+    "launch-scope": "node scripts/check-launch-scope.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",
