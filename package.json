@@ -37,7 +37,8 @@
     "todo-board": "vite build --ssr scripts/build-todo-board.ts --outDir dist-ssr && node dist-ssr/build-todo-board.js",
     "hike-gaps": "vite build --ssr scripts/audit-hike-gaps.ts --outDir dist-ssr && node dist-ssr/audit-hike-gaps.js",
     "launch-scope": "node scripts/check-launch-scope.mjs",
-    "free-claim": "node scripts/check-free-claim.mjs"
+    "free-claim": "node scripts/check-free-claim.mjs",
+    "no-photo": "vite build --ssr scripts/audit-no-photo.ts --outDir dist-ssr && node dist-ssr/audit-no-photo.js"
   },
   "dependencies": {
     "react": "^19.2.8",

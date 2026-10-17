@@ -52,13 +52,19 @@ for (const [구] of 볼구) {
   const h = 호스트[구];
   if (!h) { console.log(`   ${구} — 호스트를 모른다 (RSS 가 없어서 뽑을 데가 없다). 사람이 찾아야 한다`); continue; }
   for (const f of 틀(h)) {
-    let 글 = "";
-    try { 글 = await fetchHtml(f.url, { timeoutMs: 15000 }); }
-    catch (e) { console.log(`   ❌ ${구} ${f.이름} — ${e.message?.slice(0, 50)}`); continue; }
+    // ⚠️ fetchHtml 은 **글자가 아니라 `{ status, final, html }`** 를 준다.
+    //    2026-10-17 첫 실행에서 이걸 글자처럼 써서 첫 호출에 터졌다.
+    let r;
+    try { r = await fetchHtml(f.url, { timeoutMs: 15000 }); }
+    catch (e) { console.log(`   ❌ ${구} ${f.이름} — ${String(e.message ?? e).slice(0, 60)}`); continue; }
+    const 글 = r?.html ?? "";
+    if (r?.status !== 200) { console.log(`   ·  ${구} ${f.이름} — 상태 ${r?.status}`); continue; }
     const 건수 = (글.match(/<item\b/gi) ?? []).length + (글.match(/<entry\b/gi) ?? []).length;
-    const 제목 = 글.match(/<title>(?:<!\[CDATA\[)?([^<\]]{4,60})/g)?.slice(1, 3) ?? [];
+    // 첫 <title> 은 피드 이름이라 건너뛰고 글 제목 두 개만 보여 준다
+    const 제목 = [...글.matchAll(/<title>\s*(?:<!\[CDATA\[)?\s*([^<\]]{4,60})/gi)]
+      .slice(1, 3).map((m) => m[1].trim());
     console.log(건수 > 0
-      ? `   ✅ ${구} ${f.이름} — 글 ${건수}건\n        ${f.url}\n        보기: ${제목.map((t) => t.replace(/<title>(<!\[CDATA\[)?/, "")).join(" / ")}`
+      ? `   ✅ ${구} ${f.이름} — 글 ${건수}건\n        ${f.url}\n        보기: ${제목.join(" / ") || "(제목을 못 읽었다)"}`
       : `   ·  ${구} ${f.이름} — 글 0건`);
     await new Promise((r) => setTimeout(r, 400));
   }

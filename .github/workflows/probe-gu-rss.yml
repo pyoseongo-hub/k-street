@@ -20,6 +20,7 @@ jobs:
           node-version: 22
 
       - name: 두드려 본다
+        id: probe
         continue-on-error: true # 🧯 끊겨도 요약은 남긴다
         # pipefail 이 없으면 node 가 죽어도 tee 가 성공해 이 단계가 초록색이 된다.
         run: |
@@ -31,3 +32,12 @@ jobs:
         run: |
           { echo "## 📡 구청 RSS 두드리기"; echo ""; echo '```'; \
             cat rss.txt 2>/dev/null || echo "(로그 없음)"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      # 🚨 **깨졌는데 초록불이면 안 본다.** 2026-10-17 첫 실행이 그랬다 —
+      #    스크립트가 첫 호출에 터졌는데 `continue-on-error` 때문에 job 이 success 였다.
+      #    요약을 남기려고 그 줄은 두되, 여기서 다시 빨간불을 켠다.
+      - name: 두드리기가 끝까지 돌았나
+        if: steps.probe.outcome != 'success'
+        run: |
+          echo "❌ 두드리기가 중간에 멈췄다 — 위 요약을 볼 것"
+          exit 1
