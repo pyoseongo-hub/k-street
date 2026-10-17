@@ -1,0 +1,33 @@
+name: Probe gu RSS (구청 RSS 다른 게시판 두드리기)
+
+# 📡 축제 글이 올 리 없는 게시판을 읽고 있는 구(강서=입찰정보 등)를 고치려고
+#    다른 RSS 주소를 **실제로 열어 본다.** 까닭은 scripts/probe-gu-rss.mjs 머리말.
+#
+# 🚫 아무것도 커밋하지 않는다. ✅ 가 뜬 것만 사람이 gu-rss-extra.json 에 옮겨 적는다.
+# 🏠 작업 환경은 go.kr 에 못 닿는다(DNS) — 그래서 이 일은 여기서만 된다.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10 # ⏱️ 천장이 없으면 느려진 것이 안 드러난다
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 두드려 본다
+        continue-on-error: true # 🧯 끊겨도 요약은 남긴다
+        # pipefail 이 없으면 node 가 죽어도 tee 가 성공해 이 단계가 초록색이 된다.
+        run: |
+          set -o pipefail
+          node scripts/probe-gu-rss.mjs 2>&1 | tee rss.txt
+
+      - name: 요약에 붙인다
+        if: always()
+        run: |
+          { echo "## 📡 구청 RSS 두드리기"; echo ""; echo '```'; \
+            cat rss.txt 2>/dev/null || echo "(로그 없음)"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"

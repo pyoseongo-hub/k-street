@@ -29,6 +29,12 @@ import { writeFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fetchHtml } from "./lib/html-text.mjs";
 import feeds from "../src/data/gu-rss-feeds.json";
+// 🧩 **손으로 확인해 더한 피드.** 서울시 RSS 안내는 구마다 **하나씩만** 준다 —
+//    그 하나가 강서는 「입찰정보」, 은평은 「강좌안내」, 종로는 「교육」이었고,
+//    동대문·용산·송파는 아예 없다. 거기엔 축제 글이 올 리가 없다.
+//    🚫 주소를 짐작해서 적지 않는다. Actions 의 **Probe gu RSS** 로 실제로 열어 보고,
+//       글이 들어오는 것만 이 파일에 적는다.
+import extra from "../src/data/gu-rss-extra.json";
 import { ALL_FESTIVALS } from "../src/data/seed";
 
 const ROOT = process.cwd();
@@ -44,7 +50,20 @@ const 며칠 = Number(process.argv.find((a) => a.startsWith("--days="))?.split("
  *    목록의 절반을 먹으면 **아무도 그 목록을 안 본다.** 좁히는 쪽이 맞다.
  *    놓치는 것이 있어도 괜찮다 — 이건 **빈칸을 메우는 보조 창구**지 유일한 창구가 아니다.
  */
-const 축제말 = /축제|페스티벌|페스타|문화제|야행|한마당|불꽃|퍼레이드|등축제|빛축제|가을밤|야시장/;
+ *
+ * 🌙 **2026-10-17에 다섯 낱말을 더했다** — `야식·밤마실·달밤·장터·미식`.
+ *    사장님이 인스타 「10월 야간축제 달력」을 보내 주셨는데 **17곳 중 우리에게 0곳**이었다.
+ *    시장 상인회가 여는 야시장은 제목에 「축제」가 없는 것이 많다
+ *    (「고척 밤마실, 맛과 낭만이 켜지다」·「아리아 달밤장터」).
+ *    · 넓히기 전에 **되물렸던 소음 8개로 시험했다** — 「고교입시 박람회」·「지진안전주간」·
+ *      「먹거리 안전 점검」·「마켓 입점업체 공모」가 **하나도 안 들어온다.**
+ *      좋은 것은 1→5개로 늘고 소음은 0 그대로다. 그래서 넓혀도 된다고 봤다.
+ *    · 「먹거리」는 **일부러 안 넣었다** — 「먹거리 안전 점검」처럼 행정 글이 걸린다.
+ *    ⚠️ **낱말이 이 문제의 뿌리는 아니었다.** 지금 낱말로도 17개 중 14개를 잡는다.
+ *       안 들어온 진짜 까닭은 **보는 게시판**이다 — 강서는 「입찰정보」를 읽고 있었다.
+ *       그쪽은 gu-rss-extra.json 이 맡는다.
+ */
+const 축제말 = /축제|페스티벌|페스타|문화제|야행|한마당|불꽃|퍼레이드|등축제|빛축제|가을밤|야시장|야식|밤마실|달밤|장터|미식/;
 /**
  * 🚫 같은 칸에 **행정 글과 곁다리 글**이 섞여 온다.
  *    · 입찰·공고 — 「입찰공고」 제목에도 「축제」가 들어 있다
@@ -94,7 +113,17 @@ const 새것: Item[] = [];
 const 있음: Item[] = [];
 const 못읽음: string[] = [];
 
-const 구목록 = (feeds as { 구: Record<string, { feeds: { 이름: string; url: string }[] }> })["구"];
+type 피드 = { 이름: string; url: string };
+const 서울시목록 = (feeds as { 구: Record<string, { feeds: 피드[] }> })["구"];
+const 더한것 = (extra as { 구?: Record<string, 피드[]> })["구"] ?? {};
+// 두 곳을 합친다. 같은 주소가 두 번 들어가지 않게 거른다.
+const 구목록: Record<string, { feeds: 피드[] }> = {};
+for (const 구 of new Set([...Object.keys(서울시목록), ...Object.keys(더한것)])) {
+  const 본 = new Set<string>();
+  const 합 = [...(서울시목록[구]?.feeds ?? []), ...(더한것[구] ?? [])]
+    .filter((f) => f?.url && !본.has(f.url) && 본.add(f.url));
+  구목록[구] = { feeds: 합 };
+}
 for (const [구, v] of Object.entries(구목록)) {
   for (const f of v.feeds) {
     try {
