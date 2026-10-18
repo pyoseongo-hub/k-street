@@ -36,6 +36,14 @@ export const 있는배너: ReadonlySet<string> = new Set<배너갈래>([
   //    사장님이 보고 *"확대해도 발 정상이야 손이 오히려 이상하지 그냥써"* 로 정하셨다
   //    (2026-10-18). 카드 크기(300x200)에서는 사람이 쌀알만 해 안 보인다.
   "autumn-road",
+  // 🌊 강변 피크닉. 다리·아파트 스카이라인이 있어 한강처럼 보이지만 **특정 다리가 아니다**
+  //    (일반 콘크리트 교량 + 뒤에 산). 전국 어느 강변으로도 읽힌다.
+  "festival-day-4",
+  "festival-day-5",
+  "festival-day-6",
+  "festival-tradition",
+  "festival-flower",
+  "street-tour",
 ]);
 
 // 축제 갈래를 가르는 낱말. **위에 있는 것이 이긴다.**

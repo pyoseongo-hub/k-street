@@ -42,7 +42,8 @@
     "banner-bucket": "vite build --ssr scripts/audit-banner-bucket.ts --outDir dist-ssr && node dist-ssr/audit-banner-bucket.js",
     "no-photo-city": "vite build --ssr scripts/audit-no-photo-city.ts --outDir dist-ssr && node dist-ssr/audit-no-photo-city.js",
     "ai-banner": "node scripts/check-ai-banner.mjs",
-    "banner-size": "node scripts/check-banner-size.mjs"
+    "banner-size": "node scripts/check-banner-size.mjs",
+    "banner-cover": "vite build --ssr scripts/audit-banner-cover.ts --outDir dist-ssr && node dist-ssr/audit-banner-cover.js"
   },
   "dependencies": {
     "react": "^19.2.8",
