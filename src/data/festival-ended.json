@@ -10,13 +10,13 @@
     "",
     "✋ 지우지는 않는다. 그 축제는 **내년에 또 열린다** — 자리는 남기고 상태만 바꾼다."
   ],
-  "받은날": "2026-10-17",
+  "받은날": "2026-10-18",
   "곳": {
     "ks_7": {
       "start": "2026-09-19",
       "end": "2026-09-20",
       "title": "2026 구로G페스티벌(아시아문화축제)",
-      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=634"
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=631"
     },
     "ks_b": {
       "start": "2026-10-03",
@@ -46,6 +46,17 @@
       "title": "2026 남산골 추석축제 [남산달빛마당]",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=468"
     },
+    "fs_191": {
+      "start": "2026-10-16",
+      "end": "2026-10-17",
+      "title": "2026 서울도시농업박람회",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=191"
+    },
+    "tour_2618971": {
+      "start": "2026-10-17",
+      "title": "2026 제11회 구로청소년축제",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=629"
+    },
     "tour_2601242": {
       "start": "2026-10-09",
       "title": "제15회 도봉한글잔치",
@@ -55,6 +66,11 @@
       "start": "2026-09-19",
       "title": "2026 제4회 은평청년축제 [아무도 모르는 축제2]",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=650"
+    },
+    "tour_3001045": {
+      "start": "2026-10-10",
+      "title": "2026 한강 종이비행기 축제",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=356"
     },
     "tour_3546110": {
       "start": "2026-10-02",
