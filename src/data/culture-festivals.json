@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-10-19",
+  "받은날": "2026-10-20",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -4580,6 +4580,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401031"
     },
     {
+      "seq": "402756",
+      "title": "2026 순천문화기획학교 로컬기획자 페스티벌 'ST.ART'",
+      "start": "2026-10-31",
+      "end": "2026-10-31",
+      "place": "순천부 읍성 남문터광장",
+      "area": "전남광주통합",
+      "sigungu": "순천시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/f4ea9ae3f1a1475eb8125690856c4b5e.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=402756"
+    },
+    {
       "seq": "402676",
       "title": "2026 한강 물빛 재즈 크루즈",
       "start": "2026-10-31",
@@ -4664,6 +4676,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=402552"
     },
     {
+      "seq": "402698",
+      "title": "한중일 융합예술 교류사업 <Collective Karma, Who is We?> 포럼 개최 안내",
+      "start": "2026-11-05",
+      "end": "2026-11-05",
+      "place": "정동1928 아트센터",
+      "area": "서울",
+      "sigungu": "중구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/e66ec0acb26943799f8694ef1420d4b1.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=402698"
+    },
+    {
       "seq": "399624",
       "title": "2026 청주 원도심 골목길축제 <가을 : 잔치집,대성>",
       "start": "2026-11-07",
@@ -4674,6 +4698,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202609/5afe9b9cfe094afaa0f976e03e208c64.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=399624"
+    },
+    {
+      "seq": "402844",
+      "title": "제4회 문화체육관광 디지털혁신 포럼",
+      "start": "2026-11-17",
+      "end": "2026-11-17",
+      "place": "양재 엘타워 6층 그레이스홀",
+      "area": "서울",
+      "sigungu": "서초구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/89ed480033df424c84d12c7f16270ef6.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=402844"
     }
   ]
 }

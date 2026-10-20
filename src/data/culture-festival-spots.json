@@ -4521,6 +4521,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=399317"
   },
   {
+    "id": "cf_402756",
+    "city": "jeonnam",
+    "gu": "순천시",
+    "category": "festival",
+    "name": "2026 순천문화기획학교 로컬기획자 페스티벌 'ST.ART'",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402756"
+  },
+  {
     "id": "cf_402676",
     "city": "seoul",
     "gu": "영등포구",
