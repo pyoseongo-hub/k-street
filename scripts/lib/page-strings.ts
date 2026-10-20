@@ -61,6 +61,8 @@ export interface PageStrings {
   checkedOn: (date: string) => string;
   /** 같은 구의 다른 곳 목록 제목 */
   moreIn: (gu: string) => string;
+  /** 📏 「주변 장소」 목록 아래 한 줄 — 거리는 좌표로 잰 **직선거리**다(2026-10-20). */
+  straightLineNote: string;
   /** 아래 딱지 줄 제목 */
   browse: string;
   /** 「종로구 전체 보기」 */
@@ -106,6 +108,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     pastEdition: (y) => `${y}년 회차 기록입니다 — 올해도 열리는지 공식 안내를 확인하세요`,
     checkedOn: (d) => `${d}에 주최 측 공지에서 확인했습니다`,
     moreIn: (gu) => `${gu}의 다른 곳`,
+    straightLineNote: "가까운 순 · 거리는 직선거리예요. 실제로 걸으면 더 멀어요.",
     browse: "둘러보기",
     everythingIn: (gu) => `${gu} 전체 보기`,
     openApp: "서울의 다른 곳 더 보기 →",
@@ -130,6 +133,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     pastEdition: (y) => `Record of the ${y} edition — check the official notice to see if it runs this year`,
     checkedOn: (d) => `Checked against the organiser's notice on ${d}`,
     moreIn: (gu) => `More in ${gu}`,
+    straightLineNote: "Nearest first · distances are straight-line; walking is longer.",
     browse: "Browse",
     everythingIn: (gu) => `Everything in ${gu}`,
     openApp: "See more places in Seoul →",
@@ -156,6 +160,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     pastEdition: (y) => `${y}年開催分の記録です — 今年も開催されるかは公式案内をご確認ください`,
     checkedOn: (d) => `${d}に主催者の公式告知で確認しました`,
     moreIn: (gu) => `${gu}のほかの場所`,
+    straightLineNote: "近い順 · 距離は直線距離です。実際に歩くともっと遠くなります。",
     browse: "ほかを見る",
     everythingIn: (gu) => `${gu}をすべて見る`,
     openApp: "ソウルのほかの場所を見る →",
@@ -180,6 +185,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     pastEdition: (y) => `这是${y}年那一届的记录 — 今年是否举办请查看官方公告`,
     checkedOn: (d) => `已于${d}核对主办方公告`,
     moreIn: (gu) => `${gu}的其他地方`,
+    straightLineNote: "由近到远 · 距离为直线距离，实际步行会更远。",
     browse: "浏览",
     everythingIn: (gu) => `查看${gu}全部`,
     openApp: "查看首尔更多地方 →",
@@ -204,6 +210,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     pastEdition: (y) => `這是${y}年那一屆的紀錄 — 今年是否舉辦請查看官方公告`,
     checkedOn: (d) => `已於${d}核對主辦單位公告`,
     moreIn: (gu) => `${gu}的其他地方`,
+    straightLineNote: "由近到遠 · 距離為直線距離，實際步行會更遠。",
     browse: "瀏覽",
     everythingIn: (gu) => `查看${gu}全部`,
     openApp: "查看首爾更多地方 →",
@@ -228,6 +235,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     pastEdition: (y) => `Ghi nhận của kỳ ${y} — hãy xem thông báo chính thức để biết năm nay có tổ chức không`,
     checkedOn: (d) => `Đã đối chiếu với thông báo của ban tổ chức ngày ${d}`,
     moreIn: (gu) => `Địa điểm khác ở ${gu}`,
+    straightLineNote: "Gần nhất trước · khoảng cách là đường chim bay; đi bộ thực tế sẽ xa hơn.",
     browse: "Xem thêm",
     everythingIn: (gu) => `Tất cả ở ${gu}`,
     openApp: "Xem thêm địa điểm ở Seoul →",
@@ -254,6 +262,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     pastEdition: (y) => `Registro de la edición de ${y} — consulta el aviso oficial para saber si se celebra este año`,
     checkedOn: (d) => `Verificado con el aviso del organizador el ${d}`,
     moreIn: (gu) => `Más en ${gu}`,
+    straightLineNote: "Primero lo más cercano · distancias en línea recta; a pie es más.",
     browse: "Explorar",
     everythingIn: (gu) => `Todo en ${gu}`,
     openApp: "Ver más lugares de Seúl →",
@@ -280,6 +289,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     pastEdition: (y) => `Trace de l’édition ${y} — consultez l’avis officiel pour savoir si elle a lieu cette année`,
     checkedOn: (d) => `Vérifié auprès de l’annonce de l’organisateur le ${d}`,
     moreIn: (gu) => `Autres lieux à ${gu}`,
+    straightLineNote: "Les plus proches d'abord · distances à vol d'oiseau ; à pied, c'est plus long.",
     browse: "Parcourir",
     everythingIn: (gu) => `Tout à ${gu}`,
     openApp: "Voir plus de lieux à Séoul →",
@@ -306,6 +316,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     pastEdition: (y) => `Aufzeichnung der Ausgabe ${y} — bitte die offizielle Ankündigung prüfen, ob sie dieses Jahr stattfindet`,
     checkedOn: (d) => `Am ${d} mit der Ankündigung des Veranstalters abgeglichen`,
     moreIn: (gu) => `Mehr in ${gu}`,
+    straightLineNote: "Nächste zuerst · Luftlinie; zu Fuß ist es weiter.",
     browse: "Entdecken",
     everythingIn: (gu) => `Alles in ${gu}`,
     openApp: "Mehr Orte in Seoul ansehen →",
@@ -332,6 +343,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     pastEdition: (y) => `Запись о выпуске ${y} года — смотрите официальное объявление, проводится ли он в этом году`,
     checkedOn: (d) => `Сверено с объявлением организатора ${d}`,
     moreIn: (gu) => `Ещё в ${gu}`,
+    straightLineNote: "Сначала ближайшие · расстояние по прямой; пешком дальше.",
     browse: "Смотреть",
     everythingIn: (gu) => `Всё в ${gu}`,
     openApp: "Больше мест в Сеуле →",
@@ -358,6 +370,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     pastEdition: (y) => `Catatan edisi ${y} — cek pengumuman resmi apakah tahun ini digelar`,
     checkedOn: (d) => `Dicek dengan pengumuman penyelenggara pada ${d}`,
     moreIn: (gu) => `Lainnya di ${gu}`,
+    straightLineNote: "Terdekat dulu · jarak garis lurus; berjalan kaki lebih jauh.",
     browse: "Jelajahi",
     everythingIn: (gu) => `Semua di ${gu}`,
     openApp: "Lihat tempat lain di Seoul →",
@@ -384,6 +397,7 @@ export const PAGE_STRINGS: Record<Language, PageStrings> = {
     pastEdition: (y) => `บันทึกของครั้งปี ${y} — โปรดตรวจสอบประกาศทางการว่าปีนี้จัดหรือไม่`,
     checkedOn: (d) => `ตรวจสอบกับประกาศของผู้จัดเมื่อ ${d}`,
     moreIn: (gu) => `ที่อื่นใน ${gu}`,
+    straightLineNote: "เรียงจากใกล้ที่สุด · ระยะทางเป็นเส้นตรง เดินจริงจะไกลกว่านี้",
     browse: "ดูเพิ่มเติม",
     everythingIn: (gu) => `ทั้งหมดใน ${gu}`,
     openApp: "ดูสถานที่อื่นในโซล →",

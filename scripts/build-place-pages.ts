@@ -37,6 +37,7 @@ import { galleryShotsFor } from "../src/lib/photoGallery";
 import { districtFullName, dongName } from "../src/data/districtNamesEn";
 // 🍚 밥집 쪽으로 잇는 주소는 **표 한 장**에서만 온다(src/lib/partnerLinks.ts).
 import { eatNearbyUrl } from "../src/lib/partnerLinks";
+import { calculateDistance } from "../src/lib/geolocation";
 // 🗓️ 이름에 지난 연도가 박힌 행사(「2025 서울한옥위크」)를 가려내는 잣대.
 //    앱과 이 생성기가 **같은 함수**를 쓴다 — 잣대가 둘이면 한쪽만 고치게 된다.
 import { pastEditionYear } from "../src/lib/pastEdition";
@@ -672,13 +673,35 @@ function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
   // 🔗 같은 구의 다른 곳으로 이어 준다. 크롤러는 링크를 타고 다니므로,
   //    페이지들이 서로 이어져 있어야 **다 발견된다.** 섬처럼 떨어져 있으면
   //    사이트맵에 적어도 잘 안 온다. 손님에게도 다음에 갈 곳이 된다.
-  const nearby = sameGu
-    .filter((q) => q.id !== p.id)
+  //
+  // 📏 **가까운 순으로 고른다** (사장님 요청서 2026-10-20 ④ 「주변 관광지 자동 연결」).
+  //    그전에는 같은 구에서 **자료에 적힌 차례대로 앞의 8곳**이었다 — 경복궁 페이지 아래에
+  //    구 반대편 끝의 곳이 걸리곤 했다. 좌표가 있으면 직선거리로 줄 세우고 거리를 붙인다.
+  //    · 같은 구 안에서만 고른다 — 제목이 「○○구의 다른 곳」이라 말과 맞아야 한다.
+  //    · 좌표가 없는 곳은 거리를 지어내지 않고 **뒤에 예전 차례대로** 둔다.
+  //    · 시간(「걸어서 10분」)은 쓰지 않는다 — 머무는 시간·걷는 속도는 사람마다 다르다
+  //      (docs/코스-추천.md). 미터는 좌표에서 나오는 사실이다.
+  const here = p.lat != null && p.lng != null ? { lat: p.lat, lng: p.lng } : null;
+  const others = sameGu.filter((q) => q.id !== p.id);
+  const ranked = here
+    ? [
+        ...others
+          .filter((q) => q.lat != null && q.lng != null)
+          .map((q) => ({ q, km: calculateDistance(here, { lat: q.lat!, lng: q.lng! }) }))
+          .sort((a, b) => a.km - b.km),
+        ...others.filter((q) => q.lat == null || q.lng == null).map((q) => ({ q, km: undefined as number | undefined })),
+      ]
+    : others.map((q) => ({ q, km: undefined as number | undefined }));
+  const showDistance = ranked.slice(0, 8).some((x) => x.km != null);
+  const fmtKm = (km: number) => (km < 1 ? `${Math.max(50, Math.round((km * 1000) / 50) * 50)} m` : `${km.toFixed(1)} km`);
+  const nearby = ranked
     .slice(0, 8)
     .map(
-      (q) =>
+      ({ q, km }) =>
         `<li><a href="/${langPath(lang, `place/${savedSlugs[q.id]}/`)}">${esc(translateText(q.name, lang))}` +
-        `<span class="ko"> ${esc(q.name)}</span></a></li>`
+        `<span class="ko"> ${esc(q.name)}</span></a>` +
+        (km != null ? ` <span class="dist">· ${fmtKm(km)}</span>` : "") +
+        `</li>`
     )
     .join("");
 
@@ -926,7 +949,7 @@ ${
 }
 <div class="go"><a class="app" href="/">${esc(S.openApp)}</a></div>
 
-${nearby ? `<h2>${esc(S.moreIn(guName))}</h2><ul>${nearby}</ul>` : ""}
+${nearby ? `<h2>${esc(S.moreIn(guName))}</h2><ul>${nearby}</ul>${showDistance ? `<p class="note">${esc(S.straightLineNote)}</p>` : ""}` : ""}
 
 <h2>${esc(S.browse)}</h2>
 <ul class="chips">
