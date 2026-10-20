@@ -81,9 +81,11 @@ interface Props {
   forceCategory?: Category | null;
   /** 누를 때마다 1씩 올라가는 번호. 같은 갈래를 다시 눌러도 먹히게 한다. */
   jump?: number;
+  /** 🧭 메인 바로가기 「내 주변」 — 올라가면 아래 「내 주변 코스」를 펼친다(NearbyCourse 의 openJump). */
+  nearJump?: number;
 }
 
-export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Props = {}) {
+export default function DistrictExplorer({ forceCategory = null, jump = 0, nearJump = 0 }: Props = {}) {
   const { t, language } = useLanguage();
   const withCity = useCityText();
   // 🏙️ 지금 보고 있는 도시의 곳만. 도시가 하나일 때는 ALL_PLACES 와 같다.
@@ -248,7 +250,7 @@ export default function DistrictExplorer({ forceCategory = null, jump = 0 }: Pro
           둘 다 둔다 — 사장님이 2026-09-12에 구 선택을 택한 이유("매일 숙소에서
           계획 짜면 같은장소니")는 여전히 맞고, 이건 그 반대쪽 경우다.
           🔒 **열어도 위치를 안 묻는다** — 「코스 만들기」를 눌러야 묻는다. */}
-      <NearbyCourse />
+      <NearbyCourse openJump={nearJump} />
 
       {/* 🗺️ 고르는 것(갈래 칩 · 내 위치 · 육각 지도)을 맨 위에 모아 둔다.
           **화면에 붙여 두지 않는다** — 스크롤하면 그냥 위로 밀려 나간다.

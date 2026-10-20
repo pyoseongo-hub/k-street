@@ -25,6 +25,9 @@ import VideoCard from "./components/VideoCard";
 import BrandMark from "./components/BrandMark";
 import CityPicker from "./components/CityPicker";
 import CityCard from "./components/CityCard";
+import QuickLinks, { type QuickTarget } from "./components/QuickLinks";
+import type { WhenJump } from "./components/MonthlyFestivalPanel";
+import type { Category } from "./data/seed";
 // 🔗 주소로 받은 도시·구(`?city=seoul&gu=jung-gu`). 그 파일 머리말 참고.
 import { START } from "./lib/startParams";
 
@@ -35,6 +38,28 @@ function App() {
   // 🍁 계절 화면 맨 윗칸을 누른 횟수. 올라갈 때마다 동네 화면의 단풍길로 보낸다.
   //    0 은 "아직 안 눌렀다" — 그래서 앱을 열자마자 튀지 않는다.
   const [roadJump, setRoadJump] = useState(0);
+  // 🧭 메인 바로가기(QuickLinks.tsx). roadJump 는 「동네 화면의 갈래를 바꿔라」는 신호다 —
+  //    어느 갈래인지는 distCat 이 정한다(단풍길 칸이면 autumn, 「걷는 길」이면 walk).
+  const [distCat, setDistCat] = useState<Category>("autumn");
+  const [nearJump, setNearJump] = useState(0);
+  // 「동네 화면으로 넘어가라」 신호. roadJump(갈래를 바꿔라)와 따로 둔다 — 「내 주변」은
+  // 화면만 넘기고 손님이 고른 갈래는 그대로 둬야 한다.
+  const [distShow, setDistShow] = useState(0);
+  const [seasonJump, setSeasonJump] = useState(0);
+  const [whenJump, setWhenJump] = useState<WhenJump>({ kind: "weekend", n: 0 });
+  const goQuick = (to: QuickTarget) => {
+    if (to === "weekend" || to === "today") {
+      setSeasonJump((n) => n + 1);
+      setWhenJump((w) => ({ kind: to, n: w.n + 1 }));
+      return;
+    }
+    if (to === "walk") {
+      setDistCat("walk");
+      setRoadJump((n) => n + 1);
+    }
+    if (to === "near") setNearJump((n) => n + 1);
+    setDistShow((n) => n + 1);
+  };
   // ✈️ 도착 안내 (2026-09-12 사장님: "여기도 푸드에 있는 가이드가 필요할거같아").
   const [guideOpen, setGuideOpen] = useState(false);
   // ☔ 「비 와도 갈 곳」을 여는 문.
@@ -174,6 +199,13 @@ function App() {
         {/* 📲 홈 화면에 추가하면 앱처럼 열리고 인터넷 없이도 열린다 — 손님은
             그걸 모른다. 설치할 수 있는 브라우저에서만, 한 번만 뜬다. */}
         <InstallHint />
+        {/* 🧭 바로가기 4칸 — 홈 탭에서만. 저장한 곳에서 누르면 홈으로 넘어간다. */}
+        <QuickLinks
+          onGo={(to) => {
+            setTab("home");
+            goQuick(to);
+          }}
+        />
         {/* 🖼️ 표지 사진 고르는 임시 화면 — 주소 끝에 ?pick=cover 를 붙이면 열린다.
             작업 세션에서는 관광공사 사진 서버가 막혀 있어 내가 사진을 못 본다.
             폰에서는 보이므로 여기서 번호로 골라 알려 주는 쪽이 빠르다.
@@ -201,9 +233,19 @@ function App() {
                    (`?gu=jung-gu` — src/lib/startParams.ts). 보러 온 동네가
                    손가락 한 번 뒤에 숨지 않게. */
                 initialView={START.gu ? "district" : undefined}
-                showDistrict={roadJump}
-                season={<MonthlyFestivalPanel onGoRoads={() => setRoadJump((n) => n + 1)} />}
-                district={<DistrictExplorer forceCategory="autumn" jump={roadJump} />}
+                showDistrict={distShow}
+                showSeason={seasonJump}
+                season={
+                  <MonthlyFestivalPanel
+                    whenJump={whenJump}
+                    onGoRoads={() => {
+                      setDistCat("autumn");
+                      setRoadJump((n) => n + 1);
+                      setDistShow((n) => n + 1);
+                    }}
+                  />
+                }
+                district={<DistrictExplorer forceCategory={distCat} jump={roadJump} nearJump={nearJump} />}
               />
               {/* 🗺️ 도시 고르는 칸은 **머리줄로 올라갔다** (2026-09-17).
                   사장님이 부산을 열고 직접 써 보시고: *"이렇게 넣으면 불편해.

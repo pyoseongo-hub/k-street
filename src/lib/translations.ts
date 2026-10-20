@@ -64,6 +64,22 @@ export interface Translations {
   nearbyFestivalsNote: string;
   undatedFestivalsTitle: (count: number) => string;
   undatedFestivalsNote: string;
+  /** 🗓️ 오늘 · 이번 주말 · 이번 주 칩과 그 목록의 안내 (요청서 2026-10-20 ②). 확정 날짜가 있는 행사만 넣는다. */
+  whenToday: string;
+  whenWeekend: string;
+  whenWeek: string;
+  whenListNote: (count: number) => string;
+  whenEmpty: string;
+  whenSeeMonth: string;
+  /** ⏳ 2주 넘게 이어지는 행사 묶음 — 그 기간 중 매일 여는지 모른다. */
+  whenLongTitle: (count: number) => string;
+  whenLongNote: string;
+  /** 🧭 메인 맨 위 바로가기 4칸 (요청서 2026-10-20 「메인 화면 개편」). 글자로 쓴다 — 아이콘만으로는 못 알아본다. */
+  quickNear: string;
+  quickWeekend: string;
+  quickToday: string;
+  quickWalk: string;
+  quickNavLabel: string;
   /** ⏳ 올해 회차가 끝난 축제 카드에 붙는 띠. 감추지 않고 흑백으로 남긴다. */
   festivalEndedThisYearLabel: string;
   /** 📍 축제가 제 사진이 없어 **장소 사진**을 빌렸을 때 사진 위에 적는 줄. */
@@ -502,6 +518,19 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `${month}월에 놓치면 안 되는 것`,
     noFestivalsMessage: (month) =>
       `이번 세션 조사에서는 ${month}월에 확인된 축제가 없다 — 없는 게 아니라 아직 확인을 못 한 것일 수 있다.`,
+    whenToday: "오늘",
+    whenWeekend: "이번 주말",
+    whenWeek: "이번 주",
+    whenListNote: (n) => `날짜가 확정된 행사 ${n}곳 · 날짜가 아직 안 정해진 행사는 달별 보기에 있어요`,
+    whenEmpty: "이 기간에 날짜가 확정된 행사가 아직 없어요.",
+    whenSeeMonth: "이번 달 전체 보기",
+    whenLongTitle: (n) => `기간 중 열리는 행사 ${n}곳`,
+    whenLongNote: "몇 주씩 이어지는 행사예요. 그 기간 중 여는 요일과 시간은 공식 안내에서 확인하세요.",
+    quickNear: "내 주변",
+    quickWeekend: "이번 주말",
+    quickToday: "오늘 열리는",
+    quickWalk: "걷는 길",
+    quickNavLabel: "바로가기",
     nearbyFestivalsTitle: (n) => `옆 지역에서도 ${n}곳`,
     nearbyFestivalsNote:
       "차로 한두 시간이면 닿는 이웃 시·도의 축제예요. 카드마다 어느 지역인지 적어 뒀어요.",
@@ -681,6 +710,19 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `Must not miss in ${getMonthName('en', month)}`,
     noFestivalsMessage: (month) =>
       `No festivals confirmed for ${getMonthName('en', month)} in this session — but there may be events we haven't documented yet.`,
+    whenToday: "Today",
+    whenWeekend: "This weekend",
+    whenWeek: "This week",
+    whenListNote: (n) => `${n} events with confirmed dates · events without a set date are in the monthly view`,
+    whenEmpty: "No events with confirmed dates in this period yet.",
+    whenSeeMonth: "See all of this month",
+    whenLongTitle: (n) => `${n} longer-running events`,
+    whenLongNote: "These run for weeks. Check the official notice for which days and hours they are open.",
+    quickNear: "Near me",
+    quickWeekend: "This weekend",
+    quickToday: "On today",
+    quickWalk: "Walking routes",
+    quickNavLabel: "Shortcuts",
     nearbyFestivalsTitle: (n) => `${n} more in nearby regions`,
     nearbyFestivalsNote:
       "Festivals in neighbouring regions, one or two hours away by car. Each card says which region it is in.",
@@ -860,6 +902,19 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `${getMonthName('ja', month)}で見逃せないもの`,
     noFestivalsMessage: (month) =>
       `このセッションの調査では${getMonthName('ja', month)}に確認されたフェスティバルはありません。ただし、まだ記録していないイベントがある可能性があります。`,
+    whenToday: "今日",
+    whenWeekend: "今週末",
+    whenWeek: "今週",
+    whenListNote: (n) => `日程が確定したイベント ${n}件 · 日程未定のイベントは月別表示にあります`,
+    whenEmpty: "この期間に日程が確定したイベントはまだありません。",
+    whenSeeMonth: "今月をすべて見る",
+    whenLongTitle: (n) => `期間中に開催中のイベント ${n}件`,
+    whenLongNote: "数週間続くイベントです。開催曜日と時間は公式案内でご確認ください。",
+    quickNear: "近くで",
+    quickWeekend: "今週末",
+    quickToday: "今日開催",
+    quickWalk: "散歩道",
+    quickNavLabel: "ショートカット",
     nearbyFestivalsTitle: (n) => `近くの地域にも ${n}件`,
     nearbyFestivalsNote:
       "車で1〜2時間の隣接地域のお祭りです。カードごとにどの地域かを記しています。",
@@ -1039,6 +1094,19 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `${getMonthName('zh', month)}不容错过的`,
     noFestivalsMessage: (month) =>
       `本次调查中未发现${getMonthName('zh', month)}的节庆活动 — 但可能还有我们尚未记录的活动。`,
+    whenToday: "今天",
+    whenWeekend: "本周末",
+    whenWeek: "本周",
+    whenListNote: (n) => `已确定日期的活动 ${n} 个 · 日期未定的活动请看按月浏览`,
+    whenEmpty: "这段时间暂无已确定日期的活动。",
+    whenSeeMonth: "查看本月全部",
+    whenLongTitle: (n) => `持续举办中的活动 ${n} 个`,
+    whenLongNote: "这些活动持续数周。具体开放日和时间请查看官方公告。",
+    quickNear: "我附近",
+    quickWeekend: "本周末",
+    quickToday: "今天举办",
+    quickWalk: "步行路线",
+    quickNavLabel: "快捷入口",
     nearbyFestivalsTitle: (n) => `邻近地区还有 ${n} 个`,
     nearbyFestivalsNote:
       "开车一两个小时可达的邻近地区庆典。每张卡片都标明所属地区。",
@@ -1218,6 +1286,19 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `${getMonthName('zh-TW', month)}不容錯過的`,
     noFestivalsMessage: (month) =>
       `本次調查中未發現${getMonthName('zh-TW', month)}的節慶活動 — 但可能還有我們尚未記錄的活動。`,
+    whenToday: "今天",
+    whenWeekend: "本週末",
+    whenWeek: "本週",
+    whenListNote: (n) => `已確定日期的活動 ${n} 個 · 日期未定的活動請看按月瀏覽`,
+    whenEmpty: "這段期間暫無已確定日期的活動。",
+    whenSeeMonth: "查看本月全部",
+    whenLongTitle: (n) => `持續舉辦中的活動 ${n} 個`,
+    whenLongNote: "這些活動持續數週。開放日與時間請查看官方公告。",
+    quickNear: "我附近",
+    quickWeekend: "本週末",
+    quickToday: "今天舉辦",
+    quickWalk: "步行路線",
+    quickNavLabel: "快捷入口",
     nearbyFestivalsTitle: (n) => `鄰近地區還有 ${n} 個`,
     nearbyFestivalsNote:
       '開車一兩個小時可達的鄰近地區慶典。每張卡片都標明所屬地區。',
@@ -1397,6 +1478,19 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `Điều không được bỏ lỡ trong tháng ${getMonthName('vi', month)}`,
     noFestivalsMessage: (month) =>
       `Không có lễ hội nào được xác nhận vào tháng ${getMonthName('vi', month)} trong phiên này — nhưng có thể có các sự kiện mà chúng tôi chưa ghi lại.`,
+    whenToday: "Hôm nay",
+    whenWeekend: "Cuối tuần này",
+    whenWeek: "Tuần này",
+    whenListNote: (n) => `${n} sự kiện đã xác nhận ngày · sự kiện chưa có ngày nằm trong mục xem theo tháng`,
+    whenEmpty: "Chưa có sự kiện nào được xác nhận ngày trong khoảng này.",
+    whenSeeMonth: "Xem cả tháng này",
+    whenLongTitle: (n) => `${n} sự kiện kéo dài nhiều tuần`,
+    whenLongNote: "Các sự kiện này kéo dài nhiều tuần. Hãy xem thông báo chính thức để biết ngày và giờ mở cửa.",
+    quickNear: "Gần tôi",
+    quickWeekend: "Cuối tuần này",
+    quickToday: "Diễn ra hôm nay",
+    quickWalk: "Đường đi bộ",
+    quickNavLabel: "Lối tắt",
     nearbyFestivalsTitle: (n) => `${n} lễ hội ở vùng lân cận`,
     nearbyFestivalsNote:
       "Lễ hội ở các tỉnh lân cận, cách khoảng một đến hai giờ lái xe. Mỗi thẻ đều ghi rõ thuộc vùng nào.",
@@ -1576,6 +1670,19 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `No te pierdas en ${getMonthName('es', month)}`,
     noFestivalsMessage: (month) =>
       `No hay festivales confirmados en ${getMonthName('es', month)} en esta sesión — pero puede haber eventos que aún no hemos documentado.`,
+    whenToday: "Hoy",
+    whenWeekend: "Este fin de semana",
+    whenWeek: "Esta semana",
+    whenListNote: (n) => `${n} eventos con fecha confirmada · los que aún no tienen fecha están en la vista por meses`,
+    whenEmpty: "Aún no hay eventos con fecha confirmada en este periodo.",
+    whenSeeMonth: "Ver todo este mes",
+    whenLongTitle: (n) => `${n} eventos de larga duración`,
+    whenLongNote: "Duran varias semanas. Consulta el aviso oficial para saber qué días y a qué hora abren.",
+    quickNear: "Cerca de mí",
+    quickWeekend: "Este fin de semana",
+    quickToday: "Hoy",
+    quickWalk: "Rutas a pie",
+    quickNavLabel: "Accesos rápidos",
     nearbyFestivalsTitle: (n) => `${n} más en regiones cercanas`,
     nearbyFestivalsNote:
       "Festivales en regiones vecinas, a una o dos horas en coche. Cada tarjeta indica a qué región pertenece.",
@@ -1755,6 +1862,19 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `À ne pas manquer en ${getMonthName('fr', month)}`,
     noFestivalsMessage: (month) =>
       `Aucun festival confirmé en ${getMonthName('fr', month)} dans cette session — mais il peut y avoir des événements que nous n'avons pas encore documentés.`,
+    whenToday: "Aujourd'hui",
+    whenWeekend: "Ce week-end",
+    whenWeek: "Cette semaine",
+    whenListNote: (n) => `${n} événements à date confirmée · ceux sans date fixée sont dans la vue par mois`,
+    whenEmpty: "Aucun événement à date confirmée sur cette période pour l'instant.",
+    whenSeeMonth: "Voir tout ce mois",
+    whenLongTitle: (n) => `${n} événements de longue durée`,
+    whenLongNote: "Ils durent plusieurs semaines. Consultez l'annonce officielle pour les jours et horaires d'ouverture.",
+    quickNear: "Près de moi",
+    quickWeekend: "Ce week-end",
+    quickToday: "Aujourd'hui",
+    quickWalk: "Balades à pied",
+    quickNavLabel: "Raccourcis",
     nearbyFestivalsTitle: (n) => `${n} autres dans les régions voisines`,
     nearbyFestivalsNote:
       "Festivals des régions voisines, à une ou deux heures de route. Chaque carte indique sa région.",
@@ -1934,6 +2054,19 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `Darf man im ${getMonthName('de', month)} nicht verpassen`,
     noFestivalsMessage: (month) =>
       `Keine Festivals im ${getMonthName('de', month)} in dieser Sitzung bestätigt — es kann aber Veranstaltungen geben, die wir noch nicht dokumentiert haben.`,
+    whenToday: "Heute",
+    whenWeekend: "Dieses Wochenende",
+    whenWeek: "Diese Woche",
+    whenListNote: (n) => `${n} Veranstaltungen mit bestätigtem Datum · ohne festes Datum: siehe Monatsansicht`,
+    whenEmpty: "In diesem Zeitraum gibt es noch keine Veranstaltungen mit bestätigtem Datum.",
+    whenSeeMonth: "Ganzen Monat ansehen",
+    whenLongTitle: (n) => `${n} länger laufende Veranstaltungen`,
+    whenLongNote: "Sie laufen über Wochen. Öffnungstage und -zeiten stehen in der offiziellen Ankündigung.",
+    quickNear: "In meiner Nähe",
+    quickWeekend: "Dieses Wochenende",
+    quickToday: "Heute",
+    quickWalk: "Spazierwege",
+    quickNavLabel: "Schnellzugriff",
     nearbyFestivalsTitle: (n) => `${n} weitere in Nachbarregionen`,
     nearbyFestivalsNote:
       "Feste in benachbarten Regionen, ein bis zwei Autostunden entfernt. Jede Karte nennt die Region.",
@@ -2113,6 +2246,19 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `Не пропустите в ${getMonthName('ru', month)}`,
     noFestivalsMessage: (month) =>
       `В этой сессии на ${getMonthName('ru', month)} не подтверждено никаких фестивалей — но могут быть события, которые мы еще не задокументировали.`,
+    whenToday: "Сегодня",
+    whenWeekend: "В эти выходные",
+    whenWeek: "На этой неделе",
+    whenListNote: (n) => `Событий с подтверждённой датой: ${n} · события без даты — в просмотре по месяцам`,
+    whenEmpty: "В этот период пока нет событий с подтверждённой датой.",
+    whenSeeMonth: "Весь этот месяц",
+    whenLongTitle: (n) => `Долгие события: ${n}`,
+    whenLongNote: "Они идут несколько недель. Дни и часы работы уточняйте в официальном объявлении.",
+    quickNear: "Рядом со мной",
+    quickWeekend: "В эти выходные",
+    quickToday: "Сегодня",
+    quickWalk: "Пешие маршруты",
+    quickNavLabel: "Быстрый доступ",
     nearbyFestivalsTitle: (n) => `Ещё ${n} в соседних регионах`,
     nearbyFestivalsNote:
       "Фестивали в соседних регионах — один-два часа на машине. На каждой карточке указан регион.",
@@ -2292,6 +2438,19 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `Jangan lewatkan di ${getMonthName('id', month)}`,
     noFestivalsMessage: (month) =>
       `Tidak ada festival yang dikonfirmasi pada ${getMonthName('id', month)} dalam sesi ini — tetapi mungkin ada acara yang belum kami dokumentasikan.`,
+    whenToday: "Hari ini",
+    whenWeekend: "Akhir pekan ini",
+    whenWeek: "Minggu ini",
+    whenListNote: (n) => `${n} acara dengan tanggal pasti · acara yang belum bertanggal ada di tampilan bulanan`,
+    whenEmpty: "Belum ada acara dengan tanggal pasti pada periode ini.",
+    whenSeeMonth: "Lihat semua bulan ini",
+    whenLongTitle: (n) => `${n} acara berlangsung lama`,
+    whenLongNote: "Acara ini berlangsung berminggu-minggu. Cek pengumuman resmi untuk hari dan jam bukanya.",
+    quickNear: "Di dekat saya",
+    quickWeekend: "Akhir pekan ini",
+    quickToday: "Hari ini",
+    quickWalk: "Rute jalan kaki",
+    quickNavLabel: "Pintasan",
     nearbyFestivalsTitle: (n) => `${n} lagi di wilayah sekitar`,
     nearbyFestivalsNote:
       "Festival di wilayah tetangga, satu sampai dua jam berkendara. Setiap kartu mencantumkan wilayahnya.",
@@ -2471,6 +2630,19 @@ const translations: Record<Language, Translations> = {
     monthlyTitle: (month) => `สิ่งที่ต้องไม่พลาดในเดือน${getMonthName('th', month)}`,
     noFestivalsMessage: (month) =>
       `ไม่มีเทศกาลที่ยืนยันสำหรับเดือน${getMonthName('th', month)}ในเซสชันนี้ — แต่อาจมีกิจกรรมที่เรายังไม่ได้บันทึก`,
+    whenToday: "วันนี้",
+    whenWeekend: "สุดสัปดาห์นี้",
+    whenWeek: "สัปดาห์นี้",
+    whenListNote: (n) => `งานที่ยืนยันวันแล้ว ${n} งาน · งานที่ยังไม่กำหนดวันดูได้ในมุมมองรายเดือน`,
+    whenEmpty: "ช่วงนี้ยังไม่มีงานที่ยืนยันวันแล้ว",
+    whenSeeMonth: "ดูทั้งเดือนนี้",
+    whenLongTitle: (n) => `งานที่จัดต่อเนื่อง ${n} งาน`,
+    whenLongNote: "งานเหล่านี้จัดหลายสัปดาห์ ตรวจสอบวันและเวลาเปิดจากประกาศทางการ",
+    quickNear: "ใกล้ฉัน",
+    quickWeekend: "สุดสัปดาห์นี้",
+    quickToday: "วันนี้",
+    quickWalk: "เส้นทางเดิน",
+    quickNavLabel: "ทางลัด",
     nearbyFestivalsTitle: (n) => `อีก ${n} งานในพื้นที่ใกล้เคียง`,
     nearbyFestivalsNote:
       "เทศกาลในจังหวัดใกล้เคียง ขับรถราวหนึ่งถึงสองชั่วโมง การ์ดแต่ละใบระบุว่าอยู่พื้นที่ใด",

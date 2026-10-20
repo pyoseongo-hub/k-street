@@ -1,4 +1,4 @@
-import { useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
 import { useCityText } from "../lib/cityText";
 import { useFestivalsHere, useNeighborFestivals, cityOf } from "../lib/usePlaces";
@@ -22,6 +22,7 @@ import { FESTIVAL_THEMES, THEME_ICON, themeOf, type FestivalTheme } from "../dat
 import { pastEditionYear } from "../lib/pastEdition";
 import { galleryOf } from "../lib/tourGallery";
 import { guFestivalDate, guOfficialLink, formatRange, festivalEndedThisYear } from "../lib/guFestival";
+import { whenWindow, overlaps, weekdaysIn, onlyOnWeekdays, spanDays, LONG_RUN_DAYS, type WhenKind } from "../lib/whenWindow";
 
 // 「봄 여름 가을 겨울 그리고 서울」 — 지도와 상관없이 **계절 · 달 · 테마**로
 // 축제를 고르는 화면이다(사용자 지시 2026-09-01: "이건 지도와상관없이 서울의
@@ -103,12 +104,36 @@ function monthsLabel(
   return out.join(" · ");
 }
 
-export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => void } = {}) {
+/** 🗓️ 밖(메인 바로가기)에서 「이번 주말」·「오늘」을 열어 달라고 할 때. n 이 바뀔 때마다 따른다. */
+export interface WhenJump {
+  kind: WhenKind;
+  n: number;
+}
+
+const WHEN_CHIPS: WhenKind[] = ["today", "weekend", "week"];
+
+export default function MonthlyFestivalPanel({
+  onGoRoads,
+  whenJump,
+}: { onGoRoads?: () => void; whenJump?: WhenJump } = {}) {
   const { t, language } = useLanguage();
   const withCity = useCityText();
   const isSeoul = useIsSeoul();
   const [month, setMonth] = useState(nowMonth);
   const [theme, setTheme] = useState<FestivalTheme | null>(null);
+  /**
+   * 🗓️ **오늘 · 이번 주말 · 이번 주** (사장님 요청서 2026-10-20 ②).
+   * null 이면 지금까지처럼 달별 보기다. 칩을 누르면 달·테마 대신 이 기간으로 거른다.
+   * 🚨 **확정 날짜가 있는 축제만 넣는다** — 달만 아는 것을 「이번 주말」에 끼우면 추측이다.
+   */
+  const [when, setWhen] = useState<WhenKind | null>(null);
+  const whenRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!whenJump?.n) return;
+    setWhen(whenJump.kind);
+    // 바로가기로 들어왔으면 칩 줄이 화면 맨 위에 오게 한다 — 안 그러면 표지 사진만 보인다.
+    requestAnimationFrame(() => whenRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
+  }, [whenJump?.n, whenJump?.kind]);
   const rotatingSeed = useRotatingSeed();
 
   const season = seasonOf(month);
@@ -225,8 +250,38 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
    */
   const nearbyOpen = festivals.length < 6;
 
+  /**
+   * 🗓️ 고른 기간에 열리는 축제 — **확정 날짜(guFestivalDate)가 있는 것만.**
+   * guFestivalDate 는 이미 끝난 회차를 돌려주지 않으므로 지난 행사는 저절로 빠진다.
+   * 시작이 이른 순으로, 같으면 사진 있는 것이 위다(달별 보기와 같은 잣대).
+   */
+  const window_ = when ? whenWindow(when) : null;
+  const whenAll = useMemo(() => {
+    if (!window_) return [];
+    const days = weekdaysIn(window_);
+    return festivalsHere
+      .map((f) => ({ f, d: guFestivalDate(f.id) }))
+      .filter((x): x is { f: typeof x.f; d: NonNullable<typeof x.d> } => {
+        if (!x.d || !overlaps(window_, x.d.start, x.d.end)) return false;
+        // 📅 「매주 일요일」처럼 요일이 적힌 행사는 그 요일이 기간에 없으면 뺀다(whenWindow.ts 참고).
+        const only = onlyOnWeekdays(x.d.time) ?? onlyOnWeekdays(x.f.dateLabel);
+        return !only || only.some((w) => days.has(w));
+      })
+      .sort((a, b) => a.d.start.localeCompare(b.d.start) || Number(hasPhoto(b.f)) - Number(hasPhoto(a.f)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [festivalsHere, when, window_?.from, window_?.to]);
+  /**
+   * ⏳ **2주 넘게 이어지는 행사는 따로 묶는다** (2026-10-20, 화면을 띄워 보고 정했다).
+   * 「서울국제정원박람회 5월 1일 – 10월 27일」을 「오늘 열리는」 맨 위에 올리면, 그 기간 중
+   * 매일 여는지·몇 시에 여는지 우리는 모른다. 그래서 위에는 **짧은 행사**(그 기간을 위해 열리는 것)를,
+   * 아래에는 「기간 중 열리는 행사 — 요일·시간은 공식 안내에서」로 나눈다. 지우지는 않는다.
+   */
+  const whenList = whenAll.filter((x) => spanDays(x.d.start, x.d.end) <= LONG_RUN_DAYS).map((x) => x.f);
+  const whenLong = whenAll.filter((x) => spanDays(x.d.start, x.d.end) > LONG_RUN_DAYS).map((x) => x.f);
+
   const pickMonth = (m: number) => {
     setMonth(m);
+    setWhen(null);
     // 달을 바꾸면 테마를 푼다 — 안 그러면 그 달에 없는 테마가 걸린 채로 남아
     // 축제가 있는데도 빈 화면이 뜬다.
     setTheme(null);
@@ -492,7 +547,52 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
             아예 안 그리는 쪽이 낫다(src/lib/seoulOnly.ts). */}
         {isSeoul && <SeasonThemeBanner season={season} onGo={() => onGoRoads?.()} />}
 
-        <div className="season-row">
+        {/* 🗓️ **오늘 · 이번 주말 · 이번 주** — 계절 칩보다 위에 둔다. 「달」을 고르기 전에
+            「언제」를 묻는 손님이 더 많다(금요일 저녁 「내일 어디 가지」). 다시 누르면 풀린다. */}
+        <div className="when-row" ref={whenRef}>
+          {WHEN_CHIPS.map((k) => (
+            <button
+              key={k}
+              className={"season-chip" + (when === k ? " active" : "")}
+              onClick={() => setWhen(when === k ? null : k)}
+            >
+              {k === "today" ? t.whenToday : k === "weekend" ? t.whenWeekend : t.whenWeek}
+            </button>
+          ))}
+        </div>
+
+        {window_ && (
+          <div className="when-result">
+            <p className="when-range">
+              {formatRange({ start: window_.from, end: window_.to } as Parameters<typeof formatRange>[0], language)}
+            </p>
+            <p className="map-disclaimer map-disclaimer--fine">{t.whenListNote(whenList.length + whenLong.length)}</p>
+            {/* 📌 우리 자료에는 언제나 안내문을 단다(CLAUDE.md, 사장님 2026-09-26) — 달별 보기와 같은 줄. */}
+            <p className="map-disclaimer map-disclaimer--fine">
+              {t.festivalDateDisclaimer} {t.mapAppNote}
+            </p>
+            <div className="festival-cards">
+              {whenList.length + whenLong.length === 0 && (
+                <div className="empty-note">
+                  <p>{t.whenEmpty}</p>
+                  <button type="button" className="season-chip" onClick={() => pickMonth(nowMonth)}>
+                    {t.whenSeeMonth}
+                  </button>
+                </div>
+              )}
+              {whenList.map((f) => 축제카드(f))}
+            </div>
+            {whenLong.length > 0 && (
+              <div className="when-long">
+                <h3 className="uf-title">{t.whenLongTitle(whenLong.length)}</h3>
+                <p className="empty-note">{t.whenLongNote}</p>
+                <div className="festival-cards">{whenLong.map((f) => 축제카드(f))}</div>
+              </div>
+            )}
+          </div>
+        )}
+
+        <div className="season-row" hidden={Boolean(window_)}>
           {SEASONS.map((s) => (
             <button
               key={s.key}
@@ -506,7 +606,7 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
 
         {/* 그 계절의 석 달만 띄운다. 예전에는 12개가 한 줄로 늘어서서 가로로
             밀어야 했고, 계절 칩과 달 칩이 무슨 관계인지도 안 보였다. */}
-        <div className="month-strip">
+        <div className="month-strip" hidden={Boolean(window_)}>
           {seasonMonths.map((m) => (
             <button
               key={m}
@@ -518,6 +618,8 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
           ))}
         </div>
 
+        {/* 🗓️ 기간 보기를 고른 동안에는 달별 목록을 접는다 — 두 목록이 한 화면에 섞이면 어느 것이 「이번 주말」인지 안 보인다. */}
+        <div hidden={Boolean(window_)}>
         {themesHere.length > 0 && (
           <div className="theme-row">
             <button
@@ -599,6 +701,7 @@ export default function MonthlyFestivalPanel({ onGoRoads }: { onGoRoads?: () => 
             </ul>
           </div>
         )}
+        </div>
       </div>
     </section>
   );

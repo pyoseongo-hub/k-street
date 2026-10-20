@@ -1,4 +1,4 @@
-import { useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useLanguage } from "../lib/useLanguage";
 import { usePlacesHere } from "../lib/usePlaces";
 import { getPositionOrNull } from "../lib/userPosition";
@@ -46,10 +46,18 @@ type Phase =
   | { kind: "empty" }
   | { kind: "done"; course: Course };
 
-export default function NearbyCourse() {
+/** @param openJump 이 숫자가 올라가면 펼치고 화면에 띄운다 — 메인 바로가기 「내 주변」(2026-10-20).
+ *  🔒 펼치기만 한다. 위치는 여전히 「만들기」를 눌러야 묻는다(머리말의 오래된 판단). */
+export default function NearbyCourse({ openJump = 0 }: { openJump?: number } = {}) {
   const { t, language } = useLanguage();
   const PLACES = usePlacesHere();
   const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!openJump) return;
+    setOpen(true);
+    requestAnimationFrame(() => rootRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
+  }, [openJump]);
   const [size, setSize] = useState<CourseSize>(3);
   const [reach, setReach] = useState<Reach>("walk");
   const [cats, setCats] = useState<Category[]>([]);
@@ -89,7 +97,7 @@ export default function NearbyCourse() {
   const course = phase.kind === "done" ? phase.course : null;
 
   return (
-    <section className="panel nearby-course">
+    <section className="panel nearby-course" ref={rootRef}>
       <div className="nc-head">
         <h2>📍 {t.nearbyCourseTitle}</h2>
         <button type="button" className="nc-close" onClick={() => setOpen(false)} aria-label="✕">✕</button>

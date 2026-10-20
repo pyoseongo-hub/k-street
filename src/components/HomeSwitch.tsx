@@ -56,6 +56,11 @@ interface Props {
    *    기본값에 기대고 이 칸을 안 두면, 되돌리는 날 조용히 같이 깨진다.
    */
   initialView?: HomeView;
+  /**
+   * 🔗 이 숫자가 올라가면 **계절 화면으로 돌아온다** (2026-10-20, 메인 바로가기 「이번 주말」·「오늘 열리는」).
+   * showDistrict 의 반대쪽이다. 숫자인 이유도 같다 — 이미 계절 화면일 때 눌러도 먹혀야 한다.
+   */
+  showSeason?: number;
 }
 
 /** 손가락을 이만큼 옆으로 끌어야 화면이 바뀐다. */
@@ -63,7 +68,7 @@ const SWIPE_MIN = 60;
 /** 옆으로 끈 거리가 위아래보다 이만큼 더 커야 '옆으로 민 것'으로 본다. */
 const SWIPE_RATIO = 1.5;
 
-export default function HomeSwitch({ season, district, showDistrict = 0, initialView }: Props) {
+export default function HomeSwitch({ season, district, showDistrict = 0, initialView, showSeason = 0 }: Props) {
   const { t } = useLanguage();
   // 🍂 **계절(축제) 화면으로 시작한다** (사장님 지시 2026-10-11: *"동네탭 첫페이지
   //    축제가 첫페이지 되게 돌려놔"*).
@@ -147,6 +152,14 @@ export default function HomeSwitch({ season, district, showDistrict = 0, initial
     }
     setView(next);
   };
+
+  // 🗓️ 바로가기 「이번 주말」 — 동네 화면에 있었으면 계절 화면으로 돌려 놓는다.
+  //    goView 를 쓴다: 띠로 건너와 남겨 둔 기록이 있으면 같이 빼야 뒤로가기가 헛돌지 않는다.
+  useEffect(() => {
+    if (showSeason <= 0) return;
+    goView("season");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showSeason]);
 
   function onTouchStart(e: React.TouchEvent) {
     // 옆으로 스스로 굴러가는 줄(갈래 칩·달 띠·육각 지도) 위에서는 밀기를 잡지 않는다.

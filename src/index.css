@@ -486,6 +486,59 @@ button {
   margin-bottom: 16px;
 }
 
+/* 🗓️ 오늘 · 이번 주말 · 이번 주 (요청서 2026-10-20 ②). 계절 칩과 같은 모양 — 새 모양을 만들면
+   손님이 「다른 종류의 단추」로 읽는다. scroll-margin 은 바로가기로 들어왔을 때 머리줄에 안 가리게. */
+.when-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  /* 위에 붙어 있는 「계절 · 동네」 띠(약 60px)에 가리지 않게 — 2026-10-20 화면으로 확인 */
+  scroll-margin-top: 76px;
+}
+.when-range {
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+.when-result .empty-note {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.when-result .empty-note .season-chip {
+  flex: none;
+  padding: 0 16px;
+}
+
+/* 🧭 메인 맨 위 바로가기 4칸 — **글자로** 쓴다(아이콘만 둔 단추는 못 알아보셨다). 폰에서 2×2. */
+.quick-links {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0 0 12px;
+}
+.quick-links button {
+  min-height: 44px;
+  padding: 6px 4px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.quick-links button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+@media (max-width: 420px) {
+  .quick-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 .season-chip {
   flex: 1;
   height: 44px;
@@ -3628,7 +3681,7 @@ html[lang^="zh"] * {
 .nc-open:hover { border-color: var(--accent); }
 .nc-open-pin { font-size: 17px; }
 
-.nearby-course { margin-bottom: 16px; }
+.nearby-course { margin-bottom: 16px; scroll-margin-top: 76px; }
 
 .nc-head {
   display: flex;
@@ -3814,4 +3867,12 @@ html[lang^="zh"] * {
 .contact-link:hover,
 .contact-link:focus-visible {
   color: var(--text);
+}
+
+/* ⏳ 「기간 중 열리는 행사」 묶음 — 짧은 행사 목록과 줄로 갈라 둔다. */
+.when-long {
+  scroll-margin-top: 76px;
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
 }
