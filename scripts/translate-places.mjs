@@ -299,7 +299,11 @@ for (const f of cityFiles) {
   if (!Array.isArray(list)) continue;
   let n = 0;
   for (const p of list) if (p?.name && /[가-힣]/.test(p.name)) { source.add(p.name); n++; }
-  console.log(`   ${f} — 이름 ${n}개`);
+  // 📝 설명(note)도 넣는다 (2026-10-20). 지금 note 가 있는 것은 dalbit-yajang-streets.json 뿐이다 —
+  //    다른 곳 목록 파일에는 note 가 0개라 글자 수가 늘지 않는다. 주소는 여전히 안 넣는다.
+  let nn = 0;
+  for (const p of list) if (p?.note && /[가-힣]/.test(p.note)) { source.add(p.note); nn++; }
+  console.log(`   ${f} — 이름 ${n}개${nn ? ` · 설명 ${nn}개` : ""}`);
 }
 
 // 🚨 **그물에 안 걸린 곳 목록 파일이 있나** — 다음에 또 빠지지 않게 여기서 센다.

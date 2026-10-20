@@ -30,6 +30,7 @@
 //   (원본을 새로 받을 때는 Actions → **Fetch tour streets** 를 먼저 돌린다)
 import type { Place } from "./seed";
 import raw from "./seoul-streets.json";
+import dalbitRaw from "./dalbit-yajang-streets.json";
 
 // ── 🌙 서울 달빛야장 6곳 (2026-10-20, 사장님: *"메일 확인 달빛야장 확인하고 6개 야장 업데이트 해"*) ──
 //   근거 — 서울시 소식지 제5782호(2026.10.20.) → 미디어허브 기사
@@ -48,21 +49,22 @@ import raw from "./seoul-streets.json";
 //      · 상품권 판매일(10.23 금)·결제 시간(17~24시)은 야장 영업 시간이 아니다. 상품권은
 //        서울페이+ 앱 전용이라 외국인 손님이 쓰기 어려워 화면에도 안 넣었다.
 //   🆔 id 는 `dy_` 로 직접 박는다 — 자리에 기대지 않아 다른 목록이 늘어도 안 밀린다.
-//   🚨 build-seoul-streets.mjs 가 seoul-streets.json 을 다시 써도 이 칸은 안 지워진다(그래서 JSON 이 아니라 여기 둔다).
-const DALBIT_URL = "https://mediahub.seoul.go.kr/archives/2019784";
-//   📝 곳마다 한 줄은 서울시 「서울사랑」 2026.10 기사(위 링크)의 「서울 달빛야장은 이런 특징이 있어요」를
-//      **그대로** 옮겼다. 상봉의 출구·거리·가게 수도 같은 기사 본문이다. 우리가 지어 쓴 말은 없다.
-const DALBIT_NOTE_KONKUK = "「서울 달빛야장」 — 대학가와 역세권을 중심으로 활발한 야간 외식 문화에 청년층의 취향을 반영한 상권";
-const DALBIT_ALREADY = new Set(["sst_BE_IW01-0091"]); // 건대맛의거리
-const DALBIT_YAJANG: Place[] = [
-  { id: "dy_sangbong", city: "seoul", gu: "중랑구", dong: "상봉동", category: "street", name: "상봉먹자골목", addr: "서울시 중랑구 상봉2동 일대", note: "「서울 달빛야장」 — 다양한 맛집과 주점이 밀집한 중랑구의 대표 먹거리 상권. 7호선 상봉역 3번 출구에서 이어지는 약 680m 골목에 음식점 140여 곳", officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
-  { id: "dy_changdong", city: "seoul", gu: "도봉구", dong: "창동", category: "street", name: "창동역상점가", addr: "서울시 도봉구 창4동 일대", note: "「서울 달빛야장」 — 서울아레나와 연계해 공연 관람객의 방문을 골목으로 이어갈 수 있는 상권", officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
-  { id: "dy_sadang1", city: "seoul", gu: "동작구", dong: "사당동", category: "street", name: "사당1동 먹자골목", addr: "서울시 동작구 사당제1동 일대", note: "「서울 달빛야장」 — 유동 인구가 많고 인지도 높은 맛집과 주점 등 음식점이 밀집한 먹거리 상권", officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
-  { id: "dy_sadangorak", city: "seoul", gu: "관악구", dong: "남현동", category: "street", name: "사당오락 달빛야장", addr: "서울시 관악구 남현동 일대", note: "「서울 달빛야장」 — 부추삼겹살 골목, 관악산, 예술인마을 등 먹거리와 지역 문화 콘텐츠를 연계한 상권", officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
-  { id: "dy_serosu", city: "seoul", gu: "강남구", dong: "신사동", category: "street", name: "신사 세로수길", addr: "서울시 강남구 신사동 일대", note: "「서울 달빛야장」 — 가로수길과 인접해 낮 시간대 쇼핑과 저녁 미식을 함께 즐길 수 있는 상권", officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
-];
+//   🚨 build-seoul-streets.mjs 는 seoul-streets.json 만 다시 쓴다 — 따로 둔 이 파일은 안 지워진다.
+//   📦 자료는 `dalbit-yajang-streets.json` 에 있다. **이 파일 안에 적으면 번역이 안 된다** —
+//      translate-places.mjs 는 seed.ts 와 `*-places.json`·`*-streets.json` 만 읽는다
+//      (2026-10-20에 당했다: 처음엔 여기 적었다가 10개 언어가 통째로 비었다. 단풍길과 같은 구멍).
+//   📝 곳마다 설명 한 줄은 서울사랑 기사의 「서울 달빛야장은 이런 특징이 있어요」를 **그대로** 옮겼다.
+//      상봉의 출구·거리·가게 수도 같은 기사 본문이다. 우리가 지어 쓴 말은 없다.
+//   · `overlayId` 가 있는 줄은 **새 곳이 아니라** 이미 있는 곳(건대맛의거리)에 안내 한 줄을 덧씌운다.
+type DalbitRow = Place & { overlayId?: string };
+const DALBIT_ROWS = dalbitRaw as DalbitRow[];
+const DALBIT_OVERLAY = new Map(DALBIT_ROWS.filter((r) => r.overlayId).map((r) => [r.overlayId!, r]));
+const DALBIT_YAJANG: Place[] = DALBIT_ROWS.filter((r) => !r.overlayId);
 
 export const SEOUL_STREET_PLACES: Place[] = [
-  ...(raw as Place[]).map((p) => (DALBIT_ALREADY.has(p.id) ? { ...p, note: DALBIT_NOTE_KONKUK, officialUrl: DALBIT_URL } : p)),
+  ...(raw as Place[]).map((p) => {
+    const o = DALBIT_OVERLAY.get(p.id);
+    return o ? { ...p, note: o.note, officialUrl: o.officialUrl } : p;
+  }),
   ...DALBIT_YAJANG,
 ];
