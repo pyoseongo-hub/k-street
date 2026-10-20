@@ -693,7 +693,11 @@ function pageFor(p: Place, sameGu: Place[], lang: Language = "en"): string {
       ]
     : others.map((q) => ({ q, km: undefined as number | undefined }));
   const showDistance = ranked.slice(0, 8).some((x) => x.km != null);
-  const fmtKm = (km: number) => (km < 1 ? `${Math.max(50, Math.round((km * 1000) / 50) * 50)} m` : `${km.toFixed(1)} km`);
+  // 50 m 단위로 반올림한 값이 1,000 m 가 되면 km 로 적는다 — 「1000 m」가 찍히던 것(2026-10-20 화면에서 봤다).
+  const fmtKm = (km: number) => {
+    const m = Math.max(50, Math.round((km * 1000) / 50) * 50);
+    return m < 1000 ? `${m} m` : `${km.toFixed(1)} km`;
+  };
   const nearby = ranked
     .slice(0, 8)
     .map(
