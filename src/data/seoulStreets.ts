@@ -50,17 +50,19 @@ import raw from "./seoul-streets.json";
 //   🆔 id 는 `dy_` 로 직접 박는다 — 자리에 기대지 않아 다른 목록이 늘어도 안 밀린다.
 //   🚨 build-seoul-streets.mjs 가 seoul-streets.json 을 다시 써도 이 칸은 안 지워진다(그래서 JSON 이 아니라 여기 둔다).
 const DALBIT_URL = "https://mediahub.seoul.go.kr/archives/2019784";
-const DALBIT_NOTE = "2026년 9월 서울시 「서울 달빛야장」 선정 — 저녁에도 먹거리와 문화를 즐길 수 있도록 조성된 야간 골목 상권";
+//   📝 곳마다 한 줄은 서울시 「서울사랑」 2026.10 기사(위 링크)의 「서울 달빛야장은 이런 특징이 있어요」를
+//      **그대로** 옮겼다. 상봉의 출구·거리·가게 수도 같은 기사 본문이다. 우리가 지어 쓴 말은 없다.
+const DALBIT_NOTE_KONKUK = "「서울 달빛야장」 — 대학가와 역세권을 중심으로 활발한 야간 외식 문화에 청년층의 취향을 반영한 상권";
 const DALBIT_ALREADY = new Set(["sst_BE_IW01-0091"]); // 건대맛의거리
 const DALBIT_YAJANG: Place[] = [
-  { id: "dy_sangbong", city: "seoul", gu: "중랑구", dong: "상봉동", category: "street", name: "상봉먹자골목", addr: "서울시 중랑구 상봉2동 일대", note: DALBIT_NOTE, officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
-  { id: "dy_changdong", city: "seoul", gu: "도봉구", dong: "창동", category: "street", name: "창동역상점가", addr: "서울시 도봉구 창4동 일대", note: DALBIT_NOTE, officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
-  { id: "dy_sadang1", city: "seoul", gu: "동작구", dong: "사당동", category: "street", name: "사당1동 먹자골목", addr: "서울시 동작구 사당제1동 일대", note: DALBIT_NOTE, officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
-  { id: "dy_sadangorak", city: "seoul", gu: "관악구", dong: "남현동", category: "street", name: "사당오락 달빛야장", addr: "서울시 관악구 남현동 일대", note: DALBIT_NOTE, officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
-  { id: "dy_serosu", city: "seoul", gu: "강남구", dong: "신사동", category: "street", name: "신사 세로수길", addr: "서울시 강남구 신사동 일대", note: DALBIT_NOTE, officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
+  { id: "dy_sangbong", city: "seoul", gu: "중랑구", dong: "상봉동", category: "street", name: "상봉먹자골목", addr: "서울시 중랑구 상봉2동 일대", note: "「서울 달빛야장」 — 다양한 맛집과 주점이 밀집한 중랑구의 대표 먹거리 상권. 7호선 상봉역 3번 출구에서 이어지는 약 680m 골목에 음식점 140여 곳", officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
+  { id: "dy_changdong", city: "seoul", gu: "도봉구", dong: "창동", category: "street", name: "창동역상점가", addr: "서울시 도봉구 창4동 일대", note: "「서울 달빛야장」 — 서울아레나와 연계해 공연 관람객의 방문을 골목으로 이어갈 수 있는 상권", officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
+  { id: "dy_sadang1", city: "seoul", gu: "동작구", dong: "사당동", category: "street", name: "사당1동 먹자골목", addr: "서울시 동작구 사당제1동 일대", note: "「서울 달빛야장」 — 유동 인구가 많고 인지도 높은 맛집과 주점 등 음식점이 밀집한 먹거리 상권", officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
+  { id: "dy_sadangorak", city: "seoul", gu: "관악구", dong: "남현동", category: "street", name: "사당오락 달빛야장", addr: "서울시 관악구 남현동 일대", note: "「서울 달빛야장」 — 부추삼겹살 골목, 관악산, 예술인마을 등 먹거리와 지역 문화 콘텐츠를 연계한 상권", officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
+  { id: "dy_serosu", city: "seoul", gu: "강남구", dong: "신사동", category: "street", name: "신사 세로수길", addr: "서울시 강남구 신사동 일대", note: "「서울 달빛야장」 — 가로수길과 인접해 낮 시간대 쇼핑과 저녁 미식을 함께 즐길 수 있는 상권", officialUrl: DALBIT_URL, nameOnly: true, confirmed: true },
 ];
 
 export const SEOUL_STREET_PLACES: Place[] = [
-  ...(raw as Place[]).map((p) => (DALBIT_ALREADY.has(p.id) ? { ...p, note: DALBIT_NOTE, officialUrl: DALBIT_URL } : p)),
+  ...(raw as Place[]).map((p) => (DALBIT_ALREADY.has(p.id) ? { ...p, note: DALBIT_NOTE_KONKUK, officialUrl: DALBIT_URL } : p)),
   ...DALBIT_YAJANG,
 ];
