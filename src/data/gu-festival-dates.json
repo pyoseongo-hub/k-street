@@ -1,6 +1,6 @@
 {
  "설명": "구청·구 문화재단이 서울시 문화포털에 직접 올린 축제 확정 날짜. scripts/fetch-gu-festival-dates.ts 가 받는다. 손으로 고치지 말 것.",
- "받은날": "2026-10-18",
+ "받은날": "2026-10-20",
  "곳": {
   "ks_57": {
    "start": "2026-10-24",
@@ -16,7 +16,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159406&menuNo=200010",
    "registered": "2026-09-08",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-18"
+   "fetchedAt": "2026-10-20"
   },
   "ks_59": {
    "start": "2026-05-01",
@@ -32,7 +32,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=156916&menuNo=200010",
    "registered": "2026-03-04",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-18"
+   "fetchedAt": "2026-10-20"
   },
   "ks_5a": {
    "start": "2026-08-04",
@@ -48,7 +48,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158941&menuNo=200010",
    "registered": "2026-08-03",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-18"
+   "fetchedAt": "2026-10-20"
   },
   "ks_5b": {
    "start": "2026-08-29",
@@ -64,72 +64,13 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158899&menuNo=200010",
    "registered": "2026-07-30",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-18"
-  },
-  "ks_5c": {
-   "start": "2026-05-09",
-   "end": "2026-10-18",
-   "title": "2026 서울시 태권도 공연",
-   "gu": "중구",
-   "place": "남산골한옥마을, DDP(동대문디자인플라자) 등",
-   "lat": 37.559304933707146,
-   "lng": 126.994440072131,
-   "time": "토 - 일요일 / 14:00, 16:00",
-   "org": "서울시청",
-   "orgLink": "https://www.instagram.com/p/DXJHEnTii_j/",
-   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=157783&menuNo=200010",
-   "registered": "2026-05-08",
-   "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-18"
-  },
-  "ks_8": {
-   "start": "2026-10-17",
-   "end": "2026-10-18",
-   "title": "[금천문화재단] 2026 금천하모니축제",
-   "gu": "금천구",
-   "place": "금천구청, 금나래중앙공원 일대",
-   "lat": 37.4570656519531,
-   "lng": 126.896036850324,
-   "time": "11:00 ~ 21:00",
-   "org": "금천문화재단",
-   "orgLink": "https://www.instagram.com/geumcheon_harmony/ ",
-   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159256&menuNo=200010",
-   "registered": "2026-08-27",
-   "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-18"
+   "fetchedAt": "2026-10-20"
   },
   "ks_j": {
    "start": "2026-10-31",
    "title": "성북거리문화축제 다다페스타",
    "gu": "성북구",
    "place": "꿈의숲아이파크",
-   "source": "네이버 검색 (사장님 확인)",
-   "fetchedAt": "2026-09-26"
-  },
-  "ks_2": {
-   "start": "2026-10-16",
-   "end": "2026-10-18",
-   "title": "[강동구] 제31회 강동선사문화축제",
-   "gu": "강동구",
-   "place": "서울 암사동 유적, 암사역사공원 일대",
-   "lat": 37.56049236424722,
-   "lng": 127.13024865355433,
-   "time": "10.16.(금) 18:00~21:00 / 10.17.(토) - 10.18.(일) 10:00~21:00",
-   "org": "강동구청",
-   "orgLink": "https://www.gdsunsa.com/",
-   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159653&menuNo=200010",
-   "registered": "2026-09-27",
-   "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-18"
-  },
-  "ks_5": {
-   "start": "2026-10-16",
-   "end": "2026-10-18",
-   "title": "관악강감찬축제",
-   "gu": "관악구",
-   "place": "낙성대공원",
-   "lat": 37.47215523409015,
-   "lng": 126.95931754074891,
    "source": "네이버 검색 (사장님 확인)",
    "fetchedAt": "2026-09-26"
   },
@@ -147,23 +88,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159120&menuNo=200010",
    "registered": "2026-08-19",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-18"
-  },
-  "fs_343": {
-   "start": "2026-10-14",
-   "end": "2026-10-18",
-   "title": "[서울디자인재단] 2026 DDP디자인페어",
-   "gu": "중구",
-   "place": "아트홀 1관, 2관, 컨퍼런스홀",
-   "lat": 37.56735731522952,
-   "lng": 127.00977973484339,
-   "time": "10.14(수) 14:00~20:00 / 10.15(목)-10.17(토) 11:00~20:00 / 10.18(일) 11:00~18:00",
-   "org": "서울디자인재단",
-   "orgLink": "https://ddp.or.kr/?menuno=241&siteno=1&boardno=16&act=view&bbsno=781",
-   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159626&menuNo=200009",
-   "registered": "2026-09-23",
-   "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-18"
+   "fetchedAt": "2026-10-20"
   },
   "fs_820": {
    "start": "2026-10-17",
@@ -179,7 +104,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159236&menuNo=200010",
    "registered": "2026-08-27",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-18"
+   "fetchedAt": "2026-10-20"
   },
   "fs_279": {
    "start": "2026-10-24",
@@ -194,7 +119,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159493&menuNo=200010",
    "registered": "2026-09-15",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-18"
+   "fetchedAt": "2026-10-20"
   },
   "ks_r": {
    "start": "2026-10-30",
@@ -210,7 +135,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159663&menuNo=200010",
    "registered": "2026-09-28",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-18"
+   "fetchedAt": "2026-10-20"
   }
  }
 }
