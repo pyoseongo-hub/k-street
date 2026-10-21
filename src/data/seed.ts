@@ -557,7 +557,7 @@ export const FESTIVALS_ADDED: Place[] = [
   // 🖼️ 인사동 문화지구 전체가 장터가 된다 — 골목 자체가 볼거리인 자리라 잘 맞는다.
   { id: id(), gu: "종로구", category: "festival", name: "인사동 엔틱&아트페어", startMonth: 10, endMonth: 10, addr: "인사아트프라자, 안녕인사동 및 인사동 문화지구 전 지역", officialUrl: "http://www.hiinsa.com", monthSource: "서울시 문화포털·종로구청 등록 (2026 10.1–4)", confirmed: true },
   // 🍖 난지캠핑장. ⚠️ 요금은 적지 않는다 — 구청 자료에 「홈페이지 참고」로만 돼 있다.
-  { id: id(), gu: "마포구", category: "festival", name: "서울 바비큐 페스티벌", startMonth: 10, endMonth: 10, addr: "난지캠핑장", officialUrl: "https://www.seoulbbqfesta.com", monthSource: "서울시 문화포털·서울시청 등록 (2026 10.24–25)", confirmed: true },
+  { id: id(), gu: "마포구", category: "festival", name: "서울 바비큐 페스티벌", startMonth: 10, endMonth: 10, addr: "난지캠핑장", note: "바비큐빌리지(12:00~19:30)에 셰프·맛집 7곳 — 유용욱 바베큐 연구소 · 혼고기 · 양문숯불갈비 · 크라운돼지 · 메쯔거49 · 남산터 · 완도보이. 셀프 바비큐존은 사전예약 마감", officialUrl: "https://www.seoulbbqfesta.com", monthSource: "서울시 문화포털·서울시청 등록 (2026 10.24–25). 참여 7곳·바비큐빌리지 시간은 서울시 문화 누리집 news.seoul.go.kr/culture/archives/534476 (2026-10-21 러너로 원문 확인)", confirmed: true },
   // 🌉 **다리에서 차를 빼고 사람에게 준다.** 9·10월 내내 **매주 일요일**이라
   //    "언제 가지"를 고민할 필요가 없는, 손님에게 가장 말하기 쉬운 축제다.
   //    주최 서울시 미래한강본부.
