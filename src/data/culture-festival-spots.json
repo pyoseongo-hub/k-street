@@ -4417,6 +4417,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=392490"
   },
   {
+    "id": "cf_402868",
+    "city": "gyeonggi",
+    "gu": "안산시",
+    "category": "festival",
+    "name": "제7회 김홍도축제",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402868"
+  },
+  {
     "id": "cf_402393",
     "city": "gyeonggi",
     "gu": "파주시",
