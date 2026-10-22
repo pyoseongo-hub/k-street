@@ -1,6 +1,6 @@
 {
  "설명": "펀서울(festival.seoul.go.kr)에 서울시가 올려 둔 축제 기간. scripts/fetch-funseoul-dates.ts 가 받는다. 손으로 고치지 말 것 — 손으로 적을 것은 src/data/festival-dates-manual.json 에 적는다.",
- "받은날": "2026-10-21",
+ "받은날": "2026-10-22",
  "곳": {
   "ks_c": {
    "start": "2026-10-24",
@@ -9,10 +9,10 @@
    "gu": "동작구",
    "place": "노량진 수산시장, 노량진 축구장 일대",
    "org": "서울시청 (펀서울)",
-   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=674",
-   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=674",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=673",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=673",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "ks_k": {
    "start": "2026-10-23",
@@ -24,7 +24,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=580",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=580",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "ks_l": {
    "start": "2026-10-25",
@@ -35,7 +35,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=586",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=586",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "ks_r": {
    "start": "2026-10-30",
@@ -47,7 +47,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=833",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=833",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "ks_57": {
    "start": "2026-10-24",
@@ -59,7 +59,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=347",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=347",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "ks_58": {
    "start": "2026-09-06",
@@ -83,7 +83,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=86",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=86",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "tour_626944": {
    "start": "2026-10-17",
@@ -95,7 +95,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=257",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=257",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "tour_3069470": {
    "start": "2026-12-24",
@@ -107,7 +107,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=823",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=823",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "fs_612": {
    "start": "2026-09-06",
@@ -119,7 +119,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=612",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=612",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "fs_485": {
    "start": "2026-09-18",
@@ -131,7 +131,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=485",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=485",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "fs_409": {
    "start": "2026-09-12",
@@ -143,7 +143,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=406",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=406",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "fs_820": {
    "start": "2026-10-17",
@@ -155,7 +155,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=820",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=820",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "fs_668": {
    "start": "2026-10-20",
@@ -164,10 +164,10 @@
    "gu": "성북구",
    "place": "성북구립미술관, 성북구 일원",
    "org": "서울시청 (펀서울)",
-   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=667",
-   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=667",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=668",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=668",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "fs_303": {
    "start": "2026-10-24",
@@ -190,7 +190,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=831",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=831",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "fs_339": {
    "start": "2026-10-29",
@@ -225,7 +225,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=715",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=715",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "fs_309": {
    "start": "2026-12-04",
@@ -249,7 +249,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=688",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=688",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "fs_564": {
    "start": "2026-12-31",
@@ -260,7 +260,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=564",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=564",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   },
   "ks_5g": {
    "start": "2026-10-14",
@@ -272,7 +272,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=338",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=338",
    "source": "funseoul",
-   "fetchedAt": "2026-10-21"
+   "fetchedAt": "2026-10-22"
   }
  }
 }
