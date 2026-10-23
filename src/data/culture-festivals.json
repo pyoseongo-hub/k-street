@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-10-22",
+  "받은날": "2026-10-23",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -2491,6 +2491,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=381549"
     },
     {
+      "seq": "403139",
+      "title": "2026 서울문화재단 예술로 매력서울 선정사업 「도시의 리듬, 일상의 예술」",
+      "start": "2026-07-31",
+      "end": "2026-10-25",
+      "place": "양천구·구로구·금천구 및 안양천 일대",
+      "area": "서울",
+      "sigungu": "양천구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/rdf/26/10/rdf_2026102221172253808.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=403139"
+    },
+    {
       "seq": "388531",
       "title": "2026 양양 서머 페스티벌",
       "start": "2026-07-31",
@@ -4446,6 +4458,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/efe79319f0a74168b8e35b180d35f042.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401822"
+    },
+    {
+      "seq": "403105",
+      "title": "2026 펄벅국내학술심포지엄 '펄 벅의 문학, 예술 그리고 인도주의'",
+      "start": "2026-10-23",
+      "end": "2026-10-23",
+      "place": "부천시립박물관 통합관 1층 강당",
+      "area": "경기",
+      "sigungu": "부천시 오정구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/447ee0e523a34819ba93cfa7b3e0d0a5.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=403105"
     },
     {
       "seq": "392490",
