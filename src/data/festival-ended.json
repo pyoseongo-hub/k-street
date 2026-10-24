@@ -10,7 +10,7 @@
     "",
     "✋ 지우지는 않는다. 그 축제는 **내년에 또 열린다** — 자리는 남기고 상태만 바꾼다."
   ],
-  "받은날": "2026-10-23",
+  "받은날": "2026-10-24",
   "곳": {
     "ks_2": {
       "start": "2026-10-16",
@@ -79,6 +79,12 @@
       "start": "2026-10-09",
       "title": "제15회 도봉한글잔치",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=444"
+    },
+    "tour_626944": {
+      "start": "2026-10-17",
+      "end": "2026-10-23",
+      "title": "제25회 서울억새축제 [억새, 자연이 건네는 위로]",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=257"
     },
     "tour_3000221": {
       "start": "2026-09-19",
