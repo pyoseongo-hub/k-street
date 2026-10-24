@@ -4404,6 +4404,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=400641"
   },
   {
+    "id": "cf_403235",
+    "city": "gyeongbuk",
+    "gu": "영덕군",
+    "category": "festival",
+    "name": "2026 문화특화지역조성사업「괴시전통마을 한마당」",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=403235"
+  },
+  {
     "id": "cf_401822",
     "city": "gyeonggi",
     "gu": "여주시",
@@ -4428,6 +4441,19 @@
     "endMonth": 10,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=392490"
+  },
+  {
+    "id": "cf_403225",
+    "city": "gyeongbuk",
+    "gu": "영덕군",
+    "category": "festival",
+    "name": "제13회 목은문화제 '이색적인 하루, 목은을 만나다'",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=403225"
   },
   {
     "id": "cf_402868",
@@ -4636,5 +4662,18 @@
     "endMonth": 11,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=399624"
+  },
+  {
+    "id": "cf_403215",
+    "city": "gyeonggi",
+    "gu": "부천시",
+    "category": "festival",
+    "name": "2026 부천악기은행 성과공유회",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=403215"
   }
 ]

@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-10-23",
+  "받은날": "2026-10-24",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -4448,6 +4448,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=400641"
     },
     {
+      "seq": "403235",
+      "title": "2026 문화특화지역조성사업「괴시전통마을 한마당」",
+      "start": "2026-10-23",
+      "end": "2026-10-23",
+      "place": "영덕군 영해면 괴시전통마을 일원",
+      "area": "경북",
+      "sigungu": "영덕군",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/4ed7fc4f6d2d41e9aa689f3d5c89a158.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=403235"
+    },
+    {
       "seq": "401822",
       "title": "2026 여주오곡나루축제",
       "start": "2026-10-23",
@@ -4482,6 +4494,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202608/3db55f6a992b4cfd9df6c3c22011b80c.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=392490"
+    },
+    {
+      "seq": "403225",
+      "title": "제13회 목은문화제 '이색적인 하루, 목은을 만나다'",
+      "start": "2026-10-23",
+      "end": "2026-10-24",
+      "place": "영덕군 영해면 괴시전통마을 일원",
+      "area": "경북",
+      "sigungu": "영덕군",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/d9b8908505ca43ff9c7d4d4fb07090ed.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=403225"
     },
     {
       "seq": "402868",
@@ -4736,6 +4760,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=399624"
     },
     {
+      "seq": "403215",
+      "title": "2026 부천악기은행 성과공유회",
+      "start": "2026-11-12",
+      "end": "2026-11-12",
+      "place": "복사골문화센터 판타지아극장",
+      "area": "경기",
+      "sigungu": "부천시 원미구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/bb38effd14e44839b82b1219a84646b0.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=403215"
+    },
+    {
       "seq": "402844",
       "title": "제4회 문화체육관광 디지털혁신 포럼",
       "start": "2026-11-17",
@@ -4746,6 +4782,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/89ed480033df424c84d12c7f16270ef6.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=402844"
+    },
+    {
+      "seq": "403214",
+      "title": "2026년 부천문화예술거버넌스 통합포럼",
+      "start": "2026-11-19",
+      "end": "2026-11-19",
+      "place": "복사골문화센터 2층 갤러리",
+      "area": "경기",
+      "sigungu": "부천시 원미구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/a5452d692f014883b0a4d6ac9bdae224.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=403214"
     }
   ]
 }
