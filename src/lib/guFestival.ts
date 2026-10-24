@@ -58,6 +58,13 @@ export interface GuFestivalDate {
   page?: string;
   /** 구청이 올린 날 */
   registered?: string;
+  /**
+   * 📌 **사람이 적은 날짜를 기계가 덮지 못하게 한다** (festival-dates-manual.json 에서만 쓴다).
+   *    사장님 지시 (2026-10-24): *"공식으로 바꾸고"* — 서울라이트 광화문은 펀서울이 1.3,
+   *    축제 공식 누리집이 1.10 으로 갈렸다. 펀서울이 이기는 순서라 그냥 두면 1.3 이 뜬다.
+   *    주최 측 누리집이 펀서울(서울시가 모아 두는 자리)보다 앞선 사실일 때만 단다.
+   */
+  고정?: boolean;
   source: string;
   fetchedAt: string;
 }
@@ -98,8 +105,11 @@ const FROM_CULTURE = (cultureDates as { 곳?: Record<string, GuFestivalDate> })[
  * 문화포털을 맨 위에 두는 이유: 주최 측(구청·구 문화재단)이 **자기 손으로** 올린
  * 자리라 가장 앞선 사실이다. 펀서울은 서울시가 모아 두는 자리라 한 다리 건너다.
  */
+const PINNED = Object.fromEntries(Object.entries(BY_HAND).filter(([, d]) => d.고정));
 const RAW: Record<string, GuFestivalDate> = {
   ...FROM_CULTURE, ...BY_HAND, ...FROM_FUNSEOUL, ...FROM_PORTAL,
+  // 📌 「고정」을 단 사람 날짜만 맨 위에 다시 깐다 — 위 GuFestivalDate.고정 참고.
+  ...PINNED,
 };
 
 /** 오늘(현지 시각) YYYY-MM-DD. 서울에서 보는 앱이라 UTC 로 자르면 하루가 밀린다. */
