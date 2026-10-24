@@ -269,5 +269,18 @@
     "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=130958",
     "auto": true,
     "matchedName": "한양대학교 박물관"
+  },
+  "_서울광장_스케이트장": [
+    "🎨 2026-10-24 — **사장님이 앱용으로 따로 준 그림**(AI 연출 이미지). 공공누리 사진이 아니다.",
+    "사장님 결정: 「앱에도 필요한 축제야 넣어」·「이미지는 따로 준다」 — 이 파일 규칙(공공기관 사진만)에 대한 **사장님이 정한 예외**다.",
+    "· 출처 칸에 「AI 연출 이미지」를 적어 화면에 뜨게 했다 — 실제 사진으로 읽히지 않게.",
+    "· 그림 안에 글자(요금·시간)가 없다. SNS 카드 넷은 쓰지 않았다.",
+    "· 공식 사진이 생기면 이 줄을 지우고 그것으로 바꾼다."
+  ],
+  "ks_5i": {
+    "image": "https://korea-street.com/images/own/seoul-plaza-ice-rink.jpg",
+    "source": "K-Street · AI 연출 이미지 (AI-generated)",
+    "license": "K-Street 자체 제작",
+    "matchedName": "서울광장 스케이트장"
   }
 }
