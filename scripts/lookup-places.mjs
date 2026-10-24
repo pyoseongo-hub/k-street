@@ -46,6 +46,7 @@ const PER = 8;
 const CITIES = {
   "1": { code: "1", label: "서울", addr: "서울" },
   "6": { code: "6", label: "부산", addr: "부산" },
+  "2": { code: "2", label: "인천", addr: "인천" },
 };
 const areaArg = (argv.find((a) => a.startsWith("--area=")) ?? "").split("=")[1] ?? "1";
 const CITY = CITIES[areaArg] ?? CITIES["1"];

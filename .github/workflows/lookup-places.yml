@@ -15,7 +15,7 @@ on:
         required: true
         default: "경복궁 창덕궁 종묘 홍대 명동 가로수길"
       area:
-        description: "어느 도시에서 찾나 — 1 서울 · 6 부산"
+        description: "어느 도시에서 찾나 — 1 서울 · 2 인천 · 6 부산"
         required: false
         default: "1"
 
