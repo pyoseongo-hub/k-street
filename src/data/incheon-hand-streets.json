@@ -1,0 +1,14 @@
+[
+  {
+    "id": "hand_songdo_hanok",
+    "city": "incheon",
+    "gu": "연수구",
+    "dong": "송도동",
+    "category": "street",
+    "name": "송도 한옥마을",
+    "addr": "인천광역시 연수구 송도동 센트럴파크 곁",
+    "note": "송도 센트럴파크 곁의 한옥 단지 — 한옥 호텔 「경원재」가 있다",
+    "nameOnly": true,
+    "confirmed": true
+  }
+]

@@ -44,6 +44,11 @@ import chungbuk from "./chungbuk-places.json";
 import gyeongnam from "./gyeongnam-places.json";
 import jeonnam from "./jeonnam-places.json";
 import chungnam from "./chungnam-places.json";
+// ✋ **사람이 손으로 넣은 곳** (2026-10-24, 사장님: 「인천 송도 한옥마을 넣어」).
+//    incheon-places.json 은 관광공사 조사 자료로 **기계가 다시 만드는 파일**이라 거기 적으면
+//    다음 실행에 지워진다. 그래서 따로 둔다. `-streets.json` 이라 번역 그물(translate-places)에도 걸린다.
+//    🏠 도로명 번지는 자료마다 180·200 으로 갈려 **안 적었다.**
+import incheonHand from "./incheon-hand-streets.json";
 
 export const CITY_PLACES_2026_10: Place[] = [
   ...(jeju as Place[]),
@@ -58,6 +63,7 @@ export const CITY_PLACES_2026_10: Place[] = [
 /** 🗺️ 2026-10-05에 연 일곱 시·도. id 가 관광공사 contentId 라 순서에 영향을 주지 않는다. */
 export const CITY_PLACES_2026_10_05: Place[] = [
   ...(incheon as Place[]),
+  ...(incheonHand as Place[]),
   ...(ulsan as Place[]),
   ...(sejong as Place[]),
   ...(gyeonggi as Place[]),
