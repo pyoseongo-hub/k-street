@@ -1,6 +1,6 @@
 {
  "설명": "구청·구 문화재단이 서울시 문화포털에 직접 올린 축제 확정 날짜. scripts/fetch-gu-festival-dates.ts 가 받는다. 손으로 고치지 말 것.",
- "받은날": "2026-10-24",
+ "받은날": "2026-10-25",
  "곳": {
   "ks_57": {
    "start": "2026-10-24",
@@ -16,7 +16,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159406&menuNo=200010",
    "registered": "2026-09-08",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-24"
+   "fetchedAt": "2026-10-25"
   },
   "ks_59": {
    "start": "2026-05-01",
@@ -32,7 +32,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=156916&menuNo=200010",
    "registered": "2026-03-04",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-24"
+   "fetchedAt": "2026-10-25"
   },
   "ks_5a": {
    "start": "2026-08-04",
@@ -48,7 +48,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158941&menuNo=200010",
    "registered": "2026-08-03",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-24"
+   "fetchedAt": "2026-10-25"
   },
   "ks_5b": {
    "start": "2026-08-29",
@@ -64,7 +64,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158899&menuNo=200010",
    "registered": "2026-07-30",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-24"
+   "fetchedAt": "2026-10-25"
   },
   "ks_j": {
    "start": "2026-10-31",
@@ -88,7 +88,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159120&menuNo=200010",
    "registered": "2026-08-19",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-24"
+   "fetchedAt": "2026-10-25"
   },
   "fs_820": {
    "start": "2026-10-17",
@@ -104,22 +104,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159236&menuNo=200010",
    "registered": "2026-08-27",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-24"
-  },
-  "fs_279": {
-   "start": "2026-10-24",
-   "title": "2026 서울뮤직페스티벌",
-   "gu": "용산구",
-   "place": "노들섬",
-   "lat": 37.5176638307111,
-   "lng": 126.958036465507,
-   "time": "[부대 행사] 12:00~18:00  [SMF푸드존] 12:00~20:00  [메인 공연] 17:00~21:00",
-   "org": "서울시청",
-   "orgLink": "https://seoulmusicfestival.co.kr/2026/",
-   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159493&menuNo=200010",
-   "registered": "2026-09-15",
-   "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-24"
+   "fetchedAt": "2026-10-25"
   },
   "ks_r": {
    "start": "2026-10-30",
@@ -135,7 +120,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159663&menuNo=200010",
    "registered": "2026-09-28",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-24"
+   "fetchedAt": "2026-10-25"
   },
   "ks_k": {
    "start": "2026-10-23",
@@ -151,7 +136,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159925&menuNo=200010",
    "registered": "2026-10-20",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-24"
+   "fetchedAt": "2026-10-25"
   },
   "ks_5i": {
    "start": "2026-12-18",
@@ -167,7 +152,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159961&menuNo=200010",
    "registered": "2026-10-23",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-24"
+   "fetchedAt": "2026-10-25"
   }
  }
 }
