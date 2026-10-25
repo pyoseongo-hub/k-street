@@ -22,7 +22,7 @@
       "start": "2026-10-16",
       "end": "2026-10-18",
       "title": "2026 관악강감찬축제",
-      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=770"
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=625"
     },
     "ks_7": {
       "start": "2026-09-19",
@@ -69,6 +69,11 @@
       "end": "2026-10-17",
       "title": "2026 서울도시농업박람회",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=191"
+    },
+    "fs_279": {
+      "start": "2026-10-24",
+      "title": "2026 서울뮤직페스티벌",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=279"
     },
     "tour_2618971": {
       "start": "2026-10-17",
