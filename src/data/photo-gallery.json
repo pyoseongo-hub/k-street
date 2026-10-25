@@ -2649,5 +2649,49 @@
     "source": "한국관광공사 관광사진갤러리(포토코리아)",
     "license": "공공누리 제1유형",
     "fetchedAt": "2026-10-10"
+  },
+  "중구|서울빛초롱축제": {
+    "name": "서울빛초롱축제",
+    "gu": "중구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/52/2586952.jpg",
+        "title": "서울빛초롱축제",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20190109152342",
+        "contentId": "2586952"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/49/2586949.jpg",
+        "title": "서울빛초롱축제",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20190109152321",
+        "contentId": "2586949"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/48/2586948.jpg",
+        "title": "서울빛초롱축제",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20190109152256",
+        "contentId": "2586948"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/38/2586938.jpg",
+        "title": "서울빛초롱축제",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20190109152129",
+        "contentId": "2586938"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/44/2586944.jpg",
+        "title": "서울빛초롱축제",
+        "photographer": "라이브스튜디오",
+        "createdAt": "20190109152218",
+        "contentId": "2586944"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-10-25"
   }
 }
