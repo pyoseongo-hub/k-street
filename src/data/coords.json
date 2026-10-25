@@ -1381,5 +1381,19 @@
     "source": "kakao+naver",
     "for": "서울디자인위크",
     "matchedName": "2026 서울디자인위크"
+  },
+  "ks_5h": {
+    "lat": 37.56919368125526,
+    "lng": 126.97789091787784,
+    "source": "kakao+naver",
+    "for": "서울빛초롱축제",
+    "matchedName": "서울빛초롱축제"
+  },
+  "ks_5i": {
+    "lat": 37.5656726042805,
+    "lng": 126.977968926957,
+    "source": "kakao+naver",
+    "for": "서울광장 스케이트장",
+    "matchedName": "서울광장"
   }
 }
