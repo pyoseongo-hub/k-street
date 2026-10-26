@@ -1063,7 +1063,7 @@ export function inCategories(p: Place, cats: readonly string[]): boolean {
   return cats.includes(p.category) || (p.alsoCategories?.some((c) => cats.includes(c)) ?? false);
 }
 
-export const ALL_PLACES: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
+const ALL_PLACES_PREP: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .filter((p) => !isPlaceholder(p))
   // 🙈 사람이 "이건 안 내보낸다"고 정한 것(Place.hidden). 자료는 남아 있지만
   //    어느 화면에도 안 나온다 — 이유는 그 항목의 hidden에 적혀 있다.
@@ -1076,11 +1076,41 @@ export const ALL_PLACES: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .map(withManualPhoto)
   .map(withGalleryPhoto)
   // 🌗 두 칸에 걸치는 곳 — withAlsoCategories 주석 참고.
-  .map(withAlsoCategories)
-  // 🍁 단풍길은 사진이 없어도 내보낸다 — showsWithoutPhoto 주석 참고.
-  .filter((p) => hasPhoto(p) || showsWithoutPhoto(p));
+  .map(withAlsoCategories);
 
-/** 사진이 없어 지금 가려져 있는 곳. 하루 3곳 채우기 작업의 대상 목록이다. */
+/**
+ * 📝 **사진이 없어도 글자 카드로 내보낸다** (2026-10-26, 사장님: *"텍스트로 채워 /
+ *    이미지 없어도 번역도"*).
+ *
+ * 그때까지 사진 게이트로 가려진 곳이 전국 **521곳**(서울 205)이었다 — 강남페스티벌·
+ * 정동야행·가락시장·양재천 벚꽃길이 「동네」 화면에서 통째로 빠져 있었다. 단풍길·
+ * 이름만 있는 곳과 같은 이유로 빈 상자는 남지 않는다(PlacePhoto 가 비켜선다). 카드에는
+ * 이름·구·주소·설명이 12개 언어로 들어간다 — 521곳 모두 영어 이름이 이미 있었다.
+ *
+ * 🚨 **같은 곳이 두 장 되는 것만 막는다.** 가려져 있던 곳 중에는 사진 있는 곳과
+ *    **같은 구·같은 이름**이 있었다(정동길·삼청동길·여의서로·국립서울현충원·
+ *    오대호 아트팩토리 — 열어 보니 곳 페이지 제목이 겹쳐 배포 검사가 막았다).
+ *    사진 없이 새로 나오는 쪽이 이미 있는 이름과 겹치면 **새로 나오는 쪽을 뺀다.**
+ *    이미 보이던 곳끼리의 겹침은 건드리지 않는다 — 이 변경의 몫이 아니다.
+ *
+ * ⚠️ 사진 채우기는 그대로 한다 — 채우면 그날부터 사진이 붙는다(manual-photos.json).
+ */
+const shownBefore = (p: Place) => hasPhoto(p) || showsWithoutPhoto(p);
+const twinKey = (p: Place) => `${p.city ?? "seoul"}|${p.gu}|${nameKey(p.name)}`;
+function withTextOnlyPlaces(list: Place[]): Place[] {
+  const taken = new Set(list.filter(shownBefore).map(twinKey));
+  return list.filter((p) => {
+    if (shownBefore(p)) return true;
+    const k = twinKey(p);
+    if (taken.has(k)) return false;
+    taken.add(k);
+    return true;
+  });
+}
+export const ALL_PLACES: Place[] = withTextOnlyPlaces(ALL_PLACES_PREP);
+const SHOWN_IDS = new Set(ALL_PLACES.map((p) => p.id));
+
+/** 사진이 없어 가려진 곳 — 2026-10-26 부터는 이름이 겹쳐 빠진 쌍둥이만 남는다. */
 export const HIDDEN_NO_PHOTO: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .filter((p) => !isPlaceholder(p))
   // 🙈 사람이 "이건 안 내보낸다"고 정한 것(Place.hidden). 자료는 남아 있지만
@@ -1095,7 +1125,10 @@ export const HIDDEN_NO_PHOTO: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
   .map(withAlsoCategories)
   // 🍁 단풍길은 "사진 없어 가려진 곳"이 아니다(이미 화면에 나온다).
   //    여기 섞이면 '하루 3곳 채우기' 목록이 107곳으로 불어나 쓸모가 없어진다.
-  .filter((p) => !hasPhoto(p) && !showsWithoutPhoto(p));
+  .filter((p) => !hasPhoto(p) && !showsWithoutPhoto(p))
+  // 📝 2026-10-26 부터 사진 없는 곳도 글자 카드로 나온다(withTextOnlyPlaces).
+  //    그래서 여기 남는 것은 **이름이 겹쳐 빠진 쌍둥이**뿐이다.
+  .filter((p) => !SHOWN_IDS.has(p.id));
 
 /**
  * 계절 화면(「봄 여름 가을 겨울 그리고 서울」)이 쓰는 축제 전체.
