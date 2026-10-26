@@ -4664,6 +4664,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=399624"
   },
   {
+    "id": "cf_403465",
+    "city": "seoul",
+    "gu": "양천구",
+    "category": "festival",
+    "name": "제14회 서울시와 함께하는 GAF 시민공연예술제",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 12,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=403465"
+  },
+  {
     "id": "cf_403215",
     "city": "gyeonggi",
     "gu": "부천시",

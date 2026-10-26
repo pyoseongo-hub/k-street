@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-10-25",
+  "받은날": "2026-10-26",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -4758,6 +4758,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202609/5afe9b9cfe094afaa0f976e03e208c64.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=399624"
+    },
+    {
+      "seq": "403465",
+      "title": "제14회 서울시와 함께하는 GAF 시민공연예술제",
+      "start": "2026-11-10",
+      "end": "2026-12-05",
+      "place": "갈산문화예술센터 아이누리홀",
+      "area": "서울",
+      "sigungu": "양천구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/f6e0bbed7ecf421c8d2dd2bd52ec42e6.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=403465"
     },
     {
       "seq": "403215",
