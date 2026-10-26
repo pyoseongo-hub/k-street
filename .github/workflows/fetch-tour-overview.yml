@@ -1,0 +1,75 @@
+name: Fetch tour overview (관광공사 소개글 첫 문장 받기)
+
+# 📝 사진도 설명도 없는 곳에 **관광공사 소개글의 첫 문장**을 한 줄로 받아 온다.
+#    사장님 (2026-10-26): "텍스트로 채워 / 이미지 없어도 번역도" · "50개씩 진행하고 보고".
+#    왜·어떻게는 scripts/fetch-tour-overview.mjs 머리말에.
+# 🔁 이미 받은 곳은 건너뛴다 — 50곳씩 여러 번 돌리면 차례로 찬다.
+# ⚠️ 받은 뒤에는 Actions → Translate places 를 돌려야 12개 언어가 찬다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "한 판에 몇 곳 (기본 50)"
+        required: false
+        default: "50"
+      apply:
+        description: "받은 것을 저장하고 커밋할까 (끄면 맛보기만)"
+        type: boolean
+        default: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: 물어볼 곳 목록을 뽑는다
+        run: |
+          npx vite build --ssr scripts/dump-overview-targets.ts --outDir dist-ssr
+          node dist-ssr/dump-overview-targets.js
+
+      - name: 받아 오기
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+          LIMIT: ${{ inputs.limit }}
+        run: |
+          set -o pipefail
+          node scripts/fetch-tour-overview.mjs ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee overview-log.txt
+
+      - name: 저장된 것이 있으면 커밋
+        if: ${{ inputs.apply }}
+        run: |
+          if [ ! -f src/data/tour-overview.json ]; then echo "저장된 파일이 없다"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/tour-overview.json
+          git diff --cached --quiet && { echo "바뀐 게 없다"; exit 0; }
+          git commit -m "관광공사 소개글 첫 문장을 받았다 (fetch-tour-overview)"
+          pushed=no
+          for i in 1 2 3; do
+            if git push; then pushed=yes; break; fi
+            echo "   밀렸다 — 원격을 당겨 다시 얹는다 ($i/3)"
+            git pull --rebase origin "$(git rev-parse --abbrev-ref HEAD)" || exit 1
+            sleep $((i * 3))
+          done
+          [ "$pushed" = yes ] || { echo "❌ 세 번 다 밀렸다"; exit 1; }
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            echo "## 📝 관광공사 소개글 첫 문장"
+            echo ""
+            echo '```'
+            tail -c 60000 overview-log.txt 2>/dev/null || echo "(로그 없음)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -43,7 +43,7 @@
 //    cjk-dropped.json 에 적어 두고 다시 묻지 않는다** — 안 적어 두면 매번
 //    같은 것을 사서 또 버린다. 그물에 걸린 이름은 앱이 영어로 대신 보여 준다.
 
-import { readFileSync, writeFileSync, readdirSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
 // 🀄 이름인지 낱말인지 가리는 잣대. **감사와 같은 파일을 쓴다** — 그 파일 머리말 참고.
 import { brokenCjkNames, loadPlaces } from "./lib/cjk-name-rules.mjs";
 // 🌐 언어별로 나눠 둔 번역을 읽고 쓴다 — 그 파일 머리말에 왜 나눴는지 적어 뒀다.
@@ -304,6 +304,20 @@ for (const f of cityFiles) {
   let nn = 0;
   for (const p of list) if (p?.note && /[가-힣]/.test(p.note)) { source.add(p.note); nn++; }
   console.log(`   ${f} — 이름 ${n}개${nn ? ` · 설명 ${nn}개` : ""}`);
+}
+
+// 📝 **관광공사 소개글 첫 문장** (2026-10-26) — 설명이 없는 곳에 seed 가 붙여 쓰는 한 줄.
+//    tour-overview.json 은 `{ 곳: { id: { short } } }` 꼴이라 위 그물에 안 걸린다. 따로 넣는다.
+//    「이름다름」 줄은 화면에 안 쓰므로 번역하지 않는다.
+{
+  const f = join(DATA_DIR, "tour-overview.json");
+  let n = 0;
+  if (existsSync(f)) {
+    for (const o of Object.values(JSON.parse(readFileSync(f, "utf-8")).곳 ?? {})) {
+      if (o?.short && !o.이름다름 && /[가-힣]/.test(o.short)) { source.add(o.short); n++; }
+    }
+  }
+  console.log(`   tour-overview.json — 소개글 첫 문장 ${n}개`);
 }
 
 // 🚨 **그물에 안 걸린 곳 목록 파일이 있나** — 다음에 또 빠지지 않게 여기서 센다.

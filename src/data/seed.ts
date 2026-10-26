@@ -11,6 +11,7 @@ import { sidoOf } from "./districts";
 import { getCoords } from "../lib/coords";
 import { guFestivalDate, guOfficialLink } from "../lib/guFestival";
 import { TOUR_PLACES, findTourPlace, nameKey } from "./tourPlaces";
+import tourOverview from "./tour-overview.json";
 import { getManualPhoto } from "../lib/manualPhotos";
 import { galleryShotsFor } from "../lib/photoGallery";
 import autumnRoads from "./autumn-roads.json";
@@ -1096,6 +1097,20 @@ const ALL_PLACES_PREP: Place[] = mergeWithTourPlaces(ALL_PLACES_RAW)
  * ⚠️ 사진 채우기는 그대로 한다 — 채우면 그날부터 사진이 붙는다(manual-photos.json).
  */
 const shownBefore = (p: Place) => hasPhoto(p) || showsWithoutPhoto(p);
+
+/**
+ * 📝 **설명이 없는 곳에 관광공사 소개글의 첫 문장을 붙인다** (tour-overview.json).
+ *    글자 카드로 나온 곳 중 415곳이 설명 한 줄도 없었다 — 이름·구만으로는 무엇을 하는
+ *    곳인지 모른다. 사람이 적은 note 가 있으면 그대로 둔다. 이름이 달랐던 줄(이름다름)은
+ *    쓰지 않는다 — 남의 곳 설명이 붙는다. 50곳씩 받는다(Actions → Fetch tour overview).
+ */
+const OVERVIEW = (tourOverview as { 곳?: Record<string, { name?: string; short?: string; 이름다름?: boolean }> })["곳"] ?? {};
+function withOverview(p: Place): Place {
+  if (p.note) return p;
+  const o = OVERVIEW[p.id];
+  if (!o?.short || o.이름다름 || nameKey(o.name ?? "") !== nameKey(p.name)) return p;
+  return { ...p, note: o.short };
+}
 const twinKey = (p: Place) => `${p.city ?? "seoul"}|${p.gu}|${nameKey(p.name)}`;
 function withTextOnlyPlaces(list: Place[]): Place[] {
   const taken = new Set(list.filter(shownBefore).map(twinKey));
@@ -1107,7 +1122,7 @@ function withTextOnlyPlaces(list: Place[]): Place[] {
     return true;
   });
 }
-export const ALL_PLACES: Place[] = withTextOnlyPlaces(ALL_PLACES_PREP);
+export const ALL_PLACES: Place[] = withTextOnlyPlaces(ALL_PLACES_PREP).map(withOverview);
 const SHOWN_IDS = new Set(ALL_PLACES.map((p) => p.id));
 
 /** 사진이 없어 가려진 곳 — 2026-10-26 부터는 이름이 겹쳐 빠진 쌍둥이만 남는다. */
