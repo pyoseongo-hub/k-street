@@ -14,6 +14,8 @@ import { getMapLinks, getPlaceInfoLink } from "../src/lib/mapLinks";
 
 const shape = (p: Place) => ({
   id: p.id,
+  // 🏙️ 시·도 — 사진 찾기를 「서울부터」 돌리려고 넣었다(2026-10-26). 없으면 서울.
+  city: p.city ?? "seoul",
   name: p.name,
   gu: p.gu,
   dong: p.dong,

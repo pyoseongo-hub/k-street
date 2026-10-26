@@ -38,6 +38,12 @@ on:
         type: string
         required: false
         default: ""
+      city:
+        # 🏙️ 한 시·도만 (2026-10-26, 사장님: "서울부터"). 예: seoul · busan — 비우면 전부
+        description: "한 시·도만 찾을까 (seoul · busan …). 비우면 전부"
+        type: string
+        required: false
+        default: ""
       limit:
         # 🚨 "빈 칸이면 전체"로 만들 수 없다 — workflow_dispatch는 빈 값을 받으면
         #    여기 적힌 default로 되돌린다. 그래서 전체는 all이라고 적게 한다.
@@ -62,6 +68,7 @@ jobs:
       LIMIT: ${{ inputs.limit || (github.event_name == 'schedule' && '150') }}
       MISSING: ${{ inputs.missing || (github.event_name == 'schedule' && 'true') }}
       NAMES: ${{ inputs.names }}
+      CITY: ${{ inputs.city }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -89,6 +96,7 @@ jobs:
           if [ "$MISSING" = "true" ]; then ARGS="$ARGS --missing"; fi
           # 🔎 이름을 집었으면 그쪽이 이긴다(스크립트가 그렇게 고른다).
           if [ -n "$NAMES" ]; then ARGS="$ARGS --names \"$NAMES\""; fi
+          if [ -n "$CITY" ]; then ARGS="$ARGS --city $CITY"; fi
           if [ "$APPLY" = "true" ]; then ARGS="$ARGS --apply"; fi
           # 🐞 `$ARGS` 를 그냥 펼치면 `--names "가,나"` 의 따옴표가 안 먹어
           #    낱말이 쪼개진다. eval 로 돌려 따옴표를 살린다.

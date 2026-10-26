@@ -110,7 +110,12 @@ for (const p of [...dump.festivals, ...dump.hidden, ...dump.rows]) {
 //    **이미 사진이 있는 곳은 건너뛴다.** 기본값은 예전 그대로(전부)라 평소 쓰임은 안 바뀐다.
 const MISSING_ONLY = process.argv.includes("--missing");
 const 사진있나 = (p) => Boolean(p.image || p.thumb);
-const 모두 = [...byKey.values()];
+/**
+ * 🏙️ **한 시·도만 찾는다** (2026-10-26, 사장님: *"사진을 찾아보는 거 먼저야 / 없으면 텍스트만 / 서울부터"*).
+ *    `--city seoul` 을 주면 그 시·도의 곳만 본다. 안 주면 예전처럼 전부.
+ */
+const CITY = (argVal("--city") ?? "").trim();
+const 모두 = [...byKey.values()].filter((p) => !CITY || (p.city ?? "seoul") === CITY);
 /**
  * 🔎 **이름을 집어서 찾는다** (2026-10-11).
  *
