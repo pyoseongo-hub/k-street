@@ -1104,11 +1104,12 @@ const shownBefore = (p: Place) => hasPhoto(p) || showsWithoutPhoto(p);
  *    곳인지 모른다. 사람이 적은 note 가 있으면 그대로 둔다. 이름이 달랐던 줄(이름다름)은
  *    쓰지 않는다 — 남의 곳 설명이 붙는다. 50곳씩 받는다(Actions → Fetch tour overview).
  */
-const OVERVIEW = (tourOverview as { 곳?: Record<string, { name?: string; short?: string; 이름다름?: boolean }> })["곳"] ?? {};
+const OVERVIEW = (tourOverview as { 곳?: Record<string, { name?: string; short?: string; 이름다름?: boolean; 안씀?: string }> })["곳"] ?? {};
 function withOverview(p: Place): Place {
   if (p.note) return p;
   const o = OVERVIEW[p.id];
-  if (!o?.short || o.이름다름 || nameKey(o.name ?? "") !== nameKey(p.name)) return p;
+  // 「안씀」 — 사람이 읽고 뺀 줄(이유가 그 칸에 적혀 있다). 홍보 문구·추측·남의 곳 이야기.
+  if (!o?.short || o.이름다름 || o.안씀 || nameKey(o.name ?? "") !== nameKey(p.name)) return p;
   return { ...p, note: o.short };
 }
 const twinKey = (p: Place) => `${p.city ?? "seoul"}|${p.gu}|${nameKey(p.name)}`;

@@ -314,7 +314,7 @@ for (const f of cityFiles) {
   let n = 0;
   if (existsSync(f)) {
     for (const o of Object.values(JSON.parse(readFileSync(f, "utf-8")).곳 ?? {})) {
-      if (o?.short && !o.이름다름 && /[가-힣]/.test(o.short)) { source.add(o.short); n++; }
+      if (o?.short && !o.이름다름 && !o.안씀 && /[가-힣]/.test(o.short)) { source.add(o.short); n++; }
     }
   }
   console.log(`   tour-overview.json — 소개글 첫 문장 ${n}개`);
