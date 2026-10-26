@@ -3895,6 +3895,14 @@ html[lang^="zh"] * {
 .rec-card--back1, .rec-card--back2 { position: absolute; inset: 0; padding: 0; }
 .rec-card--back1 { transform: rotate(4deg) translate(8px, 6px); background: #E4E2DC; }
 .rec-card--back2 { transform: rotate(-3deg) translate(-6px, 10px); background: #D6D4CD; }
+/* 맨 위 장은 손가락으로 민다 — 세로 스크롤·텍스트 선택이 끼어들지 않게 */
+.rec-card--top { touch-action: none; user-select: none; -webkit-user-select: none; will-change: transform; }
+/* 위 장을 미는 동안 바로 아래 장이 제자리로 올라온다 */
+.rec-card--back1 { transition: transform 200ms ease-out; }
+.rec-card--back1.rec-card--rise { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .rec-card--top, .rec-card--back1 { transition: none !important; }
+}
 .rec-top { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #5D676C; }
 .rec-count { display: flex; gap: 6px; align-items: center; font-variant-numeric: tabular-nums; }
 .rec-count b { border: 1.5px solid #2F6F8F; color: #2F6F8F; border-radius: 99px; padding: 1px 9px; font-size: 13px; }
