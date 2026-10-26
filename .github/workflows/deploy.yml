@@ -17,6 +17,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # ⏱️ **천장을 단다** (2026-10-27). 정상은 1분 남짓인데 upload-pages-artifact 에서
+    #    13분째 멈춘 적이 있다 — 천장이 없으면 기본 6시간을 돌며 요금이 붙는다.
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -157,6 +160,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
