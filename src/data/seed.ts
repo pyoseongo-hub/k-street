@@ -12,6 +12,7 @@ import { getCoords } from "../lib/coords";
 import { guFestivalDate, guOfficialLink } from "../lib/guFestival";
 import { TOUR_PLACES, findTourPlace, nameKey } from "./tourPlaces";
 import tourOverview from "./tour-overview.json";
+import hiddenPlaces from "./place-hide-list.json";
 import { getManualPhoto } from "../lib/manualPhotos";
 import { galleryShotsFor } from "../lib/photoGallery";
 import autumnRoads from "./autumn-roads.json";
@@ -1123,7 +1124,9 @@ function withTextOnlyPlaces(list: Place[]): Place[] {
     return true;
   });
 }
-export const ALL_PLACES: Place[] = withTextOnlyPlaces(ALL_PLACES_PREP).map(withOverview);
+/** 🙈 사람이 「관광 앱에 안 맞다」고 정한 곳 — place-hide-list.json (이유가 거기 적혀 있다). */
+const HIDE = (hiddenPlaces as { 곳?: Record<string, string> })["곳"] ?? {};
+export const ALL_PLACES: Place[] = withTextOnlyPlaces(ALL_PLACES_PREP.filter((p) => !HIDE[p.id])).map(withOverview);
 const SHOWN_IDS = new Set(ALL_PLACES.map((p) => p.id));
 
 /** 사진이 없어 가려진 곳 — 2026-10-26 부터는 이름이 겹쳐 빠진 쌍둥이만 남는다. */
