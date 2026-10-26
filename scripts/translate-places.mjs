@@ -309,12 +309,13 @@ for (const f of cityFiles) {
 // 📝 **관광공사 소개글 첫 문장** (2026-10-26) — 설명이 없는 곳에 seed 가 붙여 쓰는 한 줄.
 //    tour-overview.json 은 `{ 곳: { id: { short } } }` 꼴이라 위 그물에 안 걸린다. 따로 넣는다.
 //    「이름다름」 줄은 화면에 안 쓰므로 번역하지 않는다.
+const OVERVIEW_SHORTS = new Set();
 {
   const f = join(DATA_DIR, "tour-overview.json");
   let n = 0;
   if (existsSync(f)) {
     for (const o of Object.values(JSON.parse(readFileSync(f, "utf-8")).곳 ?? {})) {
-      if (o?.short && !o.이름다름 && !o.안씀 && /[가-힣]/.test(o.short)) { source.add(o.short); n++; }
+      if (o?.short && !o.이름다름 && !o.안씀 && /[가-힣]/.test(o.short)) { source.add(o.short); OVERVIEW_SHORTS.add(o.short); n++; }
     }
   }
   console.log(`   tour-overview.json — 소개글 첫 문장 ${n}개`);
@@ -410,6 +411,15 @@ try {
   overrides = JSON.parse(readFileSync(OVERRIDES, "utf-8"));
 } catch {
   /* 없으면 그냥 안 쓴다 */
+}
+// 🀄 **소개글 첫 문장은 한자권(ja·zh·zh-TW)으로 옮기지 않는다** (2026-10-26).
+//    1차 47줄을 옮겨 보니 고유명사가 줄줄이 틀렸다 — 세검정 → 細検定, 북한산성 → 北朝鮮山城,
+//    연산군 → 連山郡, 토성 → 土星(행성), 명지시장 → 明治市場. 역사 소개글은 한자 이름 투성이라
+//    한 줄씩 확인할 수가 없다. 확인 못 한 한자는 null 이라는 규칙(name-overrides.json)을
+//    **이 줄들 전체에 미리** 건다 — 그 세 언어에서는 영어가 대신 보인다.
+for (const code of ["ja", "zh", "zh-TW"]) {
+  overrides[code] = overrides[code] ?? {};
+  for (const s of OVERVIEW_SHORTS) if (!(s in overrides[code])) overrides[code][s] = null;
 }
 let official = {};
 try {
