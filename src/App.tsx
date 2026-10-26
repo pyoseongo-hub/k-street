@@ -26,6 +26,7 @@ import BrandMark from "./components/BrandMark";
 import CityPicker from "./components/CityPicker";
 import CityCard from "./components/CityCard";
 import QuickLinks, { type QuickTarget } from "./components/QuickLinks";
+import RecommendPopup from "./components/RecommendPopup";
 import type { WhenJump } from "./components/MonthlyFestivalPanel";
 import type { Category } from "./data/seed";
 // 🔗 주소로 받은 도시·구(`?city=seoul&gu=jung-gu`). 그 파일 머리말 참고.
@@ -199,6 +200,8 @@ function App() {
         {/* 📲 홈 화면에 추가하면 앱처럼 열리고 인터넷 없이도 열린다 — 손님은
             그걸 모른다. 설치할 수 있는 브라우저에서만, 한 번만 뜬다. */}
         <InstallHint />
+        {/* 🎪 하루 한 번 뜨는 추천 축제 팝업 — RecommendPopup.tsx 머리말 */}
+        <RecommendPopup />
         {/* 🧭 바로가기 4칸 — 홈 탭에서만. 저장한 곳에서 누르면 홈으로 넘어간다. */}
         <QuickLinks
           onGo={(to) => {

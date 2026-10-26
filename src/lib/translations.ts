@@ -80,6 +80,12 @@ export interface Translations {
   quickToday: string;
   quickWalk: string;
   quickNavLabel: string;
+  /** 🎪 추천 축제 팝업 (RecommendPopup.tsx) */
+  recTitle: string;
+  recNext: string;
+  recClose: string;
+  recSkipToday: string;
+  recDatesMayChange: string;
   /** ⏳ 올해 회차가 끝난 축제 카드에 붙는 띠. 감추지 않고 흑백으로 남긴다. */
   festivalEndedThisYearLabel: string;
   /** 📍 축제가 제 사진이 없어 **장소 사진**을 빌렸을 때 사진 위에 적는 줄. */
@@ -531,6 +537,11 @@ const translations: Record<Language, Translations> = {
     quickToday: "오늘 열리는",
     quickWalk: "걷는 길",
     quickNavLabel: "바로가기",
+    recTitle: "추천 축제",
+    recNext: "다음 축제",
+    recClose: "닫기",
+    recSkipToday: "오늘 그만 보기",
+    recDatesMayChange: "날짜는 주최 측 사정으로 바뀔 수 있습니다",
     nearbyFestivalsTitle: (n) => `옆 지역에서도 ${n}곳`,
     nearbyFestivalsNote:
       "차로 한두 시간이면 닿는 이웃 시·도의 축제예요. 카드마다 어느 지역인지 적어 뒀어요.",
@@ -723,6 +734,11 @@ const translations: Record<Language, Translations> = {
     quickToday: "On today",
     quickWalk: "Walking routes",
     quickNavLabel: "Shortcuts",
+    recTitle: "Festivals to catch",
+    recNext: "Next festival",
+    recClose: "Close",
+    recSkipToday: "Don\u2019t show again today",
+    recDatesMayChange: "Dates may change at the organiser\u2019s discretion",
     nearbyFestivalsTitle: (n) => `${n} more in nearby regions`,
     nearbyFestivalsNote:
       "Festivals in neighbouring regions, one or two hours away by car. Each card says which region it is in.",
@@ -915,6 +931,11 @@ const translations: Record<Language, Translations> = {
     quickToday: "今日開催",
     quickWalk: "散歩道",
     quickNavLabel: "ショートカット",
+    recTitle: "おすすめのお祭り",
+    recNext: "次のお祭り",
+    recClose: "閉じる",
+    recSkipToday: "今日は表示しない",
+    recDatesMayChange: "日程は主催者の都合で変更される場合があります",
     nearbyFestivalsTitle: (n) => `近くの地域にも ${n}件`,
     nearbyFestivalsNote:
       "車で1〜2時間の隣接地域のお祭りです。カードごとにどの地域かを記しています。",
@@ -1107,6 +1128,11 @@ const translations: Record<Language, Translations> = {
     quickToday: "今天举办",
     quickWalk: "步行路线",
     quickNavLabel: "快捷入口",
+    recTitle: "推荐节庆",
+    recNext: "下一个节庆",
+    recClose: "关闭",
+    recSkipToday: "今天不再显示",
+    recDatesMayChange: "日期可能因主办方原因而变更",
     nearbyFestivalsTitle: (n) => `邻近地区还有 ${n} 个`,
     nearbyFestivalsNote:
       "开车一两个小时可达的邻近地区庆典。每张卡片都标明所属地区。",
@@ -1299,6 +1325,11 @@ const translations: Record<Language, Translations> = {
     quickToday: "今天舉辦",
     quickWalk: "步行路線",
     quickNavLabel: "快捷入口",
+    recTitle: "推薦節慶",
+    recNext: "下一個節慶",
+    recClose: "關閉",
+    recSkipToday: "今天不再顯示",
+    recDatesMayChange: "日期可能因主辦單位因素而變更",
     nearbyFestivalsTitle: (n) => `鄰近地區還有 ${n} 個`,
     nearbyFestivalsNote:
       '開車一兩個小時可達的鄰近地區慶典。每張卡片都標明所屬地區。',
@@ -1491,6 +1522,11 @@ const translations: Record<Language, Translations> = {
     quickToday: "Diễn ra hôm nay",
     quickWalk: "Đường đi bộ",
     quickNavLabel: "Lối tắt",
+    recTitle: "Lễ hội gợi ý",
+    recNext: "Lễ hội tiếp theo",
+    recClose: "Đóng",
+    recSkipToday: "Hôm nay không hiện nữa",
+    recDatesMayChange: "Ngày có thể thay đổi tùy ban tổ chức",
     nearbyFestivalsTitle: (n) => `${n} lễ hội ở vùng lân cận`,
     nearbyFestivalsNote:
       "Lễ hội ở các tỉnh lân cận, cách khoảng một đến hai giờ lái xe. Mỗi thẻ đều ghi rõ thuộc vùng nào.",
@@ -1683,6 +1719,11 @@ const translations: Record<Language, Translations> = {
     quickToday: "Hoy",
     quickWalk: "Rutas a pie",
     quickNavLabel: "Accesos rápidos",
+    recTitle: "Festivales recomendados",
+    recNext: "Siguiente festival",
+    recClose: "Cerrar",
+    recSkipToday: "No mostrar más hoy",
+    recDatesMayChange: "Las fechas pueden cambiar según el organizador",
     nearbyFestivalsTitle: (n) => `${n} más en regiones cercanas`,
     nearbyFestivalsNote:
       "Festivales en regiones vecinas, a una o dos horas en coche. Cada tarjeta indica a qué región pertenece.",
@@ -1875,6 +1916,11 @@ const translations: Record<Language, Translations> = {
     quickToday: "Aujourd'hui",
     quickWalk: "Balades à pied",
     quickNavLabel: "Raccourcis",
+    recTitle: "Festivals à ne pas manquer",
+    recNext: "Festival suivant",
+    recClose: "Fermer",
+    recSkipToday: "Ne plus afficher aujourd\u2019hui",
+    recDatesMayChange: "Les dates peuvent changer selon l\u2019organisateur",
     nearbyFestivalsTitle: (n) => `${n} autres dans les régions voisines`,
     nearbyFestivalsNote:
       "Festivals des régions voisines, à une ou deux heures de route. Chaque carte indique sa région.",
@@ -2067,6 +2113,11 @@ const translations: Record<Language, Translations> = {
     quickToday: "Heute",
     quickWalk: "Spazierwege",
     quickNavLabel: "Schnellzugriff",
+    recTitle: "Festival-Tipps",
+    recNext: "Nächstes Festival",
+    recClose: "Schließen",
+    recSkipToday: "Heute nicht mehr anzeigen",
+    recDatesMayChange: "Termine können sich je nach Veranstalter ändern",
     nearbyFestivalsTitle: (n) => `${n} weitere in Nachbarregionen`,
     nearbyFestivalsNote:
       "Feste in benachbarten Regionen, ein bis zwei Autostunden entfernt. Jede Karte nennt die Region.",
@@ -2259,6 +2310,11 @@ const translations: Record<Language, Translations> = {
     quickToday: "Сегодня",
     quickWalk: "Пешие маршруты",
     quickNavLabel: "Быстрый доступ",
+    recTitle: "Рекомендуемые фестивали",
+    recNext: "Следующий фестиваль",
+    recClose: "Закрыть",
+    recSkipToday: "Сегодня больше не показывать",
+    recDatesMayChange: "Даты могут измениться по решению организатора",
     nearbyFestivalsTitle: (n) => `Ещё ${n} в соседних регионах`,
     nearbyFestivalsNote:
       "Фестивали в соседних регионах — один-два часа на машине. На каждой карточке указан регион.",
@@ -2451,6 +2507,11 @@ const translations: Record<Language, Translations> = {
     quickToday: "Hari ini",
     quickWalk: "Rute jalan kaki",
     quickNavLabel: "Pintasan",
+    recTitle: "Festival pilihan",
+    recNext: "Festival berikutnya",
+    recClose: "Tutup",
+    recSkipToday: "Jangan tampilkan lagi hari ini",
+    recDatesMayChange: "Tanggal dapat berubah sesuai penyelenggara",
     nearbyFestivalsTitle: (n) => `${n} lagi di wilayah sekitar`,
     nearbyFestivalsNote:
       "Festival di wilayah tetangga, satu sampai dua jam berkendara. Setiap kartu mencantumkan wilayahnya.",
@@ -2643,6 +2704,11 @@ const translations: Record<Language, Translations> = {
     quickToday: "วันนี้",
     quickWalk: "เส้นทางเดิน",
     quickNavLabel: "ทางลัด",
+    recTitle: "เทศกาลแนะนำ",
+    recNext: "เทศกาลถัดไป",
+    recClose: "ปิด",
+    recSkipToday: "วันนี้ไม่ต้องแสดงอีก",
+    recDatesMayChange: "วันที่อาจเปลี่ยนแปลงตามผู้จัดงาน",
     nearbyFestivalsTitle: (n) => `อีก ${n} งานในพื้นที่ใกล้เคียง`,
     nearbyFestivalsNote:
       "เทศกาลในจังหวัดใกล้เคียง ขับรถราวหนึ่งถึงสองชั่วโมง การ์ดแต่ละใบระบุว่าอยู่พื้นที่ใด",
