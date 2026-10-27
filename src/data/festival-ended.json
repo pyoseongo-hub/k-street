@@ -10,7 +10,7 @@
     "",
     "✋ 지우지는 않는다. 그 축제는 **내년에 또 열린다** — 자리는 남기고 상태만 바꾼다."
   ],
-  "받은날": "2026-10-25",
+  "받은날": "2026-10-27",
   "곳": {
     "ks_2": {
       "start": "2026-10-16",
@@ -23,6 +23,11 @@
       "end": "2026-10-18",
       "title": "2026 관악강감찬축제",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=625"
+    },
+    "ks_6": {
+      "start": "2026-08-29",
+      "title": "2026 광진 뮤직페스타",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=583"
     },
     "ks_7": {
       "start": "2026-09-19",
@@ -52,6 +57,17 @@
       "title": "제18회 성북세계음식축제 누리마실",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=84"
     },
+    "ks_k": {
+      "start": "2026-10-23",
+      "end": "2026-10-25",
+      "title": "제26회 한성백제문화제",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=201"
+    },
+    "ks_l": {
+      "start": "2026-10-25",
+      "title": "제3회 양천가족 거리축제",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=585"
+    },
     "ks_54": {
       "start": "2026-09-19",
       "end": "2026-09-20",
@@ -64,11 +80,29 @@
       "title": "2026 남산골 추석축제 [남산달빛마당]",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=468"
     },
+    "ks_57": {
+      "start": "2026-10-24",
+      "end": "2026-10-25",
+      "title": "2026 서울 바비큐 페스티벌",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=347"
+    },
+    "fs_612": {
+      "start": "2026-09-06",
+      "end": "2026-10-25",
+      "title": "2026 국가무형유산 진관사 국행수륙재",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=612"
+    },
     "fs_191": {
       "start": "2026-10-16",
       "end": "2026-10-17",
       "title": "2026 서울도시농업박람회",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=191"
+    },
+    "fs_820": {
+      "start": "2026-10-17",
+      "end": "2026-10-25",
+      "title": "2026 한강페스티벌-가을",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=820"
     },
     "fs_279": {
       "start": "2026-10-24",
