@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-10-26",
+  "받은날": "2026-10-27",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -4604,6 +4604,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401152"
     },
     {
+      "seq": "405035",
+      "title": "2026년 제18회 부산관광미래포럼",
+      "start": "2026-10-28",
+      "end": "2026-10-28",
+      "place": "부산관광기업지원센터 3층 송도 대회의실",
+      "area": "부산",
+      "sigungu": "영도구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/fbdd77c8ebb949e9864252cc82ae2788.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405035"
+    },
+    {
       "seq": "396657",
       "title": "대전광역시 서예진흥원 <2026 서예 학술대회>",
       "start": "2026-10-29",
@@ -4614,6 +4626,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202609/25c700cecb264fe685686965483ebe6d.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=396657"
+    },
+    {
+      "seq": "404854",
+      "title": "「국토타고, 가을타고」",
+      "start": "2026-10-30",
+      "end": "2026-10-31",
+      "place": "국토발전전시관 1층",
+      "area": "서울",
+      "sigungu": "중구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/be99a0c7c34248969f0851fa9dbf9c38.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=404854"
     },
     {
       "seq": "399317",
@@ -4640,6 +4664,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401031"
     },
     {
+      "seq": "403470",
+      "title": "2026 서울도봉 평화울림페스티벌",
+      "start": "2026-10-31",
+      "end": "2026-10-31",
+      "place": "도봉구 평화울림터",
+      "area": "서울",
+      "sigungu": "도봉구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/28265b272ce140879bbf3857b4af16c1.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=403470"
+    },
+    {
       "seq": "402756",
       "title": "2026 순천문화기획학교 로컬기획자 페스티벌 'ST.ART'",
       "start": "2026-10-31",
@@ -4650,6 +4686,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/f4ea9ae3f1a1475eb8125690856c4b5e.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=402756"
+    },
+    {
+      "seq": "404837",
+      "title": "2026 장애예술주간 <모두 이야기 캠프>",
+      "start": "2026-10-31",
+      "end": "2026-11-08",
+      "place": "모두예술극장",
+      "area": "서울",
+      "sigungu": "서대문구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/85149c3f3b554b1fa87f5629a06ffae2.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=404837"
     },
     {
       "seq": "402676",
@@ -4698,6 +4746,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202609/6834e87cc0af426380de3a80686cd158.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=399616"
+    },
+    {
+      "seq": "405033",
+      "title": "2026 사회적가치 비즈니스 모델 공모전 밸류업 데이",
+      "start": "2026-11-04",
+      "end": "2026-11-04",
+      "place": "페럼타워 3층 페럼홀",
+      "area": "서울",
+      "sigungu": "중구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/dec31b907d2949ff95c888ea65cf38ef.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405033"
     },
     {
       "seq": "402527",
@@ -4760,6 +4820,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=399624"
     },
     {
+      "seq": "404828",
+      "title": "돌맨돌맹 - 우리 손으로 만든 고인돌 마을 축제",
+      "start": "2026-11-07",
+      "end": "2026-11-07",
+      "place": "고인돌어울림터",
+      "area": "강원",
+      "sigungu": "춘천시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/7f17fbeef344464daf26020659a17fcb.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=404828"
+    },
+    {
       "seq": "403465",
       "title": "제14회 서울시와 함께하는 GAF 시민공연예술제",
       "start": "2026-11-10",
@@ -4782,6 +4854,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/bb38effd14e44839b82b1219a84646b0.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=403215"
+    },
+    {
+      "seq": "404836",
+      "title": "2026 관광업 AX 세미나",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "place": "코엑스 2층 아셈볼룸",
+      "area": "서울",
+      "sigungu": "강남구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/dfdb77a1807a4c5ab068b36d6605218b.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=404836"
     },
     {
       "seq": "402844",

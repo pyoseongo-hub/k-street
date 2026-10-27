@@ -1263,19 +1263,6 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=373661"
   },
   {
-    "id": "cf_379747",
-    "city": "seoul",
-    "gu": "서초구",
-    "category": "festival",
-    "name": "2026 차 없는 잠수교 뚜벅뚜벅 축제",
-    "confirmed": true,
-    "nameOnly": true,
-    "startMonth": 4,
-    "endMonth": 6,
-    "monthSource": "한국문화정보원 문화정보 창구",
-    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=379747"
-  },
-  {
     "id": "cf_378369",
     "city": "jeonbuk",
     "gu": "전주시",
@@ -1612,19 +1599,6 @@
     "endMonth": 5,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=379675"
-  },
-  {
-    "id": "cf_379919",
-    "city": "seoul",
-    "gu": "중랑구",
-    "category": "festival",
-    "name": "제18회 중랑 서울장미축제",
-    "confirmed": true,
-    "nameOnly": true,
-    "startMonth": 5,
-    "endMonth": 5,
-    "monthSource": "한국문화정보원 문화정보 창구",
-    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=379919"
   },
   {
     "id": "cf_379900",
@@ -4482,19 +4456,6 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402393"
   },
   {
-    "id": "cf_401794",
-    "city": "seoul",
-    "gu": "노원구",
-    "category": "festival",
-    "name": "[서울시립과학관 x 노원천문우주과학관] 2026년 별빛축제",
-    "confirmed": true,
-    "nameOnly": true,
-    "startMonth": 10,
-    "endMonth": 10,
-    "monthSource": "한국문화정보원 문화정보 창구",
-    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401794"
-  },
-  {
     "id": "cf_402634",
     "city": "jeju",
     "gu": "제주시",
@@ -4560,6 +4521,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=401152"
   },
   {
+    "id": "cf_404854",
+    "city": "seoul",
+    "gu": "중구",
+    "category": "festival",
+    "name": "「국토타고, 가을타고」",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=404854"
+  },
+  {
     "id": "cf_399317",
     "city": "gyeongbuk",
     "gu": "예천군",
@@ -4573,6 +4547,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=399317"
   },
   {
+    "id": "cf_403470",
+    "city": "seoul",
+    "gu": "도봉구",
+    "category": "festival",
+    "name": "2026 서울도봉 평화울림페스티벌",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=403470"
+  },
+  {
     "id": "cf_402756",
     "city": "jeonnam",
     "gu": "순천시",
@@ -4584,6 +4571,19 @@
     "endMonth": 10,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402756"
+  },
+  {
+    "id": "cf_404837",
+    "city": "seoul",
+    "gu": "서대문구",
+    "category": "festival",
+    "name": "2026 장애예술주간 <모두 이야기 캠프>",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=404837"
   },
   {
     "id": "cf_402676",
@@ -4662,6 +4662,19 @@
     "endMonth": 11,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=399624"
+  },
+  {
+    "id": "cf_404828",
+    "city": "gangwon",
+    "gu": "춘천시",
+    "category": "festival",
+    "name": "돌맨돌맹 - 우리 손으로 만든 고인돌 마을 축제",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=404828"
   },
   {
     "id": "cf_403465",
