@@ -1,23 +1,7 @@
 {
  "설명": "구청·구 문화재단이 서울시 문화포털에 직접 올린 축제 확정 날짜. scripts/fetch-gu-festival-dates.ts 가 받는다. 손으로 고치지 말 것.",
- "받은날": "2026-10-25",
+ "받은날": "2026-10-27",
  "곳": {
-  "ks_57": {
-   "start": "2026-10-24",
-   "end": "2026-10-25",
-   "title": "2026 서울 바비큐 페스티벌",
-   "gu": "마포구",
-   "place": "난지캠핑장",
-   "lat": 37.5628372373648,
-   "lng": 126.885422860585,
-   "time": "12:00~20:30",
-   "org": "서울시청",
-   "orgLink": "https://www.seoulbbqfesta.com/",
-   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159406&menuNo=200010",
-   "registered": "2026-09-08",
-   "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-25"
-  },
   "ks_59": {
    "start": "2026-05-01",
    "end": "2026-10-27",
@@ -32,7 +16,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=156916&menuNo=200010",
    "registered": "2026-03-04",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-25"
+   "fetchedAt": "2026-10-27"
   },
   "ks_5a": {
    "start": "2026-08-04",
@@ -48,7 +32,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158941&menuNo=200010",
    "registered": "2026-08-03",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-25"
+   "fetchedAt": "2026-10-27"
   },
   "ks_5b": {
    "start": "2026-08-29",
@@ -64,7 +48,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158899&menuNo=200010",
    "registered": "2026-07-30",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-25"
+   "fetchedAt": "2026-10-27"
   },
   "ks_j": {
    "start": "2026-10-31",
@@ -88,23 +72,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159120&menuNo=200010",
    "registered": "2026-08-19",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-25"
-  },
-  "fs_820": {
-   "start": "2026-10-17",
-   "end": "2026-10-25",
-   "title": "[미래한강본부] 2026 한강페스티벌-가을[Hangang River Festival-Fall]",
-   "gu": "서초구",
-   "place": "한강 수상 및 한강공원 일대(잠원, 강서 중심)",
-   "lat": 37.5207505466926,
-   "lng": 127.012272942402,
-   "time": "프로그램별 상이",
-   "org": "미래한강본부",
-   "orgLink": "https://www.seoul.go.kr/festa/hangang/",
-   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159236&menuNo=200010",
-   "registered": "2026-08-27",
-   "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-25"
+   "fetchedAt": "2026-10-27"
   },
   "ks_r": {
    "start": "2026-10-30",
@@ -120,23 +88,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159663&menuNo=200010",
    "registered": "2026-09-28",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-25"
-  },
-  "ks_k": {
-   "start": "2026-10-23",
-   "end": "2026-10-25",
-   "title": "제26회 한성백제문화제",
-   "gu": "송파구",
-   "place": "올림픽공원 88잔디마당 일대",
-   "lat": 37.52053406288515,
-   "lng": 127.12081278327528,
-   "time": "개막공연: 10.23.(금) 19:00 / 한마음어울마당: 10.24.(토) 16:50 / 폐막공연: 10.25.(일) 19:00 / 체험마당: 10:00~19:00 / 한성백제장터: 11:00~21:00",
-   "org": "송파구청",
-   "orgLink": "https://www.songpa.go.kr/hanseong/",
-   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159925&menuNo=200010",
-   "registered": "2026-10-20",
-   "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-25"
+   "fetchedAt": "2026-10-27"
   },
   "ks_5i": {
    "start": "2026-12-18",
@@ -152,7 +104,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159961&menuNo=200010",
    "registered": "2026-10-23",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-25"
+   "fetchedAt": "2026-10-27"
   }
  }
 }
