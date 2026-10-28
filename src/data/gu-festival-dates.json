@@ -1,23 +1,7 @@
 {
  "설명": "구청·구 문화재단이 서울시 문화포털에 직접 올린 축제 확정 날짜. scripts/fetch-gu-festival-dates.ts 가 받는다. 손으로 고치지 말 것.",
- "받은날": "2026-10-27",
+ "받은날": "2026-10-28",
  "곳": {
-  "ks_59": {
-   "start": "2026-05-01",
-   "end": "2026-10-27",
-   "title": "2026 서울국제정원박람회",
-   "gu": "성동구",
-   "place": "서울숲 일대",
-   "lat": 37.5430701468405,
-   "lng": 127.041799099222,
-   "time": "12:00 ~ 19:00",
-   "org": "서울시청",
-   "orgLink": "https://www.seoul.go.kr/festa/garden/",
-   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=156916&menuNo=200010",
-   "registered": "2026-03-04",
-   "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-27"
-  },
   "ks_5a": {
    "start": "2026-08-04",
    "end": "2026-10-31",
@@ -32,7 +16,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158941&menuNo=200010",
    "registered": "2026-08-03",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-27"
+   "fetchedAt": "2026-10-28"
   },
   "ks_5b": {
    "start": "2026-08-29",
@@ -48,7 +32,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158899&menuNo=200010",
    "registered": "2026-07-30",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-27"
+   "fetchedAt": "2026-10-28"
   },
   "ks_j": {
    "start": "2026-10-31",
@@ -72,7 +56,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159120&menuNo=200010",
    "registered": "2026-08-19",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-27"
+   "fetchedAt": "2026-10-28"
   },
   "ks_r": {
    "start": "2026-10-30",
@@ -88,7 +72,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159663&menuNo=200010",
    "registered": "2026-09-28",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-27"
+   "fetchedAt": "2026-10-28"
   },
   "ks_5i": {
    "start": "2026-12-18",
@@ -104,7 +88,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159961&menuNo=200010",
    "registered": "2026-10-23",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-27"
+   "fetchedAt": "2026-10-28"
   }
  }
 }
