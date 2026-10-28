@@ -10,7 +10,7 @@
     "",
     "✋ 지우지는 않는다. 그 축제는 **내년에 또 열린다** — 자리는 남기고 상태만 바꾼다."
   ],
-  "받은날": "2026-10-27",
+  "받은날": "2026-10-28",
   "곳": {
     "ks_2": {
       "start": "2026-10-16",
@@ -85,6 +85,12 @@
       "end": "2026-10-25",
       "title": "2026 서울 바비큐 페스티벌",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=347"
+    },
+    "ks_59": {
+      "start": "2026-05-01",
+      "end": "2026-10-27",
+      "title": "2026 서울국제정원박람회",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=86"
     },
     "fs_612": {
       "start": "2026-09-06",
