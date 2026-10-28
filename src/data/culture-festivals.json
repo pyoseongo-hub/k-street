@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-10-27",
+  "받은날": "2026-10-28",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -2250,6 +2250,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=381738"
     },
     {
+      "seq": "394067",
+      "title": "수문장 마켓 페스티벌",
+      "start": "2026-07-11",
+      "end": "2026-10-31",
+      "place": "화홍사랑채 앞 광장",
+      "area": "경기",
+      "sigungu": "수원시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/rdf/26/08/rdf_202608192124183143.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=394067"
+    },
+    {
       "seq": "386794",
       "title": "두 세계를 잇는 실",
       "start": "2026-07-13",
@@ -3798,6 +3810,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=400427"
     },
     {
+      "seq": "405249",
+      "title": "2026 부산 원먼스페스티벌 우리동네 문화살롱 페스타 8th",
+      "start": "2026-10-01",
+      "end": "2026-10-31",
+      "place": "부산 곳곳의 우리동네 소공연장",
+      "area": "부산",
+      "sigungu": "영도구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/rdf/26/10/rdf_2026102721192645741.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405249"
+    },
+    {
       "seq": "380615",
       "title": "제51회 정선아리랑제",
       "start": "2026-10-01",
@@ -4112,6 +4136,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=399646"
     },
     {
+      "seq": "405044",
+      "title": "2026 장항 1931 밤의 기행",
+      "start": "2026-10-10",
+      "end": "2026-10-31",
+      "place": "장항도시탐험역",
+      "area": "충남",
+      "sigungu": "서천군",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/7ab05350d1544acfb4f4274f57c3a855.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405044"
+    },
+    {
       "seq": "400216",
       "title": "DMZ OPEN Festival",
       "start": "2026-10-12",
@@ -4254,6 +4290,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/f2ae9945a4bf4e10bc30821e2f23b439.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401421"
+    },
+    {
+      "seq": "405045",
+      "title": "2026 문경사과축제",
+      "start": "2026-10-17",
+      "end": "2026-11-01",
+      "place": "문경새재도립공원 일원",
+      "area": "경북",
+      "sigungu": "문경시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/0e7d21f145304afabfbd18727d6fc231.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405045"
     },
     {
       "seq": "401842",
@@ -4724,6 +4772,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=402555"
     },
     {
+      "seq": "405043",
+      "title": "제15회 성주가야산사랑 가을 산행대회",
+      "start": "2026-10-31",
+      "end": "2026-10-31",
+      "place": "가야산국립공원 백운동지구 주차장",
+      "area": "경북",
+      "sigungu": "성주군",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/ad87a927d5604319b4a5f987e0e8d973.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405043"
+    },
+    {
       "seq": "399615",
       "title": "『2026 대한민국 워케이션 박람회』 팸투어 참여기업 모집공고",
       "start": "2026-11-04",
@@ -4808,6 +4868,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=402698"
     },
     {
+      "seq": "405139",
+      "title": "2026 경산 반려문화 축제",
+      "start": "2026-11-07",
+      "end": "2026-11-08",
+      "place": "경산시 남천 둔치 서부초등학교 앞",
+      "area": "경북",
+      "sigungu": "경산시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/af6db615c0ce4c9f98838e5d403f2cb7.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405139"
+    },
+    {
       "seq": "399624",
       "title": "2026 청주 원도심 골목길축제 <가을 : 잔치집,대성>",
       "start": "2026-11-07",
@@ -4818,6 +4890,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202609/5afe9b9cfe094afaa0f976e03e208c64.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=399624"
+    },
+    {
+      "seq": "405076",
+      "title": "경주에 평화온:담",
+      "start": "2026-11-07",
+      "end": "2026-11-07",
+      "place": "첨성대 옆 잔디광장(경북 경주시 황남동 104-1)",
+      "area": "경북",
+      "sigungu": "경주시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/1267061c95ba42b28f238c6ef4d70703.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405076"
     },
     {
       "seq": "404828",
@@ -4878,6 +4962,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/89ed480033df424c84d12c7f16270ef6.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=402844"
+    },
+    {
+      "seq": "405038",
+      "title": "2026 포항국제불빛축제",
+      "start": "2026-11-19",
+      "end": "2026-11-21",
+      "place": "영일대해수욕장 및 송도부두 일원",
+      "area": "경북",
+      "sigungu": "포항시 북구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/7d39e9006b174748aa8b25860ca4b8e6.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405038"
     },
     {
       "seq": "403214",

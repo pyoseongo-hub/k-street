@@ -2214,6 +2214,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=381738"
   },
   {
+    "id": "cf_394067",
+    "city": "gyeonggi",
+    "gu": "수원시",
+    "category": "festival",
+    "name": "수문장 마켓 페스티벌",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 7,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=394067"
+  },
+  {
     "id": "cf_386794",
     "city": "seoul",
     "gu": "중구",
@@ -3726,6 +3739,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=400427"
   },
   {
+    "id": "cf_405249",
+    "city": "busan",
+    "gu": "영도구",
+    "category": "festival",
+    "name": "2026 부산 원먼스페스티벌 우리동네 문화살롱 페스타 8th",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405249"
+  },
+  {
     "id": "cf_380615",
     "city": "gangwon",
     "gu": "정선군",
@@ -4064,6 +4090,19 @@
     "endMonth": 10,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=399646"
+  },
+  {
+    "id": "cf_405044",
+    "city": "chungnam",
+    "gu": "서천군",
+    "category": "festival",
+    "name": "2026 장항 1931 밤의 기행",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405044"
   },
   {
     "id": "cf_400216",
@@ -4612,6 +4651,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402555"
   },
   {
+    "id": "cf_405043",
+    "city": "gyeongbuk",
+    "gu": "성주군",
+    "category": "festival",
+    "name": "제15회 성주가야산사랑 가을 산행대회",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405043"
+  },
+  {
     "id": "cf_402527",
     "city": "seoul",
     "gu": "동작구",
@@ -4651,6 +4703,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402552"
   },
   {
+    "id": "cf_405139",
+    "city": "gyeongbuk",
+    "gu": "경산시",
+    "category": "festival",
+    "name": "2026 경산 반려문화 축제",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405139"
+  },
+  {
     "id": "cf_399624",
     "city": "chungbuk",
     "gu": "청주시",
@@ -4662,6 +4727,19 @@
     "endMonth": 11,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=399624"
+  },
+  {
+    "id": "cf_405076",
+    "city": "gyeongbuk",
+    "gu": "경주시",
+    "category": "festival",
+    "name": "경주에 평화온:담",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405076"
   },
   {
     "id": "cf_404828",
@@ -4701,5 +4779,18 @@
     "endMonth": 11,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=403215"
+  },
+  {
+    "id": "cf_405038",
+    "city": "gyeongbuk",
+    "gu": "포항시",
+    "category": "festival",
+    "name": "2026 포항국제불빛축제",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405038"
   }
 ]
