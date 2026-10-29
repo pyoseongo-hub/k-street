@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-10-28",
+  "받은날": "2026-10-29",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -4700,6 +4700,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=399317"
     },
     {
+      "seq": "405273",
+      "title": "2026 N티스트 페스티벌",
+      "start": "2026-10-30",
+      "end": "2026-11-01",
+      "place": "정약용 펀그라운드 유스호스텔",
+      "area": "경기",
+      "sigungu": "남양주시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/6f5a7cb11c884ff59cc3861164a320e8.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405273"
+    },
+    {
       "seq": "401031",
       "title": "2026년 제2회 디지털출판 세미나 <출판사의 디지털 전환과 새로운 비즈니스 기회>",
       "start": "2026-10-30",
@@ -4710,6 +4722,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/b5bcf2dbb3564e4689eeb02ad9ee7f74.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401031"
+    },
+    {
+      "seq": "405271",
+      "title": "2026 부평별곳 권역별 프로젝트 <10월의 어린이날>",
+      "start": "2026-10-31",
+      "end": "2026-10-31",
+      "place": "청개구리어린이도서관, 포도나무작은도서관",
+      "area": "인천",
+      "sigungu": "부평구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/5f911728f2804d658ca2a4735c26fd72.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405271"
     },
     {
       "seq": "403470",

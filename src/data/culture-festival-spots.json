@@ -78,19 +78,6 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=364755"
   },
   {
-    "id": "cf_363397",
-    "city": "seoul",
-    "gu": "종로구",
-    "category": "festival",
-    "name": "2025 서울빛초롱축제",
-    "confirmed": true,
-    "nameOnly": true,
-    "startMonth": 12,
-    "endMonth": 1,
-    "monthSource": "한국문화정보원 문화정보 창구",
-    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=363397"
-  },
-  {
     "id": "cf_357746",
     "city": "seoul",
     "gu": "종로구",
@@ -4584,6 +4571,32 @@
     "endMonth": 11,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=399317"
+  },
+  {
+    "id": "cf_405273",
+    "city": "gyeonggi",
+    "gu": "남양주시",
+    "category": "festival",
+    "name": "2026 N티스트 페스티벌",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405273"
+  },
+  {
+    "id": "cf_405271",
+    "city": "incheon",
+    "gu": "부평구",
+    "category": "festival",
+    "name": "2026 부평별곳 권역별 프로젝트 <10월의 어린이날>",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405271"
   },
   {
     "id": "cf_403470",
