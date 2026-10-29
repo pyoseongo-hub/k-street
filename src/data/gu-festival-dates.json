@@ -1,6 +1,6 @@
 {
  "설명": "구청·구 문화재단이 서울시 문화포털에 직접 올린 축제 확정 날짜. scripts/fetch-gu-festival-dates.ts 가 받는다. 손으로 고치지 말 것.",
- "받은날": "2026-10-28",
+ "받은날": "2026-10-29",
  "곳": {
   "ks_5a": {
    "start": "2026-08-04",
@@ -16,7 +16,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158941&menuNo=200010",
    "registered": "2026-08-03",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-28"
+   "fetchedAt": "2026-10-29"
   },
   "ks_5b": {
    "start": "2026-08-29",
@@ -32,7 +32,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158899&menuNo=200010",
    "registered": "2026-07-30",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-28"
+   "fetchedAt": "2026-10-29"
   },
   "ks_j": {
    "start": "2026-10-31",
@@ -56,7 +56,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159120&menuNo=200010",
    "registered": "2026-08-19",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-28"
+   "fetchedAt": "2026-10-29"
   },
   "ks_r": {
    "start": "2026-10-30",
@@ -72,7 +72,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159663&menuNo=200010",
    "registered": "2026-09-28",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-28"
+   "fetchedAt": "2026-10-29"
   },
   "ks_5i": {
    "start": "2026-12-18",
@@ -88,7 +88,39 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159961&menuNo=200010",
    "registered": "2026-10-23",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-10-28"
+   "fetchedAt": "2026-10-29"
+  },
+  "ks_5h": {
+   "start": "2026-12-11",
+   "end": "2027-01-31",
+   "title": "2026 서울빛초롱축제",
+   "gu": "종로구",
+   "place": "청계천 일대(청계광장 ~ 삼일교)",
+   "lat": 37.569085502453035,
+   "lng": 126.97757627056508,
+   "time": "(일~목) 18:00 ~ 22:00 / (금~토) 18:00 ~ 23:00",
+   "org": "서울시청",
+   "orgLink": "https://www.stolantern.com/",
+   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159958&menuNo=200010",
+   "registered": "2026-10-23",
+   "source": "seoul-culture-portal",
+   "fetchedAt": "2026-10-29"
+  },
+  "tour_3035607": {
+   "start": "2026-12-11",
+   "end": "2027-01-10",
+   "title": "2026 광화문마켓",
+   "gu": "종로구",
+   "place": "광화문광장 및 세종로공원 일대",
+   "lat": 37.5718478584908,
+   "lng": 126.976168275947,
+   "time": "(일~목) 17:30~22:00 / (금~토) 17:30~23:00",
+   "org": "서울관광재단",
+   "orgLink": "https://www.stolantern.com/",
+   "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159960&menuNo=200010",
+   "registered": "2026-10-23",
+   "source": "seoul-culture-portal",
+   "fetchedAt": "2026-10-29"
   }
  }
 }
