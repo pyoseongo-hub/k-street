@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-10-29",
+  "받은날": "2026-10-30",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -4724,6 +4724,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=401031"
     },
     {
+      "seq": "405550",
+      "title": "고흥우주인, 골목축제(동행세일,2026유망상권 육성사업/귀환축제 및 홍보)",
+      "start": "2026-10-30",
+      "end": "2026-10-31",
+      "place": "고흥우주인브루어리광장",
+      "area": "전남광주통합",
+      "sigungu": "고흥군",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/23d00d6139e6410caa9e9292da02cf88.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405550"
+    },
+    {
       "seq": "405271",
       "title": "2026 부평별곳 권역별 프로젝트 <10월의 어린이날>",
       "start": "2026-10-31",
@@ -4806,6 +4818,30 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/ad87a927d5604319b4a5f987e0e8d973.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=405043"
+    },
+    {
+      "seq": "405583",
+      "title": "고흥우주인 꾸러미세트(한국관광공사 관광두레사업 파일럿사업)",
+      "start": "2026-11-02",
+      "end": "2026-11-02",
+      "place": "지하철 8호선(수진역~신흥역 사이) 12번 출구 지하 행사홀",
+      "area": "경기",
+      "sigungu": "성남시 중원구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/39257b61a6504243a873a500d9e1a794.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405583"
+    },
+    {
+      "seq": "405614",
+      "title": "고흥우주인 숯불생선&반건조생선 시제품 품평회 / 판로개척전",
+      "start": "2026-11-03",
+      "end": "2026-11-04",
+      "place": "지하철 8호선(수진역~신흥역 사이) 12번 출구 지하 행사홀",
+      "area": "경기",
+      "sigungu": "성남시 중원구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/b6173d7a32f64c6f8e2b849a4efd86dc.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405614"
     },
     {
       "seq": "399615",

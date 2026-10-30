@@ -4586,6 +4586,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405273"
   },
   {
+    "id": "cf_405550",
+    "city": "jeonnam",
+    "gu": "고흥군",
+    "category": "festival",
+    "name": "고흥우주인, 골목축제(동행세일,2026유망상권 육성사업/귀환축제 및 홍보)",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 10,
+    "endMonth": 10,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405550"
+  },
+  {
     "id": "cf_405271",
     "city": "incheon",
     "gu": "부평구",
@@ -4675,6 +4688,32 @@
     "endMonth": 10,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405043"
+  },
+  {
+    "id": "cf_405583",
+    "city": "gyeonggi",
+    "gu": "성남시",
+    "category": "festival",
+    "name": "고흥우주인 꾸러미세트(한국관광공사 관광두레사업 파일럿사업)",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405583"
+  },
+  {
+    "id": "cf_405614",
+    "city": "gyeonggi",
+    "gu": "성남시",
+    "category": "festival",
+    "name": "고흥우주인 숯불생선&반건조생선 시제품 품평회 / 판로개척전",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405614"
   },
   {
     "id": "cf_402527",
