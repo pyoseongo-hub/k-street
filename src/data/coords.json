@@ -1395,5 +1395,12 @@
     "source": "kakao+naver",
     "for": "서울광장 스케이트장",
     "matchedName": "서울광장"
+  },
+  "ks_4w": {
+    "lat": 37.5132167552833,
+    "lng": 126.900125402224,
+    "source": "kakao+naver",
+    "for": "문래예술공장(갤러리M30)",
+    "matchedName": "문래예술공장 갤러리M30"
   }
 }
