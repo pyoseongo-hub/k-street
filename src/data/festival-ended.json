@@ -10,7 +10,7 @@
     "",
     "✋ 지우지는 않는다. 그 축제는 **내년에 또 열린다** — 자리는 남기고 상태만 바꾼다."
   ],
-  "받은날": "2026-10-31",
+  "받은날": "2026-11-01",
   "곳": {
     "ks_2": {
       "start": "2026-10-16",
@@ -67,6 +67,12 @@
       "start": "2026-10-25",
       "title": "제3회 양천가족 거리축제",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=585"
+    },
+    "ks_r": {
+      "start": "2026-10-30",
+      "end": "2026-10-31",
+      "title": "2026 정동야행",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=87"
     },
     "ks_54": {
       "start": "2026-09-19",
