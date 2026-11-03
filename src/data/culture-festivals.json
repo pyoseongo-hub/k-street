@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-11-02",
+  "받은날": "2026-11-03",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -4976,6 +4976,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=405691"
     },
     {
+      "seq": "405953",
+      "title": "돈황 불교 사경 소장품 특별공개 연계 국제학술심포지엄",
+      "start": "2026-11-06",
+      "end": "2026-11-06",
+      "place": "국립중앙박물관 교육관 소강당",
+      "area": "서울",
+      "sigungu": "용산구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/a2212c15d47c40c4b236cef21fc4a09e.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405953"
+    },
+    {
       "seq": "405139",
       "title": "2026 경산 반려문화 축제",
       "start": "2026-11-07",
@@ -5036,6 +5048,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=404828"
     },
     {
+      "seq": "405729",
+      "title": "상괭이편 토큐멘터리 <기록되지 않았던 바다>",
+      "start": "2026-11-08",
+      "end": "2026-11-08",
+      "place": "다목적홀",
+      "area": "서울",
+      "sigungu": "종로구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/72558f219f8f405e99f3f43bdd162cb8.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405729"
+    },
+    {
       "seq": "403465",
       "title": "제14회 서울시와 함께하는 GAF 시민공연예술제",
       "start": "2026-11-10",
@@ -5046,6 +5070,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/f6e0bbed7ecf421c8d2dd2bd52ec42e6.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=403465"
+    },
+    {
+      "seq": "405954",
+      "title": "2026년 서점의 날 기념식",
+      "start": "2026-11-11",
+      "end": "2026-11-11",
+      "place": "서울역사박물관 야주개홀",
+      "area": "서울",
+      "sigungu": "종로구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/79a65dc8da344614861e0e1a35eccb5a.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405954"
     },
     {
       "seq": "403215",

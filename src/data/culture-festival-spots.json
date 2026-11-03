@@ -4872,6 +4872,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=404828"
   },
   {
+    "id": "cf_405729",
+    "city": "seoul",
+    "gu": "종로구",
+    "category": "festival",
+    "name": "상괭이편 토큐멘터리 <기록되지 않았던 바다>",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405729"
+  },
+  {
     "id": "cf_403465",
     "city": "seoul",
     "gu": "양천구",
@@ -4883,6 +4896,19 @@
     "endMonth": 12,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=403465"
+  },
+  {
+    "id": "cf_405954",
+    "city": "seoul",
+    "gu": "종로구",
+    "category": "festival",
+    "name": "2026년 서점의 날 기념식",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405954"
   },
   {
     "id": "cf_403215",
