@@ -2693,5 +2693,49 @@
     "source": "한국관광공사 관광사진갤러리(포토코리아)",
     "license": "공공누리 제1유형",
     "fetchedAt": "2026-10-25"
+  },
+  "송파구|서울 석촌동 고분군": {
+    "name": "서울 석촌동 고분군",
+    "gu": "송파구",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/50/4136250.jpg",
+        "title": "서울 석촌동 고분군",
+        "photographer": "임귀빈",
+        "createdAt": "20261027082229",
+        "contentId": "4136250"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/52/4136252.jpg",
+        "title": "서울 석촌동 고분군",
+        "photographer": "임귀빈",
+        "createdAt": "20261027082346",
+        "contentId": "4136252"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/54/4136254.jpg",
+        "title": "서울 석촌동 고분군",
+        "photographer": "임귀빈",
+        "createdAt": "20261027082503",
+        "contentId": "4136254"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/56/4136256.jpg",
+        "title": "서울 석촌동 고분군",
+        "photographer": "임귀빈",
+        "createdAt": "20261027082620",
+        "contentId": "4136256"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/58/4136258.JPG",
+        "title": "서울 석촌동 고분군",
+        "photographer": "임귀빈",
+        "createdAt": "20261027082737",
+        "contentId": "4136258"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-11-03"
   }
 }
