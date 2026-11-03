@@ -1,6 +1,6 @@
 {
  "설명": "구청·구 문화재단이 서울시 문화포털에 직접 올린 축제 확정 날짜. scripts/fetch-gu-festival-dates.ts 가 받는다. 손으로 고치지 말 것.",
- "받은날": "2026-11-02",
+ "받은날": "2026-11-03",
  "곳": {
   "ks_5b": {
    "start": "2026-08-29",
@@ -16,7 +16,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=158899&menuNo=200010",
    "registered": "2026-07-30",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-11-02"
+   "fetchedAt": "2026-11-03"
   },
   "fs_485": {
    "start": "2026-09-18",
@@ -32,7 +32,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159120&menuNo=200010",
    "registered": "2026-08-19",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-11-02"
+   "fetchedAt": "2026-11-03"
   },
   "ks_5i": {
    "start": "2026-12-18",
@@ -48,7 +48,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159961&menuNo=200010",
    "registered": "2026-10-23",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-11-02"
+   "fetchedAt": "2026-11-03"
   },
   "ks_5h": {
    "start": "2026-12-11",
@@ -64,7 +64,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159958&menuNo=200010",
    "registered": "2026-10-23",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-11-02"
+   "fetchedAt": "2026-11-03"
   },
   "tour_3035607": {
    "start": "2026-12-11",
@@ -80,7 +80,7 @@
    "page": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=159960&menuNo=200010",
    "registered": "2026-10-23",
    "source": "seoul-culture-portal",
-   "fetchedAt": "2026-11-02"
+   "fetchedAt": "2026-11-03"
   }
  }
 }
