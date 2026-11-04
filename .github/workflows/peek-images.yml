@@ -1,0 +1,48 @@
+name: Peek images (사진을 눈으로 확인하기)
+
+# 👀 **사진이 진짜 그 곳을 찍은 것인지 사람이 보려고** 받아 온다 (2026-11-04).
+#    사장님: 「폭포 사진 없어」 — 홍제천인공폭포의 관광공사 사진 11장이 폭포를 찍었는지
+#    작업 세션에서 확인할 길이 없었다. 작업 세션은 tong.visitkorea.or.kr 이 막혀 있다(프록시 403).
+#
+# 📦 받은 그림은 **`peek` 갈래에만** 올린다 — main 에 안 섞이고, 배포도 안 깨운다.
+#    작업 세션에서 `git fetch origin peek` 으로 가져가 열어 본다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: "그림 주소 (빈칸으로 나눈다)"
+        required: true
+      tag:
+        description: "폴더 이름 (예: 3452906)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  peek:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5 # ⏱️ 천장이 없으면 멈췄을 때 요금이 붙는다
+    steps:
+      - uses: actions/checkout@v4
+      - name: 받는다
+        run: |
+          git fetch origin peek && git checkout peek || git checkout --orphan peek
+          git rm -rf --cached . >/dev/null 2>&1 || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git ! -name peek -exec rm -rf {} +
+          mkdir -p "peek/${{ inputs.tag }}"
+          n=0
+          for u in ${{ inputs.urls }}; do
+            n=$((n+1))
+            f="peek/${{ inputs.tag }}/$(printf '%02d' $n)-$(basename "$u")"
+            if curl -fsSL -m 30 -o "$f" "$u"; then echo "✅ $n $u ($(stat -c %s "$f") 바이트)"; else echo "❌ $n $u"; rm -f "$f"; fi
+          done
+      - name: 올린다
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add peek
+          if git diff --cached --quiet; then echo "🔕 바뀐 것이 없다"; exit 0; fi
+          git commit -m "사진 확인용 (peek ${{ inputs.tag }}) [skip ci]"
+          git push origin peek
