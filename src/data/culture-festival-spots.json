@@ -3453,6 +3453,21 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=399308"
   },
   {
+    "id": "cf_406032",
+    "city": "busan",
+    "gu": "기장군",
+    "category": "festival",
+    "name": "2026 시민뜨락축제",
+    "confirmed": true,
+    "nameOnly": true,
+    "lat": 35.1388399670171,
+    "lng": 129.06521975849566,
+    "startMonth": 9,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=406032"
+  },
+  {
     "id": "cf_393010",
     "city": "incheon",
     "gu": "미추홀구",
@@ -4805,6 +4820,19 @@
     "endMonth": 11,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405691"
+  },
+  {
+    "id": "cf_405999",
+    "city": "seoul",
+    "gu": "동작구",
+    "category": "festival",
+    "name": "[동작문화재단] 11/7(토), 단 4시간만 열리는 사당의 지하낙원 \"공중부양\"으로 초대합니다!",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405999"
   },
   {
     "id": "cf_405139",

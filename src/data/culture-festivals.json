@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-11-03",
+  "받은날": "2026-11-04",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -3526,6 +3526,20 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=399308"
     },
     {
+      "seq": "406032",
+      "title": "2026 시민뜨락축제",
+      "start": "2026-09-19",
+      "end": "2026-11-14",
+      "place": "부산시민회관",
+      "area": "부산",
+      "sigungu": "기장군",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/rdf/26/11/rdf_2026110321172649297.jpg",
+      "lat": 35.1388399670171,
+      "lng": 129.06521975849566,
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=406032"
+    },
+    {
       "seq": "393010",
       "title": "2026 시민창작예술축제 - 제13회 학산마당극놀래",
       "start": "2026-09-19",
@@ -4676,6 +4690,16 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=405035"
     },
     {
+      "seq": "405992",
+      "title": "[한국콘텐츠진흥원] 365 공정상생데이 캘린더 이벤트",
+      "start": "2026-10-29",
+      "end": "2026-11-13",
+      "place": "온라인",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/37aabca2bc414fcb965f70fa91a7872d.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405992"
+    },
+    {
       "seq": "396657",
       "title": "대전광역시 서예진흥원 <2026 서예 학술대회>",
       "start": "2026-10-29",
@@ -4964,6 +4988,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=402698"
     },
     {
+      "seq": "406060",
+      "title": "「새로운 시대, 전남광주 문화포럼」",
+      "start": "2026-11-06",
+      "end": "2026-11-06",
+      "place": "광주상공회의소 7층",
+      "area": "전남광주통합",
+      "sigungu": "서구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/e2740d0f30fb4c19b692ced80c014e1f.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=406060"
+    },
+    {
       "seq": "405691",
       "title": "2026 인문문화축제 <인문지능>",
       "start": "2026-11-06",
@@ -4986,6 +5022,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/a2212c15d47c40c4b236cef21fc4a09e.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=405953"
+    },
+    {
+      "seq": "405999",
+      "title": "[동작문화재단] 11/7(토), 단 4시간만 열리는 사당의 지하낙원 \"공중부양\"으로 초대합니다!",
+      "start": "2026-11-07",
+      "end": "2026-11-07",
+      "place": "사당생활문화센터",
+      "area": "서울",
+      "sigungu": "동작구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/ad1445e843fd4ef391b674a2f86e60cb.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=405999"
     },
     {
       "seq": "405139",
