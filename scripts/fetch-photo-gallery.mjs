@@ -126,6 +126,10 @@ const 모두 = [...byKey.values()].filter((p) => !CITY || (p.city ?? "seoul") ==
  *
  *   node scripts/fetch-photo-gallery.mjs links.json --names "서울억새축제,하늘공원"
  */
+// 🔤 **다른 이름으로 찾기** (2026-11-04). 관광공사 곳 이름은 「홍제천인공폭포」인데 사진 제목은
+//    「홍제폭포」일 수 있다. --keyword 를 주면 그 말로 찾고, 제목 대조도 그 말로 한다.
+//    --names 로 곳을 하나 집었을 때만 쓴다(여러 곳에 같은 말로 찾으면 남의 사진이 붙는다).
+const KEYWORD = (argVal("--keyword") ?? "").trim().normalize("NFC");
 const NAMES = (argVal("--names") ?? "")
   .split(",")
   .map((s) => s.trim().normalize("NFC"))
@@ -317,7 +321,7 @@ for (const p of targets) {
     numOfRows: "30",
     pageNo: "1",
     arrange: "A",
-    keyword: p.name,
+    keyword: KEYWORD || p.name,
   });
   const ok = r.json?.response?.header?.resultCode === "0000" || (r.json && itemsOf(r.json).length);
   if (!ok) {
@@ -328,7 +332,7 @@ for (const p of targets) {
   }
   const items = itemsOf(r.json);
   const matched = items
-    .filter((it) => titleMentions(it.galTitle, p.name))
+    .filter((it) => titleMentions(it.galTitle, p.name) || (KEYWORD && titleMentions(it.galTitle, KEYWORD)))
     .filter((it) => it.galWebImageUrl)
     .slice(0, MAX_PER_PLACE);
 
