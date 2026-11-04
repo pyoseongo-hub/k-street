@@ -13,6 +13,10 @@ on:
         description: "한 판에 몇 곳 (기본 50)"
         required: false
         default: "50"
+      extra:
+        description: "콕 집어 받을 곳 (번호|이름|구 — 여럿은 ; 로). 비우면 사진·설명 없는 곳을 차례로"
+        required: false
+        default: ""
       apply:
         description: "받은 것을 저장하고 커밋할까 (끄면 맛보기만)"
         type: boolean
@@ -41,6 +45,7 @@ jobs:
         env:
           TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
           LIMIT: ${{ inputs.limit }}
+          EXTRA: ${{ inputs.extra }}
         run: |
           set -o pipefail
           node scripts/fetch-tour-overview.mjs ${{ inputs.apply && '--apply' || '' }} 2>&1 | tee overview-log.txt

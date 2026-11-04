@@ -24,7 +24,13 @@ const { TARGETS } = await import(`../${DUMP}`);
 
 const saved = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf-8")) : { 곳: {} };
 const done = new Set(Object.keys(saved.곳 ?? {}));
-const todo = TARGETS.filter((t) => !done.has(t.id)).slice(0, LIMIT);
+// 🎯 **콕 집어 받기** (2026-11-04 사장님: 홍제폭포 「내용 수집」). 사진이 있는 곳은 TARGETS 에
+//    안 들어 있어 설명을 못 받았다. EXTRA="번호|이름|구;번호|이름|구" 로 주면 그 곳만 받는다.
+const EXTRA = String(process.env.EXTRA ?? "").split(";").map((s) => s.trim()).filter(Boolean).map((s) => {
+  const [contentId, name, gu] = s.split("|").map((x) => x.trim());
+  return { id: contentId, contentId, name, gu: gu ?? "", city: "seoul" };
+});
+const todo = (EXTRA.length ? EXTRA : TARGETS.filter((t) => !done.has(t.id))).slice(0, LIMIT);
 console.log(`🔁 이미 받은 ${done.size}곳은 건너뛴다 · 이번에 ${todo.length}곳 (남은 대상 ${TARGETS.length - done.size})\n`);
 
 const ROOT = "https://apis.data.go.kr/B551011/KorService2";
