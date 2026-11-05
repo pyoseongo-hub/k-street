@@ -2737,5 +2737,49 @@
     "source": "한국관광공사 관광사진갤러리(포토코리아)",
     "license": "공공누리 제1유형",
     "fetchedAt": "2026-11-03"
+  },
+  "당진시|한진포구": {
+    "name": "한진포구",
+    "gu": "당진시",
+    "photos": [
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/30/4136630.jpg",
+        "title": "한진포구 해안산책로",
+        "photographer": "김지호",
+        "createdAt": "20261027102704",
+        "contentId": "4136630"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/34/4136634.jpg",
+        "title": "한진포구 해안산책로",
+        "photographer": "김지호",
+        "createdAt": "20261027102827",
+        "contentId": "4136634"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/47/4136647.jpg",
+        "title": "한진포구 해안산책로",
+        "photographer": "김지호",
+        "createdAt": "20261027102948",
+        "contentId": "4136647"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/49/4136649.jpg",
+        "title": "한진포구 해안산책로",
+        "photographer": "김지호",
+        "createdAt": "20261027103111",
+        "contentId": "4136649"
+      },
+      {
+        "url": "https://tong.visitkorea.or.kr/cms2/website/51/4136651.jpg",
+        "title": "한진포구 해안산책로",
+        "photographer": "김지호",
+        "createdAt": "20261027103234",
+        "contentId": "4136651"
+      }
+    ],
+    "source": "한국관광공사 관광사진갤러리(포토코리아)",
+    "license": "공공누리 제1유형",
+    "fetchedAt": "2026-11-05"
   }
 }
