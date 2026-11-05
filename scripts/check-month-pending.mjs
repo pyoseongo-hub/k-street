@@ -92,12 +92,17 @@ if (SEOUL_KEY) {
 // ── ③ 공식 누리집 — 올해 날짜가 적혀 있나 ────────────────────────────────────
 const yy = String(YEAR);
 const dateRe = new RegExp(`(${yy}\\s*[.\\-년/]\\s*\\d{1,2}\\s*[.\\-월/]\\s*\\d{1,2}\\s*일?[^\\n]{0,40})`, "g");
-async function officialCheck(url) {
+// 🐞 첫 판(2026-11-05)에서 문화포털 메인·체육회 공고 같은 **남의 날짜**가 「올해 날짜 보임」으로 잡혔다.
+//    officialUrl 이 축제 페이지가 아니라 목록 페이지인 곳이 있다. 그래서 **그 페이지에 축제 이름이
+//    실제로 있을 때만** 날짜를 단서로 친다. 이름이 없으면 「이름 없는 페이지」로 적는다.
+async function officialCheck(url, name) {
   if (!/^https?:\/\//.test(url)) return { state: "없음" };
   try {
     const r = await fetch(url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(20000), redirect: "follow" });
     if (!r.ok) return { state: "못 열림", why: `HTTP ${r.status}` };
     const text = (await r.text()).replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/\s+/g, " ");
+    const core = key(name);
+    if (core.length >= 3 && !key(text).includes(core.slice(0, Math.min(core.length, 8)))) return { state: "이름 없는 페이지" };
     const hits = [...new Set([...text.matchAll(dateRe)].map((m) => m[1].trim()))].slice(0, 3);
     return hits.length ? { state: "올해 날짜 보임", snippets: hits } : { state: "올해 날짜 없음" };
   } catch (e) {
@@ -134,7 +139,7 @@ for (const t of TARGETS) {
   const tour = tourRows === null ? "못 물어봄" : tourRows.filter((r) => same(r.title, t.name)).slice(0, 2).map((r) => ({ title: r.title, start: r.eventstartdate, end: r.eventenddate, contentId: r.contentid }));
   const portal = t.city !== "seoul" ? "서울 아님" : portalRows === null ? "못 물어봄" :
     portalRows.filter((r) => same(r.TITLE, t.name)).slice(0, 2).map((r) => ({ title: r.TITLE, start: r.STRTDATE?.slice(0, 10), end: r.END_DATE?.slice(0, 10), org: r.ORG_NAME, link: r.ORG_LINK || r.HMPG_ADDR || "" }));
-  const official = await officialCheck(t.officialUrl);
+  const official = await officialCheck(t.officialUrl, t.name);
   const naver = await naverCheck(t.name);
   const found = (Array.isArray(tour) && tour.length) || (Array.isArray(portal) && portal.length) || official.state === "올해 날짜 보임" || (Array.isArray(naver) && naver.length);
   out.push({ ...t, found: Boolean(found), tour, portal, official: { url: t.officialUrl, ...official }, naver });
