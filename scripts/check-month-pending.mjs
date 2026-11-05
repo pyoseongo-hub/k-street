@@ -8,6 +8,9 @@
 //   ① 관광공사 searchFestival2 — 전국. 이번 달 1일부터 시작하는 축제를 다 받아 이름으로 맞춘다
 //   ② 서울시 문화포털(culturalEventInfo) — 구청·구 문화재단이 직접 올리는 자리(서울만)
 //   ③ 그 축제의 **공식 누리집**(seed 의 officialUrl — 대개 구청·시청 페이지)에 올해 날짜가 떴나
+//   ④ **네이버 뉴스 검색** (사장님 2026-11-05: 「네이버 검색 추가」) — 「이름 + 올해」로 최신 기사를 찾아
+//      제목·요약에 올해 날짜가 적힌 기사만 단서로 남긴다. 기사는 근거가 아니라 **단서**다 —
+//      날짜는 결국 공식 누리집·창구에서 확인한다. 열쇠(NAVER_SEARCH_CLIENT_ID/SECRET)가 없으면 「못 물어봄」.
 //
 // 🚨 **여기서 날짜를 앱에 넣지 않는다.** 찾은 것을 data/month-pending.json 에 적기만 한다.
 //    「오늘 전달사항」(todo-board ⑤)이 그걸 보여 주고, 매일 아침 루틴이 사장님께 보고한다.
@@ -24,6 +27,8 @@ if (!existsSync(DUMP)) { console.error(`❌ ${DUMP} 가 없다 — 먼저 목록
 const { TARGETS, MONTH } = await import(`../${DUMP}`);
 const SEOUL_KEY = (process.env.SEOUL_OPEN_API_KEY ?? "").trim();
 const TOUR_KEY = (process.env.TOUR_API_KEY ?? "").trim();
+const NAVER_ID = (process.env.NAVER_SEARCH_CLIENT_ID ?? "").trim();
+const NAVER_SECRET = (process.env.NAVER_SEARCH_CLIENT_SECRET ?? "").trim();
 const UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125 Safari/537.36";
 const YEAR = new Date(Date.now() + 9 * 3600_000).getUTCFullYear();
 
@@ -100,15 +105,40 @@ async function officialCheck(url) {
   }
 }
 
+// ── ④ 네이버 뉴스 ─────────────────────────────────────────────────────────
+const strip = (s) => String(s ?? "").replace(/<[^>]+>/g, "").replace(/&quot;/g, '"').replace(/&amp;/g, "&").replace(/&[a-z]+;/g, " ");
+const naverDateRe = new RegExp(`(${yy}\\s*[.년]\\s*)?\\d{1,2}\\s*[.월]\\s*\\d{1,2}\\s*일?`);
+async function naverCheck(name) {
+  if (!NAVER_ID || !NAVER_SECRET) return "못 물어봄(열쇠 없음)";
+  const q = `${name.replace(/20\d{2}/g, "").trim()} ${YEAR}`;
+  try {
+    const r = await fetch(`https://openapi.naver.com/v1/search/news.json?${new URLSearchParams({ query: q, display: "10", sort: "date" })}`, {
+      headers: { "X-Naver-Client-Id": NAVER_ID, "X-Naver-Client-Secret": NAVER_SECRET }, signal: AbortSignal.timeout(15000),
+    });
+    if (!r.ok) return `못 물어봄(HTTP ${r.status})`;
+    const items = (await r.json())?.items ?? [];
+    return items
+      .map((it) => ({ title: strip(it.title), desc: strip(it.description), date: it.pubDate, link: it.originallink || it.link }))
+      // 이름이 제목에 있고, 제목·요약에 날짜가 적힌 것만 — 아니면 남의 기사가 걸린다
+      .filter((it) => same(it.title, name) && naverDateRe.test(`${it.title} ${it.desc}`))
+      .slice(0, 2)
+      .map((it) => ({ title: it.title, start: (`${it.title} ${it.desc}`.match(naverDateRe) ?? [""])[0], end: "", link: it.link, pub: it.date }));
+  } catch (e) {
+    return `못 물어봄(${String(e.message).slice(0, 40)})`;
+  }
+}
+console.log(`④ 네이버 뉴스: ${NAVER_ID && NAVER_SECRET ? "열쇠 있음" : "열쇠 없음 — 못 물어봄"}`);
+
 const out = [];
 for (const t of TARGETS) {
   const tour = tourRows === null ? "못 물어봄" : tourRows.filter((r) => same(r.title, t.name)).slice(0, 2).map((r) => ({ title: r.title, start: r.eventstartdate, end: r.eventenddate, contentId: r.contentid }));
   const portal = t.city !== "seoul" ? "서울 아님" : portalRows === null ? "못 물어봄" :
     portalRows.filter((r) => same(r.TITLE, t.name)).slice(0, 2).map((r) => ({ title: r.TITLE, start: r.STRTDATE?.slice(0, 10), end: r.END_DATE?.slice(0, 10), org: r.ORG_NAME, link: r.ORG_LINK || r.HMPG_ADDR || "" }));
   const official = await officialCheck(t.officialUrl);
-  const found = (Array.isArray(tour) && tour.length) || (Array.isArray(portal) && portal.length) || official.state === "올해 날짜 보임";
-  out.push({ ...t, found: Boolean(found), tour, portal, official: { url: t.officialUrl, ...official } });
-  console.log(`${found ? "🔎" : "⬜"} ${t.name} (${t.gu}) — 관광공사 ${Array.isArray(tour) ? tour.length : tour} · 문화포털 ${Array.isArray(portal) ? portal.length : portal} · 공식 ${official.state}`);
+  const naver = await naverCheck(t.name);
+  const found = (Array.isArray(tour) && tour.length) || (Array.isArray(portal) && portal.length) || official.state === "올해 날짜 보임" || (Array.isArray(naver) && naver.length);
+  out.push({ ...t, found: Boolean(found), tour, portal, official: { url: t.officialUrl, ...official }, naver });
+  console.log(`${found ? "🔎" : "⬜"} ${t.name} (${t.gu}) — 관광공사 ${Array.isArray(tour) ? tour.length : tour} · 문화포털 ${Array.isArray(portal) ? portal.length : portal} · 공식 ${official.state} · 네이버 ${Array.isArray(naver) ? naver.length : naver}`);
 }
 
 writeFileSync("data/month-pending.json", JSON.stringify({
