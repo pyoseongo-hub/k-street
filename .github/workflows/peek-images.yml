@@ -11,8 +11,13 @@ on:
   workflow_dispatch:
     inputs:
       urls:
-        description: "그림 주소 (빈칸으로 나눈다)"
-        required: true
+        description: "그림 주소 (빈칸으로 나눈다). 갤러리를 낱말로 찾을 때는 비운다"
+        required: false
+        default: ""
+      keyword:
+        description: "관광사진 갤러리를 이 낱말로 찾아 받는다 (예: 벚꽃). 주소를 줬으면 비운다"
+        required: false
+        default: ""
       tag:
         description: "폴더 이름 (예: 3452906)"
         required: true
@@ -26,12 +31,22 @@ jobs:
     timeout-minutes: 5 # ⏱️ 천장이 없으면 멈췄을 때 요금이 붙는다
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - name: 받는다
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
         run: |
+          # 갤러리 검색 스크립트는 main 에 있다 — peek 갈래로 옮기기 전에 꺼내 둔다.
+          cp scripts/gallery-peek.mjs /tmp/gallery-peek.mjs
           git fetch origin peek && git checkout peek || git checkout --orphan peek
           git rm -rf --cached . >/dev/null 2>&1 || true
           find . -mindepth 1 -maxdepth 1 ! -name .git ! -name peek -exec rm -rf {} +
           mkdir -p "peek/${{ inputs.tag }}"
+          if [ -n "${{ inputs.keyword }}" ]; then
+            node /tmp/gallery-peek.mjs --keyword "${{ inputs.keyword }}" --tag "${{ inputs.tag }}" --rows 40
+          fi
           n=0
           for u in ${{ inputs.urls }}; do
             n=$((n+1))
