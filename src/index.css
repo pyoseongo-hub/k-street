@@ -3919,3 +3919,12 @@ html[lang^="zh"] * {
 .rec-btns button { width: 54px; height: 54px; border-radius: 50%; border: 0; background: #fff; color: #1C2226; font-size: 22px; cursor: pointer; display: grid; place-items: center; }
 .rec-btns button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 .rec-skip { background: none; border: 0; color: #D7DCDA; font-size: 13px; text-decoration: underline; cursor: pointer; padding: 6px; }
+
+/* 📰 오늘의 서울 카드 — 서울시 사진을 못 쓰므로(공공누리 4유형) 사진 자리에 색 띠를 둔다 */
+.rec-name--news { cursor: default; margin: 0; }
+.rec-ko { margin: -4px 0 0; font-size: 13px; color: #5D676C; }
+.rec-newsband { position: relative; border-radius: 14px; height: 120px; background: linear-gradient(135deg, #2F6F8F 0%, #5FA8A0 55%, #E8B96A 100%); display: grid; place-items: center; }
+.rec-newsicon { font-size: 44px; filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25)); }
+.rec-desc--news { -webkit-line-clamp: 4; }
+.rec-src { font-size: 13px; color: #2F6F8F; font-weight: 600; text-decoration: underline; }
+.rec-src:focus-visible { outline: 3px solid #2F6F8F; outline-offset: 3px; border-radius: 6px; }

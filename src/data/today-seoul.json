@@ -1,0 +1,36 @@
+{
+  "_읽어보세요": [
+    "📰 **오늘의 서울 — 서울시 소식지에서 뽑은 여행자용 카드.** 팝업 맨 앞에 뜬다(RecommendPopup.tsx).",
+    "사장님 (2026-11-05): 「팝업 내용을 그날의 서울시 메일 번역해서 팝업으로 — 내용에 따라 한 장에서 그 이상으로」 · 「영어로」.",
+    "",
+    "🚨 **서울시 글을 옮겨 적지 않는다.** 소식지·기사는 공공누리 제4유형(출처표시 + 상업적 이용금지 + **변경금지**)이다.",
+    "   번역도 변경이다. 그래서 **사실(이름·날짜·장소)만 뽑아 우리 문장으로 새로 쓴다.** 사진도 안 쓴다(같은 4유형).",
+    "🚦 **여행자가 가서 볼 수 있는 것만** 넣는다(사장님 결정). 일자리·복지·시민 강좌·할인 행사는 빼고, 없는 날은 cards 를 비운다.",
+    "🌐 글은 **영어 한 벌**이다(사장님: 「영어로」). 번역기를 안 돌린다 — 요금이 안 든다. titleKo 는 택시·현장에서 보여 줄 한국어 이름.",
+    "",
+    "칸: title·titleKo·when·where·text·until(이날까지 띄운다)·link(원문 — 메일 속 추적 주소 말고 서울시 누리집 주소). 사진 칸은 없다(4유형).",
+    "mailDate 가 사흘 넘게 지나면 팝업이 이 파일을 안 쓴다 — 루틴이 멈춰도 낡은 소식이 남지 않게."
+  ],
+  "issue": "제5794호",
+  "mailDate": "2026-11-05",
+  "cards": [
+    {
+      "title": "Sunrise walk & run on Jamsil Bridge",
+      "titleKo": "쉬엄쉬엄 모닝 (잠실대교)",
+      "when": "Sun 8 & 22 Nov · 7–9 am",
+      "where": "Jamsil Bridge, Han River",
+      "text": "The bridge is opened for a 5 km walk or run as the sun comes up over the Han River. Go at your own pace — it's free and there is no sign-up.",
+      "until": "2026-11-22",
+      "link": "https://mediahub.seoul.go.kr/newsletter/newsletterList.do"
+    },
+    {
+      "title": "Autumn colours along Gyeongbokgung's stone wall",
+      "titleKo": "경복궁 돌담길 단풍",
+      "when": "Now · autumn",
+      "where": "Samcheong-dong to Hyoja-ro, Jongno-gu",
+      "text": "The road that hugs the palace wall is turning red and gold. Walk it from Samcheong-dong down to Hyoja-ro.",
+      "until": "2026-11-20",
+      "link": "https://mediahub.seoul.go.kr/newsletter/newsletterList.do"
+    }
+  ]
+}
