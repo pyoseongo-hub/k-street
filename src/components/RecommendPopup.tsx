@@ -36,10 +36,11 @@
 // ⚠️ 저장소(localStorage)는 막혀 있을 수 있다 — 못 읽으면 그냥 띄우고, 못 적으면 그냥 넘어간다.
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent as RPointerEvent } from "react";
 import { useLanguage } from "../lib/useLanguage";
+import { getTranslations, type Language } from "../lib/translations";
 import { useFestivalsHere } from "../lib/usePlaces";
 import { guFestivalDate, formatRange } from "../lib/guFestival";
 import { getTourImage } from "../lib/tourImages";
-import { placeName, translateText } from "../lib/placeText";
+import { placeName, translateText, ensurePlaceTranslations } from "../lib/placeText";
 import { districtFullName } from "../data/districtNamesEn";
 import { openPlaceInfo } from "../lib/mapLinks";
 import { START } from "../lib/startParams";
@@ -102,7 +103,20 @@ function shouldOpen(): boolean {
 }
 
 export default function RecommendPopup() {
-  const { t, language } = useLanguage();
+  // 🌐 **팝업 카드는 언제나 영어** (사장님 2026-11-05: 「팝업 카드는 영어로」).
+  //    화면을 한국어·일본어로 봐도 카드 안 글과 단추는 영어 한 벌이다. 이름 아래 한국어 원문은
+  //    placeName 이 그대로 붙인다(택시·현장에서 보여 주는 용도).
+  useLanguage(); // 언어가 바뀌면 다시 그린다 — 쓰지는 않는다
+  const language: Language = "en";
+  const t = getTranslations("en");
+  // 앱은 화면 언어의 번역표만 받는다 — 한국어 화면이면 영어 표가 없어 이름이 한국어로 뜬다.
+  //   팝업이 열릴 때 영어 표를 따로 받고, 다 받으면 한 번 다시 그린다.
+  const [, setEnReady] = useState(false);
+  useEffect(() => {
+    let alive = true;
+    ensurePlaceTranslations("en").then(() => { if (alive) setEnReady(true); });
+    return () => { alive = false; };
+  }, []);
   const festivals = useFestivalsHere();
   const [open, setOpen] = useState(shouldOpen);
   const [i, setI] = useState(0);          // 지금까지 넘긴 장 수
@@ -235,6 +249,7 @@ export default function RecommendPopup() {
               <button type="button" className="rec-name" onClick={() => openIfTapped(item.f)}>
                 {placeName(item.f.name, language).main}
               </button>
+              {placeName(item.f.name, language).sub && <p className="rec-ko">{placeName(item.f.name, language).sub}</p>}
               <button type="button" className="rec-photo" onClick={() => openIfTapped(item.f)} aria-label={placeName(item.f.name, language).main}>
                 <img src={item.photo} alt="" loading="eager" draggable={false} />
                 <span className="rec-when">{formatRange(item.d, language)}</span>
