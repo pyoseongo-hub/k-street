@@ -1,0 +1,379 @@
+{
+ "_읽어보세요": [
+  "🤖 기계가 날마다 다시 쓴다(check-month-pending). 손으로 고치지 말 것.",
+  "이번 달 축제 중 날짜가 확정 안 된 곳을 관광공사·서울시 문화포털·공식 누리집에 물어본 결과다.",
+  "🚨 여기 적힌 날짜를 그대로 앱에 넣지 않는다 — 이름 맞추기가 느슨해 남의 축제가 걸릴 수 있다. 사람이 보고 정한다."
+ ],
+ "checkedAt": "2026-11-05T09:37:59.333Z",
+ "month": 11,
+ "items": [
+  {
+   "id": "ks_5d",
+   "name": "서울야외도서관",
+   "city": "seoul",
+   "gu": "중구",
+   "officialUrl": "https://seouloutdoorlibrary.kr/",
+   "freshness": 1,
+   "found": true,
+   "tour": [],
+   "portal": [
+    {
+     "title": "[서울야외도서관] 2026년 서울야외도서관 (책읽는 서울광장, 광화문 책마당, 책읽는 맑은냇가)",
+     "start": "2026-09-04",
+     "end": "2026-11-01",
+     "org": "서울도서관",
+     "link": "https://seouloutdoorlibrary.kr/"
+    },
+    {
+     "title": "서울야외도서관 [책읽는 맑은냇가] 특별운영",
+     "start": "2026-08-14",
+     "end": "2026-08-16",
+     "org": "서울도서관",
+     "link": "https://www.instagram.com/seouloutdoorlibrary.c/"
+    }
+   ],
+   "official": {
+    "url": "https://seouloutdoorlibrary.kr/",
+    "state": "올해 날짜 없음"
+   }
+  },
+  {
+   "id": "fs_668",
+   "name": "성북아트위크",
+   "city": "seoul",
+   "gu": "성북구",
+   "officialUrl": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=668",
+   "freshness": 1,
+   "found": true,
+   "tour": [],
+   "portal": [],
+   "official": {
+    "url": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=668",
+    "state": "올해 날짜 보임",
+    "snippets": [
+     "2026-06-07 ~ 2026-06-07 장소 성북로 일대 (성북동주민센터 건너편~홍익중고",
+     "2026-10-20 ~ 2026-11-01 장소 성북구립미술관, 성북구 일원 관심 축제 등록",
+     "2026-10-09 ~ 2026-10-09 장소 DDP 어울림광장 관심 축제 등록 기타 강서"
+    ]
+   }
+  },
+  {
+   "id": "tour_3021762",
+   "name": "가을 , 명동으로",
+   "city": "seoul",
+   "gu": "중구",
+   "officialUrl": "",
+   "freshness": 1,
+   "found": false,
+   "tour": [],
+   "portal": [],
+   "official": {
+    "url": "",
+    "state": "없음"
+   }
+  },
+  {
+   "id": "tour_1806376",
+   "name": "강동북페스티벌",
+   "city": "seoul",
+   "gu": "강동구",
+   "officialUrl": "https://www.gdlibrary.or.kr/portal/menu/10/book-festival",
+   "freshness": 1,
+   "found": true,
+   "tour": [],
+   "portal": [],
+   "official": {
+    "url": "https://www.gdlibrary.or.kr/portal/menu/10/book-festival",
+    "state": "올해 날짜 보임",
+    "snippets": [
+     "2026.10.24 [제17회 강동북페스티벌] 📸축제 현장 스케치 2. 마시고 2026.1",
+     "2026.10.24 [제17회 강동북페스티벌] 독립출판 부스 소개 2026.10.16 [제1",
+     "2026.10.15 [제17회 강동북페스티벌] 성해나 작가가 전하는 편지 💌 2026.10"
+    ]
+   }
+  },
+  {
+   "id": "tour_3572025",
+   "name": "동궐동락",
+   "city": "seoul",
+   "gu": "종로구",
+   "officialUrl": "https://www.kh.or.kr/cont/view/fest/month/menu/210?thisPage=1&idx=110321&searchCategory1=600&searchCategory2=&searchCategory3=&searchField=all&searchDate=202511&weekSel=undefined&searchType=&searchText=",
+   "freshness": 1,
+   "found": false,
+   "tour": [],
+   "portal": [],
+   "official": {
+    "url": "https://www.kh.or.kr/cont/view/fest/month/menu/210?thisPage=1&idx=110321&searchCategory1=600&searchCategory2=&searchCategory3=&searchField=all&searchDate=202511&weekSel=undefined&searchType=&searchText=",
+    "state": "올해 날짜 없음"
+   }
+  },
+  {
+   "id": "tour_3563444",
+   "name": "방배카페 골목페스타",
+   "city": "seoul",
+   "gu": "서초구",
+   "officialUrl": "https://www.seocho.go.kr/site/seocho/ex/bbs/View.do?pageIndex=1&pageUnit=10&cbIdx=59&searchMedia=&bcIdx=405392&searchCondition=subCont&searchKeyword=",
+   "freshness": 1,
+   "found": false,
+   "tour": [],
+   "portal": [],
+   "official": {
+    "url": "https://www.seocho.go.kr/site/seocho/ex/bbs/View.do?pageIndex=1&pageUnit=10&cbIdx=59&searchMedia=&bcIdx=405392&searchCondition=subCont&searchKeyword=",
+    "state": "올해 날짜 없음"
+   }
+  },
+  {
+   "id": "tour_3551526",
+   "name": "용마루 숲길 축제",
+   "city": "seoul",
+   "gu": "용산구",
+   "officialUrl": "https://www.yongsan.go.kr/portal/bbs/B0000041/view.do?nttId=718229&menuNo=200228",
+   "freshness": 1,
+   "found": false,
+   "tour": [],
+   "portal": [],
+   "official": {
+    "url": "https://www.yongsan.go.kr/portal/bbs/B0000041/view.do?nttId=718229&menuNo=200228",
+    "state": "못 열림",
+    "why": "fetch failed"
+   }
+  },
+  {
+   "id": "tour_3524418",
+   "name": "제2회 고메 잇 강남",
+   "city": "seoul",
+   "gu": "강남구",
+   "officialUrl": "",
+   "freshness": 1,
+   "found": false,
+   "tour": [],
+   "portal": [],
+   "official": {
+    "url": "",
+    "state": "없음"
+   }
+  },
+  {
+   "id": "tour_3383832",
+   "name": "케미스트릿 강남역 페스티벌",
+   "city": "seoul",
+   "gu": "서초구",
+   "officialUrl": "",
+   "freshness": 1,
+   "found": false,
+   "tour": [],
+   "portal": [],
+   "official": {
+    "url": "",
+    "state": "없음"
+   }
+  },
+  {
+   "id": "tour_2622167",
+   "name": "2025 경북사과홍보행사",
+   "city": "seoul",
+   "gu": "중구",
+   "officialUrl": "",
+   "freshness": 3,
+   "found": true,
+   "tour": [
+    {
+     "title": "2026 경북사과홍보행사",
+     "start": "20261102",
+     "end": "20261104",
+     "contentId": "2622167"
+    }
+   ],
+   "portal": [],
+   "official": {
+    "url": "",
+    "state": "없음"
+   }
+  },
+  {
+   "id": "tour_2854855",
+   "name": "2025 대한민국 관광기념품 박람회",
+   "city": "seoul",
+   "gu": "중구",
+   "officialUrl": "https://kto.visitkorea.or.kr/kor/souvenir/main.kto",
+   "freshness": 3,
+   "found": true,
+   "tour": [
+    {
+     "title": "2026 대한민국 관광기념품 박람회",
+     "start": "20261120",
+     "end": "20261122",
+     "contentId": "2854855"
+    }
+   ],
+   "portal": [],
+   "official": {
+    "url": "https://kto.visitkorea.or.kr/kor/souvenir/main.kto",
+    "state": "올해 날짜 보임",
+    "snippets": [
+     "2026/10/02 2026 대한민국 관광기념품 박람회 참가기업 선정 결과 발표 일정 연기",
+     "2026/09/30 SNS 더보기 갤러리 FAQ 1:1문의 오늘 하루 이 창을 열지 않음 2"
+    ]
+   }
+  },
+  {
+   "id": "tour_3554794",
+   "name": "2025 대한민국 김장대축제",
+   "city": "seoul",
+   "gu": "서초구",
+   "officialUrl": "https://kimjang-festa.com/default/",
+   "freshness": 3,
+   "found": false,
+   "tour": [],
+   "portal": [],
+   "official": {
+    "url": "https://kimjang-festa.com/default/",
+    "state": "못 열림",
+    "why": "fetch failed"
+   }
+  },
+  {
+   "id": "tour_2769990",
+   "name": "2025 대한민국 우리술 대축제",
+   "city": "seoul",
+   "gu": "서초구",
+   "officialUrl": "https://thesool.com/front/home/M000000000/index.do",
+   "freshness": 3,
+   "found": true,
+   "tour": [
+    {
+     "title": "2026 대한민국 우리술 대축제",
+     "start": "20261113",
+     "end": "20261115",
+     "contentId": "2769990"
+    }
+   ],
+   "portal": [],
+   "official": {
+    "url": "https://thesool.com/front/home/M000000000/index.do",
+    "state": "못 열림",
+    "why": "HTTP 400"
+   }
+  },
+  {
+   "id": "tour_2384776",
+   "name": "2025 한강명산트레킹(2차)",
+   "city": "seoul",
+   "gu": "중랑구",
+   "officialUrl": "https://seoulsports.or.kr",
+   "freshness": 3,
+   "found": true,
+   "tour": [],
+   "portal": [],
+   "official": {
+    "url": "https://seoulsports.or.kr",
+    "state": "올해 날짜 보임",
+    "snippets": [
+     "2026-11-04 채용안내 [마포구체육회] 생활체육지도자(육아휴직대체자) 채용계획 공고 2",
+     "2026-11-04 채용안내 2026년 제3차 서울어울림체육센터 정원 외 인력 모집 공고 2",
+     "2026-10-23 공지사항 2027년도 서울특별시체육회 회원종목단체 신규 가입신청 안내 2"
+    ]
+   }
+  },
+  {
+   "id": "cf_350954",
+   "name": "2025 서면 빛 축제",
+   "city": "busan",
+   "gu": "부산진구",
+   "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=350954",
+   "freshness": 3,
+   "found": true,
+   "tour": [],
+   "portal": "서울 아님",
+   "official": {
+    "url": "https://www.culture.go.kr/wday/detailView.do?seq=350954",
+    "state": "올해 날짜 보임",
+    "snippets": [
+     "2026-11-04 ~ 2026-11-04 전라제주권 포스터\"> 공연 2026 문화가 있는",
+     "2026-11-04 ~ 2026-11-04 수도강원권 포스터\"> 공연 2026 문화가 있는",
+     "2026-11-04 ~ 2026-11-04 경상권 포스터\"> 공연 2026 문화가 있는 날"
+    ]
+   }
+  },
+  {
+   "id": "cf_359654",
+   "name": "2025 영종하늘도시 <밤하늘 빛담길 산책>",
+   "city": "incheon",
+   "gu": "영종구",
+   "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=359654",
+   "freshness": 3,
+   "found": true,
+   "tour": [],
+   "portal": "서울 아님",
+   "official": {
+    "url": "https://www.culture.go.kr/wday/detailView.do?seq=359654",
+    "state": "올해 날짜 보임",
+    "snippets": [
+     "2026-11-04 ~ 2026-11-04 전라제주권 포스터\"> 공연 2026 문화가 있는",
+     "2026-11-04 ~ 2026-11-04 수도강원권 포스터\"> 공연 2026 문화가 있는",
+     "2026-11-04 ~ 2026-11-04 경상권 포스터\"> 공연 2026 문화가 있는 날"
+    ]
+   }
+  },
+  {
+   "id": "cf_359656",
+   "name": "2025 크리스마스 트리축제 점등행사",
+   "city": "incheon",
+   "gu": "제물포구",
+   "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=359656",
+   "freshness": 3,
+   "found": true,
+   "tour": [],
+   "portal": "서울 아님",
+   "official": {
+    "url": "https://www.culture.go.kr/wday/detailView.do?seq=359656",
+    "state": "올해 날짜 보임",
+    "snippets": [
+     "2026-11-04 ~ 2026-11-04 전라제주권 포스터\"> 공연 2026 문화가 있는",
+     "2026-11-04 ~ 2026-11-04 수도강원권 포스터\"> 공연 2026 문화가 있는",
+     "2026-11-04 ~ 2026-11-04 경상권 포스터\"> 공연 2026 문화가 있는 날"
+    ]
+   }
+  },
+  {
+   "id": "cf_359657",
+   "name": "2025 크리스마스 트리축제 점등행사(영종)",
+   "city": "incheon",
+   "gu": "영종구",
+   "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=359657",
+   "freshness": 3,
+   "found": true,
+   "tour": [],
+   "portal": "서울 아님",
+   "official": {
+    "url": "https://www.culture.go.kr/wday/detailView.do?seq=359657",
+    "state": "올해 날짜 보임",
+    "snippets": [
+     "2026-11-04 ~ 2026-11-04 전라제주권 포스터\"> 공연 2026 문화가 있는",
+     "2026-11-04 ~ 2026-11-04 수도강원권 포스터\"> 공연 2026 문화가 있는",
+     "2026-11-04 ~ 2026-11-04 경상권 포스터\"> 공연 2026 문화가 있는 날"
+    ]
+   }
+  },
+  {
+   "id": "cf_364755",
+   "name": "2025 함평 겨울빛축제",
+   "city": "jeonnam",
+   "gu": "함평군",
+   "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=364755",
+   "freshness": 3,
+   "found": true,
+   "tour": [],
+   "portal": "서울 아님",
+   "official": {
+    "url": "https://www.culture.go.kr/wday/detailView.do?seq=364755",
+    "state": "올해 날짜 보임",
+    "snippets": [
+     "2026-11-04 ~ 2026-11-04 전라제주권 포스터\"> 공연 2026 문화가 있는",
+     "2026-11-04 ~ 2026-11-04 수도강원권 포스터\"> 공연 2026 문화가 있는",
+     "2026-11-04 ~ 2026-11-04 경상권 포스터\"> 공연 2026 문화가 있는 날"
+    ]
+   }
+  }
+ ]
+}
