@@ -143,12 +143,12 @@
     "matchedName": "남대문시장"
   },
   "ks_1t": {
-    "image": "https://tong.visitkorea.or.kr/cms/resource/61/3355161_image2_1.JPG",
-    "source": "한국관광공사",
+    "image": "https://tong.visitkorea.or.kr/cms2/website/30/4139730.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
     "license": "공공누리 제1유형",
-    "pageUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=126490",
-    "auto": true,
-    "matchedName": "서울어린이대공원"
+    "matchedName": "서울어린이대공원 벚꽃길",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139730"
   },
   "ks_22": {
     "image": "https://tong.visitkorea.or.kr/cms/resource/24/3565324_image2_1.jpg",
@@ -282,5 +282,127 @@
     "source": "K-Street · AI 연출 이미지 (AI-generated)",
     "license": "K-Street 자체 제작",
     "matchedName": "서울광장 스케이트장"
+  },
+  "_벚꽃_대표이미지": [
+    "🌸 2026-11-05 사장님: 「벚꽃길 사진 없는 건 대표 이미지로 — 풍경이 아닌 벚꽃 사진으로」.",
+    "서울 벚꽃길은 관광사진 갤러리에 **그 길의 사진이 0장**이었다.",
+    "그래서 **꽃을 가까이 찍은** 갤러리 사진 3장(제천 청풍문화유산단지, 2026.04, 촬영 김지호)을 돌려 쓴다.",
+    "🚨 **그 길을 찍은 사진이 아니다** — 출처 칸(화면 출처 표시)에 「대표 이미지」를 적어 손님이 오해하지 않게 한다.",
+    "🚦 이름에 「벚꽃」이 든 15곳에만 붙였다. 오동공원·발바닥공원·청계천 꽃길·홍제천·성북천·중랑천 송정·응봉지구·광진장미정원은",
+    "   무슨 꽃인지 자료에 없어 붙이지 않았다(광진장미정원은 장미다).",
+    "ks_1t 에 있던 옛 줄(matchedName 「서울어린이대공원」 — 번호가 밀려 이미 안 쓰이던 것)은 이것으로 갈았다.",
+    "그 길의 진짜 사진이 생기면 이 줄을 지우고 그것으로 바꾼다."
+  ],
+  "ks_1o": {
+    "image": "https://tong.visitkorea.or.kr/cms2/website/30/4139730.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
+    "license": "공공누리 제1유형",
+    "matchedName": "양재천 벚꽃길(강남 구간)",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139730"
+  },
+  "ks_1p": {
+    "image": "https://tong.visitkorea.or.kr/cms2/website/43/4139743.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
+    "license": "공공누리 제1유형",
+    "matchedName": "명일동 삼익그린2차 벚꽃길",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139743"
+  },
+  "ks_1s": {
+    "image": "https://tong.visitkorea.or.kr/cms2/website/54/4139954.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
+    "license": "공공누리 제1유형",
+    "matchedName": "도림천 벚꽃길",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139954"
+  },
+  "ks_1u": {
+    "image": "https://tong.visitkorea.or.kr/cms2/website/43/4139743.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
+    "license": "공공누리 제1유형",
+    "matchedName": "안양천 벚꽃길(구로 구간)",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139743"
+  },
+  "ks_1v": {
+    "image": "https://tong.visitkorea.or.kr/cms2/website/54/4139954.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
+    "license": "공공누리 제1유형",
+    "matchedName": "안양천 벚꽃 뚝방길",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139954"
+  },
+  "ks_1y": {
+    "image": "https://tong.visitkorea.or.kr/cms2/website/30/4139730.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
+    "license": "공공누리 제1유형",
+    "matchedName": "우이천변 벚꽃길",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139730"
+  },
+  "ks_21": {
+    "image": "https://tong.visitkorea.or.kr/cms2/website/43/4139743.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
+    "license": "공공누리 제1유형",
+    "matchedName": "국립서울현충원 수양벚꽃길",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139743"
+  },
+  "ks_24": {
+    "image": "https://tong.visitkorea.or.kr/cms2/website/54/4139954.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
+    "license": "공공누리 제1유형",
+    "matchedName": "안산 자락길 벚꽃길",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139954"
+  },
+  "ks_25": {
+    "image": "https://tong.visitkorea.or.kr/cms2/website/30/4139730.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
+    "license": "공공누리 제1유형",
+    "matchedName": "양재천 벚꽃길(서초 구간)",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139730"
+  },
+  "ks_26": {
+    "image": "https://tong.visitkorea.or.kr/cms2/website/43/4139743.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
+    "license": "공공누리 제1유형",
+    "matchedName": "서울숲 벚꽃길",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139743"
+  },
+  "ks_29": {
+    "image": "https://tong.visitkorea.or.kr/cms2/website/54/4139954.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
+    "license": "공공누리 제1유형",
+    "matchedName": "안양천 벚꽃길(양천 구간)",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139954"
+  },
+  "ks_2b": {
+    "image": "https://tong.visitkorea.or.kr/cms2/website/30/4139730.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
+    "license": "공공누리 제1유형",
+    "matchedName": "여의천 벚꽃길",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139730"
+  },
+  "ks_2d": {
+    "image": "https://tong.visitkorea.or.kr/cms2/website/43/4139743.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
+    "license": "공공누리 제1유형",
+    "matchedName": "불광천 벚꽃길",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139743"
+  },
+  "ks_2h": {
+    "image": "https://tong.visitkorea.or.kr/cms2/website/54/4139954.jpg",
+    "source": "대표 이미지 · Sample photo — 한국관광공사 (촬영 김지호)",
+    "license": "공공누리 제1유형",
+    "matchedName": "중랑천변 벚꽃길",
+    "대표이미지": true,
+    "원본": "제천 청풍문화유산단지 · 관광사진갤러리 4139954"
   }
 }
