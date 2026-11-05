@@ -169,6 +169,33 @@ if (작년.length) {
   줄.push("");
 }
 
+// ── ⑤ 이번 달 미확정 축제 — 날마다 세 창구에 물어본 결과 ───────────────────
+// 사장님 (2026-11-05): 「해당 달의 행사는 날짜 지나기 전까지 날짜 확정 없으면 매일 확인하게
+//   루틴에 넣어 — 관광공사 · 시청 · 구청 확인」. check-month-pending(매일 08:20)이 적은 것을 옮긴다.
+type 창구 = string | { title: string; start?: string; end?: string }[];
+const 미확정 = (() => {
+  try { return JSON.parse(readFileSync("data/month-pending.json", "utf8")); } catch { return null; }
+})() as null | { checkedAt: string; month: number; items: { name: string; gu: string; city: string; freshness: number; found: boolean; tour: 창구; portal: 창구; official: { url: string; state: string; snippets?: string[] } }[] };
+const 창구글 = (c: 창구) => (typeof c === "string" ? c : c.length ? c.map((x) => `${x.title} ${x.start ?? ""}~${x.end ?? ""}`).join(" / ") : "없음");
+if (!미확정) {
+  줄.push("## ⑤ 이번 달 미확정 축제 — 🔴 아직 한 번도 안 돌았다 (check-month-pending)");
+  줄.push("");
+} else {
+  const 단서 = 미확정.items.filter((x) => x.found);
+  줄.push(`## ⑤ ${미확정.month}월 미확정 축제 ${미확정.items.length}곳 — 단서 ${단서.length}곳`);
+  줄.push("");
+  줄.push(`관광공사 · 서울시 문화포털 · 공식 누리집(구청·시청)에 **날마다** 물어본다. 마지막 확인 ${미확정.checkedAt.slice(0, 16).replace("T", " ")} (UTC).`);
+  줄.push("🚨 이름 맞추기가 느슨하다 — **단서는 사람이 열어 보고** 같은 축제·올해 날짜일 때만 `festival-dates-manual.json` 에 넣는다.");
+  줄.push("");
+  줄.push("| 축제 | 곳 | 자료 | 관광공사 | 문화포털 | 공식 누리집 |");
+  줄.push("|---|---|---|---|---|---|");
+  for (const x of [...단서, ...미확정.items.filter((y) => !y.found)]) {
+    const 공식 = x.official.state === "올해 날짜 보임" ? `**올해 날짜 보임**: ${(x.official.snippets ?? []).join(" / ").slice(0, 80)}` : x.official.state;
+    줄.push(`| ${x.found ? "🔎 " : ""}${x.name} | ${CITY_BY_KEY.get(x.city)?.ko ?? x.city} ${x.gu} | ${x.freshness === 3 ? "작년 자료뿐" : "날짜 미정"} | ${창구글(x.tour)} | ${창구글(x.portal)} | ${공식} |`);
+  }
+  줄.push("");
+}
+
 줄.push("---");
 줄.push("");
 줄.push("🛑 **이 파일은 정하지 않는다.** 무엇을 정해야 하는지만 적는다 —");

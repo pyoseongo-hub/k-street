@@ -1,0 +1,55 @@
+name: Check month pending (이번 달 미확정 축제 매일 확인)
+
+# 🔁 사장님 (2026-11-05): "해당 달의 행사는 날짜 지나기 전까지 날짜 확정 없으면 매일 확인하게
+#    루틴에 넣어 — 관광공사 · 시청 · 구청 확인".
+#
+# 이번 달 축제 중 **날짜 미정 · 작년 자료뿐**인 곳을 관광공사 · 서울시 문화포털 · 그 축제의
+# 공식 누리집(구청·시청 페이지)에 날마다 물어 data/month-pending.json 에 적는다.
+# 📋 끝나면 「오늘 전달사항」(todo-board ⑤)이 따라 돌고, 08:52 메일 루틴이 그걸 읽어 보고한다.
+# 🚨 앱 자료는 건드리지 않는다 — 찾은 것을 적기만 한다. 넣는 것은 사람이 정한다.
+
+on:
+  schedule:
+    - cron: "20 23 * * *" # 매일 08:20 KST — 다른 날짜 수집(05:00~08:10) 뒤, 메일 루틴(08:52) 앞
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15 # ⏱️ 천장이 없으면 멈췄을 때 요금이 붙는다
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: 물어볼 곳을 뽑고 묻는다
+        env:
+          TOUR_API_KEY: ${{ secrets.TOUR_API_KEY }}
+          SEOUL_OPEN_API_KEY: ${{ secrets.SEOUL_OPEN_API_KEY }}
+        run: |
+          set -o pipefail
+          npx vite build --ssr scripts/dump-month-pending.ts --outDir dist-ssr --logLevel error
+          node scripts/check-month-pending.mjs 2>&1 | tee pending.txt
+      - name: 적은 것 커밋
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/month-pending.json
+          if git diff --cached --quiet; then echo "🔕 바뀐 게 없다"; exit 0; fi
+          git commit -m "이번 달 미확정 축제 확인 (check-month-pending) [skip ci]"
+          for i in 1 2 3; do
+            git push && exit 0
+            git pull --rebase origin "$(git rev-parse --abbrev-ref HEAD)" || exit 1
+            sleep $((i * 3))
+          done
+          echo "❌ 세 번 다 밀렸다"; exit 1
+      - name: 요약에 붙인다
+        if: always()
+        run: |
+          { echo "## 🔁 이번 달 미확정 축제"; echo ""; echo '```'; \
+            cat pending.txt 2>/dev/null || echo "(로그 없음)"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"

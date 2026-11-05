@@ -28,6 +28,7 @@ on:
     workflows:
       - "Fetch culture festivals (전국 축제 받아 오기)"
       - "Collect gu news (구청 새소식에서 축제 찾기)"
+      - "Check month pending (이번 달 미확정 축제 매일 확인)"
     types: [completed]
   workflow_dispatch:
 
