@@ -21,7 +21,7 @@ import { placeName, translateText, hasTranslation } from "../lib/placeText";
 import { FESTIVAL_THEMES, THEME_ICON, themeOf, type FestivalTheme } from "../data/festivalThemes";
 import { pastEditionYear } from "../lib/pastEdition";
 import { galleryOf } from "../lib/tourGallery";
-import { guFestivalDate, guOfficialLink, formatRange, festivalEndedThisYear } from "../lib/guFestival";
+import { guFestivalDate, guOfficialLink, formatRange, festivalEndedThisYear, festivalFreshness } from "../lib/guFestival";
 import { whenWindow, overlaps, weekdaysIn, onlyOnWeekdays, spanDays, LONG_RUN_DAYS, type WhenKind } from "../lib/whenWindow";
 
 // 「봄 여름 가을 겨울 그리고 서울」 — 지도와 상관없이 **계절 · 달 · 테마**로
@@ -204,11 +204,13 @@ export default function MonthlyFestivalPanel({
     //    있는 것끼리·없는 것끼리는 원래 순서를 그대로 지킨다.
     // ⏳ **올해 끝난 것은 맨 아래로.** 지우지도 감추지도 않지만, 아직 갈 수 있는
     //    축제가 위에 와야 한다 — 손님이 훑는 순서가 곧 쓸모의 순서다.
+    // 🧭 (2026-11-05) 네 줄로 나눴다 — **올해 확정 → 날짜 미정 → 올해 끝남 → 작년 자료뿐**
+    //    (festivalFreshness). 사장님: 「지난 자료나 작년 자료는 제일 아래로」·「월별로」.
     return picked
       .slice()
       .sort(
         (a, b) =>
-          Number(Boolean(festivalEndedThisYear(a.id))) - Number(Boolean(festivalEndedThisYear(b.id))) ||
+          festivalFreshness(a) - festivalFreshness(b) ||
           Number(hasPhoto(b)) - Number(hasPhoto(a)),
       );
   }, [inMonth, theme]);
@@ -229,7 +231,7 @@ export default function MonthlyFestivalPanel({
       .slice()
       .sort(
         (a, b) =>
-          Number(Boolean(festivalEndedThisYear(a.id))) - Number(Boolean(festivalEndedThisYear(b.id))) ||
+          festivalFreshness(a) - festivalFreshness(b) ||
           Number(hasPhoto(b)) - Number(hasPhoto(a)),
       );
   }, [neighborFestivals, month, theme]);

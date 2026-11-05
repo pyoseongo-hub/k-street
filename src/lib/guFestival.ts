@@ -159,6 +159,32 @@ export function festivalEndedThisYear(id: string): { end: string; page?: string 
   return e ? { end: e, page: d.page } : undefined;
 }
 
+/**
+ * 🧭 **이 축제 자료가 얼마나 믿을 만하고 최신인가** — 목록 순서를 정하는 잣대 하나.
+ *
+ * 사장님 (2026-11-05): *"무조건 신뢰할 수 있는 최신 자료여야 해. 지난 자료나 작년 자료는
+ * 제일 아래로 내려. 매일 루틴화해"* · *"월별로 해야 해"*.
+ *
+ *   0 — 올해 확정 날짜가 있고 아직 안 끝났다(guFestivalDate). **믿고 가도 되는 것**
+ *   1 — 날짜를 아직 모른다(달만 안다). 올해 공지가 안 나온 것
+ *   2 — 올해 회차가 이미 끝났다
+ *   3 — **작년(또는 그 전) 자료뿐이다** — 아는 날짜가 지난해이거나, 이름에 지난 연도가 박혀 있다
+ *
+ * 화면이 오늘 날짜로 그때그때 매기므로 **날마다 저절로 다시 줄을 선다** — 따로 돌릴 것이 없다.
+ * 몇 곳이 2·3 인지는 todo-board 가 날마다 세어 「오늘 전달사항」에 적는다.
+ */
+export function festivalFreshness(f: { id: string; name: string; dateLabel?: string }): 0 | 1 | 2 | 3 {
+  if (guFestivalDate(f.id)) return 0;
+  const 올해 = new Date().getFullYear();
+  const known = RAW[f.id];
+  const knownYear = known?.start ? Number((known.end ?? known.start).slice(0, 4)) : undefined;
+  if (knownYear !== undefined && knownYear < 올해) return 3;
+  const years = `${f.name} ${f.dateLabel ?? ""}`.match(/20\d{2}/g)?.map(Number) ?? [];
+  if (years.length && Math.max(...years) < 올해) return 3;
+  if (festivalEndedThisYear(f.id)) return 2;
+  return 1;
+}
+
 export function guFestivalDate(id: string): GuFestivalDate | undefined {
   const d = RAW[id];
   if (!d?.start) return undefined;

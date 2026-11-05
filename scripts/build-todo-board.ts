@@ -25,6 +25,7 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { ALL_FESTIVALS } from "../src/data/seed";
+import { festivalFreshness } from "../src/lib/guFestival";
 import { CITY_BY_KEY } from "../src/data/cities";
 
 const 오늘 = new Date().toISOString().slice(0, 10);
@@ -129,6 +130,44 @@ for (const p of 쓸만한것.slice(0, 5)) {
   줄.push(`- **${p.name}** · ${CITY_BY_KEY.get(p.city ?? "seoul")?.ko ?? ""} ${p.gu}`);
 }
 줄.push("");
+
+// ── ④ 월별 — 믿을 만한 최신 자료가 얼마나 되나 ─────────────────────────
+// 사장님 (2026-11-05): 「무조건 신뢰할 수 있는 최신 자료 · 지난 자료나 작년 자료는 제일 아래로 ·
+//   매일 루틴화 · 월별로」. 화면(MonthlyFestivalPanel)이 이 잣대(festivalFreshness)로 달마다
+//   줄을 세운다 — 여기는 **그 결과를 날마다 센다.** 작년 자료가 많은 달이 손볼 달이다.
+const 줄칸 = ["올해 확정", "날짜 미정", "올해 끝남", "작년 자료뿐"];
+줄.push("## ④ 월별 — 믿을 만한 최신 자료");
+줄.push("");
+줄.push("달 목록은 **올해 확정 → 날짜 미정 → 올해 끝남 → 작년 자료뿐** 순으로 선다(맨 아래가 작년 자료).");
+줄.push("「작년 자료뿐」이 많은 달은 올해 공지를 찾아 `festival-dates-manual.json` 에 적으면 위로 올라온다.");
+줄.push("");
+줄.push(`| 달 | ${줄칸.join(" | ")} |`);
+줄.push("|---|---:|---:|---:|---:|");
+const 달씩 = new Map<number, number[]>();
+for (const p of ALL_FESTIVALS) {
+  if (p.startMonth == null) continue;
+  const 끝달 = p.endMonth ?? p.startMonth;
+  const 달들: number[] = [];
+  for (let m = p.startMonth; ; m = (m % 12) + 1) { 달들.push(m); if (m === 끝달 || 달들.length > 12) break; }
+  const k = festivalFreshness(p);
+  for (const m of 달들) {
+    const c = 달씩.get(m) ?? [0, 0, 0, 0];
+    c[k]++;
+    달씩.set(m, c);
+  }
+}
+for (let m = 1; m <= 12; m++) {
+  const c = 달씩.get(m) ?? [0, 0, 0, 0];
+  줄.push(`| ${m}월 | ${c[0]} | ${c[1]} | ${c[2]} | ${c[3] ? `**${c[3]}**` : 0} |`);
+}
+줄.push("");
+const 작년 = ALL_FESTIVALS.filter((p) => festivalFreshness(p) === 3);
+if (작년.length) {
+  줄.push(`작년 자료뿐인 축제 가까운 것 다섯 (전체 ${작년.length}곳):`);
+  줄.push("");
+  for (const p of 작년.slice(0, 5)) 줄.push(`- **${p.name}** · ${CITY_BY_KEY.get(p.city ?? "seoul")?.ko ?? ""} ${p.gu}`);
+  줄.push("");
+}
 
 줄.push("---");
 줄.push("");
