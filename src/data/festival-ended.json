@@ -10,7 +10,7 @@
     "",
     "✋ 지우지는 않는다. 그 축제는 **내년에 또 열린다** — 자리는 남기고 상태만 바꾼다."
   ],
-  "받은날": "2026-11-04",
+  "받은날": "2026-11-05",
   "곳": {
     "ks_2": {
       "start": "2026-10-16",
@@ -126,6 +126,12 @@
       "start": "2026-10-24",
       "title": "2026 서울뮤직페스티벌",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=279"
+    },
+    "fs_339": {
+      "start": "2026-10-29",
+      "end": "2026-11-04",
+      "title": "2026 서울 웰니스 트래블위크",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=339"
     },
     "tour_2618971": {
       "start": "2026-10-17",
