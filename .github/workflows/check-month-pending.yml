@@ -33,8 +33,9 @@ jobs:
           SEOUL_OPEN_API_KEY: ${{ secrets.SEOUL_OPEN_API_KEY }}
           # 🔑 네이버 검색 열쇠 — Kfood 저장소에만 있었다. K-Street 비밀 칸에 같은 값을 넣어야 돈다.
           #    없으면 스크립트가 「못 물어봄(열쇠 없음)」이라고 적고 나머지 셋은 그대로 묻는다.
-          NAVER_SEARCH_CLIENT_ID: ${{ secrets.NAVER_SEARCH_CLIENT_ID }}
-          NAVER_SEARCH_CLIENT_SECRET: ${{ secrets.NAVER_SEARCH_CLIENT_SECRET }}
+          #    Kfood 와 같은 이름(NAVER_CLIENT_ID/SECRET)으로 넣어도 받는다.
+          NAVER_SEARCH_CLIENT_ID: ${{ secrets.NAVER_SEARCH_CLIENT_ID || secrets.NAVER_CLIENT_ID }}
+          NAVER_SEARCH_CLIENT_SECRET: ${{ secrets.NAVER_SEARCH_CLIENT_SECRET || secrets.NAVER_CLIENT_SECRET }}
         run: |
           set -o pipefail
           npx vite build --ssr scripts/dump-month-pending.ts --outDir dist-ssr --logLevel error
