@@ -4744,6 +4744,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405043"
   },
   {
+    "id": "cf_405691",
+    "city": "seoul",
+    "gu": "마포구",
+    "category": "festival",
+    "name": "2026 인문문화축제 <인문지능>",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405691"
+  },
+  {
     "id": "cf_405583",
     "city": "gyeonggi",
     "gu": "성남시",
@@ -4809,19 +4822,6 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402552"
   },
   {
-    "id": "cf_405691",
-    "city": "seoul",
-    "gu": "마포구",
-    "category": "festival",
-    "name": "2026 인문문화축제 <인문지능>",
-    "confirmed": true,
-    "nameOnly": true,
-    "startMonth": 11,
-    "endMonth": 11,
-    "monthSource": "한국문화정보원 문화정보 창구",
-    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405691"
-  },
-  {
     "id": "cf_405999",
     "city": "seoul",
     "gu": "동작구",
@@ -4846,6 +4846,19 @@
     "endMonth": 11,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405139"
+  },
+  {
+    "id": "cf_406342",
+    "city": "gyeonggi",
+    "gu": "가평군",
+    "category": "festival",
+    "name": "2026 어쿠스틱 청평 뮤직페스티벌",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=406342"
   },
   {
     "id": "cf_399624",
@@ -4950,6 +4963,19 @@
     "endMonth": 11,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=403215"
+  },
+  {
+    "id": "cf_406335",
+    "city": "seoul",
+    "gu": "영등포구",
+    "category": "festival",
+    "name": "2026 창의예술주간 잠들면 열리는 상상의 섬 <둥둥제>",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=406335"
   },
   {
     "id": "cf_405038",
