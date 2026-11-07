@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-11-06",
+  "받은날": "2026-11-07",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -5226,6 +5226,20 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/a74200858556457ea9a6f86d02219c0d.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=406267"
+    },
+    {
+      "seq": "406490",
+      "title": "제33회 영 아티스트 포럼: 음악가를 위한 지원사업 전략 - 아는 만큼 받는 지원금",
+      "start": "2026-12-21",
+      "end": "2026-12-21",
+      "place": "코스모스아트홀",
+      "area": "서울",
+      "sigungu": "서초구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/fa58f1f771a84696a1603f7c160cf9b9.jpg",
+      "lat": 37.48291746536171,
+      "lng": 127.01164275193204,
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=406490"
     },
     {
       "seq": "405669",
