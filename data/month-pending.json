@@ -4,40 +4,9 @@
   "이번 달 축제 중 날짜가 확정 안 된 곳을 관광공사·서울시 문화포털·공식 누리집에 물어본 결과다.",
   "🚨 여기 적힌 날짜를 그대로 앱에 넣지 않는다 — 이름 맞추기가 느슨해 남의 축제가 걸릴 수 있다. 사람이 보고 정한다."
  ],
- "checkedAt": "2026-11-08T02:34:10.546Z",
+ "checkedAt": "2026-11-09T02:45:01.671Z",
  "month": 11,
  "items": [
-  {
-   "id": "ks_5d",
-   "name": "서울야외도서관",
-   "city": "seoul",
-   "gu": "중구",
-   "officialUrl": "https://seouloutdoorlibrary.kr/",
-   "freshness": 1,
-   "found": true,
-   "tour": [],
-   "portal": [
-    {
-     "title": "[서울야외도서관] 2026년 서울야외도서관 (책읽는 서울광장, 광화문 책마당, 책읽는 맑은냇가)",
-     "start": "2026-09-04",
-     "end": "2026-11-01",
-     "org": "서울도서관",
-     "link": "https://seouloutdoorlibrary.kr/"
-    },
-    {
-     "title": "서울야외도서관 [책읽는 맑은냇가] 특별운영",
-     "start": "2026-08-14",
-     "end": "2026-08-16",
-     "org": "서울도서관",
-     "link": "https://www.instagram.com/seouloutdoorlibrary.c/"
-    }
-   ],
-   "official": {
-    "url": "https://seouloutdoorlibrary.kr/",
-    "state": "올해 날짜 없음"
-   },
-   "naver": "못 물어봄(열쇠 없음)"
-  },
   {
    "id": "fs_668",
    "name": "성북아트위크",
