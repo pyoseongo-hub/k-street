@@ -4991,6 +4991,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405038"
   },
   {
+    "id": "cf_407369",
+    "city": "chungbuk",
+    "gu": "청주시",
+    "category": "festival",
+    "name": "2026 청주미술아카이빙 학술행사",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407369"
+  },
+  {
     "id": "cf_405669",
     "city": "chungbuk",
     "gu": "제천시",
@@ -5002,5 +5015,18 @@
     "endMonth": 1,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405669"
+  },
+  {
+    "id": "cf_407374",
+    "city": "chungnam",
+    "gu": "논산시",
+    "category": "festival",
+    "name": "2027 논산세계딸기산업엑스포",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 2,
+    "endMonth": 3,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407374"
   }
 ]

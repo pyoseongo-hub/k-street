@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-11-08",
+  "받은날": "2026-11-09",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -5216,6 +5216,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=403214"
     },
     {
+      "seq": "407369",
+      "title": "2026 청주미술아카이빙 학술행사",
+      "start": "2026-11-20",
+      "end": "2026-11-20",
+      "place": "청주시립미술관 4층 세미나실",
+      "area": "충북",
+      "sigungu": "청주시 서원구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/b6e52f3ac99a407aa01ec41d388185cd.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407369"
+    },
+    {
       "seq": "406267",
       "title": "2026년 제3회 「요즘, 한국관광 데이터 세미나」",
       "start": "2026-11-26",
@@ -5252,6 +5264,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/71232c46ad5c4acb9755e9421405ac00.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=405669"
+    },
+    {
+      "seq": "407374",
+      "title": "2027 논산세계딸기산업엑스포",
+      "start": "2027-02-26",
+      "end": "2027-03-21",
+      "place": "논산시민가족공원",
+      "area": "충남",
+      "sigungu": "논산시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/eebdb2efb52641c6ac314428cf867ebb.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407374"
     }
   ]
 }
