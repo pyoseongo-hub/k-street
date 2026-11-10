@@ -4822,6 +4822,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402552"
   },
   {
+    "id": "cf_407039",
+    "city": "gyeongnam",
+    "gu": "진주시",
+    "category": "festival",
+    "name": "프로젝트 \"판\"",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407039"
+  },
+  {
     "id": "cf_405999",
     "city": "seoul",
     "gu": "동작구",
@@ -5002,6 +5015,19 @@
     "endMonth": 11,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407369"
+  },
+  {
+    "id": "cf_407397",
+    "city": "seoul",
+    "gu": "서대문구",
+    "category": "festival",
+    "name": "서울 청녕예술창업 페스타 2026",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407397"
   },
   {
     "id": "cf_405669",

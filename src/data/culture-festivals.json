@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-11-09",
+  "받은날": "2026-11-10",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -5024,6 +5024,17 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=405953"
     },
     {
+      "seq": "407039",
+      "title": "프로젝트 \"판\"",
+      "start": "2026-11-06",
+      "end": "2026-11-07",
+      "area": "경남",
+      "sigungu": "진주시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/rdf/26/11/rdf_2026110621254122984.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407039"
+    },
+    {
       "seq": "405999",
       "title": "[동작문화재단] 11/7(토), 단 4시간만 열리는 사당의 지하낙원 \"공중부양\"으로 초대합니다!",
       "start": "2026-11-07",
@@ -5226,6 +5237,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/b6e52f3ac99a407aa01ec41d388185cd.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=407369"
+    },
+    {
+      "seq": "407397",
+      "title": "서울 청녕예술창업 페스타 2026",
+      "start": "2026-11-21",
+      "end": "2026-11-24",
+      "place": "청년예술청SAPY",
+      "area": "서울",
+      "sigungu": "서대문구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/6e6f24d3d5ea49bfa0f635a1439e879a.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407397"
     },
     {
       "seq": "406267",
