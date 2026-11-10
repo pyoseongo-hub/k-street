@@ -4,7 +4,7 @@
   "이번 달 축제 중 날짜가 확정 안 된 곳을 관광공사·서울시 문화포털·공식 누리집에 물어본 결과다.",
   "🚨 여기 적힌 날짜를 그대로 앱에 넣지 않는다 — 이름 맞추기가 느슨해 남의 축제가 걸릴 수 있다. 사람이 보고 정한다."
  ],
- "checkedAt": "2026-11-10T04:41:05.090Z",
+ "checkedAt": "2026-11-10T23:24:48.828Z",
  "month": 11,
  "items": [
   {
@@ -93,8 +93,7 @@
    "portal": [],
    "official": {
     "url": "https://www.seocho.go.kr/site/seocho/ex/bbs/View.do?pageIndex=1&pageUnit=10&cbIdx=59&searchMedia=&bcIdx=405392&searchCondition=subCont&searchKeyword=",
-    "state": "못 열림",
-    "why": "fetch failed"
+    "state": "올해 날짜 없음"
    },
    "naver": "못 물어봄(열쇠 없음)"
   },
