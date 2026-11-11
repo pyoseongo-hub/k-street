@@ -10,7 +10,7 @@
     "",
     "✋ 지우지는 않는다. 그 축제는 **내년에 또 열린다** — 자리는 남기고 상태만 바꾼다."
   ],
-  "받은날": "2026-11-10",
+  "받은날": "2026-11-11",
   "곳": {
     "ks_2": {
       "start": "2026-10-16",
@@ -109,6 +109,12 @@
       "end": "2026-11-01",
       "title": "2026 서울야외도서관(책읽는 서울광장, 광화문 책마당, 책읽는 맑은냇가)",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=427"
+    },
+    "ks_5g": {
+      "start": "2026-10-14",
+      "end": "2026-10-25",
+      "title": "2026 서울디자인위크",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=853"
     },
     "fs_612": {
       "start": "2026-09-06",
