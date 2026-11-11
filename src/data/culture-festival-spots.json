@@ -4926,6 +4926,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=404828"
   },
   {
+    "id": "cf_407649",
+    "city": "gyeonggi",
+    "gu": "수원시",
+    "category": "festival",
+    "name": "월간 동행공간 <문화 프리(free) 패스>",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407649"
+  },
+  {
     "id": "cf_405729",
     "city": "seoul",
     "gu": "종로구",
@@ -4991,6 +5004,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=406335"
   },
   {
+    "id": "cf_407768",
+    "city": "jeonnam",
+    "gu": "고흥군",
+    "category": "festival",
+    "name": "고흥우주인 숯불생선·반건조생선 Gift 세트 제2차 품평회",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407768"
+  },
+  {
     "id": "cf_405038",
     "city": "gyeongbuk",
     "gu": "포항시",
@@ -5028,6 +5054,32 @@
     "endMonth": 11,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407397"
+  },
+  {
+    "id": "cf_407609",
+    "city": "jeonbuk",
+    "gu": "전주시",
+    "category": "festival",
+    "name": "역사랑께 배우랑께",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407609"
+  },
+  {
+    "id": "cf_407668",
+    "city": "seoul",
+    "gu": "중구",
+    "category": "festival",
+    "name": "제18회 서울문학축제 [2026 문학의 도시 서울]",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407668"
   },
   {
     "id": "cf_405669",

@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-11-10",
+  "받은날": "2026-11-11",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -5119,6 +5119,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=404828"
     },
     {
+      "seq": "407649",
+      "title": "월간 동행공간 <문화 프리(free) 패스>",
+      "start": "2026-11-07",
+      "end": "2026-11-28",
+      "place": "수원시 전역 동행공간",
+      "area": "경기",
+      "sigungu": "수원시 팔달구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/rdf/26/11/rdf_2026111021172789164.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407649"
+    },
+    {
       "seq": "405729",
       "title": "상괭이편 토큐멘터리 <기록되지 않았던 바다>",
       "start": "2026-11-08",
@@ -5191,6 +5203,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=406335"
     },
     {
+      "seq": "407768",
+      "title": "고흥우주인 숯불생선·반건조생선 Gift 세트 제2차 품평회",
+      "start": "2026-11-13",
+      "end": "2026-11-14",
+      "place": "고흥우주인브루어리거리 서쪽광장",
+      "area": "전남광주통합",
+      "sigungu": "고흥군",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/7de9e06d9a454c6e80ddb1e6cdcd9731.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407768"
+    },
+    {
       "seq": "402844",
       "title": "제4회 문화체육관광 디지털혁신 포럼",
       "start": "2026-11-17",
@@ -5251,6 +5275,30 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=407397"
     },
     {
+      "seq": "407609",
+      "title": "역사랑께 배우랑께",
+      "start": "2026-11-21",
+      "end": "2026-11-21",
+      "place": "전라감영, 호남권역 예담고, 완판본문화관, 풍남문, 전동성당",
+      "area": "전북특별자치도",
+      "sigungu": "전주시 완산구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/255e328da67b4d5fac3f912a93b7ba00.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407609"
+    },
+    {
+      "seq": "407668",
+      "title": "제18회 서울문학축제 [2026 문학의 도시 서울]",
+      "start": "2026-11-21",
+      "end": "2026-11-21",
+      "place": "청계광장 및 종로, 명동 일대",
+      "area": "서울",
+      "sigungu": "중구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/2265e110b1084558ab62e50e71f2165f.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407668"
+    },
+    {
       "seq": "406267",
       "title": "2026년 제3회 「요즘, 한국관광 데이터 세미나」",
       "start": "2026-11-26",
@@ -5261,6 +5309,30 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/a74200858556457ea9a6f86d02219c0d.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=406267"
+    },
+    {
+      "seq": "407759",
+      "title": "제2회 2026 출판 데이터 마케팅 포럼 <데이터로 움직이는 출판시장>",
+      "start": "2026-11-27",
+      "end": "2026-11-27",
+      "place": "한빛미디어 L60",
+      "area": "서울",
+      "sigungu": "서대문구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/e3ae006379b24fafa7fe185c707b055b.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407759"
+    },
+    {
+      "seq": "407770",
+      "title": "2026년 제3회 디지털출판 세미나 <2026 디지털출판시장 결산과 전망>",
+      "start": "2026-12-03",
+      "end": "2026-12-03",
+      "place": "창비서교빌딩 B2 50주년 기념홀",
+      "area": "서울",
+      "sigungu": "마포구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/6c1e43aadb83472693d21c08fb158266.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407770"
     },
     {
       "seq": "406490",
