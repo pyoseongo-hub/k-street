@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-11-11",
+  "받은날": "2026-11-12",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -5012,6 +5012,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=406060"
     },
     {
+      "seq": "407780",
+      "title": "나주 패션ROAD 중앙로 골목형상점가 11월 행사",
+      "start": "2026-11-06",
+      "end": "2026-11-15",
+      "place": "나주패션ROAD중앙로골목형상점가",
+      "area": "전남광주통합",
+      "sigungu": "나주시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/a8968aef4db948889b3691c79bba73ab.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407780"
+    },
+    {
       "seq": "405953",
       "title": "돈황 불교 사경 소장품 특별공개 연계 국제학술심포지엄",
       "start": "2026-11-06",
@@ -5141,6 +5153,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202610/72558f219f8f405e99f3f43bdd162cb8.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=405729"
+    },
+    {
+      "seq": "407860",
+      "title": "2026 무해한예술실험 x 전주시도시재생지원센터 《섬섬옥수》",
+      "start": "2026-11-10",
+      "end": "2026-11-10",
+      "place": "동완산동 일대 및 완산초등학교 운동장",
+      "area": "전북특별자치도",
+      "sigungu": "전주시 완산구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/9068dbfa7f5b49a4ba634c11a40aadd2.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407860"
     },
     {
       "seq": "403465",
@@ -5299,6 +5323,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=407668"
     },
     {
+      "seq": "407802",
+      "title": "지식공유포럼 <AI시대 문화예술의 내일을 묻다 - 변화,활용,지원>",
+      "start": "2026-11-24",
+      "end": "2026-11-24",
+      "place": "천안축구센터 대세미나실B",
+      "area": "충남",
+      "sigungu": "천안시 서북구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/02ce0624722a429da3b6949e6288881f.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407802"
+    },
+    {
       "seq": "406267",
       "title": "2026년 제3회 「요즘, 한국관광 데이터 세미나」",
       "start": "2026-11-26",
@@ -5309,6 +5345,30 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/a74200858556457ea9a6f86d02219c0d.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=406267"
+    },
+    {
+      "seq": "407803",
+      "title": "[2026 영등포 리빙아트페어] YDP EDITION : TOWN MATE",
+      "start": "2026-11-27",
+      "end": "2026-11-29",
+      "place": "YDP EDITION",
+      "area": "서울",
+      "sigungu": "영등포구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/5edb21e7df0143a9a3e39cf6c5cb6409.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407803"
+    },
+    {
+      "seq": "407804",
+      "title": "2026 움직이는 미디어 예술 놀이터",
+      "start": "2026-11-27",
+      "end": "2026-11-28",
+      "place": "부천시민미디어센터",
+      "area": "경기",
+      "sigungu": "부천시 원미구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/d25f650c637f4795b8e388615648466b.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407804"
     },
     {
       "seq": "407759",
@@ -5333,6 +5393,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/6c1e43aadb83472693d21c08fb158266.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=407770"
+    },
+    {
+      "seq": "407806",
+      "title": "12회 2026 청계천의 빛",
+      "start": "2026-12-11",
+      "end": "2026-12-31",
+      "place": "서울특별시 중구 청계천 청계광장 일대",
+      "area": "서울",
+      "sigungu": "종로구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/c718b6b44efc46cc913f339e8f933938.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=407806"
     },
     {
       "seq": "406490",

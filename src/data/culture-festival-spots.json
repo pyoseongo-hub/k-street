@@ -4822,6 +4822,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=402552"
   },
   {
+    "id": "cf_407780",
+    "city": "jeonnam",
+    "gu": "나주시",
+    "category": "festival",
+    "name": "나주 패션ROAD 중앙로 골목형상점가 11월 행사",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407780"
+  },
+  {
     "id": "cf_407039",
     "city": "gyeongnam",
     "gu": "진주시",
@@ -4952,6 +4965,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=405729"
   },
   {
+    "id": "cf_407860",
+    "city": "jeonbuk",
+    "gu": "전주시",
+    "category": "festival",
+    "name": "2026 무해한예술실험 x 전주시도시재생지원센터 《섬섬옥수》",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407860"
+  },
+  {
     "id": "cf_403465",
     "city": "seoul",
     "gu": "양천구",
@@ -5080,6 +5106,45 @@
     "endMonth": 11,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407668"
+  },
+  {
+    "id": "cf_407803",
+    "city": "seoul",
+    "gu": "영등포구",
+    "category": "festival",
+    "name": "[2026 영등포 리빙아트페어] YDP EDITION : TOWN MATE",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407803"
+  },
+  {
+    "id": "cf_407804",
+    "city": "gyeonggi",
+    "gu": "부천시",
+    "category": "festival",
+    "name": "2026 움직이는 미디어 예술 놀이터",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407804"
+  },
+  {
+    "id": "cf_407806",
+    "city": "seoul",
+    "gu": "종로구",
+    "category": "festival",
+    "name": "12회 2026 청계천의 빛",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 12,
+    "endMonth": 12,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407806"
   },
   {
     "id": "cf_405669",
