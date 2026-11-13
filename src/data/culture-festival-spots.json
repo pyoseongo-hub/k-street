@@ -5043,6 +5043,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407768"
   },
   {
+    "id": "cf_408080",
+    "city": "gangwon",
+    "gu": "양양군",
+    "category": "festival",
+    "name": "2026 제5회 몽돌소리길 걷기행사",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=408080"
+  },
+  {
     "id": "cf_405038",
     "city": "gyeongbuk",
     "gu": "포항시",
