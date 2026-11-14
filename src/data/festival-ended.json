@@ -10,7 +10,7 @@
     "",
     "✋ 지우지는 않는다. 그 축제는 **내년에 또 열린다** — 자리는 남기고 상태만 바꾼다."
   ],
-  "받은날": "2026-11-13",
+  "받은날": "2026-11-14",
   "곳": {
     "ks_2": {
       "start": "2026-10-16",
@@ -160,6 +160,11 @@
       "end": "2026-10-23",
       "title": "제25회 서울억새축제 [억새, 자연이 건네는 위로]",
       "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=257"
+    },
+    "tour_3359144": {
+      "start": "2026-09-19",
+      "title": "2026 용산 청년축제",
+      "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=380"
     },
     "tour_3000221": {
       "start": "2026-09-19",
