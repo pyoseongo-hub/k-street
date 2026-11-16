@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-11-15",
+  "받은날": "2026-11-16",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -5179,6 +5179,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=403465"
     },
     {
+      "seq": "408498",
+      "title": "[서울영화센터X럭키비디오스토어] 청년단편영화 미니상영회에 초대합니다.",
+      "start": "2026-11-11",
+      "end": "2026-12-23",
+      "place": "4층 시네마라운지",
+      "area": "서울",
+      "sigungu": "중구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/ab55360465024545898d8eb07fc4dcd0.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=408498"
+    },
+    {
       "seq": "405954",
       "title": "2026년 서점의 날 기념식",
       "start": "2026-11-11",
@@ -5417,6 +5429,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/e3ae006379b24fafa7fe185c707b055b.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=407759"
+    },
+    {
+      "seq": "408458",
+      "title": "2026 럭키칠곡 크리스마스 마켓",
+      "start": "2026-12-01",
+      "end": "2027-01-10",
+      "place": "왜관역 광장 및 1번 도로 일원",
+      "area": "경북",
+      "sigungu": "칠곡군",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/035791c720db473a812287ce9b381cec.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=408458"
     },
     {
       "seq": "407770",

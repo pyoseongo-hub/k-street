@@ -5147,6 +5147,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407804"
   },
   {
+    "id": "cf_408458",
+    "city": "gyeongbuk",
+    "gu": "칠곡군",
+    "category": "festival",
+    "name": "2026 럭키칠곡 크리스마스 마켓",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 12,
+    "endMonth": 1,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=408458"
+  },
+  {
     "id": "cf_407806",
     "city": "seoul",
     "gu": "종로구",
