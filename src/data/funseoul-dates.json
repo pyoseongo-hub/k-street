@@ -1,6 +1,6 @@
 {
  "설명": "펀서울(festival.seoul.go.kr)에 서울시가 올려 둔 축제 기간. scripts/fetch-funseoul-dates.ts 가 받는다. 손으로 고치지 말 것 — 손으로 적을 것은 src/data/festival-dates-manual.json 에 적는다.",
- "받은날": "2026-11-15",
+ "받은날": "2026-11-16",
  "곳": {
   "tour_3069470": {
    "start": "2026-12-24",
@@ -12,7 +12,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=825",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=825",
    "source": "funseoul",
-   "fetchedAt": "2026-11-15"
+   "fetchedAt": "2026-11-16"
   },
   "fs_485": {
    "start": "2026-09-18",
@@ -21,10 +21,10 @@
    "gu": "광진구",
    "place": "서울 전역의 실내외 공연장, 한강공원 일대, 서울문화재단 대학로센터 등",
    "org": "서울시청 (펀서울)",
-   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=485",
-   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=485",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=840",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=840",
    "source": "funseoul",
-   "fetchedAt": "2026-11-15"
+   "fetchedAt": "2026-11-16"
   },
   "fs_377": {
    "start": "2026-11-16",
@@ -56,10 +56,10 @@
    "gu": "종로구",
    "place": "광화문 광장 외 6곳",
    "org": "서울시청 (펀서울)",
-   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=483",
-   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=483",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=309",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=309",
    "source": "funseoul",
-   "fetchedAt": "2026-11-15"
+   "fetchedAt": "2026-11-16"
   },
   "fs_351": {
    "start": "2026-12-29",
@@ -71,7 +71,7 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=688",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=688",
    "source": "funseoul",
-   "fetchedAt": "2026-11-15"
+   "fetchedAt": "2026-11-16"
   },
   "fs_564": {
    "start": "2026-12-31",
@@ -82,19 +82,19 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=564",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=564",
    "source": "funseoul",
-   "fetchedAt": "2026-11-15"
+   "fetchedAt": "2026-11-16"
   },
   "tour_3073454": {
    "start": "2026-12-11",
-   "end": "2027-01-03",
-   "title": "2026 서울라이트 광화문",
+   "end": "2027-01-10",
+   "title": "2026 서울라이트 광화문 [윤슬 : 시간의 수면]",
    "gu": "종로구",
    "place": "광화문광장",
    "org": "서울시청 (펀서울)",
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=683",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=683",
    "source": "funseoul",
-   "fetchedAt": "2026-11-15"
+   "fetchedAt": "2026-11-16"
   },
   "tour_629742": {
    "start": "2026-11-04",
@@ -106,7 +106,43 @@
    "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=748",
    "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=748",
    "source": "funseoul",
-   "fetchedAt": "2026-11-15"
+   "fetchedAt": "2026-11-16"
+  },
+  "ks_5h": {
+   "start": "2026-12-11",
+   "end": "2027-01-31",
+   "title": "2026 서울빛초롱축제",
+   "gu": "중구",
+   "place": "청계천 일대(청계광장 ~ 삼일교)",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=810",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=810",
+   "source": "funseoul",
+   "fetchedAt": "2026-11-16"
+  },
+  "ks_5i": {
+   "start": "2026-12-18",
+   "end": "2027-02-09",
+   "title": "서울광장 스케이트장",
+   "gu": "중구",
+   "place": "서울광장",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=378",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=378",
+   "source": "funseoul",
+   "fetchedAt": "2026-11-16"
+  },
+  "tour_3035607": {
+   "start": "2026-12-11",
+   "end": "2027-01-10",
+   "title": "2026 광화문마켓",
+   "gu": "종로구",
+   "place": "광화문광장 및 세종로공원 일대",
+   "org": "서울시청 (펀서울)",
+   "orgLink": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=366",
+   "page": "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=366",
+   "source": "funseoul",
+   "fetchedAt": "2026-11-16"
   }
  }
 }
