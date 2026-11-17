@@ -702,6 +702,13 @@ export const FESTIVALS_FROM_MAIL: Place[] = [
   { id: id(), gu: "중구", category: "festival", name: "서울빛초롱축제", startMonth: 12, endMonth: 1, addr: "서울특별시 중구 청계천 일대", note: "청계천 물길을 따라 이어지는 등불·빛 조형물 — 서울윈터페스티벌의 하나", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=309", monthSource: "서울윈터페스티벌 공식 누리집 winta.co.kr 「세부 축제」 — 2026.12.11–2027.1.31 · 펀서울 「(예정) 12월, 청계천 일대」", confirmed: true },
   { id: id(), gu: "중구", category: "festival", name: "서울광장 스케이트장", startMonth: 12, endMonth: 2, addr: "서울특별시 중구 세종대로 110 (서울광장)", note: "서울광장에 겨울마다 여는 야외 스케이트장 — 서울윈터페스티벌의 하나", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=309", monthSource: "서울윈터페스티벌 공식 누리집 winta.co.kr 「세부 축제」 — 2026.12.18–2027.2.9", confirmed: true },
   { id: id(), gu: "중구", dong: "을지로7가", category: "festival", name: "서울라이트 DDP 겨울", startMonth: 12, endMonth: 1, addr: "서울특별시 중구 을지로 281 (DDP)", note: "DDP 외벽을 덮는 겨울 미디어파사드 — 서울윈터페스티벌의 하나", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=309", monthSource: "서울윈터페스티벌 공식 누리집 winta.co.kr 「세부 축제」 — 2026.12.11–2027.1.31", confirmed: true },
+  // 🔎 **검색으로 찾아 자동 반영** (2026-11-17, 사장님: 「이제부터 서치해서 찾은 거는 자동 반영하게 해」).
+  //    「행사 수집·보고」 루틴이 18시에 🆕 로 올린 둘. 넣기 전에 다시 찾아 근거를 겹쳐 봤다.
+  //    · 서울달빛미식회 — 서울시가 직접 낸 공지(내 손안에 서울 · 서울시 보도자료) 두 곳이 같은 날짜.
+  //    · 롯데타운 크리스마스 마켓 — 연합뉴스를 받은 기사 여럿이 같은 날짜. 백화점 행사라 공식 페이지 주소는 못 찾았다.
+  //      ✋ 입장료·패스트패스 값은 블로그에만 있어 **안 적었다.**
+  { id: id(), gu: "중구", dong: "남창동", category: "festival", name: "서울달빛미식회", startMonth: 11, endMonth: 11, addr: "서울특별시 중구 남대문시장 아케이드 일대", note: "남대문시장 저녁 미식 축제 — 셰프 협업 「달빛주막」·플리마켓·야간 미식투어", officialUrl: "https://mediahub.seoul.go.kr/archives/2019996", monthSource: "서울시 「내 손안에 서울」 · 서울시 보도자료 — 2026.11.14–21 (15일 휴무) 18:00–21:00", confirmed: true },
+  { id: id(), gu: "송파구", dong: "잠실동", category: "festival", name: "롯데타운 크리스마스 마켓", startMonth: 11, endMonth: 1, addr: "서울특별시 송파구 잠실 월드파크 야외 잔디광장", note: "19세기 영국풍 크리스마스 시장 — 대형 트리·회전목마·시계탑", monthSource: "연합뉴스 받은 기사 여럿(코리안센터 · 서플) — 2026.11.19–2027.1.3", confirmed: true },
 ];
 
 /**

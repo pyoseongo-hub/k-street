@@ -518,6 +518,40 @@
       "고정": true,
       "메모": "📌 사장님 지시 (2026-10-24): 「공식으로 바꾸고」. 펀서울(festacode=683)은 끝날을 2027-01-03 으로, 축제 공식 누리집은 2027-01-10 으로 적었다. 같은 누리집의 광화문 마켓도 1.10 이라 공식 쪽을 따른다. 「고정」이 펀서울보다 위에 깔린다.",
       "fetchedAt": "2026-10-24"
+    },
+    "ks_5k": {
+      "start": "2026-11-14",
+      "end": "2026-11-21",
+      "title": "서울달빛미식회",
+      "gu": "중구",
+      "place": "남대문시장 아케이드 일대",
+      "time": "18:00–21:00 · 11.15(일) 휴무",
+      "org": "서울시",
+      "orgLink": "https://mediahub.seoul.go.kr/archives/2019996",
+      "page": "https://mediahub.seoul.go.kr/archives/2019996",
+      "source": "서울시 공지 두 곳(내 손안에 서울 · 서울시 보도자료) — 검색으로 찾아 자동 반영",
+      "근거": [
+        "https://mediahub.seoul.go.kr/archives/2019996",
+        "https://www.seoul.go.kr/news/news_report.do?nttNo=470367"
+      ],
+      "메모": "🔎 「행사 수집·보고」 루틴(11-17 18시)이 찾았다. 사장님 지시 「서치해서 찾은 거는 자동 반영」.",
+      "fetchedAt": "2026-11-17"
+    },
+    "ks_5l": {
+      "start": "2026-11-19",
+      "end": "2027-01-03",
+      "title": "2026 롯데타운 크리스마스 마켓",
+      "gu": "송파구",
+      "place": "잠실 월드파크 야외 잔디광장",
+      "org": "롯데백화점",
+      "page": "https://www.koreancenter.or.kr/news/articleView.html?idxno=1436227",
+      "source": "연합뉴스를 받은 기사 여럿 — 검색으로 찾아 자동 반영",
+      "근거": [
+        "https://www.koreancenter.or.kr/news/articleView.html?idxno=1436227",
+        "https://supple.kr/news/cmw70and3wy5eal9pjj8iep0u"
+      ],
+      "메모": "🔎 「행사 수집·보고」 루틴(11-17 18시)이 찾았다. 입장료·패스트패스 값은 블로그에만 있어 안 적었다.",
+      "fetchedAt": "2026-11-17"
     }
   }
 }
