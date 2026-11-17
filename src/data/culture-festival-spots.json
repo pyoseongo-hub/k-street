@@ -5056,6 +5056,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=408080"
   },
   {
+    "id": "cf_408654",
+    "city": "gyeonggi",
+    "gu": "부천시",
+    "category": "festival",
+    "name": "2026 부천 생활문화 연결 프로젝트 <우리동네 이음> 결과공유회 및 전시",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=408654"
+  },
+  {
     "id": "cf_405038",
     "city": "gyeongbuk",
     "gu": "포항시",
@@ -5080,6 +5093,19 @@
     "endMonth": 11,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407369"
+  },
+  {
+    "id": "cf_408663",
+    "city": "seoul",
+    "gu": "중구",
+    "category": "festival",
+    "name": "제14회 서울미디어시티비엔날레 사전프로그램 II 「기술, 다르게 생각하기」",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=408663"
   },
   {
     "id": "cf_407397",
@@ -5147,6 +5173,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407804"
   },
   {
+    "id": "cf_408644",
+    "city": "gyeonggi",
+    "gu": "파주시",
+    "category": "festival",
+    "name": "제30회 파주장단콩축제",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=408644"
+  },
+  {
     "id": "cf_408458",
     "city": "gyeongbuk",
     "gu": "칠곡군",
@@ -5158,6 +5197,19 @@
     "endMonth": 1,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=408458"
+  },
+  {
+    "id": "cf_408655",
+    "city": "gyeonggi",
+    "gu": "부천시",
+    "category": "festival",
+    "name": "2026 사래이예술마당 공간 활성화 사업 <사래이 아지트> 전시 및 오픈데이 행사",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 12,
+    "endMonth": 12,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=408655"
   },
   {
     "id": "cf_407806",
