@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-11-18",
+  "받은날": "2026-11-19",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -5479,6 +5479,42 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=408644"
     },
     {
+      "seq": "408885",
+      "title": "#펀한워킹 #2026지리산워킹 페스티벌",
+      "start": "2026-11-28",
+      "end": "2026-11-28",
+      "place": "구례실내체육관 앞",
+      "area": "전남광주통합",
+      "sigungu": "구례군",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/8571696d41d84087bb0800bc7fb567cd.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=408885"
+    },
+    {
+      "seq": "408877",
+      "title": "2026 남문터 광장 문화 콘서트 - 남문터에서 미리 크리스마스",
+      "start": "2026-11-28",
+      "end": "2026-11-28",
+      "place": "순천부 읍성 남문터 광장",
+      "area": "전남광주통합",
+      "sigungu": "순천시",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/151606960d1d4d99a3b87e4360b8a37b.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=408877"
+    },
+    {
+      "seq": "408874",
+      "title": "담그랑께 나누랑께",
+      "start": "2026-11-29",
+      "end": "2026-11-29",
+      "place": "전라감영 서편부지",
+      "area": "전북특별자치도",
+      "sigungu": "전주시 완산구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/e9c57512ea614169b08561aef6a6e779.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=408874"
+    },
+    {
       "seq": "408458",
       "title": "2026 럭키칠곡 크리스마스 마켓",
       "start": "2026-12-01",
@@ -5513,6 +5549,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/ce52fee848bc4447bbca159b80adf033.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=408655"
+    },
+    {
+      "seq": "408895",
+      "title": "2026 찾아가는 소리축제, 소리효과 Vol.1 고창 <미리크리스마스>",
+      "start": "2026-12-05",
+      "end": "2026-12-05",
+      "place": "고창문화의전당 / 고창읍성 근린공원",
+      "area": "전북특별자치도",
+      "sigungu": "고창군",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/4de64b19719e47d5ab4a8a13b3576c40.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=408895"
     },
     {
       "seq": "407806",

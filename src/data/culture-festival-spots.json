@@ -5186,6 +5186,32 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=408644"
   },
   {
+    "id": "cf_408885",
+    "city": "jeonnam",
+    "gu": "구례군",
+    "category": "festival",
+    "name": "#펀한워킹 #2026지리산워킹 페스티벌",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=408885"
+  },
+  {
+    "id": "cf_408877",
+    "city": "jeonnam",
+    "gu": "순천시",
+    "category": "festival",
+    "name": "2026 남문터 광장 문화 콘서트 - 남문터에서 미리 크리스마스",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 11,
+    "endMonth": 11,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=408877"
+  },
+  {
     "id": "cf_408458",
     "city": "gyeongbuk",
     "gu": "칠곡군",
@@ -5210,6 +5236,19 @@
     "endMonth": 12,
     "monthSource": "한국문화정보원 문화정보 창구",
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=408655"
+  },
+  {
+    "id": "cf_408895",
+    "city": "jeonbuk",
+    "gu": "고창군",
+    "category": "festival",
+    "name": "2026 찾아가는 소리축제, 소리효과 Vol.1 고창 <미리크리스마스>",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 12,
+    "endMonth": 12,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=408895"
   },
   {
     "id": "cf_407806",
