@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-11-19",
+  "받은날": "2026-11-20",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -5431,6 +5431,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=406267"
     },
     {
+      "seq": "409002",
+      "title": "연결과 확장: 데이터 표준으로 잇는 문화유산과 인공지능 K-Museum Data Standard 국제 전문가 초청 세미나",
+      "start": "2026-11-26",
+      "end": "2026-11-26",
+      "place": "국립중앙박물관 교육동 소강당",
+      "area": "서울",
+      "sigungu": "용산구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/514e1188bf4b4751b4a213fe3164b2c0.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=409002"
+    },
+    {
       "seq": "407803",
       "title": "[2026 영등포 리빙아트페어] YDP EDITION : TOWN MATE",
       "start": "2026-11-27",
@@ -5559,7 +5571,7 @@
       "area": "전북특별자치도",
       "sigungu": "고창군",
       "realm": "행사/축제",
-      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/4de64b19719e47d5ab4a8a13b3576c40.png",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/d357711db0c54ba19c9a1092d71b091c.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=408895"
     },
     {
