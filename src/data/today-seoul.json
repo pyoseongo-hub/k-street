@@ -11,25 +11,34 @@
     "칸: title·titleKo·when·where·text·until(이날까지 띄운다)·link(원문 — 메일 속 추적 주소 말고 서울시 누리집 주소). 사진 칸은 없다(4유형).",
     "mailDate 가 사흘 넘게 지나면 팝업이 이 파일을 안 쓴다 — 루틴이 멈춰도 낡은 소식이 남지 않게."
   ],
-  "issue": "제5794호",
-  "mailDate": "2026-11-05",
+  "issue": "제5805호",
+  "mailDate": "2026-11-20",
   "cards": [
     {
-      "title": "Sunrise walk & run on Jamsil Bridge",
-      "titleKo": "쉬엄쉬엄 모닝 (잠실대교)",
-      "when": "Sun 8 & 22 Nov · 7–9 am",
-      "where": "Jamsil Bridge, Han River",
-      "text": "The bridge is opened for a 5 km walk or run as the sun comes up over the Han River. Go at your own pace — it's free and there is no sign-up.",
-      "until": "2026-11-22",
+      "title": "Free night views from Seoul City Hall's sky deck",
+      "titleKo": "서울시청 하늘전망대",
+      "when": "11 Dec – 9 Feb · evenings until 9–10 pm",
+      "where": "Seoul City Hall, 8th–9th floor",
+      "text": "The rooftop observatory stays open later this winter, Sundays included. On 24 and 31 December it is open until midnight. Entry is free.",
+      "until": "2027-02-09",
       "link": "https://mediahub.seoul.go.kr/newsletter/newsletterList.do"
     },
     {
-      "title": "Autumn colours along Gyeongbokgung's stone wall",
-      "titleKo": "경복궁 돌담길 단풍",
-      "when": "Now · autumn",
-      "where": "Samcheong-dong to Hyoja-ro, Jongno-gu",
-      "text": "The road that hugs the palace wall is turning red and gold. Walk it from Samcheong-dong down to Hyoja-ro.",
-      "until": "2026-11-20",
+      "title": "Last of the autumn colours on the Naesi Myoyeok trail",
+      "titleKo": "북한산 내시묘역길",
+      "when": "Now · late autumn",
+      "where": "Bukhansan, Eunpyeong-gu",
+      "text": "An easy walk at the foot of Bukhansan, no long climb needed. A quiet way to catch the last leaves of the season.",
+      "until": "2026-11-30",
+      "link": "https://mediahub.seoul.go.kr/newsletter/newsletterList.do"
+    },
+    {
+      "title": "Seoul Upcycling Plaza — an indoor day out",
+      "titleKo": "서울새활용플라자",
+      "when": "Now",
+      "where": "Seongdong-gu",
+      "text": "A building full of things made from what others threw away — shops, workshops and exhibits. A good pick on a cold day.",
+      "until": "2026-11-27",
       "link": "https://mediahub.seoul.go.kr/newsletter/newsletterList.do"
     }
   ]
