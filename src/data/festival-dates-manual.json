@@ -552,6 +552,22 @@
       ],
       "메모": "🔎 「행사 수집·보고」 루틴(11-17 18시)이 찾았다. 입장료·패스트패스 값은 블로그에만 있어 안 적었다.",
       "fetchedAt": "2026-11-17"
+    },
+    "ks_5m": {
+      "start": "2026-11-26",
+      "end": "2026-12-09",
+      "title": "언폴드엑스 2026",
+      "gu": "중구",
+      "place": "문화역서울284",
+      "org": "서울시",
+      "page": "https://www.seoul.go.kr/news/news_report.do?nttNo=470564",
+      "source": "서울시 보도자료 · 코리아타임스 · 연합뉴스 — 루틴이 찾아 반영",
+      "근거": [
+        "https://www.seoul.go.kr/news/news_report.do?nttNo=470564",
+        "https://www.koreatimes.co.kr/path/A2026111814240003494"
+      ],
+      "메모": "🔎 「행사 수집·보고」 루틴이 찾았다. 관람 무료, 휴관 없음.",
+      "fetchedAt": "2026-11-23"
     }
   }
 }

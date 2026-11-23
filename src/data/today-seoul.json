@@ -11,9 +11,27 @@
     "칸: title·titleKo·when·where·text·until(이날까지 띄운다)·link(원문 — 메일 속 추적 주소 말고 서울시 누리집 주소). 사진 칸은 없다(4유형).",
     "mailDate 가 사흘 넘게 지나면 팝업이 이 파일을 안 쓴다 — 루틴이 멈춰도 낡은 소식이 남지 않게."
   ],
-  "issue": "제5805호",
-  "mailDate": "2026-11-20",
+  "issue": "제5806호",
+  "mailDate": "2026-11-23",
   "cards": [
+    {
+      "title": "UNFOLD X 2026 — art meets technology",
+      "titleKo": "언폴드엑스 2026 (문화역서울284)",
+      "when": "26 Nov – 9 Dec · 11 am – 7 pm",
+      "where": "Culture Station Seoul 284 (old Seoul Station)",
+      "text": "AI, robots and media art from artists in eight countries fill the old station building. Free to enter, open every day.",
+      "until": "2026-12-09",
+      "link": "https://www.seoul.go.kr/news/news_report.do?nttNo=470564"
+    },
+    {
+      "title": "Dima the baby mammoth — an Ice Age exhibition for kids",
+      "titleKo": "아기 매머드 '디마' 특별전 (서울백제어린이박물관)",
+      "when": "Now – 7 Mar 2027",
+      "where": "Seoul Baekje Children's Museum, Songpa-gu",
+      "text": "Follow a baby mammoth's footprints back to the Ice Age. A warm indoor stop with children this winter.",
+      "until": "2027-03-07",
+      "link": "https://mediahub.seoul.go.kr/newsletter/newsletterList.do"
+    },
     {
       "title": "Free night views from Seoul City Hall's sky deck",
       "titleKo": "서울시청 하늘전망대",
@@ -21,24 +39,6 @@
       "where": "Seoul City Hall, 8th–9th floor",
       "text": "The rooftop observatory stays open later this winter, Sundays included. On 24 and 31 December it is open until midnight. Entry is free.",
       "until": "2027-02-09",
-      "link": "https://mediahub.seoul.go.kr/newsletter/newsletterList.do"
-    },
-    {
-      "title": "Last of the autumn colours on the Naesi Myoyeok trail",
-      "titleKo": "북한산 내시묘역길",
-      "when": "Now · late autumn",
-      "where": "Bukhansan, Eunpyeong-gu",
-      "text": "An easy walk at the foot of Bukhansan, no long climb needed. A quiet way to catch the last leaves of the season.",
-      "until": "2026-11-30",
-      "link": "https://mediahub.seoul.go.kr/newsletter/newsletterList.do"
-    },
-    {
-      "title": "Seoul Upcycling Plaza — an indoor day out",
-      "titleKo": "서울새활용플라자",
-      "when": "Now",
-      "where": "Seongdong-gu",
-      "text": "A building full of things made from what others threw away — shops, workshops and exhibits. A good pick on a cold day.",
-      "until": "2026-11-27",
       "link": "https://mediahub.seoul.go.kr/newsletter/newsletterList.do"
     }
   ]

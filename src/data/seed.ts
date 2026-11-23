@@ -709,6 +709,8 @@ export const FESTIVALS_FROM_MAIL: Place[] = [
   //      ✋ 입장료·패스트패스 값은 블로그에만 있어 **안 적었다.**
   { id: id(), gu: "중구", dong: "남창동", category: "festival", name: "서울달빛미식회", startMonth: 11, endMonth: 11, addr: "서울특별시 중구 남대문시장 아케이드 일대", note: "남대문시장 저녁 미식 축제 — 셰프 협업 「달빛주막」·플리마켓·야간 미식투어", officialUrl: "https://mediahub.seoul.go.kr/archives/2019996", monthSource: "서울시 「내 손안에 서울」 · 서울시 보도자료 — 2026.11.14–21 (15일 휴무) 18:00–21:00", confirmed: true },
   { id: id(), gu: "송파구", dong: "잠실동", category: "festival", name: "롯데타운 크리스마스 마켓", startMonth: 11, endMonth: 1, addr: "서울특별시 송파구 잠실 월드파크 야외 잔디광장", note: "19세기 영국풍 크리스마스 시장 — 대형 트리·회전목마·시계탑", monthSource: "연합뉴스 받은 기사 여럿(코리안센터 · 서플) — 2026.11.19–2027.1.3", confirmed: true },
+  //    · 언폴드엑스 2026 — 서울시 보도자료 · 코리아타임스 · 연합뉴스가 같은 날짜, 관람 무료(2026-11-23 반영).
+  { id: id(), gu: "중구", dong: "봉래동2가", category: "festival", name: "언폴드엑스 2026", startMonth: 11, endMonth: 12, addr: "서울특별시 중구 통일로 1 문화역서울284", note: "옛 서울역에서 열리는 예술·기술 축제 — AI·로봇·미디어아트 전시와 공연", officialUrl: "https://www.seoul.go.kr/news/news_report.do?nttNo=470564", monthSource: "서울시 보도자료 · 코리아타임스 · 연합뉴스 — 2026.11.26–12.9", confirmed: true },
 ];
 
 /**
