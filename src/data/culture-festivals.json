@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-11-22",
+  "받은날": "2026-11-24",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -5155,6 +5155,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=405729"
     },
     {
+      "seq": "409299",
+      "title": "[공모] 2027년 서울장애예술창작센터 17기 입주작가 정기공모",
+      "start": "2026-11-09",
+      "end": "2026-11-30",
+      "place": "서울장애예술창작센터",
+      "area": "서울",
+      "sigungu": "종로구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/e89cea4e38a54e34b64052c76112735f.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=409299"
+    },
+    {
       "seq": "407860",
       "title": "2026 무해한예술실험 x 전주시도시재생지원센터 《섬섬옥수》",
       "start": "2026-11-10",
@@ -5537,6 +5549,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/035791c720db473a812287ce9b381cec.jpg",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=408458"
+    },
+    {
+      "seq": "409280",
+      "title": "2026 전남광주 문화활동가대회 「청년문화기획자, 통하였느냐?」",
+      "start": "2026-12-01",
+      "end": "2026-12-01",
+      "place": "화순 하니움문화스포츠센터 체육관 일원",
+      "area": "전남광주통합",
+      "sigungu": "화순군",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/2813f44cd31f4ceab50e332fcf0efcfa.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=409280"
     },
     {
       "seq": "407770",
