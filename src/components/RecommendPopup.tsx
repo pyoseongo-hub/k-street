@@ -47,7 +47,8 @@ import { START } from "../lib/startParams";
 import type { Place } from "../data/seed";
 import todaySeoul from "../data/today-seoul.json";
 
-interface NewsCard { title: string; titleKo?: string; when?: string; where?: string; text?: string; until?: string; link?: string }
+// images — **우리가 만든 그림만** 넣는다(사장님이 만든 AI 연출 이미지 등). 서울시 사진은 4유형이라 안 된다.
+interface NewsCard { title: string; titleKo?: string; when?: string; where?: string; text?: string; until?: string; link?: string; images?: string[]; imageCredit?: string }
 type Item =
   | { kind: "fest"; key: string; f: Place; d: NonNullable<ReturnType<typeof guFestivalDate>>; photo: string }
   | { kind: "news"; key: string; n: NewsCard };
@@ -231,10 +232,16 @@ export default function RecommendPopup() {
             <>
               <p className="rec-name rec-name--news">{item.n.title}</p>
               {item.n.titleKo && <p className="rec-ko">{item.n.titleKo}</p>}
-              <div className="rec-newsband" aria-hidden="true">
-                {item.n.when && <span className="rec-when">{item.n.when}</span>}
-                <span className="rec-newsicon">📰</span>
-              </div>
+              {item.n.images?.length ? (
+                <NewsImages n={item.n} wasDragged={() => Boolean(drag.current?.moved)} />
+              ) : (
+                <div className="rec-newsband" aria-hidden="true">
+                  {item.n.when && <span className="rec-when">{item.n.when}</span>}
+                  <span className="rec-newsicon">📰</span>
+                </div>
+              )}
+              {/* 그림이 있으면 날짜 띠가 그림 글자를 가리므로 여기로 내린다 */}
+              {item.n.images?.length && item.n.when ? <p className="rec-meta">{item.n.when}</p> : null}
               {item.n.where && <p className="rec-meta">{item.n.where}</p>}
               {item.n.text && <p className="rec-desc rec-desc--news">{item.n.text}</p>}
               {item.n.link && (
@@ -271,5 +278,18 @@ export default function RecommendPopup() {
       </div>
       <button type="button" className="rec-skip" onClick={skipToday}>{t.recSkipToday}</button>
     </div>
+  );
+}
+
+/** 📰 카드 그림 — 누르면 다음 장으로 넘어간다(옆으로 밀기는 카드 넘기기에 쓰이므로 안 쓴다). */
+function NewsImages({ n, wasDragged }: { n: NewsCard; wasDragged: () => boolean }) {
+  const imgs = n.images ?? [];
+  const [i, setI] = useState(0);
+  return (
+    <button type="button" className="rec-photo rec-photo--news" onClick={() => { if (!wasDragged()) setI((i + 1) % imgs.length); }} aria-label={n.title}>
+      <img src={imgs[i]} alt="" loading="eager" draggable={false} />
+      {imgs.length > 1 && <span className="rec-count">{i + 1} / {imgs.length}</span>}
+      {n.imageCredit && <span className="rec-cred">{n.imageCredit}</span>}
+    </button>
   );
 }

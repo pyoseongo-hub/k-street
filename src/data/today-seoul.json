@@ -9,7 +9,8 @@
     "🌐 글은 **영어 한 벌**이다(사장님: 「영어로」). 번역기를 안 돌린다 — 요금이 안 든다. titleKo 는 택시·현장에서 보여 줄 한국어 이름.",
     "",
     "칸: title·titleKo·when·where·text·until(이날까지 띄운다)·link(원문 — 메일 속 추적 주소 말고 서울시 누리집 주소). 사진 칸은 없다(4유형).",
-    "mailDate 가 사흘 넘게 지나면 팝업이 이 파일을 안 쓴다 — 루틴이 멈춰도 낡은 소식이 남지 않게."
+    "mailDate 가 사흘 넘게 지나면 팝업이 이 파일을 안 쓴다 — 루틴이 멈춰도 낡은 소식이 남지 않게.",
+    "🖼️ images·imageCredit 칸: 사장님이 직접 만든 그림(AI 연출 이미지)만 넣는다. public/news/ 에 둔다 (2026-11-24 디마 특별전)."
   ],
   "issue": "제5806호",
   "mailDate": "2026-11-23",
@@ -28,9 +29,13 @@
       "titleKo": "아기 매머드 '디마' 특별전 (서울백제어린이박물관)",
       "when": "Now – 7 Mar 2027",
       "where": "Seoul Baekje Children's Museum, Songpa-gu",
-      "text": "Follow a baby mammoth's footprints back to the Ice Age. A warm indoor stop with children this winter.",
+      "text": "A mission trail, mammoth-bone music and postcard making. Free — weekends need a booking, and adults need a child with them.",
       "until": "2027-03-07",
-      "link": "https://mediahub.seoul.go.kr/newsletter/newsletterList.do"
+      "link": "https://mediahub.seoul.go.kr/newsletter/newsletterList.do",
+      "images": [
+        "/news/dima-1.webp",
+        "/news/dima-2.webp"
+      ]
     },
     {
       "title": "Free night views from Seoul City Hall's sky deck",
