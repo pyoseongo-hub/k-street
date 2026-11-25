@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-11-24",
+  "받은날": "2026-11-25",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -5503,6 +5503,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=408644"
     },
     {
+      "seq": "409435",
+      "title": "[서울영화센터] 비평가주간 '칸 IN 서울' 상영 기획전 행사 안내",
+      "start": "2026-11-28",
+      "end": "2026-12-06",
+      "place": "서울영화센터 로비 및 상영관",
+      "area": "서울",
+      "sigungu": "중구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/c67d1389b260434fa0034bcd82a5e308.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=409435"
+    },
+    {
       "seq": "408885",
       "title": "#펀한워킹 #2026지리산워킹 페스티벌",
       "start": "2026-11-28",
@@ -5575,6 +5587,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=407770"
     },
     {
+      "seq": "409451",
+      "title": "<2026 세대같이 한마당> 축제",
+      "start": "2026-12-04",
+      "end": "2026-12-04",
+      "place": "백주년 기념관 - 월곡 달빛 광장 일대",
+      "area": "서울",
+      "sigungu": "성북구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/1dc1251775334013a7f0c316e199c928.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=409451"
+    },
+    {
       "seq": "408655",
       "title": "2026 사래이예술마당 공간 활성화 사업 <사래이 아지트> 전시 및 오픈데이 행사",
       "start": "2026-12-04",
@@ -5597,6 +5621,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/d357711db0c54ba19c9a1092d71b091c.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=408895"
+    },
+    {
+      "seq": "409422",
+      "title": "부천 예술가들이 준비한 특별한 크리스마스 파티 <메리 아트데이 Merry ART-DAY!>",
+      "start": "2026-12-05",
+      "end": "2026-12-05",
+      "place": "복사골문화센터 1층 로비",
+      "area": "경기",
+      "sigungu": "부천시 원미구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/a1fd0404b10843ee8837542690ba7931.png",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=409422"
     },
     {
       "seq": "407806",
