@@ -5316,6 +5316,19 @@
     "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=407806"
   },
   {
+    "id": "cf_409587",
+    "city": "jeonnam",
+    "gu": "함평군",
+    "category": "festival",
+    "name": "2026 함평 겨울빛축제",
+    "confirmed": true,
+    "nameOnly": true,
+    "startMonth": 12,
+    "endMonth": 12,
+    "monthSource": "한국문화정보원 문화정보 창구",
+    "officialUrl": "https://www.culture.go.kr/wday/detailView.do?seq=409587"
+  },
+  {
     "id": "cf_405669",
     "city": "chungbuk",
     "gu": "제천시",
