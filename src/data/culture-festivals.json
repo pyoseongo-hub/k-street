@@ -1,5 +1,5 @@
 {
-  "받은날": "2026-11-26",
+  "받은날": "2026-11-27",
   "기간": {
     "부터": "2026-01-01",
     "까지": "2028-01-01"
@@ -5587,6 +5587,18 @@
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=409280"
     },
     {
+      "seq": "409715",
+      "title": "2026 성남 시민참여형 문화지도 구축 정책 포럼",
+      "start": "2026-12-02",
+      "end": "2026-12-02",
+      "place": "성남아트센터 미디어홀",
+      "area": "경기",
+      "sigungu": "성남시 분당구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/67e39d4483084921939aa9b3c89b8270.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=409715"
+    },
+    {
       "seq": "407770",
       "title": "2026년 제3회 디지털출판 세미나 <2026 디지털출판시장 결산과 전망>",
       "start": "2026-12-03",
@@ -5681,6 +5693,18 @@
       "realm": "행사/축제",
       "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/dcfe2030f0054947b3f71e1229ff3043.png",
       "page": "https://www.culture.go.kr/wday/detailView.do?seq=409618"
+    },
+    {
+      "seq": "409714",
+      "title": "2026년 국립중앙박물관 어린이박물관 심포지엄",
+      "start": "2026-12-14",
+      "end": "2026-12-14",
+      "place": "국립중앙박물관 교육관 소강당",
+      "area": "서울",
+      "sigungu": "용산구",
+      "realm": "행사/축제",
+      "thumb": "http://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202611/15ee01446c384e9ba98d950542c78edf.jpg",
+      "page": "https://www.culture.go.kr/wday/detailView.do?seq=409714"
     },
     {
       "seq": "409587",
