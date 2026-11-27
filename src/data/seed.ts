@@ -753,6 +753,8 @@ export const FESTIVALS_FROM_FUNSEOUL: Place[] = [
   { id: "fs_309", gu: "종로구", category: "festival", name: "서울윈터페스티벌", startMonth: 12, endMonth: 1, addr: "서울특별시 종로구 세종대로 175 (광화문광장) 외 6곳", note: "겨울 두 달 동안 광화문 등 일곱 곳에서 이어진다", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=309", monthSource: "펀서울 festacode=309 — 2026 12.11–2027 1.31. 🔁 2026-10-24: 펀서울이 같은 번호(309)의 이름을 「윈터페스타」→「서울윈터페스티벌」로, 시작일을 12.4→12.11 로 바꿨다 — 옛 이름이라 날짜가 안 붙고 있었다", confirmed: true },
   { id: "fs_351", gu: "중구", dong: "을지로7가", category: "festival", name: "서울콘", startMonth: 12, endMonth: 1, addr: "서울특별시 중구 을지로 281 (DDP)", note: "DDP에서 여는 연말 크리에이터 축제 — 해넘이 카운트다운까지 이어진다", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=351", monthSource: "펀서울 festacode=351 — 2026 12.29–2027 1.1", confirmed: true },
   { id: "fs_564", gu: "마포구", category: "festival", name: "2027 카운트다운", startMonth: 12, endMonth: 12, addr: "서울특별시 마포구 양화로 (홍대 레드로드 R5~R6)", note: "홍대 레드로드 해넘이 카운트다운", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=564", monthSource: "펀서울 festacode=564 — 2026 12.31", confirmed: true },
+  //    · 커튼 콜 가든 겨울시즌 — 루틴(11-27 18시)이 찾았다. 펀서울·서울시 보도자료·헤럴드경제가 같은 기간. 야외 정원이라 입장권이 없다(파는 것은 간식·수공예품).
+  { id: "fs_333", gu: "종로구", dong: "세종로", category: "festival", name: "커튼 콜 가든 겨울시즌", startMonth: 11, endMonth: 1, addr: "서울특별시 종로구 세종대로 175 세종문화회관 예술의 정원", note: "세종문화회관 뒤뜰 겨울마켓 — 붕어빵·뱅쇼 같은 겨울 간식, 수공예품, 산타 포토존", officialUrl: "https://festival.seoul.go.kr/festival/main/festivalView.do?festacode=333", monthSource: "펀서울 festacode=333 · 서울시 보도자료 · 헤럴드경제 — 2026.11.17–2027.1.3 매일 11:00–21:00", confirmed: true },
 ];
 
 interface AutumnRow {

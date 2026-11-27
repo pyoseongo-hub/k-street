@@ -568,6 +568,24 @@
       ],
       "메모": "🔎 「행사 수집·보고」 루틴이 찾았다. 관람 무료, 휴관 없음.",
       "fetchedAt": "2026-11-23"
+    },
+    "fs_333": {
+      "start": "2026-11-17",
+      "end": "2027-01-03",
+      "title": "커튼 콜 가든 겨울시즌",
+      "gu": "종로구",
+      "place": "세종문화회관 예술의 정원",
+      "org": "세종문화회관 · 서울시",
+      "time": "매일 11:00–21:00",
+      "page": "https://www.seoul.go.kr/news/news_report.do?nttNo=470498",
+      "source": "서울시 보도자료 · 펀서울 festacode=333 · 헤럴드경제 — 루틴이 찾아 반영",
+      "근거": [
+        "https://www.seoul.go.kr/news/news_report.do?nttNo=470498",
+        "https://mediahub.seoul.go.kr/archives/2020086",
+        "https://biz.heraldcorp.com/article/10940299"
+      ],
+      "메모": "🔎 「행사 수집·보고」 루틴(11-27 18시)이 찾았다. 펀서울 매일 받기가 붙이기 전에 오늘부터 확정으로 보이게 여기 적었다.",
+      "fetchedAt": "2026-11-27"
     }
   }
 }
